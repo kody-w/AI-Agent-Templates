@@ -1,0 +1,197 @@
+{
+  "version": "1.0",
+  "lastUpdated": "2024-01-15T00:00:00Z",
+  "templates": [
+    {
+      "id": "voice-copilot-sales",
+      "name": "Voice-Enabled Sales Assistant",
+      "type": "conversational",
+      "category": "sales",
+      "industry": ["cross-industry"],
+      "complexity": "medium",
+      "description": "Voice-activated AI assistant for sales teams to create visit reports, update CRM records, and access customer information hands-free.",
+      "shortDescription": "Voice-enabled CRM updates and sales support",
+      "capabilities": [
+        "Voice-to-text transcription",
+        "CRM record creation/update",
+        "Natural language commands",
+        "Multi-language support",
+        "Offline capability with sync"
+      ],
+      "defaultConfiguration": {
+        "solutionName": "Voice to CRM",
+        "businessType": "B2E",
+        "userStories": [
+          "As a sales representative, I want to create visit reports using voice commands so I can document meetings immediately while details are fresh",
+          "As a sales manager, I want my team to update CRM records hands-free so they spend more time selling and less time on data entry"
+        ],
+        "microsoftProducts": [
+          "Copilot Studio",
+          "Teams",
+          "Power Automate",
+          "Dynamics 365"
+        ],
+        "generalStrategy": "Implement voice-enabled CRM updates through Teams integration, allowing sales reps to dictate visit reports and update opportunities using natural language commands."
+      }
+    },
+    {
+      "id": "meeting-intelligence",
+      "name": "Meeting Intelligence Agent",
+      "type": "analytical",
+      "category": "operations",
+      "industry": ["financial", "consulting", "professional-services"],
+      "complexity": "medium",
+      "description": "Automatically prepares comprehensive meeting briefings by gathering and synthesizing information from multiple internal systems.",
+      "shortDescription": "AI-powered meeting preparation and insights",
+      "capabilities": [
+        "Multi-source data aggregation",
+        "Automatic briefing generation",
+        "Meeting history analysis",
+        "Action item tracking",
+        "Stakeholder insights"
+      ],
+      "defaultConfiguration": {
+        "solutionName": "Meeting Intelligence",
+        "businessType": "B2E",
+        "userStories": [
+          "As a corporate banker, I want comprehensive client briefings automatically prepared before meetings so I can focus on relationship building",
+          "As an executive, I want meeting insights and history at my fingertips so I can make informed decisions quickly"
+        ],
+        "microsoftProducts": [
+          "Copilot Studio",
+          "Teams",
+          "SharePoint",
+          "Power BI"
+        ],
+        "generalStrategy": "Aggregate data from multiple systems to create intelligent meeting briefings, track action items, and provide historical context for better decision making."
+      }
+    },
+    {
+      "id": "email-categorization",
+      "name": "Email Intelligence Agent",
+      "type": "automation",
+      "category": "customer-service",
+      "industry": ["cross-industry"],
+      "complexity": "low",
+      "description": "Automatically categorizes, prioritizes, and routes emails using AI to improve response times and customer satisfaction.",
+      "shortDescription": "Smart email categorization and routing",
+      "capabilities": [
+        "Automatic email categorization",
+        "Priority detection",
+        "Sentiment analysis",
+        "Smart routing",
+        "Response suggestions"
+      ],
+      "defaultConfiguration": {
+        "solutionName": "Automated Email Categorization",
+        "businessType": "B2E",
+        "userStories": [
+          "As a customer service agent, I want emails automatically categorized and prioritized so I can focus on the most urgent cases first",
+          "As a customer, I want my emails routed to the right department quickly so I get faster, more accurate responses"
+        ],
+        "microsoftProducts": [
+          "Dynamics 365 Customer Service",
+          "AI Builder",
+          "Power Automate"
+        ],
+        "generalStrategy": "Use Gen AI to automatically categorize incoming emails, detect urgency and sentiment, and route to appropriate teams for faster resolution."
+      }
+    },
+    {
+      "id": "order-status-bot",
+      "name": "Self-Service Order Bot",
+      "type": "conversational",
+      "category": "customer-service",
+      "industry": ["retail", "ecommerce", "logistics"],
+      "complexity": "low",
+      "description": "Customer-facing chatbot for order status inquiries, reducing support ticket volume through self-service.",
+      "shortDescription": "Self-service order status chatbot",
+      "capabilities": [
+        "Order lookup",
+        "Status tracking",
+        "Delivery estimates",
+        "Return initiation",
+        "FAQ responses"
+      ],
+      "defaultConfiguration": {
+        "solutionName": "Order Status Bot",
+        "businessType": "B2C",
+        "userStories": [
+          "As a customer, I want to check my order status instantly without calling support so I can get information 24/7",
+          "As a support agent, I want routine order inquiries handled automatically so I can focus on complex customer issues"
+        ],
+        "microsoftProducts": [
+          "Copilot Studio",
+          "Power Automate",
+          "Azure Bot Service"
+        ],
+        "generalStrategy": "Deploy a self-service chatbot on the website that integrates with order management systems to provide instant order status updates."
+      }
+    },
+    {
+      "id": "document-intelligence",
+      "name": "Document Processing Agent",
+      "type": "extraction",
+      "category": "operations",
+      "industry": ["financial", "insurance", "legal"],
+      "complexity": "medium",
+      "description": "Extract and process information from documents using AI, reducing manual data entry and improving accuracy.",
+      "shortDescription": "AI-powered document data extraction",
+      "capabilities": [
+        "OCR and text extraction",
+        "Form recognition",
+        "Data validation",
+        "Multi-format support",
+        "Integration with business systems"
+      ],
+      "defaultConfiguration": {
+        "solutionName": "Document Intelligence",
+        "businessType": "B2E",
+        "userStories": [
+          "As a loan processor, I want application data automatically extracted from documents so I can process applications faster",
+          "As a compliance officer, I want documents automatically checked for required information so nothing is missed"
+        ],
+        "microsoftProducts": [
+          "Azure Form Recognizer",
+          "Power Automate",
+          "SharePoint",
+          "Dynamics 365"
+        ],
+        "generalStrategy": "Implement intelligent document processing to extract data from various document types, validate information, and populate business systems automatically."
+      }
+    },
+    {
+      "id": "case-summarization",
+      "name": "Smart Case Summarization",
+      "type": "analytical",
+      "category": "customer-service",
+      "industry": ["cross-industry"],
+      "complexity": "low",
+      "description": "Automatically generates case summaries and suggests tags/categories for customer service cases.",
+      "shortDescription": "AI case summarization and tagging",
+      "capabilities": [
+        "Automatic summarization",
+        "Tag suggestions",
+        "Category prediction",
+        "Sentiment detection",
+        "Priority scoring"
+      ],
+      "defaultConfiguration": {
+        "solutionName": "Smart Case Summarization & Tagging Assistant",
+        "businessType": "B2E",
+        "userStories": [
+          "As a customer service agent, I want a summary of the case to be auto-generated from the customer's description, so I can quickly understand the issue and start resolving it faster",
+          "As a customer service agent, I want the system to suggest tags and categories based on the case content, so I can reduce manual data entry and ensure consistency across cases",
+          "As a customer, I want my issue to be understood and routed quickly, so I don't have to repeat information or wait while my case is manually categorized"
+        ],
+        "microsoftProducts": [
+          "Dynamics 365 Customer Service",
+          "AI Builder",
+          "Power Automate",
+          "Copilot Studio"
+        ],
+        "generalStrategy": "Leverage Gen AI to automatically analyze customer case descriptions, generate concise summaries, and suggest appropriate tags and categories to streamline case management and improve response times."
+      }
+    }
+  ]
+}
