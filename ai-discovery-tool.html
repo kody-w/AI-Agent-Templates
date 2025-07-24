@@ -1,0 +1,2270 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Use Case Discovery Tool - Microsoft AI Accelerate</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f5f5f5;
+            color: #333;
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        header {
+            background: linear-gradient(135deg, #0078d4 0%, #005a9e 100%);
+            color: white;
+            padding: 2.5rem 0;
+            text-align: center;
+            margin-bottom: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+        }
+        
+        .ms-logo {
+            font-size: 0.9rem;
+            opacity: 0.8;
+            margin-bottom: 1rem;
+        }
+        
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+            font-weight: 300;
+            letter-spacing: 1px;
+        }
+        
+        .subtitle {
+            font-size: 1.2rem;
+            opacity: 0.9;
+            font-weight: 300;
+        }
+        
+        .progress-bar {
+            background-color: #e0e0e0;
+            height: 8px;
+            border-radius: 4px;
+            margin-bottom: 2rem;
+            overflow: hidden;
+        }
+        
+        .progress {
+            background: linear-gradient(90deg, #00d4aa 0%, #0078d4 100%);
+            height: 100%;
+            width: 0%;
+            transition: width 0.3s ease;
+            border-radius: 4px;
+        }
+        
+        .step {
+            display: none;
+            background: white;
+            padding: 2.5rem;
+            border-radius: 10px;
+            box-shadow: 0 2px 15px rgba(0,0,0,0.08);
+            margin-bottom: 2rem;
+        }
+        
+        .step.active {
+            display: block;
+            animation: fadeIn 0.3s ease-in;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .step-header {
+            margin-bottom: 2rem;
+            padding-bottom: 1.5rem;
+            border-bottom: 2px solid #f0f0f0;
+        }
+        
+        .step-number {
+            display: inline-block;
+            background: #0078d4;
+            color: white;
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            text-align: center;
+            line-height: 35px;
+            margin-right: 15px;
+            font-weight: bold;
+            font-size: 1.1rem;
+        }
+        
+        h2 {
+            display: inline-block;
+            color: #0078d4;
+            font-size: 1.7rem;
+            font-weight: 400;
+        }
+        
+        h3 {
+            color: #0078d4;
+            font-size: 1.3rem;
+            font-weight: 500;
+            margin-bottom: 1rem;
+            margin-top: 1.5rem;
+        }
+        
+        .form-group {
+            margin-bottom: 1.8rem;
+        }
+        
+        label {
+            display: block;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: #555;
+            font-size: 0.95rem;
+        }
+        
+        input[type="text"],
+        input[type="number"],
+        select,
+        textarea {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #e0e0e0;
+            border-radius: 6px;
+            font-size: 1rem;
+            transition: all 0.3s;
+            background-color: #fafafa;
+        }
+        
+        input[type="text"]:focus,
+        input[type="number"]:focus,
+        select:focus,
+        textarea:focus {
+            outline: none;
+            border-color: #0078d4;
+            background-color: white;
+            box-shadow: 0 0 0 3px rgba(0, 120, 212, 0.1);
+        }
+        
+        textarea {
+            resize: vertical;
+            min-height: 120px;
+            font-family: inherit;
+        }
+        
+        .checkbox-group {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin-top: 0.8rem;
+        }
+        
+        .checkbox-item {
+            display: flex;
+            align-items: center;
+            background: #f8f9fa;
+            padding: 0.6rem 1rem;
+            border-radius: 5px;
+            transition: all 0.2s;
+            cursor: pointer;
+        }
+        
+        .checkbox-item:hover {
+            background: #e3f2fd;
+            border: 1px solid #0078d4;
+            margin: -1px;
+        }
+        
+        .checkbox-item input[type="checkbox"] {
+            margin-right: 0.5rem;
+            cursor: pointer;
+        }
+        
+        .checkbox-item label {
+            cursor: pointer;
+            margin-bottom: 0;
+        }
+        
+        .process-item {
+            background: #f8f9fa;
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin-bottom: 1rem;
+            border: 2px solid transparent;
+            transition: all 0.2s;
+        }
+        
+        .process-item:hover {
+            border-color: #0078d4;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        
+        .metric-input-group {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+        
+        .button-group {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 2.5rem;
+            padding-top: 2rem;
+            border-top: 2px solid #f0f0f0;
+        }
+        
+        button {
+            padding: 14px 35px;
+            border: none;
+            border-radius: 6px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-weight: 500;
+            letter-spacing: 0.5px;
+        }
+        
+        .btn-primary {
+            background: #0078d4;
+            color: white;
+        }
+        
+        .btn-primary:hover {
+            background: #005a9e;
+            transform: translateY(-1px);
+            box-shadow: 0 4px 15px rgba(0, 120, 212, 0.3);
+        }
+        
+        .btn-secondary {
+            background: #e0e0e0;
+            color: #333;
+        }
+        
+        .btn-secondary:hover {
+            background: #d0d0d0;
+        }
+        
+        .btn-success {
+            background: #00d4aa;
+            color: white;
+        }
+        
+        .btn-success:hover {
+            background: #00b090;
+            transform: translateY(-1px);
+            box-shadow: 0 4px 15px rgba(0, 212, 170, 0.3);
+        }
+        
+        .info-box {
+            background: #e3f2fd;
+            border-left: 4px solid #0078d4;
+            padding: 1.2rem;
+            margin-bottom: 1.8rem;
+            border-radius: 6px;
+        }
+        
+        .info-box p {
+            margin: 0;
+            color: #1565c0;
+            font-size: 0.95rem;
+        }
+        
+        .help-text {
+            font-size: 0.85rem;
+            color: #6b7280;
+            margin-top: 0.3rem;
+            font-style: italic;
+        }
+        
+        .slider-container {
+            margin-top: 1rem;
+        }
+        
+        .slider {
+            width: 100%;
+            height: 8px;
+            border-radius: 5px;
+            background: #e0e0e0;
+            outline: none;
+            -webkit-appearance: none;
+        }
+        
+        .slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: #0078d4;
+            cursor: pointer;
+        }
+        
+        .slider-value {
+            text-align: center;
+            margin-top: 0.5rem;
+            font-weight: bold;
+            color: #0078d4;
+        }
+        
+        .results {
+            background: white;
+            padding: 2.5rem;
+            border-radius: 10px;
+            box-shadow: 0 2px 15px rgba(0,0,0,0.08);
+        }
+        
+        .use-case-card {
+            background: #f8f9fa;
+            padding: 2rem;
+            border-radius: 8px;
+            margin-bottom: 1.5rem;
+            border-left: 5px solid #0078d4;
+            transition: all 0.2s;
+            position: relative;
+        }
+        
+        .use-case-card:hover {
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            transform: translateX(5px);
+        }
+        
+        .priority-badge {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background: #0078d4;
+            color: white;
+            padding: 0.4rem 1rem;
+            border-radius: 20px;
+            font-weight: bold;
+            font-size: 1.2rem;
+        }
+        
+        .use-case-metrics {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1rem;
+            margin-top: 1rem;
+            padding-top: 1rem;
+            border-top: 1px solid #e0e0e0;
+        }
+        
+        .metric-box {
+            text-align: center;
+        }
+        
+        .metric-box .value {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #0078d4;
+        }
+        
+        .metric-box .label {
+            font-size: 0.85rem;
+            color: #6b7280;
+            margin-top: 0.2rem;
+        }
+        
+        .impact-bar {
+            display: flex;
+            align-items: center;
+            margin-top: 1rem;
+        }
+        
+        .impact-bar-fill {
+            height: 8px;
+            background: linear-gradient(90deg, #00d4aa 0%, #0078d4 100%);
+            border-radius: 4px;
+            transition: width 0.3s ease;
+        }
+        
+        .quick-wins {
+            background: #d4f4dd;
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin-bottom: 2rem;
+        }
+        
+        .quick-wins h3 {
+            color: #1e7e34;
+            margin-bottom: 1rem;
+        }
+        
+        .quick-win-item {
+            background: white;
+            padding: 1rem;
+            border-radius: 5px;
+            margin-bottom: 0.8rem;
+            display: flex;
+            align-items: center;
+        }
+        
+        .quick-win-icon {
+            font-size: 1.5rem;
+            margin-right: 1rem;
+        }
+        
+        /* Import/Export Styles */
+        .import-export-section {
+            background: #f0f8ff;
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin-bottom: 2rem;
+            border: 2px dashed #0078d4;
+        }
+        
+        .file-input-wrapper {
+            position: relative;
+            overflow: hidden;
+            display: inline-block;
+        }
+        
+        .file-input-wrapper input[type=file] {
+            position: absolute;
+            left: -9999px;
+        }
+        
+        .file-input-label {
+            display: inline-block;
+            padding: 10px 20px;
+            background: #0078d4;
+            color: white;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .file-input-label:hover {
+            background: #005a9e;
+        }
+        
+        .template-actions {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+            align-items: center;
+        }
+        
+        @media (max-width: 768px) {
+            .container {
+                padding: 10px;
+            }
+            
+            h1 {
+                font-size: 2rem;
+            }
+            
+            .button-group {
+                flex-direction: column-reverse;
+                gap: 10px;
+            }
+            
+            button {
+                width: 100%;
+            }
+            
+            .checkbox-group {
+                flex-direction: column;
+            }
+            
+            .metric-input-group {
+                grid-template-columns: 1fr;
+            }
+            
+            .template-actions {
+                flex-direction: column;
+                width: 100%;
+            }
+            
+            .template-actions button {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="ms-logo">MICROSOFT AI ACCELERATE</div>
+            <h1>AI Use Case Discovery Tool</h1>
+            <p class="subtitle">Identify High-Impact AI Opportunities for Rapid Implementation</p>
+        </header>
+        
+        <div class="progress-bar">
+            <div class="progress" id="progressBar"></div>
+        </div>
+        
+        <!-- Import/Export Section -->
+        <div class="import-export-section" id="importExportSection">
+            <h3 style="margin-bottom: 1rem;">📋 Template Management</h3>
+            <div class="template-actions">
+                <button class="btn-secondary" onclick="exportTemplate()">📥 Export Empty Template</button>
+                <button class="btn-secondary" onclick="exportFilledTemplate()">💾 Export Current Data</button>
+                <div class="file-input-wrapper">
+                    <input type="file" id="importFile" accept=".json" onchange="importTemplate(event)">
+                    <label for="importFile" class="file-input-label">📤 Import Template</label>
+                </div>
+                <button class="btn-secondary" onclick="clearAllData()">🗑️ Clear All</button>
+            </div>
+            <p class="help-text" style="margin-top: 1rem;">Export a template, fill it offline, then import to populate all fields automatically</p>
+        </div>
+        
+        <!-- Step 1: Business Context -->
+        <div class="step active" id="step1">
+            <div class="step-header">
+                <span class="step-number">1</span>
+                <h2>Business Overview</h2>
+            </div>
+            
+            <div class="info-box">
+                <p>Let's quickly understand your business context to identify where AI can make the biggest impact.</p>
+            </div>
+            
+            <div class="form-group">
+                <label for="companyName">Company Name</label>
+                <input type="text" id="companyName" placeholder="Enter your company name">
+            </div>
+            
+            <div class="form-group">
+                <label for="industry">Primary Industry</label>
+                <select id="industry">
+                    <option value="">Select your industry</option>
+                    <option value="financial">Financial Services</option>
+                    <option value="healthcare">Healthcare</option>
+                    <option value="retail">Retail & E-commerce</option>
+                    <option value="manufacturing">Manufacturing</option>
+                    <option value="technology">Technology</option>
+                    <option value="energy">Energy & Utilities</option>
+                    <option value="government">Government</option>
+                    <option value="education">Education</option>
+                    <option value="logistics">Logistics & Transportation</option>
+                    <option value="telecom">Telecommunications</option>
+                    <option value="insurance">Insurance</option>
+                    <option value="real-estate">Real Estate</option>
+                    <option value="other">Other</option>
+                </select>
+            </div>
+            
+            <div class="form-group">
+                <label for="employeeCount">Number of Employees</label>
+                <input type="number" id="employeeCount" placeholder="e.g., 5000">
+            </div>
+            
+            <div class="form-group">
+                <label>What are your top business challenges right now? (Select all that apply)</label>
+                <div class="checkbox-group">
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="scale" value="Scaling operations efficiently">
+                        <label for="scale">Scaling operations efficiently</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="customerSat" value="Improving customer satisfaction">
+                        <label for="customerSat">Improving customer satisfaction</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="dataOverload" value="Information overload">
+                        <label for="dataOverload">Information overload</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="responseTime" value="Slow response times">
+                        <label for="responseTime">Slow response times</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="quality" value="Quality consistency">
+                        <label for="quality">Quality consistency</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="talent" value="Talent shortage">
+                        <label for="talent">Talent shortage</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="compliance" value="Compliance complexity">
+                        <label for="compliance">Regulatory compliance</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="innovation" value="Innovation speed">
+                        <label for="innovation">Innovation speed</label>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="button-group">
+                <div></div>
+                <button class="btn-primary" onclick="nextStep()">Next: Identify Processes</button>
+            </div>
+        </div>
+        
+        <!-- Step 2: Process Identification -->
+        <div class="step" id="step2">
+            <div class="step-header">
+                <span class="step-number">2</span>
+                <h2>High-Impact Process Identification</h2>
+            </div>
+            
+            <div class="info-box">
+                <p>List your most time-consuming, repetitive, or error-prone processes across the organization.</p>
+            </div>
+            
+            <div id="processContainer">
+                <div class="process-item">
+                    <h4>Process 1</h4>
+                    <div class="form-group">
+                        <label>Process Name</label>
+                        <input type="text" class="process-name" placeholder="e.g., Customer inquiry handling">
+                    </div>
+                    <div class="form-group">
+                        <label>Department/Function</label>
+                        <input type="text" class="process-dept" placeholder="e.g., Customer Service">
+                    </div>
+                    <div class="form-group">
+                        <label>Brief Description</label>
+                        <textarea class="process-desc" placeholder="Describe what this process involves and why it's important"></textarea>
+                    </div>
+                    <div class="metric-input-group">
+                        <div class="form-group">
+                            <label>Volume per week</label>
+                            <input type="number" class="process-volume" placeholder="e.g., 1000">
+                        </div>
+                        <div class="form-group">
+                            <label>Hours spent per week</label>
+                            <input type="number" class="process-hours" placeholder="e.g., 200">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <button class="btn-secondary" onclick="addProcess()" style="margin-top: 1rem;">+ Add Another Process</button>
+            
+            <div class="form-group" style="margin-top: 2rem;">
+                <label>What makes these processes challenging? (Select all that apply)</label>
+                <div class="checkbox-group">
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="manual" value="Too much manual work">
+                        <label for="manual">Too much manual work</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="scattered" value="Information scattered">
+                        <label for="scattered">Information in multiple places</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="decisions" value="Complex decisions">
+                        <label for="decisions">Complex decision-making</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="handoffs" value="Many handoffs">
+                        <label for="handoffs">Too many handoffs</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="inconsistent" value="Inconsistent quality">
+                        <label for="inconsistent">Inconsistent quality</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="expertise" value="Requires expertise">
+                        <label for="expertise">Requires specialized knowledge</label>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="button-group">
+                <button class="btn-secondary" onclick="previousStep()">Previous</button>
+                <button class="btn-primary" onclick="nextStep()">Next: Deep Dive</button>
+            </div>
+        </div>
+        
+        <!-- Step 3: Process Deep Dive -->
+        <div class="step" id="step3">
+            <div class="step-header">
+                <span class="step-number">3</span>
+                <h2>Process Deep Dive</h2>
+            </div>
+            
+            <div class="info-box">
+                <p>Let's understand the specific pain points and opportunities within your key processes.</p>
+            </div>
+            
+            <div id="deepDiveContainer">
+                <!-- Dynamically populated based on processes -->
+            </div>
+            
+            <div class="button-group">
+                <button class="btn-secondary" onclick="previousStep()">Previous</button>
+                <button class="btn-primary" onclick="nextStep()">Next: Data & Systems</button>
+            </div>
+        </div>
+        
+        <!-- Step 4: Data & Systems -->
+        <div class="step" id="step4">
+            <div class="step-header">
+                <span class="step-number">4</span>
+                <h2>Data & Systems Quick Scan</h2>
+            </div>
+            
+            <div class="info-box">
+                <p>Understanding your data and systems helps us identify what's possible with AI right now.</p>
+            </div>
+            
+            <div class="form-group">
+                <label>What types of data do you have lots of? (Select all that apply)</label>
+                <div class="checkbox-group">
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="customerData" value="Customer interactions">
+                        <label for="customerData">Customer emails/chats/calls</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="documents" value="Documents">
+                        <label for="documents">Documents & reports</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="transactions" value="Transactions">
+                        <label for="transactions">Transaction records</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="knowledge" value="Knowledge base">
+                        <label for="knowledge">Policies & procedures</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="tickets" value="Support tickets">
+                        <label for="tickets">Support tickets/cases</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="contracts" value="Contracts">
+                        <label for="contracts">Contracts & agreements</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="productData" value="Product data">
+                        <label for="productData">Product/service data</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="sensors" value="Sensor data">
+                        <label for="sensors">IoT/sensor data</label>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="form-group">
+                <label>Key systems your teams use daily (Select all that apply)</label>
+                <div class="checkbox-group">
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="msft365" value="Microsoft 365">
+                        <label for="msft365">Microsoft 365</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="dynamics" value="Dynamics">
+                        <label for="dynamics">Dynamics 365</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="salesforce" value="Salesforce">
+                        <label for="salesforce">Salesforce</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="sap" value="SAP">
+                        <label for="sap">SAP</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="servicenow" value="ServiceNow">
+                        <label for="servicenow">ServiceNow</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="customSystems" value="Custom systems">
+                        <label for="customSystems">Custom applications</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="otherSystems" value="Other">
+                        <label for="otherSystems">Other (specify below)</label>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="form-group" id="customSystemsGroup" style="display: none;">
+                <label for="customSystemsList">Please specify your systems (one per line)</label>
+                <textarea id="customSystemsList" placeholder="e.g.,
+Proprietary CRM built in 2010
+Legacy mainframe system (AS/400)
+Custom Python data processing pipeline
+Internal knowledge wiki"></textarea>
+            </div>
+            
+            <div class="form-group">
+                <label for="dataReadiness">How would you rate your data quality and accessibility?</label>
+                <div class="slider-container">
+                    <input type="range" min="1" max="10" value="5" class="slider" id="dataReadiness">
+                    <div class="slider-value">
+                        <span id="dataReadinessValue">5</span>/10
+                        <p class="help-text">1 = Very poor, siloed | 10 = Excellent, integrated</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="button-group">
+                <button class="btn-secondary" onclick="previousStep()">Previous</button>
+                <button class="btn-success" onclick="calculateResults()">Generate AI Use Cases</button>
+            </div>
+        </div>
+        
+        <!-- Results -->
+        <div class="step" id="results">
+            <div class="results">
+                <h2 style="color: #0078d4; margin-bottom: 2rem;">Prioritized AI Use Cases for <span id="companyNameResult"></span></h2>
+                
+                <div class="quick-wins" id="quickWinsSection">
+                    <h3>🚀 Low Complexity / High Impact Opportunities</h3>
+                    <div id="quickWinsList"></div>
+                </div>
+                
+                <h3 style="margin-bottom: 1rem;">Prioritized AI Agent Opportunities</h3>
+                <div id="useCaseList"></div>
+                
+                <div class="button-group" style="margin-top: 2rem;">
+                    <button class="btn-secondary" onclick="location.reload()">Start Over</button>
+                    <button class="btn-primary" onclick="exportResults()">Export Full Results</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        let currentStep = 1;
+        const totalSteps = 4;
+        let processCount = 1;
+        let collectedData = loadFromCache() || {
+            company: {},
+            processes: [],
+            challenges: [],
+            dataTypes: [],
+            systems: []
+        };
+        
+        // Template structure with comprehensive AI-readable documentation
+        const templateStructure = {
+            "_comment": "This is the AI Use Case Discovery Tool template. It helps organizations identify high-impact AI opportunities.",
+            "_instructions_for_ai": {
+                "overview": "This template captures information about a company's processes to identify AI automation opportunities. Fill each field thoughtfully based on the organization's actual operations.",
+                "general_rules": [
+                    "All arrays should contain strings from the availableOptions lists provided",
+                    "Numeric values should be realistic estimates based on actual business volumes",
+                    "Text fields should be specific and descriptive, not generic",
+                    "Focus on processes that are repetitive, time-consuming, or error-prone",
+                    "Consider both customer-facing and internal processes"
+                ],
+                "data_sourcing_requirements": [
+                    "ALWAYS cite your sources for each piece of information using the _sources field",
+                    "If information is already present in the template, preserve it and note 'Existing template data' as source",
+                    "If no information is available for a required field, explicitly state 'No information found' and explain in _data_gaps",
+                    "Another AI agent WILL verify all information, so citations must be accurate and checkable",
+                    "Sources should include: document names, page numbers, URLs, dates accessed, or 'Direct communication with [person/role]'",
+                    "If estimating based on industry standards, cite the benchmark source"
+                ],
+                "filling_guidance": {
+                    "company_section": "Start with basic company information to establish context",
+                    "processes_section": "List 3-5 key processes that consume significant time/resources",
+                    "challenges_section": "Select challenges that directly impact the listed processes",
+                    "data_section": "Identify data sources that could be leveraged for AI solutions"
+                }
+            },
+            "version": "1.0",
+            "data": {
+                "_sources": {
+                    "_comment": "Document all information sources here for verification by reviewing AI agent",
+                    "_instructions": "List every source used to fill this template. Be specific enough that another AI can verify the information.",
+                    "company_info_source": "", // e.g., "Company website (www.example.com/about, accessed 2024-01-15), 2023 Annual Report page 5"
+                    "process_info_sources": [], // e.g., ["Internal Process Documentation v2.3 dated 2023-12-01", "Interview with John Smith, VP Operations, 2024-01-10"]
+                    "volume_data_sources": [], // e.g., ["Q4 2023 Operations Dashboard", "Ticketing system report exported 2024-01-14"]
+                    "system_info_sources": [], // e.g., ["IT Asset Management System", "Technology Stack Documentation dated 2023-11-30"]
+                    "other_sources": [] // Any additional sources not covered above
+                },
+                "_data_gaps": {
+                    "_comment": "Document any information that could not be found or verified",
+                    "_instructions": "List fields where data was unavailable and explain what was searched/attempted",
+                    "missing_information": [], // e.g., ["Could not find specific volume data for Process X - searched internal wiki and process docs"]
+                    "assumptions_made": [], // e.g., ["Estimated customer service volume based on company size and industry average of 1.6 inquiries per customer per year"]
+                    "verification_needed": [] // e.g., ["Hours per week for loan processing should be verified with department head"]
+                },
+                "company": {
+                    "_comment": "Basic company information to understand the business context",
+                    "name": "", // String: Company's official name (e.g., "Acme Financial Services Inc.")
+                    "industry": "", // String: Must be one of the values from availableOptions.industries below
+                    "employees": null, // Integer: Total number of employees (e.g., 5000)
+                    "challenges": [] // Array of strings: Select multiple from availableOptions.challenges that apply
+                },
+                "processes": [
+                    {
+                        "_comment": "Each process represents a workflow that could benefit from AI automation",
+                        "_guidance": "Focus on processes with high volume, manual effort, or quality issues",
+                        "name": "", // String: Specific process name (e.g., "Customer Loan Application Review")
+                        "department": "", // String: Department/team responsible (e.g., "Retail Banking Operations")
+                        "description": "", // String: 2-3 sentences explaining what the process does and why it's important
+                        "volumePerWeek": null, // Integer: Number of times this process occurs weekly (e.g., 1200)
+                        "hoursPerWeek": null, // Integer: Total human hours spent on this process weekly (e.g., 300)
+                        "_process_source": "" // String: Source for this specific process information
+                    }
+                    // Add more process objects as needed, typically 3-5 processes
+                ],
+                "processChallenges": [], // Array of strings: Overall challenges across all processes, select from availableOptions.processChallenges
+                "processDetails": [
+                    {
+                        "_comment": "Detailed pain points and available data for each process listed above",
+                        "_guidance": "There should be one processDetail object for each process object",
+                        "processName": "", // String: Must match exactly a name from the processes array above
+                        "painPoints": [], // Array of strings: Select 2-4 from availableOptions.painPoints that apply to this specific process
+                        "dataAvailable": [] // Array of strings: Select all from availableOptions.dataAvailable that this process currently uses or could access
+                    }
+                    // One processDetail object for each process
+                ],
+                "dataTypes": [], // Array of strings: Types of data the organization has in large quantities, select from availableOptions.dataTypes
+                "systems": [], // Array of strings: Current software systems in use, select from availableOptions.systems
+                "customSystems": [], // Array of strings: If "Other" selected in systems, list custom system names (e.g., ["Proprietary CRM v2.0", "Legacy Mainframe AS/400"])
+                "dataReadiness": 5 // Integer 1-10: Rate data quality and accessibility (1=very poor/siloed, 10=excellent/integrated)
+            },
+            "availableOptions": {
+                "_comment": "These are the only valid values for the array fields above. AI should select from these lists.",
+                "industries": [
+                    "financial",      // Banks, credit unions, investment firms, insurance
+                    "healthcare",     // Hospitals, clinics, medical practices, health systems
+                    "retail",         // E-commerce, physical stores, omnichannel retail
+                    "manufacturing",  // Factories, production facilities, industrial operations
+                    "technology",     // Software companies, IT services, tech startups
+                    "energy",         // Utilities, oil & gas, renewable energy
+                    "government",     // Federal, state, local government agencies
+                    "education",      // Schools, universities, training organizations
+                    "logistics",      // Shipping, warehousing, transportation companies
+                    "telecom",        // Phone, internet, communication service providers
+                    "insurance",      // Health, life, property, casualty insurance
+                    "real-estate",    // Property management, real estate agencies, REITs
+                    "other"           // Any industry not listed above
+                ],
+                "challenges": [
+                    "Scaling operations efficiently",        // Growing without proportional cost increase
+                    "Improving customer satisfaction",       // Better service, faster response, personalization
+                    "Information overload",                  // Too much data to process manually
+                    "Slow response times",                   // Delays in service delivery or decision-making
+                    "Quality consistency",                   // Maintaining standards across all operations
+                    "Talent shortage",                       // Difficulty finding/retaining skilled workers
+                    "Compliance complexity",                 // Regulatory requirements are difficult to manage
+                    "Innovation speed"                       // Slow to adapt or implement new solutions
+                ],
+                "processChallenges": [
+                    "Too much manual work",                  // Repetitive tasks done by humans
+                    "Information scattered",                 // Data in multiple systems/locations
+                    "Complex decisions",                     // Requires analysis of multiple factors
+                    "Many handoffs",                         // Process passes through multiple people/teams
+                    "Inconsistent quality",                  // Output quality varies by person/time
+                    "Requires expertise"                     // Needs specialized knowledge few people have
+                ],
+                "painPoints": [
+                    "Finding information",                   // Time wasted searching for data/documents
+                    "Repetitive questions",                  // Answering same queries multiple times
+                    "Manual analysis",                       // Human review of documents/data
+                    "Compliance checking",                   // Ensuring adherence to rules/policies
+                    "Status tracking",                       // Monitoring progress and follow-ups
+                    "Knowledge gaps"                         // Junior staff lack expertise of seniors
+                ],
+                "dataAvailable": [
+                    "Historical cases",                      // Past examples of completed work
+                    "Policies",                              // Written procedures and rules
+                    "Customer data",                         // Information about clients/users
+                    "External data",                         // Third-party data sources
+                    "Documents",                             // Unstructured text files, PDFs, etc.
+                    "Real-time data"                         // Live system feeds, IoT sensors
+                ],
+                "dataTypes": [
+                    "Customer interactions",                 // Emails, chats, call transcripts
+                    "Documents",                             // Contracts, reports, presentations
+                    "Transactions",                          // Financial records, orders, payments
+                    "Knowledge base",                        // FAQs, wikis, help articles
+                    "Support tickets",                       // Help desk cases, issue tracking
+                    "Contracts",                             // Legal agreements, terms of service
+                    "Product data",                          // Catalogs, specifications, inventory
+                    "Sensor data"                            // IoT devices, monitoring equipment
+                ],
+                "systems": [
+                    "Microsoft 365",                         // Office, Teams, SharePoint, etc.
+                    "Dynamics",                              // Microsoft Dynamics 365 CRM/ERP
+                    "Salesforce",                            // CRM platform
+                    "SAP",                                   // Enterprise resource planning
+                    "ServiceNow",                            // IT service management
+                    "Custom systems",                        // Internally developed applications
+                    "Other"                                  // Systems not listed above
+                ]
+            }
+        };
+        
+        // Load from localStorage
+        function loadFromCache() {
+            const cached = localStorage.getItem('aiDiscoveryData');
+            return cached ? JSON.parse(cached) : null;
+        }
+        
+        // Save to localStorage
+        function saveToCache() {
+            localStorage.setItem('aiDiscoveryData', JSON.stringify(collectedData));
+        }
+        
+        // Clear all data
+        function clearAllData() {
+            if (confirm('Are you sure you want to clear all data? This cannot be undone.')) {
+                localStorage.removeItem('aiDiscoveryData');
+                location.reload();
+            }
+        }
+        
+        // Export empty template
+        function exportTemplate() {
+            const template = JSON.parse(JSON.stringify(templateStructure));
+            
+            // Add comprehensive example to guide AI or human users
+            template._example_filled_template = {
+                "_comment": "This is a complete example showing how to properly fill out the template",
+                "company": {
+                    "name": "Global Retail Corporation",
+                    "industry": "retail",
+                    "employees": 5000,
+                    "challenges": ["Scaling operations efficiently", "Improving customer satisfaction", "Information overload"]
+                },
+                "processes": [
+                    {
+                        "name": "Customer Support Inquiries",
+                        "department": "Customer Service",
+                        "description": "Handling incoming customer questions via email, chat, and phone about orders, products, and policies. This process is critical for customer satisfaction but currently requires significant manual effort.",
+                        "volumePerWeek": 8000,
+                        "hoursPerWeek": 400
+                    },
+                    {
+                        "name": "Return Authorization Processing",
+                        "department": "Operations",
+                        "description": "Reviewing and approving product return requests, checking against return policies, and issuing return labels. Currently involves manual review of each case.",
+                        "volumePerWeek": 1500,
+                        "hoursPerWeek": 150
+                    },
+                    {
+                        "name": "Inventory Replenishment Analysis",
+                        "department": "Supply Chain",
+                        "description": "Analyzing sales data and inventory levels to determine when and how much to reorder. Requires combining data from multiple systems and applying complex rules.",
+                        "volumePerWeek": 500,
+                        "hoursPerWeek": 80
+                    }
+                ],
+                "processChallenges": ["Too much manual work", "Information scattered", "Inconsistent quality"],
+                "processDetails": [
+                    {
+                        "processName": "Customer Support Inquiries",
+                        "painPoints": ["Repetitive questions", "Finding information", "Status tracking"],
+                        "dataAvailable": ["Historical cases", "Policies", "Customer data", "Real-time data"]
+                    },
+                    {
+                        "processName": "Return Authorization Processing",
+                        "painPoints": ["Manual analysis", "Compliance checking", "Inconsistent quality"],
+                        "dataAvailable": ["Policies", "Customer data", "Historical cases", "Documents"]
+                    },
+                    {
+                        "processName": "Inventory Replenishment Analysis",
+                        "painPoints": ["Complex decisions", "Manual analysis", "Information scattered"],
+                        "dataAvailable": ["Real-time data", "Historical cases", "External data"]
+                    }
+                ],
+                "dataTypes": ["Customer interactions", "Transactions", "Documents", "Product data"],
+                "systems": ["Microsoft 365", "Salesforce", "Custom systems", "Other"],
+                "customSystems": ["Proprietary Inventory Management System v3.2", "Legacy Order Processing Platform"],
+                "dataReadiness": 7
+            };
+            
+            // Add empty template structure for user to fill
+            template.data.processes = [
+                {
+                    "_guidance": "Replace this with your first process. Each organization should list 3-5 key processes.",
+                    "name": "",
+                    "department": "",
+                    "description": "",
+                    "volumePerWeek": null,
+                    "hoursPerWeek": null
+                }
+            ];
+            
+            // Add process details structure
+            template.data.processDetails = [
+                {
+                    "_guidance": "Create one processDetail entry for each process listed above",
+                    "processName": "",
+                    "painPoints": [],
+                    "dataAvailable": []
+                }
+            ];
+            
+            // Add filling instructions
+            template._ai_filling_instructions = {
+                "step_by_step_guide": [
+                    "1. Start with company information - be specific about the company name and size",
+                    "2. Select industry from the available options that best matches the organization",
+                    "3. Choose 3-5 challenges that are most pressing for the organization",
+                    "4. List 3-5 processes that consume the most time or cause the most issues",
+                    "5. For each process, provide realistic volume and hours estimates",
+                    "6. Select process-wide challenges that apply across multiple processes",
+                    "7. For each process, identify 2-4 specific pain points from the available options",
+                    "8. For each process, select all data types that are available or could be used",
+                    "9. Check all systems currently in use by the organization",
+                    "10. Rate data readiness honestly - most organizations are between 4-7",
+                    "11. ALWAYS fill in _sources section with specific citations for verification",
+                    "12. Document any missing information in _data_gaps section"
+                ],
+                "data_handling_rules": [
+                    "If information already exists in the template, preserve it and cite as 'Existing template data'",
+                    "If you have information from another source, use it and cite that source specifically",
+                    "If no information can be found, write 'No information found' and explain in _data_gaps",
+                    "Never make up information - either cite a source or mark as unavailable",
+                    "When estimating, clearly mark as estimate and provide basis (e.g., 'Industry average from Gartner Report 2023')"
+                ],
+                "citation_requirements": [
+                    "Every piece of information must have a verifiable source",
+                    "Citations should include: source type, name, date, and specific location (page/section)",
+                    "Example: 'Company Annual Report 2023, page 47, Operations section'",
+                    "Example: 'Direct interview with Jane Doe, CFO, conducted 2024-01-15'",
+                    "Example: 'Industry benchmark from McKinsey Digital Report 2023, Exhibit 4'",
+                    "Remember: Another AI agent will verify every claim against these citations"
+                ],
+                "common_mistakes_to_avoid": [
+                    "Don't use generic process names - be specific to the organization",
+                    "Don't underestimate volumes - include all instances, not just complex ones",
+                    "Don't forget to include internal processes, not just customer-facing ones",
+                    "Don't select all options - choose only those that truly apply",
+                    "Don't skip the processDetails section - it's crucial for analysis",
+                    "Don't forget to cite sources - uncited information will be flagged as unverified",
+                    "Don't mix different time periods - keep all data current or clearly date it"
+                ],
+                "tips_for_ai_agents": [
+                    "If analyzing a real company, research their actual operations and challenges",
+                    "Consider seasonal variations when estimating weekly volumes",
+                    "Include both high-volume simple tasks and lower-volume complex tasks",
+                    "Think about processes that frustrate employees or customers",
+                    "Consider regulatory/compliance processes for regulated industries",
+                    "When in doubt, err on the side of transparency - document uncertainties in _data_gaps"
+                ]
+            };
+            
+            downloadJSON(template, 'ai-discovery-template.json');
+        }
+        
+        // Export filled template with current data
+        function exportFilledTemplate() {
+            collectStepData(currentStep);
+            
+            const filledTemplate = {
+                version: "1.0",
+                exportDate: new Date().toISOString(),
+                data: {
+                    company: collectedData.company,
+                    processes: collectedData.processes.map(p => ({
+                        name: p.name,
+                        department: p.dept,
+                        description: p.desc,
+                        volumePerWeek: p.volume,
+                        hoursPerWeek: p.hours
+                    })),
+                    processChallenges: collectedData.processsChallenges || [],
+                    processDetails: collectedData.processes.map(p => ({
+                        processName: p.name,
+                        painPoints: p.painPoints || [],
+                        dataAvailable: p.dataAvailable || []
+                    })),
+                    dataTypes: collectedData.dataTypes || [],
+                    systems: collectedData.systems || [],
+                    customSystems: collectedData.customSystems ? collectedData.customSystems.split('\n').filter(s => s.trim()) : [],
+                    dataReadiness: collectedData.dataReadiness || 5
+                }
+            };
+            
+            downloadJSON(filledTemplate, `ai-discovery-data-${new Date().toISOString().split('T')[0]}.json`);
+        }
+        
+        // Import template
+        function importTemplate(event) {
+            const file = event.target.files[0];
+            if (!file) return;
+            
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                try {
+                    const imported = JSON.parse(e.target.result);
+                    
+                    if (!imported.data) {
+                        alert('Invalid template format. Please use a template exported from this tool.');
+                        return;
+                    }
+                    
+                    // Process and populate the data
+                    populateFromImport(imported.data);
+                    
+                    alert('Template imported successfully! All fields have been populated.');
+                    
+                    // Reset file input
+                    event.target.value = '';
+                    
+                } catch (error) {
+                    alert('Error reading file. Please ensure it\'s a valid JSON template.');
+                    console.error(error);
+                }
+            };
+            
+            reader.readAsText(file);
+        }
+        
+        // Populate form from imported data
+        function populateFromImport(importedData) {
+            // Clear existing data
+            collectedData = {
+                company: {},
+                processes: [],
+                challenges: [],
+                dataTypes: [],
+                systems: []
+            };
+            
+            // Process company data
+            if (importedData.company) {
+                collectedData.company = {
+                    name: importedData.company.name || '',
+                    industry: importedData.company.industry || '',
+                    employees: importedData.company.employees || '',
+                    challenges: importedData.company.challenges || []
+                };
+            }
+            
+            // Process processes
+            if (importedData.processes && importedData.processes.length > 0) {
+                collectedData.processes = importedData.processes.map((p, index) => {
+                    const processDetail = importedData.processDetails && importedData.processDetails[index];
+                    return {
+                        name: p.name || '',
+                        dept: p.department || '',
+                        desc: p.description || '',
+                        volume: p.volumePerWeek || 0,
+                        hours: p.hoursPerWeek || 0,
+                        painPoints: processDetail ? processDetail.painPoints : [],
+                        dataAvailable: processDetail ? processDetail.dataAvailable : []
+                    };
+                }).filter(p => p.name); // Remove empty processes
+            }
+            
+            // Process other data
+            collectedData.processsChallenges = importedData.processChallenges || [];
+            collectedData.dataTypes = importedData.dataTypes || [];
+            collectedData.systems = importedData.systems || [];
+            collectedData.customSystems = importedData.customSystems ? importedData.customSystems.join('\n') : '';
+            collectedData.dataReadiness = importedData.dataReadiness || 5;
+            
+            // Save to cache and reload
+            saveToCache();
+            location.reload();
+        }
+        
+        // Download JSON helper
+        function downloadJSON(data, filename) {
+            const jsonStr = JSON.stringify(data, null, 2);
+            const blob = new Blob([jsonStr], { type: 'application/json' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = filename;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+        }
+        
+        // Demo mode with industry templates
+        const industryTemplates = {
+            financial: {
+                company: 'Acme Financial Services',
+                processes: [
+                    {
+                        name: 'Customer Loan Applications',
+                        dept: 'Retail Banking',
+                        desc: 'Processing and approving loan applications from customers',
+                        volume: 1200,
+                        hours: 300,
+                        painPoints: ['Manual analysis', 'Compliance checking', 'Status tracking'],
+                        dataAvailable: ['Historical cases', 'Policies', 'Customer data', 'Documents']
+                    },
+                    {
+                        name: 'Fraud Investigation',
+                        dept: 'Risk Management',
+                        desc: 'Investigating suspicious transactions and potential fraud cases',
+                        volume: 800,
+                        hours: 200,
+                        painPoints: ['Finding information', 'Manual analysis', 'Knowledge gaps'],
+                        dataAvailable: ['Historical cases', 'Customer data', 'Real-time data']
+                    },
+                    {
+                        name: 'Customer Support Inquiries',
+                        dept: 'Customer Service',
+                        desc: 'Handling customer questions about accounts, transactions, and policies',
+                        volume: 5000,
+                        hours: 400,
+                        painPoints: ['Repetitive questions', 'Finding information', 'Status tracking'],
+                        dataAvailable: ['Policies', 'Customer data', 'Historical cases']
+                    }
+                ]
+            },
+            healthcare: {
+                company: 'Regional Health Network',
+                processes: [
+                    {
+                        name: 'Prior Authorization',
+                        dept: 'Clinical Operations',
+                        desc: 'Processing insurance pre-approvals for medical procedures',
+                        volume: 2500,
+                        hours: 450,
+                        painPoints: ['Manual analysis', 'Compliance checking', 'Status tracking'],
+                        dataAvailable: ['Policies', 'Historical cases', 'Documents']
+                    },
+                    {
+                        name: 'Patient Intake & Triage',
+                        dept: 'Emergency Department',
+                        desc: 'Initial patient assessment and routing to appropriate care',
+                        volume: 3000,
+                        hours: 350,
+                        painPoints: ['Finding information', 'Knowledge gaps', 'Repetitive questions'],
+                        dataAvailable: ['Customer data', 'Policies', 'Real-time data']
+                    },
+                    {
+                        name: 'Medical Records Requests',
+                        dept: 'Health Information Management',
+                        desc: 'Processing and fulfilling medical record requests',
+                        volume: 1500,
+                        hours: 200,
+                        painPoints: ['Finding information', 'Compliance checking', 'Manual analysis'],
+                        dataAvailable: ['Documents', 'Customer data', 'Policies']
+                    }
+                ]
+            },
+            retail: {
+                company: 'Global Retail Corp',
+                processes: [
+                    {
+                        name: 'Customer Service Chat',
+                        dept: 'E-commerce Support',
+                        desc: 'Handling online customer inquiries and issues',
+                        volume: 8000,
+                        hours: 500,
+                        painPoints: ['Repetitive questions', 'Finding information', 'Status tracking'],
+                        dataAvailable: ['Customer data', 'Policies', 'Historical cases']
+                    },
+                    {
+                        name: 'Inventory Management',
+                        dept: 'Supply Chain',
+                        desc: 'Tracking stock levels and coordinating replenishment',
+                        volume: 5000,
+                        hours: 300,
+                        painPoints: ['Manual analysis', 'Status tracking', 'Finding information'],
+                        dataAvailable: ['Real-time data', 'Historical cases', 'External data']
+                    },
+                    {
+                        name: 'Returns Processing',
+                        dept: 'Customer Operations',
+                        desc: 'Handling product returns and refunds',
+                        volume: 2000,
+                        hours: 250,
+                        painPoints: ['Compliance checking', 'Manual analysis', 'Repetitive questions'],
+                        dataAvailable: ['Policies', 'Customer data', 'Documents']
+                    }
+                ]
+            },
+            manufacturing: {
+                company: 'Industrial Manufacturing Inc',
+                processes: [
+                    {
+                        name: 'Quality Control Inspection',
+                        dept: 'Quality Assurance',
+                        desc: 'Inspecting products and documenting defects',
+                        volume: 3000,
+                        hours: 400,
+                        painPoints: ['Manual analysis', 'Compliance checking', 'Knowledge gaps'],
+                        dataAvailable: ['Real-time data', 'Historical cases', 'Documents']
+                    },
+                    {
+                        name: 'Supply Chain Coordination',
+                        dept: 'Procurement',
+                        desc: 'Managing supplier relationships and orders',
+                        volume: 1500,
+                        hours: 300,
+                        painPoints: ['Status tracking', 'Finding information', 'Manual analysis'],
+                        dataAvailable: ['External data', 'Documents', 'Historical cases']
+                    },
+                    {
+                        name: 'Maintenance Scheduling',
+                        dept: 'Plant Operations',
+                        desc: 'Planning and tracking equipment maintenance',
+                        volume: 800,
+                        hours: 200,
+                        painPoints: ['Finding information', 'Knowledge gaps', 'Status tracking'],
+                        dataAvailable: ['Real-time data', 'Historical cases', 'Policies']
+                    }
+                ]
+            }
+        };
+        
+        function enableDemoMode(industryType) {
+            const template = industryTemplates[industryType] || industryTemplates.financial;
+            
+            collectedData = {
+                company: {
+                    name: template.company,
+                    industry: industryType || 'financial',
+                    employees: 5000,
+                    challenges: ['Scaling operations efficiently', 'Improving customer satisfaction', 'Information overload', 'Slow response times']
+                },
+                processes: template.processes,
+                processsChallenges: ['Too much manual work', 'Information in multiple places', 'Complex decision-making'],
+                dataTypes: ['Customer interactions', 'Documents', 'Transactions', 'Policies & procedures'],
+                systems: ['Microsoft 365', 'Dynamics 365', 'Custom applications'],
+                dataReadiness: 7
+            };
+            saveToCache();
+            location.reload();
+        }
+        
+        // Populate form from cache
+        function populateFromCache() {
+            if (!collectedData.company.name) return;
+            
+            // Step 1
+            if (document.getElementById('companyName')) {
+                document.getElementById('companyName').value = collectedData.company.name || '';
+                document.getElementById('industry').value = collectedData.company.industry || '';
+                document.getElementById('employeeCount').value = collectedData.company.employees || '';
+                
+                // Restore checkboxes for challenges
+                if (collectedData.company.challenges) {
+                    document.querySelectorAll('#step1 input[type="checkbox"]').forEach(cb => cb.checked = false);
+                    collectedData.company.challenges.forEach(challenge => {
+                        const checkbox = document.querySelector(`#step1 input[type="checkbox"][value="${challenge}"]`);
+                        if (checkbox) checkbox.checked = true;
+                    });
+                }
+            }
+            
+            // Step 2 - Populate processes
+            if (collectedData.processes && collectedData.processes.length > 0) {
+                const container = document.getElementById('processContainer');
+                if (container) {
+                    container.innerHTML = '';
+                    collectedData.processes.forEach((process, index) => {
+                        if (index > 0) processCount++;
+                        const processDiv = document.createElement('div');
+                        processDiv.className = 'process-item';
+                        processDiv.innerHTML = `
+                            <h4>Process ${index + 1}</h4>
+                            <div class="form-group">
+                                <label>Process Name</label>
+                                <input type="text" class="process-name" value="${process.name}" placeholder="e.g., Customer inquiry handling">
+                            </div>
+                            <div class="form-group">
+                                <label>Department/Function</label>
+                                <input type="text" class="process-dept" value="${process.dept}" placeholder="e.g., Customer Service">
+                            </div>
+                            <div class="form-group">
+                                <label>Brief Description</label>
+                                <textarea class="process-desc" placeholder="Describe what this process involves and why it's important">${process.desc}</textarea>
+                            </div>
+                            <div class="metric-input-group">
+                                <div class="form-group">
+                                    <label>Volume per week</label>
+                                    <input type="number" class="process-volume" value="${process.volume}" placeholder="e.g., 1000">
+                                </div>
+                                <div class="form-group">
+                                    <label>Hours spent per week</label>
+                                    <input type="number" class="process-hours" value="${process.hours}" placeholder="e.g., 200">
+                                </div>
+                            </div>
+                        `;
+                        container.appendChild(processDiv);
+                    });
+                }
+                
+                // Restore process challenges checkboxes
+                if (collectedData.processsChallenges) {
+                    document.querySelectorAll('#step2 input[type="checkbox"]').forEach(cb => cb.checked = false);
+                    collectedData.processsChallenges.forEach(challenge => {
+                        const checkbox = document.querySelector(`#step2 input[type="checkbox"][value="${challenge}"]`);
+                        if (checkbox) checkbox.checked = true;
+                    });
+                }
+            }
+            
+            // Step 4 - Data & Systems
+            if (collectedData.dataTypes) {
+                document.querySelectorAll('#step4 input[type="checkbox"]').forEach(cb => cb.checked = false);
+                collectedData.dataTypes.forEach(dataType => {
+                    const checkbox = document.querySelector(`#step4 input[type="checkbox"][value="${dataType}"]`);
+                    if (checkbox) checkbox.checked = true;
+                });
+            }
+            
+            if (collectedData.systems) {
+                collectedData.systems.forEach(system => {
+                    const checkbox = document.querySelector(`#step4 input[type="checkbox"][value="${system}"]`);
+                    if (checkbox) checkbox.checked = true;
+                });
+            }
+            
+            if (collectedData.dataReadiness && document.getElementById('dataReadiness')) {
+                document.getElementById('dataReadiness').value = collectedData.dataReadiness;
+                document.getElementById('dataReadinessValue').textContent = collectedData.dataReadiness;
+            }
+        }
+        
+        // Add demo button to header
+        window.addEventListener('DOMContentLoaded', function() {
+            const header = document.querySelector('header');
+            
+            // Create demo dropdown
+            const demoContainer = document.createElement('div');
+            demoContainer.style.cssText = 'position: absolute; top: 20px; right: 20px;';
+            
+            const demoButton = document.createElement('button');
+            demoButton.textContent = '🎯 Demo Mode ▼';
+            demoButton.style.cssText = 'background: white; color: #0078d4; padding: 8px 16px; border-radius: 5px; border: none; cursor: pointer; font-weight: 500;';
+            
+            const demoDropdown = document.createElement('div');
+            demoDropdown.style.cssText = 'position: absolute; top: 100%; right: 0; background: white; border-radius: 5px; box-shadow: 0 2px 10px rgba(0,0,0,0.2); display: none; margin-top: 5px; min-width: 200px;';
+            demoDropdown.innerHTML = `
+                <div style="padding: 8px 0;">
+                    <button onclick="enableDemoMode('financial')" style="display: block; width: 100%; text-align: left; padding: 8px 16px; border: none; background: none; cursor: pointer; hover: background: #f0f0f0;">💰 Financial Services</button>
+                    <button onclick="enableDemoMode('healthcare')" style="display: block; width: 100%; text-align: left; padding: 8px 16px; border: none; background: none; cursor: pointer;">🏥 Healthcare</button>
+                    <button onclick="enableDemoMode('retail')" style="display: block; width: 100%; text-align: left; padding: 8px 16px; border: none; background: none; cursor: pointer;">🛒 Retail</button>
+                    <button onclick="enableDemoMode('manufacturing')" style="display: block; width: 100%; text-align: left; padding: 8px 16px; border: none; background: none; cursor: pointer;">🏭 Manufacturing</button>
+                </div>
+            `;
+            
+            demoButton.onclick = function() {
+                demoDropdown.style.display = demoDropdown.style.display === 'none' ? 'block' : 'none';
+            };
+            
+            // Close dropdown when clicking outside
+            document.addEventListener('click', function(e) {
+                if (!demoContainer.contains(e.target)) {
+                    demoDropdown.style.display = 'none';
+                }
+            });
+            
+            demoContainer.appendChild(demoButton);
+            demoContainer.appendChild(demoDropdown);
+            header.style.position = 'relative';
+            header.appendChild(demoContainer);
+            
+            // Show/hide custom systems input
+            document.getElementById('otherSystems').addEventListener('change', function() {
+                document.getElementById('customSystemsGroup').style.display = 
+                    this.checked ? 'block' : 'none';
+            });
+            
+            // Load cached data on page load
+            populateFromCache();
+            
+            // Add industry change listener
+            document.getElementById('industry').addEventListener('change', function() {
+                if (this.value && document.querySelectorAll('.process-item').length === 1 && 
+                    !document.querySelector('.process-name').value) {
+                    showIndustryExamples(this.value);
+                }
+            });
+        });
+        
+        // Show industry-specific examples when user selects industry
+        function showIndustryExamples(industry) {
+            const examples = {
+                financial: ['Loan Processing', 'Fraud Detection', 'Customer Inquiries', 'KYC/AML Compliance', 'Investment Advisory'],
+                healthcare: ['Prior Authorization', 'Patient Scheduling', 'Clinical Documentation', 'Insurance Verification', 'Lab Results Processing'],
+                retail: ['Customer Support', 'Inventory Management', 'Returns Processing', 'Price Matching', 'Product Recommendations'],
+                manufacturing: ['Quality Control', 'Supply Chain', 'Equipment Maintenance', 'Safety Compliance', 'Production Planning'],
+                technology: ['IT Help Desk', 'Code Review', 'Bug Triage', 'Documentation', 'User Onboarding'],
+                insurance: ['Claims Processing', 'Underwriting', 'Policy Questions', 'Risk Assessment', 'Renewal Processing'],
+                government: ['Permit Applications', 'Citizen Services', 'Compliance Monitoring', 'FOI Requests', 'Benefits Processing'],
+                education: ['Student Inquiries', 'Admissions Processing', 'Course Registration', 'Financial Aid', 'Academic Advising']
+            };
+            
+            const exampleProcesses = examples[industry];
+            if (exampleProcesses) {
+                const helpBox = document.createElement('div');
+                helpBox.className = 'info-box';
+                helpBox.style.marginTop = '1rem';
+                helpBox.innerHTML = `
+                    <p><strong>Common ${industry} processes that benefit from AI:</strong></p>
+                    <ul style="margin: 0.5rem 0 0 1.5rem;">
+                        ${exampleProcesses.map(p => `<li>${p}</li>`).join('')}
+                    </ul>
+                `;
+                
+                const container = document.getElementById('processContainer');
+                if (!document.getElementById('industryHelp')) {
+                    helpBox.id = 'industryHelp';
+                    container.parentNode.insertBefore(helpBox, container);
+                }
+            }
+        }
+        
+        // Initialize slider
+        document.getElementById('dataReadiness').oninput = function() {
+            document.getElementById('dataReadinessValue').textContent = this.value;
+        };
+        
+        function updateProgress() {
+            const progress = (currentStep / totalSteps) * 100;
+            document.getElementById('progressBar').style.width = progress + '%';
+        }
+        
+        function nextStep() {
+            collectStepData(currentStep);
+            document.getElementById(`step${currentStep}`).classList.remove('active');
+            currentStep++;
+            
+            if (currentStep === 3) {
+                populateDeepDive();
+            }
+            
+            document.getElementById(`step${currentStep}`).classList.add('active');
+            updateProgress();
+            window.scrollTo(0, 0);
+        }
+        
+        function previousStep() {
+            document.getElementById(`step${currentStep}`).classList.remove('active');
+            currentStep--;
+            document.getElementById(`step${currentStep}`).classList.add('active');
+            updateProgress();
+            window.scrollTo(0, 0);
+        }
+        
+        function collectStepData(step) {
+            switch(step) {
+                case 1:
+                    collectedData.company = {
+                        name: document.getElementById('companyName').value || 'Your Company',
+                        industry: document.getElementById('industry').value,
+                        employees: parseInt(document.getElementById('employeeCount').value) || 1000,
+                        challenges: Array.from(document.querySelectorAll('#step1 input[type="checkbox"]:checked'))
+                            .map(cb => cb.value)
+                    };
+                    saveToCache();
+                    break;
+                case 2:
+                    collectedData.processes = [];
+                    const processItems = document.querySelectorAll('.process-item');
+                    processItems.forEach(item => {
+                        const name = item.querySelector('.process-name').value;
+                        const dept = item.querySelector('.process-dept').value;
+                        const desc = item.querySelector('.process-desc').value;
+                        const contextField = item.querySelector('.process-context');
+                        const context = contextField ? contextField.value : '';
+                        const volume = parseInt(item.querySelector('.process-volume').value) || 100;
+                        const hours = parseInt(item.querySelector('.process-hours').value) || 40;
+                        
+                        if (name && dept) {
+                            collectedData.processes.push({
+                                name, dept, desc, context, volume, hours
+                            });
+                        }
+                    });
+                    collectedData.processsChallenges = Array.from(document.querySelectorAll('#step2 input[type="checkbox"]:checked'))
+                        .map(cb => cb.value);
+                    saveToCache();
+                    break;
+                case 3:
+                    // Collect deep dive data
+                    collectedData.processes.forEach((process, index) => {
+                        const painPoints = Array.from(document.querySelectorAll(`#process${index}Pain input[type="checkbox"]:checked`))
+                            .map(cb => cb.value);
+                        const dataAvailable = Array.from(document.querySelectorAll(`#process${index}Data input[type="checkbox"]:checked`))
+                            .map(cb => cb.value);
+                        process.painPoints = painPoints;
+                        process.dataAvailable = dataAvailable;
+                    });
+                    saveToCache();
+                    break;
+                case 4:
+                    collectedData.dataTypes = Array.from(document.querySelectorAll('#step4 input[type="checkbox"]:checked'))
+                        .map(cb => cb.value);
+                    collectedData.systems = Array.from(document.querySelectorAll('#step4 input[type="checkbox"]:checked'))
+                        .map(cb => cb.value);
+                    collectedData.dataReadiness = parseInt(document.getElementById('dataReadiness').value);
+                    
+                    // Collect custom systems if specified
+                    if (document.getElementById('otherSystems').checked) {
+                        collectedData.customSystems = document.getElementById('customSystemsList').value;
+                    }
+                    
+                    saveToCache();
+                    break;
+            }
+        }
+        
+        function addProcess() {
+            processCount++;
+            const container = document.getElementById('processContainer');
+            const newProcess = document.createElement('div');
+            newProcess.className = 'process-item';
+            newProcess.innerHTML = `
+                <h4>Process ${processCount}</h4>
+                <div class="form-group">
+                    <label>Process Name</label>
+                    <input type="text" class="process-name" placeholder="e.g., Contract review and approval">
+                </div>
+                <div class="form-group">
+                    <label>Department/Function</label>
+                    <input type="text" class="process-dept" placeholder="e.g., Legal">
+                </div>
+                <div class="form-group">
+                    <label>Brief Description</label>
+                    <textarea class="process-desc" placeholder="Describe what this process involves and why it's important"></textarea>
+                </div>
+                <div class="metric-input-group">
+                    <div class="form-group">
+                        <label>Volume per week</label>
+                        <input type="number" class="process-volume" placeholder="e.g., 50">
+                    </div>
+                    <div class="form-group">
+                        <label>Hours spent per week</label>
+                        <input type="number" class="process-hours" placeholder="e.g., 100">
+                    </div>
+                </div>
+            `;
+            container.appendChild(newProcess);
+        }
+        
+        function populateDeepDive() {
+            const container = document.getElementById('deepDiveContainer');
+            container.innerHTML = '';
+            
+            collectedData.processes.forEach((process, index) => {
+                const processDiv = document.createElement('div');
+                processDiv.className = 'process-item';
+                processDiv.innerHTML = `
+                    <h4>${process.name} (${process.dept})</h4>
+                    <p style="color: #666; margin-bottom: 1rem;">${process.desc || 'No description provided'}</p>
+                    
+                    <div class="form-group">
+                        <label>What are the biggest pain points in this process? (Select all that apply)</label>
+                        <div class="checkbox-group" id="process${index}Pain">
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="pain${index}_1" value="Finding information">
+                                <label for="pain${index}_1">Finding the right information takes too long</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="pain${index}_2" value="Repetitive questions">
+                                <label for="pain${index}_2">Answering the same questions repeatedly</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="pain${index}_3" value="Manual analysis">
+                                <label for="pain${index}_3">Manual analysis of documents/data</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="pain${index}_4" value="Compliance checking">
+                                <label for="pain${index}_4">Ensuring compliance/policy adherence</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="pain${index}_5" value="Status tracking">
+                                <label for="pain${index}_5">Tracking status and following up</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="pain${index}_6" value="Knowledge gaps">
+                                <label for="pain${index}_6">Junior staff lack expertise</label>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>What data/information does this process use? (Select all that apply)</label>
+                        <div class="checkbox-group" id="process${index}Data">
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="data${index}_1" value="Historical cases">
+                                <label for="data${index}_1">Historical cases/examples</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="data${index}_2" value="Policies">
+                                <label for="data${index}_2">Policies & procedures</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="data${index}_3" value="Customer data">
+                                <label for="data${index}_3">Customer/employee data</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="data${index}_4" value="External data">
+                                <label for="data${index}_4">External data sources</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="data${index}_5" value="Documents">
+                                <label for="data${index}_5">Unstructured documents</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="data${index}_6" value="Real-time data">
+                                <label for="data${index}_6">Real-time system data</label>
+                            </div>
+                        </div>
+                    </div>
+                `;
+                container.appendChild(processDiv);
+                
+                // Restore selections if they exist
+                if (process.painPoints) {
+                    process.painPoints.forEach(painPoint => {
+                        const checkbox = processDiv.querySelector(`input[value="${painPoint}"]`);
+                        if (checkbox) checkbox.checked = true;
+                    });
+                }
+                
+                if (process.dataAvailable) {
+                    process.dataAvailable.forEach(data => {
+                        const checkbox = processDiv.querySelector(`input[value="${data}"]`);
+                        if (checkbox) checkbox.checked = true;
+                    });
+                }
+            });
+        }
+        
+        function calculateResults() {
+            collectStepData(currentStep);
+            
+            // Generate use cases based on collected data
+            const useCases = generateUseCases(collectedData);
+            
+            // Sort by priority score
+            useCases.sort((a, b) => b.priorityScore - a.priorityScore);
+            
+            // Display company name
+            document.getElementById('companyNameResult').textContent = collectedData.company.name;
+            
+            // Display quick wins
+            displayQuickWins(useCases);
+            
+            // Display main use cases
+            displayUseCases(useCases);
+            
+            // Show results
+            document.getElementById(`step${currentStep}`).classList.remove('active');
+            document.getElementById('results').classList.add('active');
+            window.scrollTo(0, 0);
+        }
+        
+        function generateUseCases(data) {
+            const useCases = [];
+            
+            data.processes.forEach((process, index) => {
+                // Generate multiple use cases per process based on pain points
+                const processUseCases = generateProcessUseCases(process, data);
+                useCases.push(...processUseCases);
+            });
+            
+            // Add cross-functional use cases based on company challenges
+            const crossFunctionalUseCases = generateCrossFunctionalUseCases(data);
+            useCases.push(...crossFunctionalUseCases);
+            
+            return useCases;
+        }
+        
+        function generateProcessUseCases(process, data) {
+            const useCases = [];
+            const baseScore = calculateBaseScore(process, data);
+            
+            // Pattern matching for use case generation
+            const patterns = {
+                'Finding information': {
+                    template: 'Intelligent Knowledge Assistant',
+                    description: `AI agent that instantly retrieves relevant information from your knowledge base, reducing search time by 80%`,
+                    type: 'search',
+                    complexity: 'Low'
+                },
+                'Repetitive questions': {
+                    template: 'Conversational Support Agent',
+                    description: `Automated agent handling ${Math.round(process.volume * 0.7)} routine inquiries per week with human-like responses`,
+                    type: 'conversational',
+                    complexity: 'Low'
+                },
+                'Manual analysis': {
+                    template: 'Document Intelligence Agent',
+                    description: `Extract and analyze key information from documents, reducing processing time by 75%`,
+                    type: 'extraction',
+                    complexity: 'Medium'
+                },
+                'Compliance checking': {
+                    template: 'Compliance Monitoring Agent',
+                    description: `Automatically review and flag compliance issues across ${process.volume} items weekly`,
+                    type: 'compliance',
+                    complexity: 'High'
+                },
+                'Status tracking': {
+                    template: 'Process Orchestration Agent',
+                    description: `Track and coordinate workflow status, sending proactive updates and reducing follow-ups`,
+                    type: 'workflow',
+                    complexity: 'Medium'
+                },
+                'Knowledge gaps': {
+                    template: 'Expert Advisor Agent',
+                    description: `Provide expert-level guidance to staff, improving quality and reducing escalations`,
+                    type: 'advisory',
+                    complexity: 'Medium'
+                }
+            };
+            
+            // Generate use cases based on identified pain points
+            if (process.painPoints) {
+                process.painPoints.forEach(painPoint => {
+                    if (patterns[painPoint]) {
+                        const pattern = patterns[painPoint];
+                        const useCase = {
+                            name: `${pattern.template} for ${process.name}`,
+                            department: process.dept,
+                            description: pattern.description,
+                            currentState: {
+                                volume: process.volume,
+                                hoursPerWeek: process.hours,
+                                painPoint: painPoint,
+                                process: process.name,
+                                type: pattern.type
+                            },
+                            impact: {
+                                hoursReduced: Math.round(process.hours * getReductionFactor(painPoint)),
+                                volumeAutomated: Math.round(process.volume * getAutomationFactor(painPoint)),
+                                qualityImprovement: getQualityFactor(painPoint)
+                            },
+                            complexity: pattern.complexity,
+                            priorityScore: baseScore + getPainPointBonus(painPoint, data)
+                        };
+                        useCases.push(useCase);
+                    }
+                });
+            }
+            
+            return useCases;
+        }
+        
+        function generateCrossFunctionalUseCases(data) {
+            const useCases = [];
+            
+            // Enterprise Knowledge Agent
+            if ((data.company.challenges && data.company.challenges.includes('Information overload')) || 
+                (data.dataTypes && data.dataTypes.includes('Documents'))) {
+                useCases.push({
+                    name: 'Enterprise Knowledge Navigator',
+                    department: 'Cross-functional',
+                    description: 'Unified AI agent that searches across all company knowledge sources, providing instant answers to any business question',
+                    currentState: {
+                        volume: data.company.employees * 5, // Queries per week
+                        hoursPerWeek: data.company.employees * 0.5,
+                        painPoint: 'Information scattered',
+                        type: 'search'
+                    },
+                    impact: {
+                        hoursReduced: Math.round(data.company.employees * 0.4),
+                        volumeAutomated: data.company.employees * 4,
+                        qualityImprovement: 85
+                    },
+                    complexity: 'Medium',
+                    priorityScore: 85
+                });
+            }
+            
+            // Customer Experience Agent
+            if (data.company.challenges && data.company.challenges.includes('Improving customer satisfaction')) {
+                useCases.push({
+                    name: 'Omnichannel Customer Experience Agent',
+                    department: 'Customer-facing',
+                    description: 'AI agent providing consistent, personalized customer interactions across all channels',
+                    currentState: {
+                        volume: 5000,
+                        hoursPerWeek: 200,
+                        painPoint: 'Customer experience',
+                        type: 'conversational'
+                    },
+                    impact: {
+                        hoursReduced: 150,
+                        volumeAutomated: 3500,
+                        qualityImprovement: 90
+                    },
+                    complexity: 'High',
+                    priorityScore: 88
+                });
+            }
+            
+            // Compliance Agent
+            if (data.company.challenges && data.company.challenges.includes('Compliance complexity')) {
+                useCases.push({
+                    name: 'Regulatory Compliance Assistant',
+                    department: 'Legal/Compliance',
+                    description: 'Monitor and ensure compliance across all business processes with real-time alerts',
+                    currentState: {
+                        volume: 1000,
+                        hoursPerWeek: 80,
+                        painPoint: 'Compliance complexity',
+                        type: 'compliance'
+                    },
+                    impact: {
+                        hoursReduced: 60,
+                        volumeAutomated: 800,
+                        qualityImprovement: 95
+                    },
+                    complexity: 'High',
+                    priorityScore: 82
+                });
+            }
+            
+            return useCases;
+        }
+        
+        function calculateBaseScore(process, data) {
+            let score = 50;
+            
+            // Volume impact
+            if (process.volume > 1000) score += 15;
+            else if (process.volume > 500) score += 10;
+            else if (process.volume > 100) score += 5;
+            
+            // Hours impact
+            if (process.hours > 100) score += 15;
+            else if (process.hours > 50) score += 10;
+            else if (process.hours > 20) score += 5;
+            
+            // Data readiness
+            score += data.dataReadiness * 2;
+            
+            return Math.min(score, 100);
+        }
+        
+        function getPainPointBonus(painPoint, data) {
+            const bonuses = {
+                'Finding information': 15,
+                'Repetitive questions': 20,
+                'Manual analysis': 10,
+                'Compliance checking': 12,
+                'Status tracking': 8,
+                'Knowledge gaps': 10
+            };
+            return bonuses[painPoint] || 0;
+        }
+        
+        function getReductionFactor(painPoint) {
+            const factors = {
+                'Finding information': 0.7,
+                'Repetitive questions': 0.8,
+                'Manual analysis': 0.6,
+                'Compliance checking': 0.5,
+                'Status tracking': 0.4,
+                'Knowledge gaps': 0.3
+            };
+            return factors[painPoint] || 0.3;
+        }
+        
+        function getAutomationFactor(painPoint) {
+            const factors = {
+                'Finding information': 0.9,
+                'Repetitive questions': 0.85,
+                'Manual analysis': 0.7,
+                'Compliance checking': 0.6,
+                'Status tracking': 0.5,
+                'Knowledge gaps': 0.4
+            };
+            return factors[painPoint] || 0.4;
+        }
+        
+        function getQualityFactor(painPoint) {
+            const factors = {
+                'Finding information': 85,
+                'Repetitive questions': 90,
+                'Manual analysis': 95,
+                'Compliance checking': 98,
+                'Status tracking': 80,
+                'Knowledge gaps': 88
+            };
+            return factors[painPoint] || 80;
+        }
+        
+        function displayQuickWins(useCases) {
+            const quickWins = useCases.filter(uc => uc.complexity === 'Low').slice(0, 3);
+            const container = document.getElementById('quickWinsList');
+            container.innerHTML = '';
+            
+            quickWins.forEach(win => {
+                const winDiv = document.createElement('div');
+                winDiv.className = 'quick-win-item';
+                winDiv.innerHTML = `
+                    <div class="quick-win-icon">⚡</div>
+                    <div>
+                        <strong>${win.name}</strong>
+                        <p style="margin: 0; font-size: 0.9rem; color: #666;">Low complexity | High impact</p>
+                    </div>
+                `;
+                container.appendChild(winDiv);
+            });
+        }
+        
+        function displayUseCases(useCases) {
+            const container = document.getElementById('useCaseList');
+            container.innerHTML = '';
+            
+            useCases.slice(0, 10).forEach((uc, index) => {
+                const card = document.createElement('div');
+                card.className = 'use-case-card';
+                card.innerHTML = `
+                    <div class="priority-badge">#${index + 1}</div>
+                    <h3>${uc.name}</h3>
+                    <p style="color: #0078d4; font-weight: 500; margin-bottom: 0.5rem;">${uc.department}</p>
+                    <p>${uc.description}</p>
+                    
+                    <div class="use-case-metrics">
+                        <div class="metric-box">
+                            <div class="value">${uc.impact.hoursReduced}</div>
+                            <div class="label">Hours/Week Saved</div>
+                        </div>
+                        <div class="metric-box">
+                            <div class="value">${uc.impact.volumeAutomated}</div>
+                            <div class="label">Tasks Automated</div>
+                        </div>
+                        <div class="metric-box">
+                            <div class="value">${uc.impact.qualityImprovement}%</div>
+                            <div class="label">Quality Score</div>
+                        </div>
+                    </div>
+                    
+                    <div class="impact-bar" style="margin-top: 1rem;">
+                        <div style="flex: 1; background: #e0e0e0; border-radius: 4px; margin-right: 1rem;">
+                            <div class="impact-bar-fill" style="width: ${uc.priorityScore}%"></div>
+                        </div>
+                        <span style="font-weight: bold; color: #0078d4;">${uc.priorityScore}/100</span>
+                    </div>
+                    
+                    <p style="margin-top: 1rem; font-size: 0.9rem; color: #666;">
+                        <strong>Current State:</strong> ${uc.currentState.volume} items/week, ${uc.currentState.hoursPerWeek} hours/week<br>
+                        <strong>Implementation Complexity:</strong> ${uc.complexity}
+                    </p>
+                `;
+                container.appendChild(card);
+            });
+        }
+        
+        function exportResults() {
+            // Gather all use cases
+            const allUseCases = generateUseCases(collectedData);
+            allUseCases.sort((a, b) => b.priorityScore - a.priorityScore);
+            
+            // Create comprehensive export object with sources and data gaps
+            const exportData = {
+                metadata: {
+                    generatedDate: new Date().toISOString(),
+                    toolVersion: '2.0',
+                    company: collectedData.company
+                },
+                _sources: {
+                    _comment: "Sources used to fill this assessment - for AI verification",
+                    company_info_source: "AI Use Case Discovery Tool form submission",
+                    process_info_sources: ["User-provided process data via web form"],
+                    volume_data_sources: ["User estimates provided in form"],
+                    system_info_sources: ["User-selected systems from checklist"],
+                    other_sources: ["Direct user input via interactive web application"]
+                },
+                _data_gaps: {
+                    _comment: "Areas where additional verification may be needed",
+                    missing_information: [],
+                    assumptions_made: ["Volume and hour estimates are based on user input and may need validation"],
+                    verification_needed: ["Process volumes and hours should be verified with actual operational data"]
+                },
+                assessment: {
+                    processesAnalyzed: collectedData.processes,
+                    challengesIdentified: collectedData.processsChallenges,
+                    dataReadiness: collectedData.dataReadiness,
+                    systemsInPlace: collectedData.systems,
+                    customSystems: collectedData.customSystems ? collectedData.customSystems.split('\n').filter(s => s.trim()) : [],
+                    dataTypes: collectedData.dataTypes
+                },
+                useCases: allUseCases.map((uc, index) => ({
+                    rank: index + 1,
+                    name: uc.name,
+                    department: uc.department,
+                    description: uc.description,
+                    complexity: uc.complexity,
+                    priorityScore: uc.priorityScore,
+                    currentState: uc.currentState,
+                    projectedImpact: {
+                        weeklyHoursReduced: uc.impact.hoursReduced,
+                        weeklyVolumeAutomated: uc.impact.volumeAutomated,
+                        qualityImprovement: uc.impact.qualityImprovement + '%',
+                        annualHoursSaved: uc.impact.hoursReduced * 52,
+                        annualCostSavings: `$${(uc.impact.hoursReduced * 52 * 50).toLocaleString()}` // Assuming $50/hour
+                    },
+                    implementationNotes: {
+                        painPointAddressed: uc.currentState.painPoint,
+                        processType: uc.currentState.type,
+                        dataRequired: collectedData.processes.find(p => p.name === uc.currentState.process)?.dataAvailable || [],
+                        estimatedTimeToValue: uc.complexity === 'Low' ? '2-4 weeks' : uc.complexity === 'Medium' ? '1-3 months' : '3-6 months'
+                    }
+                })),
+                recommendations: {
+                    quickWins: allUseCases.filter(uc => uc.complexity === 'Low').slice(0, 3).map(uc => ({
+                        name: uc.name,
+                        impact: `${uc.impact.hoursReduced} hours/week saved`,
+                        implementation: '2-4 weeks'
+                    })),
+                    highImpact: allUseCases.slice(0, 5).map(uc => ({
+                        name: uc.name,
+                        totalScore: uc.priorityScore,
+                        annualSavings: `$${(uc.impact.hoursReduced * 52 * 50).toLocaleString()}`
+                    })),
+                    implementationReadiness: {
+                        dataQuality: collectedData.dataReadiness + '/10',
+                        systemIntegration: collectedData.systems.length > 3 ? 'Multiple integrations needed' : 'Limited integrations needed',
+                        microsoftEcosystem: collectedData.systems.includes('Microsoft 365') || collectedData.systems.includes('Dynamics') ? 'Strong' : 'Limited',
+                        keyRisks: identifyRisks(collectedData),
+                        nextSteps: [
+                            'Review and prioritize use cases with stakeholders',
+                            'Select 1-2 quick wins for immediate implementation',
+                            'Conduct detailed feasibility assessment for top 3 use cases',
+                            'Develop implementation roadmap and timeline',
+                            'Identify data integration requirements',
+                            'Plan change management and training approach'
+                        ]
+                    }
+                },
+                totalImpact: {
+                    totalWeeklyHoursSaved: allUseCases.reduce((sum, uc) => sum + uc.impact.hoursReduced, 0),
+                    totalAnnualHoursSaved: allUseCases.reduce((sum, uc) => sum + uc.impact.hoursReduced * 52, 0),
+                    estimatedAnnualSavings: `$${(allUseCases.reduce((sum, uc) => sum + uc.impact.hoursReduced * 52 * 50, 0)).toLocaleString()}`,
+                    processesImproved: collectedData.processes.length,
+                    employeesImpacted: Math.round(collectedData.company.employees * 0.3)
+                }
+            };
+            
+            // Create and download JSON file
+            const jsonStr = JSON.stringify(exportData, null, 2);
+            const blob = new Blob([jsonStr], { type: 'application/json' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `ai-discovery-results-${collectedData.company.name.replace(/\s+/g, '-').toLowerCase()}-${new Date().toISOString().split('T')[0]}.json`;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+        }
+        
+        function identifyRisks(data) {
+            const risks = [];
+            if (data.dataReadiness < 5) risks.push('Low data quality/accessibility may slow implementation');
+            if (data.customSystems && data.customSystems.length > 0) risks.push('Legacy system integration complexity');
+            if (!data.systems.includes('Microsoft 365')) risks.push('Limited Microsoft ecosystem integration');
+            if (data.company.challenges.includes('Talent shortage')) risks.push('Resource constraints for implementation');
+            if (data.processes.some(p => p.volume > 5000)) risks.push('High volume processes may require phased rollout');
+            return risks.length > 0 ? risks : ['No major risks identified'];
+        }
+        
+        // Initialize
+        updateProgress();
+    </script>

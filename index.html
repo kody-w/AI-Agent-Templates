@@ -1051,32 +1051,9 @@
                     </div>
                 </div>
 
-                <!-- UX Design -->
-                <div class="form-section">
-                    <h3>UX Design Considerations</h3>
-                    <div class="form-group">
-                        <label for="uxEmailProcessing">Email Processing UX</label>
-                        <textarea
-                            id="uxEmailProcessing"
-                            placeholder="Describe email processing features and UI"
-                        ></textarea>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="uxAgentInterface">Agent Interface UX</label>
-                        <textarea
-                            id="uxAgentInterface"
-                            placeholder="Describe the agent interface and interactions"
-                        ></textarea>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="uxAdministration">Administration UX</label>
-                        <textarea
-                            id="uxAdministration"
-                            placeholder="Describe admin features and management interface"
-                        ></textarea>
-                    </div>
+                <!-- Dynamic Custom Fields -->
+                <div id="customFieldsContainer">
+                    <!-- Custom fields will be dynamically loaded based on template -->
                 </div>
 
                 <!-- Technical Components -->
@@ -1213,8 +1190,8 @@
         class TemplateManager {
             constructor() {
                 // GitHub repository configuration
-                this.GITHUB_OWNER = 'kody-w'; // Replace with your GitHub username
-                this.GITHUB_REPO = 'AI-Agent-Templates'; // Replace with your repository name
+                this.GITHUB_OWNER = 'your-github-username'; // Replace with your GitHub username
+                this.GITHUB_REPO = 'ai-template-library'; // Replace with your repository name
                 this.TEMPLATE_LIBRARY_URL = `https://raw.githubusercontent.com/${this.GITHUB_OWNER}/${this.GITHUB_REPO}/main/template-library.json`;
                 
                 // Local development fallback
@@ -1399,36 +1376,56 @@
                 const card = document.createElement("div");
                 card.className = "template-card";
 
+                // Calculate estimated implementation time based on complexity
+                const complexityDisplay = {
+                    low: "Low Complexity",
+                    medium: "Medium Complexity", 
+                    high: "High Complexity"
+                };
+
                 card.innerHTML = `
                     <div class="template-header">
                         <div>
                             <h3 class="template-title">${template.name}</h3>
-                            <p class="template-type">${template.type}</p>
+                            <p class="template-type">${template.type} | ${template.department || template.category}</p>
                         </div>
                         <div class="template-badges">
                             <span class="badge badge-complexity-${template.complexity}">
-                                ${template.complexity.charAt(0).toUpperCase() + template.complexity.slice(1)}
+                                ${complexityDisplay[template.complexity]}
                             </span>
                         </div>
                     </div>
                     <p class="template-description">${template.shortDescription}</p>
                     <div class="template-metrics">
                         <div class="metric-item">
-                            <div class="metric-value">${template.capabilities.length}</div>
-                            <div class="metric-label">Capabilities</div>
+                            <div class="metric-value">${template.features ? template.features.length : template.capabilities?.length || 0}</div>
+                            <div class="metric-label">Features</div>
                         </div>
                         <div class="metric-item">
-                            <div class="metric-value">${
-                                template.complexity === "low" ? "2-4" :
-                                template.complexity === "medium" ? "4-8" : "8-12"
-                            }</div>
-                            <div class="metric-label">Weeks</div>
+                            <div class="metric-value">${template.priorityScore || 85}</div>
+                            <div class="metric-label">Priority Score</div>
                         </div>
                         <div class="metric-item">
                             <div class="metric-value">${template.industry.length}</div>
                             <div class="metric-label">Industries</div>
                         </div>
                     </div>
+                    ${template.impact ? `
+                    <div class="template-metrics" style="margin-top: 0.5rem;">
+                        <div class="metric-item">
+                            <div class="metric-value">${template.impact.hoursReduced}</div>
+                            <div class="metric-label">Hours Saved</div>
+                        </div>
+                        <div class="metric-item">
+                            <div class="metric-value">${template.impact.tasksAutomated}</div>
+                            <div class="metric-label">Tasks Automated</div>
+                        </div>
+                        <div class="metric-item">
+                            <div class="metric-value">${template.impact.qualityScore}%</div>
+                            <div class="metric-label">Quality Score</div>
+                        </div>
+                    </div>
+                    ` : ''}
                     <div class="template-tags">
                         ${template.industry.map((ind) => `<span class="tag">${ind}</span>`).join("")}
                         <span class="tag">${template.category}</span>
@@ -1471,10 +1468,77 @@
                         this.taggedProducts = [...template.defaultConfiguration.microsoftProducts];
                         this.updateTagDisplay();
                     }
+
+                    // Load custom fields specific to this template
+                    this.loadCustomFields(template);
                 }
 
                 // Move to customization step
                 this.goToStep(2);
+            }
+
+            // Load custom fields for the selected template
+            loadCustomFields(template) {
+                const container = document.getElementById("customFieldsContainer");
+                container.innerHTML = "";
+
+                if (!template.defaultConfiguration?.customFields) {
+                    return;
+                }
+
+                // Group fields by category
+                const fieldsByCategory = {};
+                template.defaultConfiguration.customFields.forEach(field => {
+                    const category = field.category || "Additional Configuration";
+                    if (!fieldsByCategory[category]) {
+                        fieldsByCategory[category] = [];
+                    }
+                    fieldsByCategory[category].push(field);
+                });
+
+                // Create sections for each category
+                Object.entries(fieldsByCategory).forEach(([category, fields]) => {
+                    const section = document.createElement("div");
+                    section.className = "form-section";
+                    section.innerHTML = `<h3>${category}</h3>`;
+
+                    fields.forEach(field => {
+                        const fieldGroup = document.createElement("div");
+                        fieldGroup.className = "form-group";
+
+                        if (field.type === "textarea") {
+                            fieldGroup.innerHTML = `
+                                <label for="${field.name}">${field.label}</label>
+                                <textarea 
+                                    id="${field.name}" 
+                                    class="custom-field" 
+                                    placeholder="${field.placeholder || ''}"
+                                ></textarea>
+                            `;
+                        } else if (field.type === "text") {
+                            fieldGroup.innerHTML = `
+                                <label for="${field.name}">${field.label}</label>
+                                <input 
+                                    type="text" 
+                                    id="${field.name}" 
+                                    class="custom-field" 
+                                    placeholder="${field.placeholder || ''}"
+                                />
+                            `;
+                        } else if (field.type === "select" && field.options) {
+                            fieldGroup.innerHTML = `
+                                <label for="${field.name}">${field.label}</label>
+                                <select id="${field.name}" class="custom-field">
+                                    ${field.options.map(opt => `<option value="${opt}">${opt}</option>`).join("")}
+                                </select>
+                            `;
+                        }
+
+                        section.appendChild(fieldGroup);
+                    });
+
+                    container.appendChild(section);
+                });
             }
 
             // Search templates
@@ -1623,16 +1687,19 @@
                         .map((input) => input.value)
                         .filter((v) => v),
                     generalStrategy: document.getElementById("generalStrategy").value,
-                    uxEmailProcessing: document.getElementById("uxEmailProcessing").value,
-                    uxAgentInterface: document.getElementById("uxAgentInterface").value,
-                    uxAdministration: document.getElementById("uxAdministration").value,
                     microsoftProducts: this.taggedProducts,
                     implementationApproach: document.getElementById("implementationApproach").value,
                     successMetrics: document.getElementById("successMetrics").value,
                     scopeMvp: document.getElementById("scopeMvp").value,
                     outOfScope: document.getElementById("outOfScope").value,
-                    implementationPlan: document.getElementById("implementationPlan").value
+                    implementationPlan: document.getElementById("implementationPlan").value,
+                    customFields: {}
                 };
+
+                // Collect custom field values
+                document.querySelectorAll(".custom-field").forEach(field => {
+                    this.customizationData.customFields[field.id] = field.value;
+                });
             }
 
             // Generate deliverable
@@ -1693,29 +1760,48 @@
 
                 // Add additional sections for complete scenario
                 const additionalContent = document.createElement("div");
+                
+                // Build custom fields HTML dynamically
+                let customFieldsHtml = "";
+                if (this.selectedTemplate?.defaultConfiguration?.customFields && Object.keys(this.customizationData.customFields).length > 0) {
+                    // Group custom fields by category
+                    const fieldsByCategory = {};
+                    this.selectedTemplate.defaultConfiguration.customFields.forEach(field => {
+                        const category = field.category || "Additional Configuration";
+                        if (!fieldsByCategory[category]) {
+                            fieldsByCategory[category] = [];
+                        }
+                        fieldsByCategory[category].push(field);
+                    });
+
+                    // Create HTML for each category
+                    Object.entries(fieldsByCategory).forEach(([category, fields]) => {
+                        const categoryFields = fields.filter(field => this.customizationData.customFields[field.name]);
+                        if (categoryFields.length > 0) {
+                            customFieldsHtml += `
+                                <div class="scenario-section">
+                                    <h3 class="scenario-header">${category}</h3>
+                                    <div class="scenario-grid">
+                                        ${categoryFields.map(field => `
+                                            <div class="scenario-item">
+                                                <div class="scenario-label">${field.label}</div>
+                                                <div class="scenario-value">${this.customizationData.customFields[field.name] || "N/A"}</div>
+                                            </div>
+                                        `).join("")}
+                                    </div>
+                                </div>
+                            `;
+                        }
+                    });
+                }
+
                 additionalContent.innerHTML = `
                     <div class="scenario-section" style="margin-top: 2rem;">
                         <h3 class="scenario-header">General Strategy</h3>
                         <p>${this.customizationData.generalStrategy}</p>
                     </div>
                     
-                    <div class="scenario-section">
-                        <h3 class="scenario-header">UX Design</h3>
-                        <div class="scenario-grid">
-                            <div class="scenario-item">
-                                <div class="scenario-label">Email Processing</div>
-                                <div class="scenario-value">${this.customizationData.uxEmailProcessing || "N/A"}</div>
-                            </div>
-                            <div class="scenario-item">
-                                <div class="scenario-label">Agent Interface</div>
-                                <div class="scenario-value">${this.customizationData.uxAgentInterface || "N/A"}</div>
-                            </div>
-                            <div class="scenario-item">
-                                <div class="scenario-label">Administration</div>
-                                <div class="scenario-value">${this.customizationData.uxAdministration || "N/A"}</div>
-                            </div>
-                        </div>
-                    </div>
+                    ${customFieldsHtml}
                     
                     <div class="scenario-section">
                         <h3 class="scenario-header">Discovery & Requirements</h3>
@@ -1809,7 +1895,7 @@
     <div class="section">
         <h2>User Stories</h2>
         ${this.customizationData.userStories.map((story, i) => 
-            `<div class="user-story"><strong>Story ${i + 1}:</strong> ${story}</div>`
+            `<div class="user-story"><strong>Story ${i +1}:</strong> ${story}</div>`
         ).join("")}
     </div>
     
@@ -1817,6 +1903,8 @@
         <h2>General Strategy</h2>
         <p>${this.customizationData.generalStrategy}</p>
     </div>
+    
+    ${this.generateCustomFieldsHTML()}
     
     <div class="section">
         <h2>Solution Summary</h2>
@@ -1842,13 +1930,6 @@
                 </tr>
             </tbody>
         </table>
-    </div>
-    
-    <div class="section">
-        <h2>UX Design</h2>
-        <p><strong>Email Processing:</strong> ${this.customizationData.uxEmailProcessing || "N/A"}</p>
-        <p><strong>Agent Interface:</strong> ${this.customizationData.uxAgentInterface || "N/A"}</p>
-        <p><strong>Administration:</strong> ${this.customizationData.uxAdministration || "N/A"}</p>
     </div>
     
     <div class="section">
@@ -1880,6 +1961,41 @@
                 a.click();
                 document.body.removeChild(a);
                 URL.revokeObjectURL(url);
+            }
+
+            generateCustomFieldsHTML() {
+                if (!this.selectedTemplate?.defaultConfiguration?.customFields || Object.keys(this.customizationData.customFields).length === 0) {
+                    return "";
+                }
+
+                let html = "";
+                
+                // Group custom fields by category
+                const fieldsByCategory = {};
+                this.selectedTemplate.defaultConfiguration.customFields.forEach(field => {
+                    const category = field.category || "Additional Configuration";
+                    if (!fieldsByCategory[category]) {
+                        fieldsByCategory[category] = [];
+                    }
+                    fieldsByCategory[category].push(field);
+                });
+
+                // Create HTML for each category
+                Object.entries(fieldsByCategory).forEach(([category, fields]) => {
+                    const categoryFields = fields.filter(field => this.customizationData.customFields[field.name]);
+                    if (categoryFields.length > 0) {
+                        html += `
+                            <div class="section">
+                                <h2>${category}</h2>
+                                ${categoryFields.map(field => `
+                                    <p><strong>${field.label}:</strong> ${this.customizationData.customFields[field.name] || "N/A"}</p>
+                                `).join("")}
+                            </div>
+                        `;
+                    }
+                });
+
+                return html;
             }
 
             startNewScenario() {

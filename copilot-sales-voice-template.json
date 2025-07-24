@@ -1,0 +1,163 @@
+{
+  "version": "1.0",
+  "exportDate": "2025-01-17T00:00:00Z",
+  "template": {
+    "id": "copilot-sales-voice",
+    "name": "Copilot for Sales Voice Agent",
+    "category": "sales",
+    "department": "Sales",
+    "description": "AI-powered sales assistant with voice capabilities, conversation memory management, and multi-agent orchestration for comprehensive sales support",
+    "currentState": {
+      "volume": 2500,
+      "hours": 200,
+      "unit": "conversations/week"
+    },
+    "impact": {
+      "hoursReduced": 160,
+      "tasksAutomated": 2000,
+      "qualityScore": 93
+    },
+    "priorityScore": 92,
+    "complexity": "High",
+    "industries": ["technology", "retail", "financial", "manufacturing"],
+    "features": [
+      "Voice-enabled conversational interface with speech recognition and synthesis",
+      "Multi-agent orchestration for complex sales tasks",
+      "Persistent conversation memory with GUID-based user tracking",
+      "Integration with Dynamics 365 for CRM operations",
+      "Real-time Hacker News feed for market intelligence",
+      "Context-aware memory management for personalized interactions",
+      "Time machine feature for conversation replay and analysis",
+      "Dark mode and accessibility features",
+      "Import/export conversation capabilities"
+    ],
+    "requirements": {
+      "systems": [
+        "Azure Functions",
+        "Azure OpenAI Service", 
+        "Azure File Storage",
+        "Microsoft Speech Services",
+        "Dynamics 365 (optional)"
+      ],
+      "data": [
+        "Conversation history",
+        "User interaction patterns",
+        "Sales context memory",
+        "CRM data (if integrated)"
+      ],
+      "skills": [
+        "Azure cloud architecture",
+        "Python development",
+        "Natural language processing",
+        "Voice interface design"
+      ]
+    },
+    "technicalDetails": {
+      "architecture": {
+        "backend": {
+          "runtime": "Azure Functions (Python)",
+          "mainFile": "function_app.py",
+          "agents": [
+            {
+              "name": "ManageMemory",
+              "purpose": "Stores and manages conversation memories"
+            },
+            {
+              "name": "ContextMemory", 
+              "purpose": "Recalls context from past interactions"
+            },
+            {
+              "name": "Dynamics365CRUD",
+              "purpose": "Performs CRM operations"
+            },
+            {
+              "name": "HackerNewsAgent",
+              "purpose": "Fetches latest tech news for market insights"
+            }
+          ]
+        },
+        "frontend": {
+          "type": "Single Page Application",
+          "file": "index_voice.html",
+          "features": [
+            "Voice input/output",
+            "Real-time conversation",
+            "Memory management UI",
+            "Conversation import/export"
+          ]
+        },
+        "storage": {
+          "type": "Azure File Storage",
+          "structure": {
+            "shared_memories": "Shared context across all users",
+            "memory/{guid}": "User-specific conversation memories"
+          }
+        }
+      },
+      "configuration": {
+        "environment_variables": [
+          "AZURE_OPENAI_API_KEY",
+          "AZURE_OPENAI_ENDPOINT",
+          "AZURE_OPENAI_API_VERSION",
+          "AzureWebJobsStorage",
+          "AZURE_FILES_SHARE_NAME",
+          "ASSISTANT_NAME",
+          "CHARACTERISTIC_DESCRIPTION",
+          "DYNAMICS_365_CLIENT_ID (optional)",
+          "DYNAMICS_365_CLIENT_SECRET (optional)",
+          "DYNAMICS_365_TENANT_ID (optional)",
+          "DYNAMICS_365_RESOURCE (optional)"
+        ],
+        "api_endpoints": [
+          {
+            "path": "/api/businessinsightbot_function",
+            "method": "POST",
+            "auth": "Function key",
+            "payload": {
+              "user_input": "string",
+              "conversation_history": "array",
+              "user_guid": "string (optional)"
+            }
+          }
+        ]
+      }
+    },
+    "implementation": {
+      "setup_steps": [
+        "Create Azure Function App with Python runtime",
+        "Configure Azure OpenAI service and obtain API credentials",
+        "Set up Azure File Storage for conversation memory",
+        "Deploy function_app.py and agent files to Azure Functions",
+        "Configure environment variables in Function App settings",
+        "Deploy index_voice.html to static web hosting",
+        "Configure CORS settings for Function App",
+        "Obtain and configure Function key for authentication"
+      ],
+      "customization_options": [
+        "Modify agent behaviors by editing agent Python files",
+        "Customize UI appearance and voice settings in index_voice.html",
+        "Add new agents by creating files following BasicAgent pattern",
+        "Adjust memory retention and context handling in storage manager",
+        "Configure voice synthesis options and languages"
+      ]
+    },
+    "metrics": {
+      "performance": {
+        "average_response_time": "2-3 seconds",
+        "concurrent_users": "100+",
+        "memory_capacity": "Unlimited conversations per user"
+      },
+      "business_impact": {
+        "sales_productivity_increase": "40%",
+        "customer_engagement_improvement": "65%",
+        "information_retrieval_speed": "10x faster"
+      }
+    },
+    "deployment": {
+      "cloud_provider": "Microsoft Azure",
+      "estimated_cost": "$50-200/month (depending on usage)",
+      "scalability": "Auto-scaling with Azure Functions",
+      "maintenance": "Low - serverless architecture"
+    }
+  }
+}
