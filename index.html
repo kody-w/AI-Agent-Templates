@@ -1283,8 +1283,8 @@
         class TemplateManager {
             constructor() {
                 // GitHub repository configuration
-                this.GITHUB_OWNER = 'kody-w'; // Replace with your GitHub username
-                this.GITHUB_REPO = 'AI-Agent-Templates'; // Replace with your repository name
+                this.GITHUB_OWNER = 'your-github-username'; // Replace with your GitHub username
+                this.GITHUB_REPO = 'ai-template-library'; // Replace with your repository name
                 this.TEMPLATE_LIBRARY_URL = `https://raw.githubusercontent.com/${this.GITHUB_OWNER}/${this.GITHUB_REPO}/main/template-library.json`;
                 this.TEMPLATE_DETAILS_BASE_URL = `https://raw.githubusercontent.com/${this.GITHUB_OWNER}/${this.GITHUB_REPO}/main/templates/`;
                 
@@ -2122,46 +2122,594 @@
             }
 
             exportDeliverable() {
+                const templateData = this.selectedTemplateDetails || this.selectedTemplate;
+                
                 let html = `
 <!DOCTYPE html>
 <html>
 <head>
     <meta charset="UTF-8">
-    <title>${this.customizationData.solutionName} - Agentic Scenario</title>
+    <title>${this.customizationData.solutionName} - Complete Solution Documentation</title>
     <style>
-        body { font-family: 'Segoe UI', Arial, sans-serif; line-height: 1.6; color: #333; max-width: 1200px; margin: 0 auto; padding: 20px; }
-        h1, h2, h3 { color: #0078d4; }
-        .section { margin-bottom: 30px; padding: 20px; background: #f8f9fa; border-radius: 8px; }
-        table { width: 100%; border-collapse: collapse; margin-top: 20px; }
-        th, td { padding: 12px; text-align: left; border-bottom: 1px solid #ddd; }
-        th { background: #0078d4; color: white; }
-        .user-story { background: #e3f2fd; padding: 15px; margin: 10px 0; border-radius: 5px; }
+        body { 
+            font-family: 'Segoe UI', Arial, sans-serif; 
+            line-height: 1.6; 
+            color: #333; 
+            max-width: 1200px; 
+            margin: 0 auto; 
+            padding: 20px; 
+            background-color: #f5f5f5;
+        }
+        h1, h2, h3, h4 { color: #0078d4; }
+        h1 { font-size: 2.5rem; margin-bottom: 1rem; }
+        h2 { font-size: 1.8rem; margin-top: 2rem; margin-bottom: 1rem; border-bottom: 2px solid #0078d4; padding-bottom: 0.5rem; }
+        h3 { font-size: 1.4rem; margin-top: 1.5rem; margin-bottom: 0.8rem; }
+        h4 { font-size: 1.1rem; margin-top: 1rem; margin-bottom: 0.5rem; }
+        
+        .section { 
+            margin-bottom: 30px; 
+            padding: 25px; 
+            background: white; 
+            border-radius: 8px; 
+            box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+        }
+        
+        .header-section {
+            background: linear-gradient(135deg, #0078d4 0%, #005a9e 100%);
+            color: white;
+            padding: 3rem;
+            border-radius: 10px;
+            margin-bottom: 2rem;
+        }
+        
+        .header-section h1, .header-section p {
+            color: white;
+        }
+        
+        table { 
+            width: 100%; 
+            border-collapse: collapse; 
+            margin-top: 20px; 
+            background: white;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+        }
+        th, td { 
+            padding: 12px; 
+            text-align: left; 
+            border-bottom: 1px solid #e0e0e0; 
+        }
+        th { 
+            background: #0078d4; 
+            color: white; 
+            font-weight: 600;
+        }
+        tr:hover {
+            background: #f8f9fa;
+        }
+        
+        .user-story { 
+            background: #e3f2fd; 
+            padding: 15px; 
+            margin: 10px 0; 
+            border-radius: 5px; 
+            border-left: 4px solid #0078d4;
+        }
+        
+        .feature-list {
+            list-style: none;
+            padding: 0;
+        }
+        
+        .feature-list li {
+            padding: 0.8rem 0;
+            border-bottom: 1px solid #f0f0f0;
+            padding-left: 2rem;
+            position: relative;
+        }
+        
+        .feature-list li:before {
+            content: "✓";
+            color: #00d4aa;
+            font-weight: bold;
+            position: absolute;
+            left: 0;
+        }
+        
+        .metric-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin-top: 1.5rem;
+        }
+        
+        .metric-card {
+            background: #f0f8ff;
+            padding: 1.5rem;
+            border-radius: 8px;
+            text-align: center;
+            border: 1px solid #d0e7ff;
+        }
+        
+        .metric-value {
+            font-size: 2rem;
+            font-weight: bold;
+            color: #0078d4;
+        }
+        
+        .metric-label {
+            color: #666;
+            font-size: 0.9rem;
+            margin-top: 0.5rem;
+        }
+        
+        .code-block {
+            background: #1e1e1e;
+            color: #d4d4d4;
+            padding: 1.5rem;
+            border-radius: 8px;
+            overflow-x: auto;
+            font-family: 'Consolas', 'Monaco', monospace;
+            font-size: 0.9rem;
+            line-height: 1.4;
+            margin: 1rem 0;
+        }
+        
+        .timeline {
+            position: relative;
+            padding-left: 3rem;
+        }
+        
+        .timeline-item {
+            position: relative;
+            padding-bottom: 2rem;
+        }
+        
+        .timeline-item:before {
+            content: "";
+            position: absolute;
+            left: -2.5rem;
+            top: 0.5rem;
+            width: 12px;
+            height: 12px;
+            background: #0078d4;
+            border-radius: 50%;
+            box-shadow: 0 0 0 4px #e3f2fd;
+        }
+        
+        .timeline-item:after {
+            content: "";
+            position: absolute;
+            left: -2.45rem;
+            top: 1.5rem;
+            width: 2px;
+            height: calc(100% - 1rem);
+            background: #e0e0e0;
+        }
+        
+        .timeline-item:last-child:after {
+            display: none;
+        }
+        
+        .architecture-diagram {
+            background: #f8f9fa;
+            padding: 2rem;
+            border-radius: 8px;
+            margin: 1rem 0;
+            border: 1px solid #e0e0e0;
+        }
+        
+        .requirement-badge {
+            display: inline-block;
+            padding: 0.25rem 0.75rem;
+            background: #e3f2fd;
+            color: #0078d4;
+            border-radius: 16px;
+            font-size: 0.85rem;
+            margin: 0.25rem;
+        }
+        
+        .warning-box {
+            background: #fff3cd;
+            border-left: 4px solid #ffc107;
+            padding: 1rem;
+            margin: 1rem 0;
+            border-radius: 4px;
+        }
+        
+        .success-box {
+            background: #d4edda;
+            border-left: 4px solid #28a745;
+            padding: 1rem;
+            margin: 1rem 0;
+            border-radius: 4px;
+        }
+        
+        .info-box {
+            background: #d1ecf1;
+            border-left: 4px solid #17a2b8;
+            padding: 1rem;
+            margin: 1rem 0;
+            border-radius: 4px;
+        }
+        
+        @media print {
+            body {
+                background: white;
+            }
+            .section {
+                box-shadow: none;
+                border: 1px solid #ddd;
+            }
+            .header-section {
+                background: #0078d4;
+                print-color-adjust: exact;
+            }
+        }
     </style>
 </head>
 <body>
-    <h1>${this.customizationData.solutionName} - Agentic Scenario</h1>
+    <div class="header-section">
+        <h1>${this.customizationData.solutionName}</h1>
+        <p style="font-size: 1.2rem; opacity: 0.9;">Complete Solution Documentation - ${templateData.name}</p>
+        <p style="opacity: 0.8;">Generated on ${new Date().toLocaleDateString()} for ${this.customizationData.clientName}</p>
+    </div>
     
     <div class="section">
-        <h2>Overview</h2>
+        <h2>Executive Summary</h2>
+        <p><strong>Solution:</strong> ${this.customizationData.solutionName}</p>
         <p><strong>Client:</strong> ${this.customizationData.clientName}</p>
         <p><strong>Industry:</strong> ${this.customizationData.industry}</p>
         <p><strong>Business Type:</strong> ${this.customizationData.businessType}</p>
         <p><strong>Template Type:</strong> ${this.customizationData.templateType}</p>
-    </div>
-    
-    <div class="section">
-        <h2>User Stories</h2>
-        ${this.customizationData.userStories.map((story, i) => 
-            `<div class="user-story"><strong>Story ${i +1}:</strong> ${story}</div>`
-        ).join("")}
-    </div>
-    
-    <div class="section">
-        <h2>General Strategy</h2>
+        <p><strong>Complexity:</strong> ${templateData.complexity || 'Medium'}</p>
+        <p><strong>Priority Score:</strong> ${templateData.priorityScore || 'N/A'}</p>
+        
+        <h3>Solution Description</h3>
+        <p>${templateData.description}</p>
+        
+        <h3>General Strategy</h3>
         <p>${this.customizationData.generalStrategy}</p>
     </div>
     
+    ${templateData.impact ? `
+    <div class="section">
+        <h2>Expected Business Impact</h2>
+        <div class="metric-grid">
+            <div class="metric-card">
+                <div class="metric-value">${templateData.impact.hoursReduced}</div>
+                <div class="metric-label">Hours Reduced per Month</div>
+            </div>
+            <div class="metric-card">
+                <div class="metric-value">${templateData.impact.tasksAutomated}</div>
+                <div class="metric-label">Tasks Automated</div>
+            </div>
+            <div class="metric-card">
+                <div class="metric-value">${templateData.impact.qualityScore}%</div>
+                <div class="metric-label">Quality Score</div>
+            </div>
+        </div>
+        
+        ${templateData.metrics?.business_impact ? `
+        <h3>Additional Business Metrics</h3>
+        <ul>
+            ${Object.entries(templateData.metrics.business_impact).map(([key, value]) => 
+                `<li><strong>${key.replace(/_/g, ' ').replace(/\b\w/g, l => l.toUpperCase())}:</strong> ${value}</li>`
+            ).join('')}
+        </ul>
+        ` : ''}
+    </div>
+    ` : ''}
+    
+    <div class="section">
+        <h2>User Stories & Requirements</h2>
+        ${this.customizationData.userStories.map((story, i) => 
+            `<div class="user-story"><strong>Story ${i + 1}:</strong> ${story}</div>`
+        ).join("")}
+        
+        ${this.customizationData.successMetrics ? `
+        <h3>Success Metrics</h3>
+        <p>${this.customizationData.successMetrics}</p>
+        ` : ''}
+        
+        ${this.customizationData.scopeMvp ? `
+        <h3>MVP Scope</h3>
+        <p>${this.customizationData.scopeMvp}</p>
+        ` : ''}
+        
+        ${this.customizationData.outOfScope ? `
+        <h3>Out of Scope</h3>
+        <div class="warning-box">
+            <p>${this.customizationData.outOfScope}</p>
+        </div>
+        ` : ''}
+    </div>
+    
     ${this.generateCustomFieldsHTML()}
+    
+    <div class="section">
+        <h2>Solution Features</h2>
+        <ul class="feature-list">
+            ${(templateData.features || templateData.capabilities || []).map(feature => 
+                `<li>${feature}</li>`
+            ).join('')}
+        </ul>
+    </div>
+    
+    <div class="section">
+        <h2>Technical Architecture</h2>
+        
+        ${templateData.technicalDetails ? `
+        <div class="architecture-diagram">
+            <h3>System Architecture</h3>
+            ${templateData.technicalDetails.architecture?.backend ? `
+            <h4>Backend</h4>
+            <p><strong>Runtime:</strong> ${templateData.technicalDetails.architecture.backend.runtime}</p>
+            ${templateData.technicalDetails.architecture.backend.mainFile ? `<p><strong>Main File:</strong> ${templateData.technicalDetails.architecture.backend.mainFile}</p>` : ''}
+            
+            ${templateData.technicalDetails.architecture.backend.agents ? `
+            <h5>Agents</h5>
+            <ul>
+                ${templateData.technicalDetails.architecture.backend.agents.map(agent => 
+                    `<li><strong>${agent.name}:</strong> ${agent.purpose}</li>`
+                ).join('')}
+            </ul>
+            ` : ''}
+            ` : ''}
+            
+            ${templateData.technicalDetails.architecture?.frontend ? `
+            <h4>Frontend</h4>
+            <p><strong>Type:</strong> ${templateData.technicalDetails.architecture.frontend.type}</p>
+            ${templateData.technicalDetails.architecture.frontend.file ? `<p><strong>Main File:</strong> ${templateData.technicalDetails.architecture.frontend.file}</p>` : ''}
+            <p><strong>Features:</strong></p>
+            <ul>
+                ${templateData.technicalDetails.architecture.frontend.features.map(feature => 
+                    `<li>${feature}</li>`
+                ).join('')}
+            </ul>
+            ` : ''}
+            
+            ${templateData.technicalDetails.architecture?.storage ? `
+            <h4>Storage</h4>
+            <p><strong>Type:</strong> ${templateData.technicalDetails.architecture.storage.type}</p>
+            ${templateData.technicalDetails.architecture.storage.structure ? `
+            <p><strong>Structure:</strong></p>
+            <ul>
+                ${Object.entries(templateData.technicalDetails.architecture.storage.structure).map(([key, value]) => 
+                    `<li><strong>${key}:</strong> ${value}</li>`
+                ).join('')}
+            </ul>
+            ` : ''}
+            ` : ''}
+        </div>
+        ` : ''}
+        
+        <h3>Technology Stack</h3>
+        <p><strong>Microsoft Products:</strong></p>
+        <div>
+            ${this.customizationData.microsoftProducts.map(product => 
+                `<span class="requirement-badge">${product}</span>`
+            ).join('')}
+        </div>
+        
+        ${this.customizationData.implementationApproach ? `
+        <h3>Implementation Approach</h3>
+        <p>${this.customizationData.implementationApproach}</p>
+        ` : ''}
+    </div>
+    
+    ${templateData.requirements ? `
+    <div class="section">
+        <h2>Requirements</h2>
+        
+        ${templateData.requirements.systems ? `
+        <h3>System Requirements</h3>
+        <div>
+            ${templateData.requirements.systems.map(system => 
+                `<span class="requirement-badge">${system}</span>`
+            ).join('')}
+        </div>
+        ` : ''}
+        
+        ${templateData.requirements.data ? `
+        <h3>Data Requirements</h3>
+        <ul>
+            ${templateData.requirements.data.map(data => 
+                `<li>${data}</li>`
+            ).join('')}
+        </ul>
+        ` : ''}
+        
+        ${templateData.requirements.skills ? `
+        <h3>Required Skills</h3>
+        <ul>
+            ${templateData.requirements.skills.map(skill => 
+                `<li>${skill}</li>`
+            ).join('')}
+        </ul>
+        ` : ''}
+    </div>
+    ` : ''}
+    
+    ${templateData.technicalDetails?.configuration ? `
+    <div class="section">
+        <h2>Configuration Details</h2>
+        
+        ${templateData.technicalDetails.configuration.environment_variables ? `
+        <h3>Environment Variables</h3>
+        <div class="code-block">
+${templateData.technicalDetails.configuration.environment_variables.map(env => env).join('\n')}
+        </div>
+        ` : ''}
+        
+        ${templateData.technicalDetails.configuration.api_endpoints ? `
+        <h3>API Endpoints</h3>
+        <table>
+            <thead>
+                <tr>
+                    <th>Path</th>
+                    <th>Method</th>
+                    <th>Authentication</th>
+                    <th>Payload</th>
+                </tr>
+            </thead>
+            <tbody>
+                ${templateData.technicalDetails.configuration.api_endpoints.map(endpoint => `
+                <tr>
+                    <td><code>${endpoint.path}</code></td>
+                    <td>${endpoint.method}</td>
+                    <td>${endpoint.auth}</td>
+                    <td><code>${JSON.stringify(endpoint.payload, null, 2)}</code></td>
+                </tr>
+                `).join('')}
+            </tbody>
+        </table>
+        ` : ''}
+    </div>
+    ` : ''}
+    
+    ${templateData.implementation ? `
+    <div class="section">
+        <h2>Implementation Guide</h2>
+        
+        ${templateData.implementation.setup_steps ? `
+        <h3>Setup Steps</h3>
+        <div class="timeline">
+            ${templateData.implementation.setup_steps.map((step, index) => `
+            <div class="timeline-item">
+                <h4>Step ${index + 1}</h4>
+                <p>${step}</p>
+            </div>
+            `).join('')}
+        </div>
+        ` : ''}
+        
+        ${templateData.implementation.customization_options ? `
+        <h3>Customization Options</h3>
+        <ul>
+            ${templateData.implementation.customization_options.map(option => 
+                `<li>${option}</li>`
+            ).join('')}
+        </ul>
+        ` : ''}
+        
+        ${this.customizationData.implementationPlan ? `
+        <h3>Custom Implementation Plan</h3>
+        <p>${this.customizationData.implementationPlan}</p>
+        ` : ''}
+    </div>
+    ` : ''}
+    
+    ${templateData.codeExamples ? `
+    <div class="section">
+        <h2>Code Examples</h2>
+        ${Object.entries(templateData.codeExamples).map(([key, example]) => `
+        <h3>${example.description}</h3>
+        <div class="code-block">
+${example.code}
+        </div>
+        `).join('')}
+    </div>
+    ` : ''}
+    
+    ${templateData.bestPractices ? `
+    <div class="section">
+        <h2>Best Practices</h2>
+        ${templateData.bestPractices.map(practice => `
+        <h3>${practice.category}</h3>
+        <ul>
+            ${practice.recommendations.map(rec => 
+                `<li>${rec}</li>`
+            ).join('')}
+        </ul>
+        `).join('')}
+    </div>
+    ` : ''}
+    
+    ${templateData.securityConsiderations ? `
+    <div class="section">
+        <h2>Security Considerations</h2>
+        
+        ${templateData.securityConsiderations.authentication ? `
+        <h3>Authentication</h3>
+        <p><strong>Methods:</strong> ${templateData.securityConsiderations.authentication.methods.join(', ')}</p>
+        <p>${templateData.securityConsiderations.authentication.implementation}</p>
+        ` : ''}
+        
+        ${templateData.securityConsiderations.dataProtection ? `
+        <h3>Data Protection</h3>
+        <p><strong>Encryption:</strong> ${templateData.securityConsiderations.dataProtection.encryption}</p>
+        <p><strong>Compliance:</strong> ${templateData.securityConsiderations.dataProtection.compliance.join(', ')}</p>
+        <p><strong>Retention:</strong> ${templateData.securityConsiderations.dataProtection.retention}</p>
+        ` : ''}
+        
+        ${templateData.securityConsiderations.voicePrivacy ? `
+        <h3>Voice Privacy</h3>
+        <ul>
+            ${templateData.securityConsiderations.voicePrivacy.considerations.map(consideration => 
+                `<li>${consideration}</li>`
+            ).join('')}
+        </ul>
+        ` : ''}
+    </div>
+    ` : ''}
+    
+    ${templateData.troubleshooting ? `
+    <div class="section">
+        <h2>Troubleshooting Guide</h2>
+        ${templateData.troubleshooting.commonIssues.map(issue => `
+        <h3>Issue: ${issue.issue}</h3>
+        <p><strong>Solutions:</strong></p>
+        <ul>
+            ${issue.solutions.map(solution => 
+                `<li>${solution}</li>`
+            ).join('')}
+        </ul>
+        `).join('')}
+    </div>
+    ` : ''}
+    
+    ${templateData.metrics ? `
+    <div class="section">
+        <h2>Performance Metrics</h2>
+        
+        ${templateData.metrics.performance ? `
+        <h3>Performance Benchmarks</h3>
+        <div class="metric-grid">
+            ${Object.entries(templateData.metrics.performance).map(([key, value]) => `
+            <div class="metric-card">
+                <div class="metric-value">${value}</div>
+                <div class="metric-label">${key.replace(/_/g, ' ').replace(/\b\w/g, l => l.toUpperCase())}</div>
+            </div>
+            `).join('')}
+        </div>
+        ` : ''}
+    </div>
+    ` : ''}
+    
+    ${templateData.deployment ? `
+    <div class="section">
+        <h2>Deployment Information</h2>
+        <p><strong>Cloud Provider:</strong> ${templateData.deployment.cloud_provider}</p>
+        <p><strong>Estimated Cost:</strong> ${templateData.deployment.estimated_cost}</p>
+        <p><strong>Scalability:</strong> ${templateData.deployment.scalability}</p>
+        <p><strong>Maintenance:</strong> ${templateData.deployment.maintenance}</p>
+    </div>
+    ` : ''}
+    
+    ${templateData.roadmap ? `
+    <div class="section">
+        <h2>Implementation Roadmap</h2>
+        ${Object.entries(templateData.roadmap).map(([phase, details]) => `
+        <h3>${phase.toUpperCase()} - ${details.duration}</h3>
+        <h4>Deliverables:</h4>
+        <ul>
+            ${details.deliverables.map(deliverable => 
+                `<li>${deliverable}</li>`
+            ).join('')}
+        </ul>
+        `).join('')}
+    </div>
+    ` : ''}
     
     <div class="section">
         <h2>Solution Summary</h2>
@@ -2190,21 +2738,13 @@
     </div>
     
     <div class="section">
-        <h2>Technical Components</h2>
-        <p><strong>Microsoft Products:</strong> ${this.customizationData.microsoftProducts.join(", ")}</p>
-        <p><strong>Implementation Approach:</strong> ${this.customizationData.implementationApproach || "TBD"}</p>
-    </div>
-    
-    <div class="section">
-        <h2>Success Metrics & Scope</h2>
-        <p><strong>Success Metrics:</strong> ${this.customizationData.successMetrics || "TBD"}</p>
-        <p><strong>MVP Scope:</strong> ${this.customizationData.scopeMvp || "TBD"}</p>
-        <p><strong>Out of Scope:</strong> ${this.customizationData.outOfScope || "TBD"}</p>
-    </div>
-    
-    <div class="section">
-        <h2>Implementation Plan</h2>
-        <p>${this.customizationData.implementationPlan || "TBD"}</p>
+        <div class="info-box">
+            <h3>Document Information</h3>
+            <p><strong>Generated from Template:</strong> ${templateData.name}</p>
+            <p><strong>Template Version:</strong> ${templateData.version || '1.0'}</p>
+            <p><strong>Document Created:</strong> ${new Date().toLocaleString()}</p>
+            <p><strong>Created by:</strong> Microsoft AI Accelerate - Agentic Template Library</p>
+        </div>
     </div>
 </body>
 </html>`;
@@ -2213,7 +2753,7 @@
                 const url = URL.createObjectURL(blob);
                 const a = document.createElement("a");
                 a.href = url;
-                a.download = `${this.customizationData.solutionName.replace(/\s+/g, "-").toLowerCase()}-scenario.html`;
+                a.download = `${this.customizationData.solutionName.replace(/\s+/g, "-").toLowerCase()}-complete-solution.html`;
                 document.body.appendChild(a);
                 a.click();
                 document.body.removeChild(a);
