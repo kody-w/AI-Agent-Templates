@@ -715,6 +715,94 @@
             border: 1px solid #f5c6cb;
         }
 
+        .template-details-section {
+            background: #f8f9fa;
+            padding: 2rem;
+            border-radius: 10px;
+            margin-bottom: 2rem;
+            display: none;
+        }
+
+        .template-details-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-top: 1.5rem;
+        }
+
+        .detail-card {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+        }
+
+        .detail-card h4 {
+            color: #0078d4;
+            margin-bottom: 1rem;
+            font-size: 1.1rem;
+        }
+
+        .detail-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .detail-list li {
+            padding: 0.5rem 0;
+            border-bottom: 1px solid #f0f0f0;
+            font-size: 0.9rem;
+        }
+
+        .detail-list li:last-child {
+            border-bottom: none;
+        }
+
+        .implementation-timeline {
+            background: white;
+            padding: 2rem;
+            border-radius: 10px;
+            margin-top: 2rem;
+        }
+
+        .timeline-item {
+            display: flex;
+            align-items: start;
+            margin-bottom: 1.5rem;
+            position: relative;
+            padding-left: 3rem;
+        }
+
+        .timeline-item::before {
+            content: "";
+            position: absolute;
+            left: 1rem;
+            top: 0.5rem;
+            width: 10px;
+            height: 10px;
+            background: #0078d4;
+            border-radius: 50%;
+        }
+
+        .timeline-item::after {
+            content: "";
+            position: absolute;
+            left: 1.4rem;
+            top: 1.5rem;
+            width: 2px;
+            height: calc(100% + 0.5rem);
+            background: #e0e0e0;
+        }
+
+        .timeline-item:last-child::after {
+            display: none;
+        }
+
+        .timeline-content h5 {
+            color: #0078d4;
+            margin-bottom: 0.5rem;
+        }
+
         @media (max-width: 768px) {
             .container {
                 padding: 10px;
@@ -943,6 +1031,11 @@
 
             <!-- Error Message -->
             <div id="errorMessage" class="error-message" style="display: none;"></div>
+
+            <!-- Template Details Section (hidden by default) -->
+            <div id="templateDetailsSection" class="template-details-section">
+                <!-- Details will be dynamically loaded here -->
+            </div>
 
             <!-- Template Grid -->
             <div class="template-grid" id="templateGrid">
@@ -1193,9 +1286,11 @@
                 this.GITHUB_OWNER = 'your-github-username'; // Replace with your GitHub username
                 this.GITHUB_REPO = 'ai-template-library'; // Replace with your repository name
                 this.TEMPLATE_LIBRARY_URL = `https://raw.githubusercontent.com/${this.GITHUB_OWNER}/${this.GITHUB_REPO}/main/template-library.json`;
+                this.TEMPLATE_DETAILS_BASE_URL = `https://raw.githubusercontent.com/${this.GITHUB_OWNER}/${this.GITHUB_REPO}/main/templates/`;
                 
                 // Local development fallback
                 this.LOCAL_LIBRARY_URL = './template-library.json';
+                this.LOCAL_DETAILS_BASE_URL = './templates/';
                 
                 // Template library data
                 this.templateLibrary = {
@@ -1208,6 +1303,7 @@
                 this.currentStep = 1;
                 this.currentTemplates = [];
                 this.selectedTemplate = null;
+                this.selectedTemplateDetails = null;
                 this.customizationData = {};
                 this.taggedProducts = [];
 
@@ -1266,6 +1362,39 @@
                 }
             }
 
+            async fetchTemplateDetails(templateId) {
+                try {
+                    this.showLoading(true, 'Loading template details...');
+                    
+                    // Try to fetch detailed template file
+                    let detailsUrl = `${this.TEMPLATE_DETAILS_BASE_URL}${templateId}.json`;
+                    let response = await fetch(detailsUrl);
+                    
+                    if (!response.ok) {
+                        // Fallback to local URL
+                        detailsUrl = `${this.LOCAL_DETAILS_BASE_URL}${templateId}.json`;
+                        response = await fetch(detailsUrl);
+                    }
+                    
+                    if (response.ok) {
+                        const details = await response.json();
+                        this.selectedTemplateDetails = details.template;
+                        return details.template;
+                    }
+                    
+                    // If no detailed file exists, use the template from library
+                    console.log(`No detailed file for ${templateId}, using library data`);
+                    return this.selectedTemplate;
+                    
+                } catch (error) {
+                    console.error('Error fetching template details:', error);
+                    // Use the basic template data as fallback
+                    return this.selectedTemplate;
+                } finally {
+                    this.showLoading(false);
+                }
+            }
+
             loadDefaultTemplates() {
                 // Default templates as fallback
                 this.templateLibrary.templates = [
@@ -1307,8 +1436,14 @@
                 this.loadTemplates();
             }
 
-            showLoading(show) {
+            showLoading(show, text = 'Loading Template Library...') {
                 const overlay = document.getElementById('loadingOverlay');
+                const loadingText = overlay.querySelector('.loading-text');
+                
+                if (text) {
+                    loadingText.textContent = text;
+                }
+                
                 if (show) {
                     overlay.classList.add('visible');
                 } else {
@@ -1345,6 +1480,11 @@
                 // Show current step
                 document.getElementById(`step${step}Content`).style.display = "block";
                 this.currentStep = step;
+
+                // Hide template details if going back to step 1
+                if (step === 1) {
+                    document.getElementById('templateDetailsSection').style.display = 'none';
+                }
 
                 // Scroll to top
                 window.scrollTo(0, 0);
@@ -1430,29 +1570,142 @@
                         ${template.industry.map((ind) => `<span class="tag">${ind}</span>`).join("")}
                         <span class="tag">${template.category}</span>
                     </div>
+                    <div class="action-buttons" style="margin-top: 1rem; padding-top: 1rem; border-top: 1px solid #e0e0e0;">
+                        <button class="btn btn-secondary" onclick="templateManager.viewTemplateDetails('${template.id}')">
+                            📋 View Details
+                        </button>
+                        <button class="btn btn-primary" onclick="templateManager.selectTemplate('${template.id}')">
+                            ✅ Select Template
+                        </button>
+                    </div>
                 `;
-
-                card.onclick = () => this.selectTemplate(template);
 
                 return card;
             }
 
-            // Select template
-            selectTemplate(template) {
+            // View template details
+            async viewTemplateDetails(templateId) {
+                const template = this.templateLibrary.templates.find(t => t.id === templateId);
+                if (!template) return;
+
                 this.selectedTemplate = template;
+                
+                // Fetch detailed template data
+                const details = await this.fetchTemplateDetails(templateId);
+                
+                // Show template details section
+                const detailsSection = document.getElementById('templateDetailsSection');
+                detailsSection.innerHTML = this.createTemplateDetailsHTML(details);
+                detailsSection.style.display = 'block';
+                
+                // Scroll to details
+                detailsSection.scrollIntoView({ behavior: 'smooth' });
+            }
+
+            createTemplateDetailsHTML(template) {
+                return `
+                    <h2 style="color: #0078d4; margin-bottom: 1.5rem">${template.name}</h2>
+                    <p style="font-size: 1.1rem; margin-bottom: 2rem;">${template.description}</p>
+                    
+                    <div class="template-details-grid">
+                        ${template.requirements ? `
+                        <div class="detail-card">
+                            <h4>🛠️ Requirements</h4>
+                            <ul class="detail-list">
+                                ${template.requirements.systems ? `
+                                <li><strong>Systems:</strong> ${template.requirements.systems.join(', ')}</li>
+                                ` : ''}
+                                ${template.requirements.skills ? `
+                                <li><strong>Skills:</strong> ${template.requirements.skills.join(', ')}</li>
+                                ` : ''}
+                            </ul>
+                        </div>
+                        ` : ''}
+                        
+                        ${template.technicalDetails ? `
+                        <div class="detail-card">
+                            <h4>⚙️ Technical Architecture</h4>
+                            <ul class="detail-list">
+                                ${template.technicalDetails.architecture?.backend?.runtime ? `
+                                <li><strong>Runtime:</strong> ${template.technicalDetails.architecture.backend.runtime}</li>
+                                ` : ''}
+                                ${template.technicalDetails.architecture?.backend?.agents ? `
+                                <li><strong>Agents:</strong> ${template.technicalDetails.architecture.backend.agents.length} configured</li>
+                                ` : ''}
+                                ${template.deployment?.cloud_provider ? `
+                                <li><strong>Cloud:</strong> ${template.deployment.cloud_provider}</li>
+                                ` : ''}
+                            </ul>
+                        </div>
+                        ` : ''}
+                        
+                        ${template.metrics ? `
+                        <div class="detail-card">
+                            <h4>📊 Expected Impact</h4>
+                            <ul class="detail-list">
+                                ${template.metrics.business_impact ? Object.entries(template.metrics.business_impact).map(([key, value]) => `
+                                <li><strong>${key.replace(/_/g, ' ').replace(/\b\w/g, l => l.toUpperCase())}:</strong> ${value}</li>
+                                `).join('') : ''}
+                            </ul>
+                        </div>
+                        ` : ''}
+                    </div>
+                    
+                    ${template.implementation?.setup_steps ? `
+                    <div class="implementation-timeline">
+                        <h4 style="color: #0078d4; margin-bottom: 1.5rem;">📋 Implementation Steps</h4>
+                        ${template.implementation.setup_steps.map((step, index) => `
+                        <div class="timeline-item">
+                            <div class="timeline-content">
+                                <h5>Step ${index + 1}</h5>
+                                <p>${step}</p>
+                            </div>
+                        </div>
+                        `).join('')}
+                    </div>
+                    ` : ''}
+                    
+                    <div class="action-buttons" style="margin-top: 2rem;">
+                        <button class="btn btn-secondary" onclick="document.getElementById('templateDetailsSection').style.display='none'">
+                            ✖️ Close Details
+                        </button>
+                        <button class="btn btn-primary" onclick="templateManager.selectTemplate('${template.id}')">
+                            ✅ Use This Template
+                        </button>
+                    </div>
+                `;
+            }
+
+            // Select template
+            async selectTemplate(templateId) {
+                const template = this.templateLibrary.templates.find(t => t.id === templateId);
+                if (!template) {
+                    console.error(`Template ${templateId} not found`);
+                    return;
+                }
+                
+                this.selectedTemplate = template;
+                
+                // Fetch detailed template data if not already loaded
+                if (!this.selectedTemplateDetails || this.selectedTemplateDetails.id !== templateId) {
+                    this.selectedTemplateDetails = await this.fetchTemplateDetails(templateId);
+                }
+
+                // Use the detailed template data if available
+                const templateData = this.selectedTemplateDetails || template;
 
                 // Pre-populate customization form with defaults
-                if (template.defaultConfiguration) {
-                    document.getElementById("solutionName").value = template.defaultConfiguration.solutionName || "";
-                    document.getElementById("businessType").value = template.defaultConfiguration.businessType || "B2E";
-                    document.getElementById("generalStrategy").value = template.defaultConfiguration.generalStrategy || "";
+                if (templateData.defaultConfiguration) {
+                    document.getElementById("solutionName").value = templateData.defaultConfiguration.solutionName || "";
+                    document.getElementById("businessType").value = templateData.defaultConfiguration.businessType || "B2E";
+                    document.getElementById("generalStrategy").value = templateData.defaultConfiguration.generalStrategy || "";
 
                     // Load user stories
                     const userStoriesContainer = document.getElementById("userStoriesContainer");
                     userStoriesContainer.innerHTML = "";
 
-                    if (template.defaultConfiguration.userStories) {
-                        template.defaultConfiguration.userStories.forEach((story, index) => {
+                    if (templateData.defaultConfiguration.userStories) {
+                        templateData.defaultConfiguration.userStories.forEach((story, index) => {
                             const storyDiv = document.createElement("div");
                             storyDiv.className = "form-group";
                             storyDiv.innerHTML = `
@@ -1464,13 +1717,13 @@
                     }
 
                     // Load Microsoft products
-                    if (template.defaultConfiguration.microsoftProducts) {
-                        this.taggedProducts = [...template.defaultConfiguration.microsoftProducts];
+                    if (templateData.defaultConfiguration.microsoftProducts) {
+                        this.taggedProducts = [...templateData.defaultConfiguration.microsoftProducts];
                         this.updateTagDisplay();
                     }
 
                     // Load custom fields specific to this template
-                    this.loadCustomFields(template);
+                    this.loadCustomFields(templateData);
                 }
 
                 // Move to customization step
@@ -1554,7 +1807,8 @@
                     (template) =>
                         template.name.toLowerCase().includes(searchTerm) ||
                         template.description.toLowerCase().includes(searchTerm) ||
-                        template.capabilities.some((cap) => cap.toLowerCase().includes(searchTerm))
+                        (template.capabilities && template.capabilities.some((cap) => cap.toLowerCase().includes(searchTerm))) ||
+                        (template.features && template.features.some((feat) => feat.toLowerCase().includes(searchTerm)))
                 );
 
                 this.loadTemplates(filtered);
@@ -1609,7 +1863,7 @@
                 const storyDiv = document.createElement("div");
                 storyDiv.className = "form-group";
                 storyDiv.innerHTML = `
-                    <label>User Story ${storyCount}</label>
+                   <label>User Story ${storyCount}</label>
                     <textarea class="user-story-input" placeholder="As a [role], I want [feature] so that [benefit]"></textarea>
                 `;
 
@@ -1664,6 +1918,7 @@
 
                 const saveData = {
                     template: this.selectedTemplate,
+                    templateDetails: this.selectedTemplateDetails,
                     customization: this.customizationData,
                     timestamp: new Date().toISOString()
                 };
@@ -1763,10 +2018,11 @@
                 
                 // Build custom fields HTML dynamically
                 let customFieldsHtml = "";
-                if (this.selectedTemplate?.defaultConfiguration?.customFields && Object.keys(this.customizationData.customFields).length > 0) {
+                const templateData = this.selectedTemplateDetails || this.selectedTemplate;
+                if (templateData?.defaultConfiguration?.customFields && Object.keys(this.customizationData.customFields).length > 0) {
                     // Group custom fields by category
                     const fieldsByCategory = {};
-                    this.selectedTemplate.defaultConfiguration.customFields.forEach(field => {
+                    templateData.defaultConfiguration.customFields.forEach(field => {
                         const category = field.category || "Additional Configuration";
                         if (!fieldsByCategory[category]) {
                             fieldsByCategory[category] = [];
@@ -1842,10 +2098,11 @@
             }
 
             exportScenario() {
+                const templateData = this.selectedTemplateDetails || this.selectedTemplate;
                 const scenarioData = {
                     version: "1.0",
                     exportDate: new Date().toISOString(),
-                    template: this.selectedTemplate,
+                    template: templateData,
                     customization: this.customizationData,
                     deliverable: {
                         solutionName: this.customizationData.solutionName,
@@ -1964,7 +2221,8 @@
             }
 
             generateCustomFieldsHTML() {
-                if (!this.selectedTemplate?.defaultConfiguration?.customFields || Object.keys(this.customizationData.customFields).length === 0) {
+                const templateData = this.selectedTemplateDetails || this.selectedTemplate;
+                if (!templateData?.defaultConfiguration?.customFields || Object.keys(this.customizationData.customFields).length === 0) {
                     return "";
                 }
 
@@ -1972,7 +2230,7 @@
                 
                 // Group custom fields by category
                 const fieldsByCategory = {};
-                this.selectedTemplate.defaultConfiguration.customFields.forEach(field => {
+                templateData.defaultConfiguration.customFields.forEach(field => {
                     const category = field.category || "Additional Configuration";
                     if (!fieldsByCategory[category]) {
                         fieldsByCategory[category] = [];
@@ -2002,6 +2260,7 @@
                 // Reset form
                 this.customizationData = {};
                 this.selectedTemplate = null;
+                this.selectedTemplateDetails = null;
                 this.taggedProducts = [];
 
                 // Clear form fields
@@ -2011,9 +2270,6 @@
                 document.getElementById("industrySelect").value = "";
                 document.getElementById("businessType").value = "B2E";
                 document.getElementById("generalStrategy").value = "";
-                document.getElementById("uxEmailProcessing").value = "";
-                document.getElementById("uxAgentInterface").value = "";
-                document.getElementById("uxAdministration").value = "";
                 document.getElementById("implementationApproach").value = "";
                 document.getElementById("successMetrics").value = "";
                 document.getElementById("scopeMvp").value = "";
@@ -2031,6 +2287,9 @@
 
                 // Clear tags
                 this.updateTagDisplay();
+
+                // Clear custom fields
+                document.getElementById("customFieldsContainer").innerHTML = "";
 
                 // Remove additional content from step 3
                 const additionalContent = document.querySelector("#step3Content .deliverable-preview > div:last-child");
@@ -2110,6 +2369,7 @@
 
                         if (imported.template) {
                             this.selectedTemplate = imported.template;
+                            this.selectedTemplateDetails = imported.templateDetails || imported.template;
                         }
 
                         if (imported.customization) {
@@ -2121,9 +2381,6 @@
                             document.getElementById("industrySelect").value = c.industry || "";
                             document.getElementById("businessType").value = c.businessType || "B2E";
                             document.getElementById("generalStrategy").value = c.generalStrategy || "";
-                            document.getElementById("uxEmailProcessing").value = c.uxEmailProcessing || "";
-                            document.getElementById("uxAgentInterface").value = c.uxAgentInterface || "";
-                            document.getElementById("uxAdministration").value = c.uxAdministration || "";
                             document.getElementById("implementationApproach").value = c.implementationApproach || "";
                             document.getElementById("successMetrics").value = c.successMetrics || "";
                             document.getElementById("scopeMvp").value = c.scopeMvp || "";
@@ -2152,6 +2409,21 @@
                                 this.updateTagDisplay();
                             }
 
+                            // Load custom fields if template is available
+                            if (this.selectedTemplate || this.selectedTemplateDetails) {
+                                this.loadCustomFields(this.selectedTemplateDetails || this.selectedTemplate);
+                                
+                                // Populate custom field values
+                                if (c.customFields) {
+                                    Object.entries(c.customFields).forEach(([fieldName, value]) => {
+                                        const field = document.getElementById(fieldName);
+                                        if (field) {
+                                            field.value = value;
+                                        }
+                                    });
+                                }
+                            }
+
                             this.goToStep(2);
                             alert("Scenario imported successfully!");
                         }
@@ -2177,6 +2449,7 @@
                     description: "Custom AI agent template - add your description here",
                     shortDescription: "Custom template",
                     capabilities: ["Add capabilities here"],
+                    features: ["Add features here"],
                     defaultConfiguration: {
                         solutionName: "Custom Solution",
                         businessType: "B2E",
@@ -2209,7 +2482,7 @@
                         Complexity: template.complexity,
                         Description: template.description,
                         ShortDescription: template.shortDescription,
-                        Capabilities: template.capabilities.join("; "), // Multi-value field
+                        Capabilities: (template.capabilities || template.features || []).join("; "), // Multi-value field
                         SolutionName: template.defaultConfiguration?.solutionName || "",
                         BusinessType: template.defaultConfiguration?.businessType || "",
                         UserStories: template.defaultConfiguration?.userStories?.join(" ||| ") || "", // Custom delimiter
@@ -2272,7 +2545,7 @@
                         Complexity: template.complexity,
                         Description: template.description.replace(/,/g, ";"), // Replace commas
                         ShortDescription: template.shortDescription.replace(/,/g, ";"),
-                        Capabilities: template.capabilities.join("; "),
+                        Capabilities: (template.capabilities || template.features || []).join("; "),
                         SolutionName: template.defaultConfiguration?.solutionName || "",
                         BusinessType: template.defaultConfiguration?.businessType || "",
                         UserStories: (template.defaultConfiguration?.userStories?.join(" ||| ") || "").replace(/,/g, ";"),
@@ -2340,6 +2613,7 @@
                                         description: item.Description,
                                         shortDescription: item.ShortDescription,
                                         capabilities: item.Capabilities.split(";").map(c => c.trim()).filter(c => c),
+                                        features: item.Capabilities.split(";").map(c => c.trim()).filter(c => c),
                                         defaultConfiguration: {
                                             solutionName: item.SolutionName,
                                             businessType: item.BusinessType,
@@ -2406,6 +2680,7 @@
                         description: item.Description || item.description || "",
                         shortDescription: item.ShortDescription || item.shortDescription || "",
                         capabilities: item.Capabilities ? item.Capabilities.split(";").map(c => c.trim()).filter(c => c) : [],
+                        features: item.Capabilities ? item.Capabilities.split(";").map(c => c.trim()).filter(c => c) : [],
                         defaultConfiguration: {
                             solutionName: item.SolutionName || item.solutionName || "",
                             businessType: item.BusinessType || item.businessType || "B2E",
