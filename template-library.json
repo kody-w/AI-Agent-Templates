@@ -1,734 +1,17 @@
 {
   "version": "2.0",
-  "lastUpdated": "2025-01-29T00:00:00Z",
+  "lastUpdated": "2025-01-17T00:00:00Z",
   "templates": [
-    {
-      "id": "patient-intake-scheduling",
-      "name": "Patient Intake & Scheduling Agent",
-      "type": "automation",
-      "category": "operations",
-      "sector": "Healthcare",
-      "sourceType": "1P",
-      "industry": ["healthcare"],
-      "complexity": "medium",
-      "description": "Automates patient intake, appointment coordination, and reminders to reduce no-shows",
-      "shortDescription": "Automated patient scheduling and intake",
-      "businessBenefit": "Reduces no-show rates by 30% and administrative burden by 60%",
-      "lobSystems": ["Epic", "Cerner", "D365 CRM", "Salesforce Health Cloud"],
-      "pricing": {
-        "model": "per-user",
-        "estimate": "$75/user/month"
-      },
-      "currentState": {
-        "volume": 3000,
-        "hours": 240,
-        "unit": "appointments/week"
-      },
-      "impact": {
-        "hoursReduced": 190,
-        "tasksAutomated": 2400,
-        "qualityScore": 92
-      },
-      "priorityScore": 88,
-      "features": [
-        "Automated appointment scheduling",
-        "Patient intake form processing",
-        "SMS/Email reminders",
-        "Integration with EHR systems",
-        "Multi-language support"
-      ],
-      "requirements": {
-        "systems": [
-          "Power Automate",
-          "AI Builder",
-          "Dynamics 365 Healthcare",
-          "Azure Communication Services"
-        ],
-        "data": [
-          "Patient records",
-          "Appointment schedules",
-          "Provider availability",
-          "Insurance information"
-        ],
-        "skills": [
-          "Healthcare workflow knowledge",
-          "EHR integration experience",
-          "HIPAA compliance understanding"
-        ]
-      },
-      "defaultConfiguration": {
-        "solutionName": "Patient Intake & Scheduling Agent",
-        "businessType": "B2C",
-        "userStories": [
-          "As a patient, I want to schedule appointments online 24/7 without waiting on hold",
-          "As a clinic staff member, I want patient forms completed before arrival to reduce wait times",
-          "As a healthcare provider, I want automated reminders to reduce no-show rates"
-        ],
-        "microsoftProducts": [
-          "Copilot Studio",
-          "Power Automate",
-          "Azure Health Bot",
-          "Dynamics 365 Healthcare"
-        ],
-        "generalStrategy": "Deploy an intelligent scheduling agent that integrates with existing EHR systems to automate patient intake and reduce administrative burden."
-      }
-    },
-    {
-      "id": "prior-authorization-agent",
-      "name": "Prior Authorization Agent",
-      "type": "automation",
-      "category": "operations",
-      "sector": "Healthcare",
-      "sourceType": "Partner",
-      "industry": ["healthcare", "insurance"],
-      "complexity": "high",
-      "description": "Speeds up approvals and reduces manual payer interactions",
-      "shortDescription": "Automated prior authorization processing",
-      "businessBenefit": "Reduces authorization processing time by 75% and improves approval rates by 40%",
-      "lobSystems": ["EHR", "Payer Portals", "D365", "Oracle Health"],
-      "pricing": {
-        "model": "per-transaction",
-        "estimate": "$5-10/authorization"
-      },
-      "currentState": {
-        "volume": 5000,
-        "hours": 400,
-        "unit": "authorizations/month"
-      },
-      "impact": {
-        "hoursReduced": 300,
-        "tasksAutomated": 4000,
-        "qualityScore": 94
-      },
-      "priorityScore": 92,
-      "features": [
-        "Automated form filling",
-        "Payer portal integration",
-        "Clinical documentation gathering",
-        "Real-time status tracking",
-        "Appeal management"
-      ],
-      "requirements": {
-        "systems": [
-          "Copilot Studio",
-          "Power Automate Premium",
-          "Azure Form Recognizer",
-          "Healthcare connectors"
-        ],
-        "data": [
-          "Clinical records",
-          "Insurance policies",
-          "Drug formularies",
-          "Provider credentials"
-        ],
-        "skills": [
-          "Healthcare billing knowledge",
-          "Payer systems integration",
-          "Clinical documentation understanding"
-        ]
-      },
-      "defaultConfiguration": {
-        "solutionName": "Prior Authorization Automation",
-        "businessType": "B2B",
-        "userStories": [
-          "As a healthcare provider, I want prior authorizations processed automatically to reduce delays in patient care",
-          "As a billing specialist, I want real-time status updates on authorization requests",
-          "As a patient, I want faster approval for necessary treatments"
-        ],
-        "microsoftProducts": [
-          "Copilot Studio",
-          "Power Automate",
-          "Azure Form Recognizer",
-          "Power BI"
-        ],
-        "generalStrategy": "Implement an intelligent agent that automates the prior authorization process by integrating with payer systems and using AI to gather required documentation."
-      }
-    },
-    {
-      "id": "asset-maintenance-forecast",
-      "name": "Asset Maintenance Forecast Agent",
-      "type": "analytical",
-      "category": "operations",
-      "sector": "Energy",
-      "sourceType": "1P",
-      "industry": ["energy", "utilities"],
-      "complexity": "medium",
-      "description": "Predicts equipment failure and schedules proactive maintenance",
-      "shortDescription": "Predictive maintenance for energy assets",
-      "businessBenefit": "Reduces unplanned downtime by 45% and maintenance costs by 30%",
-      "lobSystems": ["SAP PM", "IBM Maximo", "D365 F&O"],
-      "pricing": {
-        "model": "per-user",
-        "estimate": "$100-150/user/month"
-      },
-      "currentState": {
-        "volume": 1000,
-        "hours": 200,
-        "unit": "assets_monitored"
-      },
-      "impact": {
-        "hoursReduced": 160,
-        "tasksAutomated": 800,
-        "qualityScore": 93
-      },
-      "priorityScore": 90,
-      "features": [
-        "IoT sensor data analysis",
-        "Failure prediction algorithms",
-        "Maintenance scheduling optimization",
-        "Parts inventory management",
-        "Technician dispatch"
-      ],
-      "requirements": {
-        "systems": [
-          "Azure IoT Hub",
-          "Azure Machine Learning",
-          "Power BI",
-          "Dynamics 365 Field Service"
-        ],
-        "data": [
-          "Sensor telemetry",
-          "Maintenance history",
-          "Equipment specifications",
-          "Failure patterns"
-        ],
-        "skills": [
-          "IoT implementation",
-          "Predictive analytics",
-          "Energy sector knowledge"
-        ]
-      },
-      "defaultConfiguration": {
-        "solutionName": "Predictive Asset Maintenance",
-        "businessType": "B2E",
-        "userStories": [
-          "As a maintenance manager, I want to predict equipment failures before they occur",
-          "As a field technician, I want optimized maintenance schedules to reduce travel time",
-          "As an operations director, I want to minimize unplanned downtime"
-        ],
-        "microsoftProducts": [
-          "Azure IoT Hub",
-          "Azure ML",
-          "Power BI",
-          "D365 Field Service"
-        ],
-        "generalStrategy": "Deploy predictive analytics on IoT sensor data to forecast equipment failures and optimize maintenance schedules."
-      }
-    },
-    {
-      "id": "supplier-risk-monitoring",
-      "name": "Supplier Risk Monitoring Agent",
-      "type": "monitoring",
-      "category": "operations",
-      "sector": "Manufacturing",
-      "sourceType": "1P",
-      "industry": ["manufacturing", "supply-chain"],
-      "complexity": "medium",
-      "description": "Detects supply chain risks and recommends mitigation actions",
-      "shortDescription": "AI-powered supply chain risk management",
-      "businessBenefit": "Reduces supply chain disruptions by 60% and improves supplier performance by 35%",
-      "lobSystems": ["SAP Ariba", "D365 SCM", "Oracle SCM"],
-      "pricing": {
-        "model": "flat-rate",
-        "estimate": "$10,000/month"
-      },
-      "currentState": {
-        "volume": 500,
-        "hours": 150,
-        "unit": "suppliers_monitored"
-      },
-      "impact": {
-        "hoursReduced": 120,
-        "tasksAutomated": 400,
-        "qualityScore": 91
-      },
-      "priorityScore": 89,
-      "features": [
-        "Real-time supplier monitoring",
-        "Financial health assessment",
-        "Geopolitical risk analysis",
-        "Alternative supplier recommendations",
-        "Automated alerts and reporting"
-      ],
-      "requirements": {
-        "systems": [
-          "Power Automate",
-          "AI Builder",
-          "Azure Cognitive Services",
-          "Power BI"
-        ],
-        "data": [
-          "Supplier performance data",
-          "Financial reports",
-          "News feeds",
-          "Shipping data"
-        ],
-        "skills": [
-          "Supply chain management",
-          "Risk assessment",
-          "Data analytics"
-        ]
-      },
-      "defaultConfiguration": {
-        "solutionName": "Supply Chain Risk Intelligence",
-        "businessType": "B2E",
-        "userStories": [
-          "As a procurement manager, I want early warnings about supplier risks",
-          "As a supply chain analyst, I want automated risk assessments for all suppliers",
-          "As an executive, I want visibility into supply chain vulnerabilities"
-        ],
-        "microsoftProducts": [
-          "Copilot Studio",
-          "Power Automate",
-          "Azure Cognitive Services",
-          "Power BI"
-        ],
-        "generalStrategy": "Implement continuous monitoring of suppliers using AI to analyze multiple risk factors and provide actionable insights."
-      }
-    },
-    {
-      "id": "competitive-intel-agent",
-      "name": "Competitive Intel Agent",
-      "type": "analytical",
-      "category": "sales",
-      "sector": "Software / DP",
-      "sourceType": "Partner",
-      "industry": ["technology", "software"],
-      "complexity": "low",
-      "description": "Pulls news, pricing updates, and feature releases of competitors",
-      "shortDescription": "Automated competitive intelligence gathering",
-      "businessBenefit": "Improves win rates by 25% and reduces competitive analysis time by 80%",
-      "lobSystems": ["CRM", "Sales Enablement Platforms", "Copilot Studio"],
-      "pricing": {
-        "model": "per-user",
-        "estimate": "$50/user/month"
-      },
-      "currentState": {
-        "volume": 100,
-        "hours": 80,
-        "unit": "competitors_tracked"
-      },
-      "impact": {
-        "hoursReduced": 64,
-        "tasksAutomated": 80,
-        "qualityScore": 88
-      },
-      "priorityScore": 85,
-      "features": [
-        "Web scraping and monitoring",
-        "Pricing change detection",
-        "Feature comparison analysis",
-        "Win/loss insights",
-        "Automated battlecards"
-      ],
-      "requirements": {
-        "systems": [
-          "Copilot Studio",
-          "Power Automate",
-          "Azure Cognitive Services",
-          "SharePoint"
-        ],
-        "data": [
-          "Competitor websites",
-          "News feeds",
-          "Social media",
-          "Sales data"
-        ],
-        "skills": [
-          "Competitive analysis",
-          "Sales enablement",
-          "Data analysis"
-        ]
-      },
-      "defaultConfiguration": {
-        "solutionName": "Competitive Intelligence System",
-        "businessType": "B2E",
-        "userStories": [
-          "As a sales rep, I want real-time competitive insights during customer conversations",
-          "As a product manager, I want to track competitor feature releases",
-          "As a sales leader, I want to understand why we win or lose deals"
-        ],
-        "microsoftProducts": [
-          "Copilot Studio",
-          "Power Automate",
-          "SharePoint",
-          "Power BI"
-        ],
-        "generalStrategy": "Deploy automated monitoring of competitor activities with AI-powered analysis to provide actionable sales intelligence."
-      }
-    },
-    {
-      "id": "contract-risk-review",
-      "name": "Contract Risk Review Agent",
-      "type": "extraction",
-      "category": "compliance",
-      "sector": "Professional Services",
-      "sourceType": "1P",
-      "industry": ["legal", "professional-services"],
-      "complexity": "medium",
-      "description": "Reviews contracts for risk clauses and compliance gaps",
-      "shortDescription": "AI-powered contract analysis and risk assessment",
-      "businessBenefit": "Reduces contract review time by 70% and identifies 95% more risk factors",
-      "lobSystems": ["DocuSign", "Adobe Sign", "SharePoint", "OpenAI"],
-      "pricing": {
-        "model": "usage-based",
-        "estimate": "$10-20/contract"
-      },
-      "currentState": {
-        "volume": 200,
-        "hours": 160,
-        "unit": "contracts/month"
-      },
-      "impact": {
-        "hoursReduced": 112,
-        "tasksAutomated": 180,
-        "qualityScore": 95
-      },
-      "priorityScore": 91,
-      "features": [
-        "Clause extraction and analysis",
-        "Risk scoring",
-        "Compliance checking",
-        "Deviation detection",
-        "Automated redlining"
-      ],
-      "requirements": {
-        "systems": [
-          "Azure OpenAI",
-          "Azure Form Recognizer",
-          "Power Automate",
-          "SharePoint"
-        ],
-        "data": [
-          "Contract templates",
-          "Risk criteria",
-          "Compliance requirements",
-          "Historical contracts"
-        ],
-        "skills": [
-          "Legal knowledge",
-          "Contract management",
-          "AI implementation"
-        ]
-      },
-      "defaultConfiguration": {
-        "solutionName": "Intelligent Contract Analyzer",
-        "businessType": "B2B",
-        "userStories": [
-          "As a legal professional, I want automated identification of risky contract clauses",
-          "As a business manager, I want faster contract turnaround times",
-          "As a compliance officer, I want assurance that contracts meet our standards"
-        ],
-        "microsoftProducts": [
-          "Azure OpenAI",
-          "Azure Form Recognizer",
-          "Power Automate",
-          "SharePoint"
-        ],
-        "generalStrategy": "Leverage AI to automatically review contracts, identify risks, and ensure compliance with organizational standards."
-      }
-    },
-    {
-      "id": "inventory-visibility-agent",
-      "name": "Inventory Visibility Agent",
-      "type": "analytical",
-      "category": "operations",
-      "sector": "Retail / CPG",
-      "sourceType": "Partner",
-      "industry": ["retail", "ecommerce"],
-      "complexity": "low",
-      "description": "Gives store associates and customers real-time inventory across channels",
-      "shortDescription": "Omnichannel inventory visibility",
-      "businessBenefit": "Increases sales conversion by 20% and reduces stockouts by 50%",
-      "lobSystems": ["SAP", "Oracle Retail", "D365 Commerce"],
-      "pricing": {
-        "model": "per-transaction",
-        "estimate": "$0.10/query"
-      },
-      "currentState": {
-        "volume": 10000,
-        "hours": 100,
-        "unit": "queries/day"
-      },
-      "impact": {
-        "hoursReduced": 80,
-        "tasksAutomated": 8000,
-        "qualityScore": 90
-      },
-      "priorityScore": 87,
-      "features": [
-        "Real-time stock levels",
-        "Store locator",
-        "Alternative product suggestions",
-        "Reserve and collect",
-        "Cross-channel visibility"
-      ],
-      "requirements": {
-        "systems": [
-          "Copilot Studio",
-          "Power Platform connectors",
-          "Retail systems APIs",
-          "Mobile apps"
-        ],
-        "data": [
-          "Inventory levels",
-          "Store locations",
-          "Product catalog",
-          "Sales data"
-        ],
-        "skills": [
-          "Retail systems knowledge",
-          "API integration",
-          "Customer experience design"
-        ]
-      },
-      "defaultConfiguration": {
-        "solutionName": "Omnichannel Inventory Assistant",
-        "businessType": "B2C",
-        "userStories": [
-          "As a customer, I want to know if an item is in stock before visiting the store",
-          "As a store associate, I want to help customers find products across all locations",
-          "As a manager, I want to reduce lost sales due to stockouts"
-        ],
-        "microsoftProducts": [
-          "Copilot Studio",
-          "Power Apps",
-          "Azure API Management",
-          "D365 Commerce"
-        ],
-        "generalStrategy": "Create a unified inventory visibility layer that provides real-time stock information across all channels."
-      }
-    },
-    {
-      "id": "fraud-detection-alert",
-      "name": "Fraud Detection & Alert Agent",
-      "type": "monitoring",
-      "category": "compliance",
-      "sector": "Financial Services",
-      "sourceType": "1P",
-      "industry": ["financial", "banking"],
-      "complexity": "high",
-      "description": "Monitors transactions and behaviors to flag and alert suspicious activity in real-time",
-      "shortDescription": "Real-time fraud detection and prevention",
-      "businessBenefit": "Reduces fraud losses by 65% and improves detection accuracy by 85%",
-      "lobSystems": ["Core Banking Systems", "Azure AI", "Fraud Platforms"],
-      "pricing": {
-        "model": "usage-based",
-        "estimate": "$0.05/transaction analyzed"
-      },
-      "currentState": {
-        "volume": 100000,
-        "hours": 500,
-        "unit": "transactions/day"
-      },
-      "impact": {
-        "hoursReduced": 400,
-        "tasksAutomated": 80000,
-        "qualityScore": 96
-      },
-      "priorityScore": 94,
-      "features": [
-        "Real-time transaction monitoring",
-        "Behavioral analysis",
-        "Machine learning models",
-        "Alert prioritization",
-        "Case management integration"
-      ],
-      "requirements": {
-        "systems": [
-          "Azure Machine Learning",
-          "Azure Stream Analytics",
-          "Power Automate",
-          "Azure Sentinel"
-        ],
-        "data": [
-          "Transaction history",
-          "Customer profiles",
-          "Device fingerprints",
-          "Location data"
-        ],
-        "skills": [
-          "Fraud analysis",
-          "Machine learning",
-          "Financial systems integration"
-        ]
-      },
-      "defaultConfiguration": {
-        "solutionName": "AI Fraud Prevention System",
-        "businessType": "B2B",
-        "userStories": [
-          "As a fraud analyst, I want real-time alerts on suspicious transactions",
-          "As a customer, I want protection from fraudulent activity on my accounts",
-          "As a risk manager, I want to reduce false positives while catching real fraud"
-        ],
-        "microsoftProducts": [
-          "Azure ML",
-          "Azure Stream Analytics",
-          "Power Automate",
-          "Azure Sentinel"
-        ],
-        "generalStrategy": "Implement real-time fraud detection using machine learning models that analyze transaction patterns and customer behavior."
-      }
-    },
-    {
-      "id": "citizen-service-request",
-      "name": "Citizen Service Request Agent",
-      "type": "conversational",
-      "category": "customer-service",
-      "sector": "SLG",
-      "sourceType": "Partner",
-      "industry": ["government", "public-sector"],
-      "complexity": "low",
-      "description": "Enables 24/7 intake and routing of non-emergency issues (e.g., potholes, permits)",
-      "shortDescription": "Automated citizen service request handling",
-      "businessBenefit": "Improves citizen satisfaction by 40% and reduces response time by 60%",
-      "lobSystems": ["Dynamics 365 CE", "Salesforce", "ServiceNow", "Accela"],
-      "pricing": {
-        "model": "per-user",
-        "estimate": "$25/agent/month"
-      },
-      "currentState": {
-        "volume": 5000,
-        "hours": 200,
-        "unit": "requests/month"
-      },
-      "impact": {
-        "hoursReduced": 160,
-        "tasksAutomated": 4000,
-        "qualityScore": 89
-      },
-      "priorityScore": 86,
-      "features": [
-        "Multi-channel support",
-        "Automatic categorization",
-        "Department routing",
-        "Status tracking",
-        "Citizen notifications"
-      ],
-      "requirements": {
-        "systems": [
-          "Copilot Studio",
-          "Power Automate",
-          "Government CRM",
-          "GIS systems"
-        ],
-        "data": [
-          "Service categories",
-          "Department contacts",
-          "GIS data",
-          "Citizen records"
-        ],
-        "skills": [
-          "Government processes",
-          "Citizen services",
-          "Multi-channel design"
-        ]
-      },
-      "defaultConfiguration": {
-        "solutionName": "311 Service Request Bot",
-        "businessType": "B2C",
-        "userStories": [
-          "As a citizen, I want to report issues 24/7 without waiting on hold",
-          "As a city employee, I want requests automatically routed to the right department",
-          "As a manager, I want visibility into service request trends"
-        ],
-        "microsoftProducts": [
-          "Copilot Studio",
-          "Power Automate",
-          "Power Apps",
-          "Power BI"
-        ],
-        "generalStrategy": "Deploy an omnichannel bot that handles citizen service requests, automatically categorizes and routes them to appropriate departments."
-      }
-    },
-    {
-      "id": "regulatory-compliance-agent",
-      "name": "Regulatory Compliance Agent",
-      "type": "monitoring",
-      "category": "compliance",
-      "sector": "Federal",
-      "sourceType": "1P",
-      "industry": ["government", "defense"],
-      "complexity": "high",
-      "description": "Monitors and reports compliance with federal standards (e.g., FedRAMP, NIST)",
-      "shortDescription": "Automated federal compliance monitoring",
-      "businessBenefit": "Reduces compliance audit time by 75% and improves accuracy by 90%",
-      "lobSystems": ["SAP", "ServiceNow GRC", "OpenText", "Power BI"],
-      "pricing": {
-        "model": "flat-rate",
-        "estimate": "$15,000/month"
-      },
-      "currentState": {
-        "volume": 1000,
-        "hours": 300,
-        "unit": "controls_monitored"
-      },
-      "impact": {
-        "hoursReduced": 225,
-        "tasksAutomated": 900,
-        "qualityScore": 97
-      },
-      "priorityScore": 93,
-      "features": [
-        "Continuous compliance monitoring",
-        "Automated evidence collection",
-        "Gap analysis",
-        "Remediation tracking",
-        "Audit report generation"
-      ],
-      "requirements": {
-        "systems": [
-          "Azure Government",
-          "Power Automate GCC",
-          "Azure Policy",
-          "Log Analytics"
-        ],
-        "data": [
-          "System configurations",
-          "Security logs",
-          "Policy definitions",
-          "Compliance frameworks"
-        ],
-        "skills": [
-          "Federal compliance expertise",
-          "Security frameworks",
-          "Government cloud"
-        ]
-      },
-      "defaultConfiguration": {
-        "solutionName": "Federal Compliance Automation",
-        "businessType": "B2G",
-        "userStories": [
-          "As a compliance officer, I want continuous monitoring of our security controls",
-          "As an auditor, I want automated evidence collection for compliance reviews",
-          "As a CISO, I want real-time visibility into our compliance posture"
-        ],
-        "microsoftProducts": [
-          "Azure Government",
-          "Power Platform GCC",
-          "Azure Sentinel",
-          "Purview"
-        ],
-        "generalStrategy": "Implement continuous compliance monitoring with automated evidence collection and reporting for federal standards."
-      }
-    },
     {
       "id": "copilot-sales-voice",
       "name": "Copilot for Sales Voice Agent",
       "type": "conversational",
       "category": "sales",
-      "sector": "Cross-Industry",
-      "sourceType": "1P",
+      "department": "Sales",
       "industry": ["technology", "retail", "financial", "manufacturing"],
       "complexity": "high",
       "description": "AI-powered sales assistant with voice capabilities, conversation memory management, and multi-agent orchestration for comprehensive sales support",
       "shortDescription": "Voice-enabled sales agent with memory and multi-agent orchestration",
-      "businessBenefit": "Increases sales productivity by 40% and improves CRM data quality by 90%",
-      "lobSystems": ["Dynamics 365", "Salesforce", "HubSpot", "Custom CRM"],
-      "pricing": {
-        "model": "per-user",
-        "estimate": "$80-120/user/month"
-      },
       "currentState": {
         "volume": 2500,
         "hours": 200,
@@ -813,7 +96,71 @@
               "memory/{guid}": "User-specific conversation memories"
             }
           }
+        },
+        "configuration": {
+          "environment_variables": [
+            "AZURE_OPENAI_API_KEY",
+            "AZURE_OPENAI_ENDPOINT",
+            "AZURE_OPENAI_API_VERSION",
+            "AzureWebJobsStorage",
+            "AZURE_FILES_SHARE_NAME",
+            "ASSISTANT_NAME",
+            "CHARACTERISTIC_DESCRIPTION",
+            "DYNAMICS_365_CLIENT_ID (optional)",
+            "DYNAMICS_365_CLIENT_SECRET (optional)",
+            "DYNAMICS_365_TENANT_ID (optional)",
+            "DYNAMICS_365_RESOURCE (optional)"
+          ],
+          "api_endpoints": [
+            {
+              "path": "/api/businessinsightbot_function",
+              "method": "POST",
+              "auth": "Function key",
+              "payload": {
+                "user_input": "string",
+                "conversation_history": "array",
+                "user_guid": "string (optional)"
+              }
+            }
+          ]
         }
+      },
+      "implementation": {
+        "setup_steps": [
+          "Create Azure Function App with Python runtime",
+          "Configure Azure OpenAI service and obtain API credentials",
+          "Set up Azure File Storage for conversation memory",
+          "Deploy function_app.py and agent files to Azure Functions",
+          "Configure environment variables in Function App settings",
+          "Deploy index_voice.html to static web hosting",
+          "Configure CORS settings for Function App",
+          "Obtain and configure Function key for authentication"
+        ],
+        "customization_options": [
+          "Modify agent behaviors by editing agent Python files",
+          "Customize UI appearance and voice settings in index_voice.html",
+          "Add new agents by creating files following BasicAgent pattern",
+          "Adjust memory retention and context handling in storage manager",
+          "Configure voice synthesis options and languages"
+        ]
+      },
+      "metrics": {
+        "performance": {
+          "average_response_time": "2-3 seconds",
+          "concurrent_users": "100+",
+          "memory_capacity": "Unlimited conversations per user"
+        },
+        "business_impact": {
+          "sales_productivity_increase": "40%",
+          "customer_engagement_improvement": "65%",
+          "information_retrieval_speed": "10x faster"
+        }
+      },
+      "deployment": {
+        "cloud_provider": "Microsoft Azure",
+        "estimated_cost": "$50-200/month (depending on usage)",
+        "scalability": "Auto-scaling with Azure Functions",
+        "maintenance": "Low - serverless architecture"
       },
       "defaultConfiguration": {
         "solutionName": "Voice-Enabled Sales Copilot",
@@ -861,18 +208,11 @@
       "name": "Microsoft 365 Researcher Agent",
       "type": "analytical",
       "category": "research",
-      "sector": "Cross-Industry",
-      "sourceType": "1P",
+      "department": "Enterprise",
       "industry": ["cross-industry"],
       "complexity": "low",
       "description": "Out-of-the-box AI reasoning agent that performs deep research across enterprise data and web sources, employing a three-phase approach: Planning, Iterative Research, and Synthesis. Built on OpenAI's o3 deep research model with 88.5% higher accuracy than standard Copilot Chat.",
       "shortDescription": "OOTB deep research agent with enterprise data integration",
-      "businessBenefit": "Saves 6-8 hours per week on research tasks with 88.5% higher accuracy",
-      "lobSystems": ["Microsoft 365", "SharePoint", "Exchange", "Teams", "Graph connectors"],
-      "pricing": {
-        "model": "per-user",
-        "estimate": "$30/user/month (included with M365 Copilot)"
-      },
       "currentState": {
         "volume": 5000,
         "hours": 400,
@@ -915,6 +255,81 @@
           "Understanding of research methodologies"
         ]
       },
+      "technicalDetails": {
+        "architecture": {
+          "backend": {
+            "runtime": "Microsoft 365 Copilot Infrastructure",
+            "model": "OpenAI o3 deep research model",
+            "methodology": {
+              "phase1": "Planning - Develops comprehensive research strategy",
+              "phase2": "Iterative Research - Reason → Retrieve → Review cycles",
+              "phase3": "Synthesis - Compiles findings into actionable reports"
+            }
+          },
+          "integration": {
+            "internal_sources": [
+              "Exchange Online (Email)",
+              "SharePoint Online (Documents)",
+              "Teams (Meetings & Chat)",
+              "OneDrive (Personal files)",
+              "Graph connectors (Third-party data)"
+            ],
+            "external_sources": [
+              "Trusted web sources",
+              "Academic databases",
+              "Industry publications"
+            ]
+          }
+        },
+        "configuration": {
+          "admin_settings": [
+            "Enable/disable in Microsoft 365 admin center",
+            "Configure Graph connectors",
+            "Set data access permissions",
+            "Manage user access policies"
+          ],
+          "usage_limits": {
+            "combined_monthly_limit": "25 queries (shared with Analyst agent)",
+            "query_complexity": "No limit on research depth",
+            "source_count": "Unlimited sources per query"
+          }
+        }
+      },
+      "implementation": {
+        "setup_steps": [
+          "Ensure Microsoft 365 Copilot licenses are assigned",
+          "No additional setup required - works immediately",
+          "Optional: Configure Graph connectors for third-party data",
+          "Optional: Set up data governance policies",
+          "Train users on effective research queries"
+        ],
+        "customization_options": [
+          "Configure which data sources are accessible",
+          "Set up custom Graph connectors",
+          "Define data access policies by user group",
+          "Integrate with third-party systems",
+          "Create research query templates"
+        ]
+      },
+      "metrics": {
+        "performance": {
+          "accuracy_improvement": "88.5% over standard chat",
+          "average_sources_used": "10.1 per query",
+          "research_time_saved": "6-8 hours per week for product managers",
+          "query_processing_time": "2-5 minutes depending on complexity"
+        },
+        "business_impact": {
+          "decision_quality_improvement": "75%",
+          "research_efficiency_gain": "85%",
+          "knowledge_discovery_rate": "3x faster"
+        }
+      },
+      "deployment": {
+        "cloud_provider": "Microsoft 365",
+        "estimated_cost": "$30/user/month (included with M365 Copilot)",
+        "scalability": "Enterprise-scale by default",
+        "maintenance": "Zero - managed by Microsoft"
+      },
       "defaultConfiguration": {
         "solutionName": "Enterprise Research Assistant",
         "businessType": "B2E",
@@ -930,7 +345,23 @@
           "Exchange Online",
           "Teams"
         ],
-        "generalStrategy": "Leverage the pre-built Researcher agent to enable employees across the organization to perform deep, accurate research that combines internal organizational knowledge with external sources, saving 6-8 hours per week on research tasks"
+        "generalStrategy": "Leverage the pre-built Researcher agent to enable employees across the organization to perform deep, accurate research that combines internal organizational knowledge with external sources, saving 6-8 hours per week on research tasks",
+        "customFields": [
+          {
+            "name": "dataSourcePriorities",
+            "label": "Data Source Priorities",
+            "type": "textarea",
+            "placeholder": "Define which internal and external sources should be prioritized for different types of research",
+            "category": "Configuration"
+          },
+          {
+            "name": "researchGovernance",
+            "label": "Research Governance Policies",
+            "type": "textarea",
+            "placeholder": "Outline data access policies, compliance requirements, and research boundaries",
+            "category": "Compliance"
+          }
+        ]
       }
     },
     {
@@ -938,18 +369,11 @@
       "name": "Microsoft 365 Analyst Agent",
       "type": "analytical",
       "category": "data-analysis",
-      "sector": "Cross-Industry",
-      "sourceType": "1P",
+      "department": "Enterprise",
       "industry": ["cross-industry"],
       "complexity": "low",
       "description": "Out-of-the-box data analysis agent running on OpenAI's o3-mini model, executing Python code in real-time with visible code execution. Handles messy real-world data across Excel, CSV, JSON, PowerPoint, and PDF formats with automatic error recovery.",
       "shortDescription": "OOTB data analyst with Python execution and multi-format support",
-      "businessBenefit": "Reduces data analysis time by 90% with 82% accuracy improvement",
-      "lobSystems": ["Excel Online", "Power BI", "SharePoint", "OneDrive"],
-      "pricing": {
-        "model": "per-user",
-        "estimate": "$30/user/month (included with M365 Copilot)"
-      },
       "currentState": {
         "volume": 3000,
         "hours": 250,
@@ -991,6 +415,72 @@
           "Ability to formulate analysis questions"
         ]
       },
+      "technicalDetails": {
+        "architecture": {
+          "backend": {
+            "runtime": "Microsoft 365 Copilot Infrastructure",
+            "model": "OpenAI o3-mini (optimized for data analysis)",
+            "execution_environment": "Secure Python sandbox",
+            "capabilities": {
+              "data_processing": "Pandas, NumPy for data manipulation",
+              "visualization": "Matplotlib, Seaborn for charts",
+              "statistics": "SciPy, StatsModels for analysis",
+              "ml_basics": "Scikit-learn for predictions"
+            }
+          },
+          "data_handling": {
+            "supported_formats": [
+              "Excel (.xlsx, .xls)",
+              "CSV (.csv)",
+              "JSON (.json)",
+              "PowerPoint (.pptx)",
+              "PDF (.pdf)"
+            ],
+            "max_file_size": "100MB per file",
+            "concurrent_files": "Multiple files in single analysis"
+          }
+        },
+        "configuration": {
+          "usage_limits": {
+            "combined_monthly_limit": "25 queries (shared with Researcher agent)",
+            "code_execution_timeout": "120 seconds",
+            "memory_limit": "4GB per analysis session"
+          }
+        }
+      },
+      "implementation": {
+        "setup_steps": [
+          "Ensure Microsoft 365 Copilot licenses are assigned",
+          "No additional setup required - works immediately",
+          "Prepare data files in supported formats",
+          "Train users on effective analysis queries"
+        ],
+        "customization_options": [
+          "Create analysis query templates",
+          "Define standard visualization formats",
+          "Set up automated analysis workflows",
+          "Integrate with Power BI for advanced visualizations"
+        ]
+      },
+      "metrics": {
+        "performance": {
+          "analysis_speed": "10x faster than manual analysis",
+          "error_recovery_rate": "95%",
+          "visualization_quality": "Publication-ready",
+          "code_transparency": "100% visible execution"
+        },
+        "business_impact": {
+          "analysis_accuracy_improvement": "82%",
+          "time_to_insight": "Minutes vs hours",
+          "data_processing_efficiency": "90% reduction in manual work"
+        }
+      },
+      "deployment": {
+        "cloud_provider": "Microsoft 365",
+        "estimated_cost": "$30/user/month (included with M365 Copilot)",
+        "scalability": "Enterprise-scale by default",
+        "maintenance": "Zero - managed by Microsoft"
+      },
       "defaultConfiguration": {
         "solutionName": "Enterprise Data Analysis Assistant",
         "businessType": "B2E",
@@ -1005,7 +495,23 @@
           "Power BI (optional)",
           "SharePoint Online"
         ],
-        "generalStrategy": "Leverage the pre-built Analyst agent to democratize data analysis across the organization, enabling any employee to perform sophisticated analyses on messy real-world data without coding skills"
+        "generalStrategy": "Leverage the pre-built Analyst agent to democratize data analysis across the organization, enabling any employee to perform sophisticated analyses on messy real-world data without coding skills",
+        "customFields": [
+          {
+            "name": "analysisTemplates",
+            "label": "Standard Analysis Templates",
+            "type": "textarea",
+            "placeholder": "Define reusable analysis patterns for common business questions",
+            "category": "Templates"
+          },
+          {
+            "name": "dataQualityStandards",
+            "label": "Data Quality Standards",
+            "type": "textarea",
+            "placeholder": "Specify data validation rules and quality thresholds",
+            "category": "Data Governance"
+          }
+        ]
       }
     },
     {
@@ -1013,18 +519,11 @@
       "name": "Dynamics 365 Sales Research Agent",
       "type": "analytical",
       "category": "sales",
-      "sector": "Cross-Industry",
-      "sourceType": "1P",
+      "department": "Sales",
       "industry": ["cross-industry"],
       "complexity": "medium",
       "description": "Microsoft's most sophisticated sales intelligence offering, available through the AI Accelerator for Sales program. Transforms natural language queries into comprehensive business intelligence through deep research capabilities with AI Cursor technology and multibranch research journeys.",
       "shortDescription": "Advanced sales intelligence with AI-driven research and insights",
-      "businessBenefit": "Increases revenue per head by 133% and improves pipeline generation by 20%",
-      "lobSystems": ["Dynamics 365 Sales", "SharePoint", "Exchange", "Teams"],
-      "pricing": {
-        "model": "custom",
-        "estimate": "Included with AI Accelerator program"
-      },
       "currentState": {
         "volume": 1500,
         "hours": 300,
@@ -1068,6 +567,85 @@
           "Change management expertise"
         ]
       },
+      "technicalDetails": {
+        "architecture": {
+          "backend": {
+            "runtime": "Dynamics 365 AI Infrastructure",
+            "integration": "Native Dynamics 365 Sales integration",
+            "ai_features": {
+              "cursor_technology": "Context-aware interaction anywhere on research canvas",
+              "multibranch_research": "Explore interconnected sales performance aspects",
+              "reasoning_engine": "Transparent AI decision-making process"
+            }
+          },
+          "data_sources": {
+            "internal": [
+              "Dynamics 365 Sales data",
+              "SharePoint documents",
+              "Exchange emails",
+              "Teams conversations"
+            ],
+            "external": [
+              "Market intelligence feeds",
+              "Industry databases",
+              "Company websites",
+              "News sources"
+            ]
+          }
+        },
+        "configuration": {
+          "program_requirements": [
+            "AI Accelerator for Sales enrollment",
+            "Executive sponsorship",
+            "Dedicated implementation team",
+            "6-month commitment"
+          ],
+          "deployment_phases": {
+            "foundation": "Months 1-2: Environment setup and data preparation",
+            "pilot": "Months 2-3: Pilot team deployment",
+            "rollout": "Months 3-6: Organization-wide deployment"
+          }
+        }
+      },
+      "implementation": {
+        "setup_steps": [
+          "Enroll in AI Accelerator for Sales program",
+          "Provision Dynamics 365 Sales Premium environment",
+          "Configure data sources and connections",
+          "Set up security roles and permissions",
+          "Import historical sales data",
+          "Configure AI research parameters",
+          "Train pilot users",
+          "Deploy to broader sales organization"
+        ],
+        "customization_options": [
+          "Configure research focus areas by role",
+          "Customize insight delivery formats",
+          "Set up automated research triggers",
+          "Define custom KPIs and metrics",
+          "Create industry-specific research templates"
+        ]
+      },
+      "metrics": {
+        "performance": {
+          "insight_generation_time": "Minutes vs days",
+          "data_coverage": "95% of relevant sources",
+          "accuracy_rate": "97% validated insights",
+          "user_adoption": "85% within 3 months"
+        },
+        "business_impact": {
+          "revenue_per_head_increase": "133% YoY (Lenovo case)",
+          "pipeline_generation": "20% increase (ANS case)",
+          "sales_cycle_reduction": "25% average",
+          "forecast_accuracy": "90% improvement"
+        }
+      },
+      "deployment": {
+        "cloud_provider": "Microsoft Azure",
+        "estimated_cost": "Included with AI Accelerator program",
+        "scalability": "Enterprise-ready",
+        "maintenance": "Managed through Dynamics 365"
+      },
       "defaultConfiguration": {
         "solutionName": "AI-Powered Sales Intelligence",
         "businessType": "B2B",
@@ -1082,7 +660,30 @@
           "Azure AI Services",
           "Microsoft Teams"
         ],
-        "generalStrategy": "Transform sales operations through AI-driven research capabilities that provide deep customer insights, market intelligence, and predictive analytics, enabling data-driven decision making at scale"
+        "generalStrategy": "Transform sales operations through AI-driven research capabilities that provide deep customer insights, market intelligence, and predictive analytics, enabling data-driven decision making at scale",
+        "customFields": [
+          {
+            "name": "salesMethodology",
+            "label": "Sales Methodology Alignment",
+            "type": "textarea",
+            "placeholder": "Describe how AI research aligns with your sales methodology (MEDDIC, Challenger, etc.)",
+            "category": "Sales Strategy"
+          },
+          {
+            "name": "territoryStructure",
+            "label": "Territory and Account Structure",
+            "type": "textarea",
+            "placeholder": "Define territory organization and account segmentation for AI analysis",
+            "category": "Sales Organization"
+          },
+          {
+            "name": "competitiveIntelligence",
+            "label": "Competitive Intelligence Requirements",
+            "type": "textarea",
+            "placeholder": "Specify competitive analysis needs and win/loss tracking",
+            "category": "Market Intelligence"
+          }
+        ]
       }
     },
     {
@@ -1090,18 +691,11 @@
       "name": "Email Intelligence Agent",
       "type": "automation",
       "category": "customer-service",
-      "sector": "Cross-Industry",
-      "sourceType": "1P",
+      "department": "Customer Service",
       "industry": ["cross-industry"],
       "complexity": "low",
       "description": "Automatically categorizes, prioritizes, and routes emails using AI to improve response times and customer satisfaction. Includes sentiment analysis and smart routing capabilities.",
       "shortDescription": "Smart email categorization and routing with AI",
-      "businessBenefit": "Improves response time by 65% and customer satisfaction by 40%",
-      "lobSystems": ["Exchange Online", "Gmail", "Dynamics 365", "ServiceNow"],
-      "pricing": {
-        "model": "usage-based",
-        "estimate": "$500-1500/month"
-      },
       "currentState": {
         "volume": 10000,
         "hours": 400,
@@ -1144,6 +738,78 @@
           "Customer service process knowledge"
         ]
       },
+      "technicalDetails": {
+        "architecture": {
+          "backend": {
+            "runtime": "Power Automate cloud flows",
+            "ai_model": "AI Builder email classification model",
+            "processing": {
+              "intake": "Email connector monitors inbox",
+              "analysis": "AI Builder processes content",
+              "routing": "Power Automate executes routing logic",
+              "tracking": "Dynamics 365 logs interactions"
+            }
+          },
+          "integrations": {
+            "email_systems": ["Exchange Online", "Gmail", "IMAP/POP3"],
+            "crm_systems": ["Dynamics 365", "Salesforce connector"],
+            "ticketing": ["ServiceNow", "Zendesk", "Custom systems"]
+          }
+        },
+        "configuration": {
+          "ai_model_settings": [
+            "Training data requirements (min 50 examples per category)",
+            "Confidence threshold settings",
+            "Retraining schedule",
+            "Model performance monitoring"
+          ],
+          "routing_rules": {
+            "priority_keywords": "Urgent, Critical, Emergency",
+            "department_mapping": "Configurable routing table",
+            "escalation_paths": "Time-based escalation rules"
+          }
+        }
+      },
+      "implementation": {
+        "setup_steps": [
+          "Prepare historical email data for training",
+          "Create AI Builder classification model",
+          "Train model with categorized emails",
+          "Build Power Automate flow for email processing",
+          "Configure routing rules and departments",
+          "Set up Dynamics 365 case creation",
+          "Test with sample emails",
+          "Deploy to production inbox",
+          "Monitor and refine model"
+        ],
+        "customization_options": [
+          "Add custom categories specific to business",
+          "Configure multi-level routing logic",
+          "Create custom sentiment thresholds",
+          "Build department-specific response templates",
+          "Set up custom analytics dashboards"
+        ]
+      },
+      "metrics": {
+        "performance": {
+          "categorization_accuracy": "94%",
+          "average_routing_time": "< 30 seconds",
+          "false_positive_rate": "< 5%",
+          "processing_capacity": "1000+ emails/hour"
+        },
+        "business_impact": {
+          "response_time_improvement": "65%",
+          "customer_satisfaction_increase": "40%",
+          "agent_productivity_gain": "80%",
+          "escalation_reduction": "50%"
+        }
+      },
+      "deployment": {
+        "cloud_provider": "Microsoft Azure",
+        "estimated_cost": "$500-1500/month (depending on volume)",
+        "scalability": "Auto-scales with Power Automate",
+        "maintenance": "Monthly model retraining recommended"
+      },
       "defaultConfiguration": {
         "solutionName": "Intelligent Email Management System",
         "businessType": "B2C",
@@ -1158,7 +824,30 @@
           "Power Automate",
           "Exchange Online"
         ],
-        "generalStrategy": "Implement AI-driven email processing to automatically categorize, prioritize, and route customer emails, reducing response times by 65% and improving customer satisfaction through intelligent automation"
+        "generalStrategy": "Implement AI-driven email processing to automatically categorize, prioritize, and route customer emails, reducing response times by 65% and improving customer satisfaction through intelligent automation",
+        "customFields": [
+          {
+            "name": "emailCategories",
+            "label": "Email Category Definitions",
+            "type": "textarea",
+            "placeholder": "Define email categories and classification rules (e.g., Billing, Technical Support, Sales Inquiry)",
+            "category": "Classification"
+          },
+          {
+            "name": "routingMatrix",
+            "label": "Department Routing Matrix",
+            "type": "textarea",
+            "placeholder": "Map categories to departments and define escalation paths",
+            "category": "Workflow"
+          },
+          {
+            "name": "priorityRules",
+            "label": "Priority Detection Rules",
+            "type": "textarea",
+            "placeholder": "Define keywords, senders, and patterns that indicate high-priority emails",
+            "category": "Business Rules"
+          }
+        ]
       }
     },
     {
@@ -1166,18 +855,11 @@
       "name": "Document Intelligence Agent",
       "type": "extraction",
       "category": "operations",
-      "sector": "Cross-Industry",
-      "sourceType": "1P",
+      "department": "Operations",
       "industry": ["financial", "insurance", "legal", "healthcare"],
       "complexity": "medium",
       "description": "Extract and process information from documents using AI, reducing manual data entry and improving accuracy. Handles forms, invoices, contracts, and unstructured documents.",
       "shortDescription": "AI-powered document data extraction and processing",
-      "businessBenefit": "Reduces processing time by 90% and data entry costs by 80%",
-      "lobSystems": ["SharePoint", "SAP", "Oracle", "D365 F&O"],
-      "pricing": {
-        "model": "usage-based",
-        "estimate": "$1000-3000/month"
-      },
       "currentState": {
         "volume": 5000,
         "hours": 300,
@@ -1220,6 +902,84 @@
           "System integration experience"
         ]
       },
+      "technicalDetails": {
+        "architecture": {
+          "backend": {
+            "runtime": "Azure Form Recognizer + Power Automate",
+            "processing_pipeline": {
+              "ingestion": "SharePoint/Email/API intake",
+              "preprocessing": "Image enhancement and PDF conversion",
+              "extraction": "AI-powered field detection",
+              "validation": "Business rule checking",
+              "integration": "System updates via connectors"
+            }
+          },
+          "document_types": {
+            "structured": ["Invoices", "Purchase Orders", "Forms"],
+            "semi_structured": ["Contracts", "Agreements", "Reports"],
+            "unstructured": ["Letters", "Emails", "Memos"]
+          },
+          "storage": {
+            "raw_documents": "SharePoint document library",
+            "extracted_data": "Dataverse/SQL Database",
+            "audit_logs": "Azure Log Analytics"
+          }
+        },
+        "configuration": {
+          "model_training": [
+            "Custom model creation for each document type",
+            "Field labeling and annotation",
+            "Confidence threshold configuration",
+            "Post-processing rules"
+          ],
+          "integration_mappings": {
+            "field_mapping": "Document fields to system fields",
+            "transformation_rules": "Data format conversions",
+            "validation_logic": "Business rule implementation"
+          }
+        }
+      },
+      "implementation": {
+        "setup_steps": [
+          "Analyze document types and volumes",
+          "Set up Azure Form Recognizer resource",
+          "Create custom models for each document type",
+          "Label training documents",
+          "Train and test models",
+          "Build Power Automate processing flows",
+          "Configure system integrations",
+          "Set up error handling and monitoring",
+          "Deploy pilot with subset of documents",
+          "Scale to full production"
+        ],
+        "customization_options": [
+          "Create industry-specific extraction models",
+          "Build custom validation rules",
+          "Implement approval workflows",
+          "Add quality assurance checkpoints",
+          "Create custom dashboards"
+        ]
+      },
+      "metrics": {
+        "performance": {
+          "extraction_accuracy": "95-99%",
+          "processing_speed": "30 seconds/document",
+          "straight_through_rate": "85%",
+          "error_rate": "< 2%"
+        },
+        "business_impact": {
+          "processing_time_reduction": "90%",
+          "data_entry_elimination": "95%",
+          "compliance_improvement": "100%",
+          "cost_per_document": "80% reduction"
+        }
+      },
+      "deployment": {
+        "cloud_provider": "Microsoft Azure",
+        "estimated_cost": "$1000-3000/month (based on volume)",
+        "scalability": "Handles 10,000+ documents/day",
+        "maintenance": "Quarterly model retraining"
+      },
       "defaultConfiguration": {
         "solutionName": "Intelligent Document Processing System",
         "businessType": "B2B",
@@ -1234,7 +994,30 @@
           "SharePoint Online",
           "Dataverse"
         ],
-        "generalStrategy": "Implement end-to-end document processing automation using AI to extract data from various document types, validate against business rules, and integrate with downstream systems, reducing processing time by 90%"
+        "generalStrategy": "Implement end-to-end document processing automation using AI to extract data from various document types, validate against business rules, and integrate with downstream systems, reducing processing time by 90%",
+        "customFields": [
+          {
+            "name": "documentTypes",
+            "label": "Document Type Definitions",
+            "type": "textarea",
+            "placeholder": "List document types to process (invoices, contracts, forms) and their key fields",
+            "category": "Document Configuration"
+          },
+          {
+            "name": "validationRules",
+            "label": "Data Validation Rules",
+            "type": "textarea",
+            "placeholder": "Define business rules for data validation (e.g., invoice totals, date formats)",
+            "category": "Quality Assurance"
+          },
+          {
+            "name": "systemIntegrations",
+            "label": "System Integration Requirements",
+            "type": "textarea",
+            "placeholder": "Specify target systems and field mappings for extracted data",
+            "category": "Integration"
+          }
+        ]
       }
     },
     {
@@ -1242,18 +1025,11 @@
       "name": "Financial Insights Agent (Copilot Studio)",
       "type": "analytical",
       "category": "finance",
-      "sector": "Financial Services",
-      "sourceType": "1P",
+      "department": "Finance",
       "industry": ["financial", "insurance", "investment"],
       "complexity": "medium",
       "description": "Pre-built Copilot Studio template for financial services professionals. Analyzes SEC filings, generates regulatory reports, and provides market insights with code interpreter capabilities.",
       "shortDescription": "Financial analysis agent with SEC filing and regulatory reporting",
-      "businessBenefit": "Reduces analysis time by 80% and improves compliance accuracy to 99.5%",
-      "lobSystems": ["Bloomberg API", "Reuters", "SEC EDGAR", "Internal databases"],
-      "pricing": {
-        "model": "per-user",
-        "estimate": "$200/month base + usage"
-      },
       "currentState": {
         "volume": 2000,
         "hours": 250,
@@ -1296,6 +1072,90 @@
           "Power Platform basics"
         ]
       },
+      "technicalDetails": {
+        "architecture": {
+          "platform": "Copilot Studio",
+          "template": "Financial Insights (pre-built)",
+          "capabilities": {
+            "nlp": "Natural language understanding for financial queries",
+            "code_interpreter": "Python execution for calculations",
+            "connectors": "1,400+ Power Platform connectors",
+            "file_handling": "512MB file upload limit"
+          },
+          "components": {
+            "topics": [
+              "SEC filing analysis",
+              "Financial ratios calculation",
+              "Regulatory compliance check",
+              "Market comparison"
+            ],
+            "actions": [
+              "Extract filing data",
+              "Calculate metrics",
+              "Generate visualizations",
+              "Create reports"
+            ],
+            "knowledge": [
+              "Financial regulations database",
+              "Accounting standards",
+              "Industry benchmarks"
+            ]
+          }
+        },
+        "configuration": {
+          "setup_options": [
+            "Use pre-built template as-is",
+            "Customize topics and responses",
+            "Add custom Python functions",
+            "Configure data connections",
+            "Set up authentication"
+          ],
+          "integration_points": {
+            "data_sources": ["Bloomberg API", "Reuters", "Internal databases"],
+            "output_systems": ["Power BI", "Excel", "SharePoint"]
+          }
+        }
+      },
+      "implementation": {
+        "setup_steps": [
+          "Access Copilot Studio and create new agent",
+          "Select Financial Insights template",
+          "Configure data source connections",
+          "Customize conversation topics if needed",
+          "Set up authentication and security",
+          "Test with sample financial queries",
+          "Configure code interpreter settings",
+          "Deploy to selected channels",
+          "Train finance team on usage"
+        ],
+        "customization_options": [
+          "Add industry-specific analysis topics",
+          "Create custom financial calculations",
+          "Build specialized report templates",
+          "Integrate proprietary data sources",
+          "Customize compliance rules"
+        ]
+      },
+      "metrics": {
+        "performance": {
+          "analysis_speed": "5x faster than manual",
+          "accuracy_rate": "98% for standard metrics",
+          "report_generation": "Minutes vs hours",
+          "concurrent_analyses": "Multiple users supported"
+        },
+        "business_impact": {
+          "analyst_productivity": "75% improvement",
+          "report_turnaround": "Same day vs 3-5 days",
+          "compliance_accuracy": "99.5%",
+          "insight_discovery": "3x more insights found"
+        }
+      },
+      "deployment": {
+        "cloud_provider": "Microsoft Azure",
+        "estimated_cost": "$200/month base + usage",
+        "scalability": "25,000 messages/month included",
+        "maintenance": "Low - template updates by Microsoft"
+      },
       "defaultConfiguration": {
         "solutionName": "AI Financial Analysis Assistant",
         "businessType": "B2B",
@@ -1310,7 +1170,30 @@
           "Azure AI Services",
           "Power BI"
         ],
-        "generalStrategy": "Deploy a specialized financial analysis agent that combines pre-built capabilities with custom configurations to automate SEC filing analysis, regulatory compliance, and financial reporting, reducing analysis time by 80%"
+        "generalStrategy": "Deploy a specialized financial analysis agent that combines pre-built capabilities with custom configurations to automate SEC filing analysis, regulatory compliance, and financial reporting, reducing analysis time by 80%",
+        "customFields": [
+          {
+            "name": "analysisScope",
+            "label": "Financial Analysis Scope",
+            "type": "textarea",
+            "placeholder": "Define specific financial metrics, ratios, and KPIs to track",
+            "category": "Analysis Configuration"
+          },
+          {
+            "name": "regulatoryFramework",
+            "label": "Regulatory Compliance Framework",
+            "type": "textarea",
+            "placeholder": "Specify regulatory requirements (SOX, Basel III, IFRS, etc.)",
+            "category": "Compliance"
+          },
+          {
+            "name": "reportingRequirements",
+            "label": "Reporting Templates and Formats",
+            "type": "textarea",
+            "placeholder": "Define standard report formats and distribution requirements",
+            "category": "Output Configuration"
+          }
+        ]
       }
     },
     {
@@ -1318,18 +1201,11 @@
       "name": "Meeting Intelligence Agent",
       "type": "analytical",
       "category": "operations",
-      "sector": "Professional Services",
-      "sourceType": "Partner",
+      "department": "Enterprise",
       "industry": ["financial", "consulting", "professional-services"],
       "complexity": "medium",
       "description": "Automatically prepares comprehensive meeting briefings by gathering and synthesizing information from multiple internal systems including CRM, project data, and communication history.",
       "shortDescription": "AI-powered meeting preparation and insights generator",
-      "businessBenefit": "Reduces meeting preparation time by 75% and improves meeting effectiveness by 40%",
-      "lobSystems": ["Teams", "Outlook", "CRM", "Project systems"],
-      "pricing": {
-        "model": "per-user",
-        "estimate": "$50-150/month"
-      },
       "currentState": {
         "volume": 1000,
         "hours": 150,
@@ -1374,6 +1250,88 @@
           "Data aggregation expertise"
         ]
       },
+      "technicalDetails": {
+        "architecture": {
+          "backend": {
+            "runtime": "Power Automate + AI Builder",
+            "processing_flow": {
+              "trigger": "Meeting scheduled in calendar",
+              "data_gathering": "Aggregate from multiple sources",
+              "ai_analysis": "Synthesize information",
+              "document_generation": "Create briefing package",
+              "distribution": "Send to participants"
+            }
+          },
+          "data_sources": {
+            "internal": [
+              "Exchange/Outlook calendar",
+              "CRM (customer/contact data)",
+              "SharePoint (documents)",
+              "Project systems",
+              "Email history"
+            ],
+            "analysis": [
+              "Meeting patterns",
+              "Participant relationships",
+              "Historical outcomes",
+              "Action item tracking"
+            ]
+          }
+        },
+        "configuration": {
+          "meeting_types": [
+            "Client meetings",
+            "Internal reviews",
+            "Project updates",
+            "Board presentations"
+          ],
+          "briefing_templates": {
+            "executive": "High-level summary format",
+            "detailed": "Comprehensive background",
+            "quick": "Key points only"
+          }
+        }
+      },
+      "implementation": {
+        "setup_steps": [
+          "Map data sources and access permissions",
+          "Create Power Automate flows for data aggregation",
+          "Configure AI Builder for content synthesis",
+          "Design briefing document templates",
+          "Set up calendar integration triggers",
+          "Build participant profile logic",
+          "Test with pilot meeting types",
+          "Create feedback collection mechanism",
+          "Deploy across organization"
+        ],
+        "customization_options": [
+          "Create role-specific briefing formats",
+          "Add industry-specific data sources",
+          "Customize action item tracking",
+          "Build meeting effectiveness metrics",
+          "Configure automated follow-ups"
+        ]
+      },
+      "metrics": {
+        "performance": {
+          "briefing_generation_time": "5 minutes",
+          "data_completeness": "95%",
+          "user_satisfaction": "4.7/5",
+          "adoption_rate": "85%"
+        },
+        "business_impact": {
+          "meeting_preparation_time": "75% reduction",
+          "meeting_effectiveness": "40% improvement",
+          "follow_up_completion": "90% rate",
+          "decision_speed": "2x faster"
+        }
+      },
+      "deployment": {
+        "cloud_provider": "Microsoft 365",
+        "estimated_cost": "$50-150/month",
+        "scalability": "Unlimited meetings",
+        "maintenance": "Minimal - automated updates"
+      },
       "defaultConfiguration": {
         "solutionName": "Intelligent Meeting Assistant",
         "businessType": "B2E",
@@ -1389,7 +1347,30 @@
           "Microsoft Teams",
           "Dynamics 365"
         ],
-        "generalStrategy": "Create an intelligent system that automatically prepares comprehensive meeting briefings by aggregating data from multiple sources, saving hours of preparation time and improving meeting effectiveness"
+        "generalStrategy": "Create an intelligent system that automatically prepares comprehensive meeting briefings by aggregating data from multiple sources, saving hours of preparation time and improving meeting effectiveness",
+        "customFields": [
+          {
+            "name": "meetingTypes",
+            "label": "Meeting Type Classifications",
+            "type": "textarea",
+            "placeholder": "Define meeting categories and their specific briefing requirements",
+            "category": "Meeting Configuration"
+          },
+          {
+            "name": "dataSourcePriority",
+            "label": "Data Source Prioritization",
+            "type": "textarea",
+            "placeholder": "Rank data sources by importance for different meeting types",
+            "category": "Data Strategy"
+          },
+          {
+            "name": "briefingFormats",
+            "label": "Briefing Document Templates",
+            "type": "textarea",
+            "placeholder": "Describe preferred briefing formats for different audiences",
+            "category": "Output Design"
+          }
+        ]
       }
     },
     {
@@ -1397,18 +1378,11 @@
       "name": "Smart Case Summarization Agent",
       "type": "analytical",
       "category": "customer-service",
-      "sector": "Cross-Industry",
-      "sourceType": "1P",
+      "department": "Customer Service",
       "industry": ["cross-industry"],
       "complexity": "low",
       "description": "Automatically generates case summaries and suggests tags/categories for customer service cases using Gen AI, reducing manual effort and improving consistency.",
       "shortDescription": "AI case summarization and intelligent tagging",
-      "businessBenefit": "Reduces case handling time by 30% and improves routing accuracy by 85%",
-      "lobSystems": ["Dynamics 365 Customer Service", "Salesforce Service Cloud", "ServiceNow"],
-      "pricing": {
-        "model": "usage-based",
-        "estimate": "$300-800/month"
-      },
       "currentState": {
         "volume": 8000,
         "hours": 200,
@@ -1451,6 +1425,80 @@
           "Data analysis"
         ]
       },
+      "technicalDetails": {
+        "architecture": {
+          "backend": {
+            "runtime": "AI Builder + Power Automate",
+            "ai_model": "GPT-based summarization model",
+            "processing": {
+              "trigger": "New case creation or update",
+              "analysis": "AI processes case description",
+              "generation": "Creates summary and tags",
+              "update": "Updates case record"
+            }
+          },
+          "features": {
+            "summarization": {
+              "model": "GPT-3.5/4 via AI Builder",
+              "max_length": "200 words",
+              "style": "Concise, action-oriented"
+            },
+            "tagging": {
+              "method": "Multi-label classification",
+              "confidence_threshold": "0.7",
+              "max_tags": "5 per case"
+            }
+          }
+        },
+        "configuration": {
+          "prompts": {
+            "summary": "Summarize customer issue in 2-3 sentences",
+            "tags": "Suggest relevant tags from taxonomy",
+            "category": "Classify into primary category",
+            "priority": "Assess urgency level"
+          }
+        }
+      },
+      "implementation": {
+        "setup_steps": [
+          "Analyze existing case data and patterns",
+          "Define tag taxonomy and categories",
+          "Configure AI Builder environment",
+          "Create summarization prompts",
+          "Build Power Automate flow",
+          "Test with sample cases",
+          "Refine prompts based on results",
+          "Deploy to production",
+          "Monitor and optimize"
+        ],
+        "customization_options": [
+          "Customize summary format and length",
+          "Define business-specific tags",
+          "Create department-specific categories",
+          "Add custom priority rules",
+          "Build quality metrics"
+        ]
+      },
+      "metrics": {
+        "performance": {
+          "summarization_accuracy": "92%",
+          "tag_relevance": "88%",
+          "processing_time": "< 10 seconds",
+          "consistency_score": "95%"
+        },
+        "business_impact": {
+          "case_handling_time": "30% reduction",
+          "routing_accuracy": "85% improvement",
+          "customer_satisfaction": "15% increase",
+          "agent_productivity": "40% gain"
+        }
+      },
+      "deployment": {
+        "cloud_provider": "Microsoft Azure",
+        "estimated_cost": "$300-800/month",
+        "scalability": "10,000+ cases/day",
+        "maintenance": "Minimal - periodic prompt tuning"
+      },
       "defaultConfiguration": {
         "solutionName": "AI Case Intelligence System",
         "businessType": "B2C",
@@ -1465,7 +1513,30 @@
           "Power Automate",
           "Azure OpenAI"
         ],
-        "generalStrategy": "Leverage Gen AI to automatically analyze customer cases, generate concise summaries, and apply intelligent tags and categories, improving case handling efficiency by 30% and routing accuracy by 85%"
+        "generalStrategy": "Leverage Gen AI to automatically analyze customer cases, generate concise summaries, and apply intelligent tags and categories, improving case handling efficiency by 30% and routing accuracy by 85%",
+        "customFields": [
+          {
+            "name": "summaryGuidelines",
+            "label": "Summary Format Guidelines",
+            "type": "textarea",
+            "placeholder": "Define how case summaries should be structured (length, key elements, tone)",
+            "category": "AI Configuration"
+          },
+          {
+            "name": "tagTaxonomy",
+            "label": "Tag Taxonomy Definition",
+            "type": "textarea",
+            "placeholder": "List all available tags and their descriptions",
+            "category": "Classification"
+          },
+          {
+            "name": "priorityCriteria",
+            "label": "Priority Assessment Rules",
+            "type": "textarea",
+            "placeholder": "Define what makes a case high, medium, or low priority",
+            "category": "Business Rules"
+          }
+        ]
       }
     },
     {
@@ -1473,18 +1544,11 @@
       "name": "Self-Service Order Bot",
       "type": "conversational",
       "category": "customer-service",
-      "sector": "Retail / CPG",
-      "sourceType": "Partner",
+      "department": "Customer Service",
       "industry": ["retail", "ecommerce", "logistics"],
       "complexity": "low",
       "description": "Customer-facing chatbot for order status inquiries, reducing support ticket volume through 24/7 self-service capabilities.",
       "shortDescription": "Self-service order tracking and status chatbot",
-      "businessBenefit": "Reduces support tickets by 70% while improving customer satisfaction",
-      "lobSystems": ["Shopify", "SAP", "Oracle Commerce", "Shipping APIs"],
-      "pricing": {
-        "model": "per-user",
-        "estimate": "$200-500/month"
-      },
       "currentState": {
         "volume": 15000,
         "hours": 300,
@@ -1527,6 +1591,72 @@
           "Customer service knowledge"
         ]
       },
+      "technicalDetails": {
+        "architecture": {
+          "platform": "Copilot Studio",
+          "deployment": {
+            "channels": ["Website", "Mobile app", "WhatsApp", "Facebook"],
+            "availability": "24/7 with 99.9% uptime"
+          },
+          "integrations": {
+            "order_systems": ["SAP", "Oracle", "Shopify", "Custom APIs"],
+            "shipping": ["FedEx", "UPS", "DHL", "USPS"],
+            "crm": ["Optional customer history"]
+          }
+        },
+        "conversation_flows": {
+          "order_lookup": {
+            "inputs": ["Order number", "Email + ZIP"],
+            "validation": "Real-time with backend",
+            "outputs": ["Status", "Tracking", "Details"]
+          },
+          "returns": {
+            "eligibility": "Automatic checking",
+            "process": "Step-by-step guidance",
+            "label_generation": "Integrated"
+          }
+        }
+      },
+      "implementation": {
+        "setup_steps": [
+          "Design conversation flows",
+          "Set up Copilot Studio environment",
+          "Configure order system API connections",
+          "Build order lookup functionality",
+          "Create return process workflow",
+          "Add FAQ responses",
+          "Test with various scenarios",
+          "Deploy to website/app",
+          "Monitor and optimize"
+        ],
+        "customization_options": [
+          "Brand voice and personality",
+          "Custom status messages",
+          "Proactive notification rules",
+          "Language additions",
+          "Integration with loyalty programs"
+        ]
+      },
+      "metrics": {
+        "performance": {
+          "response_accuracy": "95%",
+          "average_resolution_time": "< 1 minute",
+          "containment_rate": "80%",
+          "availability": "99.9%"
+        },
+        "business_impact": {
+          "ticket_reduction": "70%",
+          "customer_satisfaction": "4.5/5",
+          "cost_per_interaction": "$0.10 vs $5",
+          "agent_time_saved": "250 hours/month"
+        }
+      },
+      "deployment": {
+        "cloud_provider": "Microsoft Azure",
+        "estimated_cost": "$200-500/month",
+        "scalability": "Unlimited conversations",
+        "maintenance": "Low - content updates only"
+      },
       "defaultConfiguration": {
         "solutionName": "24/7 Order Assistant",
         "businessType": "B2C",
@@ -1540,859 +1670,30 @@
           "Power Automate",
           "Azure Bot Service"
         ],
-        "generalStrategy": "Deploy a self-service chatbot that handles order inquiries 24/7, reducing support tickets by 70% while improving customer satisfaction through instant responses"
-      }
-    },
-    {
-      "id": "production-line-optimization",
-      "name": "Production Line Optimization Agent",
-      "type": "analytical",
-      "category": "operations",
-      "sector": "Manufacturing",
-      "sourceType": "Partner",
-      "industry": ["manufacturing"],
-      "complexity": "high",
-      "description": "Analyzes production output and suggests improvements in real-time",
-      "shortDescription": "Real-time production optimization",
-      "businessBenefit": "Increases production efficiency by 25% and reduces defects by 40%",
-      "lobSystems": ["MES", "D365 SCM", "Siemens"],
-      "pricing": {
-        "model": "flat-rate",
-        "estimate": "$20,000/month/line"
-      },
-      "currentState": {
-        "volume": 50,
-        "hours": 300,
-        "unit": "production_lines"
-      },
-      "impact": {
-        "hoursReduced": 240,
-        "tasksAutomated": 40,
-        "qualityScore": 94
-      },
-      "priorityScore": 91,
-      "features": [
-        "Real-time production monitoring",
-        "Quality prediction",
-        "Bottleneck identification",
-        "Resource optimization",
-        "Predictive quality control"
-      ],
-      "requirements": {
-        "systems": [
-          "Azure IoT Edge",
-          "Azure ML",
-          "Power BI",
-          "MES integration"
-        ],
-        "data": [
-          "Production metrics",
-          "Quality data",
-          "Machine telemetry",
-          "Order data"
-        ],
-        "skills": [
-          "Manufacturing expertise",
-          "IoT implementation",
-          "Data science"
+        "generalStrategy": "Deploy a self-service chatbot that handles order inquiries 24/7, reducing support tickets by 70% while improving customer satisfaction through instant responses",
+        "customFields": [
+          {
+            "name": "orderSystemIntegration",
+            "label": "Order System Integration Details",
+            "type": "textarea",
+            "placeholder": "Specify order management system and API endpoints",
+            "category": "Technical Integration"
+          },
+          {
+            "name": "conversationPersonality",
+            "label": "Bot Personality and Tone",
+            "type": "textarea",
+            "placeholder": "Define the bot's communication style and brand voice",
+            "category": "User Experience"
+          },
+          {
+            "name": "returnPolicy",
+            "label": "Return Policy Configuration",
+            "type": "textarea",
+            "placeholder": "Define return eligibility rules and process steps",
+            "category": "Business Rules"
+          }
         ]
-      },
-      "defaultConfiguration": {
-        "solutionName": "Smart Production Optimizer",
-        "businessType": "B2E",
-        "userStories": [
-          "As a production manager, I want real-time insights to optimize line performance",
-          "As a quality engineer, I want to predict and prevent defects",
-          "As an operator, I want alerts about potential issues"
-        ],
-        "microsoftProducts": [
-          "Azure IoT Edge",
-          "Azure ML",
-          "Power BI",
-          "D365 SCM"
-        ],
-        "generalStrategy": "Deploy edge AI to analyze production data in real-time and provide actionable optimization recommendations."
-      }
-    },
-    {
-      "id": "personalized-marketing-agent",
-      "name": "Personalized Marketing Agent",
-      "type": "automation",
-      "category": "marketing",
-      "sector": "Retail / CPG",
-      "sourceType": "1P",
-      "industry": ["retail", "cpg"],
-      "complexity": "medium",
-      "description": "Builds targeted campaigns from customer behavior and preferences",
-      "shortDescription": "AI-driven personalized marketing automation",
-      "businessBenefit": "Increases conversion rates by 35% and customer engagement by 50%",
-      "lobSystems": ["Adobe", "Dynamics 365 Marketing", "Salesforce Marketing Cloud"],
-      "pricing": {
-        "model": "usage-based",
-        "estimate": "$0.05/customer/month"
-      },
-      "currentState": {
-        "volume": 100000,
-        "hours": 200,
-        "unit": "customers"
-      },
-      "impact": {
-        "hoursReduced": 160,
-        "tasksAutomated": 80000,
-        "qualityScore": 89
-      },
-      "priorityScore": 87,
-      "features": [
-        "Customer segmentation",
-        "Content personalization",
-        "Channel optimization",
-        "A/B testing automation",
-        "ROI tracking"
-      ],
-      "requirements": {
-        "systems": [
-          "D365 Marketing",
-          "Azure ML",
-          "Customer Data Platform",
-          "Email/SMS platforms"
-        ],
-        "data": [
-          "Customer profiles",
-          "Purchase history",
-          "Behavioral data",
-          "Campaign history"
-        ],
-        "skills": [
-          "Marketing automation",
-          "Data science",
-          "Campaign management"
-        ]
-      },
-      "defaultConfiguration": {
-        "solutionName": "AI Marketing Personalization",
-        "businessType": "B2C",
-        "userStories": [
-          "As a marketer, I want AI to create personalized campaigns automatically",
-          "As a customer, I want relevant offers based on my preferences",
-          "As a CMO, I want improved campaign ROI through personalization"
-        ],
-        "microsoftProducts": [
-          "D365 Marketing",
-          "Azure ML",
-          "Power Automate",
-          "Customer Insights"
-        ],
-        "generalStrategy": "Use AI to analyze customer data and automatically create personalized marketing campaigns across channels."
-      }
-    },
-    {
-      "id": "workforce-clearance-onboarding",
-      "name": "Workforce Clearance & Onboarding Agent",
-      "type": "automation",
-      "category": "hr",
-      "sector": "Federal",
-      "sourceType": "Partner",
-      "industry": ["government", "defense"],
-      "complexity": "high",
-      "description": "Streamlines federal employee background checks, training, and provisioning",
-      "shortDescription": "Automated federal workforce onboarding",
-      "businessBenefit": "Reduces onboarding time by 60% and ensures 100% compliance",
-      "lobSystems": ["Workday GovCloud", "D365 HR", "Oracle HCM"],
-      "pricing": {
-        "model": "per-user",
-        "estimate": "$150/employee"
-      },
-      "currentState": {
-        "volume": 500,
-        "hours": 250,
-        "unit": "employees/month"
-      },
-      "impact": {
-        "hoursReduced": 150,
-        "tasksAutomated": 400,
-        "qualityScore": 96
-      },
-      "priorityScore": 92,
-      "features": [
-        "Clearance tracking",
-        "Training assignment",
-        "Access provisioning",
-        "Compliance monitoring",
-        "Automated notifications"
-      ],
-      "requirements": {
-        "systems": [
-          "GovCloud environments",
-          "HR systems",
-          "Identity management",
-          "Training platforms"
-        ],
-        "data": [
-          "Employee records",
-          "Clearance requirements",
-          "Training curricula",
-          "Access policies"
-        ],
-        "skills": [
-          "Federal HR processes",
-          "Security clearance knowledge",
-          "GovCloud expertise"
-        ]
-      },
-      "defaultConfiguration": {
-        "solutionName": "Federal Workforce Automation",
-        "businessType": "B2G",
-        "userStories": [
-          "As an HR specialist, I want automated tracking of clearance processes",
-          "As a new employee, I want streamlined onboarding with clear next steps",
-          "As a manager, I want visibility into onboarding status"
-        ],
-        "microsoftProducts": [
-          "Power Platform GCC",
-          "D365 HR",
-          "Azure Government",
-          "Purview"
-        ],
-        "generalStrategy": "Implement secure, compliant onboarding automation for federal workforce with integrated clearance and training management."
-      }
-    },
-    {
-      "id": "clinical-notes-summarizer",
-      "name": "Clinical Notes Summarizer",
-      "type": "extraction",
-      "category": "operations",
-      "sector": "Healthcare",
-      "sourceType": "1P",
-      "industry": ["healthcare"],
-      "complexity": "medium",
-      "description": "Generates real-time summaries from provider-patient conversations",
-      "shortDescription": "AI-powered clinical documentation",
-      "businessBenefit": "Saves 2 hours per provider daily and improves documentation accuracy by 85%",
-      "lobSystems": ["Epic", "Cerner", "Power Platform"],
-      "pricing": {
-        "model": "per-user",
-        "estimate": "$200/provider/month"
-      },
-      "currentState": {
-        "volume": 1000,
-        "hours": 400,
-        "unit": "providers"
-      },
-      "impact": {
-        "hoursReduced": 320,
-        "tasksAutomated": 800,
-        "qualityScore": 93
-      },
-      "priorityScore": 90,
-      "features": [
-        "Voice transcription",
-        "Medical terminology recognition",
-        "SOAP note generation",
-        "ICD-10 coding suggestions",
-        "EHR integration"
-      ],
-      "requirements": {
-        "systems": [
-          "Azure Health Bot",
-          "Azure OpenAI",
-          "Speech Services",
-          "EHR connectors"
-        ],
-        "data": [
-          "Clinical conversations",
-          "Medical vocabularies",
-          "Provider preferences",
-          "Coding databases"
-        ],
-        "skills": [
-          "Clinical documentation",
-          "HIPAA compliance",
-          "Healthcare IT"
-        ]
-      },
-      "defaultConfiguration": {
-        "solutionName": "AI Clinical Documentation Assistant",
-        "businessType": "B2E",
-        "userStories": [
-          "As a physician, I want automated note generation from patient conversations",
-          "As a nurse, I want accurate documentation without extensive typing",
-          "As a patient, I want my provider focused on me, not the computer"
-        ],
-        "microsoftProducts": [
-          "Azure Health Bot",
-          "Azure OpenAI",
-          "Speech Services",
-          "Power Platform"
-        ],
-        "generalStrategy": "Deploy AI-powered clinical documentation that captures provider-patient conversations and generates accurate clinical notes in real-time."
-      }
-    },
-    {
-      "id": "emission-tracking-agent",
-      "name": "Emission Tracking Agent",
-      "type": "monitoring",
-      "category": "compliance",
-      "sector": "Energy",
-      "sourceType": "Partner",
-      "industry": ["energy", "utilities", "manufacturing"],
-      "complexity": "medium",
-      "description": "Tracks, analyzes, and reports emissions across facilities",
-      "shortDescription": "Automated emissions monitoring and reporting",
-      "businessBenefit": "Reduces compliance reporting time by 80% and improves accuracy to 99%",
-      "lobSystems": ["Azure IoT", "SAP", "Enablon"],
-      "pricing": {
-        "model": "flat-rate",
-        "estimate": "$5,000/facility/month"
-      },
-      "currentState": {
-        "volume": 100,
-        "hours": 200,
-        "unit": "facilities"
-      },
-      "impact": {
-        "hoursReduced": 160,
-        "tasksAutomated": 80,
-        "qualityScore": 95
-      },
-      "priorityScore": 88,
-      "features": [
-        "Real-time emissions monitoring",
-        "Regulatory reporting automation",
-        "Anomaly detection",
-        "Predictive compliance",
-        "Carbon footprint tracking"
-      ],
-      "requirements": {
-        "systems": [
-          "Azure IoT Hub",
-          "Power BI",
-          "Sustainability Manager",
-          "EPA reporting systems"
-        ],
-        "data": [
-          "Sensor data",
-          "Production metrics",
-          "Regulatory limits",
-          "Historical emissions"
-        ],
-        "skills": [
-          "Environmental compliance",
-          "IoT implementation",
-          "Regulatory knowledge"
-        ]
-      },
-      "defaultConfiguration": {
-        "solutionName": "Smart Emissions Management",
-        "businessType": "B2E",
-        "userStories": [
-          "As an environmental manager, I want real-time emissions tracking across all facilities",
-          "As a compliance officer, I want automated regulatory reporting",
-          "As an executive, I want visibility into our carbon footprint"
-        ],
-        "microsoftProducts": [
-          "Azure IoT",
-          "Sustainability Manager",
-          "Power BI",
-          "Power Automate"
-        ],
-        "generalStrategy": "Implement IoT-based emissions monitoring with AI analytics for real-time tracking and automated compliance reporting."
-      }
-    },
-    {
-      "id": "grants-management-agent",
-      "name": "Grants Management Agent",
-      "type": "automation",
-      "category": "operations",
-      "sector": "SLG",
-      "sourceType": "1P",
-      "industry": ["government", "non-profit"],
-      "complexity": "medium",
-      "description": "Automates intake, scoring, and tracking of state-level grants",
-      "shortDescription": "End-to-end grants management automation",
-      "businessBenefit": "Reduces grant processing time by 70% and improves transparency",
-      "lobSystems": ["Salesforce Grants360", "Dynamics 365", "SAP", "PowerApps"],
-      "pricing": {
-        "model": "per-user",
-        "estimate": "$75/user/month"
-      },
-      "currentState": {
-        "volume": 500,
-        "hours": 300,
-        "unit": "grants/year"
-      },
-      "impact": {
-        "hoursReduced": 210,
-        "tasksAutomated": 400,
-        "qualityScore": 91
-      },
-      "priorityScore": 87,
-      "features": [
-        "Application intake automation",
-        "Scoring and evaluation",
-        "Compliance checking",
-        "Fund disbursement tracking",
-        "Performance monitoring"
-      ],
-      "requirements": {
-        "systems": [
-          "D365 or Salesforce",
-          "Power Platform",
-          "Document management",
-          "Financial systems"
-        ],
-        "data": [
-          "Grant criteria",
-          "Applicant information",
-          "Scoring rubrics",
-          "Financial data"
-        ],
-        "skills": [
-          "Grants management",
-          "Government processes",
-          "Compliance knowledge"
-        ]
-      },
-      "defaultConfiguration": {
-        "solutionName": "Digital Grants Management System",
-        "businessType": "B2C",
-        "userStories": [
-          "As a grant applicant, I want a simple online application process",
-          "As a grants officer, I want automated scoring and evaluation",
-          "As an administrator, I want real-time visibility into grant status"
-        ],
-        "microsoftProducts": [
-          "Power Apps",
-          "Power Automate",
-          "AI Builder",
-          "Power BI"
-        ],
-        "generalStrategy": "Digitize and automate the entire grants lifecycle from application to performance monitoring with AI-powered evaluation."
-      }
-    },
-    {
-      "id": "store-associate-copilot",
-      "name": "Store Associate Copilot",
-      "type": "conversational",
-      "category": "operations",
-      "sector": "Retail / CPG",
-      "sourceType": "1P",
-      "industry": ["retail"],
-      "complexity": "low",
-      "description": "Assists in-store staff with product info, promos, and customer service",
-      "shortDescription": "AI assistant for retail store associates",
-      "businessBenefit": "Improves sales conversion by 20% and reduces training time by 50%",
-      "lobSystems": ["POS", "D365", "Salesforce", "Power Platform"],
-      "pricing": {
-        "model": "per-user",
-        "estimate": "$30/associate/month"
-      },
-      "currentState": {
-        "volume": 5000,
-        "hours": 100,
-        "unit": "associates"
-      },
-      "impact": {
-        "hoursReduced": 50,
-        "tasksAutomated": 4000,
-        "qualityScore": 88
-      },
-      "priorityScore": 84,
-      "features": [
-        "Product information lookup",
-        "Inventory checking",
-        "Price verification",
-        "Promotion details",
-        "Customer history access"
-      ],
-      "requirements": {
-        "systems": [
-          "Copilot Studio",
-          "Retail systems APIs",
-          "Mobile devices",
-          "Store Wi-Fi"
-        ],
-        "data": [
-          "Product catalog",
-          "Inventory levels",
-          "Promotions",
-          "Customer data"
-        ],
-        "skills": [
-          "Retail operations",
-          "Mobile app deployment",
-          "Training design"
-        ]
-      },
-      "defaultConfiguration": {
-        "solutionName": "Retail Associate AI Assistant",
-        "businessType": "B2E",
-        "userStories": [
-          "As a store associate, I want instant access to product information",
-          "As a customer, I want knowledgeable staff who can answer my questions",
-          "As a store manager, I want my team to have the tools they need to succeed"
-        ],
-        "microsoftProducts": [
-          "Copilot Studio",
-          "Power Apps",
-          "Teams",
-          "D365 Commerce"
-        ],
-        "generalStrategy": "Empower store associates with an AI assistant that provides instant access to product, inventory, and customer information."
-      }
-    },
-    {
-      "id": "loan-origination-assistant",
-      "name": "Loan Origination Assistant",
-      "type": "automation",
-      "category": "operations",
-      "sector": "Financial Services",
-      "sourceType": "Partner",
-      "industry": ["banking", "financial"],
-      "complexity": "medium",
-      "description": "Streamlines application intake, documentation checks, and initial credit assessment",
-      "shortDescription": "Automated loan processing assistant",
-      "businessBenefit": "Reduces loan processing time by 65% and improves approval rates by 30%",
-      "lobSystems": ["nCino", "Salesforce", "Temenos", "D365 CE"],
-      "pricing": {
-        "model": "per-transaction",
-        "estimate": "$25/application"
-      },
-      "currentState": {
-        "volume": 2000,
-        "hours": 400,
-        "unit": "applications/month"
-      },
-      "impact": {
-        "hoursReduced": 260,
-        "tasksAutomated": 1600,
-        "qualityScore": 92
-      },
-      "priorityScore": 89,
-      "features": [
-        "Application pre-screening",
-        "Document collection automation",
-        "Credit check integration",
-        "Risk assessment",
-        "Decision support"
-      ],
-      "requirements": {
-        "systems": [
-          "Loan origination system",
-          "Credit bureaus APIs",
-          "Document management",
-          "Core banking"
-        ],
-        "data": [
-          "Application data",
-          "Credit reports",
-          "Financial documents",
-          "Risk models"
-        ],
-        "skills": [
-          "Lending processes",
-          "Risk assessment",
-          "Regulatory compliance"
-        ]
-      },
-      "defaultConfiguration": {
-        "solutionName": "AI Loan Processing System",
-        "businessType": "B2C",
-        "userStories": [
-          "As a loan applicant, I want a fast and simple application process",
-          "As a loan officer, I want automated document verification and risk assessment",
-          "As a manager, I want consistent underwriting decisions"
-        ],
-        "microsoftProducts": [
-          "Power Automate",
-          "AI Builder",
-          "Azure Form Recognizer",
-          "Power BI"
-        ],
-        "generalStrategy": "Automate loan origination workflow with AI-powered document processing, risk assessment, and decision support."
-      }
-    },
-    {
-      "id": "resource-utilization-agent",
-      "name": "Resource Utilization Agent",
-      "type": "analytical",
-      "category": "operations",
-      "sector": "Professional Services",
-      "sourceType": "1P",
-      "industry": ["consulting", "professional-services"],
-      "complexity": "low",
-      "description": "Matches available staff to projects based on skills and availability",
-      "shortDescription": "AI-powered resource optimization",
-      "businessBenefit": "Improves utilization rates by 25% and reduces bench time by 40%",
-      "lobSystems": ["Workday", "D365 HR", "SAP SuccessFactors"],
-      "pricing": {
-        "model": "per-user",
-        "estimate": "$40/employee/month"
-      },
-      "currentState": {
-        "volume": 1000,
-        "hours": 150,
-        "unit": "employees"
-      },
-      "impact": {
-        "hoursReduced": 100,
-        "tasksAutomated": 800,
-        "qualityScore": 90
-      },
-      "priorityScore": 86,
-      "features": [
-        "Skills matching",
-        "Availability forecasting",
-        "Project staffing recommendations",
-        "Utilization tracking",
-        "Capacity planning"
-      ],
-      "requirements": {
-        "systems": [
-          "HR system",
-          "Project management tools",
-          "Skills database",
-          "Time tracking"
-        ],
-        "data": [
-          "Employee skills",
-          "Project requirements",
-          "Availability calendars",
-          "Historical utilization"
-        ],
-        "skills": [
-          "Resource management",
-          "Project planning",
-          "Data analytics"
-        ]
-      },
-      "defaultConfiguration": {
-        "solutionName": "Smart Resource Optimizer",
-        "businessType": "B2E",
-        "userStories": [
-          "As a resource manager, I want AI to match the right people to projects",
-          "As a consultant, I want to be assigned to projects that match my skills",
-          "As a partner, I want optimal utilization across the practice"
-        ],
-        "microsoftProducts": [
-          "Power Apps",
-          "Azure ML",
-          "Power BI",
-          "D365 Project Operations"
-        ],
-        "generalStrategy": "Use AI to analyze skills, availability, and project needs to optimize resource allocation and utilization."
-      }
-    },
-    {
-      "id": "care-gap-closure-agent",
-      "name": "Care Gap Closure Agent",
-      "type": "monitoring",
-      "category": "operations",
-      "sector": "Healthcare",
-      "sourceType": "Partner",
-      "industry": ["healthcare"],
-      "complexity": "medium",
-      "description": "Identifies missing screenings and automates outreach to improve quality scores",
-      "shortDescription": "Automated care gap identification and closure",
-      "businessBenefit": "Improves quality scores by 30% and increases preventive care compliance by 45%",
-      "lobSystems": ["EHR", "CRM", "Azure Data Lake"],
-      "pricing": {
-        "model": "per-patient",
-        "estimate": "$2/patient/year"
-      },
-      "currentState": {
-        "volume": 50000,
-        "hours": 300,
-        "unit": "patients"
-      },
-      "impact": {
-        "hoursReduced": 240,
-        "tasksAutomated": 40000,
-        "qualityScore": 91
-      },
-      "priorityScore": 88,
-      "features": [
-        "Gap identification algorithms",
-        "Risk stratification",
-        "Automated patient outreach",
-        "Appointment scheduling",
-        "Quality measure tracking"
-      ],
-      "requirements": {
-        "systems": [
-          "EHR integration",
-          "Communication platforms",
-          "Analytics infrastructure",
-          "Scheduling systems"
-        ],
-        "data": [
-          "Patient records",
-          "Quality measures",
-          "Care guidelines",
-          "Contact information"
-        ],
-        "skills": [
-          "Population health",
-          "Quality measures",
-          "Healthcare analytics"
-        ]
-      },
-      "defaultConfiguration": {
-        "solutionName": "Population Health Management System",
-        "businessType": "B2C",
-        "userStories": [
-          "As a care coordinator, I want automated identification of patients needing preventive care",
-          "As a patient, I want reminders for important health screenings",
-          "As a provider, I want to improve my quality scores"
-        ],
-        "microsoftProducts": [
-          "Azure Health Data Services",
-          "Power Automate",
-          "Communication Services",
-          "Power BI"
-        ],
-        "generalStrategy": "Deploy AI to identify care gaps and automate patient outreach to improve preventive care compliance and quality scores."
-      }
-    },
-    {
-      "id": "returns-complaints-resolution",
-      "name": "Returns & Complaints Resolution Agent",
-      "type": "conversational",
-      "category": "customer-service",
-      "sector": "Retail / CPG",
-      "sourceType": "1P",
-      "industry": ["retail", "ecommerce"],
-      "complexity": "low",
-      "description": "Handles common customer issues autonomously",
-      "shortDescription": "Automated returns and complaint handling",
-      "businessBenefit": "Reduces customer service costs by 60% and improves satisfaction by 35%",
-      "lobSystems": ["ServiceNow", "D365 CE", "Zendesk"],
-      "pricing": {
-        "model": "per-transaction",
-        "estimate": "$0.50/interaction"
-      },
-      "currentState": {
-        "volume": 20000,
-        "hours": 400,
-        "unit": "interactions/month"
-      },
-      "impact": {
-        "hoursReduced": 240,
-        "tasksAutomated": 16000,
-        "qualityScore": 87
-      },
-      "priorityScore": 85,
-      "features": [
-        "Return authorization",
-        "Complaint categorization",
-        "Resolution suggestions",
-        "Refund processing",
-        "Escalation management"
-      ],
-      "requirements": {
-        "systems": [
-          "Copilot Studio",
-          "Order management",
-          "Payment systems",
-          "CRM"
-        ],
-        "data": [
-          "Order history",
-          "Return policies",
-          "Product information",
-          "Customer records"
-        ],
-        "skills": [
-          "Customer service design",
-          "Bot development",
-          "Process automation"
-        ]
-      },
-      "defaultConfiguration": {
-        "solutionName": "Customer Resolution Bot",
-        "businessType": "B2C",
-        "userStories": [
-          "As a customer, I want quick resolution to my return requests",
-          "As a service agent, I want routine complaints handled automatically",
-          "As a manager, I want reduced customer service costs"
-        ],
-        "microsoftProducts": [
-          "Copilot Studio",
-          "Power Automate",
-          "D365 Customer Service",
-          "Azure Cognitive Services"
-        ],
-        "generalStrategy": "Implement conversational AI to handle returns and complaints autonomously, escalating only complex cases to human agents."
-      }
-    },
-    {
-      "id": "mission-reporting-assistant",
-      "name": "Mission Reporting Assistant",
-      "type": "analytical",
-      "category": "operations",
-      "sector": "Federal",
-      "sourceType": "1P",
-      "industry": ["defense", "government"],
-      "complexity": "high",
-      "description": "Generates reports from classified/unclassified sources to brief leadership quickly",
-      "shortDescription": "Secure mission reporting automation",
-      "businessBenefit": "Reduces report generation time by 85% while maintaining security compliance",
-      "lobSystems": ["SharePoint", "Azure GovCloud", "Palantir", "Power BI"],
-      "pricing": {
-        "model": "custom",
-        "estimate": "Contact for GovCloud pricing"
-      },
-      "currentState": {
-        "volume": 100,
-        "hours": 300,
-        "unit": "reports/month"
-      },
-      "impact": {
-        "hoursReduced": 255,
-        "tasksAutomated": 85,
-        "qualityScore": 98
-      },
-      "priorityScore": 94,
-      "features": [
-        "Multi-source aggregation",
-        "Classification handling",
-        "Automated summarization",
-        "Visual intelligence",
-        "Secure distribution"
-      ],
-      "requirements": {
-        "systems": [
-          "GovCloud infrastructure",
-          "Classified networks",
-          "Secure storage",
-          "Distribution systems"
-        ],
-        "data": [
-          "Mission data",
-          "Intelligence feeds",
-          "Operational reports",
-          "Geospatial data"
-        ],
-        "skills": [
-          "Security clearance",
-          "Military/IC processes",
-          "GovCloud expertise"
-        ]
-      },
-      "defaultConfiguration": {
-        "solutionName": "Secure Mission Intelligence System",
-        "businessType": "B2G",
-        "userStories": [
-          "As a commander, I want rapid synthesis of mission-critical information",
-          "As an analyst, I want automated report generation from multiple sources",
-          "As an operator, I want secure access to relevant intelligence"
-        ],
-        "microsoftProducts": [
-          "Azure Government",
-          "Power Platform GCC High",
-          "Azure AI GovCloud",
-          "Purview"
-        ],
-        "generalStrategy": "Deploy secure, AI-powered report generation that aggregates classified and unclassified sources while maintaining strict security compliance."
       }
     }
   ]

@@ -302,16 +302,6 @@
             color: #1565c0;
         }
 
-        .badge-source-1p {
-            background: #e8f5e9;
-            color: #2e7d32;
-        }
-
-        .badge-source-partner {
-            background: #f3e5f5;
-            color: #6a1b9a;
-        }
-
         .template-description {
             color: #666;
             font-size: 0.95rem;
@@ -342,45 +332,6 @@
         .metric-label {
             font-size: 0.75rem;
             color: #666;
-        }
-
-        .template-systems {
-            margin: 1rem 0;
-            padding: 0.75rem;
-            background: #f0f8ff;
-            border-radius: 6px;
-            border-left: 3px solid #0078d4;
-        }
-
-        .template-systems-label {
-            font-weight: 600;
-            font-size: 0.85rem;
-            color: #0078d4;
-            margin-bottom: 0.25rem;
-        }
-
-        .template-systems-list {
-            font-size: 0.85rem;
-            color: #555;
-        }
-
-        .template-pricing {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-top: 1rem;
-            padding-top: 1rem;
-            border-top: 1px solid #e0e0e0;
-        }
-
-        .pricing-label {
-            font-size: 0.85rem;
-            color: #666;
-        }
-
-        .pricing-value {
-            font-weight: 600;
-            color: #0078d4;
         }
 
         .template-tags {
@@ -919,36 +870,22 @@
 
                 <div class="filter-section">
                     <div class="filter-group">
-                        <label class="filter-label">Sector</label>
+                        <label class="filter-label">Industry</label>
                         <select
                             class="filter-select"
-                            id="sectorFilter"
+                            id="industryFilter"
                             onchange="templateManager.filterTemplates()"
                         >
-                            <option value="">All Sectors</option>
-                            <option value="Healthcare">Healthcare</option>
-                            <option value="Energy">Energy</option>
-                            <option value="Manufacturing">Manufacturing</option>
-                            <option value="Software / DP">Software / Digital Products</option>
-                            <option value="Professional Services">Professional Services</option>
-                            <option value="Retail / CPG">Retail / CPG</option>
-                            <option value="Financial Services">Financial Services</option>
-                            <option value="SLG">State & Local Government</option>
-                            <option value="Federal">Federal</option>
-                            <option value="Cross-Industry">Cross-Industry</option>
-                        </select>
-                    </div>
-
-                    <div class="filter-group">
-                        <label class="filter-label">Source Type</label>
-                        <select
-                            class="filter-select"
-                            id="sourceFilter"
-                            onchange="templateManager.filterTemplates()"
-                        >
-                            <option value="">All Sources</option>
-                            <option value="1P">1P (Microsoft)</option>
-                            <option value="Partner">Partner</option>
+                            <option value="">All Industries</option>
+                            <option value="financial">Financial Services</option>
+                            <option value="healthcare">Healthcare</option>
+                            <option value="retail">Retail & E-commerce</option>
+                            <option value="manufacturing">Manufacturing</option>
+                            <option value="technology">Technology</option>
+                            <option value="insurance">Insurance</option>
+                            <option value="government">Government</option>
+                            <option value="education">Education</option>
+                            <option value="cross-industry">Cross-Industry</option>
                         </select>
                     </div>
 
@@ -1056,24 +993,22 @@
                         <input
                             type="text"
                             id="clientName"
-                            placeholder="e.g., Generic Corp, Example Industries"
+                            placeholder="e.g., Microsoft Corporation, ACME Corp."
                         />
                     </div>
 
                     <div class="form-group">
-                        <label for="sectorSelect">Sector</label>
-                        <select id="sectorSelect">
-                            <option value="">Select Sector</option>
-                            <option value="Healthcare">Healthcare</option>
-                            <option value="Energy">Energy</option>
-                            <option value="Manufacturing">Manufacturing</option>
-                            <option value="Software / DP">Software / Digital Products</option>
-                            <option value="Professional Services">Professional Services</option>
-                            <option value="Retail / CPG">Retail / CPG</option>
+                        <label for="industrySelect">Industry</label>
+                        <select id="industrySelect">
+                            <option value="">Select Industry</option>
                             <option value="Financial Services">Financial Services</option>
-                            <option value="SLG">State & Local Government</option>
-                            <option value="Federal">Federal</option>
-                            <option value="Cross-Industry">Cross-Industry</option>
+                            <option value="Healthcare">Healthcare</option>
+                            <option value="Retail">Retail</option>
+                            <option value="Manufacturing">Manufacturing</option>
+                            <option value="Technology">Technology</option>
+                            <option value="Government">Government</option>
+                            <option value="Education">Education</option>
+                            <option value="Other">Other</option>
                         </select>
                     </div>
 
@@ -1084,70 +1019,6 @@
                             <option value="B2C">B2C (Business to Customer)</option>
                             <option value="B2B">B2B (Business to Business)</option>
                         </select>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="sourceType">Source Type</label>
-                        <select id="sourceType">
-                            <option value="1P">1P (Microsoft)</option>
-                            <option value="Partner">Partner</option>
-                        </select>
-                        <p class="help-text">Specify if this is a Microsoft or Partner solution</p>
-                    </div>
-                </div>
-
-                <!-- Business Benefits & Integration -->
-                <div class="form-section">
-                    <h3>Business Benefits & Integration</h3>
-                    <div class="form-group">
-                        <label for="businessBenefit">Business Benefit</label>
-                        <textarea
-                            id="businessBenefit"
-                            placeholder="Describe the key business benefits (e.g., reduces manual data entry by 80%, improves customer response time by 50%)"
-                        ></textarea>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="lobSystems">LOB Systems Integrated</label>
-                        <div class="tag-input-container" id="lobSystemsContainer">
-                            <input
-                                type="text"
-                                class="tag-input"
-                                id="lobSystemsInput"
-                                placeholder="Type and press Enter to add (e.g., Epic, SAP, Salesforce)"
-                            />
-                        </div>
-                        <p class="help-text">
-                            List all Line of Business systems that will be integrated
-                        </p>
-                    </div>
-                </div>
-
-                <!-- Pricing Information -->
-                <div class="form-section">
-                    <h3>Pricing & Licensing</h3>
-                    <div class="form-group">
-                        <label for="pricingModel">Pricing Model</label>
-                        <select id="pricingModel">
-                            <option value="">Select Pricing Model</option>
-                            <option value="per-user">Per User/Month</option>
-                            <option value="per-transaction">Per Transaction</option>
-                            <option value="flat-rate">Flat Rate</option>
-                            <option value="usage-based">Usage Based</option>
-                            <option value="custom">Custom Pricing</option>
-                        </select>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="estimatedCost">Estimated Cost</label>
-                        <input
-                            type="text"
-                            id="estimatedCost"
-                            placeholder="e.g., $50-200/user/month, $10k one-time setup"
-                        />
-                        <p class="help-text">
-                            Provide cost estimates including licensing and implementation
-                        </p>
                     </div>
                 </div>
 
@@ -1285,13 +1156,10 @@
                         <tr>
                             <th>Solution</th>
                             <th>Type</th>
-                            <th>Source</th>
-                            <th>Sector</th>
-                            <th>Business Type</th>
-                            <th>Business Benefit</th>
-                            <th>LOB Systems</th>
+                            <th>Industry</th>
+                            <th>Business</th>
+                            <th>Description</th>
                             <th>Technologies</th>
-                            <th>Pricing</th>
                             <th>Client</th>
                         </tr>
                     </thead>
@@ -1322,8 +1190,8 @@
         class TemplateManager {
             constructor() {
                 // GitHub repository configuration
-                this.GITHUB_OWNER = 'kody-w'; // Replace with your GitHub username
-                this.GITHUB_REPO = 'AI-Agent-Templates'; // Replace with your repository name
+                this.GITHUB_OWNER = 'your-github-username'; // Replace with your GitHub username
+                this.GITHUB_REPO = 'ai-template-library'; // Replace with your repository name
                 this.TEMPLATE_LIBRARY_URL = `https://raw.githubusercontent.com/${this.GITHUB_OWNER}/${this.GITHUB_REPO}/main/template-library.json`;
                 
                 // Local development fallback
@@ -1331,7 +1199,7 @@
                 
                 // Template library data
                 this.templateLibrary = {
-                    version: "2.0",
+                    version: "1.0",
                     lastUpdated: new Date().toISOString(),
                     templates: []
                 };
@@ -1342,7 +1210,6 @@
                 this.selectedTemplate = null;
                 this.customizationData = {};
                 this.taggedProducts = [];
-                this.taggedLobSystems = [];
 
                 // Initialize
                 this.init();
@@ -1357,7 +1224,7 @@
                     await this.fetchTemplateLibrary();
                     
                     // Initialize UI components
-                    this.initializeTagInputs();
+                    this.initializeTagInput();
                     
                     // Load templates
                     this.loadTemplates();
@@ -1385,22 +1252,6 @@
                     
                     if (response.ok) {
                         const data = await response.json();
-                        
-                        // Enhance templates with new fields if not present
-                        data.templates = data.templates.map(template => {
-                            return {
-                                ...template,
-                                sector: template.sector || this.mapIndustryToSector(template.industry),
-                                sourceType: template.sourceType || "1P",
-                                businessBenefit: template.businessBenefit || template.description,
-                                lobSystems: template.lobSystems || [],
-                                pricing: template.pricing || {
-                                    model: "per-user",
-                                    estimate: "$30-100/user/month"
-                                }
-                            };
-                        });
-                        
                         this.templateLibrary = data;
                         this.currentTemplates = [...data.templates];
                         console.log(`Loaded ${data.templates.length} templates`);
@@ -1415,76 +1266,39 @@
                 }
             }
 
-            mapIndustryToSector(industries) {
-                // Map existing industry tags to new sector format
-                const sectorMap = {
-                    "healthcare": "Healthcare",
-                    "financial": "Financial Services",
-                    "retail": "Retail / CPG",
-                    "ecommerce": "Retail / CPG",
-                    "manufacturing": "Manufacturing",
-                    "technology": "Software / DP",
-                    "insurance": "Financial Services",
-                    "legal": "Professional Services",
-                    "consulting": "Professional Services",
-                    "professional-services": "Professional Services",
-                    "government": "SLG",
-                    "logistics": "Manufacturing",
-                    "investment": "Financial Services",
-                    "cross-industry": "Cross-Industry"
-                };
-
-                if (Array.isArray(industries)) {
-                    for (let industry of industries) {
-                        if (sectorMap[industry]) {
-                            return sectorMap[industry];
-                        }
-                    }
-                }
-                
-                return "Cross-Industry";
-            }
-
             loadDefaultTemplates() {
                 // Default templates as fallback
                 this.templateLibrary.templates = [
                     {
-                        id: "patient-intake-scheduling",
-                        name: "Patient Intake & Scheduling Agent",
-                        type: "automation",
-                        category: "operations",
-                        sector: "Healthcare",
-                        sourceType: "1P",
-                        industry: ["healthcare"],
+                        id: "voice-copilot-sales",
+                        name: "Voice-Enabled Sales Assistant",
+                        type: "conversational",
+                        category: "sales",
+                        industry: ["cross-industry"],
                         complexity: "medium",
-                        description: "Automates patient intake, appointment coordination, and reminders to reduce no-shows",
-                        shortDescription: "Automated patient scheduling and intake",
-                        businessBenefit: "Reduces no-show rates by 30% and administrative burden by 60%",
-                        lobSystems: ["Epic", "Cerner", "D365 CRM", "Salesforce Health Cloud"],
-                        pricing: {
-                            model: "per-user",
-                            estimate: "$75/user/month"
-                        },
+                        description: "Voice-activated AI assistant for sales teams to create visit reports, update CRM records, and access customer information hands-free.",
+                        shortDescription: "Voice-enabled CRM updates and sales support",
                         capabilities: [
-                            "Automated appointment scheduling",
-                            "Patient intake form processing",
-                            "SMS/Email reminders",
-                            "Integration with EHR systems",
-                            "Multi-language support"
+                            "Voice-to-text transcription",
+                            "CRM record creation/update",
+                            "Natural language commands",
+                            "Multi-language support",
+                            "Offline capability with sync"
                         ],
                         defaultConfiguration: {
-                            solutionName: "Patient Intake & Scheduling Agent",
-                            businessType: "B2C",
+                            solutionName: "Voice to CRM",
+                            businessType: "B2E",
                             userStories: [
-                                "As a patient, I want to schedule appointments online 24/7 without waiting on hold",
-                                "As a clinic staff member, I want patient forms completed before arrival to reduce wait times"
+                                "As a sales representative, I want to create visit reports using voice commands so I can document meetings immediately while details are fresh",
+                                "As a sales manager, I want my team to update CRM records hands-free so they spend more time selling and less time on data entry"
                             ],
                             microsoftProducts: [
                                 "Copilot Studio",
+                                "Teams",
                                 "Power Automate",
-                                "Azure Health Bot"
+                                "Dynamics 365"
                             ],
-                            generalStrategy: "Deploy an intelligent scheduling agent that integrates with existing EHR systems to automate patient intake and reduce administrative burden."
+                            generalStrategy: "Implement voice-enabled CRM updates through Teams integration, allowing sales reps to dictate visit reports and update opportunities using natural language commands."
                         }
                     }
                 ];
@@ -1562,39 +1376,29 @@
                 const card = document.createElement("div");
                 card.className = "template-card";
 
+                // Calculate estimated implementation time based on complexity
                 const complexityDisplay = {
                     low: "Low Complexity",
                     medium: "Medium Complexity", 
                     high: "High Complexity"
                 };
 
-                const sourceBadge = template.sourceType === "Partner" 
-                    ? '<span class="badge badge-source-partner">Partner</span>'
-                    : '<span class="badge badge-source-1p">1P</span>';
-
                 card.innerHTML = `
                     <div class="template-header">
                         <div>
                             <h3 class="template-title">${template.name}</h3>
-                            <p class="template-type">${template.type} | ${template.sector || template.category}</p>
+                            <p class="template-type">${template.type} | ${template.department || template.category}</p>
                         </div>
                         <div class="template-badges">
-                            ${sourceBadge}
                             <span class="badge badge-complexity-${template.complexity}">
                                 ${complexityDisplay[template.complexity]}
                             </span>
                         </div>
                     </div>
                     <p class="template-description">${template.shortDescription}</p>
-                    
-                    <div class="template-systems">
-                        <div class="template-systems-label">LOB Systems:</div>
-                        <div class="template-systems-list">${template.lobSystems?.join(", ") || "Multiple systems supported"}</div>
-                    </div>
-                    
                     <div class="template-metrics">
                         <div class="metric-item">
-                            <div class="metric-value">${template.features?.length || template.capabilities?.length || 0}</div>
+                            <div class="metric-value">${template.features ? template.features.length : template.capabilities?.length || 0}</div>
                             <div class="metric-label">Features</div>
                         </div>
                         <div class="metric-item">
@@ -1602,18 +1406,28 @@
                             <div class="metric-label">Priority Score</div>
                         </div>
                         <div class="metric-item">
-                            <div class="metric-value">${template.sourceType}</div>
-                            <div class="metric-label">Source</div>
+                            <div class="metric-value">${template.industry.length}</div>
+                            <div class="metric-label">Industries</div>
                         </div>
                     </div>
-                    
-                    <div class="template-pricing">
-                        <span class="pricing-label">Estimated Cost:</span>
-                        <span class="pricing-value">${template.pricing?.estimate || "Contact for pricing"}</span>
+                    ${template.impact ? `
+                    <div class="template-metrics" style="margin-top: 0.5rem;">
+                        <div class="metric-item">
+                            <div class="metric-value">${template.impact.hoursReduced}</div>
+                            <div class="metric-label">Hours Saved</div>
+                        </div>
+                        <div class="metric-item">
+                            <div class="metric-value">${template.impact.tasksAutomated}</div>
+                            <div class="metric-label">Tasks Automated</div>
+                        </div>
+                        <div class="metric-item">
+                            <div class="metric-value">${template.impact.qualityScore}%</div>
+                            <div class="metric-label">Quality Score</div>
+                        </div>
                     </div>
-                    
+                    ` : ''}
                     <div class="template-tags">
-                        <span class="tag">${template.sector || "Cross-Industry"}</span>
+                        ${template.industry.map((ind) => `<span class="tag">${ind}</span>`).join("")}
                         <span class="tag">${template.category}</span>
                     </div>
                 `;
@@ -1632,51 +1446,32 @@
                     document.getElementById("solutionName").value = template.defaultConfiguration.solutionName || "";
                     document.getElementById("businessType").value = template.defaultConfiguration.businessType || "B2E";
                     document.getElementById("generalStrategy").value = template.defaultConfiguration.generalStrategy || "";
-                }
 
-                // Set source type and sector
-                document.getElementById("sourceType").value = template.sourceType || "1P";
-                document.getElementById("sectorSelect").value = template.sector || "";
-                
-                // Set business benefit
-                document.getElementById("businessBenefit").value = template.businessBenefit || "";
-                
-                // Set pricing info
-                if (template.pricing) {
-                    document.getElementById("pricingModel").value = template.pricing.model || "";
-                    document.getElementById("estimatedCost").value = template.pricing.estimate || "";
-                }
-                
-                // Load LOB systems
-                if (template.lobSystems) {
-                    this.taggedLobSystems = [...template.lobSystems];
-                    this.updateLobSystemsDisplay();
-                }
-
-                // Load user stories
-                if (template.defaultConfiguration?.userStories) {
+                    // Load user stories
                     const userStoriesContainer = document.getElementById("userStoriesContainer");
                     userStoriesContainer.innerHTML = "";
 
-                    template.defaultConfiguration.userStories.forEach((story, index) => {
-                        const storyDiv = document.createElement("div");
-                        storyDiv.className = "form-group";
-                        storyDiv.innerHTML = `
-                            <label>User Story ${index + 1}</label>
-                            <textarea class="user-story-input">${story}</textarea>
-                        `;
-                        userStoriesContainer.appendChild(storyDiv);
-                    });
-                }
+                    if (template.defaultConfiguration.userStories) {
+                        template.defaultConfiguration.userStories.forEach((story, index) => {
+                            const storyDiv = document.createElement("div");
+                            storyDiv.className = "form-group";
+                            storyDiv.innerHTML = `
+                                <label>User Story ${index + 1}</label>
+                                <textarea class="user-story-input">${story}</textarea>
+                            `;
+                            userStoriesContainer.appendChild(storyDiv);
+                        });
+                    }
 
-                // Load Microsoft products
-                if (template.defaultConfiguration?.microsoftProducts) {
-                    this.taggedProducts = [...template.defaultConfiguration.microsoftProducts];
-                    this.updateTagDisplay();
-                }
+                    // Load Microsoft products
+                    if (template.defaultConfiguration.microsoftProducts) {
+                        this.taggedProducts = [...template.defaultConfiguration.microsoftProducts];
+                        this.updateTagDisplay();
+                    }
 
-                // Load custom fields specific to this template
-                this.loadCustomFields(template);
+                    // Load custom fields specific to this template
+                    this.loadCustomFields(template);
+                }
 
                 // Move to customization step
                 this.goToStep(2);
@@ -1759,9 +1554,7 @@
                     (template) =>
                         template.name.toLowerCase().includes(searchTerm) ||
                         template.description.toLowerCase().includes(searchTerm) ||
-                        template.businessBenefit?.toLowerCase().includes(searchTerm) ||
-                        template.capabilities?.some((cap) => cap.toLowerCase().includes(searchTerm)) ||
-                        template.lobSystems?.some((sys) => sys.toLowerCase().includes(searchTerm))
+                        template.capabilities.some((cap) => cap.toLowerCase().includes(searchTerm))
                 );
 
                 this.loadTemplates(filtered);
@@ -1769,20 +1562,15 @@
 
             // Filter templates
             filterTemplates() {
-                const sector = document.getElementById("sectorFilter").value;
-                const sourceType = document.getElementById("sourceFilter").value;
+                const industry = document.getElementById("industryFilter").value;
                 const complexity = document.getElementById("complexityFilter").value;
                 const type = document.getElementById("typeFilter").value;
                 const category = document.getElementById("functionFilter").value;
 
                 let filtered = [...this.templateLibrary.templates];
 
-                if (sector) {
-                    filtered = filtered.filter((t) => t.sector === sector);
-                }
-
-                if (sourceType) {
-                    filtered = filtered.filter((t) => t.sourceType === sourceType);
+                if (industry) {
+                    filtered = filtered.filter((t) => t.industry.includes(industry));
                 }
 
                 if (complexity) {
@@ -1804,8 +1592,7 @@
             // Reset filters
             resetFilters() {
                 document.getElementById("searchInput").value = "";
-                document.getElementById("sectorFilter").value = "";
-                document.getElementById("sourceFilter").value = "";
+                document.getElementById("industryFilter").value = "";
                 document.getElementById("complexityFilter").value = "";
                 document.getElementById("typeFilter").value = "";
                 document.getElementById("functionFilter").value = "";
@@ -1830,35 +1617,18 @@
             }
 
             // Tag input functionality
-            initializeTagInputs() {
-                // Microsoft Products
-                const productInput = document.getElementById("microsoftProductsInput");
-                const productContainer = document.getElementById("microsoftProductsContainer");
+            initializeTagInput() {
+                const input = document.getElementById("microsoftProductsInput");
+                const container = document.getElementById("microsoftProductsContainer");
 
-                productInput.addEventListener("keypress", (e) => {
+                input.addEventListener("keypress", (e) => {
                     if (e.key === "Enter") {
                         e.preventDefault();
-                        const value = productInput.value.trim();
+                        const value = input.value.trim();
                         if (value && !this.taggedProducts.includes(value)) {
                             this.taggedProducts.push(value);
                             this.updateTagDisplay();
-                            productInput.value = "";
-                        }
-                    }
-                });
-
-                // LOB Systems
-                const lobInput = document.getElementById("lobSystemsInput");
-                const lobContainer = document.getElementById("lobSystemsContainer");
-
-                lobInput.addEventListener("keypress", (e) => {
-                    if (e.key === "Enter") {
-                        e.preventDefault();
-                        const value = lobInput.value.trim();
-                        if (value && !this.taggedLobSystems.includes(value)) {
-                            this.taggedLobSystems.push(value);
-                            this.updateLobSystemsDisplay();
-                            lobInput.value = "";
+                            input.value = "";
                         }
                     }
                 });
@@ -1883,33 +1653,9 @@
                 });
             }
 
-            updateLobSystemsDisplay() {
-                const container = document.getElementById("lobSystemsContainer");
-                const input = document.getElementById("lobSystemsInput");
-
-                // Clear existing tags
-                container.querySelectorAll(".tag-chip").forEach((chip) => chip.remove());
-
-                // Add tags
-                this.taggedLobSystems.forEach((system) => {
-                    const chip = document.createElement("div");
-                    chip.className = "tag-chip";
-                    chip.innerHTML = `
-                        ${system}
-                        <span class="remove-tag" onclick="templateManager.removeLobSystem('${system}')">×</span>
-                    `;
-                    container.insertBefore(chip, input);
-                });
-            }
-
             removeTag(product) {
                 this.taggedProducts = this.taggedProducts.filter((p) => p !== product);
                 this.updateTagDisplay();
-            }
-
-            removeLobSystem(system) {
-                this.taggedLobSystems = this.taggedLobSystems.filter((s) => s !== system);
-                this.updateLobSystemsDisplay();
             }
 
             // Save progress
@@ -1935,13 +1681,8 @@
                     solutionName: document.getElementById("solutionName").value,
                     templateType: document.getElementById("templateType").value,
                     clientName: document.getElementById("clientName").value,
-                    sector: document.getElementById("sectorSelect").value,
+                    industry: document.getElementById("industrySelect").value,
                     businessType: document.getElementById("businessType").value,
-                    sourceType: document.getElementById("sourceType").value,
-                    businessBenefit: document.getElementById("businessBenefit").value,
-                    lobSystems: this.taggedLobSystems,
-                    pricingModel: document.getElementById("pricingModel").value,
-                    estimatedCost: document.getElementById("estimatedCost").value,
                     userStories: Array.from(document.querySelectorAll(".user-story-input"))
                         .map((input) => input.value)
                         .filter((v) => v),
@@ -1975,24 +1716,16 @@
                             <div class="scenario-value">${this.customizationData.clientName || "TBD"}</div>
                         </div>
                         <div class="scenario-item">
-                            <div class="scenario-label">Sector</div>
-                            <div class="scenario-value">${this.customizationData.sector || "Cross-Industry"}</div>
+                            <div class="scenario-label">Industry</div>
+                            <div class="scenario-value">${this.customizationData.industry || "Cross-Industry"}</div>
                         </div>
                         <div class="scenario-item">
                             <div class="scenario-label">Business Type</div>
                             <div class="scenario-value">${this.customizationData.businessType}</div>
                         </div>
                         <div class="scenario-item">
-                            <div class="scenario-label">Source Type</div>
-                            <div class="scenario-value">${this.customizationData.sourceType}</div>
-                        </div>
-                        <div class="scenario-item">
                             <div class="scenario-label">Template Type</div>
                             <div class="scenario-value">${this.customizationData.templateType}</div>
-                        </div>
-                        <div class="scenario-item">
-                            <div class="scenario-label">Pricing Model</div>
-                            <div class="scenario-value">${this.customizationData.pricingModel || "TBD"}</div>
                         </div>
                     </div>
                 `;
@@ -2017,13 +1750,10 @@
                     <tr>
                         <td>${this.customizationData.solutionName}</td>
                         <td>${this.customizationData.templateType}</td>
-                        <td>${this.customizationData.sourceType}</td>
-                        <td>${this.customizationData.sector}</td>
+                        <td>${this.customizationData.industry}</td>
                         <td>${this.customizationData.businessType}</td>
-                        <td>${this.customizationData.businessBenefit}</td>
-                        <td>${this.customizationData.lobSystems.join(", ")}</td>
+                        <td>${this.customizationData.generalStrategy}</td>
                         <td>${this.customizationData.microsoftProducts.join(", ")}</td>
-                        <td>${this.customizationData.estimatedCost || "Contact for pricing"}</td>
                         <td>${this.customizationData.clientName}</td>
                     </tr>
                 `;
@@ -2071,13 +1801,6 @@
                         <p>${this.customizationData.generalStrategy}</p>
                     </div>
                     
-                    <div class="scenario-section">
-                        <h3 class="scenario-header">Business Benefits & Integration</h3>
-                        <p><strong>Business Benefit:</strong> ${this.customizationData.businessBenefit || "TBD"}</p>
-                        <p><strong>LOB Systems Integrated:</strong> ${this.customizationData.lobSystems.join(", ") || "TBD"}</p>
-                        <p><strong>Estimated Cost:</strong> ${this.customizationData.estimatedCost || "Contact for pricing"}</p>
-                    </div>
-                    
                     ${customFieldsHtml}
                     
                     <div class="scenario-section">
@@ -2120,25 +1843,18 @@
 
             exportScenario() {
                 const scenarioData = {
-                    version: "2.0",
+                    version: "1.0",
                     exportDate: new Date().toISOString(),
                     template: this.selectedTemplate,
                     customization: this.customizationData,
                     deliverable: {
                         solutionName: this.customizationData.solutionName,
                         type: this.customizationData.templateType,
-                        sourceType: this.customizationData.sourceType,
-                        sector: this.customizationData.sector,
+                        industry: this.customizationData.industry,
                         businessType: this.customizationData.businessType,
-                        businessBenefit: this.customizationData.businessBenefit,
-                        lobSystems: this.customizationData.lobSystems,
                         description: this.customizationData.generalStrategy,
                         technologies: this.customizationData.microsoftProducts,
-                        client: this.customizationData.clientName,
-                        pricing: {
-                            model: this.customizationData.pricingModel,
-                            estimate: this.customizationData.estimatedCost
-                        }
+                        client: this.customizationData.clientName
                     }
                 };
 
@@ -2163,33 +1879,17 @@
         th, td { padding: 12px; text-align: left; border-bottom: 1px solid #ddd; }
         th { background: #0078d4; color: white; }
         .user-story { background: #e3f2fd; padding: 15px; margin: 10px 0; border-radius: 5px; }
-        .metadata { background: #f0f8ff; padding: 15px; border-radius: 5px; margin-bottom: 20px; }
-        .metadata-item { display: inline-block; margin-right: 30px; }
-        .metadata-label { font-weight: bold; color: #555; }
     </style>
 </head>
 <body>
     <h1>${this.customizationData.solutionName} - Agentic Scenario</h1>
     
-    <div class="metadata">
-        <div class="metadata-item">
-            <span class="metadata-label">Source Type:</span> ${this.customizationData.sourceType}
-        </div>
-        <div class="metadata-item">
-            <span class="metadata-label">Sector:</span> ${this.customizationData.sector}
-        </div>
-        <div class="metadata-item">
-            <span class="metadata-label">Business Type:</span> ${this.customizationData.businessType}
-        </div>
-    </div>
-    
     <div class="section">
         <h2>Overview</h2>
         <p><strong>Client:</strong> ${this.customizationData.clientName}</p>
+        <p><strong>Industry:</strong> ${this.customizationData.industry}</p>
+        <p><strong>Business Type:</strong> ${this.customizationData.businessType}</p>
         <p><strong>Template Type:</strong> ${this.customizationData.templateType}</p>
-        <p><strong>Business Benefit:</strong> ${this.customizationData.businessBenefit}</p>
-        <p><strong>Pricing Model:</strong> ${this.customizationData.pricingModel || "TBD"}</p>
-        <p><strong>Estimated Cost:</strong> ${this.customizationData.estimatedCost || "Contact for pricing"}</p>
     </div>
     
     <div class="section">
@@ -2204,11 +1904,6 @@
         <p>${this.customizationData.generalStrategy}</p>
     </div>
     
-    <div class="section">
-        <h2>LOB Systems Integration</h2>
-        <p><strong>Integrated Systems:</strong> ${this.customizationData.lobSystems.join(", ") || "None specified"}</p>
-    </div>
-    
     ${this.generateCustomFieldsHTML()}
     
     <div class="section">
@@ -2218,12 +1913,9 @@
                 <tr>
                     <th>Solution</th>
                     <th>Type</th>
-                    <th>Source</th>
-                    <th>Sector</th>
-                    <th>Business Type</th>
-                    <th>LOB Systems</th>
+                    <th>Industry</th>
+                    <th>Business</th>
                     <th>Technologies</th>
-                    <th>Pricing</th>
                     <th>Client</th>
                 </tr>
             </thead>
@@ -2231,12 +1923,9 @@
                 <tr>
                     <td>${this.customizationData.solutionName}</td>
                     <td>${this.customizationData.templateType}</td>
-                    <td>${this.customizationData.sourceType}</td>
-                    <td>${this.customizationData.sector}</td>
+                    <td>${this.customizationData.industry}</td>
                     <td>${this.customizationData.businessType}</td>
-                    <td>${this.customizationData.lobSystems.join(", ")}</td>
                     <td>${this.customizationData.microsoftProducts.join(", ")}</td>
-                    <td>${this.customizationData.estimatedCost || "Contact for pricing"}</td>
                     <td>${this.customizationData.clientName}</td>
                 </tr>
             </tbody>
@@ -2314,19 +2003,17 @@
                 this.customizationData = {};
                 this.selectedTemplate = null;
                 this.taggedProducts = [];
-                this.taggedLobSystems = [];
 
                 // Clear form fields
                 document.getElementById("solutionName").value = "";
                 document.getElementById("templateType").value = "Custom";
                 document.getElementById("clientName").value = "";
-                document.getElementById("sectorSelect").value = "";
+                document.getElementById("industrySelect").value = "";
                 document.getElementById("businessType").value = "B2E";
-                document.getElementById("sourceType").value = "1P";
-                document.getElementById("businessBenefit").value = "";
-                document.getElementById("pricingModel").value = "";
-                document.getElementById("estimatedCost").value = "";
                 document.getElementById("generalStrategy").value = "";
+                document.getElementById("uxEmailProcessing").value = "";
+                document.getElementById("uxAgentInterface").value = "";
+                document.getElementById("uxAdministration").value = "";
                 document.getElementById("implementationApproach").value = "";
                 document.getElementById("successMetrics").value = "";
                 document.getElementById("scopeMvp").value = "";
@@ -2344,7 +2031,6 @@
 
                 // Clear tags
                 this.updateTagDisplay();
-                this.updateLobSystemsDisplay();
 
                 // Remove additional content from step 3
                 const additionalContent = document.querySelector("#step3Content .deliverable-preview > div:last-child");
@@ -2370,21 +2056,19 @@
                         if (imported.data && imported.data.company) {
                             document.getElementById("clientName").value = imported.data.company.name || "";
 
-                            // Map discovery industry to our sector list
-                            const sectorMap = {
-                                healthcare: "Healthcare",
-                                energy: "Energy",
-                                manufacturing: "Manufacturing",
-                                software: "Software / DP",
-                                professional: "Professional Services",
-                                retail: "Retail / CPG",
+                            // Map discovery industry to our industry list
+                            const industryMap = {
                                 financial: "Financial Services",
-                                government: "SLG",
-                                federal: "Federal"
+                                healthcare: "Healthcare",
+                                retail: "Retail",
+                                manufacturing: "Manufacturing",
+                                technology: "Technology",
+                                government: "Government",
+                                education: "Education"
                             };
 
-                            const mappedSector = sectorMap[imported.data.company.industry] || "Cross-Industry";
-                            document.getElementById("sectorSelect").value = mappedSector;
+                            const mappedIndustry = industryMap[imported.data.company.industry] || "Other";
+                            document.getElementById("industrySelect").value = mappedIndustry;
                         }
 
                         // Filter templates based on use cases
@@ -2434,24 +2118,17 @@
                             document.getElementById("solutionName").value = c.solutionName || "";
                             document.getElementById("templateType").value = c.templateType || "Custom";
                             document.getElementById("clientName").value = c.clientName || "";
-                            document.getElementById("sectorSelect").value = c.sector || "";
+                            document.getElementById("industrySelect").value = c.industry || "";
                             document.getElementById("businessType").value = c.businessType || "B2E";
-                            document.getElementById("sourceType").value = c.sourceType || "1P";
-                            document.getElementById("businessBenefit").value = c.businessBenefit || "";
-                            document.getElementById("pricingModel").value = c.pricingModel || "";
-                            document.getElementById("estimatedCost").value = c.estimatedCost || "";
                             document.getElementById("generalStrategy").value = c.generalStrategy || "";
+                            document.getElementById("uxEmailProcessing").value = c.uxEmailProcessing || "";
+                            document.getElementById("uxAgentInterface").value = c.uxAgentInterface || "";
+                            document.getElementById("uxAdministration").value = c.uxAdministration || "";
                             document.getElementById("implementationApproach").value = c.implementationApproach || "";
                             document.getElementById("successMetrics").value = c.successMetrics || "";
                             document.getElementById("scopeMvp").value = c.scopeMvp || "";
                             document.getElementById("outOfScope").value = c.outOfScope || "";
                             document.getElementById("implementationPlan").value = c.implementationPlan || "";
-
-                            // Load LOB systems
-                            if (c.lobSystems) {
-                                this.taggedLobSystems = [...c.lobSystems];
-                                this.updateLobSystemsDisplay();
-                            }
 
                             // Load user stories
                             if (c.userStories) {
@@ -2495,18 +2172,10 @@
                     name: "New Custom Template",
                     type: "conversational",
                     category: "operations",
-                    sector: "Cross-Industry",
-                    sourceType: "1P",
                     industry: ["cross-industry"],
                     complexity: "medium",
                     description: "Custom AI agent template - add your description here",
                     shortDescription: "Custom template",
-                    businessBenefit: "Define business benefits here",
-                    lobSystems: [],
-                    pricing: {
-                        model: "custom",
-                        estimate: "TBD"
-                    },
                     capabilities: ["Add capabilities here"],
                     defaultConfiguration: {
                         solutionName: "Custom Solution",
@@ -2535,24 +2204,17 @@
                         Title: template.name,
                         TemplateID: template.id,
                         TemplateType: template.type,
-                        AgentUseCase: template.name,
                         Category: template.category,
-                        Sector: template.sector || "Cross-Industry",
                         Industry: template.industry.join("; "), // SharePoint multi-value field
-                        SourceType: template.sourceType || "1P",
                         Complexity: template.complexity,
                         Description: template.description,
                         ShortDescription: template.shortDescription,
-                        BusinessBenefit: template.businessBenefit || template.description,
-                        LOBSystemsIntegrated: template.lobSystems?.join("; ") || "",
-                        Capabilities: template.capabilities?.join("; ") || template.features?.join("; ") || "",
+                        Capabilities: template.capabilities.join("; "), // Multi-value field
                         SolutionName: template.defaultConfiguration?.solutionName || "",
                         BusinessType: template.defaultConfiguration?.businessType || "",
                         UserStories: template.defaultConfiguration?.userStories?.join(" ||| ") || "", // Custom delimiter
                         MicrosoftProducts: template.defaultConfiguration?.microsoftProducts?.join("; ") || "",
                         GeneralStrategy: template.defaultConfiguration?.generalStrategy || "",
-                        PricingModel: template.pricing?.model || "",
-                        EstimatedCost: template.pricing?.estimate || "",
                         EstimatedDuration: template.complexity === "low" ? "2-4 weeks" : 
                                            template.complexity === "medium" ? "1-3 months" : "3-6 months",
                         LastModified: new Date().toISOString()
@@ -2570,25 +2232,18 @@
                         requiredColumns: [
                             { name: "Title", type: "Text", required: true },
                             { name: "TemplateID", type: "Text", required: true },
-                            { name: "AgentUseCase", type: "Text", required: true },
                             { name: "TemplateType", type: "Choice", choices: ["conversational", "analytical", "automation", "extraction", "monitoring", "orchestration"] },
-                            { name: "Category", type: "Choice", choices: ["sales", "operations", "customer-service", "hr", "finance", "it", "compliance", "research", "data-analysis"] },
-                            { name: "Sector", type: "Choice", choices: ["Healthcare", "Energy", "Manufacturing", "Software / DP", "Professional Services", "Retail / CPG", "Financial Services", "SLG", "Federal", "Cross-Industry"] },
+                            { name: "Category", type: "Choice", choices: ["sales", "operations", "customer-service", "hr", "finance", "it", "compliance", "research"] },
                             { name: "Industry", type: "Text", multiValue: true },
-                            { name: "SourceType", type: "Choice", choices: ["1P", "Partner"] },
                             { name: "Complexity", type: "Choice", choices: ["low", "medium", "high"] },
                             { name: "Description", type: "Note" },
                             { name: "ShortDescription", type: "Text" },
-                            { name: "BusinessBenefit", type: "Note" },
-                            { name: "LOBSystemsIntegrated", type: "Note" },
                             { name: "Capabilities", type: "Note" },
                             { name: "SolutionName", type: "Text" },
                             { name: "BusinessType", type: "Choice", choices: ["B2E", "B2C", "B2B"] },
                             { name: "UserStories", type: "Note" },
                             { name: "MicrosoftProducts", type: "Note" },
                             { name: "GeneralStrategy", type: "Note" },
-                            { name: "PricingModel", type: "Choice", choices: ["per-user", "per-transaction", "flat-rate", "usage-based", "custom"] },
-                            { name: "EstimatedCost", type: "Text" },
                             { name: "EstimatedDuration", type: "Text" },
                             { name: "LastModified", type: "DateTime" }
                         ]
@@ -2596,7 +2251,7 @@
                     data: sharePointData
                 };
 
-                this.downloadJSON(exportPackage, `sharepoint-agent-library-${new Date().toISOString().split("T")[0]}.json`);
+                this.downloadJSON(exportPackage, `sharepoint-template-library-${new Date().toISOString().split("T")[0]}.json`);
                 
                 // Also offer CSV export
                 const csvOption = confirm("SharePoint JSON exported. Would you also like a CSV version for manual import?");
@@ -2611,25 +2266,18 @@
                     return {
                         Title: template.name,
                         TemplateID: template.id,
-                        AgentUseCase: template.name,
                         TemplateType: template.type,
                         Category: template.category,
-                        Sector: template.sector || "Cross-Industry",
                         Industry: template.industry.join("; "),
-                        SourceType: template.sourceType || "1P",
                         Complexity: template.complexity,
                         Description: template.description.replace(/,/g, ";"), // Replace commas
                         ShortDescription: template.shortDescription.replace(/,/g, ";"),
-                        BusinessBenefit: (template.businessBenefit || template.description).replace(/,/g, ";"),
-                        LOBSystemsIntegrated: (template.lobSystems?.join("; ") || "").replace(/,/g, ";"),
-                        Capabilities: (template.capabilities?.join("; ") || template.features?.join("; ") || "").replace(/,/g, ";"),
+                        Capabilities: template.capabilities.join("; "),
                         SolutionName: template.defaultConfiguration?.solutionName || "",
                         BusinessType: template.defaultConfiguration?.businessType || "",
                         UserStories: (template.defaultConfiguration?.userStories?.join(" ||| ") || "").replace(/,/g, ";"),
                         MicrosoftProducts: template.defaultConfiguration?.microsoftProducts?.join("; ") || "",
                         GeneralStrategy: (template.defaultConfiguration?.generalStrategy || "").replace(/,/g, ";"),
-                        PricingModel: template.pricing?.model || "",
-                        EstimatedCost: template.pricing?.estimate || "",
                         EstimatedDuration: template.complexity === "low" ? "2-4 weeks" : 
                                            template.complexity === "medium" ? "1-3 months" : "3-6 months",
                         LastModified: new Date().toISOString()
@@ -2658,7 +2306,7 @@
                 const url = URL.createObjectURL(blob);
                 const a = document.createElement("a");
                 a.href = url;
-                a.download = `sharepoint-agent-library-${new Date().toISOString().split("T")[0]}.csv`;
+                a.download = `sharepoint-templates-${new Date().toISOString().split("T")[0]}.csv`;
                 document.body.appendChild(a);
                 a.click();
                 document.body.removeChild(a);
@@ -2684,22 +2332,14 @@
                                 const templates = imported.data.map(item => {
                                     return {
                                         id: item.TemplateID,
-                                        name: item.Title || item.AgentUseCase,
+                                        name: item.Title,
                                         type: item.TemplateType,
                                         category: item.Category,
-                                        sector: item.Sector,
-                                        sourceType: item.SourceType || "1P",
                                         industry: item.Industry.split(";").map(i => i.trim()).filter(i => i),
                                         complexity: item.Complexity,
                                         description: item.Description,
                                         shortDescription: item.ShortDescription,
-                                        businessBenefit: item.BusinessBenefit,
-                                        lobSystems: item.LOBSystemsIntegrated ? item.LOBSystemsIntegrated.split(";").map(s => s.trim()).filter(s => s) : [],
                                         capabilities: item.Capabilities.split(";").map(c => c.trim()).filter(c => c),
-                                        pricing: {
-                                            model: item.PricingModel || "custom",
-                                            estimate: item.EstimatedCost || "TBD"
-                                        },
                                         defaultConfiguration: {
                                             solutionName: item.SolutionName,
                                             businessType: item.BusinessType,
@@ -2713,7 +2353,7 @@
                                 // Update template library
                                 this.templateLibrary.templates = templates;
                                 this.templateLibrary.lastUpdated = new Date().toISOString();
-                                this.templateLibrary.version = imported.metadata.version || "2.0";
+                                this.templateLibrary.version = imported.metadata.version || "1.0";
                                 
                                 this.currentTemplates = [...templates];
                                 this.loadTemplates();
@@ -2758,22 +2398,14 @@
                     // Convert to template format
                     const template = {
                         id: item.TemplateID || item.templateID || "",
-                        name: item.Title || item.AgentUseCase || item.title || "",
+                        name: item.Title || item.title || "",
                         type: item.TemplateType || item.templateType || "conversational",
                         category: item.Category || item.category || "operations",
-                        sector: item.Sector || item.sector || "Cross-Industry",
-                        sourceType: item.SourceType || item.sourceType || "1P",
                         industry: item.Industry ? item.Industry.split(";").map(i => i.trim()).filter(i => i) : ["cross-industry"],
                         complexity: item.Complexity || item.complexity || "medium",
                         description: item.Description || item.description || "",
                         shortDescription: item.ShortDescription || item.shortDescription || "",
-                        businessBenefit: item.BusinessBenefit || item.businessBenefit || "",
-                        lobSystems: item.LOBSystemsIntegrated ? item.LOBSystemsIntegrated.split(";").map(s => s.trim()).filter(s => s) : [],
                         capabilities: item.Capabilities ? item.Capabilities.split(";").map(c => c.trim()).filter(c => c) : [],
-                        pricing: {
-                            model: item.PricingModel || item.pricingModel || "custom",
-                            estimate: item.EstimatedCost || item.estimatedCost || "TBD"
-                        },
                         defaultConfiguration: {
                             solutionName: item.SolutionName || item.solutionName || "",
                             businessType: item.BusinessType || item.businessType || "B2E",
@@ -2793,7 +2425,7 @@
                 if (templates.length > 0) {
                     this.templateLibrary.templates = templates;
                     this.templateLibrary.lastUpdated = new Date().toISOString();
-                    this.templateLibrary.version = "2.0";
+                    this.templateLibrary.version = "1.0"; // Default version since it's not in the CSV
                     
                     this.currentTemplates = [...templates];
                     this.loadTemplates();
