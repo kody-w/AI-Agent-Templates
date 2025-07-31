@@ -2,7 +2,7 @@
   "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
   "contentVersion": "1.0.0.0",
   "metadata": {
-    "description": "Sales Voice Copilot - Complete Azure Infrastructure with Centralized Agent Deployment",
+    "description": "Sales Voice Copilot - Complete Azure Infrastructure",
     "author": "Microsoft AI Accelerate Team"
   },
   "parameters": {
@@ -34,20 +34,6 @@
       ],
       "metadata": {
         "description": "Location for all resources"
-      }
-    },
-    "manifestUrl": {
-      "type": "string",
-      "defaultValue": "https://raw.githubusercontent.com/YOUR-USERNAME/AI-AGENT-TEMPLATES/main/templates/sales-voice-agent/agent-manifest.json",
-      "metadata": {
-        "description": "URL to the agent manifest file"
-      }
-    },
-    "agentLibraryUrl": {
-      "type": "string",
-      "defaultValue": "https://github.com/YOUR-USERNAME/AI-AGENT-TEMPLATES/archive/refs/heads/main.zip",
-      "metadata": {
-        "description": "URL to download the agent library"
       }
     },
     "azureOpenAIEndpoint": {
@@ -111,41 +97,6 @@
         "description": "Azure AD tenant ID"
       }
     },
-    "enableSharePoint": {
-      "type": "bool",
-      "defaultValue": false,
-      "metadata": {
-        "description": "Enable SharePoint integration for document processing"
-      }
-    },
-    "sharePointSiteUrl": {
-      "type": "string",
-      "defaultValue": "",
-      "metadata": {
-        "description": "SharePoint site URL for document extraction"
-      }
-    },
-    "sharePointClientId": {
-      "type": "string",
-      "defaultValue": "",
-      "metadata": {
-        "description": "App registration client ID for SharePoint access"
-      }
-    },
-    "sharePointClientSecret": {
-      "type": "securestring",
-      "defaultValue": "",
-      "metadata": {
-        "description": "App registration client secret for SharePoint access"
-      }
-    },
-    "sharePointTenantId": {
-      "type": "string",
-      "defaultValue": "[subscription().tenantId]",
-      "metadata": {
-        "description": "SharePoint tenant ID"
-      }
-    },
     "enableVoiceServices": {
       "type": "bool",
       "defaultValue": true,
@@ -169,7 +120,7 @@
     },
     "characteristicDescription": {
       "type": "string",
-      "defaultValue": "An intelligent sales assistant that processes meeting transcripts and automatically updates CRM records, creating a seamless workflow from voice to action.",
+      "defaultValue": "An intelligent sales assistant with voice capabilities, conversation memory management, and multi-agent orchestration for comprehensive sales support.",
       "metadata": {
         "description": "Description of the assistant's characteristics and behavior"
       }
@@ -246,7 +197,6 @@
     "fileShareName": "[concat('azf', toLower(parameters('projectName')), take(variables('uniqueString'), 6))]",
     "keyVaultName": "[concat(parameters('projectName'), '-kv-', take(variables('uniqueString'), 6))]",
     "speechServicesName": "[concat(parameters('projectName'), '-speech-', variables('uniqueString'))]",
-    "containerInstanceName": "[concat(parameters('projectName'), '-aci-deploy')]",
     "functionWorkerRuntime": "python",
     "pythonVersion": "3.9",
     "isPremiumPlan": "[not(equals(parameters('functionAppSkuName'), 'Y1'))]",
@@ -256,7 +206,7 @@
       "CostCenter": "[parameters('tagCostCenter')]",
       "ManagedBy": "ARM Template",
       "CreatedBy": "Microsoft AI Accelerate",
-      "TemplateVersion": "2.0.0"
+      "TemplateVersion": "1.0.0"
     }
   },
   "resources": [
@@ -403,18 +353,6 @@
       }
     },
     {
-      "condition": "[parameters('enableSharePoint')]",
-      "type": "Microsoft.KeyVault/vaults/secrets",
-      "apiVersion": "2021-11-01-preview",
-      "name": "[concat(variables('keyVaultName'), '/SharePointClientSecret')]",
-      "dependsOn": [
-        "[resourceId('Microsoft.KeyVault/vaults', variables('keyVaultName'))]"
-      ],
-      "properties": {
-        "value": "[parameters('sharePointClientSecret')]"
-      }
-    },
-    {
       "condition": "[parameters('enableVoiceServices')]",
       "type": "Microsoft.CognitiveServices/accounts",
       "apiVersion": "2021-10-01",
@@ -528,26 +466,6 @@
               "value": "[string(parameters('enableDynamics365'))]"
             },
             {
-              "name": "SHAREPOINT_SITE_URL",
-              "value": "[if(parameters('enableSharePoint'), parameters('sharePointSiteUrl'), '')]"
-            },
-            {
-              "name": "SHAREPOINT_CLIENT_ID",
-              "value": "[if(parameters('enableSharePoint'), parameters('sharePointClientId'), '')]"
-            },
-            {
-              "name": "SHAREPOINT_CLIENT_SECRET",
-              "value": "[if(parameters('enableSharePoint'), concat('@Microsoft.KeyVault(VaultName=', variables('keyVaultName'), ';SecretName=SharePointClientSecret)'), '')]"
-            },
-            {
-              "name": "SHAREPOINT_TENANT_ID",
-              "value": "[if(parameters('enableSharePoint'), parameters('sharePointTenantId'), '')]"
-            },
-            {
-              "name": "SHAREPOINT_ENABLED",
-              "value": "[string(parameters('enableSharePoint'))]"
-            },
-            {
               "name": "SPEECH_SERVICES_KEY",
               "value": "[if(parameters('enableVoiceServices'), listKeys(resourceId('Microsoft.CognitiveServices/accounts', variables('speechServicesName')), '2021-10-01').key1, '')]"
             },
@@ -586,10 +504,6 @@
             {
               "name": "ENVIRONMENT",
               "value": "[parameters('tagEnvironment')]"
-            },
-            {
-              "name": "AGENT_MANIFEST_URL",
-              "value": "[parameters('manifestUrl')]"
             },
             {
               "name": "MEMORY_PATH",
@@ -649,39 +563,6 @@
         "principalId": "[reference(resourceId('Microsoft.Web/sites', variables('functionAppName')), '2021-03-01', 'full').identity.principalId]",
         "principalType": "ServicePrincipal"
       }
-    },
-    {
-      "type": "Microsoft.ContainerInstance/containerGroups",
-      "apiVersion": "2021-09-01",
-      "name": "[variables('containerInstanceName')]",
-      "location": "[parameters('location')]",
-      "dependsOn": [
-        "[resourceId('Microsoft.Storage/storageAccounts', variables('storageAccountName'))]",
-        "[resourceId('Microsoft.Storage/storageAccounts/fileServices/shares', variables('storageAccountName'), 'default', variables('fileShareName'))]"
-      ],
-      "properties": {
-        "containers": [
-          {
-            "name": "agent-deployer",
-            "properties": {
-              "image": "mcr.microsoft.com/azure-cli:latest",
-              "command": [
-                "/bin/bash",
-                "-c",
-                "[concat('apt-get update && apt-get install -y curl unzip && ', 'curl -L ', parameters('agentLibraryUrl'), ' -o agents.zip && ', 'unzip agents.zip && ', 'cd AI-AGENT-TEMPLATES-main && ', 'az storage directory create --name agents --share-name ', variables('fileShareName'), ' --account-name ', variables('storageAccountName'), ' --account-key ', listKeys(resourceId('Microsoft.Storage/storageAccounts', variables('storageAccountName')), '2021-09-01').keys[0].value, ' && ', 'curl -s ', parameters('manifestUrl'), ' -o manifest.json && ', 'for agent in $(cat manifest.json | grep -oP ''\"required\"\\s*:\\s*\\[[^]]+\\]'' | grep -oP ''\"[^\"]+\"'' | grep -v required | tr -d ''\"\\''); do ', 'agent_path=$(echo $agent | tr ''/'' ''_'').py; ', 'if [ -f agents/$agent.py ]; then ', 'az storage file upload --share-name ', variables('fileShareName'), ' --source agents/$agent.py --path agents/$(basename $agent).py --account-name ', variables('storageAccountName'), ' --account-key ', listKeys(resourceId('Microsoft.Storage/storageAccounts', variables('storageAccountName')), '2021-09-01').keys[0].value, '; ', 'fi; ', 'done && ', 'echo \"Agent deployment completed\"')]"
-              ],
-              "resources": {
-                "requests": {
-                  "cpu": 1.0,
-                  "memoryInGB": 1.5
-                }
-              }
-            }
-          }
-        ],
-        "osType": "Linux",
-        "restartPolicy": "OnFailure"
-      }
     }
   ],
   "outputs": {
@@ -728,24 +609,22 @@
     "nextSteps": {
       "type": "object",
       "value": {
-        "1_AgentDeployment": "Agents are being deployed automatically from the central library",
-        "2_DeployCode": "Deploy the Python function code to the Function App using VS Code, Azure CLI, or GitHub Actions",
-        "3_ConfigureCopilot": "Import the Copilot Studio solution and configure it with the function endpoint URL",
-        "4_TestEndpoint": "Test the function endpoint with: curl -X POST [functionEndpoint] -H 'Content-Type: application/json' -d '{\"user_input\": \"Hello\", \"conversation_history\": []}'",
-        "5_TestVoice": "Test voice commands in Teams: 'Process my meeting transcripts and update CRM'",
-        "6_MonitorLogs": "Monitor performance and logs in Application Insights",
-        "7_Documentation": "Access the full implementation guide at: https://github.com/YOUR-USERNAME/AI-AGENT-TEMPLATES"
+        "1_DeployCode": "Deploy the Python function code to the Function App using VS Code, Azure CLI, or GitHub Actions",
+        "2_TestEndpoint": "Test the function endpoint with: curl -X POST [functionEndpoint] -H 'Content-Type: application/json' -d '{\"user_input\": \"Hello\", \"conversation_history\": []}'",
+        "3_DeployFrontend": "Deploy the index_voice.html to a static web hosting service",
+        "4_ConfigureCORS": "Update CORS settings if needed for your frontend domain",
+        "5_TestVoice": "Test voice commands in the deployed application",
+        "6_MonitorLogs": "Monitor performance and logs in Application Insights"
       }
     },
     "deploymentInfo": {
       "type": "object",
       "value": {
-        "templateVersion": "2.0.0",
+        "templateVersion": "1.0.0",
         "deploymentTime": "[utcNow()]",
         "resourceGroup": "[resourceGroup().name]",
         "subscription": "[subscription().subscriptionId]",
-        "environment": "[parameters('tagEnvironment')]",
-        "agentManifest": "[parameters('manifestUrl')]"
+        "environment": "[parameters('tagEnvironment')]"
       }
     }
   }
