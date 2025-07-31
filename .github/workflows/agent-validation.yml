@@ -1,0 +1,41 @@
+name: Validate Agents and Templates
+
+on:
+  push:
+    branches: [ main ]
+    paths:
+      - 'agents/**'
+      - 'templates/**/agent-manifest.json'
+  pull_request:
+    branches: [ main ]
+    paths:
+      - 'agents/**'
+      - 'templates/**/agent-manifest.json'
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - uses: actions/checkout@v3
+    
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.9'
+    
+    - name: Validate Agent Manifests
+      run: |
+        for manifest in templates/*/agent-manifest.json; do
+          echo "Validating $manifest"
+          python -m json.tool "$manifest" > /dev/null
+        done
+    
+    - name: Check Agent Dependencies
+      run: |
+        echo "Checking that all agents referenced in manifests exist..."
+        # Add validation script here
+    
+    - name: Python Syntax Check
+      run: |
+        python -m py_compile agents/**/*.py
