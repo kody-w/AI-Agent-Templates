@@ -91,7 +91,7 @@ class ImageGenerationAgent(BasicAgent):
         """Initialize API configuration from environment variables."""
         self.api_endpoint = os.environ.get(
             'AZURE_IMAGE_API_ENDPOINT', 'https://.cognitiveservices.azure.com')
-        self.api_key = os.environ.get('AZURE_IMAGE_API_KEY', 'YOURKEY')
+        self.api_key = os.environ.get('AZURE_IMAGE_API_KEY', 'YOUR KEY')
         self.deployment_name = os.environ.get(
             'AZURE_IMAGE_DEPLOYMENT', 'gpt-image-1')
         self.api_version = os.environ.get(
