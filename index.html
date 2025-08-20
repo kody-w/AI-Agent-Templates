@@ -1,0 +1,2851 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Microsoft AI Accelerate - Complete Platform</title>
+    <style>
+      /* Reset and Base Styles */
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      :root {
+        --primary-color: #0078d4;
+        --secondary-color: #40e0d0;
+        --success-color: #00d4aa;
+        --danger-color: #ef4444;
+        --warning-color: #f59e0b;
+        --dark-bg: #1a1a2e;
+        --card-bg: #16213e;
+        --text-primary: #333;
+        --text-secondary: #666;
+        --border-color: #e0e0e0;
+        --shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+        --shadow-lg: 0 4px 15px rgba(0, 0, 0, 0.15);
+      }
+
+      body {
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        background-color: #f5f5f5;
+        color: #333;
+        line-height: 1.6;
+      }
+
+      .container {
+        max-width: 1400px;
+        margin: 0 auto;
+        padding: 20px;
+      }
+
+      /* Main Navigation */
+      .main-nav {
+        background: linear-gradient(135deg, #0078d4 0%, #005a9e 100%);
+        color: white;
+        padding: 1rem 0;
+        position: sticky;
+        top: 0;
+        z-index: 1000;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+      }
+
+      .nav-container {
+        max-width: 1400px;
+        margin: 0 auto;
+        padding: 0 20px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+
+      .nav-brand {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+      }
+
+      .nav-brand h1 {
+        font-size: 1.5rem;
+        font-weight: 600;
+      }
+
+      .nav-tabs {
+        display: flex;
+        gap: 0.5rem;
+      }
+
+      .nav-tab {
+        background: rgba(255, 255, 255, 0.1);
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        color: white;
+        padding: 0.75rem 1.5rem;
+        border-radius: 8px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        font-size: 0.95rem;
+        font-weight: 500;
+      }
+
+      .nav-tab:hover {
+        background: rgba(255, 255, 255, 0.2);
+        transform: translateY(-2px);
+      }
+
+      .nav-tab.active {
+        background: white;
+        color: #0078d4;
+      }
+
+      /* App Sections */
+      .app-section {
+        display: none;
+        animation: fadeIn 0.3s ease-in;
+      }
+
+      .app-section.active {
+        display: block;
+      }
+
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+          transform: translateY(10px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      /* Header Styles */
+      header {
+        background: linear-gradient(135deg, #0078d4 0%, #005a9e 100%);
+        color: white;
+        padding: 2.5rem 0;
+        text-align: center;
+        margin-bottom: 2rem;
+        border-radius: 10px;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+      }
+
+      .ms-logo {
+        font-size: 0.9rem;
+        opacity: 0.8;
+        margin-bottom: 1rem;
+      }
+
+      h1 {
+        font-size: 2.5rem;
+        margin-bottom: 0.5rem;
+        font-weight: 300;
+        letter-spacing: 1px;
+      }
+
+      h2 {
+        font-size: 1.8rem;
+        color: #0078d4;
+        margin-bottom: 1rem;
+      }
+
+      h3 {
+        font-size: 1.3rem;
+        color: #0078d4;
+        margin-bottom: 1rem;
+      }
+
+      .subtitle {
+        font-size: 1.2rem;
+        opacity: 0.9;
+        font-weight: 300;
+      }
+
+      /* Common UI Components */
+      .btn {
+        padding: 12px 24px;
+        border: none;
+        border-radius: 6px;
+        font-size: 1rem;
+        cursor: pointer;
+        transition: all 0.3s;
+        font-weight: 500;
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+      }
+
+      .btn-primary {
+        background: #0078d4;
+        color: white;
+      }
+
+      .btn-primary:hover {
+        background: #005a9e;
+        transform: translateY(-1px);
+        box-shadow: 0 4px 15px rgba(0, 120, 212, 0.3);
+      }
+
+      .btn-secondary {
+        background: #e0e0e0;
+        color: #333;
+      }
+
+      .btn-secondary:hover {
+        background: #d0d0d0;
+      }
+
+      .btn-success {
+        background: #00d4aa;
+        color: white;
+      }
+
+      .btn-success:hover {
+        background: #00b090;
+        transform: translateY(-1px);
+        box-shadow: 0 4px 15px rgba(0, 212, 170, 0.3);
+      }
+
+      .btn-danger {
+        background: #ef4444;
+        color: white;
+      }
+
+      .btn-danger:hover {
+        background: #dc2626;
+      }
+
+      .btn-warning {
+        background: #f59e0b;
+        color: white;
+      }
+
+      .btn-warning:hover {
+        background: #d97706;
+        transform: translateY(-1px);
+        box-shadow: 0 4px 15px rgba(245, 158, 11, 0.3);
+      }
+
+      /* Form Controls */
+      input[type="text"],
+      input[type="number"],
+      select,
+      textarea {
+        width: 100%;
+        padding: 12px;
+        border: 2px solid #e0e0e0;
+        border-radius: 6px;
+        font-size: 1rem;
+        transition: all 0.3s;
+        background-color: #fafafa;
+      }
+
+      input:focus,
+      select:focus,
+      textarea:focus {
+        outline: none;
+        border-color: #0078d4;
+        background-color: white;
+        box-shadow: 0 0 0 3px rgba(0, 120, 212, 0.1);
+      }
+
+      /* Cards and Sections */
+      .card {
+        background: white;
+        padding: 2rem;
+        border-radius: 10px;
+        box-shadow: 0 2px 15px rgba(0, 0, 0, 0.08);
+        margin-bottom: 2rem;
+      }
+
+      .info-box {
+        background: #e3f2fd;
+        border-left: 4px solid #0078d4;
+        padding: 1.2rem;
+        margin-bottom: 1.8rem;
+        border-radius: 6px;
+      }
+
+      .info-box p {
+        margin: 0;
+        color: #1565c0;
+        font-size: 0.95rem;
+      }
+
+      /* Template Grid */
+      .template-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
+        gap: 2rem;
+        margin-bottom: 2rem;
+      }
+
+      .template-card {
+        background: white;
+        padding: 1.5rem;
+        border-radius: 12px;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+        transition: all 0.3s;
+        cursor: pointer;
+        position: relative;
+        border: 2px solid transparent;
+        overflow: hidden;
+      }
+
+      .template-card::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 4px;
+        background: linear-gradient(90deg, #0078d4, #40e0d0);
+        transform: scaleX(0);
+        transition: transform 0.3s ease;
+      }
+
+      .template-card:hover::before {
+        transform: scaleX(1);
+      }
+
+      .template-card:hover {
+        box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+        transform: translateY(-2px);
+        border-color: #0078d4;
+      }
+
+      .template-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: start;
+        margin-bottom: 1rem;
+      }
+
+      .template-title {
+        font-size: 1.3rem;
+        color: #0078d4;
+        font-weight: 600;
+        margin-bottom: 0.5rem;
+      }
+
+      .template-description {
+        color: #666;
+        margin-bottom: 1.5rem;
+        line-height: 1.5;
+      }
+
+      .template-agents {
+        background: #f8f9fa;
+        border-radius: 8px;
+        padding: 1rem;
+        margin-bottom: 1.5rem;
+      }
+
+      .template-agents-title {
+        font-size: 0.9rem;
+        font-weight: 600;
+        color: #555;
+        margin-bottom: 0.75rem;
+      }
+
+      .agent-pill {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.3rem;
+        background: white;
+        border: 1px solid #e0e0e0;
+        padding: 0.4rem 0.8rem;
+        border-radius: 20px;
+        margin: 0.25rem;
+        font-size: 0.85rem;
+        color: #555;
+      }
+
+      .template-stats {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 1.5rem;
+        padding: 1rem 0;
+        border-top: 1px solid #e0e0e0;
+        border-bottom: 1px solid #e0e0e0;
+      }
+
+      .template-stat {
+        text-align: center;
+      }
+
+      .template-stat-value {
+        font-size: 1.2rem;
+        font-weight: 600;
+        color: #0078d4;
+      }
+
+      .template-stat-label {
+        font-size: 0.8rem;
+        color: #666;
+      }
+
+      /* Agent Store Styles */
+      .agent-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+        gap: 2rem;
+      }
+
+      .agent-card {
+        background: white;
+        border: 1px solid #e0e0e0;
+        border-radius: 16px;
+        padding: 1.5rem;
+        transition: all 0.3s ease;
+        position: relative;
+        overflow: hidden;
+      }
+
+      .agent-card::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 4px;
+        background: linear-gradient(90deg, #0078d4, #40e0d0);
+        transform: scaleX(0);
+        transition: transform 0.3s ease;
+      }
+
+      .agent-card:hover::before {
+        transform: scaleX(1);
+      }
+
+      .agent-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        border-color: #0078d4;
+      }
+
+      .agent-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+        margin-bottom: 1rem;
+      }
+
+      .agent-icon {
+        font-size: 2.5rem;
+        margin-bottom: 0.5rem;
+      }
+
+      .agent-badge {
+        background: rgba(64, 224, 208, 0.2);
+        color: #40e0d0;
+        padding: 4px 12px;
+        border-radius: 12px;
+        font-size: 0.75rem;
+        font-weight: 600;
+      }
+
+      .agent-name {
+        font-size: 1.2rem;
+        font-weight: 600;
+        margin-bottom: 0.5rem;
+      }
+
+      .agent-description {
+        color: #666;
+        font-size: 0.9rem;
+        margin-bottom: 1rem;
+        line-height: 1.5;
+        min-height: 60px;
+      }
+
+      .agent-features {
+        list-style: none;
+        margin-bottom: 1rem;
+        min-height: 100px;
+      }
+
+      .agent-features li {
+        color: #666;
+        font-size: 0.85rem;
+        padding: 0.25rem 0;
+        padding-left: 1.2rem;
+        position: relative;
+      }
+
+      .agent-features li::before {
+        content: "✓";
+        position: absolute;
+        left: 0;
+        color: #00d4aa;
+      }
+
+      /* GitHub Repo Info */
+      .repo-info {
+        background: #f8f9fa;
+        border-radius: 10px;
+        padding: 15px;
+        display: flex;
+        align-items: center;
+        gap: 15px;
+        flex-wrap: wrap;
+        margin-bottom: 2rem;
+      }
+
+      .repo-link {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        padding: 8px 16px;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+        text-decoration: none;
+        border-radius: 8px;
+        font-weight: 500;
+        transition: transform 0.2s;
+      }
+
+      .repo-link:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+      }
+
+      /* Discovery Tool Styles */
+      .progress-bar {
+        background-color: #e0e0e0;
+        height: 8px;
+        border-radius: 4px;
+        margin-bottom: 2rem;
+        overflow: hidden;
+      }
+
+      .progress {
+        background: linear-gradient(90deg, #00d4aa 0%, #0078d4 100%);
+        height: 100%;
+        width: 0%;
+        transition: width 0.3s ease;
+        border-radius: 4px;
+      }
+
+      .step {
+        display: none;
+        background: white;
+        padding: 2.5rem;
+        border-radius: 10px;
+        box-shadow: 0 2px 15px rgba(0, 0, 0, 0.08);
+        margin-bottom: 2rem;
+      }
+
+      .step.active {
+        display: block;
+        animation: fadeIn 0.3s ease-in;
+      }
+
+      .step-header {
+        margin-bottom: 2rem;
+        padding-bottom: 1.5rem;
+        border-bottom: 2px solid #f0f0f0;
+      }
+
+      .step-number {
+        display: inline-block;
+        background: #0078d4;
+        color: white;
+        width: 35px;
+        height: 35px;
+        border-radius: 50%;
+        text-align: center;
+        line-height: 35px;
+        margin-right: 15px;
+        font-weight: bold;
+        font-size: 1.1rem;
+      }
+
+      /* Cart Sidebar */
+      .cart-sidebar {
+        position: fixed;
+        right: -450px;
+        top: 0;
+        width: 450px;
+        height: 100vh;
+        background: white;
+        border-left: 1px solid #e0e0e0;
+        z-index: 1000;
+        transition: right 0.3s ease;
+        display: flex;
+        flex-direction: column;
+        box-shadow: -2px 0 10px rgba(0, 0, 0, 0.1);
+      }
+
+      .cart-sidebar.active {
+        right: 0;
+      }
+
+      .cart-header {
+        padding: 1.5rem;
+        border-bottom: 1px solid #e0e0e0;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        background: #f8f9fa;
+      }
+
+      .cart-content {
+        flex: 1;
+        overflow-y: auto;
+        padding: 1.5rem;
+      }
+
+      .cart-item {
+        background: #f8f9fa;
+        border: 1px solid #e0e0e0;
+        border-radius: 8px;
+        padding: 1rem;
+        margin-bottom: 1rem;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+
+      .cart-footer {
+        padding: 1.5rem;
+        border-top: 1px solid #e0e0e0;
+        background: #f8f9fa;
+      }
+
+      /* Loading Overlay */
+      .loading-overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.7);
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        z-index: 2000;
+        opacity: 0;
+        pointer-events: none;
+        transition: opacity 0.3s ease;
+      }
+
+      .loading-overlay.visible {
+        opacity: 1;
+        pointer-events: all;
+      }
+
+      .loading-spinner {
+        width: 50px;
+        height: 50px;
+        border: 3px solid #f3f3f3;
+        border-top: 3px solid #0078d4;
+        border-radius: 50%;
+        animation: spin 1s linear infinite;
+        margin-bottom: 20px;
+      }
+
+      @keyframes spin {
+        0% {
+          transform: rotate(0deg);
+        }
+        100% {
+          transform: rotate(360deg);
+        }
+      }
+
+      .loading-text {
+        color: white;
+        font-size: 1.2rem;
+      }
+
+      /* Toast Notification */
+      .toast {
+        position: fixed;
+        bottom: 20px;
+        right: 20px;
+        background: #333;
+        color: white;
+        padding: 15px 20px;
+        border-radius: 10px;
+        display: none;
+        animation: slideUp 0.3s ease;
+        z-index: 3000;
+        max-width: 300px;
+      }
+
+      .toast.show {
+        display: block;
+      }
+
+      .toast.success {
+        background: #4caf50;
+      }
+
+      .toast.error {
+        background: #f44336;
+      }
+
+      @keyframes slideUp {
+        from {
+          transform: translateY(100px);
+          opacity: 0;
+        }
+        to {
+          transform: translateY(0);
+          opacity: 1;
+        }
+      }
+
+      /* Badges */
+      .badge {
+        padding: 0.25rem 0.75rem;
+        border-radius: 12px;
+        font-size: 0.75rem;
+        font-weight: 600;
+        display: inline-block;
+      }
+
+      .badge-complexity-low {
+        background: #d4f4dd;
+        color: #1e7e34;
+      }
+
+      .badge-complexity-medium {
+        background: #fff3cd;
+        color: #856404;
+      }
+
+      .badge-complexity-high {
+        background: #f8d7da;
+        color: #721c24;
+      }
+
+      /* Search and Filter */
+      .search-section {
+        background: white;
+        padding: 2rem;
+        border-radius: 10px;
+        box-shadow: 0 2px 15px rgba(0, 0, 0, 0.08);
+        margin-bottom: 2rem;
+      }
+
+      .search-box {
+        display: flex;
+        gap: 1rem;
+        margin-bottom: 1.5rem;
+      }
+
+      .search-input {
+        flex: 1;
+        padding: 12px 20px;
+        border: 2px solid #e0e0e0;
+        border-radius: 6px;
+        font-size: 1rem;
+        transition: all 0.3s;
+      }
+
+      .search-input:focus {
+        outline: none;
+        border-color: #0078d4;
+        box-shadow: 0 0 0 3px rgba(0, 120, 212, 0.1);
+      }
+
+      .filter-section {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 1rem;
+        margin-top: 1.5rem;
+        padding-top: 1.5rem;
+        border-top: 2px solid #f0f0f0;
+      }
+
+      .filter-group {
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+        min-width: 200px;
+      }
+
+      .filter-label {
+        font-weight: 600;
+        color: #555;
+        font-size: 0.9rem;
+      }
+
+      .filter-select {
+        padding: 8px;
+        border: 2px solid #e0e0e0;
+        border-radius: 4px;
+        font-size: 0.9rem;
+        background: white;
+        cursor: pointer;
+      }
+
+      .filter-btn {
+        background: white;
+        border: 1px solid #e0e0e0;
+        color: #333;
+        padding: 10px 20px;
+        border-radius: 25px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        font-size: 0.9rem;
+        font-weight: 500;
+      }
+
+      .filter-btn:hover {
+        background: #0078d4;
+        color: white;
+        transform: translateY(-2px);
+      }
+
+      .filter-btn.active {
+        background: #0078d4;
+        color: white;
+        border-color: #0078d4;
+      }
+
+      /* Action Buttons */
+      .action-buttons {
+        display: flex;
+        gap: 1rem;
+        margin-top: 2rem;
+        padding-top: 2rem;
+        border-top: 2px solid #f0f0f0;
+        flex-wrap: wrap;
+      }
+
+      .button-group {
+        display: flex;
+        justify-content: space-between;
+        margin-top: 2.5rem;
+        padding-top: 2rem;
+        border-top: 2px solid #f0f0f0;
+      }
+
+      /* Empty State */
+      .empty-state {
+        text-align: center;
+        padding: 4rem;
+        color: #666;
+      }
+
+      .empty-state-icon {
+        font-size: 4rem;
+        margin-bottom: 1rem;
+        opacity: 0.5;
+      }
+
+      .empty-state-title {
+        font-size: 1.5rem;
+        margin-bottom: 0.5rem;
+        color: #555;
+      }
+
+      .close-btn {
+        background: none;
+        border: none;
+        font-size: 1.5rem;
+        cursor: pointer;
+        color: #666;
+        padding: 0;
+        width: 30px;
+        height: 30px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 50%;
+        transition: all 0.2s;
+      }
+
+      .close-btn:hover {
+        background: #f0f0f0;
+        color: #333;
+      }
+
+      /* Stats Cards */
+      .stats-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+        gap: 1rem;
+        margin-bottom: 2rem;
+      }
+
+      .stat-card {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+        padding: 1.5rem;
+        border-radius: 10px;
+        text-align: center;
+      }
+
+      .stat-value {
+        font-size: 2rem;
+        font-weight: bold;
+        margin-bottom: 0.5rem;
+      }
+
+      .stat-label {
+        font-size: 0.9rem;
+        opacity: 0.9;
+      }
+
+      /* Code Viewer Modal */
+      .code-viewer-modal {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.8);
+        display: none;
+        align-items: center;
+        justify-content: center;
+        z-index: 2000;
+        backdrop-filter: blur(2px);
+      }
+
+      .code-viewer-content {
+        background: white;
+        width: 90%;
+        max-width: 1200px;
+        height: 90vh;
+        border-radius: 10px;
+        display: flex;
+        flex-direction: column;
+        overflow: hidden;
+      }
+
+      .code-viewer-header {
+        padding: 1.5rem;
+        border-bottom: 1px solid #e0e0e0;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        background: #f8f9fa;
+      }
+
+      .code-viewer-body {
+        flex: 1;
+        overflow: auto;
+        background: #1e1e1e;
+        padding: 1.5rem;
+      }
+
+      .code-content {
+        color: #d4d4d4;
+        font-family: "Monaco", "Menlo", "Ubuntu Mono", monospace;
+        font-size: 13px;
+        line-height: 1.6;
+        white-space: pre;
+      }
+
+      /* Python Syntax Highlighting */
+      .keyword {
+        color: #569cd6;
+      }
+      .string {
+        color: #ce9178;
+      }
+      .comment {
+        color: #6a9955;
+      }
+      .function {
+        color: #dcdcaa;
+      }
+      .class {
+        color: #4ec9b0;
+      }
+      .number {
+        color: #b5cea8;
+      }
+      .decorator {
+        color: #ffd700;
+      }
+      .self {
+        color: #9cdcfe;
+      }
+
+      /* Responsive Design */
+      @media (max-width: 768px) {
+        .container {
+          padding: 10px;
+        }
+
+        h1 {
+          font-size: 2rem;
+        }
+
+        .nav-tabs {
+          flex-direction: column;
+          width: 100%;
+        }
+
+        .nav-tab {
+          width: 100%;
+          text-align: center;
+        }
+
+        .template-grid,
+        .agent-grid {
+          grid-template-columns: 1fr;
+        }
+
+        .search-box {
+          flex-direction: column;
+        }
+
+        .filter-section {
+          flex-direction: column;
+        }
+
+        .filter-group {
+          width: 100%;
+        }
+
+        .code-viewer-content {
+          width: 95%;
+        }
+
+        .action-buttons,
+        .button-group {
+          flex-direction: column;
+        }
+
+        .action-buttons .btn,
+        .button-group button {
+          width: 100%;
+        }
+
+        .cart-sidebar {
+          width: 100%;
+          right: -100%;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Loading Overlay -->
+    <div class="loading-overlay" id="loadingOverlay">
+      <div class="loading-spinner"></div>
+      <div class="loading-text">Loading...</div>
+    </div>
+
+    <!-- Main Navigation -->
+    <nav class="main-nav">
+      <div class="nav-container">
+        <div class="nav-brand">
+          <h1>🚀 Microsoft AI Accelerate</h1>
+        </div>
+        <div class="nav-tabs">
+          <button class="nav-tab active" onclick="switchApp('templates')">
+            📚 Template Library
+          </button>
+          <button class="nav-tab" onclick="switchApp('discovery')">
+            🔍 Discovery Tool
+          </button>
+          <button class="nav-tab" onclick="switchApp('agents')">
+            🤖 Agent Store
+          </button>
+        </div>
+      </div>
+    </nav>
+
+    <!-- Template Library Section -->
+    <div id="templatesApp" class="app-section active">
+      <div class="container">
+        <header>
+          <div class="ms-logo">MICROSOFT AI ACCELERATE</div>
+          <h1>Agentic Template Library</h1>
+          <p class="subtitle">
+            Pre-configured Agent Stacks for Common Use Cases
+          </p>
+          <div style="text-align: center; margin-top: 1rem">
+            <button
+              class="btn btn-primary"
+              onclick="agentStore.toggleCart()"
+              style="display: inline-flex"
+            >
+              <span>🛒</span>
+              <span class="badge" id="templateCartCount">0</span>
+              <span>My Stack</span>
+            </button>
+          </div>
+        </header>
+
+        <!-- Search and Filter -->
+        <div class="search-section">
+          <h3 style="margin-bottom: 1rem">Find Your Perfect Agent Stack</h3>
+          <div class="search-box">
+            <input
+              type="text"
+              class="search-input"
+              id="templateSearchInput"
+              placeholder="Search templates by name, description, or use case..."
+            />
+            <button
+              class="btn btn-primary"
+              onclick="templateManager.searchTemplates()"
+            >
+              🔍 Search
+            </button>
+            <button
+              class="btn btn-secondary"
+              onclick="templateManager.resetFilters()"
+            >
+              ↺ Reset
+            </button>
+          </div>
+
+          <div class="filter-section">
+            <div class="filter-group">
+              <label class="filter-label">Use Case</label>
+              <select
+                class="filter-select"
+                id="useCaseFilter"
+                onchange="templateManager.filterTemplates()"
+              >
+                <option value="">All Use Cases</option>
+                <option value="communication">Communication</option>
+                <option value="productivity">Productivity</option>
+                <option value="analytics">Analytics</option>
+                <option value="customer-service">Customer Service</option>
+                <option value="development">Development</option>
+              </select>
+            </div>
+            <div class="filter-group">
+              <label class="filter-label">Complexity</label>
+              <select
+                class="filter-select"
+                id="complexityFilter"
+                onchange="templateManager.filterTemplates()"
+              >
+                <option value="">All Complexities</option>
+                <option value="starter">Starter (2-3 agents)</option>
+                <option value="intermediate">Intermediate (4-5 agents)</option>
+                <option value="advanced">Advanced (6+ agents)</option>
+              </select>
+            </div>
+          </div>
+        </div>
+
+        <div class="template-grid" id="templateGrid">
+          <!-- Templates will be dynamically loaded here -->
+        </div>
+
+        <div class="empty-state" id="templateEmptyState" style="display: none">
+          <div class="empty-state-icon">🔍</div>
+          <div class="empty-state-title">No Templates Found</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Discovery Tool Section -->
+    <div id="discoveryApp" class="app-section">
+      <div class="container">
+        <header>
+          <div class="ms-logo">MICROSOFT AI ACCELERATE</div>
+          <h1>AI Use Case Discovery Tool</h1>
+          <p class="subtitle">Identify High-Impact AI Opportunities</p>
+        </header>
+
+        <div class="progress-bar">
+          <div class="progress" id="progressBar"></div>
+        </div>
+
+        <!-- Step 1: Business Context -->
+        <div class="step active" id="disc-step1">
+          <div class="step-header">
+            <span class="step-number">1</span>
+            <h2 style="display: inline-block">Business Overview</h2>
+          </div>
+
+          <div class="info-box">
+            <p>
+              Let's understand your business context to identify AI
+              opportunities.
+            </p>
+          </div>
+
+          <div class="form-group">
+            <label for="companyName">Company Name</label>
+            <input
+              type="text"
+              id="companyName"
+              placeholder="Enter your company name"
+            />
+          </div>
+
+          <div class="form-group">
+            <label for="industry">Primary Industry</label>
+            <select id="industry">
+              <option value="">Select your industry</option>
+              <option value="financial">Financial Services</option>
+              <option value="healthcare">Healthcare</option>
+              <option value="retail">Retail & E-commerce</option>
+              <option value="manufacturing">Manufacturing</option>
+              <option value="technology">Technology</option>
+            </select>
+          </div>
+
+          <div class="button-group">
+            <div></div>
+            <button class="btn btn-primary" onclick="discoveryTool.nextStep()">
+              Next: Identify Processes
+            </button>
+          </div>
+        </div>
+
+        <!-- Step 2: Process Identification -->
+        <div class="step" id="disc-step2">
+          <div class="step-header">
+            <span class="step-number">2</span>
+            <h2 style="display: inline-block">Process Identification</h2>
+          </div>
+
+          <div class="info-box">
+            <p>Select the key processes you'd like to optimize with AI.</p>
+          </div>
+
+          <div class="button-group">
+            <button
+              class="btn btn-secondary"
+              onclick="discoveryTool.previousStep()"
+            >
+              Previous
+            </button>
+            <button
+              class="btn btn-success"
+              onclick="discoveryTool.calculateResults()"
+            >
+              Generate AI Use Cases
+            </button>
+          </div>
+        </div>
+
+        <!-- Results -->
+        <div class="step" id="disc-results">
+          <div class="card">
+            <h2>Recommended Agent Stacks for Your Industry</h2>
+            <div id="recommendedStacks"></div>
+            <div class="button-group">
+              <button class="btn btn-secondary" onclick="location.reload()">
+                Start Over
+              </button>
+              <button class="btn btn-primary" onclick="switchApp('templates')">
+                Browse All Templates
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Agent Store Section -->
+    <div id="agentsApp" class="app-section">
+      <div class="container">
+        <header>
+          <div class="ms-logo">MICROSOFT AI ACCELERATE</div>
+          <h1>🤖 AI Agent Store</h1>
+          <p class="subtitle">Enterprise-Ready AI Agents from GitHub</p>
+          <div style="text-align: center; margin-top: 1rem">
+            <button
+              class="btn btn-primary"
+              onclick="agentStore.toggleCart()"
+              style="display: inline-flex"
+            >
+              <span>🛒</span>
+              <span class="badge" id="cartCount">0</span>
+              <span>My Stack</span>
+            </button>
+          </div>
+        </header>
+
+        <!-- GitHub Repository Info -->
+        <div class="repo-info">
+          <a
+            href="https://github.com/kody-w/AI-Agent-Templates"
+            target="_blank"
+            class="repo-link"
+          >
+            <svg height="20" width="20" viewBox="0 0 16 16" fill="currentColor">
+              <path
+                d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"
+              ></path>
+            </svg>
+            View on GitHub
+          </a>
+          <button class="btn btn-warning" onclick="agentStore.refreshAgents()">
+            🔄 Refresh List
+          </button>
+          <span style="color: #666"
+            >Fetching agents directly from GitHub repository</span
+          >
+        </div>
+
+        <!-- Stats Cards -->
+        <div class="stats-grid">
+          <div class="stat-card">
+            <div class="stat-value" id="totalAgents">0</div>
+            <div class="stat-label">Total Agents</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-value" id="filteredAgents">0</div>
+            <div class="stat-label">Filtered</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-value" id="cartAgents">0</div>
+            <div class="stat-label">In Cart</div>
+          </div>
+        </div>
+
+        <!-- Search and Filter -->
+        <div class="search-section">
+          <div class="search-box">
+            <input
+              type="text"
+              class="search-input"
+              id="agentSearchInput"
+              placeholder="Search agents by name or description..."
+            />
+            <button class="btn btn-primary" onclick="agentStore.searchAgents()">
+              🔍 Search
+            </button>
+          </div>
+        </div>
+
+        <!-- Category Filter -->
+        <div
+          style="
+            background: #f8f9fa;
+            padding: 1.5rem 0;
+            margin-bottom: 2rem;
+            border-radius: 10px;
+          "
+        >
+          <div
+            style="
+              display: flex;
+              gap: 1rem;
+              flex-wrap: wrap;
+              justify-content: center;
+            "
+          >
+            <button
+              class="filter-btn active"
+              data-category="all"
+              onclick="agentStore.filterAgents('all')"
+            >
+              All Agents
+            </button>
+            <button
+              class="filter-btn"
+              data-category="communication"
+              onclick="agentStore.filterAgents('communication')"
+            >
+              💬 Communication
+            </button>
+            <button
+              class="filter-btn"
+              data-category="productivity"
+              onclick="agentStore.filterAgents('productivity')"
+            >
+              ⚡ Productivity
+            </button>
+            <button
+              class="filter-btn"
+              data-category="analytics"
+              onclick="agentStore.filterAgents('analytics')"
+            >
+              📊 Analytics
+            </button>
+            <button
+              class="filter-btn"
+              data-category="automation"
+              onclick="agentStore.filterAgents('automation')"
+            >
+              🔧 Automation
+            </button>
+            <button
+              class="filter-btn"
+              data-category="integration"
+              onclick="agentStore.filterAgents('integration')"
+            >
+              🔗 Integration
+            </button>
+          </div>
+        </div>
+
+        <!-- Agent Grid -->
+        <div class="agent-grid" id="agentGrid">
+          <!-- Agent cards will be dynamically loaded here -->
+        </div>
+
+        <div class="empty-state" id="agentEmptyState" style="display: none">
+          <div class="empty-state-icon">🤖</div>
+          <div class="empty-state-title">No Agents Found</div>
+          <p>Loading agents from GitHub repository...</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Cart Sidebar -->
+    <div class="cart-sidebar" id="cartSidebar">
+      <div class="cart-header">
+        <h2>🛒 Your Agent Stack</h2>
+        <button class="close-btn" onclick="agentStore.toggleCart()">✕</button>
+      </div>
+
+      <div class="cart-content">
+        <div id="cartItems"></div>
+        <div class="empty-state" id="cartEmpty">
+          <p>Your cart is empty</p>
+        </div>
+      </div>
+
+      <div class="cart-footer" id="cartFooter" style="display: none">
+        <div style="margin-bottom: 1rem">
+          <div
+            style="
+              display: flex;
+              justify-content: space-between;
+              padding: 0.5rem 0;
+            "
+          >
+            <span>Total Agents:</span>
+            <span id="totalCartAgents">0</span>
+          </div>
+        </div>
+        <div style="display: flex; flex-direction: column; gap: 0.5rem">
+          <button class="btn btn-primary" onclick="agentStore.downloadAll()">
+            📥 Download All
+          </button>
+          <button class="btn btn-secondary" onclick="agentStore.clearCart()">
+            Clear Cart
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Code Viewer Modal -->
+    <div class="code-viewer-modal" id="codeViewerModal">
+      <div class="code-viewer-content">
+        <div class="code-viewer-header">
+          <h2 id="codeViewerTitle">Agent Code</h2>
+          <div style="display: flex; gap: 1rem">
+            <button class="btn btn-success" onclick="agentStore.copyCode()">
+              📋 Copy Code
+            </button>
+            <button
+              class="btn btn-primary"
+              onclick="agentStore.downloadCurrentAgent()"
+            >
+              💾 Download
+            </button>
+            <button class="close-btn" onclick="agentStore.closeCodeViewer()">
+              ✕
+            </button>
+          </div>
+        </div>
+        <div class="code-viewer-body">
+          <pre class="code-content" id="codeContent"></pre>
+        </div>
+      </div>
+    </div>
+
+    <!-- Toast Notification -->
+    <div class="toast" id="toast"></div>
+
+    <script>
+      // Global state
+      let currentApp = "templates";
+
+      // Switch between apps
+      function switchApp(app) {
+        currentApp = app;
+
+        // Update navigation
+        document.querySelectorAll(".nav-tab").forEach((tab) => {
+          tab.classList.remove("active");
+        });
+        event.target.classList.add("active");
+
+        // Hide all sections
+        document.querySelectorAll(".app-section").forEach((section) => {
+          section.classList.remove("active");
+        });
+
+        // Show selected section
+        if (app === "templates") {
+          document.getElementById("templatesApp").classList.add("active");
+          if (!templateManager.templatesLoaded) {
+            templateManager.loadTemplates();
+          }
+        } else if (app === "discovery") {
+          document.getElementById("discoveryApp").classList.add("active");
+        } else if (app === "agents") {
+          document.getElementById("agentsApp").classList.add("active");
+          if (agentStore.agents.length === 0) {
+            agentStore.loadAgents();
+          }
+        }
+      }
+
+      // Template Manager
+      class TemplateManager {
+        constructor() {
+          this.templatesLoaded = false;
+          this.agentTemplates = [];
+          this.filteredTemplates = [];
+        }
+
+        async loadTemplates() {
+          // First ensure agents are loaded
+          if (agentStore.agents.length === 0) {
+            await agentStore.loadAgents();
+          }
+
+          // Create templates based on available agents
+          this.agentTemplates = [
+            {
+              id: "voice-assistant",
+              name: "Voice-Enabled Sales Assistant",
+              description:
+                "Complete voice-to-action solution for sales teams. Enables voice commands for CRM updates, email drafting, and calendar management.",
+              useCase: "communication",
+              complexity: "intermediate",
+              estimatedTime: "2-3 weeks",
+              agents: [
+                "voice_to_text_agent",
+                "email_agent",
+                "calendar_scheduler_agent",
+                "crm_integration_agent",
+                "notification_agent",
+              ],
+              benefits: [
+                "40% faster CRM updates",
+                "Voice-activated scheduling",
+                "Automated email responses",
+                "Real-time notifications",
+              ],
+            },
+            {
+              id: "productivity-suite",
+              name: "Complete Productivity Suite",
+              description:
+                "Full productivity enhancement stack with task management, document handling, and collaboration features.",
+              useCase: "productivity",
+              complexity: "advanced",
+              estimatedTime: "4-6 weeks",
+              agents: [
+                "task_manager_agent",
+                "document_processor_agent",
+                "email_agent",
+                "calendar_scheduler_agent",
+                "pdf_generator_agent",
+                "translation_agent",
+                "notification_agent",
+              ],
+              benefits: [
+                "Complete task automation",
+                "Document management",
+                "Multi-language support",
+                "Team synchronization",
+              ],
+            },
+            {
+              id: "analytics-dashboard",
+              name: "Analytics & Reporting Stack",
+              description:
+                "Data analysis and reporting automation with visualization and insights generation.",
+              useCase: "analytics",
+              complexity: "intermediate",
+              estimatedTime: "3-4 weeks",
+              agents: [
+                "data_analysis_agent",
+                "report_generator_agent",
+                "visualization_agent",
+                "pdf_generator_agent",
+                "email_agent",
+              ],
+              benefits: [
+                "Automated reporting",
+                "Real-time insights",
+                "Data visualization",
+                "PDF report generation",
+              ],
+            },
+            {
+              id: "customer-service",
+              name: "Customer Service Hub",
+              description:
+                "Complete customer service automation with multi-channel support and sentiment analysis.",
+              useCase: "customer-service",
+              complexity: "intermediate",
+              estimatedTime: "3-4 weeks",
+              agents: [
+                "customer_support_agent",
+                "sentiment_analysis_agent",
+                "email_agent",
+                "translation_agent",
+                "notification_agent",
+              ],
+              benefits: [
+                "60% faster response times",
+                "Sentiment analysis",
+                "Multi-language support",
+                "Automated routing",
+              ],
+            },
+            {
+              id: "content-creator",
+              name: "Content Creation Suite",
+              description:
+                "AI-powered content generation and optimization stack for marketing teams.",
+              useCase: "communication",
+              complexity: "starter",
+              estimatedTime: "1-2 weeks",
+              agents: [
+                "content_writer_agent",
+                "seo_optimizer_agent",
+                "social_media_agent",
+              ],
+              benefits: [
+                "AI content generation",
+                "SEO optimization",
+                "Social media automation",
+                "Brand consistency",
+              ],
+            },
+            {
+              id: "minimal-starter",
+              name: "Minimal Starter Pack",
+              description:
+                "Essential agents for getting started with AI automation. Perfect for small teams.",
+              useCase: "productivity",
+              complexity: "starter",
+              estimatedTime: "1 week",
+              agents: ["task_manager_agent", "email_agent"],
+              benefits: [
+                "Quick deployment",
+                "Easy to customize",
+                "Low complexity",
+                "Immediate value",
+              ],
+            },
+          ];
+
+          this.filteredTemplates = [...this.agentTemplates];
+          this.templatesLoaded = true;
+          this.renderTemplates(this.filteredTemplates);
+        }
+
+        renderTemplates(templates) {
+          const grid = document.getElementById("templateGrid");
+          const emptyState = document.getElementById("templateEmptyState");
+
+          if (!grid) return;
+
+          if (templates.length === 0) {
+            grid.style.display = "none";
+            if (emptyState) emptyState.style.display = "block";
+            return;
+          }
+
+          if (emptyState) emptyState.style.display = "none";
+          grid.style.display = "grid";
+
+          grid.innerHTML = templates
+            .map((template) => {
+              const isInCart = this.isTemplateInCart(template);
+              const complexityLabel = {
+                starter: "Starter",
+                intermediate: "Intermediate",
+                advanced: "Advanced",
+              }[template.complexity];
+
+              // Get agent details for display
+              const agentDetails = template.agents.map((agentId) => {
+                const agent = agentStore.agents.find((a) => a.id === agentId);
+                return agent
+                  ? { id: agentId, name: agent.name, icon: agent.icon }
+                  : {
+                      id: agentId,
+                      name: this.formatAgentName(agentId),
+                      icon: "🤖",
+                    };
+              });
+
+              return `
+                        <div class="template-card">
+                            <div class="template-header">
+                                <div>
+                                    <h3 class="template-title">${
+                                      template.name
+                                    }</h3>
+                                    <span class="badge badge-complexity-${
+                                      template.complexity === "starter"
+                                        ? "low"
+                                        : template.complexity === "intermediate"
+                                        ? "medium"
+                                        : "high"
+                                    }">
+                                        ${complexityLabel} • ${
+                template.estimatedTime
+              }
+                                    </span>
+                                </div>
+                            </div>
+
+                            <p class="template-description">${
+                              template.description
+                            }</p>
+
+                            <div class="template-agents">
+                                <div class="template-agents-title">Included Agents (${
+                                  template.agents.length
+                                }):</div>
+                                <div style="display: flex; flex-wrap: wrap; gap: 0.5rem;">
+                                    ${agentDetails
+                                      .map(
+                                        (agent) =>
+                                          `<span class="agent-pill">${agent.icon} ${agent.name}</span>`
+                                      )
+                                      .join("")}
+                                </div>
+                            </div>
+
+                            <div class="template-stats">
+                                <div class="template-stat">
+                                    <div class="template-stat-value">${
+                                      template.agents.length
+                                    }</div>
+                                    <div class="template-stat-label">Agents</div>
+                                </div>
+                                <div class="template-stat">
+                                    <div class="template-stat-value">${
+                                      template.benefits.length
+                                    }</div>
+                                    <div class="template-stat-label">Benefits</div>
+                                </div>
+                                <div class="template-stat">
+                                    <div class="template-stat-value">${
+                                      template.estimatedTime.split("-")[0]
+                                    }</div>
+                                    <div class="template-stat-label">Min. Time</div>
+                                </div>
+                            </div>
+
+                            <div style="margin-bottom: 1rem;">
+                                <strong style="color: #555; font-size: 0.9rem;">Key Benefits:</strong>
+                                <ul style="margin-top: 0.5rem; padding-left: 1.5rem;">
+                                    ${template.benefits
+                                      .map(
+                                        (benefit) =>
+                                          `<li style="color: #666; font-size: 0.85rem; margin: 0.25rem 0;">${benefit}</li>`
+                                      )
+                                      .join("")}
+                                </ul>
+                            </div>
+
+                            <div class="action-buttons">
+                                ${
+                                  isInCart
+                                    ? `<button class="btn btn-danger" onclick="templateManager.removeTemplateFromCart('${template.id}')">
+                                        ✕ Remove Stack
+                                       </button>`
+                                    : `<button class="btn btn-success" onclick="templateManager.addTemplateToCart('${template.id}')">
+                                        ➕ Add Entire Stack to Cart
+                                       </button>`
+                                }
+                                <button class="btn btn-secondary" onclick="templateManager.viewTemplateDetails('${
+                                  template.id
+                                }')">
+                                    👁️ View Details
+                                </button>
+                            </div>
+                        </div>
+                    `;
+            })
+            .join("");
+        }
+
+        formatAgentName(agentId) {
+          return agentId
+            .split("_")
+            .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+            .join(" ")
+            .replace(" Agent", "");
+        }
+
+        isTemplateInCart(template) {
+          // Check if all agents in the template are in the cart
+          return template.agents.every((agentId) =>
+            agentStore.cart.some((cartItem) => cartItem.id === agentId)
+          );
+        }
+
+        async addTemplateToCart(templateId) {
+          const template = this.agentTemplates.find((t) => t.id === templateId);
+          if (!template) return;
+
+          // Ensure agents are loaded
+          if (agentStore.agents.length === 0) {
+            showToast("Loading agents...", "info");
+            await agentStore.loadAgents();
+          }
+
+          // Add each agent from the template to the cart
+          let addedCount = 0;
+          for (const agentId of template.agents) {
+            const agent = agentStore.agents.find((a) => a.id === agentId);
+            if (
+              agent &&
+              !agentStore.cart.find((item) => item.id === agent.id)
+            ) {
+              agentStore.cart.push(agent);
+              addedCount++;
+            }
+          }
+
+          agentStore.updateCartUI();
+          this.updateTemplateCartCount();
+          this.renderTemplates(this.filteredTemplates);
+
+          if (addedCount > 0) {
+            showToast(
+              `Added ${addedCount} agents from "${template.name}" to your stack`,
+              "success"
+            );
+          } else {
+            showToast(
+              "All agents from this template are already in your stack",
+              "info"
+            );
+          }
+        }
+
+        removeTemplateFromCart(templateId) {
+          const template = this.agentTemplates.find((t) => t.id === templateId);
+          if (!template) return;
+
+          // Remove each agent from the template from the cart
+          let removedCount = 0;
+          for (const agentId of template.agents) {
+            const index = agentStore.cart.findIndex(
+              (item) => item.id === agentId
+            );
+            if (index !== -1) {
+              agentStore.cart.splice(index, 1);
+              removedCount++;
+            }
+          }
+
+          agentStore.updateCartUI();
+          this.updateTemplateCartCount();
+          this.renderTemplates(this.filteredTemplates);
+
+          if (removedCount > 0) {
+            showToast(
+              `Removed ${removedCount} agents from "${template.name}"`,
+              "success"
+            );
+          }
+        }
+
+        viewTemplateDetails(templateId) {
+          const template = this.agentTemplates.find((t) => t.id === templateId);
+          if (!template) return;
+
+          const agentDetails = template.agents.map((agentId) => {
+            const agent = agentStore.agents.find((a) => a.id === agentId);
+            return agent
+              ? `- ${agent.icon} ${agent.name}`
+              : `- ${this.formatAgentName(agentId)}`;
+          });
+
+          const details = `
+                    Template: ${template.name}
+                    Use Case: ${template.useCase}
+                    Complexity: ${template.complexity}
+                    Time to Deploy: ${template.estimatedTime}
+
+                    Included Agents:
+                    ${agentDetails.join("\n")}
+
+                    Key Benefits:
+                    ${template.benefits.map((b) => `- ${b}`).join("\n")}
+                `;
+
+          alert(details);
+        }
+
+        searchTemplates() {
+          const searchTerm = document
+            .getElementById("templateSearchInput")
+            .value.toLowerCase();
+
+          if (!searchTerm) {
+            this.filteredTemplates = [...this.agentTemplates];
+          } else {
+            this.filteredTemplates = this.agentTemplates.filter(
+              (template) =>
+                template.name.toLowerCase().includes(searchTerm) ||
+                template.description.toLowerCase().includes(searchTerm) ||
+                template.useCase.toLowerCase().includes(searchTerm) ||
+                template.agents.some((a) =>
+                  a.toLowerCase().includes(searchTerm)
+                ) ||
+                template.benefits.some((b) =>
+                  b.toLowerCase().includes(searchTerm)
+                )
+            );
+          }
+
+          this.applyFilters();
+        }
+
+        filterTemplates() {
+          this.applyFilters();
+        }
+
+        applyFilters() {
+          const useCase = document.getElementById("useCaseFilter").value;
+          const complexity = document.getElementById("complexityFilter").value;
+          const searchTerm = document
+            .getElementById("templateSearchInput")
+            .value.toLowerCase();
+
+          let filtered = [...this.agentTemplates];
+
+          if (searchTerm) {
+            filtered = filtered.filter(
+              (template) =>
+                template.name.toLowerCase().includes(searchTerm) ||
+                template.description.toLowerCase().includes(searchTerm) ||
+                template.useCase.toLowerCase().includes(searchTerm) ||
+                template.agents.some((a) =>
+                  a.toLowerCase().includes(searchTerm)
+                ) ||
+                template.benefits.some((b) =>
+                  b.toLowerCase().includes(searchTerm)
+                )
+            );
+          }
+
+          if (useCase) {
+            filtered = filtered.filter((t) => t.useCase === useCase);
+          }
+
+          if (complexity) {
+            filtered = filtered.filter((t) => t.complexity === complexity);
+          }
+
+          this.filteredTemplates = filtered;
+          this.renderTemplates(this.filteredTemplates);
+        }
+
+        resetFilters() {
+          document.getElementById("templateSearchInput").value = "";
+          document.getElementById("useCaseFilter").value = "";
+          document.getElementById("complexityFilter").value = "";
+          this.filteredTemplates = [...this.agentTemplates];
+          this.renderTemplates(this.filteredTemplates);
+        }
+
+        updateTemplateCartCount() {
+          const count = document.getElementById("templateCartCount");
+          if (count) count.textContent = agentStore.cart.length;
+        }
+      }
+
+      // Discovery Tool
+      class DiscoveryTool {
+        constructor() {
+          this.currentStep = 1;
+          this.totalSteps = 2;
+          this.collectedData = {};
+        }
+
+        nextStep() {
+          this.collectStepData(this.currentStep);
+          document
+            .getElementById(`disc-step${this.currentStep}`)
+            .classList.remove("active");
+          this.currentStep++;
+          document
+            .getElementById(`disc-step${this.currentStep}`)
+            .classList.add("active");
+          this.updateProgress();
+        }
+
+        previousStep() {
+          document
+            .getElementById(`disc-step${this.currentStep}`)
+            .classList.remove("active");
+          this.currentStep--;
+          document
+            .getElementById(`disc-step${this.currentStep}`)
+            .classList.add("active");
+          this.updateProgress();
+        }
+
+        updateProgress() {
+          const progress = (this.currentStep / this.totalSteps) * 100;
+          const progressBar = document.getElementById("progressBar");
+          if (progressBar) {
+            progressBar.style.width = progress + "%";
+          }
+        }
+
+        collectStepData(step) {
+          if (step === 1) {
+            this.collectedData.company = {
+              name: document.getElementById("companyName").value,
+              industry: document.getElementById("industry").value,
+            };
+          }
+        }
+
+        async calculateResults() {
+          this.collectStepData(this.currentStep);
+
+          document
+            .getElementById(`disc-step${this.currentStep}`)
+            .classList.remove("active");
+          document.getElementById("disc-results").classList.add("active");
+
+          // Ensure templates are loaded
+          if (!templateManager.templatesLoaded) {
+            await templateManager.loadTemplates();
+          }
+
+          // Recommend templates based on industry
+          const industry = this.collectedData.company.industry;
+          let recommendedTemplates = [];
+
+          if (industry === "financial" || industry === "retail") {
+            recommendedTemplates = [
+              "customer-service",
+              "analytics-dashboard",
+              "productivity-suite",
+            ];
+          } else if (industry === "healthcare") {
+            recommendedTemplates = ["voice-assistant", "productivity-suite"];
+          } else if (industry === "technology") {
+            recommendedTemplates = [
+              "content-creator",
+              "analytics-dashboard",
+              "productivity-suite",
+            ];
+          } else {
+            recommendedTemplates = [
+              "minimal-starter",
+              "productivity-suite",
+              "analytics-dashboard",
+            ];
+          }
+
+          const stacksDiv = document.getElementById("recommendedStacks");
+          if (stacksDiv) {
+            stacksDiv.innerHTML = recommendedTemplates
+              .map((templateId) => {
+                const template = templateManager.agentTemplates.find(
+                  (t) => t.id === templateId
+                );
+                if (!template) return "";
+
+                return `
+                            <div class="card" style="margin-bottom: 1rem;">
+                                <h3>${template.name}</h3>
+                                <p>${template.description}</p>
+                                <p style="color: #666;">Agents: ${template.agents.length} | Time: ${template.estimatedTime}</p>
+                                <button class="btn btn-primary" onclick="templateManager.addTemplateToCart('${template.id}')">
+                                    Add to Cart
+                                </button>
+                            </div>
+                        `;
+              })
+              .join("");
+          }
+        }
+      }
+
+      // Agent Store with GitHub Integration
+      class AgentStore {
+        constructor() {
+          // Updated to use the new GitHub repository
+          this.GITHUB_REPO = "kody-w/AI-Agent-Templates";
+          this.BRANCH = "main";
+          this.AGENTS_PATH = "agents";
+          this.agents = [];
+          this.filteredAgents = [];
+          this.cart = [];
+          this.agentCode = {};
+          this.currentAgent = null;
+          this.currentFilter = "all";
+        }
+
+        async loadAgents() {
+          try {
+            this.showLoading(true);
+
+            // Fetch the list of files from GitHub API
+            const apiUrl = `https://api.github.com/repos/${this.GITHUB_REPO}/contents/${this.AGENTS_PATH}?ref=${this.BRANCH}`;
+            const response = await fetch(apiUrl);
+
+            if (!response.ok) {
+              throw new Error(`GitHub API returned ${response.status}`);
+            }
+
+            const files = await response.json();
+
+            // Filter for Python files and exclude __init__.py
+            this.agents = files
+              .filter(
+                (file) =>
+                  file.name.endsWith(".py") && file.name !== "__init__.py"
+              )
+              .map((file) => ({
+                id: file.name.replace(".py", ""),
+                name: this.formatAgentName(file.name),
+                filename: file.name,
+                path: file.path,
+                url: file.download_url,
+                size: this.formatFileSize(file.size),
+                rawSize: file.size,
+                sha: file.sha,
+                icon: this.getAgentIcon(file.name),
+                category: this.getAgentCategory(file.name),
+                description: this.getAgentDescription(file.name),
+                features: this.getAgentFeatures(file.name),
+              }));
+
+            // Sort agents alphabetically
+            this.agents.sort((a, b) => a.name.localeCompare(b.name));
+
+            this.filteredAgents = [...this.agents];
+            this.updateStats();
+            this.renderAgents();
+
+            this.showLoading(false);
+            showToast(
+              `Loaded ${this.agents.length} agents from GitHub`,
+              "success"
+            );
+          } catch (error) {
+            console.error("Error loading agents:", error);
+            this.showLoading(false);
+            this.showError(
+              "Failed to load agents from GitHub. Please check your connection and try again."
+            );
+            showToast("Error loading agents from GitHub", "error");
+          }
+        }
+
+        formatAgentName(filename) {
+          // Convert filename to readable name
+          const baseName = filename.replace(".py", "");
+          return baseName
+            .split("_")
+            .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+            .join(" ")
+            .replace(" Agent", " Agent");
+        }
+
+        getAgentIcon(filename) {
+          const iconMap = {
+            "voice_to_text_agent.py": "🎤",
+            "text_to_speech_agent.py": "🔊",
+            "email_agent.py": "✉️",
+            "calendar_scheduler_agent.py": "📅",
+            "task_manager_agent.py": "✅",
+            "document_processor_agent.py": "📄",
+            "pdf_generator_agent.py": "📑",
+            "data_analysis_agent.py": "📊",
+            "report_generator_agent.py": "📈",
+            "visualization_agent.py": "📉",
+            "translation_agent.py": "🌐",
+            "sentiment_analysis_agent.py": "😊",
+            "customer_support_agent.py": "🎧",
+            "notification_agent.py": "🔔",
+            "crm_integration_agent.py": "💼",
+            "database_agent.py": "🗄️",
+            "api_integration_agent.py": "🔗",
+            "web_scraper_agent.py": "🕷️",
+            "content_writer_agent.py": "✍️",
+            "seo_optimizer_agent.py": "🔍",
+            "social_media_agent.py": "📱",
+            "workflow_automation_agent.py": "⚙️",
+            "file_manager_agent.py": "📁",
+            "backup_agent.py": "💾",
+            "security_monitor_agent.py": "🔒",
+            "performance_monitor_agent.py": "⚡",
+            "log_analyzer_agent.py": "📋",
+            "chat_bot_agent.py": "💬",
+            "voice_assistant_agent.py": "🗣️",
+            "image_processor_agent.py": "🖼️",
+            "video_processor_agent.py": "🎥",
+          };
+          return iconMap[filename] || "🤖";
+        }
+
+        getAgentCategory(filename) {
+          const categoryMap = {
+            "voice_to_text_agent.py": "communication",
+            "text_to_speech_agent.py": "communication",
+            "email_agent.py": "communication",
+            "calendar_scheduler_agent.py": "productivity",
+            "task_manager_agent.py": "productivity",
+            "document_processor_agent.py": "productivity",
+            "pdf_generator_agent.py": "productivity",
+            "data_analysis_agent.py": "analytics",
+            "report_generator_agent.py": "analytics",
+            "visualization_agent.py": "analytics",
+            "translation_agent.py": "communication",
+            "sentiment_analysis_agent.py": "analytics",
+            "customer_support_agent.py": "communication",
+            "notification_agent.py": "automation",
+            "crm_integration_agent.py": "integration",
+            "database_agent.py": "integration",
+            "api_integration_agent.py": "integration",
+            "web_scraper_agent.py": "automation",
+            "content_writer_agent.py": "communication",
+            "seo_optimizer_agent.py": "communication",
+            "social_media_agent.py": "communication",
+            "workflow_automation_agent.py": "automation",
+            "file_manager_agent.py": "productivity",
+            "backup_agent.py": "automation",
+            "security_monitor_agent.py": "automation",
+            "performance_monitor_agent.py": "analytics",
+            "log_analyzer_agent.py": "analytics",
+            "chat_bot_agent.py": "communication",
+            "voice_assistant_agent.py": "communication",
+            "image_processor_agent.py": "productivity",
+            "video_processor_agent.py": "productivity",
+          };
+          return categoryMap[filename] || "other";
+        }
+
+        getAgentDescription(filename) {
+          const descriptionMap = {
+            "voice_to_text_agent.py":
+              "Converts voice input to text using advanced speech recognition",
+            "text_to_speech_agent.py":
+              "Generates natural-sounding speech from text input",
+            "email_agent.py":
+              "Manages email composition, sending, and inbox organization",
+            "calendar_scheduler_agent.py":
+              "Handles calendar events, scheduling, and meeting coordination",
+            "task_manager_agent.py":
+              "Organizes tasks, sets priorities, and tracks progress",
+            "document_processor_agent.py":
+              "Processes and analyzes various document formats",
+            "pdf_generator_agent.py":
+              "Creates professional PDF documents from various sources",
+            "data_analysis_agent.py":
+              "Performs advanced data analysis and insights generation",
+            "report_generator_agent.py":
+              "Creates comprehensive reports with data visualization",
+            "visualization_agent.py":
+              "Generates charts, graphs, and visual representations",
+            "translation_agent.py":
+              "Provides real-time translation between multiple languages",
+            "sentiment_analysis_agent.py":
+              "Analyzes text sentiment and emotional tone",
+            "customer_support_agent.py":
+              "Handles customer inquiries and support tickets",
+            "notification_agent.py":
+              "Manages and sends notifications across multiple channels",
+            "crm_integration_agent.py":
+              "Integrates with CRM systems for customer data management",
+            "database_agent.py": "Manages database operations and queries",
+            "api_integration_agent.py":
+              "Connects with external APIs and services",
+            "web_scraper_agent.py":
+              "Extracts data from websites and web applications",
+            "content_writer_agent.py":
+              "Generates high-quality written content using AI",
+            "seo_optimizer_agent.py":
+              "Optimizes content for search engine rankings",
+            "social_media_agent.py":
+              "Manages social media posts and engagement",
+            "workflow_automation_agent.py":
+              "Automates complex business workflows",
+            "file_manager_agent.py": "Organizes and manages file systems",
+            "backup_agent.py": "Automates data backup and recovery processes",
+            "security_monitor_agent.py":
+              "Monitors system security and detects threats",
+            "performance_monitor_agent.py": "Tracks system performance metrics",
+            "log_analyzer_agent.py":
+              "Analyzes system logs for insights and issues",
+            "chat_bot_agent.py": "Provides conversational AI interface",
+            "voice_assistant_agent.py": "Voice-activated personal assistant",
+            "image_processor_agent.py": "Processes and analyzes images",
+            "video_processor_agent.py": "Handles video processing and analysis",
+          };
+          return (
+            descriptionMap[filename] ||
+            "Custom AI agent for enterprise automation"
+          );
+        }
+
+        getAgentFeatures(filename) {
+          const featuresMap = {
+            "voice_to_text_agent.py": [
+              "Real-time transcription",
+              "Multiple language support",
+              "Noise cancellation",
+              "Speaker identification",
+            ],
+            "text_to_speech_agent.py": [
+              "Natural voice synthesis",
+              "Multiple voice options",
+              "Emotion control",
+              "Speed adjustment",
+            ],
+            "email_agent.py": [
+              "Smart composition",
+              "Auto-categorization",
+              "Template management",
+              "Schedule sending",
+            ],
+            "calendar_scheduler_agent.py": [
+              "Smart scheduling",
+              "Conflict detection",
+              "Time zone handling",
+              "Meeting optimization",
+            ],
+            "task_manager_agent.py": [
+              "Priority management",
+              "Deadline tracking",
+              "Team collaboration",
+              "Progress monitoring",
+            ],
+            "document_processor_agent.py": [
+              "Multi-format support",
+              "Text extraction",
+              "Metadata analysis",
+              "Content indexing",
+            ],
+            "pdf_generator_agent.py": [
+              "Template-based generation",
+              "Dynamic content",
+              "Formatting options",
+              "Digital signatures",
+            ],
+            "data_analysis_agent.py": [
+              "Statistical analysis",
+              "Pattern recognition",
+              "Predictive modeling",
+              "Data cleaning",
+            ],
+            "visualization_agent.py": [
+              "Interactive charts",
+              "Real-time updates",
+              "Custom themes",
+              "Export options",
+            ],
+            "translation_agent.py": [
+              "100+ languages",
+              "Context awareness",
+              "Industry terminology",
+              "Real-time translation",
+            ],
+            "customer_support_agent.py": [
+              "Ticket routing",
+              "Response templates",
+              "Escalation handling",
+              "Customer history",
+            ],
+            "crm_integration_agent.py": [
+              "Lead management",
+              "Contact sync",
+              "Pipeline tracking",
+              "Activity logging",
+            ],
+          };
+          return (
+            featuresMap[filename] || [
+              "Custom functionality",
+              "API integration",
+              "Automated workflows",
+              "Enterprise ready",
+            ]
+          );
+        }
+
+        formatFileSize(bytes) {
+          if (bytes === 0) return "0 Bytes";
+          const k = 1024;
+          const sizes = ["Bytes", "KB", "MB"];
+          const i = Math.floor(Math.log(bytes) / Math.log(k));
+          return (
+            Math.round((bytes / Math.pow(k, i)) * 100) / 100 + " " + sizes[i]
+          );
+        }
+
+        showLoading(show) {
+          const grid = document.getElementById("agentGrid");
+          const emptyState = document.getElementById("agentEmptyState");
+
+          if (show) {
+            if (grid)
+              grid.innerHTML =
+                '<div style="text-align: center; padding: 3rem;"><div class="loading-spinner" style="margin: 0 auto;"></div><p style="margin-top: 1rem;">Loading agents from GitHub...</p></div>';
+            if (emptyState) emptyState.style.display = "none";
+          } else {
+            if (this.agents.length === 0 && emptyState) {
+              emptyState.style.display = "block";
+              if (grid) grid.innerHTML = "";
+            }
+          }
+        }
+
+        showError(message) {
+          const grid = document.getElementById("agentGrid");
+          if (grid) {
+            grid.innerHTML = `<div class="error-message" style="grid-column: 1/-1;">${message}</div>`;
+          }
+        }
+
+        renderAgents(agentsToRender = this.filteredAgents) {
+          const grid = document.getElementById("agentGrid");
+          const emptyState = document.getElementById("agentEmptyState");
+
+          if (!grid) return;
+
+          if (agentsToRender.length === 0) {
+            grid.innerHTML = "";
+            if (emptyState) emptyState.style.display = "block";
+            return;
+          }
+
+          if (emptyState) emptyState.style.display = "none";
+
+          grid.innerHTML = agentsToRender
+            .map(
+              (agent) => `
+                    <div class="agent-card">
+                        <div class="agent-header">
+                            <div>
+                                <div class="agent-icon">${agent.icon}</div>
+                                <h3 class="agent-name">${agent.name}</h3>
+                            </div>
+                            <span class="agent-badge">${agent.size}</span>
+                        </div>
+                        <p class="agent-description">${agent.description}</p>
+                        <ul class="agent-features">
+                            ${agent.features
+                              .map((f) => `<li>${f}</li>`)
+                              .join("")}
+                        </ul>
+                        <div style="display: flex; justify-content: space-between; padding: 1rem 0; border-top: 1px solid #e0e0e0;">
+                            <span style="color: #666; font-size: 0.85rem;">${
+                              agent.filename
+                            }</span>
+                            <span style="color: #666; font-size: 0.85rem;">${
+                              agent.category
+                            }</span>
+                        </div>
+                        <div class="action-buttons">
+                            <button class="btn btn-secondary" onclick="agentStore.viewCode('${
+                              agent.id
+                            }')">
+                                👁️ View Code
+                            </button>
+                            ${
+                              this.cart.find((item) => item.id === agent.id)
+                                ? `<button class="btn btn-danger" onclick="agentStore.removeFromCart('${agent.id}')">
+                                    ✕ Remove
+                                   </button>`
+                                : `<button class="btn btn-primary" onclick="agentStore.addToCart('${agent.id}')">
+                                    ➕ Add to Stack
+                                   </button>`
+                            }
+                        </div>
+                    </div>
+                `
+            )
+            .join("");
+        }
+
+        async viewCode(agentId) {
+          const agent = this.agents.find((a) => a.id === agentId);
+          if (!agent) return;
+
+          this.currentAgent = agent;
+
+          // Show loading in modal
+          const modal = document.getElementById("codeViewerModal");
+          const codeContent = document.getElementById("codeContent");
+          const title = document.getElementById("codeViewerTitle");
+
+          if (modal) modal.style.display = "flex";
+          if (title) title.textContent = agent.name;
+          if (codeContent)
+            codeContent.innerHTML =
+              '<span style="color: #999;">Loading code...</span>';
+
+          try {
+            // Check if we already have the code cached
+            if (!this.agentCode[agent.id]) {
+              // Fetch the code from GitHub
+              const response = await fetch(agent.url);
+              if (!response.ok) {
+                throw new Error(`Failed to load code: ${response.status}`);
+              }
+              this.agentCode[agent.id] = await response.text();
+            }
+
+            // Display code with syntax highlighting
+            const code = this.agentCode[agent.id];
+            const highlightedCode = this.highlightPython(code);
+            if (codeContent) codeContent.innerHTML = highlightedCode;
+          } catch (error) {
+            console.error("Error loading agent code:", error);
+            if (codeContent) {
+              codeContent.innerHTML =
+                '<span style="color: #f44336;">Error loading code. Please try again.</span>';
+            }
+            showToast("Failed to load agent code", "error");
+          }
+        }
+
+        highlightPython(code) {
+          // Escape HTML first
+          code = code
+            .replace(/&/g, "&amp;")
+            .replace(/</g, "&lt;")
+            .replace(/>/g, "&gt;");
+
+          // Python syntax highlighting
+          return (
+            code
+              // Decorators
+              .replace(/(@\w+)/g, '<span class="decorator">$1</span>')
+              // Comments
+              .replace(/(#.*$)/gm, '<span class="comment">$1</span>')
+              // Triple-quoted strings (docstrings)
+              .replace(
+                /("""[\s\S]*?"""|'''[\s\S]*?''')/g,
+                '<span class="string">$1</span>'
+              )
+              // Single-line strings
+              .replace(
+                /(['"]).+?\1/g,
+                (match) => `<span class="string">${match}</span>`
+              )
+              // Keywords
+              .replace(
+                /\b(class|def|import|from|return|if|else|elif|for|while|try|except|finally|with|as|pass|raise|assert|yield|lambda|and|or|not|in|is|None|True|False|self|super|break|continue|global|nonlocal|del|async|await)\b/g,
+                '<span class="keyword">$1</span>'
+              )
+              // Numbers
+              .replace(/\b(\d+\.?\d*)\b/g, '<span class="number">$1</span>')
+              // Class names (capitalized words)
+              .replace(
+                /\b([A-Z][a-zA-Z0-9_]*)\b/g,
+                '<span class="class">$1</span>'
+              )
+              // Function calls
+              .replace(
+                /\b([a-z_][a-zA-Z0-9_]*)\s*(?=\()/g,
+                '<span class="function">$1</span>'
+              )
+              // self keyword
+              .replace(/\bself\b/g, '<span class="self">self</span>')
+          );
+        }
+
+        closeCodeViewer() {
+          const modal = document.getElementById("codeViewerModal");
+          if (modal) modal.style.display = "none";
+          this.currentAgent = null;
+        }
+
+        copyCode() {
+          if (!this.currentAgent || !this.agentCode[this.currentAgent.id])
+            return;
+
+          navigator.clipboard
+            .writeText(this.agentCode[this.currentAgent.id])
+            .then(() => {
+              showToast("Code copied to clipboard!", "success");
+            })
+            .catch(() => {
+              showToast("Failed to copy code", "error");
+            });
+        }
+
+        downloadCurrentAgent() {
+          if (!this.currentAgent || !this.agentCode[this.currentAgent.id])
+            return;
+
+          const blob = new Blob([this.agentCode[this.currentAgent.id]], {
+            type: "text/plain",
+          });
+          const url = URL.createObjectURL(blob);
+          const a = document.createElement("a");
+          a.href = url;
+          a.download = this.currentAgent.filename;
+          document.body.appendChild(a);
+          a.click();
+          document.body.removeChild(a);
+          URL.revokeObjectURL(url);
+
+          showToast(`Downloaded ${this.currentAgent.filename}`, "success");
+        }
+
+        filterAgents(category) {
+          this.currentFilter = category;
+
+          document.querySelectorAll(".filter-btn").forEach((btn) => {
+            btn.classList.remove("active");
+            if (btn.dataset.category === category) {
+              btn.classList.add("active");
+            }
+          });
+
+          if (category === "all") {
+            this.filteredAgents = [...this.agents];
+          } else {
+            this.filteredAgents = this.agents.filter(
+              (agent) => agent.category === category
+            );
+          }
+
+          this.updateStats();
+          this.renderAgents();
+        }
+
+        searchAgents() {
+          const searchTerm = document
+            .getElementById("agentSearchInput")
+            .value.toLowerCase();
+
+          if (!searchTerm) {
+            this.filterAgents(this.currentFilter);
+            return;
+          }
+
+          this.filteredAgents = this.agents.filter(
+            (agent) =>
+              agent.name.toLowerCase().includes(searchTerm) ||
+              agent.description.toLowerCase().includes(searchTerm) ||
+              agent.filename.toLowerCase().includes(searchTerm) ||
+              agent.features.some((f) => f.toLowerCase().includes(searchTerm))
+          );
+
+          if (this.currentFilter !== "all") {
+            this.filteredAgents = this.filteredAgents.filter(
+              (agent) => agent.category === this.currentFilter
+            );
+          }
+
+          this.updateStats();
+          this.renderAgents();
+        }
+
+        addToCart(agentId) {
+          const agent = this.agents.find((a) => a.id === agentId);
+          if (agent && !this.cart.find((item) => item.id === agentId)) {
+            this.cart.push(agent);
+            this.updateCartUI();
+            this.renderAgents();
+            templateManager.updateTemplateCartCount();
+            templateManager.renderTemplates(templateManager.filteredTemplates);
+            showToast(`Added ${agent.name} to your stack`, "success");
+          }
+        }
+
+        removeFromCart(agentId) {
+          const agent = this.cart.find((a) => a.id === agentId);
+          this.cart = this.cart.filter((item) => item.id !== agentId);
+          this.updateCartUI();
+          this.renderAgents();
+          templateManager.updateTemplateCartCount();
+          templateManager.renderTemplates(templateManager.filteredTemplates);
+          if (agent) {
+            showToast(`Removed ${agent.name} from your stack`, "success");
+          }
+        }
+
+        clearCart() {
+          if (confirm("Clear all agents from your stack?")) {
+            this.cart = [];
+            this.updateCartUI();
+            this.renderAgents();
+            templateManager.updateTemplateCartCount();
+            templateManager.renderTemplates(templateManager.filteredTemplates);
+            showToast("Cart cleared", "success");
+          }
+        }
+
+        updateCartUI() {
+          const cartCount = document.getElementById("cartCount");
+          const templateCartCount =
+            document.getElementById("templateCartCount");
+          const cartItems = document.getElementById("cartItems");
+          const cartEmpty = document.getElementById("cartEmpty");
+          const cartFooter = document.getElementById("cartFooter");
+          const totalCartAgents = document.getElementById("totalCartAgents");
+          const cartAgentsCount = document.getElementById("cartAgents");
+
+          if (cartCount) cartCount.textContent = this.cart.length;
+          if (templateCartCount)
+            templateCartCount.textContent = this.cart.length;
+          if (cartAgentsCount) cartAgentsCount.textContent = this.cart.length;
+
+          if (this.cart.length === 0) {
+            if (cartItems) cartItems.innerHTML = "";
+            if (cartEmpty) cartEmpty.style.display = "block";
+            if (cartFooter) cartFooter.style.display = "none";
+          } else {
+            if (cartEmpty) cartEmpty.style.display = "none";
+            if (cartFooter) cartFooter.style.display = "block";
+
+            if (cartItems) {
+              cartItems.innerHTML = this.cart
+                .map(
+                  (agent) => `
+                            <div class="cart-item">
+                                <div style="flex: 1;">
+                                    <div style="font-weight: 600;">${agent.icon} ${agent.name}</div>
+                                    <div style="color: #666; font-size: 0.85rem;">${agent.category} • ${agent.size}</div>
+                                </div>
+                                <button class="btn btn-danger" style="padding: 6px 12px; font-size: 0.85rem;"
+                                        onclick="agentStore.removeFromCart('${agent.id}')">Remove</button>
+                            </div>
+                        `
+                )
+                .join("");
+            }
+
+            if (totalCartAgents) totalCartAgents.textContent = this.cart.length;
+          }
+        }
+
+        updateStats() {
+          const totalAgents = document.getElementById("totalAgents");
+          const filteredAgents = document.getElementById("filteredAgents");
+
+          if (totalAgents) totalAgents.textContent = this.agents.length;
+          if (filteredAgents)
+            filteredAgents.textContent = this.filteredAgents.length;
+        }
+
+        toggleCart() {
+          const sidebar = document.getElementById("cartSidebar");
+          if (sidebar) sidebar.classList.toggle("active");
+        }
+
+        async downloadAll() {
+          if (this.cart.length === 0) {
+            showToast("No agents in cart to download", "error");
+            return;
+          }
+
+          showToast(
+            `Preparing to download ${this.cart.length} agent(s)...`,
+            "success"
+          );
+
+          for (const agent of this.cart) {
+            try {
+              // Ensure we have the code
+              if (!this.agentCode[agent.id]) {
+                const response = await fetch(agent.url);
+                if (response.ok) {
+                  this.agentCode[agent.id] = await response.text();
+                }
+              }
+
+              if (this.agentCode[agent.id]) {
+                // Download the file
+                const blob = new Blob([this.agentCode[agent.id]], {
+                  type: "text/plain",
+                });
+                const url = URL.createObjectURL(blob);
+                const a = document.createElement("a");
+                a.href = url;
+                a.download = agent.filename;
+                document.body.appendChild(a);
+                a.click();
+                document.body.removeChild(a);
+                URL.revokeObjectURL(url);
+
+                // Small delay between downloads
+                await new Promise((resolve) => setTimeout(resolve, 200));
+              }
+            } catch (error) {
+              console.error(`Failed to download ${agent.filename}:`, error);
+            }
+          }
+
+          showToast(`Downloaded ${this.cart.length} agent(s)`, "success");
+        }
+
+        refreshAgents() {
+          this.agents = [];
+          this.filteredAgents = [];
+          this.agentCode = {};
+          this.loadAgents();
+        }
+      }
+
+      // Show toast notification
+      function showToast(message, type = "info") {
+        const toast = document.getElementById("toast");
+        if (toast) {
+          toast.textContent = message;
+          toast.className = `toast show ${type}`;
+
+          setTimeout(() => {
+            toast.classList.remove("show");
+          }, 3000);
+        }
+      }
+
+      // Initialize all modules
+      const templateManager = new TemplateManager();
+      const discoveryTool = new DiscoveryTool();
+      const agentStore = new AgentStore();
+
+      // Initialize on page load
+      document.addEventListener("DOMContentLoaded", () => {
+        // Load templates on start
+        templateManager.loadTemplates();
+
+        // Pre-load agents in background
+        setTimeout(() => {
+          if (agentStore.agents.length === 0) {
+            agentStore.loadAgents();
+          }
+        }, 1000);
+      });
+
+      // Close code viewer on escape key
+      document.addEventListener("keydown", (e) => {
+        if (e.key === "Escape") {
+          agentStore.closeCodeViewer();
+          const sidebar = document.getElementById("cartSidebar");
+          if (sidebar && sidebar.classList.contains("active")) {
+            sidebar.classList.remove("active");
+          }
+        }
+      });
+
+      // Close modals when clicking outside
+      document
+        .getElementById("codeViewerModal")
+        ?.addEventListener("click", (e) => {
+          if (e.target === e.currentTarget) {
+            agentStore.closeCodeViewer();
+          }
+        });
+    </script>
+  </body>
+</html>
