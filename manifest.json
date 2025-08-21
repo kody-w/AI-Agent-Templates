@@ -1,6 +1,6 @@
 {
   "version": "1.0.0",
-  "generated": "2025-08-21T18:26:51.415028Z",
+  "generated": "2025-08-21T19:03:43.078655Z",
   "repository": "kody-w/AI-Agent-Templates",
   "branch": "main",
   "agents": [
@@ -77,24 +77,6 @@
       ]
     },
     {
-      "id": "Dynamics365DemoDataSeederAgent_agent",
-      "name": "Dynamics365Demodataseederagent Agent",
-      "filename": "Dynamics365DemoDataSeederAgent_agent.py",
-      "path": "agents/Dynamics365DemoDataSeederAgent_agent.py",
-      "url": "https://raw.githubusercontent.com/kody-w/AI-Agent-Templates/main/agents/Dynamics365DemoDataSeederAgent_agent.py",
-      "size": 9005,
-      "size_formatted": "8.8KB",
-      "type": "singular",
-      "icon": "\ud83d\udcbc",
-      "description": "Microsoft Dynamics 365 integration agent",
-      "features": [
-        "Dynamics 365 integration",
-        "Entity management",
-        "Workflow automation",
-        "API connectivity"
-      ]
-    },
-    {
       "id": "powerpoint_agent",
       "name": "Powerpoint Agent",
       "filename": "powerpoint_agent.py",
@@ -110,24 +92,6 @@
         "Slide automation",
         "Template support",
         "Export options"
-      ]
-    },
-    {
-      "id": "MeetingPrepAgent_agent",
-      "name": "Meetingprepagent Agent",
-      "filename": "MeetingPrepAgent_agent.py",
-      "path": "agents/MeetingPrepAgent_agent.py",
-      "url": "https://raw.githubusercontent.com/kody-w/AI-Agent-Templates/main/agents/MeetingPrepAgent_agent.py",
-      "size": 32330,
-      "size_formatted": "31.6KB",
-      "type": "singular",
-      "icon": "\ud83d\udccb",
-      "description": "Meeting preparation and coordination agent",
-      "features": [
-        "Meeting preparation",
-        "Agenda creation",
-        "Note taking",
-        "Action items"
       ]
     },
     {
@@ -167,24 +131,6 @@
       ]
     },
     {
-      "id": "servicenow-agent",
-      "name": "Servicenow-Agent",
-      "filename": "servicenow-agent.py",
-      "path": "agents/servicenow-agent.py",
-      "url": "https://raw.githubusercontent.com/kody-w/AI-Agent-Templates/main/agents/servicenow-agent.py",
-      "size": 11010,
-      "size_formatted": "10.8KB",
-      "type": "singular",
-      "icon": "\ud83c\udfab",
-      "description": "ServiceNow ticket and workflow management",
-      "features": [
-        "Ticket management",
-        "Workflow automation",
-        "ServiceNow integration",
-        "Incident tracking"
-      ]
-    },
-    {
       "id": "dynamics_365_agent",
       "name": "Dynamics 365 Agent",
       "filename": "dynamics_365_agent.py",
@@ -221,29 +167,11 @@
       ]
     },
     {
-      "id": "HackerNewsAgent_agent",
-      "name": "Hackernewsagent Agent",
-      "filename": "HackerNewsAgent_agent.py",
-      "path": "agents/HackerNewsAgent_agent.py",
-      "url": "https://raw.githubusercontent.com/kody-w/AI-Agent-Templates/main/agents/HackerNewsAgent_agent.py",
-      "size": 1296,
-      "size_formatted": "1.3KB",
-      "type": "singular",
-      "icon": "\ud83d\udcf0",
-      "description": "Hacker News content aggregation and monitoring",
-      "features": [
-        "News aggregation",
-        "Content monitoring",
-        "Trend analysis",
-        "Real-time updates"
-      ]
-    },
-    {
-      "id": "duckduckgo-search-agent",
-      "name": "Duckduckgo-Search-Agent",
-      "filename": "duckduckgo-search-agent.py",
-      "path": "agents/duckduckgo-search-agent.py",
-      "url": "https://raw.githubusercontent.com/kody-w/AI-Agent-Templates/main/agents/duckduckgo-search-agent.py",
+      "id": "duckduckgo_search_agent",
+      "name": "Duckduckgo Search Agent",
+      "filename": "duckduckgo_search_agent.py",
+      "path": "agents/duckduckgo_search_agent.py",
+      "url": "https://raw.githubusercontent.com/kody-w/AI-Agent-Templates/main/agents/duckduckgo_search_agent.py",
       "size": 7811,
       "size_formatted": "7.6KB",
       "type": "singular",
@@ -275,6 +203,24 @@
       ]
     },
     {
+      "id": "fetch_random_wikipedia_article_skill",
+      "name": "Fetch Random Wikipedia Article Skill",
+      "filename": "fetch_random_wikipedia_article_skill.py",
+      "path": "agents/fetch_random_wikipedia_article_skill.py",
+      "url": "https://raw.githubusercontent.com/kody-w/AI-Agent-Templates/main/agents/fetch_random_wikipedia_article_skill.py",
+      "size": 2089,
+      "size_formatted": "2.0KB",
+      "type": "singular",
+      "icon": "\ud83d\udcda",
+      "description": "Wikipedia article fetching and knowledge extraction",
+      "features": [
+        "Article fetching",
+        "Random content",
+        "Knowledge extraction",
+        "API connectivity"
+      ]
+    },
+    {
       "id": "image_generation_agent",
       "name": "Image Generation Agent",
       "filename": "image_generation_agent.py",
@@ -290,6 +236,24 @@
         "AI creativity",
         "Format support",
         "Batch processing"
+      ]
+    },
+    {
+      "id": "dynamics365_demo_data_seeder_agent",
+      "name": "Dynamics365 Demo Data Seeder Agent",
+      "filename": "dynamics365_demo_data_seeder_agent.py",
+      "path": "agents/dynamics365_demo_data_seeder_agent.py",
+      "url": "https://raw.githubusercontent.com/kody-w/AI-Agent-Templates/main/agents/dynamics365_demo_data_seeder_agent.py",
+      "size": 9005,
+      "size_formatted": "8.8KB",
+      "type": "singular",
+      "icon": "\ud83d\udcbc",
+      "description": "Microsoft Dynamics 365 integration agent",
+      "features": [
+        "Dynamics 365 integration",
+        "Entity management",
+        "Workflow automation",
+        "API connectivity"
       ]
     },
     {
@@ -347,21 +311,57 @@
       ]
     },
     {
-      "id": "fetchrandomwikipediaarticle_skill",
-      "name": "Fetchrandomwikipediaarticle Skill",
-      "filename": "fetchrandomwikipediaarticle_skill.py",
-      "path": "agents/fetchrandomwikipediaarticle_skill.py",
-      "url": "https://raw.githubusercontent.com/kody-w/AI-Agent-Templates/main/agents/fetchrandomwikipediaarticle_skill.py",
-      "size": 2089,
-      "size_formatted": "2.0KB",
+      "id": "servicenow_agent",
+      "name": "Servicenow Agent",
+      "filename": "servicenow_agent.py",
+      "path": "agents/servicenow_agent.py",
+      "url": "https://raw.githubusercontent.com/kody-w/AI-Agent-Templates/main/agents/servicenow_agent.py",
+      "size": 11010,
+      "size_formatted": "10.8KB",
       "type": "singular",
-      "icon": "\ud83d\udcda",
-      "description": "Wikipedia article fetching and knowledge extraction",
+      "icon": "\ud83c\udfab",
+      "description": "ServiceNow ticket and workflow management",
       "features": [
-        "Article fetching",
-        "Random content",
-        "Knowledge extraction",
-        "API connectivity"
+        "Ticket management",
+        "Workflow automation",
+        "ServiceNow integration",
+        "Incident tracking"
+      ]
+    },
+    {
+      "id": "meeting_prep_agent",
+      "name": "Meeting Prep Agent",
+      "filename": "meeting_prep_agent.py",
+      "path": "agents/meeting_prep_agent.py",
+      "url": "https://raw.githubusercontent.com/kody-w/AI-Agent-Templates/main/agents/meeting_prep_agent.py",
+      "size": 32330,
+      "size_formatted": "31.6KB",
+      "type": "singular",
+      "icon": "\ud83d\udccb",
+      "description": "Meeting preparation and coordination agent",
+      "features": [
+        "Meeting preparation",
+        "Agenda creation",
+        "Note taking",
+        "Action items"
+      ]
+    },
+    {
+      "id": "hacker_news_agent",
+      "name": "Hacker News Agent",
+      "filename": "hacker_news_agent.py",
+      "path": "agents/hacker_news_agent.py",
+      "url": "https://raw.githubusercontent.com/kody-w/AI-Agent-Templates/main/agents/hacker_news_agent.py",
+      "size": 1296,
+      "size_formatted": "1.3KB",
+      "type": "singular",
+      "icon": "\ud83d\udcf0",
+      "description": "Hacker News content aggregation and monitoring",
+      "features": [
+        "News aggregation",
+        "Content monitoring",
+        "Trend analysis",
+        "Real-time updates"
       ]
     }
   ],
@@ -371,26 +371,6 @@
       "name": "Crm Bulk Data Creator Stack",
       "path": "agent_stacks/crm_bulk_data_creator_stack",
       "agents": [
-        {
-          "id": "crm_bulk_data_creator_stack_OneClickCRMIntakeAgent",
-          "name": "Oneclickcrmintakeagent",
-          "filename": "OneClickCRMIntakeAgent.py",
-          "path": "agent_stacks/crm_bulk_data_creator_stack/agents/OneClickCRMIntakeAgent.py",
-          "url": "https://raw.githubusercontent.com/kody-w/AI-Agent-Templates/main/agent_stacks/crm_bulk_data_creator_stack/agents/OneClickCRMIntakeAgent.py",
-          "size": 42659,
-          "size_formatted": "41.7KB",
-          "type": "stack",
-          "stack_name": "Crm Bulk Data Creator Stack",
-          "stack_path": "crm_bulk_data_creator_stack",
-          "icon": "\ud83d\udcbc",
-          "description": "CRM integration and data management",
-          "features": [
-            "CRM integration",
-            "Data synchronization",
-            "Record management",
-            "Pipeline automation"
-          ]
-        },
         {
           "id": "crm_bulk_data_creator_stack_dynamics_365_agent",
           "name": "Dynamics 365 Agent",
@@ -409,6 +389,26 @@
             "Entity management",
             "Workflow automation",
             "API connectivity"
+          ]
+        },
+        {
+          "id": "crm_bulk_data_creator_stack_one_click_crm_intake_agent",
+          "name": "One Click Crm Intake Agent",
+          "filename": "one_click_crm_intake_agent.py",
+          "path": "agent_stacks/crm_bulk_data_creator_stack/agents/one_click_crm_intake_agent.py",
+          "url": "https://raw.githubusercontent.com/kody-w/AI-Agent-Templates/main/agent_stacks/crm_bulk_data_creator_stack/agents/one_click_crm_intake_agent.py",
+          "size": 42659,
+          "size_formatted": "41.7KB",
+          "type": "stack",
+          "stack_name": "Crm Bulk Data Creator Stack",
+          "stack_path": "crm_bulk_data_creator_stack",
+          "icon": "\ud83d\udcbc",
+          "description": "CRM integration and data management",
+          "features": [
+            "CRM integration",
+            "Data synchronization",
+            "Record management",
+            "Pipeline automation"
           ]
         },
         {
@@ -590,26 +590,6 @@
           ]
         },
         {
-          "id": "voice_to_crm_stack_servicenow-agent",
-          "name": "Servicenow-Agent",
-          "filename": "servicenow-agent.py",
-          "path": "agent_stacks/voice_to_crm_stack/agents/servicenow-agent.py",
-          "url": "https://raw.githubusercontent.com/kody-w/AI-Agent-Templates/main/agent_stacks/voice_to_crm_stack/agents/servicenow-agent.py",
-          "size": 11010,
-          "size_formatted": "10.8KB",
-          "type": "stack",
-          "stack_name": "Voice To Crm Stack",
-          "stack_path": "voice_to_crm_stack",
-          "icon": "\ud83c\udfab",
-          "description": "ServiceNow ticket and workflow management",
-          "features": [
-            "Ticket management",
-            "Workflow automation",
-            "ServiceNow integration",
-            "Incident tracking"
-          ]
-        },
-        {
           "id": "voice_to_crm_stack_dynamics_365_agent",
           "name": "Dynamics 365 Agent",
           "filename": "dynamics_365_agent.py",
@@ -647,6 +627,26 @@
             "SharePoint integration",
             "File management",
             "Metadata handling"
+          ]
+        },
+        {
+          "id": "voice_to_crm_stack_servicenow_agent",
+          "name": "Servicenow Agent",
+          "filename": "servicenow_agent.py",
+          "path": "agent_stacks/voice_to_crm_stack/agents/servicenow_agent.py",
+          "url": "https://raw.githubusercontent.com/kody-w/AI-Agent-Templates/main/agent_stacks/voice_to_crm_stack/agents/servicenow_agent.py",
+          "size": 11010,
+          "size_formatted": "10.8KB",
+          "type": "stack",
+          "stack_name": "Voice To Crm Stack",
+          "stack_path": "voice_to_crm_stack",
+          "icon": "\ud83c\udfab",
+          "description": "ServiceNow ticket and workflow management",
+          "features": [
+            "Ticket management",
+            "Workflow automation",
+            "ServiceNow integration",
+            "Incident tracking"
           ]
         }
       ],
