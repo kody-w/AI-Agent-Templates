@@ -3,6 +3,19 @@
 ## Overview
 This agent stack provides an end-to-end solution for capturing sales call data and automatically integrating it with your CRM system. It extracts information from SharePoint documents (including call transcripts), loads data into Dynamics 365, and sends follow-up emails - all through a modular AI agent system.
 
+## Directory Structure
+```
+voice_to_crm_stack/
+├── agents/                                         # Agent implementations
+│   ├── extract_sharepoint_document_url_agent.py   # SharePoint document extractor
+│   ├── dynamics_365_agent.py                      # Dynamics 365 CRUD operations
+│   ├── email_drafting_agent.py                    # Email drafting and sending
+│   └── servicenow-agent.py                        # ServiceNow integration (optional)
+├── MSFTAIBASMultiAgentCopilot_1_0_0_1_managed.zip # Power Platform managed solution
+├── index_voice.html                                # Web interface (optional)
+└── README.md                                       # This documentation
+```
+
 ## Key Features
 - **SharePoint Document Extraction**: Extract content from documents, PDFs, and images stored in SharePoint
 - **Dynamics 365 Integration**: Create, read, update, and delete records in Dynamics 365
@@ -11,7 +24,7 @@ This agent stack provides an end-to-end solution for capturing sales call data a
 
 ## Agents Included
 
-### 1. SharePoint Document Extractor Agent (`extract_sharepoint_document_url_agent.py`)
+### 1. SharePoint Document Extractor Agent (`agents/extract_sharepoint_document_url_agent.py`)
 Extracts complete content from SharePoint documents including:
 - Word documents (.docx)
 - PDF files
@@ -19,7 +32,7 @@ Extracts complete content from SharePoint documents including:
 - Images (with Vision AI analysis)
 - Entire folders of documents
 
-### 2. Dynamics 365 CRUD Agent (`dynamics_365_agent.py`)
+### 2. Dynamics 365 CRUD Agent (`agents/dynamics_365_agent.py`)
 Performs full CRUD operations with Dynamics 365:
 - Create new records (contacts, leads, opportunities)
 - Read existing records
@@ -27,7 +40,7 @@ Performs full CRUD operations with Dynamics 365:
 - Delete records
 - Execute complex FetchXML queries
 
-### 3. Email Drafting Agent (`email_drafting_agent.py`)
+### 3. Email Drafting Agent (`agents/email_drafting_agent.py`)
 Drafts professional emails and sends them via Power Automate:
 - HTML formatted emails
 - Multiple recipients (To, CC, BCC)
@@ -121,7 +134,7 @@ AZURE_FILES_SHARE_NAME=voicetocrm
 
 1. **Copy agents to your AI system's agents folder**:
    ```bash
-   cp agent_stacks/voice_to_crm_stack/*.py /path/to/your/ai/system/agents/
+   cp -r agent_stacks/voice_to_crm_stack/agents/*.py /path/to/your/ai/system/agents/
    ```
 
 2. **Install required dependencies**:
@@ -132,9 +145,10 @@ AZURE_FILES_SHARE_NAME=voicetocrm
 3. **Register agents with your AI system** (varies by system):
    ```python
    # Example registration code
-   from extract_sharepoint_document_url_agent import SharePointDocumentExtractorAgent
-   from dynamics_365_agent import Dynamics365CRUDAgent
-   from email_drafting_agent import EmailDraftingAgent
+   # Note: Update import paths based on your AI system's structure
+   from agents.extract_sharepoint_document_url_agent import SharePointDocumentExtractorAgent
+   from agents.dynamics_365_agent import Dynamics365CRUDAgent
+   from agents.email_drafting_agent import EmailDraftingAgent
    
    agent_registry.register(SharePointDocumentExtractorAgent())
    agent_registry.register(Dynamics365CRUDAgent())
