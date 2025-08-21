@@ -1,6 +1,6 @@
 {
   "version": "1.0.0",
-  "generated": "2025-08-21T18:00:09.195676Z",
+  "generated": "2025-08-21T18:19:54.081305Z",
   "repository": "kody-w/AI-Agent-Templates",
   "branch": "main",
   "agents": [
@@ -13,6 +13,7 @@
       "size": 2824,
       "size_formatted": "2.8KB",
       "type": "singular",
+      "icon": "\ud83d\udcc5",
       "description": "Calendar management and scheduling automation",
       "features": [
         "Schedule management",
@@ -30,6 +31,7 @@
       "size": 1405,
       "size_formatted": "1.4KB",
       "type": "singular",
+      "icon": "\ud83d\udcaa",
       "description": "Motivational quote generation and inspiration",
       "features": [
         "Quote generation",
@@ -47,6 +49,7 @@
       "size": 7379,
       "size_formatted": "7.2KB",
       "type": "singular",
+      "icon": "\ud83e\udde0",
       "description": "Context and memory management for conversations",
       "features": [
         "Context retention",
@@ -64,6 +67,7 @@
       "size": 1809,
       "size_formatted": "1.8KB",
       "type": "singular",
+      "icon": "\ud83d\udc1d",
       "description": "Beehiiv newsletter platform integration",
       "features": [
         "Newsletter integration",
@@ -81,6 +85,7 @@
       "size": 9005,
       "size_formatted": "8.8KB",
       "type": "singular",
+      "icon": "\ud83d\udcbc",
       "description": "Microsoft Dynamics 365 integration agent",
       "features": [
         "Dynamics 365 integration",
@@ -98,6 +103,7 @@
       "size": 69601,
       "size_formatted": "68.0KB",
       "type": "singular",
+      "icon": "\ud83d\udcca",
       "description": "PowerPoint presentation automation",
       "features": [
         "Presentation creation",
@@ -115,6 +121,7 @@
       "size": 32330,
       "size_formatted": "31.6KB",
       "type": "singular",
+      "icon": "\ud83d\udccb",
       "description": "Meeting preparation and coordination agent",
       "features": [
         "Meeting preparation",
@@ -132,6 +139,7 @@
       "size": 5007,
       "size_formatted": "4.9KB",
       "type": "singular",
+      "icon": "\u2709\ufe0f",
       "description": "Intelligent email drafting and automation agent",
       "features": [
         "Email composition",
@@ -149,6 +157,7 @@
       "size": 152,
       "size_formatted": "152.0B",
       "type": "singular",
+      "icon": "\ud83e\udd16",
       "description": "AI agent for task automation and workflow optimization",
       "features": [
         "AI-powered automation",
@@ -166,6 +175,7 @@
       "size": 11010,
       "size_formatted": "10.8KB",
       "type": "singular",
+      "icon": "\ud83c\udfab",
       "description": "ServiceNow ticket and workflow management",
       "features": [
         "Ticket management",
@@ -183,6 +193,7 @@
       "size": 7182,
       "size_formatted": "7.0KB",
       "type": "singular",
+      "icon": "\ud83d\udcbc",
       "description": "Microsoft Dynamics 365 integration agent",
       "features": [
         "Dynamics 365 integration",
@@ -200,6 +211,7 @@
       "size": 12513,
       "size_formatted": "12.2KB",
       "type": "singular",
+      "icon": "\ud83c\udccf",
       "description": "Adaptive card generation for multiple platforms",
       "features": [
         "Card generation",
@@ -217,6 +229,7 @@
       "size": 1296,
       "size_formatted": "1.3KB",
       "type": "singular",
+      "icon": "\ud83d\udcf0",
       "description": "Hacker News content aggregation and monitoring",
       "features": [
         "News aggregation",
@@ -234,6 +247,7 @@
       "size": 7811,
       "size_formatted": "7.6KB",
       "type": "singular",
+      "icon": "\ud83d\udd0d",
       "description": "Web search and content aggregation",
       "features": [
         "Web search",
@@ -251,6 +265,7 @@
       "size": 9837,
       "size_formatted": "9.6KB",
       "type": "singular",
+      "icon": "\ud83e\udde0",
       "description": "Context and memory management for conversations",
       "features": [
         "Context retention",
@@ -268,6 +283,7 @@
       "size": 18156,
       "size_formatted": "17.7KB",
       "type": "singular",
+      "icon": "\ud83c\udfa8",
       "description": "AI-powered image generation and processing",
       "features": [
         "Image generation",
@@ -285,6 +301,7 @@
       "size": 5067,
       "size_formatted": "4.9KB",
       "type": "singular",
+      "icon": "\u2601\ufe0f",
       "description": "Salesforce data query and integration",
       "features": [
         "Salesforce queries",
@@ -302,6 +319,7 @@
       "size": 43530,
       "size_formatted": "42.5KB",
       "type": "singular",
+      "icon": "\ud83d\udcc1",
       "description": "SharePoint document extraction and management",
       "features": [
         "Document extraction",
@@ -319,6 +337,7 @@
       "size": 23421,
       "size_formatted": "22.9KB",
       "type": "singular",
+      "icon": "\ud83d\udd0d",
       "description": "Automated code review and analysis",
       "features": [
         "Code analysis",
@@ -336,6 +355,7 @@
       "size": 2089,
       "size_formatted": "2.0KB",
       "type": "singular",
+      "icon": "\ud83d\udcda",
       "description": "Wikipedia article fetching and knowledge extraction",
       "features": [
         "Article fetching",
@@ -362,6 +382,7 @@
           "type": "stack",
           "stack_name": "Crm Bulk Data Creator Stack",
           "stack_path": "crm_bulk_data_creator_stack",
+          "icon": "\ud83d\udcbc",
           "description": "CRM integration and data management",
           "features": [
             "CRM integration",
@@ -381,6 +402,7 @@
           "type": "stack",
           "stack_name": "Crm Bulk Data Creator Stack",
           "stack_path": "crm_bulk_data_creator_stack",
+          "icon": "\ud83d\udcbc",
           "description": "Microsoft Dynamics 365 integration agent",
           "features": [
             "Dynamics 365 integration",
@@ -400,6 +422,7 @@
           "type": "stack",
           "stack_name": "Crm Bulk Data Creator Stack",
           "stack_path": "crm_bulk_data_creator_stack",
+          "icon": "\ud83d\udcbc",
           "description": "CRM integration and data management",
           "features": [
             "CRM integration",
@@ -557,6 +580,7 @@
           "type": "stack",
           "stack_name": "Voice To Crm Stack",
           "stack_path": "voice_to_crm_stack",
+          "icon": "\u2709\ufe0f",
           "description": "Intelligent email drafting and automation agent",
           "features": [
             "Email composition",
@@ -576,6 +600,7 @@
           "type": "stack",
           "stack_name": "Voice To Crm Stack",
           "stack_path": "voice_to_crm_stack",
+          "icon": "\ud83c\udfab",
           "description": "ServiceNow ticket and workflow management",
           "features": [
             "Ticket management",
@@ -595,6 +620,7 @@
           "type": "stack",
           "stack_name": "Voice To Crm Stack",
           "stack_path": "voice_to_crm_stack",
+          "icon": "\ud83d\udcbc",
           "description": "Microsoft Dynamics 365 integration agent",
           "features": [
             "Dynamics 365 integration",
@@ -614,6 +640,7 @@
           "type": "stack",
           "stack_name": "Voice To Crm Stack",
           "stack_path": "voice_to_crm_stack",
+          "icon": "\ud83d\udcc1",
           "description": "SharePoint document extraction and management",
           "features": [
             "Document extraction",
@@ -881,6 +908,7 @@
           "type": "stack",
           "stack_name": "Simulation Sales Stack",
           "stack_path": "simulation_sales_stack",
+          "icon": "\ud83e\udd16",
           "description": "AI agent for task automation and workflow optimization",
           "features": [
             "AI-powered automation",
@@ -1079,6 +1107,7 @@
           "type": "stack",
           "stack_name": "Email Drafting Stack",
           "stack_path": "email_drafting_stack",
+          "icon": "\u2709\ufe0f",
           "description": "Intelligent email drafting and automation agent",
           "features": [
             "Email composition",

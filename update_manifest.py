@@ -17,6 +17,44 @@ def format_file_size(size):
         size /= 1024.0
     return f"{size:.1f}TB"
 
+def get_agent_icon(filename):
+    """Get an icon for an agent based on its filename"""
+    icon_map = {
+        "email": "✉️",
+        "calendar": "📅",
+        "crm": "💼",
+        "dynamics": "💼",
+        "sharepoint": "📁",
+        "memory": "🧠",
+        "image": "🎨",
+        "powerpoint": "📊",
+        "servicenow": "🎫",
+        "salesforce": "☁️",
+        "search": "🔍",
+        "review": "🔍",
+        "adaptive": "🃏",
+        "hacker": "📰",
+        "motivational": "💪",
+        "wikipedia": "📚",
+        "beehiiv": "🐝",
+        "demo": "🎯",
+        "meeting": "📋",
+        "basic": "🤖",
+        "context": "🧠",
+        "manage": "💭",
+        "extract": "📄",
+        "code": "💻",
+        "duckduckgo": "🦆",
+        "fetchrandom": "🎲"
+    }
+    
+    filename_lower = filename.lower()
+    for keyword, icon in icon_map.items():
+        if keyword in filename_lower:
+            return icon
+    
+    return "🤖"  # Default icon
+
 def get_agent_features(filename):
     """Get default features for an agent based on its filename"""
     # Default features that apply to all agents
@@ -113,6 +151,7 @@ def scan_agents():
             "size": size,
             "size_formatted": format_file_size(size),
             "type": "singular",
+            "icon": get_agent_icon(py_file.name),
             "description": get_agent_description(py_file.name),
             "features": get_agent_features(py_file.name)
         })
@@ -164,6 +203,7 @@ def scan_stacks():
                     "type": "stack",
                     "stack_name": stack_info["name"],
                     "stack_path": stack_dir.name,
+                    "icon": get_agent_icon(py_file.name),
                     "description": get_agent_description(py_file.name),
                     "features": get_agent_features(py_file.name)
                 }
