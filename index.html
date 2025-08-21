@@ -2956,12 +2956,19 @@
 
         async loadFromManifest() {
           try {
-            // Load the pre-generated manifest file (single request!)
-            const response = await fetch('manifest.json');
+            // Try loading from local manifest first, then from raw GitHub URL
+            let response = await fetch('manifest.json');
             
             if (!response.ok) {
-              console.warn("Manifest file not found");
-              return false;
+              // Try loading from GitHub raw URL as fallback
+              console.warn("Local manifest not found, trying GitHub raw URL");
+              const manifestUrl = `https://raw.githubusercontent.com/${this.GITHUB_REPO}/${this.BRANCH}/manifest.json`;
+              response = await fetch(manifestUrl);
+              
+              if (!response.ok) {
+                console.warn("Manifest file not found at GitHub either");
+                return false;
+              }
             }
             
             const manifest = await response.json();
