@@ -1050,7 +1050,10 @@
           <h1>🚀 Microsoft AI Accelerate</h1>
         </div>
         <div class="nav-tabs">
-          <button class="nav-tab active" onclick="switchApp('templates')">
+          <button class="nav-tab active" onclick="switchApp('setup')">
+            🚀 Setup Guide
+          </button>
+          <button class="nav-tab" onclick="switchApp('templates')">
             📚 Template Library
           </button>
           <button class="nav-tab" onclick="switchApp('discovery')">
@@ -1063,8 +1066,322 @@
       </div>
     </nav>
 
+    <!-- Setup Guide Section -->
+    <div id="setupApp" class="app-section active">
+      <div class="container">
+        <header>
+          <div class="ms-logo">MICROSOFT AI ACCELERATE</div>
+          <h1>🚀 One-Click Azure Setup</h1>
+          <p class="subtitle">Deploy your AI agent infrastructure in minutes</p>
+        </header>
+
+        <div style="max-width: 1200px; margin: 0 auto; padding: 2rem;">
+          <!-- Step 1: Deploy to Azure -->
+          <div style="background: linear-gradient(135deg, #0078d4 0%, #005a9e 100%); color: white; border-radius: 12px; padding: 2rem; margin-bottom: 2rem;">
+            <h2 style="color: white; margin-bottom: 1rem;">Step 1: Deploy to Azure (1 minute)</h2>
+            <p style="margin-bottom: 1.5rem; opacity: 0.95;">Click the button below to automatically deploy all required Azure resources including Azure OpenAI, Function App, and Storage.</p>
+            <a href="https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fkody-w%2FAI-Agent-Templates%2Fmain%2Fazuredeploy.json" 
+               target="_blank"
+               style="display: inline-block; background: white; color: #0078d4; padding: 1rem 2rem; border-radius: 8px; text-decoration: none; font-weight: 600; font-size: 1.1rem; transition: transform 0.2s;">
+              <img src="https://aka.ms/deploytoazurebutton" alt="Deploy to Azure" style="height: 40px;">
+            </a>
+          </div>
+
+          <!-- Step 2: Test Your Endpoint -->
+          <div style="background: white; border: 2px solid #e5e7eb; border-radius: 12px; padding: 2rem; margin-bottom: 2rem;">
+            <h2 style="color: #1f2937; margin-bottom: 1rem;">Step 2: Test Your Endpoint</h2>
+            <p style="color: #6b7280; margin-bottom: 1rem;">After deployment completes, you'll see "Your deployment is complete" ✅</p>
+            
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; margin-top: 1.5rem;">
+              <div>
+                <h3 style="color: #374151; font-size: 1.1rem; margin-bottom: 0.5rem;">1. Click "Outputs" Tab</h3>
+                <img src="https://raw.githubusercontent.com/kody-w/Copilot-Agent-365/main/docs/images/afterTemplate1.png" 
+                     alt="Click Outputs Tab" 
+                     style="width: 100%; border: 1px solid #e5e7eb; border-radius: 8px;">
+                <p style="color: #6b7280; font-size: 0.9rem; margin-top: 0.5rem;">Find the "Outputs" tab in the left sidebar</p>
+              </div>
+              
+              <div>
+                <h3 style="color: #374151; font-size: 1.1rem; margin-bottom: 0.5rem;">2. Copy Your Endpoint URL</h3>
+                <img src="https://raw.githubusercontent.com/kody-w/Copilot-Agent-365/main/docs/images/afterTemplate2.png" 
+                     alt="Copy Endpoint URL" 
+                     style="width: 100%; border: 1px solid #e5e7eb; border-radius: 8px;">
+                <p style="color: #6b7280; font-size: 0.9rem; margin-top: 0.5rem;">Copy the functionEndpoint value</p>
+              </div>
+            </div>
+
+            <div style="background: #f9fafb; border-radius: 8px; padding: 1rem; margin-top: 1.5rem;">
+              <h4 style="color: #374151; margin-bottom: 0.5rem;">Test Your Endpoint:</h4>
+              <pre style="background: #1f2937; color: #10b981; padding: 1rem; border-radius: 6px; overflow-x: auto; font-size: 0.9rem;">curl -X POST [YOUR_FUNCTION_URL] \
+  -H "Content-Type: application/json" \
+  -d '{"action": "test", "agent": "basic_agent"}'</pre>
+            </div>
+          </div>
+
+          <!-- Step 3: Connect to Copilot Studio (Optional) -->
+          <div style="background: linear-gradient(135deg, #7c3aed 0%, #5b21b6 100%); color: white; border-radius: 12px; padding: 2rem; margin-bottom: 2rem;">
+            <h2 style="color: white; margin-bottom: 1rem;">Step 3: Connect to Microsoft 365 Copilot (Optional)</h2>
+            <p style="margin-bottom: 1.5rem; opacity: 0.95;">Deploy your AI agents directly into Microsoft Teams and M365 Copilot using our pre-configured Power Platform solution.</p>
+            
+            <div style="display: flex; gap: 1rem; flex-wrap: wrap;">
+              <a href="https://github.com/kody-w/AI-Agent-Templates/raw/main/MSFTAIBASMultiAgentCopilot_1_0_0_2.zip" 
+                 download="MSFTAIBASMultiAgentCopilot_1_0_0_2.zip"
+                 style="display: inline-block; background: white; color: #7c3aed; padding: 1rem 2rem; border-radius: 8px; text-decoration: none; font-weight: 600; transition: transform 0.2s;"
+                 onmouseover="this.style.transform='translateY(-2px)'"
+                 onmouseout="this.style.transform='translateY(0)'">
+                📦 Download Power Platform Solution
+              </a>
+              <button onclick="document.getElementById('copilotInstructions').style.display='block'" 
+                      style="background: rgba(255,255,255,0.2); color: white; border: 2px solid white; padding: 1rem 2rem; border-radius: 8px; font-weight: 600; cursor: pointer; transition: all 0.2s;"
+                      onmouseover="this.style.background='rgba(255,255,255,0.3)'"
+                      onmouseout="this.style.background='rgba(255,255,255,0.2)'">
+                📖 View Setup Instructions
+              </button>
+            </div>
+            
+            <!-- Detailed Instructions (Hidden by default) -->
+            <div id="copilotInstructions" style="display: none; margin-top: 2rem; background: rgba(0,0,0,0.2); border-radius: 8px; padding: 1.5rem;">
+              <h3 style="color: white; margin-bottom: 1rem;">🚀 Quick Setup Guide</h3>
+              
+              <div style="background: rgba(255,255,255,0.1); border-radius: 6px; padding: 1rem; margin-bottom: 1rem;">
+                <h4 style="color: white; margin-bottom: 0.5rem;">1️⃣ Import Solution to Power Platform</h4>
+                <ol style="margin-left: 1.5rem; opacity: 0.95;">
+                  <li>Go to <a href="https://make.powerapps.com" target="_blank" style="color: #fbbf24;">make.powerapps.com</a></li>
+                  <li>Navigate to Solutions → Import solution</li>
+                  <li>Upload the downloaded ZIP file</li>
+                  <li>Click Next → Import</li>
+                </ol>
+              </div>
+              
+              <div style="background: rgba(255,255,255,0.1); border-radius: 6px; padding: 1rem; margin-bottom: 1rem;">
+                <h4 style="color: white; margin-bottom: 0.5rem;">2️⃣ Configure Power Automate Connection</h4>
+                <ol style="margin-left: 1.5rem; opacity: 0.95;">
+                  <li>Open the imported solution</li>
+                  <li>Find "Talk to MAC (Migration Assessment Copilot)" flow</li>
+                  <li>Edit the flow and update the HTTP action:</li>
+                  <li style="margin-top: 0.5rem;">
+                    <code style="background: rgba(0,0,0,0.3); padding: 0.5rem; border-radius: 4px; display: block;">
+                      URL: [Your Function URL from Step 2]<br>
+                      Key: [Your Function Key]
+                    </code>
+                  </li>
+                  <li>Save and turn on the flow</li>
+                </ol>
+              </div>
+              
+              <div style="background: rgba(255,255,255,0.1); border-radius: 6px; padding: 1rem; margin-bottom: 1rem;">
+                <h4 style="color: white; margin-bottom: 0.5rem;">3️⃣ Configure Copilot Studio Bot</h4>
+                <ol style="margin-left: 1.5rem; opacity: 0.95;">
+                  <li>Go to <a href="https://copilotstudio.microsoft.com" target="_blank" style="color: #fbbf24;">Copilot Studio</a></li>
+                  <li>Find your imported bot "Agent"</li>
+                  <li>Open Topics → MAIN topic</li>
+                  <li>Verify the Power Automate action is connected</li>
+                  <li>Test in the Test pane</li>
+                </ol>
+              </div>
+              
+              <div style="background: rgba(255,255,255,0.1); border-radius: 6px; padding: 1rem; margin-bottom: 1rem;">
+                <h4 style="color: white; margin-bottom: 0.5rem;">4️⃣ Deploy to Microsoft 365</h4>
+                <ol style="margin-left: 1.5rem; opacity: 0.95;">
+                  <li>In Copilot Studio, go to Channels</li>
+                  <li>Select "Microsoft Teams"</li>
+                  <li>Click "Turn on Teams"</li>
+                  <li>For M365 Copilot integration:
+                    <ul style="margin-top: 0.5rem;">
+                      <li>Enable "Microsoft 365 Copilot" channel</li>
+                      <li>Configure declarative agent settings</li>
+                      <li>Submit for admin approval if required</li>
+                    </ul>
+                  </li>
+                </ol>
+              </div>
+              
+              <div style="background: #fef3c7; color: #92400e; border-radius: 6px; padding: 1rem; margin-top: 1rem;">
+                <strong>⚠️ Prerequisites:</strong>
+                <ul style="margin-left: 1.5rem; margin-top: 0.5rem;">
+                  <li>Power Platform license (or trial)</li>
+                  <li>Copilot Studio license (for M365 integration)</li>
+                  <li>Azure Function must be accessible from Power Platform</li>
+                  <li>Admin consent may be required for M365 Copilot deployment</li>
+                </ul>
+              </div>
+              
+              <button onclick="document.getElementById('copilotInstructions').style.display='none'" 
+                      style="margin-top: 1rem; background: rgba(255,255,255,0.2); color: white; border: none; padding: 0.5rem 1rem; border-radius: 6px; cursor: pointer;">
+                ✕ Close Instructions
+              </button>
+            </div>
+          </div>
+
+          <!-- Step 4: Choose Your Stack -->
+          <div style="background: linear-gradient(135deg, #10b981 0%, #059669 100%); color: white; border-radius: 12px; padding: 2rem; margin-bottom: 2rem;">
+            <h2 style="color: white; margin-bottom: 1rem;">Step 4: Choose Your Agent Stack</h2>
+            <p style="margin-bottom: 1.5rem; opacity: 0.95;">Browse our template library to select and deploy agent stacks for your specific use cases.</p>
+            <button onclick="switchApp('templates')" 
+                    style="background: white; color: #10b981; border: none; padding: 1rem 2rem; border-radius: 8px; font-weight: 600; font-size: 1.1rem; cursor: pointer; transition: transform 0.2s;"
+                    onmouseover="this.style.transform='translateY(-2px)'"
+                    onmouseout="this.style.transform='translateY(0)'">
+              Browse Template Library →
+            </button>
+          </div>
+
+          <!-- Architecture Overview -->
+          <div style="background: white; border: 2px solid #e5e7eb; border-radius: 12px; padding: 2rem; margin-bottom: 2rem;">
+            <h3 style="color: #1f2937; margin-bottom: 1rem;">🏗️ Solution Architecture</h3>
+            <div style="background: #f9fafb; border-radius: 8px; padding: 1.5rem; font-family: monospace; font-size: 0.9rem; color: #374151; line-height: 1.6;">
+              <pre style="margin: 0; white-space: pre-wrap;">
+┌─────────────────────────────────────────────────────────┐
+│                   Microsoft 365 Copilot                  │
+│                         & Teams                          │
+└─────────────────▲───────────────────────────────────────┘
+                  │
+                  │ Channels
+                  │
+┌─────────────────▼───────────────────────────────────────┐
+│                    Copilot Studio                        │
+│                      (Your Bot)                          │
+│  • Natural Language Processing                           │
+│  • Conversation Management                               │
+│  • User Authentication                                   │
+└─────────────────▲───────────────────────────────────────┘
+                  │
+                  │ Triggers
+                  │
+┌─────────────────▼───────────────────────────────────────┐
+│                   Power Automate                         │
+│              (Orchestration Layer)                       │
+│  • User Context (Office 365)                            │
+│  • Data Transformation                                   │
+│  • Error Handling                                       │
+└─────────────────▲───────────────────────────────────────┘
+                  │
+                  │ HTTP Request
+                  │
+┌─────────────────▼───────────────────────────────────────┐
+│                  Azure Function                          │
+│               (Agent Execution)                          │
+│  • Agent Selection & Routing                            │
+│  • Memory Management                                     │
+│  • Azure OpenAI Integration                             │
+└─────────────────▲───────────────────────────────────────┘
+                  │
+                  │ Processes
+                  │
+┌─────────────────▼───────────────────────────────────────┐
+│                   AI Agents                              │
+│  • CRM Integration (Dynamics, Salesforce)               │
+│  • Document Processing                                   │
+│  • Email Automation                                      │
+│  • Calendar Management                                   │
+│  • Custom Business Logic                                 │
+└─────────────────────────────────────────────────────────┘
+              </pre>
+            </div>
+            
+            <div style="margin-top: 1.5rem; display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1rem;">
+              <div style="background: #eff6ff; border-left: 4px solid #3b82f6; padding: 1rem; border-radius: 4px;">
+                <strong style="color: #1e40af;">User Interface</strong>
+                <p style="color: #64748b; font-size: 0.9rem; margin-top: 0.5rem;">Microsoft Teams, M365 Copilot, or custom web interface</p>
+              </div>
+              <div style="background: #f3e8ff; border-left: 4px solid #9333ea; padding: 1rem; border-radius: 4px;">
+                <strong style="color: #581c87;">Conversation Layer</strong>
+                <p style="color: #64748b; font-size: 0.9rem; margin-top: 0.5rem;">Copilot Studio manages conversations and NLU</p>
+              </div>
+              <div style="background: #fef3c7; border-left: 4px solid #f59e0b; padding: 1rem; border-radius: 4px;">
+                <strong style="color: #92400e;">Integration Layer</strong>
+                <p style="color: #64748b; font-size: 0.9rem; margin-top: 0.5rem;">Power Automate connects systems securely</p>
+              </div>
+              <div style="background: #dcfce7; border-left: 4px solid #22c55e; padding: 1rem; border-radius: 4px;">
+                <strong style="color: #166534;">Processing Layer</strong>
+                <p style="color: #64748b; font-size: 0.9rem; margin-top: 0.5rem;">Azure Functions execute agent logic</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Additional Resources -->
+          <div style="background: #f9fafb; border-radius: 12px; padding: 2rem;">
+            <h3 style="color: #1f2937; margin-bottom: 1rem;">📚 Resources & Documentation</h3>
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1rem;">
+              <a href="https://github.com/kody-w/AI-Agent-Templates" target="_blank" 
+                 style="background: white; padding: 1rem; border-radius: 8px; text-decoration: none; color: #374151; border: 1px solid #e5e7eb; transition: all 0.2s;"
+                 onmouseover="this.style.borderColor='#0078d4'; this.style.transform='translateY(-2px)'"
+                 onmouseout="this.style.borderColor='#e5e7eb'; this.style.transform='translateY(0)'">
+                <strong>📖 GitHub Repository</strong>
+                <p style="color: #6b7280; font-size: 0.9rem; margin-top: 0.5rem;">Source code and documentation</p>
+              </a>
+              
+              <a href="https://docs.microsoft.com/azure/azure-functions/" target="_blank"
+                 style="background: white; padding: 1rem; border-radius: 8px; text-decoration: none; color: #374151; border: 1px solid #e5e7eb; transition: all 0.2s;"
+                 onmouseover="this.style.borderColor='#0078d4'; this.style.transform='translateY(-2px)'"
+                 onmouseout="this.style.borderColor='#e5e7eb'; this.style.transform='translateY(0)'">
+                <strong>⚡ Azure Functions Docs</strong>
+                <p style="color: #6b7280; font-size: 0.9rem; margin-top: 0.5rem;">Learn about serverless computing</p>
+              </a>
+              
+              <a href="https://learn.microsoft.com/azure/ai-services/openai/" target="_blank"
+                 style="background: white; padding: 1rem; border-radius: 8px; text-decoration: none; color: #374151; border: 1px solid #e5e7eb; transition: all 0.2s;"
+                 onmouseover="this.style.borderColor='#0078d4'; this.style.transform='translateY(-2px)'"
+                 onmouseout="this.style.borderColor='#e5e7eb'; this.style.transform='translateY(0)'">
+                <strong>🧠 Azure OpenAI Docs</strong>
+                <p style="color: #6b7280; font-size: 0.9rem; margin-top: 0.5rem;">AI model documentation</p>
+              </a>
+            </div>
+          </div>
+
+          <!-- Deployment Details -->
+          <div style="background: white; border: 1px solid #e5e7eb; border-radius: 12px; padding: 2rem; margin-top: 2rem;">
+            <h3 style="color: #1f2937; margin-bottom: 1rem;">🔧 What Gets Deployed</h3>
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem;">
+              <div>
+                <strong style="color: #0078d4;">Azure OpenAI</strong>
+                <p style="color: #6b7280; font-size: 0.9rem;">GPT-4o model deployment</p>
+              </div>
+              <div>
+                <strong style="color: #0078d4;">Function App</strong>
+                <p style="color: #6b7280; font-size: 0.9rem;">Serverless compute</p>
+              </div>
+              <div>
+                <strong style="color: #0078d4;">Storage Account</strong>
+                <p style="color: #6b7280; font-size: 0.9rem;">Agent memory & files</p>
+              </div>
+              <div>
+                <strong style="color: #0078d4;">App Insights</strong>
+                <p style="color: #6b7280; font-size: 0.9rem;">Monitoring & analytics</p>
+              </div>
+            </div>
+            
+            <div style="background: #fef3c7; border: 1px solid #fbbf24; border-radius: 8px; padding: 1rem; margin-top: 1.5rem;">
+              <strong style="color: #92400e;">💰 Estimated Cost:</strong>
+              <span style="color: #78350f;">~$5-10/month base + OpenAI usage (~$0.01 per 1K tokens)</span>
+            </div>
+          </div>
+
+          <!-- Troubleshooting -->
+          <details style="background: #f9fafb; border-radius: 12px; padding: 1rem; margin-top: 2rem;">
+            <summary style="cursor: pointer; font-weight: 600; color: #1f2937; padding: 0.5rem;">
+              ❓ Troubleshooting & FAQ
+            </summary>
+            <div style="margin-top: 1rem; padding-left: 1rem;">
+              <div style="margin-bottom: 1rem;">
+                <strong style="color: #374151;">Deployment fails with "quota exceeded"</strong>
+                <p style="color: #6b7280; font-size: 0.9rem;">Try a different region or request a quota increase in Azure Portal</p>
+              </div>
+              <div style="margin-bottom: 1rem;">
+                <strong style="color: #374151;">Function returns 401 Unauthorized</strong>
+                <p style="color: #6b7280; font-size: 0.9rem;">Make sure you're using the function key from the Azure Portal</p>
+              </div>
+              <div style="margin-bottom: 1rem;">
+                <strong style="color: #374151;">How do I add custom agents?</strong>
+                <p style="color: #6b7280; font-size: 0.9rem;">Deploy agent code to your Function App via GitHub Actions or Azure DevOps</p>
+              </div>
+            </div>
+          </details>
+        </div>
+      </div>
+    </div>
+
     <!-- Template Library Section -->
-    <div id="templatesApp" class="app-section active">
+    <div id="templatesApp" class="app-section">
       <div class="container">
         <header>
           <div class="ms-logo">MICROSOFT AI ACCELERATE</div>
@@ -1488,7 +1805,9 @@
         });
 
         // Show selected section
-        if (app === "templates") {
+        if (app === "setup") {
+          document.getElementById("setupApp").classList.add("active");
+        } else if (app === "templates") {
           document.getElementById("templatesApp").classList.add("active");
           if (!templateManager.templatesLoaded) {
             templateManager.loadTemplates();
@@ -4515,6 +4834,23 @@
 
       // Initialize on page load
       document.addEventListener("DOMContentLoaded", () => {
+        // Check if user has already deployed (e.g., coming from URL param or localStorage)
+        const urlParams = new URLSearchParams(window.location.search);
+        const hasDeployed = urlParams.get('deployed') === 'true' || localStorage.getItem('azureDeployed') === 'true';
+        
+        if (hasDeployed) {
+          // User has deployed, go straight to templates
+          localStorage.setItem('azureDeployed', 'true');
+          switchApp('templates');
+          // Update nav tabs
+          document.querySelectorAll(".nav-tab").forEach((tab) => {
+            tab.classList.remove("active");
+            if (tab.textContent.includes('Template Library')) {
+              tab.classList.add("active");
+            }
+          });
+        }
+        
         // Load templates on start
         templateManager.loadTemplates();
         
