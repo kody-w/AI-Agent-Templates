@@ -1,0 +1,1807 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Voice to CRM Multi-Agent Demo - Microsoft AI Accelerate</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #742774;
+            --primary-dark: #4f1c4f;
+            --secondary: #00a651;
+            --secondary-dark: #008441;
+            --accent: #40e0d0;
+            --success: #10b981;
+            --danger: #ef4444;
+            --warning: #f59e0b;
+            --dark: #1f2937;
+            --gray: #6b7280;
+            --light: #f3f4f6;
+            --lighter: #f9fafb;
+            --border: #e5e7eb;
+            --text-primary: #111827;
+            --text-secondary: #4b5563;
+            --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+            --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1);
+            --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1);
+            --shadow-xl: 0 20px 25px -5px rgb(0 0 0 / 0.1);
+        }
+
+        body {
+            font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, 'Helvetica Neue', sans-serif;
+            background: linear-gradient(135deg, #742774 0%, #00a651 100%);
+            min-height: 100vh;
+            padding: 20px;
+            color: var(--text-primary);
+        }
+
+        .main-container {
+            max-width: 1600px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 24px;
+            box-shadow: var(--shadow-xl);
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            color: white;
+            padding: 2.5rem;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E") repeat;
+        }
+
+        .header-content {
+            position: relative;
+            z-index: 1;
+        }
+
+        .header h1 {
+            font-size: 2.5rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .header p {
+            font-size: 1.15rem;
+            opacity: 0.95;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        .mode-selector {
+            background: var(--lighter);
+            padding: 1.5rem;
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .config-panel {
+            background: var(--lighter);
+            padding: 1.5rem;
+            border-bottom: 2px solid var(--border);
+            display: none;
+        }
+
+        .config-panel.active {
+            display: block;
+        }
+
+        .config-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            gap: 1rem;
+        }
+
+        .input-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr auto;
+            gap: 1rem;
+            align-items: end;
+        }
+
+        .input-group {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .input-group label {
+            font-size: 0.875rem;
+            font-weight: 600;
+            color: var(--text-secondary);
+        }
+
+        .input-group input {
+            padding: 0.75rem;
+            border: 2px solid var(--border);
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            background: white;
+        }
+
+        .input-group input:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(116, 39, 116, 0.1);
+        }
+
+        .connection-status {
+            padding: 0.75rem 1rem;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.875rem;
+            background: var(--light);
+            color: var(--text-secondary);
+            justify-content: center;
+            margin-top: 1rem;
+        }
+
+        .connection-status.connected {
+            background: #d1fae5;
+            color: #065f46;
+        }
+
+        .connection-status.error {
+            background: #fee2e2;
+            color: #991b1b;
+        }
+
+        .mode-toggle {
+            background: white;
+            border-radius: 12px;
+            padding: 4px;
+            display: flex;
+            gap: 4px;
+            box-shadow: var(--shadow-sm);
+            border: 1px solid var(--border);
+        }
+
+        .mode-btn {
+            padding: 0.75rem 1.5rem;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            background: transparent;
+            color: var(--text-secondary);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .mode-btn.active {
+            background: var(--primary);
+            color: white;
+            box-shadow: var(--shadow-md);
+        }
+
+        .mode-btn:hover:not(.active) {
+            background: var(--light);
+        }
+
+        .content-area {
+            display: grid;
+            grid-template-columns: 350px 1fr;
+            height: 600px;
+        }
+
+        .sidebar {
+            background: var(--lighter);
+            border-right: 1px solid var(--border);
+            padding: 1.5rem;
+            overflow-y: auto;
+        }
+
+        .control-section {
+            margin-bottom: 2rem;
+        }
+
+        .control-section h3 {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            color: var(--text-primary);
+        }
+
+        .demo-controls {
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+        }
+
+        .control-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 0.75rem;
+        }
+
+        .btn {
+            padding: 0.75rem 1.5rem;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            white-space: nowrap;
+        }
+
+        .btn-primary {
+            background: var(--primary);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: var(--primary-dark);
+        }
+
+        .btn-success {
+            background: var(--success);
+            color: white;
+        }
+
+        .btn-success:hover {
+            background: #059669;
+        }
+
+        .btn-secondary {
+            background: var(--gray);
+            color: white;
+        }
+
+        .btn-secondary:hover {
+            background: #4b5563;
+        }
+
+        .btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .speed-control {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-top: 1rem;
+            padding-top: 1rem;
+            border-top: 1px solid var(--border);
+        }
+
+        .speed-label {
+            font-size: 0.875rem;
+            font-weight: 600;
+            color: var(--text-secondary);
+        }
+
+        .speed-slider {
+            flex: 1;
+            -webkit-appearance: none;
+            appearance: none;
+            height: 6px;
+            border-radius: 3px;
+            background: var(--border);
+            outline: none;
+        }
+
+        .speed-slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            background: var(--primary);
+            cursor: pointer;
+        }
+
+        .progress-section {
+            margin-bottom: 2rem;
+        }
+
+        .progress-bar {
+            height: 8px;
+            background: var(--border);
+            border-radius: 4px;
+            overflow: hidden;
+            margin-bottom: 1rem;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--primary) 0%, var(--secondary) 100%);
+            border-radius: 4px;
+            width: 0%;
+            transition: width 0.5s ease;
+        }
+
+        .step-indicators {
+            display: flex;
+            justify-content: space-between;
+            gap: 0.5rem;
+        }
+
+        .step-indicator {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.5rem;
+            flex: 1;
+        }
+
+        .step-circle {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: white;
+            border: 3px solid var(--border);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            color: var(--text-secondary);
+            transition: all 0.3s ease;
+        }
+
+        .step-indicator.active .step-circle {
+            background: var(--primary);
+            border-color: var(--primary);
+            color: white;
+            transform: scale(1.1);
+        }
+
+        .step-indicator.completed .step-circle {
+            background: var(--success);
+            border-color: var(--success);
+            color: white;
+        }
+
+        .step-label {
+            font-size: 0.75rem;
+            color: var(--text-secondary);
+            text-align: center;
+        }
+
+        .voice-controls {
+            background: white;
+            border-radius: 12px;
+            padding: 1.5rem;
+            box-shadow: var(--shadow-sm);
+            margin-bottom: 1.5rem;
+        }
+
+        .voice-button {
+            width: 100%;
+            height: 80px;
+            border-radius: 50px;
+            border: 3px solid var(--secondary);
+            background: linear-gradient(135deg, var(--secondary) 0%, var(--secondary-dark) 100%);
+            color: white;
+            font-size: 1.2rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 1rem;
+        }
+
+        .voice-button:hover {
+            transform: scale(1.05);
+            box-shadow: 0 5px 20px rgba(0, 166, 81, 0.4);
+        }
+
+        .voice-button.recording {
+            background: linear-gradient(135deg, var(--danger) 0%, #dc2626 100%);
+            border-color: var(--danger);
+            animation: pulse 1.5s infinite;
+        }
+
+        @keyframes pulse {
+            0% { box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.4); }
+            70% { box-shadow: 0 0 0 20px rgba(239, 68, 68, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(239, 68, 68, 0); }
+        }
+
+        .chat-container {
+            background: white;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .chat-header {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            color: white;
+            padding: 1rem 1.5rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .chat-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+        }
+
+        .status-indicator {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .status-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: #10b981;
+            animation: none;
+        }
+
+        .status-dot.processing {
+            background: #f59e0b;
+            animation: statusPulse 1s infinite;
+        }
+
+        @keyframes statusPulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+
+        .chat-messages {
+            flex: 1;
+            overflow-y: auto;
+            padding: 1.5rem;
+            background: var(--lighter);
+        }
+
+        .message {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+            animation: messageSlide 0.3s ease;
+        }
+
+        @keyframes messageSlide {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .message-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.25rem;
+            flex-shrink: 0;
+        }
+
+        .message.user .message-avatar {
+            background: linear-gradient(135deg, var(--secondary) 0%, var(--secondary-dark) 100%);
+        }
+
+        .message.assistant .message-avatar {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+        }
+
+        .message-content {
+            flex: 1;
+        }
+
+        .message-header {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .message-sender {
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+
+        .message-time {
+            font-size: 0.75rem;
+            color: var(--text-secondary);
+        }
+
+        .message-text {
+            background: white;
+            padding: 1rem;
+            border-radius: 12px;
+            box-shadow: var(--shadow-sm);
+            line-height: 1.6;
+            border: 1px solid var(--border);
+        }
+
+        .message.user .message-text {
+            background: linear-gradient(135deg, var(--secondary) 0%, var(--secondary-dark) 100%);
+            color: white;
+            border: none;
+        }
+
+        .voice-transcript {
+            background: #f0fdf4;
+            border: 2px solid var(--secondary);
+            border-radius: 8px;
+            padding: 0.75rem;
+            margin-bottom: 0.75rem;
+            font-style: italic;
+            color: #065f46;
+        }
+
+        .crm-card {
+            background: white;
+            border: 2px solid var(--primary);
+            border-radius: 12px;
+            padding: 1rem;
+            margin-top: 1rem;
+        }
+
+        .crm-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+            padding-bottom: 0.75rem;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .crm-title {
+            font-weight: 600;
+            color: var(--primary);
+            font-size: 1.1rem;
+        }
+
+        .crm-status {
+            padding: 0.25rem 0.75rem;
+            background: var(--success);
+            color: white;
+            border-radius: 12px;
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+
+        .crm-fields {
+            display: grid;
+            gap: 0.75rem;
+        }
+
+        .crm-field {
+            display: grid;
+            grid-template-columns: 120px 1fr;
+            gap: 0.5rem;
+            padding: 0.5rem;
+            background: var(--lighter);
+            border-radius: 6px;
+        }
+
+        .crm-label {
+            font-weight: 600;
+            color: var(--text-secondary);
+            font-size: 0.875rem;
+        }
+
+        .crm-value {
+            color: var(--text-primary);
+        }
+
+        .entity-badges {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-top: 1rem;
+        }
+
+        .entity-badge {
+            padding: 0.5rem 1rem;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            color: white;
+            border-radius: 20px;
+            font-size: 0.875rem;
+            font-weight: 600;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .typing-indicator {
+            display: none;
+            padding: 0.75rem 1rem;
+            background: white;
+            border-radius: 12px;
+            box-shadow: var(--shadow-sm);
+            border: 1px solid var(--border);
+            width: fit-content;
+        }
+
+        .typing-indicator.active {
+            display: inline-block;
+        }
+
+        .typing-dots {
+            display: flex;
+            gap: 4px;
+        }
+
+        .typing-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: var(--gray);
+            animation: typingPulse 1.4s infinite ease-in-out;
+        }
+
+        .typing-dot:nth-child(1) { animation-delay: -0.32s; }
+        .typing-dot:nth-child(2) { animation-delay: -0.16s; }
+
+        @keyframes typingPulse {
+            0%, 80%, 100% {
+                opacity: 0.5;
+                transform: scale(1);
+            }
+            40% {
+                opacity: 1;
+                transform: scale(1.2);
+            }
+        }
+
+        @media (max-width: 1024px) {
+            .content-area {
+                grid-template-columns: 1fr;
+                height: auto;
+            }
+
+            .sidebar {
+                border-right: none;
+                border-bottom: 1px solid var(--border);
+            }
+        }
+
+        @media (max-width: 640px) {
+            .header h1 {
+                font-size: 1.75rem;
+            }
+
+            .mode-selector {
+                padding: 1rem;
+            }
+
+            .chat-messages {
+                padding: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="main-container">
+        <div class="header">
+            <div class="header-content">
+                <h1>🎤 Voice to CRM Multi-Agent System</h1>
+                <p>Transform voice commands into CRM records instantly with AI-powered speech recognition and natural language processing</p>
+            </div>
+        </div>
+
+        <div class="mode-selector">
+            <div class="mode-toggle">
+                <button class="mode-btn active" onclick="switchMode('demo')" id="demoModeBtn">
+                    <span>🎬</span>
+                    <span>Demo Mode</span>
+                </button>
+                <button class="mode-btn" onclick="switchMode('live')" id="liveModeBtn">
+                    <span>🔴</span>
+                    <span>Live Mode</span>
+                </button>
+            </div>
+        </div>
+
+        <div class="config-panel" id="liveConfig">
+            <div class="config-content">
+                <div class="input-row">
+                    <div class="input-group">
+                        <label>Azure Function Key</label>
+                        <input type="password" id="apiKey" placeholder="Enter your function key">
+                    </div>
+                    <div class="input-group">
+                        <label>Function App URL</label>
+                        <input type="text" id="apiEndpoint" placeholder="https://your-app.azurewebsites.net/api/voice-to-crm">
+                    </div>
+                    <button class="btn btn-primary" onclick="testConnection()">
+                        Test Connection
+                    </button>
+                </div>
+                <div class="connection-status" id="connectionStatus">
+                    <span class="status-dot idle"></span>
+                    <span>Not Connected</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="content-area">
+            <div class="sidebar">
+                <div class="control-section">
+                    <h3>🎮 Demo Controls</h3>
+                    <div class="demo-controls">
+                        <div class="control-row">
+                            <button class="btn btn-success" onclick="startDemo()" id="startBtn">
+                                ▶️ Start Demo
+                            </button>
+                            <button class="btn btn-secondary" onclick="pauseDemo()" id="pauseBtn" disabled>
+                                ⏸️ Pause
+                            </button>
+                        </div>
+                        <div class="control-row">
+                            <button class="btn btn-secondary" onclick="resetDemo()">
+                                🔄 Reset
+                            </button>
+                            <button class="btn btn-secondary" onclick="skipToNext()" id="skipBtn" disabled>
+                                ⏭️ Skip
+                            </button>
+                        </div>
+                    </div>
+                    <div class="speed-control">
+                        <span class="speed-label">Speed:</span>
+                        <input type="range" class="speed-slider" id="speedSlider" min="0.5" max="3" step="0.5" value="1">
+                        <span class="speed-label" id="speedLabel">1x</span>
+                    </div>
+                </div>
+
+                <div class="progress-section">
+                    <h3>📊 Demo Progress</h3>
+                    <div class="progress-bar">
+                        <div class="progress-fill" id="progressBar"></div>
+                    </div>
+                    <div class="step-indicators">
+                        <div class="step-indicator" id="step1">
+                            <div class="step-circle">🎤</div>
+                            <div class="step-label">Voice Input</div>
+                        </div>
+                        <div class="step-indicator" id="step2">
+                            <div class="step-circle">🧠</div>
+                            <div class="step-label">Process</div>
+                        </div>
+                        <div class="step-indicator" id="step3">
+                            <div class="step-circle">💾</div>
+                            <div class="step-label">CRM Save</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="voice-controls">
+                    <h3>🎙️ Voice Simulation</h3>
+                    <button class="voice-button" id="voiceBtn" onclick="simulateVoiceInput()" disabled>
+                        <span id="voiceBtnIcon">🎤</span>
+                        <span id="voiceBtnText">Click to Simulate Voice</span>
+                    </button>
+                </div>
+            </div>
+
+            <div class="chat-container">
+                <div class="chat-header">
+                    <div class="chat-title">Voice to CRM Conversation</div>
+                    <div class="status-indicator">
+                        <span class="status-dot" id="statusDot"></span>
+                        <span id="statusText">Ready</span>
+                    </div>
+                </div>
+
+                <div class="chat-messages" id="chatMessages">
+                    <!-- Messages will be inserted here -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Global state
+        let currentMode = 'demo';
+        let demoState = {
+            isPlaying: false,
+            isPaused: false,
+            currentMessageIndex: 0,
+            currentStep: 0,
+            speed: 1,
+            typingTimer: null,
+            messageTimer: null
+        };
+
+        let liveState = {
+            isConnected: false,
+            apiKey: '',
+            endpoint: '',
+            isRecording: false,
+            mediaRecorder: null,
+            audioChunks: [],
+            stream: null
+        };
+
+        // Demo script with voice transcripts and CRM actions
+        const demoScript = [
+            {
+                type: 'voice',
+                transcript: "Create a new account for Acme Corporation. They're a technology company based in Seattle with annual revenue of 50 million dollars. The main contact is John Smith, CEO, and his email is john.smith@acme.com",
+                messages: [
+                    {
+                        role: 'user',
+                        content: '🎤 Voice Input Detected',
+                        showTranscript: true,
+                        typingTime: 1500,
+                        delay: 1000
+                    },
+                    {
+                        role: 'assistant',
+                        content: `I'm processing your voice command and extracting the CRM entities...
+
+## 🧠 Natural Language Processing Results
+
+I've identified the following information from your voice input:
+
+**Entities Detected:**
+- Company Account
+- Contact Person
+- Financial Data
+- Contact Information
+
+Let me create these records in your CRM system now...`,
+                        typingTime: 2000,
+                        delay: 1500,
+                        action: 'step1'
+                    }
+                ]
+            },
+            {
+                type: 'crm',
+                messages: [
+                    {
+                        role: 'assistant',
+                        content: `## ✅ CRM Records Created Successfully
+
+I've created the following records in Dynamics 365:`,
+                        showCRM: true,
+                        crmData: {
+                            account: {
+                                name: 'Acme Corporation',
+                                type: 'Technology Company',
+                                location: 'Seattle, WA',
+                                revenue: '$50,000,000',
+                                status: 'Active',
+                                id: 'ACC-2024-0842'
+                            },
+                            contact: {
+                                name: 'John Smith',
+                                title: 'CEO',
+                                email: 'john.smith@acme.com',
+                                phone: '(206) 555-0100',
+                                account: 'Acme Corporation',
+                                id: 'CON-2024-1563'
+                            }
+                        },
+                        typingTime: 2000,
+                        delay: 1500,
+                        action: 'step2'
+                    }
+                ]
+            },
+            {
+                type: 'voice',
+                transcript: "Schedule a follow-up meeting with John next Tuesday at 2 PM to discuss the enterprise software proposal. Also create an opportunity for 500 thousand dollars closing in Q2",
+                messages: [
+                    {
+                        role: 'user',
+                        content: '🎤 Voice Input Detected',
+                        showTranscript: true,
+                        typingTime: 1500,
+                        delay: 2000
+                    },
+                    {
+                        role: 'assistant',
+                        content: `Processing your voice command for meeting and opportunity creation...
+
+## 📅 Calendar & Opportunity Management
+
+I've identified:
+- **Meeting Request**: Follow-up with John Smith
+- **Date/Time**: Next Tuesday at 2:00 PM
+- **Topic**: Enterprise Software Proposal
+- **Opportunity**: $500,000 closing Q2 2024
+
+Creating these items now...`,
+                        typingTime: 2000,
+                        delay: 1500
+                    }
+                ]
+            },
+            {
+                type: 'crm',
+                messages: [
+                    {
+                        role: 'assistant',
+                        content: `## ✅ Meeting and Opportunity Created
+
+### 📅 Meeting Scheduled`,
+                        showCRM: true,
+                        crmData: {
+                            meeting: {
+                                subject: 'Enterprise Software Proposal Discussion',
+                                attendees: 'John Smith (Acme Corporation)',
+                                date: 'Tuesday, January 28, 2024',
+                                time: '2:00 PM - 3:00 PM PST',
+                                location: 'Microsoft Teams',
+                                status: 'Scheduled',
+                                id: 'MTG-2024-0367'
+                            },
+                            opportunity: {
+                                name: 'Acme Enterprise Software',
+                                account: 'Acme Corporation',
+                                amount: '$500,000',
+                                closeDate: 'Q2 2024',
+                                probability: '60%',
+                                stage: 'Proposal',
+                                id: 'OPP-2024-0198'
+                            }
+                        },
+                        typingTime: 2000,
+                        delay: 1500,
+                        action: 'step3'
+                    }
+                ]
+            },
+            {
+                type: 'voice',
+                transcript: "Create a support ticket. Customer reported login issues with the portal. Priority high. Assign to technical support team",
+                messages: [
+                    {
+                        role: 'user',
+                        content: '🎤 Voice Input Detected',
+                        showTranscript: true,
+                        typingTime: 1500,
+                        delay: 2000
+                    },
+                    {
+                        role: 'assistant',
+                        content: `Processing support ticket creation from voice command...
+
+## 🎫 ServiceNow Ticket Creation
+
+Extracted information:
+- **Issue**: Portal login problems
+- **Priority**: High
+- **Assignment**: Technical Support Team
+- **Customer**: Acme Corporation
+
+Creating ticket in ServiceNow...`,
+                        typingTime: 2000,
+                        delay: 1500
+                    }
+                ]
+            },
+            {
+                type: 'crm',
+                messages: [
+                    {
+                        role: 'assistant',
+                        content: `## ✅ Support Ticket Created
+
+### 🎫 ServiceNow Incident`,
+                        showCRM: true,
+                        crmData: {
+                            ticket: {
+                                number: 'INC0034521',
+                                summary: 'Portal Login Issues',
+                                description: 'Customer experiencing authentication failures when accessing customer portal',
+                                priority: 'High',
+                                assignedTo: 'Technical Support Team',
+                                customer: 'Acme Corporation',
+                                status: 'Open',
+                                sla: '4 hours',
+                                created: 'Just now'
+                            },
+                            email: {
+                                to: 'john.smith@acme.com',
+                                subject: 'Support Ticket INC0034521 Created',
+                                status: 'Draft ready for review',
+                                template: 'High Priority Support'
+                            }
+                        },
+                        typingTime: 2000,
+                        delay: 1500
+                    }
+                ]
+            },
+            {
+                type: 'summary',
+                messages: [
+                    {
+                        role: 'assistant',
+                        content: `## 🎉 Demo Complete!
+
+### Voice to CRM Benefits Demonstrated:
+
+✅ **80% Faster Data Entry** - Voice input vs manual typing
+✅ **Multi-Platform Integration** - Dynamics 365, ServiceNow, Email
+✅ **Natural Language Processing** - No training required
+✅ **Real-time Validation** - Ensures data accuracy
+✅ **Mobile Ready** - Works anywhere with a microphone
+
+### Records Created in This Demo:
+- 1 Account (Acme Corporation)
+- 1 Contact (John Smith)
+- 1 Opportunity ($500,000)
+- 1 Meeting (Next Tuesday)
+- 1 Support Ticket (INC0034521)
+- 1 Email Draft
+
+**Ready to transform your CRM workflow with voice?**`,
+                        typingTime: 2500,
+                        delay: 2000
+                    }
+                ]
+            }
+        ];
+
+        let currentScriptIndex = 0;
+        let currentMessageIndex = 0;
+
+        // Initialize on page load
+        window.addEventListener('DOMContentLoaded', () => {
+            setupEventListeners();
+            addInitialMessage();
+        });
+
+        function setupEventListeners() {
+            const speedSlider = document.getElementById('speedSlider');
+            speedSlider.addEventListener('input', (e) => {
+                demoState.speed = parseFloat(e.target.value);
+                document.getElementById('speedLabel').textContent = `${demoState.speed}x`;
+            });
+        }
+
+        function addInitialMessage() {
+            const messagesContainer = document.getElementById('chatMessages');
+            messagesContainer.innerHTML = `
+                <div class="message assistant">
+                    <div class="message-avatar">🤖</div>
+                    <div class="message-content">
+                        <div class="message-header">
+                            <span class="message-sender">Voice to CRM Assistant</span>
+                            <span class="message-time">${getCurrentTime()}</span>
+                        </div>
+                        <div class="message-text">
+                            Welcome to the Voice to CRM Multi-Agent Demo! 
+                            
+                            This system demonstrates how voice commands can instantly create and update CRM records across multiple platforms including:
+                            
+                            • Dynamics 365
+                            • ServiceNow  
+                            • SharePoint
+                            • Email Systems
+                            
+                            Click "Start Demo" to see the system in action, or switch to "Live Mode" to connect to your own CRM instance.
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        function switchMode(mode) {
+            currentMode = mode;
+            document.getElementById('demoModeBtn').classList.toggle('active', mode === 'demo');
+            document.getElementById('liveModeBtn').classList.toggle('active', mode === 'live');
+            document.getElementById('liveConfig').classList.toggle('active', mode === 'live');
+            
+            // Update sidebar controls visibility
+            const demoControls = document.querySelector('.demo-controls');
+            const voiceButton = document.getElementById('voiceBtn');
+            
+            if (mode === 'demo') {
+                resetDemo();
+                if (demoControls) demoControls.style.display = 'flex';
+                voiceButton.disabled = true;
+                voiceButton.onclick = simulateVoiceInput;
+            } else {
+                // Live mode
+                if (demoControls) {
+                    document.getElementById('startBtn').style.display = 'none';
+                    document.getElementById('pauseBtn').style.display = 'none';
+                    document.getElementById('skipBtn').style.display = 'none';
+                    document.querySelector('.speed-control').style.display = 'none';
+                }
+                voiceButton.disabled = false;
+                voiceButton.onclick = handleLiveVoiceInput;
+                
+                // Load saved config if exists
+                const savedConfig = localStorage.getItem('voiceToCRMConfig');
+                if (savedConfig) {
+                    const config = JSON.parse(savedConfig);
+                    document.getElementById('apiKey').value = config.apiKey || '';
+                    document.getElementById('apiEndpoint').value = config.endpoint || '';
+                }
+            }
+        }
+
+        // Live Mode Functions
+        async function testConnection() {
+            const apiKey = document.getElementById('apiKey').value;
+            const endpoint = document.getElementById('apiEndpoint').value;
+            
+            if (!apiKey || !endpoint) {
+                updateConnectionStatus('error', 'Please enter both API Key and Endpoint');
+                return;
+            }
+            
+            updateConnectionStatus('processing', 'Testing connection...');
+            
+            try {
+                // Test with a health check or simple echo
+                const response = await fetch(endpoint, {
+                    method: 'POST',
+                    headers: {
+                        'x-functions-key': apiKey,
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        action: 'health',
+                        test: true
+                    })
+                });
+                
+                if (response.ok) {
+                    liveState.isConnected = true;
+                    liveState.apiKey = apiKey;
+                    liveState.endpoint = endpoint;
+                    
+                    // Save config
+                    localStorage.setItem('voiceToCRMConfig', JSON.stringify({
+                        apiKey: apiKey,
+                        endpoint: endpoint
+                    }));
+                    
+                    const data = await response.json();
+                    const message = data.message || 'Connected Successfully';
+                    updateConnectionStatus('connected', message);
+                    document.getElementById('voiceBtn').disabled = false;
+                } else {
+                    const errorText = await response.text();
+                    throw new Error(`Connection failed: ${response.status} - ${errorText}`);
+                }
+            } catch (error) {
+                updateConnectionStatus('error', `Connection Failed: ${error.message}`);
+                liveState.isConnected = false;
+            }
+        }
+
+        function updateConnectionStatus(status, message) {
+            const statusElement = document.getElementById('connectionStatus');
+            statusElement.className = `connection-status ${status}`;
+            statusElement.innerHTML = `
+                <span class="status-dot ${status}"></span>
+                <span>${message}</span>
+            `;
+        }
+
+        async function handleLiveVoiceInput() {
+            const voiceBtn = document.getElementById('voiceBtn');
+            const voiceBtnIcon = document.getElementById('voiceBtnIcon');
+            const voiceBtnText = document.getElementById('voiceBtnText');
+            
+            if (!liveState.isConnected) {
+                alert('Please connect to your Azure Function first');
+                return;
+            }
+            
+            if (!liveState.isRecording) {
+                // Start recording
+                try {
+                    liveState.stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+                    liveState.mediaRecorder = new MediaRecorder(liveState.stream);
+                    liveState.audioChunks = [];
+                    
+                    liveState.mediaRecorder.ondataavailable = (event) => {
+                        liveState.audioChunks.push(event.data);
+                    };
+                    
+                    liveState.mediaRecorder.onstop = async () => {
+                        const audioBlob = new Blob(liveState.audioChunks, { type: 'audio/wav' });
+                        await processAudioWithAPI(audioBlob);
+                    };
+                    
+                    liveState.mediaRecorder.start();
+                    liveState.isRecording = true;
+                    
+                    voiceBtn.classList.add('recording');
+                    voiceBtnIcon.textContent = '🔴';
+                    voiceBtnText.textContent = 'Recording... Click to Stop';
+                    
+                    updateStatus('processing', 'Recording...');
+                    
+                } catch (error) {
+                    alert('Microphone access denied. Please allow microphone access to use voice input.');
+                    console.error('Error accessing microphone:', error);
+                }
+            } else {
+                // Stop recording
+                liveState.mediaRecorder.stop();
+                liveState.stream.getTracks().forEach(track => track.stop());
+                liveState.isRecording = false;
+                
+                voiceBtn.classList.remove('recording');
+                voiceBtnIcon.textContent = '🎤';
+                voiceBtnText.textContent = 'Processing...';
+                
+                updateStatus('processing', 'Processing voice input...');
+            }
+        }
+
+        async function processAudioWithAPI(audioBlob) {
+            const voiceBtnText = document.getElementById('voiceBtnText');
+            
+            try {
+                // Convert audio to base64
+                const reader = new FileReader();
+                reader.readAsDataURL(audioBlob);
+                reader.onloadend = async () => {
+                    try {
+                        const base64Audio = reader.result.split(',')[1];
+                        
+                        // Step 1: Speech to Text
+                        addLiveMessage('user', '🎤 Processing voice input...');
+                        updateStatus('processing', 'Converting speech to text...');
+                        
+                        const speechResponse = await fetch(`${liveState.endpoint}`, {
+                            method: 'POST',
+                            headers: {
+                                'x-functions-key': liveState.apiKey,
+                                'Content-Type': 'application/json'
+                            },
+                            body: JSON.stringify({
+                                action: 'speech-to-text',
+                                audio: base64Audio,
+                                format: 'wav'
+                            })
+                        });
+                        
+                        if (!speechResponse.ok) {
+                            const errorText = await speechResponse.text();
+                            throw new Error(`Speech to text failed: ${errorText}`);
+                        }
+                        
+                        const speechData = await speechResponse.json();
+                        const transcript = speechData.text || speechData.transcript || speechData.result;
+                        
+                        // Show transcript
+                        addLiveMessage('user', '🎤 Voice Input Detected', transcript);
+                        updateStep('step1');
+                        
+                        // Step 2: Process CRM command
+                        updateStatus('processing', 'Processing CRM command...');
+                        
+                        const crmResponse = await fetch(`${liveState.endpoint}`, {
+                            method: 'POST',
+                            headers: {
+                                'x-functions-key': liveState.apiKey,
+                                'Content-Type': 'application/json'
+                            },
+                            body: JSON.stringify({
+                                action: 'process-crm',
+                                conversation: [
+                                    {
+                                        role: 'user',
+                                        content: transcript
+                                    }
+                                ],
+                                extractEntities: true,
+                                createRecords: true,
+                                platform: 'dynamics365'
+                            })
+                        });
+                        
+                        if (!crmResponse.ok) {
+                            const errorText = await crmResponse.text();
+                            throw new Error(`CRM processing failed: ${errorText}`);
+                        }
+                        
+                        const crmData = await crmResponse.json();
+                        
+                        // Show processing results
+                        if (crmData.entities) {
+                            addLiveMessage('assistant', formatNLPResults(crmData));
+                            updateStep('step2');
+                        }
+                        
+                        // Show CRM results
+                        if (crmData.records || crmData.result) {
+                            const records = crmData.records || crmData.result;
+                            addLiveMessage('assistant', '✅ CRM Records Created Successfully!', null, records);
+                            updateStep('step3');
+                        } else if (crmData.message) {
+                            addLiveMessage('assistant', crmData.message);
+                        }
+                        
+                        // Complete
+                        updateStatus('idle', 'Ready');
+                        voiceBtnText.textContent = 'Click to Record Voice';
+                        
+                        // Mark step as complete after delay
+                        setTimeout(() => {
+                            document.getElementById('step3').classList.remove('active');
+                            document.getElementById('step3').classList.add('completed');
+                            
+                            // Reset steps after a few seconds
+                            setTimeout(() => {
+                                document.querySelectorAll('.step-indicator').forEach(step => {
+                                    step.classList.remove('active', 'completed');
+                                });
+                            }, 3000);
+                        }, 2000);
+                        
+                    } catch (error) {
+                        console.error('API Error:', error);
+                        addLiveMessage('assistant', `❌ Error: ${error.message}`);
+                        updateStatus('idle', 'Error occurred');
+                        voiceBtnText.textContent = 'Click to Record Voice';
+                        
+                        // Reset steps on error
+                        document.querySelectorAll('.step-indicator').forEach(step => {
+                            step.classList.remove('active', 'completed');
+                        });
+                    }
+                };
+            } catch (error) {
+                console.error('Processing error:', error);
+                voiceBtnText.textContent = 'Click to Record Voice';
+                updateStatus('idle', 'Error occurred');
+            }
+        }
+
+        function addLiveMessage(role, content, transcript = null, crmData = null) {
+            const messagesContainer = document.getElementById('chatMessages');
+            const messageDiv = document.createElement('div');
+            messageDiv.className = `message ${role}`;
+            
+            let contentHTML = `
+                <div class="message-avatar">${role === 'user' ? '👤' : '🤖'}</div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-sender">${role === 'user' ? 'You (Voice)' : 'CRM Assistant'}</span>
+                        <span class="message-time">${getCurrentTime()}</span>
+                    </div>
+            `;
+            
+            if (transcript) {
+                contentHTML += `
+                    <div class="voice-transcript">
+                        🎤 "${transcript}"
+                    </div>
+                `;
+            }
+            
+            contentHTML += `<div class="message-text">${content}</div>`;
+            
+            if (crmData) {
+                contentHTML += formatCRMResponse(crmData);
+            }
+            
+            contentHTML += '</div>';
+            messageDiv.innerHTML = contentHTML;
+            
+            messagesContainer.appendChild(messageDiv);
+            messagesContainer.scrollTop = messagesContainer.scrollHeight;
+        }
+
+        function formatNLPResults(nlpData) {
+            let html = `
+                <strong>🧠 Natural Language Processing Complete</strong><br><br>
+                <strong>Entities Detected:</strong><br>
+            `;
+            
+            if (nlpData.entities) {
+                for (const [type, values] of Object.entries(nlpData.entities)) {
+                    html += `• ${type}: ${Array.isArray(values) ? values.join(', ') : values}<br>`;
+                }
+            }
+            
+            if (nlpData.intent) {
+                html += `<br><strong>Intent:</strong> ${nlpData.intent}`;
+            }
+            
+            if (nlpData.confidence) {
+                html += `<br><strong>Confidence:</strong> ${(nlpData.confidence * 100).toFixed(1)}%`;
+            }
+            
+            return html;
+        }
+
+        function formatCRMResponse(crmData) {
+            let html = '';
+            
+            if (crmData.records) {
+                for (const record of crmData.records) {
+                    html += `
+                        <div class="crm-card">
+                            <div class="crm-header">
+                                <div class="crm-title">${record.type || 'Record'}</div>
+                                <div class="crm-status">${record.status || 'Created'}</div>
+                            </div>
+                            <div class="crm-fields">
+                    `;
+                    
+                    for (const [field, value] of Object.entries(record.data || record)) {
+                        if (field !== 'type' && field !== 'status' && field !== 'id') {
+                            html += `
+                                <div class="crm-field">
+                                    <div class="crm-label">${field}:</div>
+                                    <div class="crm-value">${value}</div>
+                                </div>
+                            `;
+                        }
+                    }
+                    
+                    if (record.id) {
+                        html += `
+                            <div class="entity-badges">
+                                <div class="entity-badge">ID: ${record.id}</div>
+                            </div>
+                        `;
+                    }
+                    
+                    html += `
+                            </div>
+                        </div>
+                    `;
+                }
+            }
+            
+            return html;
+        }
+
+        function startDemo() {
+            if (demoState.isPlaying && !demoState.isPaused) return;
+            
+            demoState.isPlaying = true;
+            demoState.isPaused = false;
+            
+            document.getElementById('startBtn').disabled = true;
+            document.getElementById('pauseBtn').disabled = false;
+            document.getElementById('skipBtn').disabled = false;
+            document.getElementById('voiceBtn').disabled = false;
+            
+            updateStatus('processing', 'Running Demo...');
+            
+            if (currentScriptIndex === 0 && currentMessageIndex === 0) {
+                // Clear initial message if starting fresh
+                const messagesContainer = document.getElementById('chatMessages');
+                messagesContainer.innerHTML = '';
+            }
+            
+            playNextMessage();
+        }
+
+        function pauseDemo() {
+            demoState.isPaused = true;
+            document.getElementById('startBtn').disabled = false;
+            document.getElementById('pauseBtn').disabled = true;
+            
+            clearTimeout(demoState.messageTimer);
+            clearTimeout(demoState.typingTimer);
+            
+            updateStatus('idle', 'Paused');
+        }
+
+        function resetDemo() {
+            demoState.isPlaying = false;
+            demoState.isPaused = false;
+            currentScriptIndex = 0;
+            currentMessageIndex = 0;
+            demoState.currentStep = 0;
+            
+            clearTimeout(demoState.messageTimer);
+            clearTimeout(demoState.typingTimer);
+            
+            document.getElementById('startBtn').disabled = false;
+            document.getElementById('pauseBtn').disabled = true;
+            document.getElementById('skipBtn').disabled = true;
+            document.getElementById('voiceBtn').disabled = true;
+            
+            document.getElementById('progressBar').style.width = '0%';
+            
+            // Reset step indicators
+            document.querySelectorAll('.step-indicator').forEach(step => {
+                step.classList.remove('active', 'completed');
+            });
+            
+            updateStatus('idle', 'Ready');
+            addInitialMessage();
+        }
+
+        function skipToNext() {
+            clearTimeout(demoState.messageTimer);
+            clearTimeout(demoState.typingTimer);
+            
+            currentMessageIndex++;
+            if (currentMessageIndex >= demoScript[currentScriptIndex].messages.length) {
+                currentScriptIndex++;
+                currentMessageIndex = 0;
+            }
+            
+            if (currentScriptIndex < demoScript.length) {
+                playNextMessage();
+            }
+        }
+
+        function playNextMessage() {
+            if (!demoState.isPlaying || demoState.isPaused) return;
+            
+            if (currentScriptIndex >= demoScript.length) {
+                completeDemo();
+                return;
+            }
+            
+            const currentSection = demoScript[currentScriptIndex];
+            const currentMessage = currentSection.messages[currentMessageIndex];
+            
+            if (!currentMessage) {
+                currentScriptIndex++;
+                currentMessageIndex = 0;
+                if (currentScriptIndex < demoScript.length) {
+                    playNextMessage();
+                } else {
+                    completeDemo();
+                }
+                return;
+            }
+            
+            // Handle voice button animation for voice sections
+            if (currentSection.type === 'voice' && currentMessageIndex === 0) {
+                simulateVoiceRecording();
+            }
+            
+            // Add typing indicator
+            showTypingIndicator();
+            
+            demoState.typingTimer = setTimeout(() => {
+                hideTypingIndicator();
+                addMessage(currentMessage, currentSection);
+                
+                // Update progress
+                updateProgress();
+                
+                // Handle step actions
+                if (currentMessage.action) {
+                    updateStep(currentMessage.action);
+                }
+                
+                currentMessageIndex++;
+                if (currentMessageIndex >= currentSection.messages.length) {
+                    currentScriptIndex++;
+                    currentMessageIndex = 0;
+                }
+                
+                // Schedule next message
+                const delay = (currentMessage.delay || 2000) / demoState.speed;
+                demoState.messageTimer = setTimeout(() => {
+                    playNextMessage();
+                }, delay);
+                
+            }, (currentMessage.typingTime || 2000) / demoState.speed);
+        }
+
+        function addMessage(message, section) {
+            const messagesContainer = document.getElementById('chatMessages');
+            const messageDiv = document.createElement('div');
+            messageDiv.className = `message ${message.role}`;
+            
+            let contentHTML = `
+                <div class="message-avatar">${message.role === 'user' ? '👤' : '🤖'}</div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-sender">${message.role === 'user' ? 'You (Voice)' : 'CRM Assistant'}</span>
+                        <span class="message-time">${getCurrentTime()}</span>
+                    </div>
+            `;
+            
+            // Add voice transcript if needed
+            if (message.showTranscript && section.transcript) {
+                contentHTML += `
+                    <div class="voice-transcript">
+                        🎤 "${section.transcript}"
+                    </div>
+                `;
+            }
+            
+            contentHTML += `<div class="message-text">${message.content}</div>`;
+            
+            // Add CRM card if needed
+            if (message.showCRM && message.crmData) {
+                contentHTML += createCRMCard(message.crmData);
+            }
+            
+            contentHTML += '</div>';
+            messageDiv.innerHTML = contentHTML;
+            
+            messagesContainer.appendChild(messageDiv);
+            messagesContainer.scrollTop = messagesContainer.scrollHeight;
+        }
+
+        function createCRMCard(data) {
+            let html = '';
+            
+            for (const [key, value] of Object.entries(data)) {
+                html += `
+                    <div class="crm-card">
+                        <div class="crm-header">
+                            <div class="crm-title">${key.charAt(0).toUpperCase() + key.slice(1)}</div>
+                            <div class="crm-status">Created</div>
+                        </div>
+                        <div class="crm-fields">
+                `;
+                
+                for (const [field, fieldValue] of Object.entries(value)) {
+                    if (field !== 'id') {
+                        html += `
+                            <div class="crm-field">
+                                <div class="crm-label">${field.charAt(0).toUpperCase() + field.slice(1)}:</div>
+                                <div class="crm-value">${fieldValue}</div>
+                            </div>
+                        `;
+                    }
+                }
+                
+                if (value.id) {
+                    html += `
+                        <div class="entity-badges">
+                            <div class="entity-badge">ID: ${value.id}</div>
+                        </div>
+                    `;
+                }
+                
+                html += `
+                        </div>
+                    </div>
+                `;
+            }
+            
+            return html;
+        }
+
+        function simulateVoiceRecording() {
+            const voiceBtn = document.getElementById('voiceBtn');
+            const voiceBtnIcon = document.getElementById('voiceBtnIcon');
+            const voiceBtnText = document.getElementById('voiceBtnText');
+            
+            voiceBtn.classList.add('recording');
+            voiceBtnIcon.textContent = '🔴';
+            voiceBtnText.textContent = 'Recording...';
+            
+            setTimeout(() => {
+                voiceBtn.classList.remove('recording');
+                voiceBtnIcon.textContent = '🎤';
+                voiceBtnText.textContent = 'Processing...';
+                
+                setTimeout(() => {
+                    voiceBtnText.textContent = 'Click to Simulate Voice';
+                }, 1000);
+            }, 3000 / demoState.speed);
+        }
+
+        function simulateVoiceInput() {
+            if (!demoState.isPlaying) return;
+            
+            // This would trigger the next voice section in a real implementation
+            skipToNext();
+        }
+
+        function showTypingIndicator() {
+            const messagesContainer = document.getElementById('chatMessages');
+            const indicator = document.createElement('div');
+            indicator.className = 'typing-indicator active';
+            indicator.id = 'typingIndicator';
+            indicator.innerHTML = `
+                <div class="typing-dots">
+                    <div class="typing-dot"></div>
+                    <div class="typing-dot"></div>
+                    <div class="typing-dot"></div>
+                </div>
+            `;
+            messagesContainer.appendChild(indicator);
+            messagesContainer.scrollTop = messagesContainer.scrollHeight;
+        }
+
+        function hideTypingIndicator() {
+            const indicator = document.getElementById('typingIndicator');
+            if (indicator) {
+                indicator.remove();
+            }
+        }
+
+        function updateProgress() {
+            const totalMessages = demoScript.reduce((sum, section) => sum + section.messages.length, 0);
+            const currentProgress = (currentScriptIndex * 10 + currentMessageIndex) / totalMessages * 100;
+            document.getElementById('progressBar').style.width = `${currentProgress}%`;
+        }
+
+        function updateStep(action) {
+            if (action === 'step1') {
+                document.getElementById('step1').classList.add('active');
+                demoState.currentStep = 1;
+            } else if (action === 'step2') {
+                document.getElementById('step1').classList.remove('active');
+                document.getElementById('step1').classList.add('completed');
+                document.getElementById('step2').classList.add('active');
+                demoState.currentStep = 2;
+            } else if (action === 'step3') {
+                document.getElementById('step2').classList.remove('active');
+                document.getElementById('step2').classList.add('completed');
+                document.getElementById('step3').classList.add('active');
+                demoState.currentStep = 3;
+            }
+        }
+
+        function updateStatus(status, text) {
+            const statusDot = document.getElementById('statusDot');
+            const statusText = document.getElementById('statusText');
+            
+            statusDot.className = `status-dot ${status}`;
+            statusText.textContent = text;
+        }
+
+        function completeDemo() {
+            demoState.isPlaying = false;
+            document.getElementById('startBtn').disabled = false;
+            document.getElementById('pauseBtn').disabled = true;
+            document.getElementById('skipBtn').disabled = true;
+            document.getElementById('voiceBtn').disabled = true;
+            
+            document.getElementById('step3').classList.remove('active');
+            document.getElementById('step3').classList.add('completed');
+            
+            document.getElementById('progressBar').style.width = '100%';
+            
+            updateStatus('idle', 'Demo Complete');
+        }
+
+        function getCurrentTime() {
+            const now = new Date();
+            return now.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' });
+        }
+    </script>
+</body>
+</html>
