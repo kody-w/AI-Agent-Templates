@@ -2970,6 +2970,15 @@
             // Load all singular agents from manifest
             this.agents = manifest.agents || [];
             
+            // Add agents from stacks to the main collection
+            if (manifest.stacks) {
+              manifest.stacks.forEach(stack => {
+                if (stack.agents) {
+                  this.agents.push(...stack.agents);
+                }
+              });
+            }
+            
             // Store stack information for lazy loading
             this.stacksManifest = manifest.stacks || [];
             
