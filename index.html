@@ -1714,6 +1714,22 @@
 
         async createStackTemplate(stackDir) {
           try {
+            let metadata = null;
+            
+            // Try to fetch metadata.json for the stack
+            const metadataUrl = `https://api.github.com/repos/${agentStore.GITHUB_REPO}/contents/${stackDir.path}/metadata.json?ref=${agentStore.BRANCH}`;
+            try {
+              const metadataResponse = await fetch(metadataUrl);
+              if (metadataResponse.ok) {
+                const metadataFile = await metadataResponse.json();
+                // Decode base64 content
+                const decodedContent = atob(metadataFile.content);
+                metadata = JSON.parse(decodedContent);
+              }
+            } catch (error) {
+              console.log(`No metadata.json found for ${stackDir.name}, using defaults`);
+            }
+
             const stackName = this.formatStackName(stackDir.name);
             const agentIds = [];
             
@@ -1741,31 +1757,71 @@
               agentIds.push(...rootPythonIds);
             }
 
-            if (agentIds.length === 0) return null;
+            if (agentIds.length === 0 && !metadata) return null;
 
-            // Determine complexity based on number of agents
-            let complexity = "starter";
-            if (agentIds.length > 5) complexity = "advanced";
-            else if (agentIds.length > 3) complexity = "intermediate";
+            // Use metadata if available, otherwise use defaults
+            if (metadata) {
+              return {
+                id: stackDir.name,
+                name: metadata.name || `${stackName} Stack`,
+                description: metadata.description || `Complete ${stackName} solution with ${agentIds.length} integrated agents`,
+                longDescription: metadata.longDescription,
+                useCase: metadata.category || this.determineStackUseCase(stackDir.name),
+                complexity: metadata.complexity || "intermediate",
+                estimatedTime: metadata.estimatedSetupTime || `${Math.ceil(agentIds.length / 2)} weeks`,
+                agents: agentIds,
+                benefits: metadata.benefits || [
+                  `${agentIds.length} specialized agents`,
+                  "Pre-integrated solution",
+                  "Ready to deploy",
+                  "GitHub-sourced",
+                ],
+                features: metadata.features,
+                useCases: metadata.useCases,
+                technicalRequirements: metadata.technicalRequirements,
+                components: metadata.components,
+                architecture: metadata.architecture,
+                deployment: metadata.deployment,
+                security: metadata.security,
+                performance: metadata.performance,
+                support: metadata.support,
+                pricing: metadata.pricing,
+                changelog: metadata.changelog,
+                screenshots: metadata.screenshots,
+                videos: metadata.videos,
+                relatedStacks: metadata.relatedStacks,
+                tags: metadata.tags,
+                version: metadata.version,
+                author: metadata.author,
+                isDynamic: true,
+                stackPath: stackDir.name,
+                hasMetadata: true
+              };
+            } else {
+              // Fallback to default template creation
+              let complexity = "starter";
+              if (agentIds.length > 5) complexity = "advanced";
+              else if (agentIds.length > 3) complexity = "intermediate";
 
-            // Create template object
-            return {
-              id: stackDir.name,
-              name: `${stackName} Stack`,
-              description: `Complete ${stackName} solution with ${agentIds.length} integrated agents`,
-              useCase: this.determineStackUseCase(stackDir.name),
-              complexity: complexity,
-              estimatedTime: `${Math.ceil(agentIds.length / 2)} weeks`,
-              agents: agentIds,
-              benefits: [
-                `${agentIds.length} specialized agents`,
-                "Pre-integrated solution",
-                "Ready to deploy",
-                "GitHub-sourced",
-              ],
-              isDynamic: true,
-              stackPath: stackDir.name
-            };
+              return {
+                id: stackDir.name,
+                name: `${stackName} Stack`,
+                description: `Complete ${stackName} solution with ${agentIds.length} integrated agents`,
+                useCase: this.determineStackUseCase(stackDir.name),
+                complexity: complexity,
+                estimatedTime: `${Math.ceil(agentIds.length / 2)} weeks`,
+                agents: agentIds,
+                benefits: [
+                  `${agentIds.length} specialized agents`,
+                  "Pre-integrated solution",
+                  "Ready to deploy",
+                  "GitHub-sourced",
+                ],
+                isDynamic: true,
+                stackPath: stackDir.name,
+                hasMetadata: false
+              };
+            }
           } catch (error) {
             console.error(`Error creating stack template for ${stackDir.name}:`, error);
             return null;
@@ -2010,27 +2066,230 @@
           const template = this.agentTemplates.find((t) => t.id === templateId);
           if (!template) return;
 
-          const agentDetails = template.agents.map((agentId) => {
-            const agent = agentStore.agents.find((a) => a.id === agentId);
-            return agent
-              ? `- ${agent.icon} ${agent.name}`
-              : `- ${this.formatAgentName(agentId)}`;
+          // Create modal backdrop
+          const backdrop = document.createElement('div');
+          backdrop.style.cssText = `
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.7);
+            z-index: 9998;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow-y: auto;
+            padding: 2rem;
+          `;
+
+          // Create modal content
+          const modal = document.createElement('div');
+          modal.style.cssText = `
+            background: white;
+            border-radius: 16px;
+            max-width: 900px;
+            width: 100%;
+            max-height: 90vh;
+            overflow-y: auto;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            position: relative;
+            z-index: 9999;
+          `;
+
+          // Build modal HTML based on available metadata
+          let modalHTML = `
+            <div style="padding: 2rem;">
+              <div style="display: flex; justify-content: space-between; align-items: start; margin-bottom: 1.5rem;">
+                <div>
+                  <h2 style="margin: 0; color: #333; font-size: 1.8rem;">${template.name}</h2>
+                  ${template.version ? `<span style="color: #666; font-size: 0.9rem;">Version ${template.version}</span>` : ''}
+                  ${template.author ? `<span style="color: #666; font-size: 0.9rem; margin-left: 1rem;">by ${template.author}</span>` : ''}
+                </div>
+                <button onclick="this.closest('[style*=\"z-index: 9998\"]').remove();" style="background: #ef4444; color: white; border: none; border-radius: 8px; padding: 0.5rem 1rem; cursor: pointer; font-size: 1rem;">✕ Close</button>
+              </div>
+          `;
+
+          // Add badges
+          modalHTML += `
+            <div style="display: flex; gap: 0.5rem; margin-bottom: 1.5rem; flex-wrap: wrap;">
+              <span style="background: ${template.complexity === 'starter' ? '#10b981' : template.complexity === 'intermediate' ? '#f59e0b' : '#ef4444'}; color: white; padding: 0.25rem 0.75rem; border-radius: 20px; font-size: 0.85rem;">${template.complexity}</span>
+              <span style="background: #3b82f6; color: white; padding: 0.25rem 0.75rem; border-radius: 20px; font-size: 0.85rem;">${template.estimatedTime}</span>
+              <span style="background: #8b5cf6; color: white; padding: 0.25rem 0.75rem; border-radius: 20px; font-size: 0.85rem;">${template.useCase}</span>
+              ${template.hasMetadata ? '<span style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 0.25rem 0.75rem; border-radius: 20px; font-size: 0.85rem;">📊 Rich Metadata</span>' : ''}
+            </div>
+          `;
+
+          // Description section
+          modalHTML += `
+            <div style="margin-bottom: 2rem;">
+              <h3 style="color: #333; margin-bottom: 0.5rem;">Description</h3>
+              <p style="color: #666; line-height: 1.6;">${template.description}</p>
+              ${template.longDescription ? `<p style="color: #666; line-height: 1.6; margin-top: 1rem;">${template.longDescription}</p>` : ''}
+            </div>
+          `;
+
+          // Features section (if available)
+          if (template.features && template.features.length > 0) {
+            modalHTML += `
+              <div style="margin-bottom: 2rem;">
+                <h3 style="color: #333; margin-bottom: 0.5rem;">Features</h3>
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 0.5rem;">
+                  ${template.features.map(feature => `
+                    <div style="display: flex; align-items: start;">
+                      <span style="color: #10b981; margin-right: 0.5rem;">✓</span>
+                      <span style="color: #666; font-size: 0.9rem;">${feature}</span>
+                    </div>
+                  `).join('')}
+                </div>
+              </div>
+            `;
+          }
+
+          // Use Cases section (if available)
+          if (template.useCases && template.useCases.length > 0) {
+            modalHTML += `
+              <div style="margin-bottom: 2rem;">
+                <h3 style="color: #333; margin-bottom: 0.5rem;">Use Cases</h3>
+                <div style="display: grid; gap: 1rem;">
+                  ${template.useCases.map(useCase => `
+                    <div style="background: #f3f4f6; padding: 1rem; border-radius: 8px;">
+                      <h4 style="color: #333; margin: 0 0 0.5rem 0; font-size: 1rem;">${useCase.title}</h4>
+                      <p style="color: #666; margin: 0; font-size: 0.9rem;">${useCase.description}</p>
+                    </div>
+                  `).join('')}
+                </div>
+              </div>
+            `;
+          }
+
+          // Components/Agents section
+          modalHTML += `
+            <div style="margin-bottom: 2rem;">
+              <h3 style="color: #333; margin-bottom: 0.5rem;">Included Components (${template.agents.length})</h3>
+              <div style="display: grid; gap: 0.75rem;">
+          `;
+
+          if (template.components && template.components.length > 0) {
+            // Use detailed component info if available
+            template.components.forEach(component => {
+              modalHTML += `
+                <div style="background: #f9fafb; padding: 0.75rem; border-radius: 8px; border-left: 3px solid #3b82f6;">
+                  <div style="display: flex; justify-content: space-between; align-items: start;">
+                    <div>
+                      <strong style="color: #333;">${component.name}</strong>
+                      <span style="color: #6b7280; font-size: 0.85rem; margin-left: 0.5rem;">${component.role}</span>
+                    </div>
+                  </div>
+                  <p style="color: #666; margin: 0.5rem 0 0 0; font-size: 0.9rem;">${component.description}</p>
+                </div>
+              `;
+            });
+          } else {
+            // Fallback to simple agent list
+            template.agents.forEach(agentId => {
+              const agent = agentStore.agents.find(a => a.id === agentId);
+              modalHTML += `
+                <div style="background: #f9fafb; padding: 0.75rem; border-radius: 8px;">
+                  ${agent ? `${agent.icon} ${agent.name}` : this.formatAgentName(agentId)}
+                </div>
+              `;
+            });
+          }
+
+          modalHTML += `</div></div>`;
+
+          // Technical Requirements (if available)
+          if (template.technicalRequirements) {
+            modalHTML += `
+              <div style="margin-bottom: 2rem;">
+                <h3 style="color: #333; margin-bottom: 0.5rem;">Technical Requirements</h3>
+                <div style="background: #fef3c7; padding: 1rem; border-radius: 8px; border: 1px solid #fbbf24;">
+                  ${template.technicalRequirements.platforms ? `
+                    <div style="margin-bottom: 0.75rem;">
+                      <strong style="color: #92400e;">Platforms:</strong>
+                      <span style="color: #78350f; margin-left: 0.5rem;">${template.technicalRequirements.platforms.join(', ')}</span>
+                    </div>
+                  ` : ''}
+                  ${template.technicalRequirements.dependencies ? `
+                    <div style="margin-bottom: 0.75rem;">
+                      <strong style="color: #92400e;">Dependencies:</strong>
+                      <ul style="margin: 0.5rem 0 0 1.5rem; padding: 0;">
+                        ${template.technicalRequirements.dependencies.map(dep => `
+                          <li style="color: #78350f; font-size: 0.9rem;">${dep}</li>
+                        `).join('')}
+                      </ul>
+                    </div>
+                  ` : ''}
+                  ${template.technicalRequirements.apiKeys ? `
+                    <div>
+                      <strong style="color: #92400e;">Required API Keys:</strong>
+                      <div style="display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 0.5rem;">
+                        ${template.technicalRequirements.apiKeys.map(key => `
+                          <code style="background: white; padding: 0.25rem 0.5rem; border-radius: 4px; font-size: 0.85rem;">${key}</code>
+                        `).join('')}
+                      </div>
+                    </div>
+                  ` : ''}
+                </div>
+              </div>
+            `;
+          }
+
+          // Benefits section
+          modalHTML += `
+            <div style="margin-bottom: 2rem;">
+              <h3 style="color: #333; margin-bottom: 0.5rem;">Key Benefits</h3>
+              <ul style="color: #666; padding-left: 1.5rem;">
+                ${template.benefits.map(benefit => `<li style="margin: 0.5rem 0;">${benefit}</li>`).join('')}
+              </ul>
+            </div>
+          `;
+
+          // Tags (if available)
+          if (template.tags && template.tags.length > 0) {
+            modalHTML += `
+              <div style="margin-bottom: 2rem;">
+                <h3 style="color: #333; margin-bottom: 0.5rem;">Tags</h3>
+                <div style="display: flex; flex-wrap: wrap; gap: 0.5rem;">
+                  ${template.tags.map(tag => `
+                    <span style="background: #e5e7eb; color: #374151; padding: 0.25rem 0.75rem; border-radius: 20px; font-size: 0.85rem;">#${tag}</span>
+                  `).join('')}
+                </div>
+              </div>
+            `;
+          }
+
+          // Action buttons
+          modalHTML += `
+            <div style="display: flex; gap: 1rem; margin-top: 2rem; padding-top: 2rem; border-top: 1px solid #e5e7eb;">
+              ${!this.isTemplateInCart(template) ? `
+                <button onclick="templateManager.addTemplateToCart('${template.id}'); this.closest('[style*=\"z-index: 9998\"]').remove();" style="background: #10b981; color: white; border: none; border-radius: 8px; padding: 0.75rem 1.5rem; cursor: pointer; font-size: 1rem; font-weight: 500;">
+                  ➕ Add Stack to Cart
+                </button>
+              ` : `
+                <button style="background: #6b7280; color: white; border: none; border-radius: 8px; padding: 0.75rem 1.5rem; cursor: not-allowed; font-size: 1rem; font-weight: 500;" disabled>
+                  ✓ Already in Cart
+                </button>
+              `}
+              <button onclick="this.closest('[style*=\"z-index: 9998\"]').remove();" style="background: #f3f4f6; color: #374151; border: 1px solid #d1d5db; border-radius: 8px; padding: 0.75rem 1.5rem; cursor: pointer; font-size: 1rem;">
+                Close
+              </button>
+            </div>
+          `;
+
+          modalHTML += `</div>`;
+          modal.innerHTML = modalHTML;
+          backdrop.appendChild(modal);
+
+          // Close on backdrop click
+          backdrop.addEventListener('click', (e) => {
+            if (e.target === backdrop) {
+              backdrop.remove();
+            }
           });
 
-          const details = `
-                    Template: ${template.name}
-                    Use Case: ${template.useCase}
-                    Complexity: ${template.complexity}
-                    Time to Deploy: ${template.estimatedTime}
-
-                    Included Agents:
-                    ${agentDetails.join("\n")}
-
-                    Key Benefits:
-                    ${template.benefits.map((b) => `- ${b}`).join("\n")}
-                `;
-
-          alert(details);
+          document.body.appendChild(backdrop);
         }
 
         searchTemplates() {
