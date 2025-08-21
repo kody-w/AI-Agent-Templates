@@ -2210,7 +2210,7 @@
                   ${template.version ? `<span style="color: #666; font-size: 0.9rem;">Version ${template.version}</span>` : ''}
                   ${template.author ? `<span style="color: #666; font-size: 0.9rem; margin-left: 1rem;">by ${template.author}</span>` : ''}
                 </div>
-                <button onclick="this.closest('[style*=\"z-index: 10000\"]').remove();" style="background: #ef4444; color: white; border: none; border-radius: 8px; padding: 0.5rem 1rem; cursor: pointer; font-size: 1rem;">✕ Close</button>
+                <button onclick="this.closest('[style*=\\"z-index: 10000\\"]').remove();" style="background: #ef4444; color: white; border: none; border-radius: 8px; padding: 0.5rem 1rem; cursor: pointer; font-size: 1rem;">✕ Close</button>
               </div>
           `;
 
@@ -2391,7 +2391,7 @@
           modalHTML += `
             <div style="display: flex; gap: 1rem; margin-top: 2rem; padding-top: 2rem; border-top: 1px solid #e5e7eb;">
               ${!this.isTemplateInCart(template) ? `
-                <button onclick="templateManager.addTemplateToCart('${template.id.replace(/'/g, "\\'")}'); this.closest('[style*=\"z-index: 10000\"]').remove();" style="background: #10b981; color: white; border: none; border-radius: 8px; padding: 0.75rem 1.5rem; cursor: pointer; font-size: 1rem; font-weight: 500;">
+                <button onclick="templateManager.addTemplateToCart('${template.id.replace(/'/g, "\\'")}'); this.closest('[style*=\\"z-index: 10000\\"]').remove();" style="background: #10b981; color: white; border: none; border-radius: 8px; padding: 0.75rem 1.5rem; cursor: pointer; font-size: 1rem; font-weight: 500;">
                   ➕ Add Stack to Cart
                 </button>
               ` : `
@@ -2409,7 +2409,7 @@
                   📦 Export Trading Card
                 </button>
               ` : ''}
-              <button onclick="this.closest('[style*=\"z-index: 10000\"]').remove();" style="background: #f3f4f6; color: #374151; border: 1px solid #d1d5db; border-radius: 8px; padding: 0.75rem 1.5rem; cursor: pointer; font-size: 1rem;">
+              <button onclick="this.closest('[style*=\\"z-index: 10000\\"]').remove();" style="background: #f3f4f6; color: #374151; border: 1px solid #d1d5db; border-radius: 8px; padding: 0.75rem 1.5rem; cursor: pointer; font-size: 1rem;">
                 Close
               </button>
             </div>
