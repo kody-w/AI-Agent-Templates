@@ -17,6 +17,78 @@ def format_file_size(size):
         size /= 1024.0
     return f"{size:.1f}TB"
 
+def get_agent_features(filename):
+    """Get default features for an agent based on its filename"""
+    # Default features that apply to all agents
+    default_features = [
+        "AI-powered automation",
+        "Easy integration",
+        "Scalable architecture",
+        "Production ready"
+    ]
+    
+    # Specific features based on agent type
+    feature_map = {
+        "email": ["Email composition", "Smart templates", "Auto-response", "Attachment handling"],
+        "calendar": ["Schedule management", "Meeting coordination", "Availability tracking", "Time zone support"],
+        "crm": ["CRM integration", "Data synchronization", "Record management", "Pipeline automation"],
+        "dynamics": ["Dynamics 365 integration", "Entity management", "Workflow automation", "API connectivity"],
+        "sharepoint": ["Document extraction", "SharePoint integration", "File management", "Metadata handling"],
+        "memory": ["Context retention", "State management", "Memory optimization", "Conversation tracking"],
+        "image": ["Image generation", "AI creativity", "Format support", "Batch processing"],
+        "powerpoint": ["Presentation creation", "Slide automation", "Template support", "Export options"],
+        "servicenow": ["Ticket management", "Workflow automation", "ServiceNow integration", "Incident tracking"],
+        "salesforce": ["Salesforce queries", "Data extraction", "Report generation", "SOQL support"],
+        "search": ["Web search", "Result aggregation", "Content filtering", "API integration"],
+        "review": ["Code analysis", "Quality metrics", "Best practices", "Automated feedback"],
+        "adaptive": ["Card generation", "Dynamic layouts", "Multi-platform", "Interactive elements"],
+        "hacker": ["News aggregation", "Content monitoring", "Trend analysis", "Real-time updates"],
+        "motivational": ["Quote generation", "Daily inspiration", "Category selection", "API integration"],
+        "wikipedia": ["Article fetching", "Random content", "Knowledge extraction", "API connectivity"],
+        "beehiiv": ["Newsletter integration", "Subscriber management", "Content automation", "Analytics"],
+        "demo": ["Data generation", "Test scenarios", "Bulk operations", "Realistic samples"],
+        "meeting": ["Meeting preparation", "Agenda creation", "Note taking", "Action items"]
+    }
+    
+    # Check filename for keywords and return appropriate features
+    filename_lower = filename.lower()
+    for keyword, features in feature_map.items():
+        if keyword in filename_lower:
+            return features
+    
+    return default_features
+
+def get_agent_description(filename):
+    """Get a description for an agent based on its filename"""
+    description_map = {
+        "email": "Intelligent email drafting and automation agent",
+        "calendar": "Calendar management and scheduling automation",
+        "crm": "CRM integration and data management",
+        "dynamics": "Microsoft Dynamics 365 integration agent",
+        "sharepoint": "SharePoint document extraction and management",
+        "memory": "Context and memory management for conversations",
+        "image": "AI-powered image generation and processing",
+        "powerpoint": "PowerPoint presentation automation",
+        "servicenow": "ServiceNow ticket and workflow management",
+        "salesforce": "Salesforce data query and integration",
+        "search": "Web search and content aggregation",
+        "review": "Automated code review and analysis",
+        "adaptive": "Adaptive card generation for multiple platforms",
+        "hacker": "Hacker News content aggregation and monitoring",
+        "motivational": "Motivational quote generation and inspiration",
+        "wikipedia": "Wikipedia article fetching and knowledge extraction",
+        "beehiiv": "Beehiiv newsletter platform integration",
+        "demo": "Demo data generation and seeding",
+        "meeting": "Meeting preparation and coordination agent"
+    }
+    
+    filename_lower = filename.lower()
+    for keyword, description in description_map.items():
+        if keyword in filename_lower:
+            return description
+    
+    return "AI agent for task automation and workflow optimization"
+
 def scan_agents():
     """Scan the agents directory"""
     agents = []
@@ -40,7 +112,9 @@ def scan_agents():
             "url": f"https://raw.githubusercontent.com/kody-w/AI-Agent-Templates/main/agents/{py_file.name}",
             "size": size,
             "size_formatted": format_file_size(size),
-            "type": "singular"
+            "type": "singular",
+            "description": get_agent_description(py_file.name),
+            "features": get_agent_features(py_file.name)
         })
     
     return agents
@@ -89,7 +163,9 @@ def scan_stacks():
                     "size_formatted": format_file_size(size),
                     "type": "stack",
                     "stack_name": stack_info["name"],
-                    "stack_path": stack_dir.name
+                    "stack_path": stack_dir.name,
+                    "description": get_agent_description(py_file.name),
+                    "features": get_agent_features(py_file.name)
                 }
                 stack_info["agents"].append(agent)
         

@@ -1,6 +1,6 @@
 {
   "version": "1.0.0",
-  "generated": "2025-08-21T17:40:53.757753Z",
+  "generated": "2025-08-21T17:49:20.902726Z",
   "repository": "kody-w/AI-Agent-Templates",
   "branch": "main",
   "agents": [
@@ -12,7 +12,14 @@
       "url": "https://raw.githubusercontent.com/kody-w/AI-Agent-Templates/main/agents/calendar_agent.py",
       "size": 2824,
       "size_formatted": "2.8KB",
-      "type": "singular"
+      "type": "singular",
+      "description": "Calendar management and scheduling automation",
+      "features": [
+        "Schedule management",
+        "Meeting coordination",
+        "Availability tracking",
+        "Time zone support"
+      ]
     },
     {
       "id": "motivational_quote_skill",
@@ -22,7 +29,14 @@
       "url": "https://raw.githubusercontent.com/kody-w/AI-Agent-Templates/main/agents/motivational_quote_skill.py",
       "size": 1405,
       "size_formatted": "1.4KB",
-      "type": "singular"
+      "type": "singular",
+      "description": "Motivational quote generation and inspiration",
+      "features": [
+        "Quote generation",
+        "Daily inspiration",
+        "Category selection",
+        "API integration"
+      ]
     },
     {
       "id": "context_memory_agent",
@@ -32,7 +46,14 @@
       "url": "https://raw.githubusercontent.com/kody-w/AI-Agent-Templates/main/agents/context_memory_agent.py",
       "size": 7379,
       "size_formatted": "7.2KB",
-      "type": "singular"
+      "type": "singular",
+      "description": "Context and memory management for conversations",
+      "features": [
+        "Context retention",
+        "State management",
+        "Memory optimization",
+        "Conversation tracking"
+      ]
     },
     {
       "id": "fixed_beehiiv_agent",
@@ -42,7 +63,14 @@
       "url": "https://raw.githubusercontent.com/kody-w/AI-Agent-Templates/main/agents/fixed_beehiiv_agent.py",
       "size": 1809,
       "size_formatted": "1.8KB",
-      "type": "singular"
+      "type": "singular",
+      "description": "Beehiiv newsletter platform integration",
+      "features": [
+        "Newsletter integration",
+        "Subscriber management",
+        "Content automation",
+        "Analytics"
+      ]
     },
     {
       "id": "Dynamics365DemoDataSeederAgent_agent",
@@ -52,7 +80,14 @@
       "url": "https://raw.githubusercontent.com/kody-w/AI-Agent-Templates/main/agents/Dynamics365DemoDataSeederAgent_agent.py",
       "size": 9005,
       "size_formatted": "8.8KB",
-      "type": "singular"
+      "type": "singular",
+      "description": "Microsoft Dynamics 365 integration agent",
+      "features": [
+        "Dynamics 365 integration",
+        "Entity management",
+        "Workflow automation",
+        "API connectivity"
+      ]
     },
     {
       "id": "powerpoint_agent",
@@ -62,7 +97,14 @@
       "url": "https://raw.githubusercontent.com/kody-w/AI-Agent-Templates/main/agents/powerpoint_agent.py",
       "size": 69601,
       "size_formatted": "68.0KB",
-      "type": "singular"
+      "type": "singular",
+      "description": "PowerPoint presentation automation",
+      "features": [
+        "Presentation creation",
+        "Slide automation",
+        "Template support",
+        "Export options"
+      ]
     },
     {
       "id": "MeetingPrepAgent_agent",
@@ -72,7 +114,14 @@
       "url": "https://raw.githubusercontent.com/kody-w/AI-Agent-Templates/main/agents/MeetingPrepAgent_agent.py",
       "size": 32330,
       "size_formatted": "31.6KB",
-      "type": "singular"
+      "type": "singular",
+      "description": "Meeting preparation and coordination agent",
+      "features": [
+        "Meeting preparation",
+        "Agenda creation",
+        "Note taking",
+        "Action items"
+      ]
     },
     {
       "id": "email_drafting_agent",
@@ -82,7 +131,14 @@
       "url": "https://raw.githubusercontent.com/kody-w/AI-Agent-Templates/main/agents/email_drafting_agent.py",
       "size": 5007,
       "size_formatted": "4.9KB",
-      "type": "singular"
+      "type": "singular",
+      "description": "Intelligent email drafting and automation agent",
+      "features": [
+        "Email composition",
+        "Smart templates",
+        "Auto-response",
+        "Attachment handling"
+      ]
     },
     {
       "id": "basic_agent",
@@ -92,7 +148,14 @@
       "url": "https://raw.githubusercontent.com/kody-w/AI-Agent-Templates/main/agents/basic_agent.py",
       "size": 152,
       "size_formatted": "152.0B",
-      "type": "singular"
+      "type": "singular",
+      "description": "AI agent for task automation and workflow optimization",
+      "features": [
+        "AI-powered automation",
+        "Easy integration",
+        "Scalable architecture",
+        "Production ready"
+      ]
     },
     {
       "id": "servicenow-agent",
@@ -102,7 +165,14 @@
       "url": "https://raw.githubusercontent.com/kody-w/AI-Agent-Templates/main/agents/servicenow-agent.py",
       "size": 11010,
       "size_formatted": "10.8KB",
-      "type": "singular"
+      "type": "singular",
+      "description": "ServiceNow ticket and workflow management",
+      "features": [
+        "Ticket management",
+        "Workflow automation",
+        "ServiceNow integration",
+        "Incident tracking"
+      ]
     },
     {
       "id": "dynamics_365_agent",
@@ -112,7 +182,14 @@
       "url": "https://raw.githubusercontent.com/kody-w/AI-Agent-Templates/main/agents/dynamics_365_agent.py",
       "size": 7182,
       "size_formatted": "7.0KB",
-      "type": "singular"
+      "type": "singular",
+      "description": "Microsoft Dynamics 365 integration agent",
+      "features": [
+        "Dynamics 365 integration",
+        "Entity management",
+        "Workflow automation",
+        "API connectivity"
+      ]
     },
     {
       "id": "adaptive_card_agent",
@@ -122,7 +199,14 @@
       "url": "https://raw.githubusercontent.com/kody-w/AI-Agent-Templates/main/agents/adaptive_card_agent.py",
       "size": 12513,
       "size_formatted": "12.2KB",
-      "type": "singular"
+      "type": "singular",
+      "description": "Adaptive card generation for multiple platforms",
+      "features": [
+        "Card generation",
+        "Dynamic layouts",
+        "Multi-platform",
+        "Interactive elements"
+      ]
     },
     {
       "id": "HackerNewsAgent_agent",
@@ -132,7 +216,14 @@
       "url": "https://raw.githubusercontent.com/kody-w/AI-Agent-Templates/main/agents/HackerNewsAgent_agent.py",
       "size": 1296,
       "size_formatted": "1.3KB",
-      "type": "singular"
+      "type": "singular",
+      "description": "Hacker News content aggregation and monitoring",
+      "features": [
+        "News aggregation",
+        "Content monitoring",
+        "Trend analysis",
+        "Real-time updates"
+      ]
     },
     {
       "id": "duckduckgo-search-agent",
@@ -142,7 +233,14 @@
       "url": "https://raw.githubusercontent.com/kody-w/AI-Agent-Templates/main/agents/duckduckgo-search-agent.py",
       "size": 7811,
       "size_formatted": "7.6KB",
-      "type": "singular"
+      "type": "singular",
+      "description": "Web search and content aggregation",
+      "features": [
+        "Web search",
+        "Result aggregation",
+        "Content filtering",
+        "API integration"
+      ]
     },
     {
       "id": "manage_memory_agent",
@@ -152,7 +250,14 @@
       "url": "https://raw.githubusercontent.com/kody-w/AI-Agent-Templates/main/agents/manage_memory_agent.py",
       "size": 9837,
       "size_formatted": "9.6KB",
-      "type": "singular"
+      "type": "singular",
+      "description": "Context and memory management for conversations",
+      "features": [
+        "Context retention",
+        "State management",
+        "Memory optimization",
+        "Conversation tracking"
+      ]
     },
     {
       "id": "image_generation_agent",
@@ -162,7 +267,14 @@
       "url": "https://raw.githubusercontent.com/kody-w/AI-Agent-Templates/main/agents/image_generation_agent.py",
       "size": 18156,
       "size_formatted": "17.7KB",
-      "type": "singular"
+      "type": "singular",
+      "description": "AI-powered image generation and processing",
+      "features": [
+        "Image generation",
+        "AI creativity",
+        "Format support",
+        "Batch processing"
+      ]
     },
     {
       "id": "salesforce_query_agent",
@@ -172,7 +284,14 @@
       "url": "https://raw.githubusercontent.com/kody-w/AI-Agent-Templates/main/agents/salesforce_query_agent.py",
       "size": 5067,
       "size_formatted": "4.9KB",
-      "type": "singular"
+      "type": "singular",
+      "description": "Salesforce data query and integration",
+      "features": [
+        "Salesforce queries",
+        "Data extraction",
+        "Report generation",
+        "SOQL support"
+      ]
     },
     {
       "id": "extract_sharepoint_document_url_agent",
@@ -182,7 +301,14 @@
       "url": "https://raw.githubusercontent.com/kody-w/AI-Agent-Templates/main/agents/extract_sharepoint_document_url_agent.py",
       "size": 43530,
       "size_formatted": "42.5KB",
-      "type": "singular"
+      "type": "singular",
+      "description": "SharePoint document extraction and management",
+      "features": [
+        "Document extraction",
+        "SharePoint integration",
+        "File management",
+        "Metadata handling"
+      ]
     },
     {
       "id": "code_review_agent",
@@ -192,7 +318,14 @@
       "url": "https://raw.githubusercontent.com/kody-w/AI-Agent-Templates/main/agents/code_review_agent.py",
       "size": 23421,
       "size_formatted": "22.9KB",
-      "type": "singular"
+      "type": "singular",
+      "description": "Automated code review and analysis",
+      "features": [
+        "Code analysis",
+        "Quality metrics",
+        "Best practices",
+        "Automated feedback"
+      ]
     },
     {
       "id": "fetchrandomwikipediaarticle_skill",
@@ -202,7 +335,14 @@
       "url": "https://raw.githubusercontent.com/kody-w/AI-Agent-Templates/main/agents/fetchrandomwikipediaarticle_skill.py",
       "size": 2089,
       "size_formatted": "2.0KB",
-      "type": "singular"
+      "type": "singular",
+      "description": "Wikipedia article fetching and knowledge extraction",
+      "features": [
+        "Article fetching",
+        "Random content",
+        "Knowledge extraction",
+        "API connectivity"
+      ]
     }
   ],
   "stacks": [
@@ -221,7 +361,14 @@
           "size_formatted": "41.7KB",
           "type": "stack",
           "stack_name": "Crm Bulk Data Creator Stack",
-          "stack_path": "crm_bulk_data_creator_stack"
+          "stack_path": "crm_bulk_data_creator_stack",
+          "description": "CRM integration and data management",
+          "features": [
+            "CRM integration",
+            "Data synchronization",
+            "Record management",
+            "Pipeline automation"
+          ]
         },
         {
           "id": "crm_bulk_data_creator_stack_dynamics_365_agent",
@@ -233,7 +380,14 @@
           "size_formatted": "7.0KB",
           "type": "stack",
           "stack_name": "Crm Bulk Data Creator Stack",
-          "stack_path": "crm_bulk_data_creator_stack"
+          "stack_path": "crm_bulk_data_creator_stack",
+          "description": "Microsoft Dynamics 365 integration agent",
+          "features": [
+            "Dynamics 365 integration",
+            "Entity management",
+            "Workflow automation",
+            "API connectivity"
+          ]
         },
         {
           "id": "crm_bulk_data_creator_stack_bulk_crm_data_generator",
@@ -245,7 +399,14 @@
           "size_formatted": "38.2KB",
           "type": "stack",
           "stack_name": "Crm Bulk Data Creator Stack",
-          "stack_path": "crm_bulk_data_creator_stack"
+          "stack_path": "crm_bulk_data_creator_stack",
+          "description": "CRM integration and data management",
+          "features": [
+            "CRM integration",
+            "Data synchronization",
+            "Record management",
+            "Pipeline automation"
+          ]
         }
       ],
       "metadata": {
@@ -395,7 +556,14 @@
           "size_formatted": "4.9KB",
           "type": "stack",
           "stack_name": "Voice To Crm Stack",
-          "stack_path": "voice_to_crm_stack"
+          "stack_path": "voice_to_crm_stack",
+          "description": "Intelligent email drafting and automation agent",
+          "features": [
+            "Email composition",
+            "Smart templates",
+            "Auto-response",
+            "Attachment handling"
+          ]
         },
         {
           "id": "voice_to_crm_stack_servicenow-agent",
@@ -407,7 +575,14 @@
           "size_formatted": "10.8KB",
           "type": "stack",
           "stack_name": "Voice To Crm Stack",
-          "stack_path": "voice_to_crm_stack"
+          "stack_path": "voice_to_crm_stack",
+          "description": "ServiceNow ticket and workflow management",
+          "features": [
+            "Ticket management",
+            "Workflow automation",
+            "ServiceNow integration",
+            "Incident tracking"
+          ]
         },
         {
           "id": "voice_to_crm_stack_dynamics_365_agent",
@@ -419,7 +594,14 @@
           "size_formatted": "7.0KB",
           "type": "stack",
           "stack_name": "Voice To Crm Stack",
-          "stack_path": "voice_to_crm_stack"
+          "stack_path": "voice_to_crm_stack",
+          "description": "Microsoft Dynamics 365 integration agent",
+          "features": [
+            "Dynamics 365 integration",
+            "Entity management",
+            "Workflow automation",
+            "API connectivity"
+          ]
         },
         {
           "id": "voice_to_crm_stack_extract_sharepoint_document_url_agent",
@@ -431,7 +613,14 @@
           "size_formatted": "42.5KB",
           "type": "stack",
           "stack_name": "Voice To Crm Stack",
-          "stack_path": "voice_to_crm_stack"
+          "stack_path": "voice_to_crm_stack",
+          "description": "SharePoint document extraction and management",
+          "features": [
+            "Document extraction",
+            "SharePoint integration",
+            "File management",
+            "Metadata handling"
+          ]
         }
       ],
       "metadata": {
@@ -691,7 +880,14 @@
           "size_formatted": "6.2KB",
           "type": "stack",
           "stack_name": "Simulation Sales Stack",
-          "stack_path": "simulation_sales_stack"
+          "stack_path": "simulation_sales_stack",
+          "description": "AI agent for task automation and workflow optimization",
+          "features": [
+            "AI-powered automation",
+            "Easy integration",
+            "Scalable architecture",
+            "Production ready"
+          ]
         }
       ],
       "metadata": {
@@ -882,7 +1078,14 @@
           "size_formatted": "4.9KB",
           "type": "stack",
           "stack_name": "Email Drafting Stack",
-          "stack_path": "email_drafting_stack"
+          "stack_path": "email_drafting_stack",
+          "description": "Intelligent email drafting and automation agent",
+          "features": [
+            "Email composition",
+            "Smart templates",
+            "Auto-response",
+            "Attachment handling"
+          ]
         }
       ],
       "metadata": {
