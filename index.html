@@ -1728,6 +1728,17 @@
           this.dynamicStacks = [];
           
           for (const stack of stacksData) {
+            // Extract files list from manifest or detect from stack structure
+            let filesList = [];
+            if (stack.files && stack.files.length > 0) {
+              filesList = stack.files.filter(f => 
+                f.endsWith('.zip') || 
+                f.endsWith('.html') || 
+                f.endsWith('.json') ||
+                f.endsWith('.xml')
+              ).map(f => f.split('/').pop());
+            }
+            
             const template = {
               id: stack.id,
               name: stack.metadata?.name || this.formatStackName(stack.id),
@@ -1743,6 +1754,7 @@
               technicalRequirements: stack.metadata?.technicalRequirements,
               components: stack.metadata?.components,
               demo: stack.metadata?.demo,
+              files: filesList,  // Add files list
               isDynamic: true,
               stackPath: stack.id,
               hasMetadata: !!stack.metadata,
@@ -1819,6 +1831,24 @@
 
             if (agentIds.length === 0 && !metadata) return null;
 
+            // Check for additional files in the stack
+            let filesList = [];
+            if (metadata && metadata.files) {
+              filesList = metadata.files;
+            } else {
+              // Try to detect files in the files directory
+              try {
+                const filesUrl = `https://api.github.com/repos/${agentStore.GITHUB_REPO}/contents/${stackDir.path}/files?ref=${agentStore.BRANCH}`;
+                const filesResponse = await fetch(filesUrl);
+                if (filesResponse.ok) {
+                  const files = await filesResponse.json();
+                  filesList = files.filter(f => f.type === 'file').map(f => f.name);
+                }
+              } catch (err) {
+                // Files directory might not exist
+              }
+            }
+            
             // Use metadata if available, otherwise use defaults
             if (metadata) {
               return {
@@ -1854,6 +1884,7 @@
                 version: metadata.version,
                 author: metadata.author,
                 demo: metadata.demo,
+                files: filesList,  // Add files list
                 isDynamic: true,
                 stackPath: stackDir.name,
                 hasMetadata: true,
@@ -1879,6 +1910,7 @@
                   "Ready to deploy",
                   "GitHub-sourced",
                 ],
+                files: filesList,  // Add files list even for fallback
                 isDynamic: true,
                 stackPath: stackDir.name,
                 hasMetadata: false,
@@ -2521,44 +2553,192 @@
           // Lazy load agents if needed
           await this.loadStackAgentsIfNeeded(template);
 
-          showToast("Generating Trading Card... This may take a moment", "info");
+          showToast("Creating complete package with all components...", "info");
 
           try {
-            // Fetch all agent code for the stack
-            const agentCode = {};
-            for (const agentId of template.agents) {
-              const agent = agentStore.agents.find(a => a.id === agentId);
-              if (agent && agent.url) {
-                try {
-                  const response = await fetch(agent.url);
-                  if (response.ok) {
-                    agentCode[agent.filename] = await response.text();
-                  }
-                } catch (error) {
-                  console.error(`Failed to fetch ${agent.filename}:`, error);
+            // Check if stack has additional files
+            const hasDemo = template.demo && template.demo.available;
+            const hasFiles = template.files && template.files.length > 0;
+            const needsZip = hasDemo || hasFiles || template.agents.length > 1;
+            
+            if (needsZip) {
+              // Create a zip package with all components
+              await this.exportStackAsZip(template);
+            } else {
+              // Single file export as HTML trading card
+              await this.exportStackAsHTML(template);
+            }
+          } catch (error) {
+            console.error("Error exporting stack:", error);
+            showToast("Failed to export stack", "error");
+          }
+        }
+
+        async exportStackAsZip(template) {
+          // Load JSZip if needed
+          if (typeof JSZip === 'undefined') {
+            await agentStore.loadJSZip();
+          }
+
+          const zip = new JSZip();
+          const stackFolder = zip.folder(template.name.replace(/[^a-z0-9]/gi, '_'));
+          
+          // Add agents
+          const agentsFolder = stackFolder.folder('agents');
+          const agentCode = {};
+          
+          for (const agentId of template.agents) {
+            const agent = agentStore.agents.find(a => a.id === agentId);
+            if (agent && agent.url) {
+              try {
+                const response = await fetch(agent.url);
+                if (response.ok) {
+                  const code = await response.text();
+                  agentCode[agent.filename] = code;
+                  agentsFolder.file(agent.filename, code);
                 }
+              } catch (error) {
+                console.error(`Failed to fetch ${agent.filename}:`, error);
               }
             }
-
-            // Generate the trading card HTML
-            const tradingCardHTML = this.generateTradingCardHTML(template, agentCode);
-            
-            // Create a blob and download
-            const blob = new Blob([tradingCardHTML], { type: 'text/html' });
-            const url = URL.createObjectURL(blob);
-            const a = document.createElement('a');
-            a.href = url;
-            a.download = `${template.id}_trading_card.html`;
-            document.body.appendChild(a);
-            a.click();
-            document.body.removeChild(a);
-            URL.revokeObjectURL(url);
-
-            showToast(`Trading Card exported for ${template.name}!`, "success");
-          } catch (error) {
-            console.error("Error exporting trading card:", error);
-            showToast("Failed to export trading card", "error");
           }
+          
+          // Add demo files
+          if (template.demo && template.demo.url) {
+            const demoFolder = stackFolder.folder('demos');
+            try {
+              const demoFilename = template.demo.url.split('/').pop();
+              const demoResponse = await fetch(template.demo.url);
+              if (demoResponse.ok) {
+                const demoContent = await demoResponse.text();
+                demoFolder.file(demoFilename, demoContent);
+              }
+            } catch (err) {
+              console.error('Failed to fetch demo:', err);
+            }
+          }
+          
+          // Add additional files
+          if (template.files && template.files.length > 0) {
+            const filesFolder = stackFolder.folder('files');
+            for (const file of template.files) {
+              try {
+                const filePath = `agent_stacks/${template.id}/files/${file}`;
+                const fileResponse = await fetch(filePath);
+                if (fileResponse.ok) {
+                  const fileBlob = await fileResponse.blob();
+                  filesFolder.file(file, fileBlob);
+                }
+              } catch (err) {
+                console.error(`Failed to fetch file ${file}:`, err);
+              }
+            }
+          }
+          
+          // Add metadata
+          stackFolder.file('metadata.json', JSON.stringify(template, null, 2));
+          
+          // Generate and add trading card HTML
+          const tradingCardHTML = this.generateTradingCardHTML(template, agentCode);
+          stackFolder.file('trading_card.html', tradingCardHTML);
+          
+          // Add README
+          const readme = this.generateStackReadmeForExport(template);
+          stackFolder.file('README.md', readme);
+          
+          // Generate and download zip
+          const content = await zip.generateAsync({ type: 'blob' });
+          const url = URL.createObjectURL(content);
+          const a = document.createElement('a');
+          a.href = url;
+          a.download = `${template.id}_complete_package.zip`;
+          document.body.appendChild(a);
+          a.click();
+          document.body.removeChild(a);
+          URL.revokeObjectURL(url);
+          
+          showToast(`Complete package exported for ${template.name}!`, "success");
+        }
+
+        async exportStackAsHTML(template) {
+          // Fetch all agent code for the stack
+          const agentCode = {};
+          for (const agentId of template.agents) {
+            const agent = agentStore.agents.find(a => a.id === agentId);
+            if (agent && agent.url) {
+              try {
+                const response = await fetch(agent.url);
+                if (response.ok) {
+                  agentCode[agent.filename] = await response.text();
+                }
+              } catch (error) {
+                console.error(`Failed to fetch ${agent.filename}:`, error);
+              }
+            }
+          }
+
+          // Generate the trading card HTML
+          const tradingCardHTML = this.generateTradingCardHTML(template, agentCode);
+          
+          // Create a blob and download
+          const blob = new Blob([tradingCardHTML], { type: 'text/html' });
+          const url = URL.createObjectURL(blob);
+          const a = document.createElement('a');
+          a.href = url;
+          a.download = `${template.id}_trading_card.html`;
+          document.body.appendChild(a);
+          a.click();
+          document.body.removeChild(a);
+          URL.revokeObjectURL(url);
+
+          showToast(`Trading Card exported for ${template.name}!`, "success");
+        }
+
+        generateStackReadmeForExport(template) {
+          let readme = `# ${template.name}\n\n`;
+          readme += `${template.description}\n\n`;
+          readme += `## Stack Information\n\n`;
+          readme += `- **Version:** ${template.version || '1.0.0'}\n`;
+          readme += `- **Complexity:** ${template.complexity}\n`;
+          readme += `- **Setup Time:** ${template.estimatedTime}\n`;
+          readme += `- **Agents:** ${template.agents.length}\n\n`;
+          
+          if (template.features && template.features.length > 0) {
+            readme += `## Features\n\n`;
+            for (const feature of template.features) {
+              readme += `- ${feature}\n`;
+            }
+            readme += `\n`;
+          }
+          
+          if (template.benefits && template.benefits.length > 0) {
+            readme += `## Benefits\n\n`;
+            for (const benefit of template.benefits) {
+              readme += `- ${benefit}\n`;
+            }
+            readme += `\n`;
+          }
+          
+          readme += `## Installation\n\n`;
+          readme += `1. Deploy base infrastructure from [Copilot-Agent-365](https://github.com/kody-w/Copilot-Agent-365)\n`;
+          readme += `2. Copy agent files from \`agents/\` folder to your deployment\n`;
+          
+          if (template.demo && template.demo.available) {
+            readme += `3. Open the demo file in \`demos/\` folder to test functionality\n`;
+          }
+          
+          if (template.files && template.files.length > 0) {
+            readme += `4. Additional resources are available in the \`files/\` folder\n`;
+          }
+          
+          if (template.technicalRequirements && template.technicalRequirements.apiKeys) {
+            readme += `\n## Required API Keys\n\n`;
+            for (const key of template.technicalRequirements.apiKeys) {
+              readme += `- \`${key}\`\n`;
+            }
+          }
+          
+          return readme;
         }
 
         loadTradingCardGenerator() {
@@ -3932,11 +4112,286 @@
             return;
           }
 
-          showToast(
-            `Preparing to download ${this.cart.length} agent(s)...`,
-            "success"
-          );
+          // Check if we need to create a zip (multiple items or stacks with additional files)
+          const hasMultipleItems = this.cart.length > 1;
+          const hasStacksWithFiles = await this.checkForStackFiles();
+          
+          if (hasMultipleItems || hasStacksWithFiles) {
+            await this.downloadAsZip();
+          } else {
+            // Single agent download
+            await this.downloadSingleAgent();
+          }
+        }
 
+        async checkForStackFiles() {
+          // Check if any items in cart are part of stacks with additional files
+          for (const agent of this.cart) {
+            // Check if agent belongs to a stack
+            const stack = await this.getStackForAgent(agent.id);
+            if (stack && stack.hasAdditionalFiles) {
+              return true;
+            }
+          }
+          return false;
+        }
+
+        async getStackForAgent(agentId) {
+          // Check if agent belongs to any stack
+          for (const template of templateManager.agentTemplates) {
+            if (template.agents && template.agents.includes(agentId)) {
+              // Check for additional files
+              const hasDemo = template.demo && template.demo.available;
+              const hasFiles = template.files && template.files.length > 0;
+              return {
+                ...template,
+                hasAdditionalFiles: hasDemo || hasFiles
+              };
+            }
+          }
+          return null;
+        }
+
+        async downloadSingleAgent() {
+          const agent = this.cart[0];
+          try {
+            // Ensure we have the code
+            if (!this.agentCode[agent.id]) {
+              const response = await fetch(agent.url);
+              if (response.ok) {
+                this.agentCode[agent.id] = await response.text();
+              }
+            }
+
+            if (this.agentCode[agent.id]) {
+              // Download the file
+              const blob = new Blob([this.agentCode[agent.id]], {
+                type: "text/plain",
+              });
+              const url = URL.createObjectURL(blob);
+              const a = document.createElement("a");
+              a.href = url;
+              a.download = agent.filename;
+              document.body.appendChild(a);
+              a.click();
+              document.body.removeChild(a);
+              URL.revokeObjectURL(url);
+              showToast(`Downloaded ${agent.filename}`, "success");
+            }
+          } catch (error) {
+            console.error(`Failed to download ${agent.filename}:`, error);
+            showToast(`Failed to download ${agent.filename}`, "error");
+          }
+        }
+
+        async downloadAsZip() {
+          showToast("Creating package with all components...", "info");
+          
+          try {
+            // Load JSZip library if not already loaded
+            if (typeof JSZip === 'undefined') {
+              await this.loadJSZip();
+            }
+
+            const zip = new JSZip();
+            const processedStacks = new Set();
+            
+            // Group agents by stack
+            const stackGroups = {};
+            const standaloneAgents = [];
+            
+            for (const agent of this.cart) {
+              const stack = await this.getStackForAgent(agent.id);
+              if (stack && !processedStacks.has(stack.id)) {
+                processedStacks.add(stack.id);
+                if (!stackGroups[stack.id]) {
+                  stackGroups[stack.id] = {
+                    stack: stack,
+                    agents: []
+                  };
+                }
+                // Add all agents from this stack that are in cart
+                for (const stackAgentId of stack.agents) {
+                  const cartAgent = this.cart.find(a => a.id === stackAgentId);
+                  if (cartAgent) {
+                    stackGroups[stack.id].agents.push(cartAgent);
+                  }
+                }
+              } else if (!stack) {
+                standaloneAgents.push(agent);
+              }
+            }
+
+            // Add stack components
+            for (const stackId in stackGroups) {
+              const { stack, agents } = stackGroups[stackId];
+              const stackFolder = zip.folder(stack.name.replace(/[^a-z0-9]/gi, '_'));
+              
+              // Add agents
+              const agentsFolder = stackFolder.folder('agents');
+              for (const agent of agents) {
+                if (!this.agentCode[agent.id]) {
+                  const response = await fetch(agent.url);
+                  if (response.ok) {
+                    this.agentCode[agent.id] = await response.text();
+                  }
+                }
+                if (this.agentCode[agent.id]) {
+                  agentsFolder.file(agent.filename, this.agentCode[agent.id]);
+                }
+              }
+              
+              // Add demo files if available
+              if (stack.demo && stack.demo.url) {
+                const demoFolder = stackFolder.folder('demos');
+                try {
+                  const demoUrl = stack.demo.url;
+                  const demoFilename = demoUrl.split('/').pop();
+                  const demoResponse = await fetch(demoUrl);
+                  if (demoResponse.ok) {
+                    const demoContent = await demoResponse.text();
+                    demoFolder.file(demoFilename, demoContent);
+                  }
+                } catch (err) {
+                  console.error('Failed to fetch demo file:', err);
+                }
+              }
+              
+              // Add additional files from stack
+              if (stack.files && stack.files.length > 0) {
+                const filesFolder = stackFolder.folder('files');
+                for (const file of stack.files) {
+                  try {
+                    // Construct file path
+                    const filePath = `agent_stacks/${stack.id}/files/${file}`;
+                    const fileResponse = await fetch(filePath);
+                    if (fileResponse.ok) {
+                      const fileBlob = await fileResponse.blob();
+                      filesFolder.file(file, fileBlob);
+                    }
+                  } catch (err) {
+                    console.error(`Failed to fetch file ${file}:`, err);
+                  }
+                }
+              }
+              
+              // Add metadata
+              stackFolder.file('metadata.json', JSON.stringify(stack, null, 2));
+              
+              // Add README with instructions
+              const readme = this.generateStackReadme(stack, agents);
+              stackFolder.file('README.md', readme);
+            }
+            
+            // Add standalone agents
+            if (standaloneAgents.length > 0) {
+              const agentsFolder = zip.folder('individual_agents');
+              for (const agent of standaloneAgents) {
+                if (!this.agentCode[agent.id]) {
+                  const response = await fetch(agent.url);
+                  if (response.ok) {
+                    this.agentCode[agent.id] = await response.text();
+                  }
+                }
+                if (this.agentCode[agent.id]) {
+                  agentsFolder.file(agent.filename, this.agentCode[agent.id]);
+                }
+              }
+            }
+            
+            // Add main README
+            const mainReadme = this.generateMainReadme(stackGroups, standaloneAgents);
+            zip.file('README.md', mainReadme);
+            
+            // Generate and download zip
+            const content = await zip.generateAsync({ type: 'blob' });
+            const url = URL.createObjectURL(content);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `AI_Agent_Package_${new Date().toISOString().split('T')[0]}.zip`;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+            
+            showToast('Package downloaded successfully!', 'success');
+          } catch (error) {
+            console.error('Failed to create package:', error);
+            showToast('Failed to create package. Downloading files individually...', 'error');
+            // Fallback to individual downloads
+            await this.downloadIndividually();
+          }
+        }
+
+        async loadJSZip() {
+          return new Promise((resolve, reject) => {
+            const script = document.createElement('script');
+            script.src = 'https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js';
+            script.onload = resolve;
+            script.onerror = reject;
+            document.head.appendChild(script);
+          });
+        }
+
+        generateStackReadme(stack, agents) {
+          let readme = `# ${stack.name}\n\n`;
+          readme += `${stack.description}\n\n`;
+          readme += `## Stack Components\n\n`;
+          
+          for (const agent of agents) {
+            readme += `- **${agent.name}** - ${agent.description || agent.category}\n`;
+          }
+          
+          readme += `\n## Setup Instructions\n\n`;
+          readme += `1. Deploy the base infrastructure from [Copilot-Agent-365](https://github.com/kody-w/Copilot-Agent-365)\n`;
+          readme += `2. Copy the agent files from the \`agents/\` folder to your deployment\n`;
+          
+          if (stack.demo && stack.demo.available) {
+            readme += `3. Test the stack using the demo in the \`demos/\` folder\n`;
+          }
+          
+          if (stack.technicalRequirements && stack.technicalRequirements.apiKeys) {
+            readme += `\n## Required API Keys\n\n`;
+            for (const key of stack.technicalRequirements.apiKeys) {
+              readme += `- \`${key}\`\n`;
+            }
+          }
+          
+          return readme;
+        }
+
+        generateMainReadme(stackGroups, standaloneAgents) {
+          let readme = `# AI Agent Package\n\n`;
+          readme += `Generated on ${new Date().toLocaleDateString()}\n\n`;
+          
+          if (Object.keys(stackGroups).length > 0) {
+            readme += `## Agent Stacks\n\n`;
+            for (const stackId in stackGroups) {
+              const { stack, agents } = stackGroups[stackId];
+              readme += `### ${stack.name}\n`;
+              readme += `${stack.description}\n\n`;
+              readme += `**Agents:** ${agents.length}\n`;
+              readme += `**Complexity:** ${stack.complexity}\n\n`;
+            }
+          }
+          
+          if (standaloneAgents.length > 0) {
+            readme += `## Individual Agents\n\n`;
+            for (const agent of standaloneAgents) {
+              readme += `- **${agent.name}** - ${agent.category}\n`;
+            }
+          }
+          
+          readme += `\n## Installation\n\n`;
+          readme += `1. Deploy base infrastructure: https://github.com/kody-w/Copilot-Agent-365\n`;
+          readme += `2. Copy agent files to your deployment\n`;
+          readme += `3. Configure required API keys\n`;
+          readme += `4. Test using provided demos\n`;
+          
+          return readme;
+        }
+
+        async downloadIndividually() {
           for (const agent of this.cart) {
             try {
               // Ensure we have the code
