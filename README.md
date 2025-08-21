@@ -222,12 +222,16 @@ The project includes a comprehensive web interface (`index.html`) that provides:
 - **Optimized Loading**: Uses pre-generated manifest.json to avoid API rate limits
 
 ### Performance & Scalability
-The web interface uses a **manifest-based loading system** to ensure scalability:
-- Single `manifest.json` file contains all agent/stack metadata
-- Automatically generated via GitHub Actions when code changes
-- Eliminates GitHub API rate limit issues
-- Loads instantly with a single HTTP request
-- Falls back to API calls only if manifest is unavailable
+The web interface uses a **multi-tier loading system** to ensure scalability:
+1. **Primary: Manifest-based loading** - Single `manifest.json` file contains all agent/stack metadata
+2. **Fallback: Raw URL loading** - Uses `raw.githubusercontent.com` URLs (no rate limits for public repos!)
+3. **Local fallback** - Hardcoded agent list for offline development
+
+Key benefits:
+- No GitHub API rate limits when using raw URLs
+- Automatically generated manifest via `update_manifest.py` script
+- Loads instantly with minimal HTTP requests
+- Works reliably even during GitHub API outages
 
 Open `index.html` in a browser to explore the full gallery and interactive demonstrations.
 

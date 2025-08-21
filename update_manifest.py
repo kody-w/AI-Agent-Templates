@@ -116,6 +116,14 @@ def main():
     manifest["agents"] = scan_agents()
     print(f"   Found {len(manifest['agents'])} agents")
     
+    # Also create agents/index.json for raw URL loading
+    agents_index = {
+        "agents": [agent["filename"] for agent in manifest["agents"]]
+    }
+    with open("agents/index.json", 'w') as f:
+        json.dump(agents_index, f, indent=2)
+    print("   Created agents/index.json")
+    
     # Scan stacks
     print("📂 Scanning agent_stacks directory...")
     manifest["stacks"] = scan_stacks()
@@ -132,8 +140,8 @@ def main():
     print("-" * 40)
     print("✅ manifest.json updated successfully!")
     print("\n📝 Next steps:")
-    print("   1. Review changes: git diff manifest.json")
-    print("   2. Commit: git add manifest.json && git commit -m 'Update manifest'")
+    print("   1. Review changes: git diff manifest.json agents/index.json")
+    print("   2. Commit: git add manifest.json agents/index.json && git commit -m 'Update manifest'")
     print("   3. Push: git push")
     print("\n")
 

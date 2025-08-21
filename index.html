@@ -2801,10 +2801,11 @@
             const manifestLoaded = await this.loadFromManifest();
             
             if (!manifestLoaded) {
-              // Fallback to API calls if manifest is not available
-              console.warn("Manifest not available, falling back to API calls");
-              const singularAgents = await this.loadSingularAgents();
-              this.agents = [...singularAgents];
+              // Fallback to raw URL loading (no API, no rate limits!)
+              console.warn("Manifest not available, falling back to raw URL loading");
+              const singularAgents = await this.loadAgentsViaRawUrls();
+              const agentStacks = await this.loadStacksViaRawUrls();
+              this.agents = [...singularAgents, ...agentStacks];
             }
 
             // Sort agents alphabetically
@@ -2815,18 +2816,142 @@
             this.renderAgents();
 
             this.showLoading(false);
+            const agentCount = this.agents.filter(a => a.type === 'singular').length;
+            const stackCount = this.stacksManifest ? this.stacksManifest.length : 0;
             showToast(
-              `Loaded ${singularAgents.length} agents and ${agentStacks.length} stacks from GitHub`,
+              `Loaded ${agentCount} agents and ${stackCount} stacks`,
               "success"
             );
           } catch (error) {
             console.error("Error loading agents:", error);
             this.showLoading(false);
             this.showError(
-              "Failed to load agents from GitHub. Please check your connection and try again."
+              "Failed to load agents. Please check your connection and try again."
             );
-            showToast("Error loading agents from GitHub", "error");
+            showToast("Error loading agents", "error");
           }
+        }
+
+        async loadAgentsViaRawUrls() {
+          console.log("Loading agents via raw GitHub URLs (no API, no rate limits!)...");
+          
+          try {
+            // First load the index file that lists all agents
+            const indexUrl = `https://raw.githubusercontent.com/${this.GITHUB_REPO}/${this.BRANCH}/${this.AGENTS_PATH}/index.json`;
+            const indexResponse = await fetch(indexUrl);
+            
+            let agentFiles;
+            if (indexResponse.ok) {
+              const index = await indexResponse.json();
+              agentFiles = index.agents || [];
+            } else {
+              // Fallback to hardcoded list if index.json doesn't exist yet
+              console.warn("Index file not found, using hardcoded list");
+              agentFiles = [
+                'basic_agent.py',
+                'calendar_agent.py',
+                'code_review_agent.py',
+                'context_memory_agent.py',
+                'duckduckgo_search_agent.py',
+                'dynamics_365_agent.py',
+                'email_drafting_agent.py',
+                'FetchRandomWikipediaArticle_agent.py',
+                'HackerNewsAgent_agent.py',
+                'image_generation_agent.py',
+                'manage_memory_agent.py',
+                'meeting_prep_agent.py',
+                'motivational_quote_skill.py',
+                'powerpoint_agent.py',
+                'salesforce_query_agent.py',
+                'servicenow_agent.py',
+                'SharePointDocumentExtractorAgent_agent.py',
+                'adaptive_card_agent.py'
+              ];
+            }
+
+            const agents = [];
+            
+            // For each agent, we can optionally load its raw content to get size
+            // But to keep it fast, we'll just use the list and approximate sizes
+            for (const filename of agentFiles) {
+              if (filename === '__init__.py') continue;
+              
+              const id = filename.replace('.py', '');
+              agents.push({
+                id: id,
+                name: this.formatAgentName(filename),
+                filename: filename,
+                path: `${this.AGENTS_PATH}/${filename}`,
+                url: `https://raw.githubusercontent.com/${this.GITHUB_REPO}/${this.BRANCH}/${this.AGENTS_PATH}/${filename}`,
+                icon: this.getAgentIcon(filename),
+                category: this.getAgentCategory(filename),
+                description: this.getAgentDescription(filename),
+                features: this.getAgentFeatures(filename),
+                size: "~10KB", // Approximate size
+                type: "singular",
+                stackName: null
+              });
+            }
+
+            return agents;
+          } catch (error) {
+            console.error("Error loading agents via raw URLs:", error);
+            return this.getLocalAgents();
+          }
+        }
+
+        async loadStacksViaRawUrls() {
+          console.log("Loading stacks via raw URLs...");
+          
+          // Known stacks - we maintain this list
+          const stacks = [
+            'voice_to_crm_stack',
+            'crm_bulk_data_creator_stack',
+            'email_drafting_stack',
+            'simulation_sales_stack'
+          ];
+
+          const stackAgents = [];
+          
+          for (const stackName of stacks) {
+            try {
+              // Load the metadata.json for each stack
+              const metadataUrl = `https://raw.githubusercontent.com/${this.GITHUB_REPO}/${this.BRANCH}/${this.STACKS_PATH}/${stackName}/metadata.json`;
+              const response = await fetch(metadataUrl);
+              
+              if (response.ok) {
+                const metadata = await response.json();
+                
+                // Add agents from this stack
+                if (metadata.agents) {
+                  metadata.agents.forEach(agentFile => {
+                    const filename = agentFile.split('/').pop();
+                    const id = `${stackName}_${filename.replace('.py', '')}`;
+                    
+                    stackAgents.push({
+                      id: id,
+                      name: this.formatAgentName(filename),
+                      filename: filename,
+                      path: `${this.STACKS_PATH}/${stackName}/agents/${filename}`,
+                      url: `https://raw.githubusercontent.com/${this.GITHUB_REPO}/${this.BRANCH}/${this.STACKS_PATH}/${stackName}/agents/${filename}`,
+                      icon: '📦',
+                      category: 'stack',
+                      description: `Part of ${metadata.name || stackName.replace(/_/g, ' ').replace(/\b\w/g, l => l.toUpperCase())}`,
+                      features: metadata.features || ["Stack functionality", "Integrated solution", "Production ready", "Enterprise scale"],
+                      size: "~15KB",
+                      type: "stack",
+                      stackName: metadata.name || stackName.replace(/_/g, ' ').replace(/\b\w/g, l => l.toUpperCase()),
+                      stackPath: stackName
+                    });
+                  });
+                }
+              }
+            } catch (error) {
+              console.warn(`Failed to load stack ${stackName}:`, error);
+            }
+          }
+          
+          return stackAgents;
         }
 
         async loadFromManifest() {
@@ -3021,9 +3146,11 @@
               name: "Basic Agent",
               filename: "basic_agent.py",
               path: "agents/basic_agent.py",
+              url: "https://raw.githubusercontent.com/kody-w/AI-Agent-Templates/main/agents/basic_agent.py",
               icon: "🤖",
               category: "core",
               description: "Base agent class",
+              features: ["Base functionality", "Core operations", "Extensible framework", "Simple API"],
               size: "5KB",
               type: "singular"
             },
@@ -3032,9 +3159,11 @@
               name: "Calendar Agent",
               filename: "calendar_agent.py",
               path: "agents/calendar_agent.py",
+              url: "https://raw.githubusercontent.com/kody-w/AI-Agent-Templates/main/agents/calendar_agent.py",
               icon: "📅",
               category: "productivity",
               description: "Calendar scheduling agent",
+              features: ["Meeting scheduling", "Conflict resolution", "Availability checking", "Calendar sync"],
               size: "8KB",
               type: "singular"
             },
@@ -3043,9 +3172,11 @@
               name: "Email Drafting Agent",
               filename: "email_drafting_agent.py",
               path: "agents/email_drafting_agent.py",
+              url: "https://raw.githubusercontent.com/kody-w/AI-Agent-Templates/main/agents/email_drafting_agent.py",
               icon: "✉️",
               category: "communication",
               description: "Email composition agent",
+              features: ["Email drafting", "Template support", "Auto-formatting", "Multi-language"],
               size: "10KB",
               type: "singular"
             }
@@ -3061,9 +3192,11 @@
               name: "Dynamics 365 Agent",
               filename: "dynamics_365_agent.py",
               path: "agent_stacks/voice_to_crm_stack/agents/dynamics_365_agent.py",
+              url: "https://raw.githubusercontent.com/kody-w/AI-Agent-Templates/main/agent_stacks/voice_to_crm_stack/agents/dynamics_365_agent.py",
               icon: "📦",
               category: "stack",
               description: "Part of Voice to CRM Stack",
+              features: ["CRM integration", "Voice processing", "Data sync", "API automation"],
               size: "12KB",
               type: "stack",
               stackName: "Voice to CRM Stack",

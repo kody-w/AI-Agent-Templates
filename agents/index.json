@@ -1,0 +1,24 @@
+{
+  "agents": [
+    "calendar_agent.py",
+    "motivational_quote_skill.py",
+    "context_memory_agent.py",
+    "fixed_beehiiv_agent.py",
+    "Dynamics365DemoDataSeederAgent_agent.py",
+    "powerpoint_agent.py",
+    "MeetingPrepAgent_agent.py",
+    "email_drafting_agent.py",
+    "basic_agent.py",
+    "servicenow-agent.py",
+    "dynamics_365_agent.py",
+    "adaptive_card_agent.py",
+    "HackerNewsAgent_agent.py",
+    "duckduckgo-search-agent.py",
+    "manage_memory_agent.py",
+    "image_generation_agent.py",
+    "salesforce_query_agent.py",
+    "extract_sharepoint_document_url_agent.py",
+    "code_review_agent.py",
+    "fetchrandomwikipediaarticle_skill.py"
+  ]
+}
