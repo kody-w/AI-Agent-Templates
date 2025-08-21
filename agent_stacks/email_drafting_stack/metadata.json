@@ -1,0 +1,110 @@
+{
+  "id": "email_drafting_stack",
+  "name": "Email Drafting Stack",
+  "version": "1.0.0",
+  "author": "Microsoft AI Communications Team",
+  "description": "AI-powered email composition and automation. Generate professional emails, automate responses, and manage communication workflows.",
+  "longDescription": "The Email Drafting Stack leverages advanced AI to compose professional emails, automate responses, and streamline communication workflows. It integrates with Microsoft 365, provides context-aware suggestions, and maintains consistent brand voice across all communications.",
+  "category": "communication",
+  "complexity": "starter",
+  "estimatedSetupTime": "30 minutes",
+  "maintenanceEffort": "minimal",
+  "features": [
+    "AI-powered email composition",
+    "Context-aware response suggestions",
+    "Multi-language support",
+    "Template library management",
+    "Sentiment analysis and tone adjustment",
+    "Microsoft 365 integration",
+    "Automated follow-up scheduling",
+    "Brand voice consistency",
+    "Smart categorization and routing",
+    "Attachment recommendations"
+  ],
+  "benefits": [
+    "75% faster email composition",
+    "Consistent professional communication",
+    "Reduced response time",
+    "Improved customer satisfaction",
+    "Multilingual support without translators",
+    "24/7 automated responses"
+  ],
+  "useCases": [
+    {
+      "title": "Customer Support",
+      "description": "Automatically draft responses to customer inquiries with appropriate tone and solutions."
+    },
+    {
+      "title": "Sales Outreach",
+      "description": "Generate personalized sales emails at scale while maintaining authenticity."
+    },
+    {
+      "title": "Internal Communications",
+      "description": "Draft company-wide announcements and team updates with consistent messaging."
+    },
+    {
+      "title": "Meeting Follow-ups",
+      "description": "Automatically generate meeting summaries and action item emails."
+    }
+  ],
+  "technicalRequirements": {
+    "platforms": ["Windows", "macOS", "Web"],
+    "dependencies": [
+      "Python 3.8+",
+      "Microsoft Graph API",
+      "Azure OpenAI Service"
+    ],
+    "apiKeys": [
+      "MICROSOFT_365_CLIENT_ID",
+      "MICROSOFT_365_CLIENT_SECRET",
+      "AZURE_OPENAI_KEY",
+      "AZURE_OPENAI_ENDPOINT"
+    ]
+  },
+  "components": [
+    {
+      "name": "email_drafting_agent.py",
+      "description": "Core AI agent for email composition and suggestions",
+      "role": "Email Generation"
+    }
+  ],
+  "architecture": {
+    "pattern": "Event-driven",
+    "communication": "REST API and WebSockets",
+    "dataFlow": "Input Context → AI Processing → Draft Generation → Review → Send",
+    "scalability": "Serverless auto-scaling"
+  },
+  "deployment": {
+    "environments": ["Development", "Production"],
+    "containerized": true,
+    "dockerImage": "mcr.microsoft.com/ai-agents/email-drafting:latest",
+    "cloudProviders": ["Azure", "Microsoft 365"],
+    "cicd": "Azure DevOps pipelines"
+  },
+  "security": {
+    "authentication": "OAuth 2.0 with Microsoft Identity",
+    "encryption": "End-to-end encryption",
+    "compliance": ["GDPR", "HIPAA", "SOC 2"],
+    "auditLogging": true
+  },
+  "performance": {
+    "responseTime": "< 2 seconds per draft",
+    "throughput": "1000 emails/hour",
+    "accuracy": "95% satisfaction rate",
+    "availability": "99.9% uptime"
+  },
+  "support": {
+    "documentation": "https://github.com/kody-w/AI-Agent-Templates/wiki",
+    "community": "https://github.com/kody-w/AI-Agent-Templates/discussions",
+    "email": "support@example.com"
+  },
+  "tags": [
+    "email",
+    "ai-writing",
+    "microsoft-365",
+    "automation",
+    "communication",
+    "productivity",
+    "nlp"
+  ]
+}

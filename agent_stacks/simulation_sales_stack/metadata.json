@@ -1,0 +1,144 @@
+{
+  "id": "simulation_sales_stack",
+  "name": "AI Sales Simulation Stack",
+  "version": "1.0.0",
+  "author": "Microsoft AI Sales Excellence Team",
+  "description": "Advanced sales training and simulation platform. Practice sales scenarios, receive AI coaching, and improve closing rates through realistic simulations.",
+  "longDescription": "The AI Sales Simulation Stack provides a comprehensive training environment for sales teams. It simulates realistic customer interactions, provides real-time coaching feedback, and tracks performance metrics. Sales representatives can practice handling objections, negotiations, and closing techniques in a safe, AI-powered environment.",
+  "category": "training",
+  "complexity": "advanced",
+  "estimatedSetupTime": "2-3 hours",
+  "maintenanceEffort": "moderate",
+  "features": [
+    "Realistic customer persona simulations",
+    "Real-time AI coaching and feedback",
+    "Objection handling practice",
+    "Negotiation scenario training",
+    "Performance analytics dashboard",
+    "Custom scenario creation",
+    "Multi-industry templates",
+    "Voice and text interaction modes",
+    "Skill progression tracking",
+    "Team leaderboards and gamification"
+  ],
+  "benefits": [
+    "40% improvement in close rates",
+    "Reduced onboarding time by 60%",
+    "Consistent training across teams",
+    "Safe environment for practice",
+    "Data-driven performance insights",
+    "24/7 training availability"
+  ],
+  "useCases": [
+    {
+      "title": "New Hire Onboarding",
+      "description": "Accelerate new sales rep training with structured simulation programs."
+    },
+    {
+      "title": "Product Launch Training",
+      "description": "Practice selling new products before market launch with realistic scenarios."
+    },
+    {
+      "title": "Objection Handling",
+      "description": "Master responses to common objections through repeated practice."
+    },
+    {
+      "title": "Executive Selling",
+      "description": "Prepare for high-stakes meetings with C-level persona simulations."
+    }
+  ],
+  "technicalRequirements": {
+    "platforms": ["Windows", "macOS", "Web", "Mobile"],
+    "dependencies": [
+      "Python 3.9+",
+      "Azure Cognitive Services",
+      "Azure OpenAI Service",
+      "Power BI for analytics"
+    ],
+    "apiKeys": [
+      "AZURE_OPENAI_KEY",
+      "AZURE_OPENAI_ENDPOINT",
+      "AZURE_COGNITIVE_SERVICES_KEY",
+      "POWER_BI_WORKSPACE_ID"
+    ]
+  },
+  "components": [
+    {
+      "name": "sales_simulation_agent.py",
+      "description": "Core simulation engine for customer interactions",
+      "role": "Simulation Engine"
+    }
+  ],
+  "architecture": {
+    "pattern": "Microservices",
+    "communication": "WebSockets and REST API",
+    "dataFlow": "Scenario Selection → Simulation → Interaction → Feedback → Analytics",
+    "scalability": "Auto-scaling with Azure Functions"
+  },
+  "deployment": {
+    "environments": ["Development", "Staging", "Production"],
+    "containerized": true,
+    "dockerImage": "mcr.microsoft.com/ai-agents/sales-simulation:latest",
+    "cloudProviders": ["Azure"],
+    "cicd": "Azure DevOps with automated testing"
+  },
+  "security": {
+    "authentication": "Azure AD B2C",
+    "encryption": "TLS 1.3 and data encryption at rest",
+    "compliance": ["SOC 2", "ISO 27001"],
+    "auditLogging": true
+  },
+  "performance": {
+    "responseTime": "< 500ms interaction latency",
+    "concurrentUsers": "1000+",
+    "simulationAccuracy": "92% realism score",
+    "availability": "99.95% uptime"
+  },
+  "demo": {
+    "available": true,
+    "url": "agent_stacks/simulation_sales_stack/demos/ai-simulation-sales-demo.html",
+    "title": "Interactive Sales Simulation Demo",
+    "description": "Experience AI-powered sales training with sample scenarios",
+    "features": [
+      "Live customer simulation",
+      "Real-time coaching feedback",
+      "Performance scoring",
+      "Multiple scenario types"
+    ]
+  },
+  "support": {
+    "documentation": "https://github.com/kody-w/AI-Agent-Templates/wiki",
+    "community": "https://github.com/kody-w/AI-Agent-Templates/discussions",
+    "email": "support@example.com",
+    "training": "Available through Microsoft Learn"
+  },
+  "pricing": {
+    "model": "Per-user monthly subscription",
+    "tiers": [
+      {
+        "name": "Basic",
+        "price": "$49/user/month",
+        "features": ["10 simulations/month", "Basic scenarios", "Individual analytics"]
+      },
+      {
+        "name": "Professional",
+        "price": "$99/user/month",
+        "features": ["Unlimited simulations", "Custom scenarios", "Team analytics", "AI coaching"]
+      },
+      {
+        "name": "Enterprise",
+        "price": "Custom",
+        "features": ["White-label option", "API access", "Custom integrations", "Dedicated support"]
+      }
+    ]
+  },
+  "tags": [
+    "sales-training",
+    "simulation",
+    "ai-coaching",
+    "gamification",
+    "performance",
+    "training",
+    "sales-enablement"
+  ]
+}
