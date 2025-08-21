@@ -2242,12 +2242,20 @@
           }
         }
 
-        async viewTemplateDetails(templateId) {
+        async viewTemplateDetails(templateId, fromHashChange = false) {
           const template = this.agentTemplates.find((t) => t.id === templateId);
           if (!template) return;
           
-          // Update URL hash for permalinking
-          window.location.hash = `stack-${templateId}`;
+          // Check if modal already exists and remove it
+          const existingModal = document.getElementById('stackModalBackdrop');
+          if (existingModal) {
+            existingModal.remove();
+          }
+          
+          // Update URL hash for permalinking (only if not called from hash change event)
+          if (!fromHashChange) {
+            window.location.hash = `stack-${templateId}`;
+          }
 
           // Lazy load agents if needed
           await this.loadStackAgentsIfNeeded(template);
@@ -4521,7 +4529,7 @@
             const waitForTemplates = async () => {
               if (templateManager.agentTemplates.length > 0) {
                 // Templates are loaded, try to open the modal
-                await templateManager.viewTemplateDetails(stackId);
+                await templateManager.viewTemplateDetails(stackId, true);
               } else if (attempts < 20) {
                 // Wait and try again (max 10 seconds)
                 attempts++;
