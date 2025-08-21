@@ -1050,14 +1050,14 @@
           <h1>🚀 Microsoft AI Accelerate</h1>
         </div>
         <div class="nav-tabs">
-          <button class="nav-tab active" onclick="switchApp('setup')">
-            🚀 Setup Guide
-          </button>
-          <button class="nav-tab" onclick="switchApp('templates')">
-            📚 Template Library
-          </button>
           <button class="nav-tab" onclick="switchApp('discovery')">
             🔍 Discovery Tool
+          </button>
+          <button class="nav-tab" onclick="switchApp('setup')">
+            🚀 Setup Guide
+          </button>
+          <button class="nav-tab active" onclick="switchApp('templates')">
+            📚 Template Library
           </button>
           <button class="nav-tab" onclick="switchApp('agents')">
             🤖 Agent Store
@@ -1067,7 +1067,7 @@
     </nav>
 
     <!-- Setup Guide Section -->
-    <div id="setupApp" class="app-section active">
+    <div id="setupApp" class="app-section">
       <div class="container">
         <header>
           <div class="ms-logo">MICROSOFT AI ACCELERATE</div>
@@ -1228,55 +1228,91 @@
           <!-- Architecture Overview -->
           <div style="background: white; border: 2px solid #e5e7eb; border-radius: 12px; padding: 2rem; margin-bottom: 2rem;">
             <h3 style="color: #1f2937; margin-bottom: 1rem;">🏗️ Solution Architecture</h3>
-            <div style="background: #f9fafb; border-radius: 8px; padding: 1.5rem; font-family: monospace; font-size: 0.9rem; color: #374151; line-height: 1.6;">
-              <pre style="margin: 0; white-space: pre-wrap;">
-┌─────────────────────────────────────────────────────────┐
-│                   Microsoft 365 Copilot                  │
-│                         & Teams                          │
-└─────────────────▲───────────────────────────────────────┘
-                  │
-                  │ Channels
-                  │
-┌─────────────────▼───────────────────────────────────────┐
-│                    Copilot Studio                        │
-│                      (Your Bot)                          │
-│  • Natural Language Processing                           │
-│  • Conversation Management                               │
-│  • User Authentication                                   │
-└─────────────────▲───────────────────────────────────────┘
-                  │
-                  │ Triggers
-                  │
-┌─────────────────▼───────────────────────────────────────┐
-│                   Power Automate                         │
-│              (Orchestration Layer)                       │
-│  • User Context (Office 365)                            │
-│  • Data Transformation                                   │
-│  • Error Handling                                       │
-└─────────────────▲───────────────────────────────────────┘
-                  │
-                  │ HTTP Request
-                  │
-┌─────────────────▼───────────────────────────────────────┐
-│                  Azure Function                          │
-│               (Agent Execution)                          │
-│  • Agent Selection & Routing                            │
-│  • Memory Management                                     │
-│  • Azure OpenAI Integration                             │
-└─────────────────▲───────────────────────────────────────┘
-                  │
-                  │ Processes
-                  │
-┌─────────────────▼───────────────────────────────────────┐
-│                   AI Agents                              │
-│  • CRM Integration (Dynamics, Salesforce)               │
-│  • Document Processing                                   │
-│  • Email Automation                                      │
-│  • Calendar Management                                   │
-│  • Custom Business Logic                                 │
-└─────────────────────────────────────────────────────────┘
+            
+            <!-- Mermaid Diagram Container -->
+            <div id="architectureDiagram" style="background: #f9fafb; border-radius: 8px; padding: 1.5rem; display: flex; justify-content: center;">
+              <pre class="mermaid" style="background: transparent;">
+graph TB
+    subgraph "User Interface Layer"
+        M365[Microsoft 365 Copilot]
+        Teams[Microsoft Teams]
+        Web[Web Interface]
+    end
+    
+    subgraph "Conversation Layer"
+        CS[Copilot Studio<br/>• Natural Language Processing<br/>• Conversation Management<br/>• User Authentication]
+    end
+    
+    subgraph "Integration Layer"
+        PA[Power Automate<br/>• User Context - Office 365<br/>• Data Transformation<br/>• Error Handling]
+    end
+    
+    subgraph "Processing Layer"
+        AF[Azure Function<br/>• Agent Selection & Routing<br/>• Memory Management<br/>• Azure OpenAI Integration]
+    end
+    
+    subgraph "Agent Layer"
+        CRM[CRM Agents<br/>Dynamics/Salesforce]
+        DOC[Document Agents<br/>SharePoint/OneDrive]
+        EMAIL[Email Agents<br/>Outlook Integration]
+        CAL[Calendar Agents<br/>Meeting Management]
+        CUSTOM[Custom Agents<br/>Business Logic]
+    end
+    
+    subgraph "Data Layer"
+        Storage[(Azure Storage<br/>Agent Memory)]
+        OpenAI[Azure OpenAI<br/>GPT-4o]
+        CRMData[(CRM Systems<br/>Business Data)]
+    end
+    
+    M365 --> CS
+    Teams --> CS
+    Web --> CS
+    CS --> PA
+    PA --> AF
+    AF --> CRM
+    AF --> DOC
+    AF --> EMAIL
+    AF --> CAL
+    AF --> CUSTOM
+    AF <--> Storage
+    AF <--> OpenAI
+    CRM <--> CRMData
+    DOC <--> Storage
+    EMAIL <--> Storage
+    
+    classDef userInterface fill:#eff6ff,stroke:#3b82f6,stroke-width:2px
+    classDef conversation fill:#f3e8ff,stroke:#9333ea,stroke-width:2px
+    classDef integration fill:#fef3c7,stroke:#f59e0b,stroke-width:2px
+    classDef processing fill:#dcfce7,stroke:#22c55e,stroke-width:2px
+    classDef agents fill:#fce7f3,stroke:#ec4899,stroke-width:2px
+    classDef data fill:#e0e7ff,stroke:#6366f1,stroke-width:2px
+    
+    class M365,Teams,Web userInterface
+    class CS conversation
+    class PA integration
+    class AF processing
+    class CRM,DOC,EMAIL,CAL,CUSTOM agents
+    class Storage,OpenAI,CRMData data
               </pre>
             </div>
+            
+            <!-- Add Mermaid.js CDN -->
+            <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+            <script>
+              mermaid.initialize({ 
+                startOnLoad: true,
+                theme: 'default',
+                themeVariables: {
+                  primaryColor: '#0078d4',
+                  primaryTextColor: '#fff',
+                  primaryBorderColor: '#005a9e',
+                  lineColor: '#5e5e5e',
+                  secondaryColor: '#40e0d0',
+                  tertiaryColor: '#f9fafb'
+                }
+              });
+            </script>
             
             <div style="margin-top: 1.5rem; display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1rem;">
               <div style="background: #eff6ff; border-left: 4px solid #3b82f6; padding: 1rem; border-radius: 4px;">
@@ -1381,7 +1417,7 @@
     </div>
 
     <!-- Template Library Section -->
-    <div id="templatesApp" class="app-section">
+    <div id="templatesApp" class="app-section active">
       <div class="container">
         <header>
           <div class="ms-logo">MICROSOFT AI ACCELERATE</div>

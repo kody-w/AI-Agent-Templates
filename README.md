@@ -1,14 +1,103 @@
-# AI Agent Templates
+# AI Agent Templates 🚀
 
-A comprehensive collection of AI agent templates and stacks for building intelligent automation solutions. This repository provides ready-to-use agent templates for various business scenarios including CRM integration, email management, calendar scheduling, and more.
+A comprehensive collection of AI agent templates and stacks for building intelligent automation solutions with Azure and Microsoft 365 integration.
 
-## 🚀 Features
+[![Deploy to Azure](https://aka.ms/deploytoazurebutton)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fkody-w%2FAI-Agent-Templates%2Fmain%2Fazuredeploy.json)
 
-- **Modular Agent Architecture**: Built on a flexible `BasicAgent` base class for easy extension
-- **Pre-built Agent Templates**: Ready-to-use agents for common business scenarios
-- **Agent Stacks**: Complete solutions combining multiple agents for complex workflows
-- **Integration Ready**: Templates for popular platforms (Dynamics 365, Salesforce, ServiceNow, etc.)
-- **Azure Integration**: Built-in support for Azure services (OpenAI, File Storage)
+## 🌟 Quick Start - Three Ways to Deploy
+
+### 1. Azure Deployment (Recommended)
+Deploy complete infrastructure in minutes with our one-click Azure deployment.
+
+### 2. Microsoft 365 Copilot Integration
+Connect your agents directly to Teams and M365 Copilot using our Power Platform solution.
+
+### 3. Standalone Development
+Use individual agents and stacks in your own applications.
+
+## 🏗️ Solution Architecture
+
+```mermaid
+graph TB
+    subgraph "User Interface Layer"
+        M365[Microsoft 365 Copilot]
+        Teams[Microsoft Teams]
+        Web[Web Interface]
+    end
+    
+    subgraph "Conversation Layer"
+        CS[Copilot Studio<br/>NLP & Auth]
+    end
+    
+    subgraph "Integration Layer"
+        PA[Power Automate<br/>Orchestration]
+    end
+    
+    subgraph "Processing Layer"
+        AF[Azure Function<br/>Agent Execution]
+    end
+    
+    subgraph "Agent Layer"
+        Agents[AI Agents<br/>Business Logic]
+    end
+    
+    M365 --> CS
+    Teams --> CS
+    Web --> CS
+    CS --> PA
+    PA --> AF
+    AF --> Agents
+    
+    style M365 fill:#eff6ff
+    style CS fill:#f3e8ff
+    style PA fill:#fef3c7
+    style AF fill:#dcfce7
+    style Agents fill:#fce7f3
+```
+
+## 🚀 Getting Started
+
+### Step 1: Deploy to Azure (1 minute)
+
+Click the Deploy to Azure button above or use this link:
+```
+https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fkody-w%2FAI-Agent-Templates%2Fmain%2Fazuredeploy.json
+```
+
+This deploys:
+- ✅ Azure OpenAI Service (GPT-4o)
+- ✅ Azure Function App
+- ✅ Storage Account
+- ✅ Application Insights
+
+### Step 2: Test Your Endpoint
+
+After deployment, get your function URL from the Azure Portal:
+
+```bash
+curl -X POST [YOUR_FUNCTION_URL] \
+  -H "Content-Type: application/json" \
+  -d '{"action": "test", "agent": "basic_agent"}'
+```
+
+### Step 3: Connect to Microsoft 365 (Optional)
+
+1. **Download Power Platform Solution**: [MSFTAIBASMultiAgentCopilot_1_0_0_2.zip](https://github.com/kody-w/AI-Agent-Templates/raw/main/MSFTAIBASMultiAgentCopilot_1_0_0_2.zip)
+
+2. **Import to Power Platform**:
+   - Go to [make.powerapps.com](https://make.powerapps.com)
+   - Solutions → Import solution
+   - Upload the ZIP file
+
+3. **Configure Power Automate**:
+   - Edit "Talk to MAC" flow
+   - Update HTTP action with your Azure Function URL
+   - Save and activate
+
+4. **Deploy to Teams/M365**:
+   - Open in [Copilot Studio](https://copilotstudio.microsoft.com)
+   - Channels → Microsoft Teams → Turn on
+   - For M365 Copilot: Enable M365 channel
 
 ## 📁 Project Structure
 
@@ -17,174 +106,82 @@ AI-Agent-Templates/
 ├── agents/                    # Individual agent templates
 │   ├── basic_agent.py         # Base agent class
 │   ├── calendar_agent.py      # Calendar scheduling
-│   ├── dynamics_365_agent.py  # Dynamics 365 CRM integration
+│   ├── dynamics_365_agent.py  # Dynamics 365 CRM
 │   ├── email_drafting_agent.py # Email composition
-│   ├── image_generation_agent.py # DALL-E image generation
-│   └── ...                    # More agent templates
-├── agent_stacks/              # Complete agent solutions
-│   ├── crm_bulk_data_creator_stack/
-│   │   ├── agents/            # Stack-specific agents
-│   │   ├── demos/             # Interactive demonstrations
-│   │   └── metadata.json      # Stack configuration
-│   ├── email_drafting_stack/
-│   │   ├── agents/            # Email processing agents
-│   │   ├── demos/             # Demo interfaces
-│   │   ├── files/             # Additional resources
-│   │   └── metadata.json      # Stack configuration
-│   ├── simulation_sales_stack/
-│   │   ├── agents/            # Sales simulation agents
-│   │   ├── demos/             # Interactive demos
-│   │   └── metadata.json      # Stack configuration
-│   └── voice_to_crm_stack/
-│       ├── agents/            # Voice processing agents
-│       ├── demos/             # Voice-to-CRM demo
-│       ├── files/             # Supporting files
-│       └── metadata.json      # Stack configuration
-└── index.html                 # Web interface gallery
-
+│   └── ...                    # 20+ more agents
+├── agent_stacks/              # Complete solutions
+│   ├── voice_to_crm_stack/    # Voice-enabled CRM
+│   ├── crm_bulk_data_stack/   # Test data generation
+│   ├── email_drafting_stack/  # Email automation
+│   └── simulation_sales_stack/ # Sales training
+├── azuredeploy.json           # Azure ARM template
+├── index.html                 # Web interface
+└── manifest.json              # Agent registry
 ```
 
 ## 🤖 Available Agents
 
 ### Core Agents
 - **BasicAgent**: Base class for all agents
-- **ContextMemoryAgent**: Agent with persistent memory capabilities
-- **ManageMemoryAgent**: Memory management and optimization
+- **ContextMemoryAgent**: Persistent memory capabilities
+- **ManageMemoryAgent**: Memory optimization
 
-### Business Integration Agents
-- **Dynamics365Agent**: Microsoft Dynamics 365 CRM operations
-- **SalesforceQueryAgent**: Salesforce data queries and operations
-- **ServiceNowAgent**: ServiceNow ticket and workflow management
-- **CalendarAgent**: Meeting scheduling with conflict resolution
+### Business Integration
+- **Dynamics365Agent**: Microsoft Dynamics 365 operations
+- **SalesforceQueryAgent**: Salesforce data queries
+- **ServiceNowAgent**: ServiceNow ticket management
+- **CalendarAgent**: Meeting scheduling
 - **EmailDraftingAgent**: Intelligent email composition
 
-### Utility Agents
-- **ImageGenerationAgent**: Azure OpenAI DALL-E integration
-- **CodeReviewAgent**: Automated code review and analysis
-- **AdaptiveCardAgent**: Microsoft Adaptive Cards generation
-- **DuckDuckGoSearchAgent**: Web search capabilities
-- **HackerNewsAgent**: Hacker News content fetching
-
-### Demo & Skill Agents
+### AI & Automation
+- **ImageGenerationAgent**: DALL-E image generation
+- **CodeReviewAgent**: Automated code analysis
 - **PowerPointAgent**: Presentation generation
-- **MeetingPrepAgent**: Meeting preparation assistance
-- **MotivationalQuoteSkill**: Random motivational quotes
-- **FetchRandomWikipediaArticle**: Wikipedia content retrieval
+- **DuckDuckGoSearchAgent**: Web search capabilities
 
 ## 🛠️ Agent Stacks
 
-Agent Stacks are complete, production-ready solutions that combine multiple agents to solve complex business problems. Each stack follows a standardized structure:
-
-- **`agents/`** - Contains all Python agent files for the stack
-- **`demos/`** - Interactive HTML demonstrations
-- **`files/`** - Additional resources and dependencies
-- **`metadata.json`** - Complete stack configuration and documentation
+Complete, production-ready solutions combining multiple agents:
 
 ### Voice to CRM Stack
-Voice-enabled CRM data entry with real-time processing:
-- Speech-to-text conversion with Azure Cognitive Services
-- Natural language processing for entity extraction
-- Automatic CRM record creation in Dynamics 365/ServiceNow
-- Email drafting from voice commands
-- SharePoint document linking
-- Live API integration mode for production use
+```mermaid
+graph LR
+    Voice[Voice Input] --> STT[Speech-to-Text]
+    STT --> NLP[NLP Processing]
+    NLP --> CRM[CRM Update]
+    NLP --> Email[Email Draft]
+    CRM --> Confirm[Confirmation]
+```
+
+**Features:**
+- Real-time voice transcription
+- Entity extraction
+- Automatic CRM record creation
+- Email drafting from voice
+- SharePoint integration
 
 ### CRM Bulk Data Creator Stack
-Complete solution for generating test data in CRM systems:
-- Generate thousands of realistic customer records
-- Create complex relationship hierarchies
-- Bulk import to Dynamics 365
-- Industry-specific data templates
-- GDPR-compliant test data generation
-- Performance testing datasets
+Generate realistic test data for CRM systems:
+- 1000s of customer records
+- Complex relationships
+- GDPR-compliant data
+- Industry templates
 
 ### Email Drafting Stack
-AI-powered email composition and automation:
-- Context-aware email generation
+AI-powered email automation:
+- Context-aware generation
 - Multi-language support
-- Microsoft 365 integration
-- Sentiment analysis and tone adjustment
-- Template library management
-- Automated follow-up scheduling
+- Sentiment analysis
+- Template management
 
-### Simulation Sales Stack
-Advanced sales training and simulation platform:
-- Realistic customer persona simulations
-- Real-time AI coaching and feedback
-- Objection handling practice
-- Negotiation scenario training
-- Performance analytics dashboard
-- Gamification and leaderboards
+### Sales Simulation Stack
+Advanced training platform:
+- Customer persona simulations
+- Real-time coaching
+- Objection handling
+- Performance analytics
 
-## 🚦 Getting Started
-
-### Prerequisites
-```python
-# Required Python packages (install as needed)
-import json
-import random
-import requests
-import logging
-from datetime import datetime
-```
-
-### Basic Usage
-
-1. **Using a Basic Agent:**
-```python
-from agents.basic_agent import BasicAgent
-
-# Create an agent instance
-agent = BasicAgent(name="MyAgent", metadata={})
-
-# Execute agent task
-result = agent.perform()
-```
-
-2. **Using Specialized Agents:**
-```python
-from agents.calendar_agent import CalendarAgent
-
-# Initialize calendar agent
-calendar = CalendarAgent()
-
-# Schedule a meeting
-meeting_result = calendar.perform()
-```
-
-3. **Using Agent Stacks:**
-```python
-# Import agents from the standardized structure
-from agent_stacks.crm_bulk_data_creator_stack.agents.bulk_crm_data_generator import BulkCRMDataGeneratorAgent
-from agent_stacks.voice_to_crm_stack.agents.dynamics_365_agent import Dynamics365Agent
-
-# Initialize bulk data generator
-generator = BulkCRMDataGeneratorAgent()
-
-# Generate CRM data
-data = generator.perform(
-    iterations=10,
-    company_name_components={...},
-    contact_name_pools={...}
-)
-
-# Or use voice-to-CRM agents
-dynamics = Dynamics365Agent()
-result = dynamics.create_account(account_data)
-```
-
-## 🔧 Configuration
-
-Most agents require environment variables or configuration:
-
-```python
-# Example for Azure OpenAI integration
-AZURE_OPENAI_API_KEY = "your-api-key"
-AZURE_OPENAI_ENDPOINT = "your-endpoint"
-AZURE_STORAGE_CONNECTION_STRING = "your-connection-string"
-```
-
-## 📚 Agent Development
+## 💻 Development Guide
 
 ### Creating a Custom Agent
 
@@ -200,81 +197,160 @@ class CustomAgent(BasicAgent):
             "parameters": {
                 "type": "object",
                 "properties": {
-                    # Define your parameters
+                    "input": {
+                        "type": "string",
+                        "description": "Input parameter"
+                    }
                 },
-                "required": []
+                "required": ["input"]
             }
         }
         super().__init__(name=self.name, metadata=self.metadata)
     
     def perform(self, **kwargs):
-        # Implement your agent logic
-        return "Agent result"
+        input_data = kwargs.get('input', '')
+        # Your logic here
+        return f"Processed: {input_data}"
+```
+
+### Using Agent Stacks
+
+```python
+from agent_stacks.voice_to_crm_stack.agents.dynamics_365_agent import Dynamics365Agent
+
+# Initialize agent
+dynamics = Dynamics365Agent()
+
+# Create CRM record
+result = dynamics.create_account({
+    "name": "Contoso Corp",
+    "revenue": 1000000
+})
+```
+
+## 🔧 Configuration
+
+### Environment Variables
+
+```bash
+# Azure OpenAI
+AZURE_OPENAI_API_KEY="your-key"
+AZURE_OPENAI_ENDPOINT="your-endpoint"
+AZURE_OPENAI_DEPLOYMENT_NAME="gpt-4o"
+
+# Azure Storage
+AZURE_STORAGE_CONNECTION_STRING="your-connection"
+
+# Dynamics 365 (if using CRM agents)
+DYNAMICS_365_CLIENT_ID="your-client-id"
+DYNAMICS_365_CLIENT_SECRET="your-secret"
+DYNAMICS_365_TENANT_ID="your-tenant"
+DYNAMICS_365_RESOURCE="your-resource"
 ```
 
 ## 🌐 Web Interface
 
-The project includes a comprehensive web interface (`index.html`) that provides:
-- **Agent Gallery**: Browse and explore all available agents
-- **Stack Templates**: Interactive demos for each agent stack
-- **Trading Card Export**: Generate standalone HTML "trading cards" for sharing agent stacks
-- **Live API Integration**: Connect to your own Azure Functions for real-time processing
-- **Optimized Loading**: Uses pre-generated manifest.json to avoid API rate limits
+Open `index.html` to access:
+- **Discovery Tool**: Find the right agents for your needs
+- **Setup Guide**: Step-by-step deployment instructions
+- **Template Library**: Browse and export agent stacks
+- **Agent Store**: Individual agent catalog
 
-### Performance & Scalability
-The web interface uses a **multi-tier loading system** to ensure scalability:
-1. **Primary: Manifest-based loading** - Single `manifest.json` file contains all agent/stack metadata
-2. **Fallback: Raw URL loading** - Uses `raw.githubusercontent.com` URLs (no rate limits for public repos!)
-3. **Local fallback** - Hardcoded agent list for offline development
+### Features
+- 🎯 Interactive agent selection
+- 📦 One-click stack export
+- 🔄 Live API integration
+- 📊 Visual architecture diagrams
 
-Key benefits:
-- No GitHub API rate limits when using raw URLs
-- Automatically generated manifest via `update_manifest.py` script
-- Loads instantly with minimal HTTP requests
-- Works reliably even during GitHub API outages
+## 📊 Performance & Scalability
 
-Open `index.html` in a browser to explore the full gallery and interactive demonstrations.
+```mermaid
+graph LR
+    subgraph "Load Distribution"
+        LB[Load Balancer] --> F1[Function 1]
+        LB --> F2[Function 2]
+        LB --> F3[Function N]
+    end
+    
+    subgraph "Caching Layer"
+        F1 --> Cache[Redis Cache]
+        F2 --> Cache
+        F3 --> Cache
+    end
+    
+    subgraph "Storage"
+        Cache --> Storage[Azure Storage]
+        Cache --> DB[(Cosmos DB)]
+    end
+```
+
+### Optimization Features
+- **Manifest-based loading**: Instant load times
+- **Raw URL fallback**: No API rate limits
+- **Agent caching**: Reduced latency
+- **Parallel execution**: Multi-agent processing
+
+## 🔐 Security & Compliance
+
+- **Azure AD Integration**: Enterprise authentication
+- **Managed Identities**: Secure credential handling
+- **RBAC**: Role-based access control
+- **Audit Logging**: Complete activity tracking
+- **GDPR Compliant**: Data privacy controls
+
+## 📈 Monitoring & Analytics
+
+The solution includes built-in monitoring:
+- Application Insights integration
+- Custom metrics tracking
+- Performance dashboards
+- Error tracking and alerts
 
 ## 🤝 Contributing
 
-Contributions are welcome! 
+We welcome contributions! See our [Contributing Guide](CONTRIBUTING.md) for details.
 
-### To add a new individual agent:
-1. Create a new Python file in the `agents/` directory
-2. Extend the `BasicAgent` class
-3. Implement the `perform()` method
-4. Add appropriate metadata and parameters
-5. Document your agent's functionality
+### Adding a New Agent
+1. Create Python file in `agents/`
+2. Extend `BasicAgent` class
+3. Implement `perform()` method
+4. Add metadata
+5. Update manifest
 
-### To add a new agent stack:
-1. Create a new directory under `agent_stacks/your_stack_name/`
-2. Follow the standard structure:
-   - `agents/` - Place all Python agent files here
-   - `demos/` - Add interactive HTML demonstrations
-   - `files/` - Include any additional resources
-   - `metadata.json` - Define stack configuration
-3. Ensure your metadata.json includes all required fields
-4. Add demo files to showcase stack capabilities
+### Adding a Stack
+1. Create directory in `agent_stacks/`
+2. Add agents, demos, and metadata
+3. Include demo HTML
+4. Update documentation
+
+## 📚 Resources
+
+- [Azure OpenAI Documentation](https://learn.microsoft.com/azure/ai-services/openai/)
+- [Copilot Studio Guide](https://learn.microsoft.com/microsoft-copilot-studio/)
+- [Power Platform Documentation](https://learn.microsoft.com/power-platform/)
+- [Azure Functions Guide](https://learn.microsoft.com/azure/azure-functions/)
+
+## 💰 Cost Estimation
+
+| Component | Monthly Cost |
+|-----------|-------------|
+| Azure Function App | ~$0 (consumption plan) |
+| Storage Account | ~$5 |
+| Azure OpenAI | Pay-per-use (~$0.01/1K tokens) |
+| **Total** | **~$5-10/month + usage** |
+
+## 🆘 Support
+
+- **Issues**: [GitHub Issues](https://github.com/kody-w/AI-Agent-Templates/issues)
+- **Discussions**: [GitHub Discussions](https://github.com/kody-w/AI-Agent-Templates/discussions)
+- **Documentation**: [Wiki](https://github.com/kody-w/AI-Agent-Templates/wiki)
 
 ## 📝 License
 
 This project is provided as-is for educational and development purposes.
 
-## 🔗 Integration Examples
-
-### Dynamics 365 Integration
-The Dynamics 365 agents provide comprehensive CRM functionality including account management, contact creation, and opportunity tracking.
-
-### Azure Services Integration
-Multiple agents leverage Azure services:
-- Azure OpenAI for image generation
-- Azure File Storage for document management
-- Azure Cognitive Services for various AI capabilities
-
-## 📧 Support
-
-For questions or issues, please create an issue in the repository.
-
 ---
 
-**Note**: Remember to configure your API keys and endpoints before using agents that require external service integration.
+**Built with ❤️ for the AI community**
+
+⭐ Star this repo if it helps you!
