@@ -2804,8 +2804,8 @@
               // Fallback to raw URL loading (no API, no rate limits!)
               console.warn("Manifest not available, falling back to raw URL loading");
               const singularAgents = await this.loadAgentsViaRawUrls();
-              const agentStacks = await this.loadStacksViaRawUrls();
-              this.agents = [...singularAgents, ...agentStacks];
+              const stackAgents = await this.loadStacksViaRawUrls();
+              this.agents = [...singularAgents, ...stackAgents];
             }
 
             // Sort agents alphabetically
