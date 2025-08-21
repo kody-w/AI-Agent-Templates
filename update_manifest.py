@@ -5,9 +5,8 @@ Run this locally to regenerate the manifest with all agent/stack information.
 """
 
 import json
-import os
 from pathlib import Path
-from datetime import datetime
+from datetime import datetime, timezone
 
 def format_file_size(size):
     """Format file size in human-readable format"""
@@ -220,7 +219,7 @@ def main():
     # Build manifest
     manifest = {
         "version": "1.0.0",
-        "generated": datetime.utcnow().isoformat() + "Z",
+        "generated": datetime.now(timezone.utc).isoformat().replace('+00:00', 'Z'),
         "repository": "kody-w/AI-Agent-Templates",
         "branch": "main",
         "agents": [],
