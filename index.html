@@ -292,6 +292,16 @@
         overflow: hidden;
       }
 
+      .template-card.dynamic-stack {
+        border: 2px solid #667eea;
+        background: linear-gradient(to bottom, #ffffff, #f8f6ff);
+      }
+
+      .template-card.dynamic-stack:hover {
+        border-color: #764ba2;
+        box-shadow: 0 4px 20px rgba(102, 126, 234, 0.3);
+      }
+
       .template-card::before {
         content: "";
         position: absolute;
@@ -1499,6 +1509,7 @@
           this.templatesLoaded = false;
           this.agentTemplates = [];
           this.filteredTemplates = [];
+          this.dynamicStacks = [];
         }
 
         async loadTemplates() {
@@ -1507,7 +1518,10 @@
             await agentStore.loadAgents();
           }
 
-          // Create templates based on available agents
+          // Load dynamic stacks from GitHub
+          await this.loadDynamicStacks();
+
+          // Combine hardcoded templates with dynamic stacks
           this.agentTemplates = [
             {
               id: "basic-starter",
@@ -1662,9 +1676,115 @@
             },
           ];
 
+          // Append dynamic stacks to the templates
+          this.agentTemplates = [...this.agentTemplates, ...this.dynamicStacks];
+          
           this.filteredTemplates = [...this.agentTemplates];
           this.templatesLoaded = true;
           this.renderTemplates(this.filteredTemplates);
+        }
+
+        async loadDynamicStacks() {
+          try {
+            // Fetch the list of stacks from GitHub API
+            const apiUrl = `https://api.github.com/repos/${agentStore.GITHUB_REPO}/contents/${agentStore.STACKS_PATH}?ref=${agentStore.BRANCH}`;
+            const response = await fetch(apiUrl);
+
+            if (!response.ok) {
+              console.error("Failed to load dynamic stacks");
+              return;
+            }
+
+            const stackDirs = await response.json();
+            this.dynamicStacks = [];
+
+            // Process each stack directory
+            for (const stackDir of stackDirs) {
+              if (stackDir.type === "dir") {
+                const stackTemplate = await this.createStackTemplate(stackDir);
+                if (stackTemplate) {
+                  this.dynamicStacks.push(stackTemplate);
+                }
+              }
+            }
+          } catch (error) {
+            console.error("Error loading dynamic stacks:", error);
+          }
+        }
+
+        async createStackTemplate(stackDir) {
+          try {
+            const stackName = this.formatStackName(stackDir.name);
+            const agentIds = [];
+            
+            // Check for agents subdirectory
+            const agentsUrl = `https://api.github.com/repos/${agentStore.GITHUB_REPO}/contents/${stackDir.path}/agents?ref=${agentStore.BRANCH}`;
+            const agentsResponse = await fetch(agentsUrl);
+            
+            if (agentsResponse.ok) {
+              const agentFiles = await agentsResponse.json();
+              const pythonAgentIds = agentFiles
+                .filter(file => file.name.endsWith(".py") && file.name !== "__init__.py")
+                .map(file => `${stackDir.name}_${file.name.replace(".py", "")}`);
+              agentIds.push(...pythonAgentIds);
+            }
+            
+            // Also check for Python files in the root of the stack directory
+            const rootUrl = `https://api.github.com/repos/${agentStore.GITHUB_REPO}/contents/${stackDir.path}?ref=${agentStore.BRANCH}`;
+            const rootResponse = await fetch(rootUrl);
+            
+            if (rootResponse.ok) {
+              const rootFiles = await rootResponse.json();
+              const rootPythonIds = rootFiles
+                .filter(file => file.type === "file" && file.name.endsWith(".py") && file.name !== "__init__.py")
+                .map(file => `${stackDir.name}_${file.name.replace(".py", "")}`);
+              agentIds.push(...rootPythonIds);
+            }
+
+            if (agentIds.length === 0) return null;
+
+            // Determine complexity based on number of agents
+            let complexity = "starter";
+            if (agentIds.length > 5) complexity = "advanced";
+            else if (agentIds.length > 3) complexity = "intermediate";
+
+            // Create template object
+            return {
+              id: stackDir.name,
+              name: `${stackName} Stack`,
+              description: `Complete ${stackName} solution with ${agentIds.length} integrated agents`,
+              useCase: this.determineStackUseCase(stackDir.name),
+              complexity: complexity,
+              estimatedTime: `${Math.ceil(agentIds.length / 2)} weeks`,
+              agents: agentIds,
+              benefits: [
+                `${agentIds.length} specialized agents`,
+                "Pre-integrated solution",
+                "Ready to deploy",
+                "GitHub-sourced",
+              ],
+              isDynamic: true,
+              stackPath: stackDir.name
+            };
+          } catch (error) {
+            console.error(`Error creating stack template for ${stackDir.name}:`, error);
+            return null;
+          }
+        }
+
+        formatStackName(dirname) {
+          return dirname
+            .replace(/_stack$/, "")
+            .split("_")
+            .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+            .join(" ");
+        }
+
+        determineStackUseCase(stackName) {
+          if (stackName.includes("crm") || stackName.includes("sales")) return "sales";
+          if (stackName.includes("email") || stackName.includes("voice")) return "communication";
+          if (stackName.includes("data") || stackName.includes("analysis")) return "analytics";
+          return "productivity";
         }
 
         renderTemplates(templates) {
@@ -1704,7 +1824,7 @@
               });
 
               return `
-                        <div class="template-card">
+                        <div class="template-card ${template.isDynamic ? 'dynamic-stack' : ''}">
                             <div class="template-header">
                                 <div>
                                     <h3 class="template-title">${
@@ -1723,6 +1843,12 @@
                                     </span>
                                 </div>
                             </div>
+
+                            ${template.isDynamic ? `
+                            <div style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 0.5rem; border-radius: 6px; margin-bottom: 0.75rem; text-align: center; font-weight: 500;">
+                                🚀 Dynamic GitHub Stack
+                            </div>
+                            ` : ''}
 
                             <p class="template-description">${
                               template.description
@@ -2107,7 +2233,9 @@
           this.GITHUB_REPO = "kody-w/AI-Agent-Templates";
           this.BRANCH = "main";
           this.AGENTS_PATH = "agents";
+          this.STACKS_PATH = "agent_stacks";
           this.agents = [];
+          this.stacks = [];
           this.filteredAgents = [];
           this.cart = [];
           this.agentCode = {};
@@ -2119,6 +2247,39 @@
           try {
             this.showLoading(true);
 
+            // Load both singular agents and agent stacks in parallel
+            const [singularAgents, agentStacks] = await Promise.all([
+              this.loadSingularAgents(),
+              this.loadAgentStacks()
+            ]);
+
+            // Combine all agents (singular + stack agents)
+            this.agents = [...singularAgents, ...agentStacks];
+
+            // Sort agents alphabetically
+            this.agents.sort((a, b) => a.name.localeCompare(b.name));
+
+            this.filteredAgents = [...this.agents];
+            this.updateStats();
+            this.renderAgents();
+
+            this.showLoading(false);
+            showToast(
+              `Loaded ${singularAgents.length} agents and ${agentStacks.length} stacks from GitHub`,
+              "success"
+            );
+          } catch (error) {
+            console.error("Error loading agents:", error);
+            this.showLoading(false);
+            this.showError(
+              "Failed to load agents from GitHub. Please check your connection and try again."
+            );
+            showToast("Error loading agents from GitHub", "error");
+          }
+        }
+
+        async loadSingularAgents() {
+          try {
             // Fetch the list of files from GitHub API
             const apiUrl = `https://api.github.com/repos/${this.GITHUB_REPO}/contents/${this.AGENTS_PATH}?ref=${this.BRANCH}`;
             const response = await fetch(apiUrl);
@@ -2130,7 +2291,7 @@
             const files = await response.json();
 
             // Filter for Python files and exclude __init__.py
-            this.agents = files
+            return files
               .filter(
                 (file) =>
                   file.name.endsWith(".py") && file.name !== "__init__.py"
@@ -2148,28 +2309,122 @@
                 category: this.getAgentCategory(file.name),
                 description: this.getAgentDescription(file.name),
                 features: this.getAgentFeatures(file.name),
+                type: "singular",
+                stackName: null
               }));
-
-            // Sort agents alphabetically
-            this.agents.sort((a, b) => a.name.localeCompare(b.name));
-
-            this.filteredAgents = [...this.agents];
-            this.updateStats();
-            this.renderAgents();
-
-            this.showLoading(false);
-            showToast(
-              `Loaded ${this.agents.length} agents from GitHub`,
-              "success"
-            );
           } catch (error) {
-            console.error("Error loading agents:", error);
-            this.showLoading(false);
-            this.showError(
-              "Failed to load agents from GitHub. Please check your connection and try again."
-            );
-            showToast("Error loading agents from GitHub", "error");
+            console.error("Error loading singular agents:", error);
+            return [];
           }
+        }
+
+        async loadAgentStacks() {
+          try {
+            // Fetch the list of stacks from GitHub API
+            const apiUrl = `https://api.github.com/repos/${this.GITHUB_REPO}/contents/${this.STACKS_PATH}?ref=${this.BRANCH}`;
+            const response = await fetch(apiUrl);
+
+            if (!response.ok) {
+              throw new Error(`GitHub API returned ${response.status}`);
+            }
+
+            const stackDirs = await response.json();
+            const allStackAgents = [];
+
+            // Process each stack directory
+            for (const stackDir of stackDirs) {
+              if (stackDir.type === "dir") {
+                const stackAgents = await this.loadStackAgents(stackDir);
+                allStackAgents.push(...stackAgents);
+              }
+            }
+
+            return allStackAgents;
+          } catch (error) {
+            console.error("Error loading agent stacks:", error);
+            return [];
+          }
+        }
+
+        async loadStackAgents(stackDir) {
+          const stackAgents = [];
+          const stackName = this.formatStackName(stackDir.name);
+          
+          try {
+            // Check for agents subdirectory
+            const agentsUrl = `https://api.github.com/repos/${this.GITHUB_REPO}/contents/${stackDir.path}/agents?ref=${this.BRANCH}`;
+            const agentsResponse = await fetch(agentsUrl);
+            
+            if (agentsResponse.ok) {
+              const agentFiles = await agentsResponse.json();
+              
+              // Process agent files in the agents subdirectory
+              const pythonAgents = agentFiles
+                .filter(file => file.name.endsWith(".py") && file.name !== "__init__.py")
+                .map(file => ({
+                  id: `${stackDir.name}_${file.name.replace(".py", "")}`,
+                  name: this.formatAgentName(file.name),
+                  filename: file.name,
+                  path: file.path,
+                  url: file.download_url,
+                  size: this.formatFileSize(file.size),
+                  rawSize: file.size,
+                  sha: file.sha,
+                  icon: "📦",
+                  category: "stack",
+                  description: `Part of ${stackName} stack`,
+                  features: this.getAgentFeatures(file.name),
+                  type: "stack",
+                  stackName: stackName,
+                  stackPath: stackDir.name
+                }));
+              
+              stackAgents.push(...pythonAgents);
+            }
+            
+            // Also check for Python files in the root of the stack directory
+            const rootUrl = `https://api.github.com/repos/${this.GITHUB_REPO}/contents/${stackDir.path}?ref=${this.BRANCH}`;
+            const rootResponse = await fetch(rootUrl);
+            
+            if (rootResponse.ok) {
+              const rootFiles = await rootResponse.json();
+              
+              const rootPythonFiles = rootFiles
+                .filter(file => file.type === "file" && file.name.endsWith(".py") && file.name !== "__init__.py")
+                .map(file => ({
+                  id: `${stackDir.name}_${file.name.replace(".py", "")}`,
+                  name: this.formatAgentName(file.name),
+                  filename: file.name,
+                  path: file.path,
+                  url: file.download_url,
+                  size: this.formatFileSize(file.size),
+                  rawSize: file.size,
+                  sha: file.sha,
+                  icon: "📦",
+                  category: "stack",
+                  description: `Part of ${stackName} stack`,
+                  features: this.getAgentFeatures(file.name),
+                  type: "stack",
+                  stackName: stackName,
+                  stackPath: stackDir.name
+                }));
+              
+              stackAgents.push(...rootPythonFiles);
+            }
+          } catch (error) {
+            console.error(`Error loading agents from stack ${stackDir.name}:`, error);
+          }
+          
+          return stackAgents;
+        }
+
+        formatStackName(dirname) {
+          // Convert directory name to readable stack name
+          return dirname
+            .replace(/_stack$/, "")
+            .split("_")
+            .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+            .join(" ");
         }
 
         formatAgentName(filename) {
