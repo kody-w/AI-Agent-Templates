@@ -1679,6 +1679,53 @@
           // Append dynamic stacks to the templates
           this.agentTemplates = [...this.agentTemplates, ...this.dynamicStacks];
           
+          // Sort templates by data completeness (most complete first)
+          this.agentTemplates.sort((a, b) => {
+            // Calculate completeness score for each template
+            const getCompletenessScore = (template) => {
+              let score = 0;
+              
+              // Has demo available (highest priority)
+              if (template.demo && template.demo.available) score += 100;
+              
+              // Has live mode capability
+              if (template.hasLiveMode) score += 50;
+              
+              // Has downloadable files
+              if (template.files && template.files.length > 0) score += 30;
+              
+              // Has detailed metadata
+              if (template.features && template.features.length > 0) score += 20;
+              if (template.benefits && template.benefits.length > 0) score += 15;
+              if (template.technicalRequirements) score += 15;
+              
+              // Has multiple agents
+              if (template.agents && template.agents.length > 3) score += 10;
+              else if (template.agents && template.agents.length > 0) score += 5;
+              
+              // Has components defined
+              if (template.components && template.components.length > 0) score += 10;
+              
+              // Has use case and complexity defined
+              if (template.useCase) score += 5;
+              if (template.complexity) score += 5;
+              
+              // Is a dynamic stack (loaded from GitHub)
+              if (template.isDynamic) score += 10;
+              
+              return score;
+            };
+            
+            const scoreA = getCompletenessScore(a);
+            const scoreB = getCompletenessScore(b);
+            
+            // Sort by score (highest first), then by name
+            if (scoreA !== scoreB) {
+              return scoreB - scoreA;
+            }
+            return a.name.localeCompare(b.name);
+          });
+          
           this.filteredTemplates = [...this.agentTemplates];
           this.templatesLoaded = true;
           this.renderTemplates(this.filteredTemplates);
