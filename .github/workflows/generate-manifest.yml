@@ -1,0 +1,34 @@
+name: Generate Manifest
+
+on:
+  push:
+    branches: [ main ]
+    paths:
+      - 'agents/**'
+      - 'agent_stacks/**'
+      - 'scripts/generate_manifest.py'
+  workflow_dispatch:
+
+jobs:
+  generate-manifest:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - uses: actions/checkout@v3
+      with:
+        token: ${{ secrets.GITHUB_TOKEN }}
+    
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.9'
+    
+    - name: Generate manifest
+      run: python scripts/generate_manifest.py
+    
+    - name: Commit and push if changed
+      run: |
+        git config --global user.email "action@github.com"
+        git config --global user.name "GitHub Action"
+        git add manifest.json
+        git diff --quiet && git diff --staged --quiet || (git commit -m "Auto-update manifest.json" && git push)

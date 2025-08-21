@@ -1686,7 +1686,14 @@
 
         async loadDynamicStacks() {
           try {
-            // Fetch the list of stacks from GitHub API
+            // First try to use manifest data if available
+            if (agentStore.stacksManifest && agentStore.stacksManifest.length > 0) {
+              console.log("Loading stacks from manifest");
+              this.loadStacksFromManifest(agentStore.stacksManifest);
+              return;
+            }
+            
+            // Fallback to API calls if manifest not available
             const apiUrl = `https://api.github.com/repos/${agentStore.GITHUB_REPO}/contents/${agentStore.STACKS_PATH}?ref=${agentStore.BRANCH}`;
             const response = await fetch(apiUrl);
 
@@ -1715,6 +1722,46 @@
           } catch (error) {
             console.error("Error loading dynamic stacks:", error);
           }
+        }
+
+        loadStacksFromManifest(stacksData) {
+          this.dynamicStacks = [];
+          
+          for (const stack of stacksData) {
+            const template = {
+              id: stack.id,
+              name: stack.metadata?.name || this.formatStackName(stack.id),
+              description: stack.metadata?.description || `Complete ${stack.name} solution`,
+              longDescription: stack.metadata?.longDescription,
+              category: stack.metadata?.category || 'general',
+              complexity: stack.metadata?.complexity || 'intermediate',
+              estimatedTime: stack.metadata?.estimatedSetupTime || '1-2 weeks',
+              agents: stack.agents.map(a => a.id),
+              benefits: stack.metadata?.benefits || [],
+              features: stack.metadata?.features || [],
+              useCases: stack.metadata?.useCases,
+              technicalRequirements: stack.metadata?.technicalRequirements,
+              components: stack.metadata?.components,
+              demo: stack.metadata?.demo,
+              isDynamic: true,
+              stackPath: stack.id,
+              hasMetadata: !!stack.metadata,
+              manifestData: stack  // Store the full manifest data for later use
+            };
+            
+            this.dynamicStacks.push(template);
+            
+            // Also add stack agents to agentStore if not already there
+            if (stack.agents && stack.agents.length > 0) {
+              stack.agents.forEach(agent => {
+                if (!agentStore.agents.find(a => a.id === agent.id)) {
+                  agentStore.agents.push(agent);
+                }
+              });
+            }
+          }
+          
+          console.log(`Loaded ${this.dynamicStacks.length} stacks from manifest`);
         }
 
         async createStackTemplate(stackDir, loadAgents = false) {
@@ -2750,11 +2797,15 @@
           try {
             this.showLoading(true);
 
-            // Load only singular agents upfront (stacks will be lazy-loaded when needed)
-            const singularAgents = await this.loadSingularAgents();
-
-            // Initialize agents with just singular agents
-            this.agents = [...singularAgents];
+            // Try to load from manifest first (single request instead of many API calls)
+            const manifestLoaded = await this.loadFromManifest();
+            
+            if (!manifestLoaded) {
+              // Fallback to API calls if manifest is not available
+              console.warn("Manifest not available, falling back to API calls");
+              const singularAgents = await this.loadSingularAgents();
+              this.agents = [...singularAgents];
+            }
 
             // Sort agents alphabetically
             this.agents.sort((a, b) => a.name.localeCompare(b.name));
@@ -2775,6 +2826,39 @@
               "Failed to load agents from GitHub. Please check your connection and try again."
             );
             showToast("Error loading agents from GitHub", "error");
+          }
+        }
+
+        async loadFromManifest() {
+          try {
+            // Load the pre-generated manifest file (single request!)
+            const response = await fetch('manifest.json');
+            
+            if (!response.ok) {
+              console.warn("Manifest file not found");
+              return false;
+            }
+            
+            const manifest = await response.json();
+            console.log(`Loaded manifest version ${manifest.version}, generated at ${manifest.generated}`);
+            
+            // Load all singular agents from manifest
+            this.agents = manifest.agents || [];
+            
+            // Store stack information for lazy loading
+            this.stacksManifest = manifest.stacks || [];
+            
+            // Also share with TemplateManager for stack templates
+            if (window.templateManager) {
+              window.templateManager.stacksManifest = this.stacksManifest;
+            }
+            
+            console.log(`Loaded ${this.agents.length} agents from manifest`);
+            return true;
+            
+          } catch (error) {
+            console.error("Error loading manifest:", error);
+            return false;
           }
         }
 

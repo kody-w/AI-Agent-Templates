@@ -219,7 +219,15 @@ The project includes a comprehensive web interface (`index.html`) that provides:
 - **Stack Templates**: Interactive demos for each agent stack
 - **Trading Card Export**: Generate standalone HTML "trading cards" for sharing agent stacks
 - **Live API Integration**: Connect to your own Azure Functions for real-time processing
-- **GitHub Integration**: Automatically loads agents and stacks from the repository
+- **Optimized Loading**: Uses pre-generated manifest.json to avoid API rate limits
+
+### Performance & Scalability
+The web interface uses a **manifest-based loading system** to ensure scalability:
+- Single `manifest.json` file contains all agent/stack metadata
+- Automatically generated via GitHub Actions when code changes
+- Eliminates GitHub API rate limit issues
+- Loads instantly with a single HTTP request
+- Falls back to API calls only if manifest is unavailable
 
 Open `index.html` in a browser to explore the full gallery and interactive demonstrations.
 

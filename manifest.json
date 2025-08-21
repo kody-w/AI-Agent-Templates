@@ -1,0 +1,1014 @@
+{
+  "version": "1.0.0",
+  "generated": "2025-08-21T16:38:25.432456Z",
+  "repository": "kody-w/AI-Agent-Templates",
+  "branch": "main",
+  "agents": [
+    {
+      "id": "calendar_agent",
+      "name": "Calendar Agent",
+      "filename": "calendar_agent.py",
+      "path": "agents/calendar_agent.py",
+      "url": "https://raw.githubusercontent.com/kody-w/AI-Agent-Templates/main/agents/calendar_agent.py",
+      "size": 2824,
+      "size_formatted": "2.8KB",
+      "type": "singular"
+    },
+    {
+      "id": "motivational_quote_skill",
+      "name": "Motivational Quote Skill",
+      "filename": "motivational_quote_skill.py",
+      "path": "agents/motivational_quote_skill.py",
+      "url": "https://raw.githubusercontent.com/kody-w/AI-Agent-Templates/main/agents/motivational_quote_skill.py",
+      "size": 1405,
+      "size_formatted": "1.4KB",
+      "type": "singular"
+    },
+    {
+      "id": "context_memory_agent",
+      "name": "Context Memory Agent",
+      "filename": "context_memory_agent.py",
+      "path": "agents/context_memory_agent.py",
+      "url": "https://raw.githubusercontent.com/kody-w/AI-Agent-Templates/main/agents/context_memory_agent.py",
+      "size": 7379,
+      "size_formatted": "7.2KB",
+      "type": "singular"
+    },
+    {
+      "id": "fixed_beehiiv_agent",
+      "name": "Fixed Beehiiv Agent",
+      "filename": "fixed_beehiiv_agent.py",
+      "path": "agents/fixed_beehiiv_agent.py",
+      "url": "https://raw.githubusercontent.com/kody-w/AI-Agent-Templates/main/agents/fixed_beehiiv_agent.py",
+      "size": 1809,
+      "size_formatted": "1.8KB",
+      "type": "singular"
+    },
+    {
+      "id": "Dynamics365DemoDataSeederAgent_agent",
+      "name": "Dynamics365Demodataseederagent Agent",
+      "filename": "Dynamics365DemoDataSeederAgent_agent.py",
+      "path": "agents/Dynamics365DemoDataSeederAgent_agent.py",
+      "url": "https://raw.githubusercontent.com/kody-w/AI-Agent-Templates/main/agents/Dynamics365DemoDataSeederAgent_agent.py",
+      "size": 9005,
+      "size_formatted": "8.8KB",
+      "type": "singular"
+    },
+    {
+      "id": "powerpoint_agent",
+      "name": "Powerpoint Agent",
+      "filename": "powerpoint_agent.py",
+      "path": "agents/powerpoint_agent.py",
+      "url": "https://raw.githubusercontent.com/kody-w/AI-Agent-Templates/main/agents/powerpoint_agent.py",
+      "size": 69601,
+      "size_formatted": "68.0KB",
+      "type": "singular"
+    },
+    {
+      "id": "MeetingPrepAgent_agent",
+      "name": "Meetingprepagent Agent",
+      "filename": "MeetingPrepAgent_agent.py",
+      "path": "agents/MeetingPrepAgent_agent.py",
+      "url": "https://raw.githubusercontent.com/kody-w/AI-Agent-Templates/main/agents/MeetingPrepAgent_agent.py",
+      "size": 32330,
+      "size_formatted": "31.6KB",
+      "type": "singular"
+    },
+    {
+      "id": "email_drafting_agent",
+      "name": "Email Drafting Agent",
+      "filename": "email_drafting_agent.py",
+      "path": "agents/email_drafting_agent.py",
+      "url": "https://raw.githubusercontent.com/kody-w/AI-Agent-Templates/main/agents/email_drafting_agent.py",
+      "size": 5007,
+      "size_formatted": "4.9KB",
+      "type": "singular"
+    },
+    {
+      "id": "basic_agent",
+      "name": "Basic Agent",
+      "filename": "basic_agent.py",
+      "path": "agents/basic_agent.py",
+      "url": "https://raw.githubusercontent.com/kody-w/AI-Agent-Templates/main/agents/basic_agent.py",
+      "size": 152,
+      "size_formatted": "152.0B",
+      "type": "singular"
+    },
+    {
+      "id": "servicenow-agent",
+      "name": "Servicenow-Agent",
+      "filename": "servicenow-agent.py",
+      "path": "agents/servicenow-agent.py",
+      "url": "https://raw.githubusercontent.com/kody-w/AI-Agent-Templates/main/agents/servicenow-agent.py",
+      "size": 11010,
+      "size_formatted": "10.8KB",
+      "type": "singular"
+    },
+    {
+      "id": "dynamics_365_agent",
+      "name": "Dynamics 365 Agent",
+      "filename": "dynamics_365_agent.py",
+      "path": "agents/dynamics_365_agent.py",
+      "url": "https://raw.githubusercontent.com/kody-w/AI-Agent-Templates/main/agents/dynamics_365_agent.py",
+      "size": 7182,
+      "size_formatted": "7.0KB",
+      "type": "singular"
+    },
+    {
+      "id": "adaptive_card_agent",
+      "name": "Adaptive Card Agent",
+      "filename": "adaptive_card_agent.py",
+      "path": "agents/adaptive_card_agent.py",
+      "url": "https://raw.githubusercontent.com/kody-w/AI-Agent-Templates/main/agents/adaptive_card_agent.py",
+      "size": 12513,
+      "size_formatted": "12.2KB",
+      "type": "singular"
+    },
+    {
+      "id": "HackerNewsAgent_agent",
+      "name": "Hackernewsagent Agent",
+      "filename": "HackerNewsAgent_agent.py",
+      "path": "agents/HackerNewsAgent_agent.py",
+      "url": "https://raw.githubusercontent.com/kody-w/AI-Agent-Templates/main/agents/HackerNewsAgent_agent.py",
+      "size": 1296,
+      "size_formatted": "1.3KB",
+      "type": "singular"
+    },
+    {
+      "id": "duckduckgo-search-agent",
+      "name": "Duckduckgo-Search-Agent",
+      "filename": "duckduckgo-search-agent.py",
+      "path": "agents/duckduckgo-search-agent.py",
+      "url": "https://raw.githubusercontent.com/kody-w/AI-Agent-Templates/main/agents/duckduckgo-search-agent.py",
+      "size": 7811,
+      "size_formatted": "7.6KB",
+      "type": "singular"
+    },
+    {
+      "id": "manage_memory_agent",
+      "name": "Manage Memory Agent",
+      "filename": "manage_memory_agent.py",
+      "path": "agents/manage_memory_agent.py",
+      "url": "https://raw.githubusercontent.com/kody-w/AI-Agent-Templates/main/agents/manage_memory_agent.py",
+      "size": 9837,
+      "size_formatted": "9.6KB",
+      "type": "singular"
+    },
+    {
+      "id": "image_generation_agent",
+      "name": "Image Generation Agent",
+      "filename": "image_generation_agent.py",
+      "path": "agents/image_generation_agent.py",
+      "url": "https://raw.githubusercontent.com/kody-w/AI-Agent-Templates/main/agents/image_generation_agent.py",
+      "size": 18156,
+      "size_formatted": "17.7KB",
+      "type": "singular"
+    },
+    {
+      "id": "salesforce_query_agent",
+      "name": "Salesforce Query Agent",
+      "filename": "salesforce_query_agent.py",
+      "path": "agents/salesforce_query_agent.py",
+      "url": "https://raw.githubusercontent.com/kody-w/AI-Agent-Templates/main/agents/salesforce_query_agent.py",
+      "size": 5067,
+      "size_formatted": "4.9KB",
+      "type": "singular"
+    },
+    {
+      "id": "extract_sharepoint_document_url_agent",
+      "name": "Extract Sharepoint Document Url Agent",
+      "filename": "extract_sharepoint_document_url_agent.py",
+      "path": "agents/extract_sharepoint_document_url_agent.py",
+      "url": "https://raw.githubusercontent.com/kody-w/AI-Agent-Templates/main/agents/extract_sharepoint_document_url_agent.py",
+      "size": 43530,
+      "size_formatted": "42.5KB",
+      "type": "singular"
+    },
+    {
+      "id": "code_review_agent",
+      "name": "Code Review Agent",
+      "filename": "code_review_agent.py",
+      "path": "agents/code_review_agent.py",
+      "url": "https://raw.githubusercontent.com/kody-w/AI-Agent-Templates/main/agents/code_review_agent.py",
+      "size": 23421,
+      "size_formatted": "22.9KB",
+      "type": "singular"
+    },
+    {
+      "id": "fetchrandomwikipediaarticle_skill",
+      "name": "Fetchrandomwikipediaarticle Skill",
+      "filename": "fetchrandomwikipediaarticle_skill.py",
+      "path": "agents/fetchrandomwikipediaarticle_skill.py",
+      "url": "https://raw.githubusercontent.com/kody-w/AI-Agent-Templates/main/agents/fetchrandomwikipediaarticle_skill.py",
+      "size": 2089,
+      "size_formatted": "2.0KB",
+      "type": "singular"
+    }
+  ],
+  "stacks": [
+    {
+      "id": "crm_bulk_data_creator_stack",
+      "name": "Crm Bulk Data Creator Stack",
+      "path": "agent_stacks/crm_bulk_data_creator_stack",
+      "agents": [
+        {
+          "id": "crm_bulk_data_creator_stack_OneClickCRMIntakeAgent",
+          "name": "Oneclickcrmintakeagent",
+          "filename": "OneClickCRMIntakeAgent.py",
+          "path": "agent_stacks/crm_bulk_data_creator_stack/agents/OneClickCRMIntakeAgent.py",
+          "url": "https://raw.githubusercontent.com/kody-w/AI-Agent-Templates/main/agent_stacks/crm_bulk_data_creator_stack/agents/OneClickCRMIntakeAgent.py",
+          "size": 42659,
+          "size_formatted": "41.7KB",
+          "type": "stack",
+          "stack_name": "Crm Bulk Data Creator Stack",
+          "stack_path": "crm_bulk_data_creator_stack"
+        },
+        {
+          "id": "crm_bulk_data_creator_stack_dynamics_365_agent",
+          "name": "Dynamics 365 Agent",
+          "filename": "dynamics_365_agent.py",
+          "path": "agent_stacks/crm_bulk_data_creator_stack/agents/dynamics_365_agent.py",
+          "url": "https://raw.githubusercontent.com/kody-w/AI-Agent-Templates/main/agent_stacks/crm_bulk_data_creator_stack/agents/dynamics_365_agent.py",
+          "size": 7182,
+          "size_formatted": "7.0KB",
+          "type": "stack",
+          "stack_name": "Crm Bulk Data Creator Stack",
+          "stack_path": "crm_bulk_data_creator_stack"
+        },
+        {
+          "id": "crm_bulk_data_creator_stack_bulk_crm_data_generator",
+          "name": "Bulk Crm Data Generator",
+          "filename": "bulk_crm_data_generator.py",
+          "path": "agent_stacks/crm_bulk_data_creator_stack/agents/bulk_crm_data_generator.py",
+          "url": "https://raw.githubusercontent.com/kody-w/AI-Agent-Templates/main/agent_stacks/crm_bulk_data_creator_stack/agents/bulk_crm_data_generator.py",
+          "size": 39085,
+          "size_formatted": "38.2KB",
+          "type": "stack",
+          "stack_name": "Crm Bulk Data Creator Stack",
+          "stack_path": "crm_bulk_data_creator_stack"
+        }
+      ],
+      "metadata": {
+        "id": "crm_bulk_data_creator_stack",
+        "name": "CRM Bulk Data Creator Stack",
+        "version": "1.0.0",
+        "author": "Microsoft AI Solutions Team",
+        "description": "Automated bulk data generation and import for CRM systems. Create thousands of test records, realistic customer data, and complex relationship structures.",
+        "longDescription": "The CRM Bulk Data Creator Stack provides comprehensive tools for generating and importing large volumes of test data into CRM systems. Perfect for testing, training, and demo environments, this stack creates realistic customer records, opportunities, and relationships at scale.",
+        "category": "data-management",
+        "complexity": "intermediate",
+        "estimatedSetupTime": "1-2 hours",
+        "maintenanceEffort": "low",
+        "features": [
+          "Generate thousands of realistic customer records",
+          "Create complex relationship hierarchies",
+          "Bulk import to Dynamics 365",
+          "Customizable data templates",
+          "Industry-specific data generation",
+          "GDPR-compliant test data",
+          "Relationship mapping and linking",
+          "Performance testing datasets"
+        ],
+        "benefits": [
+          "90% faster test environment setup",
+          "Realistic demo data in minutes",
+          "Consistent test data across environments",
+          "Reduced manual data entry",
+          "Better testing coverage",
+          "Improved training scenarios"
+        ],
+        "useCases": [
+          {
+            "title": "Testing Environment Setup",
+            "description": "Quickly populate test environments with realistic data for comprehensive testing scenarios."
+          },
+          {
+            "title": "Sales Training",
+            "description": "Create realistic customer scenarios for sales team training and onboarding."
+          },
+          {
+            "title": "Demo Preparation",
+            "description": "Generate industry-specific data for compelling product demonstrations."
+          },
+          {
+            "title": "Performance Testing",
+            "description": "Create large datasets to test CRM performance and scalability."
+          }
+        ],
+        "technicalRequirements": {
+          "platforms": [
+            "Windows",
+            "macOS",
+            "Linux"
+          ],
+          "dependencies": [
+            "Python 3.8+",
+            "Dynamics 365 Web API access",
+            "Azure Active Directory authentication"
+          ],
+          "apiKeys": [
+            "DYNAMICS_365_CLIENT_ID",
+            "DYNAMICS_365_CLIENT_SECRET",
+            "DYNAMICS_365_TENANT_ID",
+            "DYNAMICS_365_INSTANCE_URL"
+          ]
+        },
+        "components": [
+          {
+            "name": "bulk_crm_data_generator.py",
+            "description": "Core data generation engine with customizable templates",
+            "role": "Data Generation"
+          },
+          {
+            "name": "dynamics_365_agent.py",
+            "description": "Handles bulk import operations to Dynamics 365",
+            "role": "CRM Integration"
+          },
+          {
+            "name": "OneClickCRMIntakeAgent.py",
+            "description": "One-click setup and configuration for bulk operations",
+            "role": "Automation"
+          }
+        ],
+        "architecture": {
+          "pattern": "Batch Processing",
+          "communication": "REST API",
+          "dataFlow": "Template Selection \u2192 Data Generation \u2192 Validation \u2192 Bulk Import \u2192 Verification",
+          "scalability": "Supports millions of records with batching"
+        },
+        "deployment": {
+          "environments": [
+            "Development",
+            "Testing",
+            "Demo"
+          ],
+          "containerized": false,
+          "cloudProviders": [
+            "Azure"
+          ],
+          "cicd": "GitHub Actions ready"
+        },
+        "security": {
+          "authentication": "OAuth 2.0 with Azure AD",
+          "encryption": "TLS 1.3 for API calls",
+          "compliance": [
+            "GDPR",
+            "SOC 2"
+          ],
+          "auditLogging": true
+        },
+        "performance": {
+          "recordsPerMinute": "1000+",
+          "batchSize": "5000 records",
+          "memoryUsage": "< 500MB",
+          "apiThrottling": "Automatic rate limiting"
+        },
+        "support": {
+          "documentation": "https://github.com/kody-w/AI-Agent-Templates/wiki",
+          "community": "https://github.com/kody-w/AI-Agent-Templates/discussions",
+          "email": "support@example.com"
+        },
+        "tags": [
+          "crm",
+          "bulk-data",
+          "dynamics-365",
+          "test-data",
+          "data-generation",
+          "automation",
+          "testing",
+          "training"
+        ]
+      }
+    },
+    {
+      "id": "voice_to_crm_stack",
+      "name": "Voice To Crm Stack",
+      "path": "agent_stacks/voice_to_crm_stack",
+      "agents": [
+        {
+          "id": "voice_to_crm_stack_email_drafting_agent",
+          "name": "Email Drafting Agent",
+          "filename": "email_drafting_agent.py",
+          "path": "agent_stacks/voice_to_crm_stack/agents/email_drafting_agent.py",
+          "url": "https://raw.githubusercontent.com/kody-w/AI-Agent-Templates/main/agent_stacks/voice_to_crm_stack/agents/email_drafting_agent.py",
+          "size": 5007,
+          "size_formatted": "4.9KB",
+          "type": "stack",
+          "stack_name": "Voice To Crm Stack",
+          "stack_path": "voice_to_crm_stack"
+        },
+        {
+          "id": "voice_to_crm_stack_servicenow-agent",
+          "name": "Servicenow-Agent",
+          "filename": "servicenow-agent.py",
+          "path": "agent_stacks/voice_to_crm_stack/agents/servicenow-agent.py",
+          "url": "https://raw.githubusercontent.com/kody-w/AI-Agent-Templates/main/agent_stacks/voice_to_crm_stack/agents/servicenow-agent.py",
+          "size": 11010,
+          "size_formatted": "10.8KB",
+          "type": "stack",
+          "stack_name": "Voice To Crm Stack",
+          "stack_path": "voice_to_crm_stack"
+        },
+        {
+          "id": "voice_to_crm_stack_dynamics_365_agent",
+          "name": "Dynamics 365 Agent",
+          "filename": "dynamics_365_agent.py",
+          "path": "agent_stacks/voice_to_crm_stack/agents/dynamics_365_agent.py",
+          "url": "https://raw.githubusercontent.com/kody-w/AI-Agent-Templates/main/agent_stacks/voice_to_crm_stack/agents/dynamics_365_agent.py",
+          "size": 7182,
+          "size_formatted": "7.0KB",
+          "type": "stack",
+          "stack_name": "Voice To Crm Stack",
+          "stack_path": "voice_to_crm_stack"
+        },
+        {
+          "id": "voice_to_crm_stack_extract_sharepoint_document_url_agent",
+          "name": "Extract Sharepoint Document Url Agent",
+          "filename": "extract_sharepoint_document_url_agent.py",
+          "path": "agent_stacks/voice_to_crm_stack/agents/extract_sharepoint_document_url_agent.py",
+          "url": "https://raw.githubusercontent.com/kody-w/AI-Agent-Templates/main/agent_stacks/voice_to_crm_stack/agents/extract_sharepoint_document_url_agent.py",
+          "size": 43530,
+          "size_formatted": "42.5KB",
+          "type": "stack",
+          "stack_name": "Voice To Crm Stack",
+          "stack_path": "voice_to_crm_stack"
+        }
+      ],
+      "metadata": {
+        "id": "voice_to_crm_stack",
+        "name": "Voice to CRM Integration Stack",
+        "version": "1.0.0",
+        "author": "Microsoft AI Accelerate Team",
+        "description": "A comprehensive voice-enabled CRM data entry solution that converts speech to text and automatically creates CRM records in Dynamics 365, ServiceNow, and other platforms.",
+        "longDescription": "The Voice to CRM Integration Stack revolutionizes data entry by enabling natural language processing for CRM systems. Users can speak naturally to create accounts, contacts, opportunities, and support cases without manual typing. The stack includes intelligent entity extraction, relationship mapping, and multi-platform CRM support.",
+        "category": "communication",
+        "complexity": "intermediate",
+        "estimatedSetupTime": "2-3 weeks",
+        "maintenanceEffort": "low",
+        "features": [
+          "Real-time speech-to-text conversion with high accuracy",
+          "Natural language understanding for CRM entity extraction",
+          "Automatic record creation in Dynamics 365",
+          "ServiceNow ticket and workflow integration",
+          "Email drafting from voice commands",
+          "SharePoint document extraction and linking",
+          "Multi-language support (English, Spanish, French)",
+          "Voice command validation and confirmation",
+          "Batch record processing from audio files",
+          "Custom entity and field mapping"
+        ],
+        "benefits": [
+          "80% reduction in data entry time",
+          "Hands-free CRM updates for field workers",
+          "Improved data accuracy with validation",
+          "Seamless integration with existing workflows",
+          "Mobile-friendly voice interface",
+          "Compliance with accessibility standards"
+        ],
+        "useCases": [
+          {
+            "title": "Field Sales Updates",
+            "description": "Sales representatives can update CRM records immediately after client meetings using voice notes while driving."
+          },
+          {
+            "title": "Customer Service Call Logging",
+            "description": "Support agents can create and update tickets using voice commands during or after customer calls."
+          },
+          {
+            "title": "Executive Meeting Notes",
+            "description": "Executives can dictate meeting outcomes and action items that automatically create tasks and opportunities."
+          },
+          {
+            "title": "Healthcare Patient Records",
+            "description": "Medical professionals can update patient records and create follow-up tasks through voice commands."
+          }
+        ],
+        "technicalRequirements": {
+          "platforms": [
+            "Windows",
+            "macOS",
+            "Linux",
+            "Web"
+          ],
+          "dependencies": [
+            "Azure Cognitive Services Speech SDK",
+            "Dynamics 365 Web API access",
+            "ServiceNow REST API credentials",
+            "Python 3.8+",
+            "Modern web browser with microphone access"
+          ],
+          "apiKeys": [
+            "AZURE_SPEECH_KEY",
+            "AZURE_SPEECH_REGION",
+            "DYNAMICS_365_CLIENT_ID",
+            "DYNAMICS_365_CLIENT_SECRET",
+            "DYNAMICS_365_TENANT_ID",
+            "SERVICENOW_INSTANCE",
+            "SERVICENOW_USERNAME",
+            "SERVICENOW_PASSWORD"
+          ]
+        },
+        "components": [
+          {
+            "name": "dynamics_365_agent.py",
+            "description": "Handles all CRUD operations with Dynamics 365 Web API",
+            "role": "CRM Integration"
+          },
+          {
+            "name": "servicenow-agent.py",
+            "description": "Manages ServiceNow ticket creation and workflow automation",
+            "role": "Ticketing System"
+          },
+          {
+            "name": "email_drafting_agent.py",
+            "description": "Generates professional emails from voice commands",
+            "role": "Communication"
+          },
+          {
+            "name": "extract_sharepoint_document_url_agent.py",
+            "description": "Extracts and links SharePoint documents to CRM records",
+            "role": "Document Management"
+          }
+        ],
+        "architecture": {
+          "pattern": "Microservices",
+          "communication": "REST API and WebSockets",
+          "dataFlow": "Voice Input \u2192 Speech-to-Text \u2192 NLP Processing \u2192 Entity Extraction \u2192 CRM API \u2192 Confirmation",
+          "scalability": "Horizontal scaling supported with load balancing"
+        },
+        "deployment": {
+          "environments": [
+            "Development",
+            "Staging",
+            "Production"
+          ],
+          "containerized": true,
+          "dockerImage": "mcr.microsoft.com/ai-accelerate/voice-to-crm:latest",
+          "cloudProviders": [
+            "Azure",
+            "AWS",
+            "Google Cloud"
+          ],
+          "cicd": "Azure DevOps pipelines included"
+        },
+        "security": {
+          "authentication": "OAuth 2.0 with Azure AD",
+          "encryption": "TLS 1.3 for data in transit, AES-256 for data at rest",
+          "compliance": [
+            "GDPR",
+            "HIPAA",
+            "SOC 2"
+          ],
+          "auditLogging": true
+        },
+        "performance": {
+          "responseTime": "< 2 seconds for voice processing",
+          "throughput": "100 concurrent voice sessions",
+          "accuracy": "95% speech recognition accuracy",
+          "availability": "99.9% uptime SLA"
+        },
+        "support": {
+          "documentation": "https://docs.microsoft.com/ai-accelerate/voice-to-crm",
+          "community": "https://github.com/microsoft/ai-accelerate/discussions",
+          "email": "ai-accelerate-support@microsoft.com",
+          "sla": "24/7 support for enterprise customers"
+        },
+        "pricing": {
+          "model": "Per-user monthly subscription",
+          "tiers": [
+            {
+              "name": "Starter",
+              "price": "$29/user/month",
+              "features": [
+                "1000 voice commands/month",
+                "Basic CRM integration",
+                "Email support"
+              ]
+            },
+            {
+              "name": "Professional",
+              "price": "$79/user/month",
+              "features": [
+                "Unlimited voice commands",
+                "All CRM platforms",
+                "Priority support"
+              ]
+            },
+            {
+              "name": "Enterprise",
+              "price": "Custom",
+              "features": [
+                "Custom integrations",
+                "Dedicated support",
+                "SLA guarantees"
+              ]
+            }
+          ]
+        },
+        "changelog": [
+          {
+            "version": "1.0.0",
+            "date": "2024-01-15",
+            "changes": [
+              "Initial release with Dynamics 365 support",
+              "Basic voice commands",
+              "Email integration"
+            ]
+          },
+          {
+            "version": "0.9.0",
+            "date": "2023-12-01",
+            "changes": [
+              "Beta release",
+              "ServiceNow integration added",
+              "Multi-language support"
+            ]
+          }
+        ],
+        "screenshots": [
+          {
+            "url": "/assets/voice-to-crm-main.png",
+            "caption": "Main voice interface dashboard"
+          },
+          {
+            "url": "/assets/voice-to-crm-recording.png",
+            "caption": "Voice recording in progress"
+          },
+          {
+            "url": "/assets/voice-to-crm-results.png",
+            "caption": "CRM records created from voice"
+          }
+        ],
+        "videos": [
+          {
+            "url": "https://youtube.com/watch?v=demo123",
+            "title": "Voice to CRM Stack Overview",
+            "duration": "5:23"
+          }
+        ],
+        "demo": {
+          "available": true,
+          "url": "agent_stacks/voice_to_crm_stack/demos/voice_to_crm_showcase.html",
+          "title": "Interactive Voice to CRM Demo",
+          "description": "Try the voice-to-CRM system with both scripted demo and live API integration",
+          "features": [
+            "Simulated voice recording",
+            "Real-time CRM record creation",
+            "Live API integration mode",
+            "Step-by-step visualization"
+          ]
+        },
+        "relatedStacks": [
+          "crm_bulk_data_creator_stack",
+          "email_drafting_stack"
+        ],
+        "tags": [
+          "voice",
+          "crm",
+          "dynamics-365",
+          "servicenow",
+          "speech-to-text",
+          "automation",
+          "accessibility",
+          "field-service",
+          "sales",
+          "customer-service"
+        ]
+      }
+    },
+    {
+      "id": "simulation_sales_stack",
+      "name": "Simulation Sales Stack",
+      "path": "agent_stacks/simulation_sales_stack",
+      "agents": [
+        {
+          "id": "simulation_sales_stack_sales_simulation_agent",
+          "name": "Sales Simulation Agent",
+          "filename": "sales_simulation_agent.py",
+          "path": "agent_stacks/simulation_sales_stack/agents/sales_simulation_agent.py",
+          "url": "https://raw.githubusercontent.com/kody-w/AI-Agent-Templates/main/agent_stacks/simulation_sales_stack/agents/sales_simulation_agent.py",
+          "size": 6371,
+          "size_formatted": "6.2KB",
+          "type": "stack",
+          "stack_name": "Simulation Sales Stack",
+          "stack_path": "simulation_sales_stack"
+        }
+      ],
+      "metadata": {
+        "id": "simulation_sales_stack",
+        "name": "AI Sales Simulation Stack",
+        "version": "1.0.0",
+        "author": "Microsoft AI Sales Excellence Team",
+        "description": "Advanced sales training and simulation platform. Practice sales scenarios, receive AI coaching, and improve closing rates through realistic simulations.",
+        "longDescription": "The AI Sales Simulation Stack provides a comprehensive training environment for sales teams. It simulates realistic customer interactions, provides real-time coaching feedback, and tracks performance metrics. Sales representatives can practice handling objections, negotiations, and closing techniques in a safe, AI-powered environment.",
+        "category": "training",
+        "complexity": "advanced",
+        "estimatedSetupTime": "2-3 hours",
+        "maintenanceEffort": "moderate",
+        "features": [
+          "Realistic customer persona simulations",
+          "Real-time AI coaching and feedback",
+          "Objection handling practice",
+          "Negotiation scenario training",
+          "Performance analytics dashboard",
+          "Custom scenario creation",
+          "Multi-industry templates",
+          "Voice and text interaction modes",
+          "Skill progression tracking",
+          "Team leaderboards and gamification"
+        ],
+        "benefits": [
+          "40% improvement in close rates",
+          "Reduced onboarding time by 60%",
+          "Consistent training across teams",
+          "Safe environment for practice",
+          "Data-driven performance insights",
+          "24/7 training availability"
+        ],
+        "useCases": [
+          {
+            "title": "New Hire Onboarding",
+            "description": "Accelerate new sales rep training with structured simulation programs."
+          },
+          {
+            "title": "Product Launch Training",
+            "description": "Practice selling new products before market launch with realistic scenarios."
+          },
+          {
+            "title": "Objection Handling",
+            "description": "Master responses to common objections through repeated practice."
+          },
+          {
+            "title": "Executive Selling",
+            "description": "Prepare for high-stakes meetings with C-level persona simulations."
+          }
+        ],
+        "technicalRequirements": {
+          "platforms": [
+            "Windows",
+            "macOS",
+            "Web",
+            "Mobile"
+          ],
+          "dependencies": [
+            "Python 3.9+",
+            "Azure Cognitive Services",
+            "Azure OpenAI Service",
+            "Power BI for analytics"
+          ],
+          "apiKeys": [
+            "AZURE_OPENAI_KEY",
+            "AZURE_OPENAI_ENDPOINT",
+            "AZURE_COGNITIVE_SERVICES_KEY",
+            "POWER_BI_WORKSPACE_ID"
+          ]
+        },
+        "components": [
+          {
+            "name": "sales_simulation_agent.py",
+            "description": "Core simulation engine for customer interactions",
+            "role": "Simulation Engine"
+          }
+        ],
+        "architecture": {
+          "pattern": "Microservices",
+          "communication": "WebSockets and REST API",
+          "dataFlow": "Scenario Selection \u2192 Simulation \u2192 Interaction \u2192 Feedback \u2192 Analytics",
+          "scalability": "Auto-scaling with Azure Functions"
+        },
+        "deployment": {
+          "environments": [
+            "Development",
+            "Staging",
+            "Production"
+          ],
+          "containerized": true,
+          "dockerImage": "mcr.microsoft.com/ai-agents/sales-simulation:latest",
+          "cloudProviders": [
+            "Azure"
+          ],
+          "cicd": "Azure DevOps with automated testing"
+        },
+        "security": {
+          "authentication": "Azure AD B2C",
+          "encryption": "TLS 1.3 and data encryption at rest",
+          "compliance": [
+            "SOC 2",
+            "ISO 27001"
+          ],
+          "auditLogging": true
+        },
+        "performance": {
+          "responseTime": "< 500ms interaction latency",
+          "concurrentUsers": "1000+",
+          "simulationAccuracy": "92% realism score",
+          "availability": "99.95% uptime"
+        },
+        "demo": {
+          "available": true,
+          "url": "agent_stacks/simulation_sales_stack/demos/ai-simulation-sales-demo.html",
+          "title": "Interactive Sales Simulation Demo",
+          "description": "Experience AI-powered sales training with sample scenarios",
+          "features": [
+            "Live customer simulation",
+            "Real-time coaching feedback",
+            "Performance scoring",
+            "Multiple scenario types"
+          ]
+        },
+        "support": {
+          "documentation": "https://github.com/kody-w/AI-Agent-Templates/wiki",
+          "community": "https://github.com/kody-w/AI-Agent-Templates/discussions",
+          "email": "support@example.com",
+          "training": "Available through Microsoft Learn"
+        },
+        "pricing": {
+          "model": "Per-user monthly subscription",
+          "tiers": [
+            {
+              "name": "Basic",
+              "price": "$49/user/month",
+              "features": [
+                "10 simulations/month",
+                "Basic scenarios",
+                "Individual analytics"
+              ]
+            },
+            {
+              "name": "Professional",
+              "price": "$99/user/month",
+              "features": [
+                "Unlimited simulations",
+                "Custom scenarios",
+                "Team analytics",
+                "AI coaching"
+              ]
+            },
+            {
+              "name": "Enterprise",
+              "price": "Custom",
+              "features": [
+                "White-label option",
+                "API access",
+                "Custom integrations",
+                "Dedicated support"
+              ]
+            }
+          ]
+        },
+        "tags": [
+          "sales-training",
+          "simulation",
+          "ai-coaching",
+          "gamification",
+          "performance",
+          "training",
+          "sales-enablement"
+        ]
+      }
+    },
+    {
+      "id": "email_drafting_stack",
+      "name": "Email Drafting Stack",
+      "path": "agent_stacks/email_drafting_stack",
+      "agents": [
+        {
+          "id": "email_drafting_stack_email_drafting_agent",
+          "name": "Email Drafting Agent",
+          "filename": "email_drafting_agent.py",
+          "path": "agent_stacks/email_drafting_stack/agents/email_drafting_agent.py",
+          "url": "https://raw.githubusercontent.com/kody-w/AI-Agent-Templates/main/agent_stacks/email_drafting_stack/agents/email_drafting_agent.py",
+          "size": 5007,
+          "size_formatted": "4.9KB",
+          "type": "stack",
+          "stack_name": "Email Drafting Stack",
+          "stack_path": "email_drafting_stack"
+        }
+      ],
+      "metadata": {
+        "id": "email_drafting_stack",
+        "name": "Email Drafting Stack",
+        "version": "1.0.0",
+        "author": "Microsoft AI Communications Team",
+        "description": "AI-powered email composition and automation. Generate professional emails, automate responses, and manage communication workflows.",
+        "longDescription": "The Email Drafting Stack leverages advanced AI to compose professional emails, automate responses, and streamline communication workflows. It integrates with Microsoft 365, provides context-aware suggestions, and maintains consistent brand voice across all communications.",
+        "category": "communication",
+        "complexity": "starter",
+        "estimatedSetupTime": "30 minutes",
+        "maintenanceEffort": "minimal",
+        "features": [
+          "AI-powered email composition",
+          "Context-aware response suggestions",
+          "Multi-language support",
+          "Template library management",
+          "Sentiment analysis and tone adjustment",
+          "Microsoft 365 integration",
+          "Automated follow-up scheduling",
+          "Brand voice consistency",
+          "Smart categorization and routing",
+          "Attachment recommendations"
+        ],
+        "benefits": [
+          "75% faster email composition",
+          "Consistent professional communication",
+          "Reduced response time",
+          "Improved customer satisfaction",
+          "Multilingual support without translators",
+          "24/7 automated responses"
+        ],
+        "useCases": [
+          {
+            "title": "Customer Support",
+            "description": "Automatically draft responses to customer inquiries with appropriate tone and solutions."
+          },
+          {
+            "title": "Sales Outreach",
+            "description": "Generate personalized sales emails at scale while maintaining authenticity."
+          },
+          {
+            "title": "Internal Communications",
+            "description": "Draft company-wide announcements and team updates with consistent messaging."
+          },
+          {
+            "title": "Meeting Follow-ups",
+            "description": "Automatically generate meeting summaries and action item emails."
+          }
+        ],
+        "technicalRequirements": {
+          "platforms": [
+            "Windows",
+            "macOS",
+            "Web"
+          ],
+          "dependencies": [
+            "Python 3.8+",
+            "Microsoft Graph API",
+            "Azure OpenAI Service"
+          ],
+          "apiKeys": [
+            "MICROSOFT_365_CLIENT_ID",
+            "MICROSOFT_365_CLIENT_SECRET",
+            "AZURE_OPENAI_KEY",
+            "AZURE_OPENAI_ENDPOINT"
+          ]
+        },
+        "components": [
+          {
+            "name": "email_drafting_agent.py",
+            "description": "Core AI agent for email composition and suggestions",
+            "role": "Email Generation"
+          }
+        ],
+        "architecture": {
+          "pattern": "Event-driven",
+          "communication": "REST API and WebSockets",
+          "dataFlow": "Input Context \u2192 AI Processing \u2192 Draft Generation \u2192 Review \u2192 Send",
+          "scalability": "Serverless auto-scaling"
+        },
+        "deployment": {
+          "environments": [
+            "Development",
+            "Production"
+          ],
+          "containerized": true,
+          "dockerImage": "mcr.microsoft.com/ai-agents/email-drafting:latest",
+          "cloudProviders": [
+            "Azure",
+            "Microsoft 365"
+          ],
+          "cicd": "Azure DevOps pipelines"
+        },
+        "security": {
+          "authentication": "OAuth 2.0 with Microsoft Identity",
+          "encryption": "End-to-end encryption",
+          "compliance": [
+            "GDPR",
+            "HIPAA",
+            "SOC 2"
+          ],
+          "auditLogging": true
+        },
+        "performance": {
+          "responseTime": "< 2 seconds per draft",
+          "throughput": "1000 emails/hour",
+          "accuracy": "95% satisfaction rate",
+          "availability": "99.9% uptime"
+        },
+        "support": {
+          "documentation": "https://github.com/kody-w/AI-Agent-Templates/wiki",
+          "community": "https://github.com/kody-w/AI-Agent-Templates/discussions",
+          "email": "support@example.com"
+        },
+        "tags": [
+          "email",
+          "ai-writing",
+          "microsoft-365",
+          "automation",
+          "communication",
+          "productivity",
+          "nlp"
+        ]
+      }
+    }
+  ]
+}
