@@ -3612,23 +3612,23 @@
                     <div class="agent-card">
                         <div class="agent-header">
                             <div>
-                                <div class="agent-icon">${agent.icon}</div>
+                                <div class="agent-icon">${agent.icon || '🤖'}</div>
                                 <h3 class="agent-name">${agent.name}</h3>
                             </div>
-                            <span class="agent-badge">${agent.size}</span>
+                            <span class="agent-badge">${agent.size || agent.size_formatted || 'N/A'}</span>
                         </div>
-                        <p class="agent-description">${agent.description}</p>
+                        <p class="agent-description">${agent.description || 'No description available'}</p>
                         <ul class="agent-features">
-                            ${agent.features
+                            ${(agent.features || [])
                               .map((f) => `<li>${f}</li>`)
                               .join("")}
                         </ul>
                         <div style="display: flex; justify-content: space-between; padding: 1rem 0; border-top: 1px solid #e0e0e0;">
                             <span style="color: #666; font-size: 0.85rem;">${
-                              agent.filename
+                              agent.filename || 'Unknown'
                             }</span>
                             <span style="color: #666; font-size: 0.85rem;">${
-                              agent.category
+                              agent.category || agent.type || 'general'
                             }</span>
                         </div>
                         <div class="action-buttons">
