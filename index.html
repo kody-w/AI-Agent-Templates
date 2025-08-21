@@ -2166,6 +2166,9 @@
         async viewTemplateDetails(templateId) {
           const template = this.agentTemplates.find((t) => t.id === templateId);
           if (!template) return;
+          
+          // Update URL hash for permalinking
+          window.location.hash = `stack-${templateId}`;
 
           // Lazy load agents if needed
           await this.loadStackAgentsIfNeeded(template);
@@ -2211,7 +2214,7 @@
                   ${template.version ? `<span style="color: #666; font-size: 0.9rem;">Version ${template.version}</span>` : ''}
                   ${template.author ? `<span style="color: #666; font-size: 0.9rem; margin-left: 1rem;">by ${template.author}</span>` : ''}
                 </div>
-                <button onclick="document.getElementById('stackModalBackdrop').remove();" style="background: #ef4444; color: white; border: none; border-radius: 8px; padding: 0.5rem 1rem; cursor: pointer; font-size: 1rem;">✕ Close</button>
+                <button onclick="document.getElementById('stackModalBackdrop').remove(); window.location.hash = '';" style="background: #ef4444; color: white; border: none; border-radius: 8px; padding: 0.5rem 1rem; cursor: pointer; font-size: 1rem;">✕ Close</button>
               </div>
           `;
 
@@ -2392,7 +2395,7 @@
           modalHTML += `
             <div style="display: flex; gap: 1rem; margin-top: 2rem; padding-top: 2rem; border-top: 1px solid #e5e7eb;">
               ${!this.isTemplateInCart(template) ? `
-                <button onclick="templateManager.addTemplateToCart('${template.id.replace(/'/g, "\\'")}'); document.getElementById('stackModalBackdrop').remove();" style="background: #10b981; color: white; border: none; border-radius: 8px; padding: 0.75rem 1.5rem; cursor: pointer; font-size: 1rem; font-weight: 500;">
+                <button onclick="templateManager.addTemplateToCart('${template.id.replace(/'/g, "\\'")}'); document.getElementById('stackModalBackdrop').remove(); window.location.hash = '';" style="background: #10b981; color: white; border: none; border-radius: 8px; padding: 0.75rem 1.5rem; cursor: pointer; font-size: 1rem; font-weight: 500;">
                   ➕ Add Stack to Cart
                 </button>
               ` : `
@@ -2410,7 +2413,7 @@
                   📦 Export Trading Card
                 </button>
               ` : ''}
-              <button onclick="document.getElementById('stackModalBackdrop').remove();" style="background: #f3f4f6; color: #374151; border: 1px solid #d1d5db; border-radius: 8px; padding: 0.75rem 1.5rem; cursor: pointer; font-size: 1rem;">
+              <button onclick="document.getElementById('stackModalBackdrop').remove(); window.location.hash = '';" style="background: #f3f4f6; color: #374151; border: 1px solid #d1d5db; border-radius: 8px; padding: 0.75rem 1.5rem; cursor: pointer; font-size: 1rem;">
                 Close
               </button>
             </div>
@@ -2424,6 +2427,7 @@
           backdrop.addEventListener('click', (e) => {
             if (e.target === backdrop) {
               backdrop.remove();
+              window.location.hash = '';
             }
           });
 
@@ -4003,6 +4007,35 @@
       document.addEventListener("DOMContentLoaded", () => {
         // Load templates on start
         templateManager.loadTemplates();
+        
+        // Handle permalinks - check if there's a hash in the URL
+        const checkHashAndOpenModal = async () => {
+          const hash = window.location.hash;
+          if (hash && hash.startsWith('#stack-')) {
+            const stackId = hash.substring(7); // Remove '#stack-' prefix
+            
+            // Wait for templates to load if they haven't yet
+            let attempts = 0;
+            const waitForTemplates = async () => {
+              if (templateManager.agentTemplates.length > 0) {
+                // Templates are loaded, try to open the modal
+                await templateManager.viewTemplateDetails(stackId);
+              } else if (attempts < 20) {
+                // Wait and try again (max 10 seconds)
+                attempts++;
+                setTimeout(waitForTemplates, 500);
+              }
+            };
+            
+            setTimeout(waitForTemplates, 1000); // Give initial load time
+          }
+        };
+        
+        // Check on initial load
+        checkHashAndOpenModal();
+        
+        // Listen for hash changes (for navigation within the page)
+        window.addEventListener('hashchange', checkHashAndOpenModal);
 
         // Pre-load agents in background
         setTimeout(() => {
