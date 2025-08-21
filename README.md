@@ -22,11 +22,25 @@ AI-Agent-Templates/
 │   ├── image_generation_agent.py # DALL-E image generation
 │   └── ...                    # More agent templates
 ├── agent_stacks/              # Complete agent solutions
-│   ├── crm_bulk_data_creator_stack/  # Bulk CRM data generation
-│   ├── email_drafting_stack/         # Email management solution
-│   ├── simulation_sales_stack/       # Sales simulation demo
-│   └── voice_to_crm_stack/          # Voice-to-CRM integration
-└── index.html                 # Web interface demo
+│   ├── crm_bulk_data_creator_stack/
+│   │   ├── agents/            # Stack-specific agents
+│   │   ├── demos/             # Interactive demonstrations
+│   │   └── metadata.json      # Stack configuration
+│   ├── email_drafting_stack/
+│   │   ├── agents/            # Email processing agents
+│   │   ├── demos/             # Demo interfaces
+│   │   ├── files/             # Additional resources
+│   │   └── metadata.json      # Stack configuration
+│   ├── simulation_sales_stack/
+│   │   ├── agents/            # Sales simulation agents
+│   │   ├── demos/             # Interactive demos
+│   │   └── metadata.json      # Stack configuration
+│   └── voice_to_crm_stack/
+│       ├── agents/            # Voice processing agents
+│       ├── demos/             # Voice-to-CRM demo
+│       ├── files/             # Supporting files
+│       └── metadata.json      # Stack configuration
+└── index.html                 # Web interface gallery
 
 ```
 
@@ -59,25 +73,48 @@ AI-Agent-Templates/
 
 ## 🛠️ Agent Stacks
 
-### CRM Bulk Data Creator Stack
-Complete solution for generating test data in CRM systems:
-- Bulk account creation
-- Contact generation with relationships
-- Opportunity and lead creation
-- Customizable data patterns
+Agent Stacks are complete, production-ready solutions that combine multiple agents to solve complex business problems. Each stack follows a standardized structure:
 
-### Email Drafting Stack
-Comprehensive email management solution:
-- Email template generation
-- Context-aware drafting
-- Integration with email systems
-- Managed solution package included
+- **`agents/`** - Contains all Python agent files for the stack
+- **`demos/`** - Interactive HTML demonstrations
+- **`files/`** - Additional resources and dependencies
+- **`metadata.json`** - Complete stack configuration and documentation
 
 ### Voice to CRM Stack
-Voice-enabled CRM data entry:
-- Speech-to-text conversion
-- Natural language processing
-- Automatic CRM record creation
+Voice-enabled CRM data entry with real-time processing:
+- Speech-to-text conversion with Azure Cognitive Services
+- Natural language processing for entity extraction
+- Automatic CRM record creation in Dynamics 365/ServiceNow
+- Email drafting from voice commands
+- SharePoint document linking
+- Live API integration mode for production use
+
+### CRM Bulk Data Creator Stack
+Complete solution for generating test data in CRM systems:
+- Generate thousands of realistic customer records
+- Create complex relationship hierarchies
+- Bulk import to Dynamics 365
+- Industry-specific data templates
+- GDPR-compliant test data generation
+- Performance testing datasets
+
+### Email Drafting Stack
+AI-powered email composition and automation:
+- Context-aware email generation
+- Multi-language support
+- Microsoft 365 integration
+- Sentiment analysis and tone adjustment
+- Template library management
+- Automated follow-up scheduling
+
+### Simulation Sales Stack
+Advanced sales training and simulation platform:
+- Realistic customer persona simulations
+- Real-time AI coaching and feedback
+- Objection handling practice
+- Negotiation scenario training
+- Performance analytics dashboard
+- Gamification and leaderboards
 
 ## 🚦 Getting Started
 
@@ -117,7 +154,9 @@ meeting_result = calendar.perform()
 
 3. **Using Agent Stacks:**
 ```python
-from agent_stacks.crm_bulk_data_creator_stack.bulk_crm_data_generator import BulkCRMDataGeneratorAgent
+# Import agents from the standardized structure
+from agent_stacks.crm_bulk_data_creator_stack.agents.bulk_crm_data_generator import BulkCRMDataGeneratorAgent
+from agent_stacks.voice_to_crm_stack.agents.dynamics_365_agent import Dynamics365Agent
 
 # Initialize bulk data generator
 generator = BulkCRMDataGeneratorAgent()
@@ -128,6 +167,10 @@ data = generator.perform(
     company_name_components={...},
     contact_name_pools={...}
 )
+
+# Or use voice-to-CRM agents
+dynamics = Dynamics365Agent()
+result = dynamics.create_account(account_data)
 ```
 
 ## 🔧 Configuration
@@ -171,17 +214,35 @@ class CustomAgent(BasicAgent):
 
 ## 🌐 Web Interface
 
-The project includes an `index.html` file for demonstrating agent capabilities through a web interface. Open it in a browser to interact with agents visually.
+The project includes a comprehensive web interface (`index.html`) that provides:
+- **Agent Gallery**: Browse and explore all available agents
+- **Stack Templates**: Interactive demos for each agent stack
+- **Trading Card Export**: Generate standalone HTML "trading cards" for sharing agent stacks
+- **Live API Integration**: Connect to your own Azure Functions for real-time processing
+- **GitHub Integration**: Automatically loads agents and stacks from the repository
+
+Open `index.html` in a browser to explore the full gallery and interactive demonstrations.
 
 ## 🤝 Contributing
 
-Contributions are welcome! To add a new agent:
+Contributions are welcome! 
 
+### To add a new individual agent:
 1. Create a new Python file in the `agents/` directory
 2. Extend the `BasicAgent` class
 3. Implement the `perform()` method
 4. Add appropriate metadata and parameters
 5. Document your agent's functionality
+
+### To add a new agent stack:
+1. Create a new directory under `agent_stacks/your_stack_name/`
+2. Follow the standard structure:
+   - `agents/` - Place all Python agent files here
+   - `demos/` - Add interactive HTML demonstrations
+   - `files/` - Include any additional resources
+   - `metadata.json` - Define stack configuration
+3. Ensure your metadata.json includes all required fields
+4. Add demo files to showcase stack capabilities
 
 ## 📝 License
 
