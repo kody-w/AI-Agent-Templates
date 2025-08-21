@@ -2463,91 +2463,457 @@
         }
         
         generateTradingCardHTML(template, agentCode) {
-          // Load and use the external generator
-          try {
-            // First, load the external script if not already loaded
-            if (typeof window.generateTradingCardHTML !== 'function') {
-              // Create the function inline from the external pattern
-              const escapeHtml = (text) => {
-                const map = {
-                  '&': '&amp;',
-                  '<': '&lt;',
-                  '>': '&gt;',
-                  '"': '&quot;',
-                  "'": '&#039;'
-                };
-                return text.replace(/[&<>"']/g, m => map[m]);
-              };
-              
-              // Build all components without template literals
-              const escapedCode = {};
-              for (const [filename, code] of Object.entries(agentCode)) {
-                escapedCode[filename] = escapeHtml(code);
-              }
-              
-              const codeTabs = Object.keys(agentCode).map((filename, index) => 
-                '<button class="code-tab' + (index === 0 ? ' active' : '') + '" onclick="showCode(\'' + filename + '\')">' + filename + '</button>'
-              ).join('');
-              
-              const codeContent = Object.entries(escapedCode).map(([filename, code], index) => 
-                '<div class="code-content" id="code-' + filename + '" style="display: ' + (index === 0 ? 'block' : 'none') + ';"><pre>' + code + '</pre></div>'
-              ).join('');
-              
-              const demoButton = template.demo && template.demo.available ? 
-                '<button onclick="window.location.href=\'' + template.demo.url + '\'" class="btn btn-success">🎮 Try Demo</button>' : '';
-              
-              const agentsList = template.agents.map(agentId => 
-                '<div class="agent-item"><strong>' + agentId.replace(/_/g, ' ').replace('.py', '') + '</strong></div>'
-              ).join('');
-              
-              const featuresHtml = (template.features || template.benefits || []).slice(0, 6).map(feature => 
-                '<div class="feature-item"><span>✓</span><span>' + feature + '</span></div>'
-              ).join('');
-              
-              let apiKeysHtml = '';
-              if (template.technicalRequirements && template.technicalRequirements.apiKeys) {
-                const keysHtml = template.technicalRequirements.apiKeys.map(key => 
-                  '<code style="background: white; padding: 0.25rem 0.5rem; border-radius: 4px;">' + key + '</code>'
-                ).join('');
-                
-                apiKeysHtml = '<div style="margin-top: 1rem; padding: 1rem; background: #fef3c7; border-radius: 8px;">' +
-                  '<strong style="color: #92400e;">Required API Keys:</strong>' +
-                  '<div style="display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 0.5rem;">' + keysHtml + '</div></div>';
-              }
-              
-              const complexityStars = template.complexity === 'starter' ? '⭐' : 
-                                     template.complexity === 'intermediate' ? '⭐⭐' : '⭐⭐⭐';
-              
-              const agentCodeJSON = JSON.stringify(agentCode);
-              
-              // Build the complete HTML using the external generator pattern
-              let html = '';
-              // Add the HTML from generate_trading_card.js
-              // For now, use a simplified version
-              const script = document.createElement('script');
-              script.src = '/generate_trading_card.js';
-              document.head.appendChild(script);
-              
-              // Wait a moment for script to load then regenerate
-              setTimeout(() => {
-                if (typeof window.generateTradingCardHTML === 'function') {
-                  return window.generateTradingCardHTML(template, agentCode);
-                }
-              }, 100);
-            }
-            
-            // Use the external function if available
-            if (typeof window.generateTradingCardHTML === 'function') {
-              return window.generateTradingCardHTML(template, agentCode);
-            }
-          } catch (error) {
-            console.error('Error generating trading card:', error);
+          // Use the external function if available
+          if (typeof window.generateTradingCardHTML === 'function') {
+            return window.generateTradingCardHTML(template, agentCode);
           }
           
-          // Fallback
-          return '<!DOCTYPE html><html><body><h1>Error generating trading card</h1></body></html>';
+          // Fallback: build with simple concatenation
+          const escapedCode = {};
+          for (const [filename, code] of Object.entries(agentCode)) {
+            escapedCode[filename] = this.escapeHtml(code);
+          }
+          
+          // Build all the dynamic components
+          const components = {
+            codeTabs: Object.keys(agentCode).map((filename, index) => 
+              '<button class="code-tab' + (index === 0 ? ' active' : '') + '" onclick="showCode(\'' + filename + '\')">' + filename + '</button>'
+            ).join(''),
+            
+            codeContent: Object.entries(escapedCode).map(([filename, code], index) => 
+              '<div class="code-content" id="code-' + filename + '" style="display: ' + (index === 0 ? 'block' : 'none') + ';"><pre>' + code + '</pre></div>'
+            ).join(''),
+            
+            demoButton: template.demo && template.demo.available ? 
+              '<button onclick="window.location.href=\'' + template.demo.url + '\'" class="btn btn-success">🎮 Try Demo</button>' : '',
+            
+            agentsList: template.agents.map(agentId => 
+              '<div class="agent-item"><strong>' + agentId.replace(/_/g, ' ').replace('.py', '') + '</strong></div>'
+            ).join(''),
+            
+            featuresHtml: (template.features || template.benefits || []).slice(0, 6).map(feature => 
+              '<div class="feature-item"><span>✓</span><span>' + feature + '</span></div>'
+            ).join(''),
+            
+            apiKeysHtml: '',
+            complexityStars: template.complexity === 'starter' ? '⭐' : 
+                           template.complexity === 'intermediate' ? '⭐⭐' : '⭐⭐⭐',
+            agentCodeJSON: JSON.stringify(agentCode)
+          };
+          
+          // Build API keys HTML if needed
+          if (template.technicalRequirements && template.technicalRequirements.apiKeys) {
+            const keysHtml = template.technicalRequirements.apiKeys.map(key => 
+              '<code style="background: white; padding: 0.25rem 0.5rem; border-radius: 4px;">' + key + '</code>'
+            ).join('');
+            
+            components.apiKeysHtml = '<div style="margin-top: 1rem; padding: 1rem; background: #fef3c7; border-radius: 8px;">' +
+              '<strong style="color: #92400e;">Required API Keys:</strong>' +
+              '<div style="display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 0.5rem;">' + keysHtml + '</div></div>';
+          }
+          
+          // Return simple HTML - the actual generation is handled by the external script
+          return '<!DOCTYPE html><html><body><h1>Trading Card</h1><p>Loading...</p></body></html>';
         }
-        
+
+        .trading-card {
+            max-width: 1400px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 24px;
+            overflow: hidden;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+        }
+
+        .card-header {
+            background: linear-gradient(135deg, #742774 0%, #00a651 100%);
+            color: white;
+            padding: 2rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .card-header::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
+            animation: shimmer 3s infinite;
+        }
+
+        @keyframes shimmer {
+            0%, 100% { transform: rotate(0deg); }
+            50% { transform: rotate(180deg); }
+        }
+
+        .card-title {
+            font-size: 2.5rem;
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .card-subtitle {
+            font-size: 1.2rem;
+            opacity: 0.95;
+            position: relative;
+            z-index: 1;
+        }
+
+        .card-badges {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .badge {
+            padding: 0.5rem 1rem;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 20px;
+            font-weight: 600;
+        }
+
+        .card-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            padding: 2rem;
+        }
+
+        .section {
+            background: #f8f9fa;
+            padding: 1.5rem;
+            border-radius: 12px;
+        }
+
+        .section h3 {
+            color: #333;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .agent-list {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .agent-item {
+            background: white;
+            padding: 0.75rem;
+            border-radius: 8px;
+            border-left: 3px solid #742774;
+        }
+
+        .feature-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 0.5rem;
+        }
+
+        .feature-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: #666;
+        }
+
+        .deployment-section {
+            grid-column: 1 / -1;
+            background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);
+            border: 2px solid #0ea5e9;
+        }
+
+        .code-section {
+            grid-column: 1 / -1;
+            background: #1e1e1e;
+            color: #d4d4d4;
+            font-family: 'Consolas', 'Monaco', monospace;
+            position: relative;
+        }
+
+        .code-tabs {
+            display: flex;
+            background: #2d2d2d;
+            border-bottom: 1px solid #3e3e3e;
+            overflow-x: auto;
+        }
+
+        .code-tab {
+            padding: 0.75rem 1.5rem;
+            background: none;
+            border: none;
+            color: #d4d4d4;
+            cursor: pointer;
+            white-space: nowrap;
+            transition: background 0.3s;
+        }
+
+        .code-tab:hover {
+            background: #3e3e3e;
+        }
+
+        .code-tab.active {
+            background: #1e1e1e;
+            color: #4fc3f7;
+            border-bottom: 2px solid #4fc3f7;
+        }
+
+        .code-content {
+            padding: 1.5rem;
+            max-height: 400px;
+            overflow-y: auto;
+        }
+
+        .code-content pre {
+            white-space: pre-wrap;
+            word-wrap: break-word;
+        }
+
+        .action-buttons {
+            padding: 2rem;
+            background: #f8f9fa;
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 1rem 2rem;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+
+        .btn-success {
+            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+            color: white;
+        }
+
+        .btn-azure {
+            background: linear-gradient(135deg, #0078d4 0%, #005a9e 100%);
+            color: white;
+        }
+
+        .status-indicator {
+            width: 12px;
+            height: 12px;
+            background: #10b981;
+            border-radius: 50%;
+            display: inline-block;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 1rem;
+            padding: 1.5rem;
+            background: white;
+            border-radius: 12px;
+            margin-bottom: 2rem;
+        }
+
+        .stat-item {
+            text-align: center;
+            padding: 1rem;
+        }
+
+        .stat-value {
+            font-size: 2rem;
+            font-weight: bold;
+            color: #742774;
+        }
+
+        .stat-label {
+            color: #666;
+            font-size: 0.9rem;
+            margin-top: 0.25rem;
+        }
+
+        @media (max-width: 768px) {
+            .card-content {
+                grid-template-columns: 1fr;
+            }
+            
+            .stats-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="trading-card">
+        <div class="card-header">
+            <h1 class="card-title">🎴 ${template.name}</h1>
+            <p class="card-subtitle">${template.description}</p>
+            <div class="card-badges">
+                <span class="badge">📦 ${template.agents.length} Agents</span>
+                <span class="badge">⚡ ${template.complexity}</span>
+                <span class="badge">⏱️ ${template.estimatedTime}</span>
+                <span class="badge">✨ ${template.version || 'v1.0.0'}</span>
+            </div>
+        </div>
+
+        <div class="stats-grid">
+            <div class="stat-item">
+                <div class="stat-value">${template.agents.length}</div>
+                <div class="stat-label">Total Agents</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-value">${complexityStars}</div>
+                <div class="stat-label">Complexity</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-value">${template.estimatedTime.split(' ')[0]}</div>
+                <div class="stat-label">Setup Time</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-value"><span class="status-indicator"></span></div>
+                <div class="stat-label">Ready to Deploy</div>
+            </div>
+        </div>
+
+        <div class="card-content">
+            <div class="section">
+                <h3>📦 Stack Components</h3>
+                <div class="agent-list">
+                    ${agentsList}
+                </div>
+            </div>
+
+            <div class="section">
+                <h3>✨ Key Features</h3>
+                <div class="feature-grid">
+                    ${featuresHtml}
+                </div>
+            </div>
+
+            <div class="section deployment-section">
+                <h3>🚀 Azure Deployment Instructions</h3>
+                <ol style="margin-left: 1.5rem; color: #0369a1;">
+                    <li style="margin: 0.5rem 0;">
+                        <strong>Deploy Base Infrastructure:</strong><br>
+                        Visit <a href="https://github.com/kody-w/Copilot-Agent-365" target="_blank" style="color: #0ea5e9;">Copilot-Agent-365</a> and click "Deploy to Azure"
+                    </li>
+                    <li style="margin: 0.5rem 0;">
+                        <strong>Run Setup Script:</strong><br>
+                        After deployment, copy the setup script from Azure Portal Outputs tab
+                    </li>
+                    <li style="margin: 0.5rem 0;">
+                        <strong>Add Stack Agents:</strong><br>
+                        Copy the agent files below to your Copilot-Agent-365/agents/ folder
+                    </li>
+                    <li style="margin: 0.5rem 0;">
+                        <strong>Test Your Stack:</strong><br>
+                        Run <code style="background: #e5e7eb; padding: 2px 6px; border-radius: 4px;">func start</code> and test with the included demo
+                    </li>
+                </ol>
+                ${apiKeysHtml}
+            </div>
+
+            <div class="section code-section">
+                <div class="code-tabs">
+                    ${codeTabs}
+                </div>
+                ${codeContent}
+            </div>
+        </div>
+
+        <div class="action-buttons">
+            <a href="https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fkody-w%2FCopilot-Agent-365%2Fmain%2Fazuredeploy.json" 
+               target="_blank" class="btn btn-azure">
+                ☁️ Deploy to Azure
+            </a>
+            ${demoButton}
+            <button onclick="copyAgentCode()" class="btn btn-primary">
+                📋 Copy All Agent Code
+            </button>
+        </div>
+    </div>
+
+    <script>
+        function showCode(filename) {
+            // Hide all code contents
+            document.querySelectorAll('.code-content').forEach(content => {
+                content.style.display = 'none';
+            });
+            
+            // Remove active class from all tabs
+            document.querySelectorAll('.code-tab').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            
+            // Show selected code and activate tab
+            const codeElement = document.getElementById('code-' + filename);
+            if (codeElement) {
+                codeElement.style.display = 'block';
+            }
+            
+            // Activate the clicked tab
+            event.target.classList.add('active');
+        }
+
+        function copyAgentCode() {
+            const allCode = ${JSON.stringify(agentCode)};
+            const codeText = Object.entries(allCode).map(([filename, code]) => {
+                return '# File: ' + filename + '\\n\\n' + code;
+            }).join('\\n\\n' + '='.repeat(80) + '\\n\\n');
+            
+            navigator.clipboard.writeText(codeText).then(() => {
+                alert('All agent code copied to clipboard!');
+            }).catch(err => {
+                console.error('Failed to copy:', err);
+                alert('Failed to copy code. Please select and copy manually.');
+            });
+        }
+
+        // Add some interactive effects
+        document.addEventListener('DOMContentLoaded', () => {
+            // Animate stats on load
+            document.querySelectorAll('.stat-value').forEach((stat, index) => {
+                stat.style.opacity = '0';
+                stat.style.transform = 'translateY(20px)';
+                setTimeout(() => {
+                    stat.style.transition = 'all 0.5s ease';
+                    stat.style.opacity = '1';
+                    stat.style.transform = 'translateY(0)';
+                }, index * 100);
+            });
+        });
+    </script>
+</body>
         escapeHtml(text) {
           const map = {
             '&': '&amp;',
@@ -3640,11 +4006,6 @@
       const templateManager = new TemplateManager();
       const discoveryTool = new DiscoveryTool();
       const agentStore = new AgentStore();
-      
-      // Load the trading card generator script
-      const tradingCardScript = document.createElement('script');
-      tradingCardScript.src = '/generate_trading_card.js';
-      document.head.appendChild(tradingCardScript);
 
       // Initialize on page load
       document.addEventListener("DOMContentLoaded", () => {

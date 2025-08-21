@@ -173,6 +173,18 @@
       "duration": "5:23"
     }
   ],
+  "demo": {
+    "available": true,
+    "url": "agent_stacks/voice_to_crm_stack/demos/voice_to_crm_showcase.html",
+    "title": "Interactive Voice to CRM Demo",
+    "description": "Try the voice-to-CRM system with both scripted demo and live API integration",
+    "features": [
+      "Simulated voice recording",
+      "Real-time CRM record creation",
+      "Live API integration mode",
+      "Step-by-step visualization"
+    ]
+  },
   "relatedStacks": [
     "crm_bulk_data_creator_stack",
     "email_drafting_stack"

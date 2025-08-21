@@ -761,7 +761,7 @@
                 <div class="control-section">
                     <h3>🎮 Demo Controls</h3>
                     <div class="demo-controls">
-                        <div class="control-row">
+                        <div class="control-row" id="controlRow1">
                             <button class="btn btn-success" onclick="startDemo()" id="startBtn">
                                 ▶️ Start Demo
                             </button>
@@ -769,8 +769,8 @@
                                 ⏸️ Pause
                             </button>
                         </div>
-                        <div class="control-row">
-                            <button class="btn btn-secondary" onclick="resetDemo()">
+                        <div class="control-row" id="controlRow2">
+                            <button class="btn btn-secondary" onclick="resetDemo()" id="resetBtn">
                                 🔄 Reset
                             </button>
                             <button class="btn btn-secondary" onclick="skipToNext()" id="skipBtn" disabled>
@@ -1128,25 +1128,41 @@ Creating ticket in ServiceNow...`,
             document.getElementById('liveModeBtn').classList.toggle('active', mode === 'live');
             document.getElementById('liveConfig').classList.toggle('active', mode === 'live');
             
-            // Update sidebar controls visibility
-            const demoControls = document.querySelector('.demo-controls');
+            // Get UI elements
+            const startBtn = document.getElementById('startBtn');
+            const pauseBtn = document.getElementById('pauseBtn');
+            const skipBtn = document.getElementById('skipBtn');
+            const resetBtn = document.getElementById('resetBtn');
+            const speedControl = document.querySelector('.speed-control');
             const voiceButton = document.getElementById('voiceBtn');
+            const voiceBtnText = document.getElementById('voiceBtnText');
             
             if (mode === 'demo') {
+                // Demo mode - show all demo controls
+                if (startBtn) startBtn.style.display = 'inline-flex';
+                if (pauseBtn) pauseBtn.style.display = 'inline-flex';
+                if (skipBtn) skipBtn.style.display = 'inline-flex';
+                if (resetBtn) resetBtn.style.display = 'inline-flex';
+                if (speedControl) speedControl.style.display = 'flex';
+                
+                // Reset the demo state
                 resetDemo();
-                if (demoControls) demoControls.style.display = 'flex';
+                
+                // Set voice button for demo mode
                 voiceButton.disabled = true;
                 voiceButton.onclick = simulateVoiceInput;
+                voiceBtnText.textContent = 'Click to Simulate Voice';
             } else {
-                // Live mode
-                if (demoControls) {
-                    document.getElementById('startBtn').style.display = 'none';
-                    document.getElementById('pauseBtn').style.display = 'none';
-                    document.getElementById('skipBtn').style.display = 'none';
-                    document.querySelector('.speed-control').style.display = 'none';
-                }
-                voiceButton.disabled = false;
+                // Live mode - hide demo-specific controls
+                if (startBtn) startBtn.style.display = 'none';
+                if (pauseBtn) pauseBtn.style.display = 'none';
+                if (skipBtn) skipBtn.style.display = 'none';
+                if (speedControl) speedControl.style.display = 'none';
+                // Keep reset button visible in live mode too
+                
+                // Set voice button for live mode
                 voiceButton.onclick = handleLiveVoiceInput;
+                voiceBtnText.textContent = 'Click to Record Voice';
                 
                 // Load saved config if exists
                 const savedConfig = localStorage.getItem('voiceToCRMConfig');
@@ -1155,6 +1171,19 @@ Creating ticket in ServiceNow...`,
                     document.getElementById('apiKey').value = config.apiKey || '';
                     document.getElementById('apiEndpoint').value = config.endpoint || '';
                 }
+                
+                // Enable voice button only if connected
+                voiceButton.disabled = !liveState.isConnected;
+                
+                // Clear any demo state
+                clearTimeout(demoState.messageTimer);
+                clearTimeout(demoState.typingTimer);
+                demoState.isPlaying = false;
+                demoState.isPaused = false;
+                
+                // Reset the UI
+                updateStatus('idle', liveState.isConnected ? 'Connected' : 'Not Connected');
+                addInitialMessage();
             }
         }
 
@@ -1527,20 +1556,50 @@ Creating ticket in ServiceNow...`,
         }
 
         function resetDemo() {
-            demoState.isPlaying = false;
-            demoState.isPaused = false;
-            currentScriptIndex = 0;
-            currentMessageIndex = 0;
-            demoState.currentStep = 0;
-            
+            // Clear all timers
             clearTimeout(demoState.messageTimer);
             clearTimeout(demoState.typingTimer);
             
-            document.getElementById('startBtn').disabled = false;
-            document.getElementById('pauseBtn').disabled = true;
-            document.getElementById('skipBtn').disabled = true;
-            document.getElementById('voiceBtn').disabled = true;
+            // Reset demo state
+            demoState.isPlaying = false;
+            demoState.isPaused = false;
+            demoState.currentStep = 0;
+            currentScriptIndex = 0;
+            currentMessageIndex = 0;
             
+            // Reset button states based on current mode
+            const startBtn = document.getElementById('startBtn');
+            const pauseBtn = document.getElementById('pauseBtn');
+            const skipBtn = document.getElementById('skipBtn');
+            const voiceBtn = document.getElementById('voiceBtn');
+            const voiceBtnText = document.getElementById('voiceBtnText');
+            const voiceBtnIcon = document.getElementById('voiceBtnIcon');
+            
+            if (currentMode === 'demo') {
+                // Show demo controls
+                startBtn.style.display = 'inline-flex';
+                pauseBtn.style.display = 'inline-flex';
+                skipBtn.style.display = 'inline-flex';
+                document.querySelector('.speed-control').style.display = 'flex';
+                
+                // Reset button states for demo mode
+                startBtn.disabled = false;
+                pauseBtn.disabled = true;
+                skipBtn.disabled = true;
+                voiceBtn.disabled = true;
+                voiceBtn.onclick = simulateVoiceInput;
+            } else {
+                // Live mode - ensure voice button is properly set
+                voiceBtn.disabled = !liveState.isConnected;
+                voiceBtn.onclick = handleLiveVoiceInput;
+            }
+            
+            // Reset voice button appearance
+            voiceBtn.classList.remove('recording');
+            voiceBtnIcon.textContent = '🎤';
+            voiceBtnText.textContent = 'Click to Simulate Voice';
+            
+            // Reset progress bar
             document.getElementById('progressBar').style.width = '0%';
             
             // Reset step indicators
@@ -1548,7 +1607,16 @@ Creating ticket in ServiceNow...`,
                 step.classList.remove('active', 'completed');
             });
             
+            // Clear typing indicator if present
+            const typingIndicator = document.getElementById('typingIndicator');
+            if (typingIndicator) {
+                typingIndicator.remove();
+            }
+            
+            // Reset status
             updateStatus('idle', 'Ready');
+            
+            // Clear and reset messages
             addInitialMessage();
         }
 

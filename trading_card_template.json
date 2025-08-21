@@ -1,0 +1,63 @@
+{
+  "htmlTemplate": {
+    "doctype": "<!DOCTYPE html>",
+    "styles": {
+      "global": "* { margin: 0; padding: 0; box-sizing: border-box; }",
+      "body": "font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, sans-serif; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); min-height: 100vh; padding: 20px;",
+      "tradingCard": "max-width: 1400px; margin: 0 auto; background: white; border-radius: 24px; overflow: hidden; box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);",
+      "cardHeader": "background: linear-gradient(135deg, #742774 0%, #00a651 100%); color: white; padding: 2rem; position: relative; overflow: hidden;",
+      "cardTitle": "font-size: 2.5rem; font-weight: bold; margin-bottom: 0.5rem; position: relative; z-index: 1;",
+      "cardSubtitle": "font-size: 1.2rem; opacity: 0.95; position: relative; z-index: 1;",
+      "cardBadges": "display: flex; gap: 1rem; margin-top: 1rem; position: relative; z-index: 1;",
+      "badge": "padding: 0.5rem 1rem; background: rgba(255, 255, 255, 0.2); border-radius: 20px; font-weight: 600;",
+      "cardContent": "display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; padding: 2rem;",
+      "section": "background: #f8f9fa; padding: 1.5rem; border-radius: 12px;",
+      "sectionTitle": "color: #333; margin-bottom: 1rem; display: flex; align-items: center; gap: 0.5rem;",
+      "agentList": "display: flex; flex-direction: column; gap: 0.5rem;",
+      "agentItem": "background: white; padding: 0.75rem; border-radius: 8px; border-left: 3px solid #742774;",
+      "featureGrid": "display: grid; grid-template-columns: 1fr 1fr; gap: 0.5rem;",
+      "featureItem": "display: flex; align-items: center; gap: 0.5rem; color: #666;",
+      "deploymentSection": "grid-column: 1 / -1; background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%); border: 2px solid #0ea5e9;",
+      "codeSection": "grid-column: 1 / -1; background: #1e1e1e; color: #d4d4d4; font-family: 'Consolas', 'Monaco', monospace; position: relative;",
+      "codeTabs": "display: flex; background: #2d2d2d; border-bottom: 1px solid #3e3e3e; overflow-x: auto;",
+      "codeTab": "padding: 0.75rem 1.5rem; background: none; border: none; color: #d4d4d4; cursor: pointer; white-space: nowrap; transition: background 0.3s;",
+      "codeTabHover": "background: #3e3e3e;",
+      "codeTabActive": "background: #1e1e1e; color: #4fc3f7; border-bottom: 2px solid #4fc3f7;",
+      "codeContent": "padding: 1.5rem; max-height: 400px; overflow-y: auto;",
+      "actionButtons": "padding: 2rem; background: #f8f9fa; display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;",
+      "btn": "padding: 0.75rem 1.5rem; border: none; border-radius: 8px; font-size: 1rem; font-weight: 600; cursor: pointer; transition: all 0.3s; text-decoration: none; display: inline-flex; align-items: center; gap: 0.5rem;",
+      "btnAzure": "background: linear-gradient(135deg, #0078d4 0%, #005a9e 100%); color: white;",
+      "btnSuccess": "background: linear-gradient(135deg, #10b981 0%, #059669 100%); color: white;",
+      "btnPrimary": "background: linear-gradient(135deg, #742774 0%, #5a1e5a 100%); color: white;",
+      "statsGrid": "display: grid; grid-template-columns: repeat(4, 1fr); gap: 1rem; padding: 1.5rem; background: white; border-radius: 12px; margin-bottom: 2rem;",
+      "statItem": "text-align: center; padding: 1rem;",
+      "statValue": "font-size: 2rem; font-weight: bold; color: #742774;",
+      "statLabel": "color: #666; font-size: 0.9rem; margin-top: 0.25rem;"
+    },
+    "animations": {
+      "shimmer": "@keyframes shimmer { 0%, 100% { transform: rotate(0deg); } 50% { transform: rotate(180deg); } }"
+    },
+    "scripts": {
+      "showCode": "function showCode(filename) { document.querySelectorAll('.code-content').forEach(content => { content.style.display = 'none'; }); document.querySelectorAll('.code-tab').forEach(tab => { tab.classList.remove('active'); }); const codeElement = document.getElementById('code-' + filename); if (codeElement) { codeElement.style.display = 'block'; } event.target.classList.add('active'); }",
+      "animateStats": "document.addEventListener('DOMContentLoaded', () => { document.querySelectorAll('.stat-value').forEach((stat, index) => { stat.style.opacity = '0'; stat.style.transform = 'translateY(20px)'; setTimeout(() => { stat.style.transition = 'all 0.5s ease'; stat.style.opacity = '1'; stat.style.transform = 'translateY(0)'; }, index * 100); }); });"
+    },
+    "deploymentInstructions": [
+      {
+        "title": "Deploy Base Infrastructure",
+        "description": "Visit <a href=\"https://github.com/kody-w/Copilot-Agent-365\" target=\"_blank\" style=\"color: #0ea5e9;\">Copilot-Agent-365</a> and click \"Deploy to Azure\""
+      },
+      {
+        "title": "Run Setup Script",
+        "description": "After deployment, copy the setup script from Azure Portal Outputs tab"
+      },
+      {
+        "title": "Add Stack Agents",
+        "description": "Copy the agent files below to your Copilot-Agent-365/agents/ folder"
+      },
+      {
+        "title": "Test Your Stack",
+        "description": "Run <code style=\"background: #e5e7eb; padding: 2px 6px; border-radius: 4px;\">func start</code> and test with the included demo"
+      }
+    ]
+  }
+}
