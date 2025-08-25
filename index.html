@@ -1297,22 +1297,6 @@ graph TB
               </pre>
             </div>
             
-            <!-- Add Mermaid.js CDN -->
-            <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
-            <script>
-              mermaid.initialize({ 
-                startOnLoad: true,
-                theme: 'default',
-                themeVariables: {
-                  primaryColor: '#0078d4',
-                  primaryTextColor: '#fff',
-                  primaryBorderColor: '#005a9e',
-                  lineColor: '#5e5e5e',
-                  secondaryColor: '#40e0d0',
-                  tertiaryColor: '#f9fafb'
-                }
-              });
-            </script>
             
             <div style="margin-top: 1.5rem; display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1rem;">
               <div style="background: #eff6ff; border-left: 4px solid #3b82f6; padding: 1rem; border-radius: 4px;">
@@ -1843,6 +1827,12 @@ graph TB
         // Show selected section
         if (app === "setup") {
           document.getElementById("setupApp").classList.add("active");
+          // Re-render Mermaid diagrams when showing setup tab
+          if (typeof mermaid !== 'undefined') {
+            setTimeout(() => {
+              mermaid.init(undefined, document.querySelectorAll('#setupApp .mermaid'));
+            }, 100);
+          }
         } else if (app === "templates") {
           document.getElementById("templatesApp").classList.add("active");
           if (!templateManager.templatesLoaded) {
@@ -4946,6 +4936,40 @@ graph TB
             agentStore.closeCodeViewer();
           }
         });
+    </script>
+    
+    <!-- Load Mermaid.js -->
+    <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+    <script>
+      // Initialize Mermaid.js for architecture diagrams
+      document.addEventListener('DOMContentLoaded', function() {
+        if (typeof mermaid !== 'undefined') {
+          mermaid.initialize({ 
+            startOnLoad: true,
+            theme: 'default',
+            themeVariables: {
+              primaryColor: '#0078d4',
+              primaryTextColor: '#fff',
+              primaryBorderColor: '#005a9e',
+              lineColor: '#5e5e5e',
+              secondaryColor: '#40e0d0',
+              tertiaryColor: '#f9fafb',
+              mainBkg: '#eff6ff',
+              secondBkg: '#f3e8ff',
+              tertiaryTextColor: '#333'
+            },
+            flowchart: {
+              useMaxWidth: true,
+              htmlLabels: true,
+              curve: 'basis'
+            }
+          });
+          // Force re-render for any diagrams that might be hidden
+          setTimeout(() => {
+            mermaid.init(undefined, document.querySelectorAll('.mermaid'));
+          }, 500);
+        }
+      });
     </script>
   </body>
 </html>
