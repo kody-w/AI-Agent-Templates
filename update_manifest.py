@@ -228,8 +228,36 @@ def main():
     
     # Scan agents
     print("📂 Scanning agents directory...")
-    manifest["agents"] = scan_agents()
-    print(f"   Found {len(manifest['agents'])} agents")
+    singular_agents = scan_agents()
+    
+    # Scan stacks
+    print("📂 Scanning agent_stacks directory...")
+    stacks = scan_stacks()
+    
+    # Create a set of agent filenames that exist in stacks
+    stack_agent_filenames = set()
+    for stack in stacks:
+        for agent in stack.get('agents', []):
+            stack_agent_filenames.add(agent['filename'])
+    
+    # Filter out singular agents that also exist in stacks (deduplication)
+    # Only keep the singular version if it doesn't exist in any stack
+    deduplicated_agents = []
+    duplicates_removed = 0
+    for agent in singular_agents:
+        if agent['filename'] not in stack_agent_filenames:
+            deduplicated_agents.append(agent)
+        else:
+            duplicates_removed += 1
+            print(f"   Removing duplicate: {agent['filename']} (exists in stack)")
+    
+    manifest["agents"] = deduplicated_agents
+    manifest["stacks"] = stacks
+    
+    print(f"   Found {len(singular_agents)} singular agents")
+    print(f"   Removed {duplicates_removed} duplicates")
+    print(f"   Final unique agents: {len(manifest['agents'])}")
+    print(f"   Found {len(manifest['stacks'])} stacks")
     
     # Also create agents/index.json for raw URL loading
     agents_index = {
@@ -238,11 +266,6 @@ def main():
     with open("agents/index.json", 'w') as f:
         json.dump(agents_index, f, indent=2)
     print("   Created agents/index.json")
-    
-    # Scan stacks
-    print("📂 Scanning agent_stacks directory...")
-    manifest["stacks"] = scan_stacks()
-    print(f"   Found {len(manifest['stacks'])} stacks")
     
     # Count total stack agents
     total_stack_agents = sum(len(stack['agents']) for stack in manifest['stacks'])

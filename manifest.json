@@ -1,6 +1,6 @@
 {
   "version": "1.0.0",
-  "generated": "2025-08-21T19:22:02.169992Z",
+  "generated": "2025-08-25T16:51:22.708945Z",
   "repository": "kody-w/AI-Agent-Templates",
   "branch": "main",
   "agents": [
@@ -95,24 +95,6 @@
       ]
     },
     {
-      "id": "email_drafting_agent",
-      "name": "Email Drafting Agent",
-      "filename": "email_drafting_agent.py",
-      "path": "agents/email_drafting_agent.py",
-      "url": "https://raw.githubusercontent.com/kody-w/AI-Agent-Templates/main/agents/email_drafting_agent.py",
-      "size": 5007,
-      "size_formatted": "4.9KB",
-      "type": "singular",
-      "icon": "\u2709\ufe0f",
-      "description": "Intelligent email drafting and automation agent",
-      "features": [
-        "Email composition",
-        "Smart templates",
-        "Auto-response",
-        "Attachment handling"
-      ]
-    },
-    {
       "id": "basic_agent",
       "name": "Basic Agent",
       "filename": "basic_agent.py",
@@ -128,24 +110,6 @@
         "Easy integration",
         "Scalable architecture",
         "Production ready"
-      ]
-    },
-    {
-      "id": "dynamics_365_agent",
-      "name": "Dynamics 365 Agent",
-      "filename": "dynamics_365_agent.py",
-      "path": "agents/dynamics_365_agent.py",
-      "url": "https://raw.githubusercontent.com/kody-w/AI-Agent-Templates/main/agents/dynamics_365_agent.py",
-      "size": 7182,
-      "size_formatted": "7.0KB",
-      "type": "singular",
-      "icon": "\ud83d\udcbc",
-      "description": "Microsoft Dynamics 365 integration agent",
-      "features": [
-        "Dynamics 365 integration",
-        "Entity management",
-        "Workflow automation",
-        "API connectivity"
       ]
     },
     {
@@ -275,24 +239,6 @@
       ]
     },
     {
-      "id": "extract_sharepoint_document_url_agent",
-      "name": "Extract Sharepoint Document Url Agent",
-      "filename": "extract_sharepoint_document_url_agent.py",
-      "path": "agents/extract_sharepoint_document_url_agent.py",
-      "url": "https://raw.githubusercontent.com/kody-w/AI-Agent-Templates/main/agents/extract_sharepoint_document_url_agent.py",
-      "size": 43530,
-      "size_formatted": "42.5KB",
-      "type": "singular",
-      "icon": "\ud83d\udcc1",
-      "description": "SharePoint document extraction and management",
-      "features": [
-        "Document extraction",
-        "SharePoint integration",
-        "File management",
-        "Metadata handling"
-      ]
-    },
-    {
       "id": "code_review_agent",
       "name": "Code Review Agent",
       "filename": "code_review_agent.py",
@@ -308,24 +254,6 @@
         "Quality metrics",
         "Best practices",
         "Automated feedback"
-      ]
-    },
-    {
-      "id": "servicenow_agent",
-      "name": "Servicenow Agent",
-      "filename": "servicenow_agent.py",
-      "path": "agents/servicenow_agent.py",
-      "url": "https://raw.githubusercontent.com/kody-w/AI-Agent-Templates/main/agents/servicenow_agent.py",
-      "size": 11010,
-      "size_formatted": "10.8KB",
-      "type": "singular",
-      "icon": "\ud83c\udfab",
-      "description": "ServiceNow ticket and workflow management",
-      "features": [
-        "Ticket management",
-        "Workflow automation",
-        "ServiceNow integration",
-        "Incident tracking"
       ]
     },
     {

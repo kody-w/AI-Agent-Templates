@@ -5,9 +5,7 @@
     "context_memory_agent.py",
     "fixed_beehiiv_agent.py",
     "powerpoint_agent.py",
-    "email_drafting_agent.py",
     "basic_agent.py",
-    "dynamics_365_agent.py",
     "adaptive_card_agent.py",
     "duckduckgo_search_agent.py",
     "manage_memory_agent.py",
@@ -15,9 +13,7 @@
     "image_generation_agent.py",
     "dynamics365_demo_data_seeder_agent.py",
     "salesforce_query_agent.py",
-    "extract_sharepoint_document_url_agent.py",
     "code_review_agent.py",
-    "servicenow_agent.py",
     "meeting_prep_agent.py",
     "hacker_news_agent.py"
   ]
