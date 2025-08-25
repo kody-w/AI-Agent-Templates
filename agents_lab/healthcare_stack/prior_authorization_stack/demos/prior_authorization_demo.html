@@ -1,0 +1,826 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prior Authorization Agent - Healthcare Demo</title>
+    <style>
+        :root {
+            --primary: #742774;
+            --secondary: #00a651;
+            --accent: #4a90e2;
+            --dark: #1e1e1e;
+            --light: #f5f5f5;
+            --error: #e74c3c;
+            --warning: #f39c12;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .container {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            max-width: 1200px;
+            width: 100%;
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            animation: fadeInDown 0.5s ease;
+        }
+
+        .header p {
+            font-size: 1.1em;
+            opacity: 0.9;
+            animation: fadeInUp 0.5s ease 0.2s both;
+        }
+
+        .mode-toggle {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .mode-btn {
+            padding: 10px 20px;
+            border: 2px solid white;
+            background: transparent;
+            color: white;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: bold;
+        }
+
+        .mode-btn.active {
+            background: white;
+            color: var(--primary);
+        }
+
+        .content {
+            display: flex;
+            gap: 20px;
+            padding: 30px;
+        }
+
+        .left-panel {
+            flex: 1;
+            background: var(--light);
+            border-radius: 15px;
+            padding: 25px;
+        }
+
+        .right-panel {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: var(--dark);
+        }
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 14px;
+            transition: border-color 0.3s ease;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: var(--primary);
+        }
+
+        .form-group textarea {
+            resize: vertical;
+            min-height: 100px;
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 12px 24px;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            flex: 1;
+            min-width: 120px;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+        }
+
+        .btn-secondary {
+            background: white;
+            color: var(--primary);
+            border: 2px solid var(--primary);
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+
+        .steps-indicator {
+            background: white;
+            border-radius: 15px;
+            padding: 20px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        .steps {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 20px;
+        }
+
+        .step {
+            flex: 1;
+            text-align: center;
+            position: relative;
+        }
+
+        .step:not(:last-child)::after {
+            content: '';
+            position: absolute;
+            top: 20px;
+            right: -50%;
+            width: 100%;
+            height: 2px;
+            background: #e0e0e0;
+            z-index: -1;
+        }
+
+        .step.active:not(:last-child)::after {
+            background: var(--secondary);
+        }
+
+        .step-circle {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: #e0e0e0;
+            margin: 0 auto 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            color: white;
+            transition: all 0.3s ease;
+        }
+
+        .step.active .step-circle {
+            background: var(--secondary);
+            transform: scale(1.1);
+        }
+
+        .step.completed .step-circle {
+            background: var(--primary);
+        }
+
+        .chat-interface {
+            background: white;
+            border-radius: 15px;
+            padding: 20px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            height: 400px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .chat-messages {
+            flex: 1;
+            overflow-y: auto;
+            padding: 10px;
+            background: var(--light);
+            border-radius: 10px;
+            margin-bottom: 15px;
+        }
+
+        .message {
+            margin-bottom: 15px;
+            animation: slideIn 0.3s ease;
+        }
+
+        .message.user {
+            text-align: right;
+        }
+
+        .message.agent {
+            text-align: left;
+        }
+
+        .message-bubble {
+            display: inline-block;
+            padding: 12px 18px;
+            border-radius: 18px;
+            max-width: 80%;
+        }
+
+        .user .message-bubble {
+            background: var(--primary);
+            color: white;
+        }
+
+        .agent .message-bubble {
+            background: white;
+            border: 2px solid var(--secondary);
+            color: var(--dark);
+        }
+
+        .typing-indicator {
+            display: none;
+            padding: 10px;
+            background: white;
+            border: 2px solid var(--secondary);
+            border-radius: 18px;
+            width: 60px;
+            text-align: center;
+        }
+
+        .typing-indicator.active {
+            display: inline-block;
+            animation: pulse 1.5s infinite;
+        }
+
+        .typing-indicator span {
+            display: inline-block;
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: var(--secondary);
+            margin: 0 2px;
+            animation: bounce 1.4s infinite ease-in-out both;
+        }
+
+        .typing-indicator span:nth-child(1) {
+            animation-delay: -0.32s;
+        }
+
+        .typing-indicator span:nth-child(2) {
+            animation-delay: -0.16s;
+        }
+
+        .results-card {
+            background: white;
+            border-radius: 15px;
+            padding: 20px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            margin-top: 20px;
+            display: none;
+        }
+
+        .results-card.active {
+            display: block;
+            animation: fadeIn 0.5s ease;
+        }
+
+        .result-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 15px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid var(--light);
+        }
+
+        .status-badge {
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-weight: 600;
+            font-size: 14px;
+        }
+
+        .status-approved {
+            background: #d4edda;
+            color: #155724;
+        }
+
+        .status-pending {
+            background: #fff3cd;
+            color: #856404;
+        }
+
+        .status-denied {
+            background: #f8d7da;
+            color: #721c24;
+        }
+
+        .result-details {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-top: 15px;
+        }
+
+        .detail-item {
+            padding: 10px;
+            background: var(--light);
+            border-radius: 8px;
+        }
+
+        .detail-label {
+            font-size: 12px;
+            color: #666;
+            margin-bottom: 5px;
+        }
+
+        .detail-value {
+            font-weight: 600;
+            color: var(--dark);
+        }
+
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateX(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        @keyframes bounce {
+            0%, 80%, 100% {
+                transform: scale(0);
+            }
+            40% {
+                transform: scale(1);
+            }
+        }
+
+        @keyframes pulse {
+            0% { opacity: 1; }
+            50% { opacity: 0.5; }
+            100% { opacity: 1; }
+        }
+
+        .loader {
+            display: none;
+            width: 40px;
+            height: 40px;
+            border: 4px solid var(--light);
+            border-top: 4px solid var(--primary);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 20px auto;
+        }
+
+        .loader.active {
+            display: block;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🏥 Prior Authorization Agent</h1>
+            <p>Streamline authorization approvals with AI-powered EHR and payer portal integration</p>
+            <div class="mode-toggle">
+                <button class="mode-btn active" onclick="setMode('demo')">Demo Mode</button>
+                <button class="mode-btn" onclick="setMode('live')">Live Mode</button>
+            </div>
+        </div>
+
+        <div class="content">
+            <div class="left-panel">
+                <h2 style="margin-bottom: 20px; color: var(--primary);">Authorization Request</h2>
+                
+                <div class="form-group">
+                    <label>Patient ID</label>
+                    <input type="text" id="patientId" placeholder="e.g., PT123456" value="PT123456">
+                </div>
+
+                <div class="form-group">
+                    <label>Procedure Code (CPT/HCPCS)</label>
+                    <input type="text" id="procedureCode" placeholder="e.g., CPT-97110" value="CPT-97110">
+                </div>
+
+                <div class="form-group">
+                    <label>Diagnosis Codes (ICD-10)</label>
+                    <input type="text" id="diagnosisCodes" placeholder="e.g., M25.511, M79.3" value="M25.511, M79.3">
+                </div>
+
+                <div class="form-group">
+                    <label>Provider NPI</label>
+                    <input type="text" id="providerId" placeholder="e.g., 1234567890" value="1234567890">
+                </div>
+
+                <div class="form-group">
+                    <label>Insurance Plan</label>
+                    <select id="insurancePlan">
+                        <option value="BCBS-PPO-GOLD">Blue Cross PPO Gold</option>
+                        <option value="AETNA-HMO-SILVER">Aetna HMO Silver</option>
+                        <option value="UNITED-EPO-PLATINUM">United Healthcare EPO Platinum</option>
+                        <option value="CIGNA-PPO-BRONZE">Cigna PPO Bronze</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label>Urgency Level</label>
+                    <select id="urgency">
+                        <option value="routine">Routine</option>
+                        <option value="urgent">Urgent</option>
+                        <option value="emergency">Emergency</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label>Clinical Notes</label>
+                    <textarea id="clinicalNotes" placeholder="Enter supporting clinical documentation...">Patient presents with chronic knee pain limiting mobility. Conservative treatment failed after 6 weeks of physical therapy.</textarea>
+                </div>
+
+                <div class="action-buttons">
+                    <button class="btn btn-primary" onclick="submitAuthorization()">Submit Authorization</button>
+                    <button class="btn btn-secondary" onclick="checkRequirements()">Check Requirements</button>
+                </div>
+            </div>
+
+            <div class="right-panel">
+                <div class="steps-indicator">
+                    <h3 style="margin-bottom: 15px; color: var(--dark);">Authorization Workflow</h3>
+                    <div class="steps">
+                        <div class="step" id="step1">
+                            <div class="step-circle">1</div>
+                            <span>Submit</span>
+                        </div>
+                        <div class="step" id="step2">
+                            <div class="step-circle">2</div>
+                            <span>Review</span>
+                        </div>
+                        <div class="step" id="step3">
+                            <div class="step-circle">3</div>
+                            <span>Decision</span>
+                        </div>
+                        <div class="step" id="step4">
+                            <div class="step-circle">4</div>
+                            <span>Complete</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="chat-interface">
+                    <div class="chat-messages" id="chatMessages">
+                        <div class="message agent">
+                            <div class="message-bubble">
+                                👋 Welcome to the Prior Authorization Assistant! I can help you submit, track, and appeal authorization requests.
+                            </div>
+                        </div>
+                    </div>
+                    <div class="typing-indicator" id="typingIndicator">
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                    </div>
+                </div>
+
+                <div class="loader" id="loader"></div>
+
+                <div class="results-card" id="resultsCard">
+                    <div class="result-header">
+                        <h3>Authorization Result</h3>
+                        <span class="status-badge" id="statusBadge">Pending</span>
+                    </div>
+                    <div class="result-details" id="resultDetails">
+                        <!-- Results will be populated here -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let currentMode = 'demo';
+        let currentStep = 1;
+
+        function setMode(mode) {
+            currentMode = mode;
+            document.querySelectorAll('.mode-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            event.target.classList.add('active');
+            
+            addMessage('agent', mode === 'demo' 
+                ? '🎭 Demo mode activated. Using simulated data for demonstration.'
+                : '🔴 Live mode activated. Connected to production systems.');
+        }
+
+        function addMessage(sender, text) {
+            const messagesDiv = document.getElementById('chatMessages');
+            const messageDiv = document.createElement('div');
+            messageDiv.className = `message ${sender}`;
+            messageDiv.innerHTML = `
+                <div class="message-bubble">${text}</div>
+            `;
+            messagesDiv.appendChild(messageDiv);
+            messagesDiv.scrollTop = messagesDiv.scrollHeight;
+        }
+
+        function showTyping() {
+            document.getElementById('typingIndicator').classList.add('active');
+        }
+
+        function hideTyping() {
+            document.getElementById('typingIndicator').classList.remove('active');
+        }
+
+        function updateStep(step) {
+            for (let i = 1; i <= 4; i++) {
+                const stepEl = document.getElementById(`step${i}`);
+                stepEl.classList.remove('active', 'completed');
+                if (i < step) {
+                    stepEl.classList.add('completed');
+                } else if (i === step) {
+                    stepEl.classList.add('active');
+                }
+            }
+        }
+
+        async function submitAuthorization() {
+            const patientId = document.getElementById('patientId').value;
+            const procedureCode = document.getElementById('procedureCode').value;
+            const diagnosisCodes = document.getElementById('diagnosisCodes').value;
+            const providerId = document.getElementById('providerId').value;
+            const insurancePlan = document.getElementById('insurancePlan').value;
+            const urgency = document.getElementById('urgency').value;
+            const clinicalNotes = document.getElementById('clinicalNotes').value;
+
+            if (!patientId || !procedureCode) {
+                addMessage('agent', '⚠️ Please provide at least Patient ID and Procedure Code.');
+                return;
+            }
+
+            addMessage('user', `Submit prior authorization for ${procedureCode} - Patient ${patientId}`);
+            showTyping();
+            document.getElementById('loader').classList.add('active');
+
+            // Step 1: Submit
+            updateStep(1);
+            await delay(1000);
+
+            // Step 2: Review
+            updateStep(2);
+            addMessage('agent', '📋 Submitting authorization request to payer portal...');
+            await delay(1500);
+
+            // Step 3: Decision
+            updateStep(3);
+            addMessage('agent', '🔍 Reviewing medical necessity criteria...');
+            await delay(2000);
+
+            hideTyping();
+            document.getElementById('loader').classList.remove('active');
+
+            // Step 4: Complete
+            updateStep(4);
+
+            if (currentMode === 'demo') {
+                // Simulate different outcomes
+                const outcomes = [
+                    {
+                        status: 'approved',
+                        authId: `PA${Math.floor(Math.random() * 900000) + 100000}`,
+                        approvalCode: `APV${Math.floor(Math.random() * 90000) + 10000}`,
+                        message: '✅ Authorization APPROVED! The procedure meets medical necessity criteria.',
+                        validDays: 90,
+                        units: 12
+                    },
+                    {
+                        status: 'pending',
+                        authId: `PA${Math.floor(Math.random() * 900000) + 100000}`,
+                        message: '⏳ Authorization under review. Additional documentation may be required.',
+                        expectedDays: 3,
+                        requiredDocs: ['Recent lab results', 'Specialist notes']
+                    },
+                    {
+                        status: 'approved',
+                        authId: `PA${Math.floor(Math.random() * 900000) + 100000}`,
+                        approvalCode: `APV${Math.floor(Math.random() * 90000) + 10000}`,
+                        message: '✅ Authorization APPROVED with modifications. 6 sessions approved instead of 12.',
+                        validDays: 60,
+                        units: 6
+                    }
+                ];
+
+                const outcome = outcomes[Math.floor(Math.random() * outcomes.length)];
+                displayResult(outcome);
+                addMessage('agent', outcome.message);
+
+            } else {
+                // Live mode - would call actual API
+                addMessage('agent', '🔄 Connecting to live authorization system...');
+                // Simulated API response
+                setTimeout(() => {
+                    const result = {
+                        status: 'approved',
+                        authId: `PA${Math.floor(Math.random() * 900000) + 100000}`,
+                        approvalCode: `APV${Math.floor(Math.random() * 90000) + 10000}`,
+                        message: '✅ Live authorization submitted successfully.',
+                        validDays: 90,
+                        units: 12
+                    };
+                    displayResult(result);
+                    addMessage('agent', result.message);
+                }, 1000);
+            }
+        }
+
+        function displayResult(result) {
+            const resultsCard = document.getElementById('resultsCard');
+            const statusBadge = document.getElementById('statusBadge');
+            const resultDetails = document.getElementById('resultDetails');
+
+            resultsCard.classList.add('active');
+            
+            // Update status badge
+            statusBadge.textContent = result.status.toUpperCase();
+            statusBadge.className = `status-badge status-${result.status}`;
+
+            // Build details HTML
+            let detailsHTML = `
+                <div class="detail-item">
+                    <div class="detail-label">Authorization ID</div>
+                    <div class="detail-value">${result.authId}</div>
+                </div>
+            `;
+
+            if (result.approvalCode) {
+                detailsHTML += `
+                    <div class="detail-item">
+                        <div class="detail-label">Approval Code</div>
+                        <div class="detail-value">${result.approvalCode}</div>
+                    </div>
+                    <div class="detail-item">
+                        <div class="detail-label">Valid For</div>
+                        <div class="detail-value">${result.validDays} days</div>
+                    </div>
+                    <div class="detail-item">
+                        <div class="detail-label">Approved Units</div>
+                        <div class="detail-value">${result.units} sessions</div>
+                    </div>
+                `;
+            }
+
+            if (result.expectedDays) {
+                detailsHTML += `
+                    <div class="detail-item">
+                        <div class="detail-label">Expected Decision</div>
+                        <div class="detail-value">${result.expectedDays} days</div>
+                    </div>
+                `;
+            }
+
+            if (result.requiredDocs) {
+                detailsHTML += `
+                    <div class="detail-item">
+                        <div class="detail-label">Required Documents</div>
+                        <div class="detail-value">${result.requiredDocs.join(', ')}</div>
+                    </div>
+                `;
+            }
+
+            detailsHTML += `
+                <div class="detail-item">
+                    <div class="detail-label">Integrated Systems</div>
+                    <div class="detail-value">Epic EHR, Payer Portal, D365</div>
+                </div>
+                <div class="detail-item">
+                    <div class="detail-label">Processing Time</div>
+                    <div class="detail-value">${Math.floor(Math.random() * 10) + 2} minutes</div>
+                </div>
+            `;
+
+            resultDetails.innerHTML = detailsHTML;
+        }
+
+        async function checkRequirements() {
+            const procedureCode = document.getElementById('procedureCode').value || 'CPT-97110';
+            
+            addMessage('user', `Check authorization requirements for ${procedureCode}`);
+            showTyping();
+            
+            await delay(1500);
+            hideTyping();
+            
+            const requirements = {
+                criteria: [
+                    'Documented failure of conservative treatment',
+                    'Functional impairment affecting daily activities',
+                    'Supporting imaging or diagnostic test results'
+                ],
+                documents: [
+                    'Clinical notes from last 3 visits',
+                    'Relevant diagnostic test results',
+                    'Treatment history and outcomes'
+                ],
+                timeline: '3-5 business days',
+                autoApproval: Math.random() > 0.5
+            };
+            
+            let message = `📋 Requirements for ${procedureCode}:\n\n`;
+            message += `<b>Medical Necessity Criteria:</b>\n`;
+            requirements.criteria.forEach(c => {
+                message += `• ${c}\n`;
+            });
+            message += `\n<b>Required Documentation:</b>\n`;
+            requirements.documents.forEach(d => {
+                message += `• ${d}\n`;
+            });
+            message += `\n<b>Typical Timeline:</b> ${requirements.timeline}\n`;
+            message += `<b>Auto-Approval Eligible:</b> ${requirements.autoApproval ? 'Yes ✅' : 'No ❌'}`;
+            
+            addMessage('agent', message.replace(/\n/g, '<br>'));
+        }
+
+        function delay(ms) {
+            return new Promise(resolve => setTimeout(resolve, ms));
+        }
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', () => {
+            updateStep(1);
+        });
+    </script>
+</body>
+</html>

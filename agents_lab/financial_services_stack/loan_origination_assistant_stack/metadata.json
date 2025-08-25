@@ -1,0 +1,58 @@
+{
+  "id": "loan_origination_assistant_stack",
+  "name": "Loan Origination Assistant Stack",
+  "version": "1.0.0",
+  "description": "Streamlines loan application and credit assessment",
+  "category": "financial_services",
+  "complexity": "intermediate",
+  "features": [
+    "Application processing",
+    "Credit scoring",
+    "Document verification"
+  ],
+  "benefits": [
+    "Accelerates loan processing",
+    "Improves approval rates",
+    "Reduces operational costs"
+  ],
+  "technicalRequirements": {
+    "platforms": [
+      "Windows",
+      "macOS",
+      "Linux"
+    ],
+    "dependencies": [
+      "Python 3.8+",
+      "requests",
+      "json"
+    ],
+    "apiKeys": [
+      "NCINO_API_KEY",
+      "SALESFORCE_API_KEY"
+    ],
+    "integrations": [
+      "nCino",
+      "Salesforce",
+      "Temenos",
+      "D365 CE"
+    ]
+  },
+  "components": [
+    {
+      "name": "loan_origination_assistant_agent.py",
+      "description": "Streamlines loan application and credit assessment",
+      "role": "Primary processing engine"
+    }
+  ],
+  "demo": {
+    "available": true,
+    "url": "agents_lab/financial_services_stack/loan_origination_assistant_stack/demos/loan_origination_assistant_demo.html",
+    "title": "Loan Origination Assistant Interactive Demo",
+    "description": "Interactive demonstration of Loan Origination Assistant capabilities"
+  },
+  "useCases": [
+    "Application processing",
+    "Credit scoring",
+    "Document verification"
+  ]
+}

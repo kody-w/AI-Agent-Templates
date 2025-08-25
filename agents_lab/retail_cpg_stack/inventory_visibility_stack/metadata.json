@@ -1,0 +1,58 @@
+{
+  "id": "inventory_visibility_stack",
+  "name": "Inventory Visibility Agent Stack",
+  "version": "1.0.0",
+  "description": "Provides real-time inventory across all channels",
+  "category": "retail_cpg",
+  "complexity": "intermediate",
+  "features": [
+    "Stock checking",
+    "Transfer management",
+    "Replenishment planning"
+  ],
+  "benefits": [
+    "Reduces stockouts by 30%",
+    "Improves customer satisfaction",
+    "Optimizes inventory levels"
+  ],
+  "technicalRequirements": {
+    "platforms": [
+      "Windows",
+      "macOS",
+      "Linux"
+    ],
+    "dependencies": [
+      "Python 3.8+",
+      "requests",
+      "json"
+    ],
+    "apiKeys": [
+      "SAP_API_KEY",
+      "ORACLE_RETAIL_API_KEY"
+    ],
+    "integrations": [
+      "SAP",
+      "Oracle Retail",
+      "D365 Commerce",
+      "Power BI"
+    ]
+  },
+  "components": [
+    {
+      "name": "inventory_visibility_agent.py",
+      "description": "Provides real-time inventory across all channels",
+      "role": "Primary processing engine"
+    }
+  ],
+  "demo": {
+    "available": true,
+    "url": "agents_lab/retail_cpg_stack/inventory_visibility_stack/demos/inventory_visibility_demo.html",
+    "title": "Inventory Visibility Agent Interactive Demo",
+    "description": "Interactive demonstration of Inventory Visibility Agent capabilities"
+  },
+  "useCases": [
+    "Stock checking",
+    "Transfer management",
+    "Replenishment planning"
+  ]
+}

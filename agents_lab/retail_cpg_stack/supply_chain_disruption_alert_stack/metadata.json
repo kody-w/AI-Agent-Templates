@@ -1,0 +1,58 @@
+{
+  "id": "supply_chain_disruption_alert_stack",
+  "name": "Supply Chain Disruption Alert Agent Stack",
+  "version": "1.0.0",
+  "description": "Notifies of disruptions and recommends alternatives",
+  "category": "retail_cpg",
+  "complexity": "intermediate",
+  "features": [
+    "Disruption monitoring",
+    "Alternative sourcing",
+    "Risk mitigation"
+  ],
+  "benefits": [
+    "Minimizes stockouts",
+    "Enables proactive planning",
+    "Reduces supply chain risks"
+  ],
+  "technicalRequirements": {
+    "platforms": [
+      "Windows",
+      "macOS",
+      "Linux"
+    ],
+    "dependencies": [
+      "Python 3.8+",
+      "requests",
+      "json"
+    ],
+    "apiKeys": [
+      "SAP_SCM_API_KEY",
+      "ORACLE_API_KEY"
+    ],
+    "integrations": [
+      "SAP SCM",
+      "Oracle",
+      "Azure IoT",
+      "Power BI"
+    ]
+  },
+  "components": [
+    {
+      "name": "supply_chain_disruption_alert_agent.py",
+      "description": "Notifies of disruptions and recommends alternatives",
+      "role": "Primary processing engine"
+    }
+  ],
+  "demo": {
+    "available": true,
+    "url": "agents_lab/retail_cpg_stack/supply_chain_disruption_alert_stack/demos/supply_chain_disruption_alert_demo.html",
+    "title": "Supply Chain Disruption Alert Agent Interactive Demo",
+    "description": "Interactive demonstration of Supply Chain Disruption Alert Agent capabilities"
+  },
+  "useCases": [
+    "Disruption monitoring",
+    "Alternative sourcing",
+    "Risk mitigation"
+  ]
+}

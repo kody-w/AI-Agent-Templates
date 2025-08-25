@@ -1,0 +1,58 @@
+{
+  "id": "staff_credentialing_stack",
+  "name": "Staff Credentialing Agent Stack",
+  "version": "1.0.0",
+  "description": "Automates tracking and renewal of healthcare staff credentials",
+  "category": "healthcare",
+  "complexity": "intermediate",
+  "features": [
+    "License renewal tracking",
+    "Certification management",
+    "Compliance reporting"
+  ],
+  "benefits": [
+    "Ensures compliance",
+    "Reduces credential lapses",
+    "Automates renewal notifications"
+  ],
+  "technicalRequirements": {
+    "platforms": [
+      "Windows",
+      "macOS",
+      "Linux"
+    ],
+    "dependencies": [
+      "Python 3.8+",
+      "requests",
+      "json"
+    ],
+    "apiKeys": [
+      "WORKDAY_API_KEY",
+      "SAP_SUCCESSFACTORS_API_KEY"
+    ],
+    "integrations": [
+      "Workday",
+      "SAP SuccessFactors",
+      "Kronos",
+      "SharePoint"
+    ]
+  },
+  "components": [
+    {
+      "name": "staff_credentialing_agent.py",
+      "description": "Automates tracking and renewal of healthcare staff credentials",
+      "role": "Primary processing engine"
+    }
+  ],
+  "demo": {
+    "available": true,
+    "url": "agents_lab/healthcare_stack/staff_credentialing_stack/demos/staff_credentialing_demo.html",
+    "title": "Staff Credentialing Agent Interactive Demo",
+    "description": "Interactive demonstration of Staff Credentialing Agent capabilities"
+  },
+  "useCases": [
+    "License renewal tracking",
+    "Certification management",
+    "Compliance reporting"
+  ]
+}

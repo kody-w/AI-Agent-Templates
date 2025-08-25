@@ -1,0 +1,58 @@
+{
+  "id": "cart_abandonment_recovery_stack",
+  "name": "Cart Abandonment Recovery Agent Stack",
+  "version": "1.0.0",
+  "description": "Follows up to convert abandoned carts to sales",
+  "category": "b2c_sales",
+  "complexity": "intermediate",
+  "features": [
+    "Abandonment campaigns",
+    "Incentive offers",
+    "Retargeting"
+  ],
+  "benefits": [
+    "Recovers lost revenue",
+    "Improves conversion",
+    "Reduces abandonment"
+  ],
+  "technicalRequirements": {
+    "platforms": [
+      "Windows",
+      "macOS",
+      "Linux"
+    ],
+    "dependencies": [
+      "Python 3.8+",
+      "requests",
+      "json"
+    ],
+    "apiKeys": [
+      "SHOPIFY_API_KEY",
+      "MAGENTO_API_KEY"
+    ],
+    "integrations": [
+      "Shopify",
+      "Magento",
+      "Salesforce Commerce",
+      "Email Platforms"
+    ]
+  },
+  "components": [
+    {
+      "name": "cart_abandonment_recovery_agent.py",
+      "description": "Follows up to convert abandoned carts to sales",
+      "role": "Primary processing engine"
+    }
+  ],
+  "demo": {
+    "available": true,
+    "url": "agents_lab/b2c_sales_stack/cart_abandonment_recovery_stack/demos/cart_abandonment_recovery_demo.html",
+    "title": "Cart Abandonment Recovery Agent Interactive Demo",
+    "description": "Interactive demonstration of Cart Abandonment Recovery Agent capabilities"
+  },
+  "useCases": [
+    "Abandonment campaigns",
+    "Incentive offers",
+    "Retargeting"
+  ]
+}

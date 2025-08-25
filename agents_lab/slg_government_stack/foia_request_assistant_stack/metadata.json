@@ -1,0 +1,58 @@
+{
+  "id": "foia_request_assistant_stack",
+  "name": "FOIA Request Assistant Stack",
+  "version": "1.0.0",
+  "description": "Automates document search and redaction for FOIA",
+  "category": "slg_government",
+  "complexity": "intermediate",
+  "features": [
+    "Request processing",
+    "Document search",
+    "Redaction automation"
+  ],
+  "benefits": [
+    "Reduces response time",
+    "Ensures compliance",
+    "Improves transparency"
+  ],
+  "technicalRequirements": {
+    "platforms": [
+      "Windows",
+      "macOS",
+      "Linux"
+    ],
+    "dependencies": [
+      "Python 3.8+",
+      "requests",
+      "json"
+    ],
+    "apiKeys": [
+      "SHAREPOINT_API_KEY",
+      "OPENTEXT_API_KEY"
+    ],
+    "integrations": [
+      "SharePoint",
+      "OpenText",
+      "Adobe",
+      "Azure AI Search"
+    ]
+  },
+  "components": [
+    {
+      "name": "foia_request_assistant_agent.py",
+      "description": "Automates document search and redaction for FOIA",
+      "role": "Primary processing engine"
+    }
+  ],
+  "demo": {
+    "available": true,
+    "url": "agents_lab/slg_government_stack/foia_request_assistant_stack/demos/foia_request_assistant_demo.html",
+    "title": "FOIA Request Assistant Interactive Demo",
+    "description": "Interactive demonstration of FOIA Request Assistant capabilities"
+  },
+  "useCases": [
+    "Request processing",
+    "Document search",
+    "Redaction automation"
+  ]
+}

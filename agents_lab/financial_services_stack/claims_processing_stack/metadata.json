@@ -1,0 +1,58 @@
+{
+  "id": "claims_processing_stack",
+  "name": "Claims Processing Agent Stack",
+  "version": "1.0.0",
+  "description": "Automates insurance claim intake and processing",
+  "category": "financial_services",
+  "complexity": "intermediate",
+  "features": [
+    "Claim submission",
+    "Document processing",
+    "Status tracking"
+  ],
+  "benefits": [
+    "Reduces processing time by 50%",
+    "Improves accuracy",
+    "Enhances customer satisfaction"
+  ],
+  "technicalRequirements": {
+    "platforms": [
+      "Windows",
+      "macOS",
+      "Linux"
+    ],
+    "dependencies": [
+      "Python 3.8+",
+      "requests",
+      "json"
+    ],
+    "apiKeys": [
+      "GUIDEWIRE_API_KEY",
+      "DUCK_CREEK_API_KEY"
+    ],
+    "integrations": [
+      "Guidewire",
+      "Duck Creek",
+      "Salesforce",
+      "D365 CE"
+    ]
+  },
+  "components": [
+    {
+      "name": "claims_processing_agent.py",
+      "description": "Automates insurance claim intake and processing",
+      "role": "Primary processing engine"
+    }
+  ],
+  "demo": {
+    "available": true,
+    "url": "agents_lab/financial_services_stack/claims_processing_stack/demos/claims_processing_demo.html",
+    "title": "Claims Processing Agent Interactive Demo",
+    "description": "Interactive demonstration of Claims Processing Agent capabilities"
+  },
+  "useCases": [
+    "Claim submission",
+    "Document processing",
+    "Status tracking"
+  ]
+}

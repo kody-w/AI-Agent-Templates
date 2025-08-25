@@ -1,0 +1,58 @@
+{
+  "id": "permit_license_management_stack",
+  "name": "Permit & License Management Agent Stack",
+  "version": "1.0.0",
+  "description": "Automates renewal and tracking of operational permits",
+  "category": "energy",
+  "complexity": "intermediate",
+  "features": [
+    "Permit renewal tracking",
+    "License management",
+    "Compliance monitoring"
+  ],
+  "benefits": [
+    "Prevents permit lapses",
+    "Automates renewal processes",
+    "Maintains compliance"
+  ],
+  "technicalRequirements": {
+    "platforms": [
+      "Windows",
+      "macOS",
+      "Linux"
+    ],
+    "dependencies": [
+      "Python 3.8+",
+      "requests",
+      "json"
+    ],
+    "apiKeys": [
+      "SHAREPOINT_API_KEY",
+      "SAP_API_KEY"
+    ],
+    "integrations": [
+      "SharePoint",
+      "SAP",
+      "Power Platform",
+      "D365"
+    ]
+  },
+  "components": [
+    {
+      "name": "permit_license_management_agent.py",
+      "description": "Automates renewal and tracking of operational permits",
+      "role": "Primary processing engine"
+    }
+  ],
+  "demo": {
+    "available": true,
+    "url": "agents_lab/energy_stack/permit_license_management_stack/demos/permit_license_management_demo.html",
+    "title": "Permit & License Management Agent Interactive Demo",
+    "description": "Interactive demonstration of Permit & License Management Agent capabilities"
+  },
+  "useCases": [
+    "Permit renewal tracking",
+    "License management",
+    "Compliance monitoring"
+  ]
+}

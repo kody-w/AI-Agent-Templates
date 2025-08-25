@@ -1,0 +1,58 @@
+{
+  "id": "regulatory_compliance_fs_stack",
+  "name": "Regulatory Compliance Agent Stack",
+  "version": "1.0.0",
+  "description": "Ensures AML and GDPR compliance adherence",
+  "category": "financial_services",
+  "complexity": "intermediate",
+  "features": [
+    "AML monitoring",
+    "GDPR compliance",
+    "Regulatory reporting"
+  ],
+  "benefits": [
+    "Reduces compliance risks",
+    "Automates reporting",
+    "Ensures audit readiness"
+  ],
+  "technicalRequirements": {
+    "platforms": [
+      "Windows",
+      "macOS",
+      "Linux"
+    ],
+    "dependencies": [
+      "Python 3.8+",
+      "requests",
+      "json"
+    ],
+    "apiKeys": [
+      "GRC_PLATFORMS_API_KEY",
+      "AZURE_COMPLIANCE_API_KEY"
+    ],
+    "integrations": [
+      "GRC Platforms",
+      "Azure Compliance",
+      "Oracle",
+      "SAP"
+    ]
+  },
+  "components": [
+    {
+      "name": "regulatory_compliance_fs_agent.py",
+      "description": "Ensures AML and GDPR compliance adherence",
+      "role": "Primary processing engine"
+    }
+  ],
+  "demo": {
+    "available": true,
+    "url": "agents_lab/financial_services_stack/regulatory_compliance_fs_stack/demos/regulatory_compliance_fs_demo.html",
+    "title": "Regulatory Compliance Agent Interactive Demo",
+    "description": "Interactive demonstration of Regulatory Compliance Agent capabilities"
+  },
+  "useCases": [
+    "AML monitoring",
+    "GDPR compliance",
+    "Regulatory reporting"
+  ]
+}

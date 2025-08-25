@@ -1,0 +1,58 @@
+{
+  "id": "building_permit_processing_stack",
+  "name": "Building Permit Processing Agent Stack",
+  "version": "1.0.0",
+  "description": "Reviews applications and tracks permit status",
+  "category": "slg_government",
+  "complexity": "intermediate",
+  "features": [
+    "Permit applications",
+    "Review automation",
+    "Status notifications"
+  ],
+  "benefits": [
+    "Reduces processing time",
+    "Improves accuracy",
+    "Enhances transparency"
+  ],
+  "technicalRequirements": {
+    "platforms": [
+      "Windows",
+      "macOS",
+      "Linux"
+    ],
+    "dependencies": [
+      "Python 3.8+",
+      "requests",
+      "json"
+    ],
+    "apiKeys": [
+      "TYLER_TECHNOLOGIES_API_KEY",
+      "ACCELA_API_KEY"
+    ],
+    "integrations": [
+      "Tyler Technologies",
+      "Accela",
+      "SharePoint",
+      "D365"
+    ]
+  },
+  "components": [
+    {
+      "name": "building_permit_processing_agent.py",
+      "description": "Reviews applications and tracks permit status",
+      "role": "Primary processing engine"
+    }
+  ],
+  "demo": {
+    "available": true,
+    "url": "agents_lab/slg_government_stack/building_permit_processing_stack/demos/building_permit_processing_demo.html",
+    "title": "Building Permit Processing Agent Interactive Demo",
+    "description": "Interactive demonstration of Building Permit Processing Agent capabilities"
+  },
+  "useCases": [
+    "Permit applications",
+    "Review automation",
+    "Status notifications"
+  ]
+}

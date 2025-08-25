@@ -1,0 +1,58 @@
+{
+  "id": "order_status_communication_stack",
+  "name": "Order Status Communication Agent Stack",
+  "version": "1.0.0",
+  "description": "Provides live updates on manufacturing and delivery status",
+  "category": "manufacturing",
+  "complexity": "intermediate",
+  "features": [
+    "Order tracking",
+    "Delivery notifications",
+    "Production updates"
+  ],
+  "benefits": [
+    "Improves customer satisfaction",
+    "Reduces support inquiries",
+    "Enables proactive communication"
+  ],
+  "technicalRequirements": {
+    "platforms": [
+      "Windows",
+      "macOS",
+      "Linux"
+    ],
+    "dependencies": [
+      "Python 3.8+",
+      "requests",
+      "json"
+    ],
+    "apiKeys": [
+      "D365_CRM_API_KEY",
+      "SALESFORCE_API_KEY"
+    ],
+    "integrations": [
+      "D365 CRM",
+      "Salesforce",
+      "SAP",
+      "Power Automate"
+    ]
+  },
+  "components": [
+    {
+      "name": "order_status_communication_agent.py",
+      "description": "Provides live updates on manufacturing and delivery status",
+      "role": "Primary processing engine"
+    }
+  ],
+  "demo": {
+    "available": true,
+    "url": "agents_lab/manufacturing_stack/order_status_communication_stack/demos/order_status_communication_demo.html",
+    "title": "Order Status Communication Agent Interactive Demo",
+    "description": "Interactive demonstration of Order Status Communication Agent capabilities"
+  },
+  "useCases": [
+    "Order tracking",
+    "Delivery notifications",
+    "Production updates"
+  ]
+}

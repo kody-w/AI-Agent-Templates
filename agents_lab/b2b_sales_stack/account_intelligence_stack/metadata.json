@@ -1,0 +1,58 @@
+{
+  "id": "account_intelligence_stack",
+  "name": "Account Intelligence Agent Stack",
+  "version": "1.0.0",
+  "description": "Surfaces org charts, news, and stakeholder interests",
+  "category": "b2b_sales",
+  "complexity": "intermediate",
+  "features": [
+    "Account mapping",
+    "Stakeholder analysis",
+    "Opportunity identification"
+  ],
+  "benefits": [
+    "Improves account penetration",
+    "Enables strategic selling",
+    "Increases deal size"
+  ],
+  "technicalRequirements": {
+    "platforms": [
+      "Windows",
+      "macOS",
+      "Linux"
+    ],
+    "dependencies": [
+      "Python 3.8+",
+      "requests",
+      "json"
+    ],
+    "apiKeys": [
+      "CRM_API_KEY",
+      "LINKEDIN_API_KEY"
+    ],
+    "integrations": [
+      "CRM",
+      "LinkedIn",
+      "Power BI",
+      "Sales Enablement"
+    ]
+  },
+  "components": [
+    {
+      "name": "account_intelligence_agent.py",
+      "description": "Surfaces org charts, news, and stakeholder interests",
+      "role": "Primary processing engine"
+    }
+  ],
+  "demo": {
+    "available": true,
+    "url": "agents_lab/b2b_sales_stack/account_intelligence_stack/demos/account_intelligence_demo.html",
+    "title": "Account Intelligence Agent Interactive Demo",
+    "description": "Interactive demonstration of Account Intelligence Agent capabilities"
+  },
+  "useCases": [
+    "Account mapping",
+    "Stakeholder analysis",
+    "Opportunity identification"
+  ]
+}

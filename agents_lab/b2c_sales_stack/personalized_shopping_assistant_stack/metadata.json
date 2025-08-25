@@ -1,0 +1,58 @@
+{
+  "id": "personalized_shopping_assistant_stack",
+  "name": "Personalized Shopping Assistant Stack",
+  "version": "1.0.0",
+  "description": "Guides product discovery and purchase decisions",
+  "category": "b2c_sales",
+  "complexity": "intermediate",
+  "features": [
+    "Product recommendations",
+    "Guided selling",
+    "Virtual assistance"
+  ],
+  "benefits": [
+    "Increases conversion",
+    "Improves AOV",
+    "Enhances experience"
+  ],
+  "technicalRequirements": {
+    "platforms": [
+      "Windows",
+      "macOS",
+      "Linux"
+    ],
+    "dependencies": [
+      "Python 3.8+",
+      "requests",
+      "json"
+    ],
+    "apiKeys": [
+      "COMMERCE_PLATFORMS_API_KEY",
+      "D365_COMMERCE_API_KEY"
+    ],
+    "integrations": [
+      "Commerce Platforms",
+      "D365 Commerce",
+      "Adobe Experience",
+      "Shopify"
+    ]
+  },
+  "components": [
+    {
+      "name": "personalized_shopping_assistant_agent.py",
+      "description": "Guides product discovery and purchase decisions",
+      "role": "Primary processing engine"
+    }
+  ],
+  "demo": {
+    "available": true,
+    "url": "agents_lab/b2c_sales_stack/personalized_shopping_assistant_stack/demos/personalized_shopping_assistant_demo.html",
+    "title": "Personalized Shopping Assistant Interactive Demo",
+    "description": "Interactive demonstration of Personalized Shopping Assistant capabilities"
+  },
+  "useCases": [
+    "Product recommendations",
+    "Guided selling",
+    "Virtual assistance"
+  ]
+}

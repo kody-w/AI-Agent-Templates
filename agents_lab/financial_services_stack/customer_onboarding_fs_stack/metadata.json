@@ -1,0 +1,58 @@
+{
+  "id": "customer_onboarding_fs_stack",
+  "name": "Customer Onboarding Agent Stack",
+  "version": "1.0.0",
+  "description": "Automates KYC and account setup processes",
+  "category": "financial_services",
+  "complexity": "intermediate",
+  "features": [
+    "KYC verification",
+    "Account opening",
+    "Document collection"
+  ],
+  "benefits": [
+    "Reduces onboarding time by 60%",
+    "Improves compliance",
+    "Enhances customer experience"
+  ],
+  "technicalRequirements": {
+    "platforms": [
+      "Windows",
+      "macOS",
+      "Linux"
+    ],
+    "dependencies": [
+      "Python 3.8+",
+      "requests",
+      "json"
+    ],
+    "apiKeys": [
+      "SALESFORCE_FINANCIAL_SERVICES_CLOUD_API_KEY",
+      "D365_CE_API_KEY"
+    ],
+    "integrations": [
+      "Salesforce Financial Services Cloud",
+      "D365 CE",
+      "Workday",
+      "Oracle"
+    ]
+  },
+  "components": [
+    {
+      "name": "customer_onboarding_fs_agent.py",
+      "description": "Automates KYC and account setup processes",
+      "role": "Primary processing engine"
+    }
+  ],
+  "demo": {
+    "available": true,
+    "url": "agents_lab/financial_services_stack/customer_onboarding_fs_stack/demos/customer_onboarding_fs_demo.html",
+    "title": "Customer Onboarding Agent Interactive Demo",
+    "description": "Interactive demonstration of Customer Onboarding Agent capabilities"
+  },
+  "useCases": [
+    "KYC verification",
+    "Account opening",
+    "Document collection"
+  ]
+}

@@ -1,0 +1,58 @@
+{
+  "id": "customer_loyalty_rewards_stack",
+  "name": "Customer Loyalty & Rewards Agent Stack",
+  "version": "1.0.0",
+  "description": "Manages loyalty programs and redemptions",
+  "category": "b2c_sales",
+  "complexity": "intermediate",
+  "features": [
+    "Points management",
+    "Reward redemption",
+    "Tier progression"
+  ],
+  "benefits": [
+    "Increases retention",
+    "Drives repeat purchases",
+    "Improves engagement"
+  ],
+  "technicalRequirements": {
+    "platforms": [
+      "Windows",
+      "macOS",
+      "Linux"
+    ],
+    "dependencies": [
+      "Python 3.8+",
+      "requests",
+      "json"
+    ],
+    "apiKeys": [
+      "CRM_API_KEY",
+      "LOYALTY_PLATFORMS_API_KEY"
+    ],
+    "integrations": [
+      "CRM",
+      "Loyalty Platforms",
+      "D365 Marketing",
+      "Salesforce"
+    ]
+  },
+  "components": [
+    {
+      "name": "customer_loyalty_rewards_agent.py",
+      "description": "Manages loyalty programs and redemptions",
+      "role": "Primary processing engine"
+    }
+  ],
+  "demo": {
+    "available": true,
+    "url": "agents_lab/b2c_sales_stack/customer_loyalty_rewards_stack/demos/customer_loyalty_rewards_demo.html",
+    "title": "Customer Loyalty & Rewards Agent Interactive Demo",
+    "description": "Interactive demonstration of Customer Loyalty & Rewards Agent capabilities"
+  },
+  "useCases": [
+    "Points management",
+    "Reward redemption",
+    "Tier progression"
+  ]
+}

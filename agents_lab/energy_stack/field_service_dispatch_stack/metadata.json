@@ -1,0 +1,58 @@
+{
+  "id": "field_service_dispatch_stack",
+  "name": "Field Service Dispatch Agent Stack",
+  "version": "1.0.0",
+  "description": "Optimizes technician dispatch based on skills, location, and urgency",
+  "category": "energy",
+  "complexity": "intermediate",
+  "features": [
+    "Emergency dispatch",
+    "Routine maintenance scheduling",
+    "Resource optimization"
+  ],
+  "benefits": [
+    "Improves first-time fix rate",
+    "Reduces travel time",
+    "Increases technician utilization"
+  ],
+  "technicalRequirements": {
+    "platforms": [
+      "Windows",
+      "macOS",
+      "Linux"
+    ],
+    "dependencies": [
+      "Python 3.8+",
+      "requests",
+      "json"
+    ],
+    "apiKeys": [
+      "D365_FIELD_SERVICE_API_KEY",
+      "SAP_FSM_API_KEY"
+    ],
+    "integrations": [
+      "D365 Field Service",
+      "SAP FSM",
+      "Oracle Field Service",
+      "ServiceNow"
+    ]
+  },
+  "components": [
+    {
+      "name": "field_service_dispatch_agent.py",
+      "description": "Optimizes technician dispatch based on skills, location, and urgency",
+      "role": "Primary processing engine"
+    }
+  ],
+  "demo": {
+    "available": true,
+    "url": "agents_lab/energy_stack/field_service_dispatch_stack/demos/field_service_dispatch_demo.html",
+    "title": "Field Service Dispatch Agent Interactive Demo",
+    "description": "Interactive demonstration of Field Service Dispatch Agent capabilities"
+  },
+  "useCases": [
+    "Emergency dispatch",
+    "Routine maintenance scheduling",
+    "Resource optimization"
+  ]
+}

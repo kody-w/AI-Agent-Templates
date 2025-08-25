@@ -1,0 +1,58 @@
+{
+  "id": "regulatory_reporting_stack",
+  "name": "Regulatory Reporting Agent Stack",
+  "version": "1.0.0",
+  "description": "Auto-generates EPA/FERC/OSHA compliance documents",
+  "category": "energy",
+  "complexity": "intermediate",
+  "features": [
+    "Environmental reporting",
+    "Safety compliance",
+    "Regulatory submissions"
+  ],
+  "benefits": [
+    "Ensures regulatory compliance",
+    "Reduces reporting time by 70%",
+    "Minimizes compliance risks"
+  ],
+  "technicalRequirements": {
+    "platforms": [
+      "Windows",
+      "macOS",
+      "Linux"
+    ],
+    "dependencies": [
+      "Python 3.8+",
+      "requests",
+      "json"
+    ],
+    "apiKeys": [
+      "ORACLE_API_KEY",
+      "OPENTEXT_API_KEY"
+    ],
+    "integrations": [
+      "Oracle",
+      "OpenText",
+      "Azure Compliance Manager",
+      "SharePoint"
+    ]
+  },
+  "components": [
+    {
+      "name": "regulatory_reporting_agent.py",
+      "description": "Auto-generates EPA/FERC/OSHA compliance documents",
+      "role": "Primary processing engine"
+    }
+  ],
+  "demo": {
+    "available": true,
+    "url": "agents_lab/energy_stack/regulatory_reporting_stack/demos/regulatory_reporting_demo.html",
+    "title": "Regulatory Reporting Agent Interactive Demo",
+    "description": "Interactive demonstration of Regulatory Reporting Agent capabilities"
+  },
+  "useCases": [
+    "Environmental reporting",
+    "Safety compliance",
+    "Regulatory submissions"
+  ]
+}

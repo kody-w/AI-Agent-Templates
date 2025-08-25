@@ -1,0 +1,58 @@
+{
+  "id": "time_entry_billing_stack",
+  "name": "Time Entry & Billing Agent Stack",
+  "version": "1.0.0",
+  "description": "Auto-logs time and generates accurate invoices",
+  "category": "professional_services",
+  "complexity": "intermediate",
+  "features": [
+    "Automated time tracking",
+    "Invoice generation",
+    "Expense management"
+  ],
+  "benefits": [
+    "Improves billing accuracy",
+    "Reduces revenue leakage",
+    "Accelerates cash flow"
+  ],
+  "technicalRequirements": {
+    "platforms": [
+      "Windows",
+      "macOS",
+      "Linux"
+    ],
+    "dependencies": [
+      "Python 3.8+",
+      "requests",
+      "json"
+    ],
+    "apiKeys": [
+      "NETSUITE_API_KEY",
+      "SAP_CONCUR_API_KEY"
+    ],
+    "integrations": [
+      "NetSuite",
+      "SAP Concur",
+      "D365 Project Ops",
+      "QuickBooks"
+    ]
+  },
+  "components": [
+    {
+      "name": "time_entry_billing_agent.py",
+      "description": "Auto-logs time and generates accurate invoices",
+      "role": "Primary processing engine"
+    }
+  ],
+  "demo": {
+    "available": true,
+    "url": "agents_lab/professional_services_stack/time_entry_billing_stack/demos/time_entry_billing_demo.html",
+    "title": "Time Entry & Billing Agent Interactive Demo",
+    "description": "Interactive demonstration of Time Entry & Billing Agent capabilities"
+  },
+  "useCases": [
+    "Automated time tracking",
+    "Invoice generation",
+    "Expense management"
+  ]
+}

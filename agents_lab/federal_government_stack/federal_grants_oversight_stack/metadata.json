@@ -1,0 +1,58 @@
+{
+  "id": "federal_grants_oversight_stack",
+  "name": "Federal Grants Oversight Agent Stack",
+  "version": "1.0.0",
+  "description": "Tracks grant spending, risk, and reporting",
+  "category": "federal_government",
+  "complexity": "intermediate",
+  "features": [
+    "Spending tracking",
+    "Risk monitoring",
+    "Performance reporting"
+  ],
+  "benefits": [
+    "Improves oversight",
+    "Ensures compliance",
+    "Reduces waste"
+  ],
+  "technicalRequirements": {
+    "platforms": [
+      "Windows",
+      "macOS",
+      "Linux"
+    ],
+    "dependencies": [
+      "Python 3.8+",
+      "requests",
+      "json"
+    ],
+    "apiKeys": [
+      "ORACLE_GRANTS_API_KEY",
+      "SALESFORCE_API_KEY"
+    ],
+    "integrations": [
+      "Oracle Grants",
+      "Salesforce",
+      "D365 Finance",
+      "SAP"
+    ]
+  },
+  "components": [
+    {
+      "name": "federal_grants_oversight_agent.py",
+      "description": "Tracks grant spending, risk, and reporting",
+      "role": "Primary processing engine"
+    }
+  ],
+  "demo": {
+    "available": true,
+    "url": "agents_lab/federal_government_stack/federal_grants_oversight_stack/demos/federal_grants_oversight_demo.html",
+    "title": "Federal Grants Oversight Agent Interactive Demo",
+    "description": "Interactive demonstration of Federal Grants Oversight Agent capabilities"
+  },
+  "useCases": [
+    "Spending tracking",
+    "Risk monitoring",
+    "Performance reporting"
+  ]
+}

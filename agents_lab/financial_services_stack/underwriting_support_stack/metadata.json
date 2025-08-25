@@ -1,0 +1,58 @@
+{
+  "id": "underwriting_support_stack",
+  "name": "Underwriting Support Agent Stack",
+  "version": "1.0.0",
+  "description": "Pulls risk data and summarizes applications",
+  "category": "financial_services",
+  "complexity": "intermediate",
+  "features": [
+    "Risk analysis",
+    "Application review",
+    "Decision support"
+  ],
+  "benefits": [
+    "Accelerates underwriting",
+    "Improves risk assessment",
+    "Reduces manual effort"
+  ],
+  "technicalRequirements": {
+    "platforms": [
+      "Windows",
+      "macOS",
+      "Linux"
+    ],
+    "dependencies": [
+      "Python 3.8+",
+      "requests",
+      "json"
+    ],
+    "apiKeys": [
+      "UNDERWRITING_ENGINES_API_KEY",
+      "CRM_API_KEY"
+    ],
+    "integrations": [
+      "Underwriting Engines",
+      "CRM",
+      "Azure OpenAI",
+      "SharePoint"
+    ]
+  },
+  "components": [
+    {
+      "name": "underwriting_support_agent.py",
+      "description": "Pulls risk data and summarizes applications",
+      "role": "Primary processing engine"
+    }
+  ],
+  "demo": {
+    "available": true,
+    "url": "agents_lab/financial_services_stack/underwriting_support_stack/demos/underwriting_support_demo.html",
+    "title": "Underwriting Support Agent Interactive Demo",
+    "description": "Interactive demonstration of Underwriting Support Agent capabilities"
+  },
+  "useCases": [
+    "Risk analysis",
+    "Application review",
+    "Decision support"
+  ]
+}

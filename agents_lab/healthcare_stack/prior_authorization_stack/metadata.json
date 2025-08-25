@@ -1,0 +1,55 @@
+{
+  "id": "prior_authorization_stack",
+  "name": "Prior Authorization Automation Stack",
+  "version": "1.0.0",
+  "description": "Automates prior authorization processes by integrating with EHR systems and payer portals to speed up approvals and reduce manual interactions",
+  "category": "healthcare",
+  "complexity": "intermediate",
+  "features": [
+    "Automated authorization submission",
+    "Real-time status tracking",
+    "Appeal management",
+    "Requirements checking",
+    "Multi-payer integration",
+    "Clinical documentation support"
+  ],
+  "benefits": [
+    "Reduces authorization processing time by 75%",
+    "Decreases administrative burden on clinical staff",
+    "Improves patient satisfaction with faster approvals",
+    "Reduces claim denials due to authorization issues",
+    "Provides real-time visibility into authorization status"
+  ],
+  "technicalRequirements": {
+    "platforms": ["Windows", "macOS", "Linux"],
+    "dependencies": ["Python 3.8+", "requests", "json"],
+    "apiKeys": ["EHR_API_KEY", "PAYER_PORTAL_KEY", "DYNAMICS_365_CLIENT_ID"],
+    "integrations": ["Epic EHR", "Cerner", "Payer Portals", "Dynamics 365 Health", "Oracle Health"]
+  },
+  "components": [
+    {
+      "name": "prior_authorization_agent.py",
+      "description": "Core agent that handles authorization submission, status tracking, and appeals",
+      "role": "Primary authorization processing engine"
+    }
+  ],
+  "demo": {
+    "available": true,
+    "url": "agents_lab/healthcare_stack/prior_authorization_stack/demos/prior_authorization_demo.html",
+    "title": "Prior Authorization Interactive Demo",
+    "description": "Interactive demonstration of prior authorization workflow with simulated payer responses"
+  },
+  "useCases": [
+    "Automated prior authorization submission for procedures",
+    "Real-time authorization status tracking",
+    "Appeal management for denied authorizations",
+    "Bulk authorization processing for recurring treatments",
+    "Integration with multiple payer systems"
+  ],
+  "metrics": {
+    "averageProcessingTime": "2-5 minutes",
+    "approvalRate": "85%",
+    "timeToDecision": "24-72 hours",
+    "appealSuccessRate": "65%"
+  }
+}

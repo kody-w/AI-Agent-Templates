@@ -1,0 +1,58 @@
+{
+  "id": "utility_billing_assistance_stack",
+  "name": "Utility Billing & Assistance Agent Stack",
+  "version": "1.0.0",
+  "description": "Manages utility bills and assistance programs",
+  "category": "slg_government",
+  "complexity": "intermediate",
+  "features": [
+    "Bill inquiries",
+    "Payment processing",
+    "Assistance applications"
+  ],
+  "benefits": [
+    "Improves payment rates",
+    "Reduces delinquencies",
+    "Enhances citizen services"
+  ],
+  "technicalRequirements": {
+    "platforms": [
+      "Windows",
+      "macOS",
+      "Linux"
+    ],
+    "dependencies": [
+      "Python 3.8+",
+      "requests",
+      "json"
+    ],
+    "apiKeys": [
+      "SAP_API_KEY",
+      "ORACLE_API_KEY"
+    ],
+    "integrations": [
+      "SAP",
+      "Oracle",
+      "Munis",
+      "D365 Finance"
+    ]
+  },
+  "components": [
+    {
+      "name": "utility_billing_assistance_agent.py",
+      "description": "Manages utility bills and assistance programs",
+      "role": "Primary processing engine"
+    }
+  ],
+  "demo": {
+    "available": true,
+    "url": "agents_lab/slg_government_stack/utility_billing_assistance_stack/demos/utility_billing_assistance_demo.html",
+    "title": "Utility Billing & Assistance Agent Interactive Demo",
+    "description": "Interactive demonstration of Utility Billing & Assistance Agent capabilities"
+  },
+  "useCases": [
+    "Bill inquiries",
+    "Payment processing",
+    "Assistance applications"
+  ]
+}

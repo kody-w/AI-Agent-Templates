@@ -1,0 +1,58 @@
+{
+  "id": "grants_management_stack",
+  "name": "Grants Management Agent Stack",
+  "version": "1.0.0",
+  "description": "Automates grant intake, scoring, and tracking",
+  "category": "slg_government",
+  "complexity": "intermediate",
+  "features": [
+    "Application processing",
+    "Scoring automation",
+    "Performance tracking"
+  ],
+  "benefits": [
+    "Streamlines grant process",
+    "Improves transparency",
+    "Ensures compliance"
+  ],
+  "technicalRequirements": {
+    "platforms": [
+      "Windows",
+      "macOS",
+      "Linux"
+    ],
+    "dependencies": [
+      "Python 3.8+",
+      "requests",
+      "json"
+    ],
+    "apiKeys": [
+      "SALESFORCE_GRANTS360_API_KEY",
+      "D365_API_KEY"
+    ],
+    "integrations": [
+      "Salesforce Grants360",
+      "D365",
+      "SAP",
+      "PowerApps"
+    ]
+  },
+  "components": [
+    {
+      "name": "grants_management_agent.py",
+      "description": "Automates grant intake, scoring, and tracking",
+      "role": "Primary processing engine"
+    }
+  ],
+  "demo": {
+    "available": true,
+    "url": "agents_lab/slg_government_stack/grants_management_stack/demos/grants_management_demo.html",
+    "title": "Grants Management Agent Interactive Demo",
+    "description": "Interactive demonstration of Grants Management Agent capabilities"
+  },
+  "useCases": [
+    "Application processing",
+    "Scoring automation",
+    "Performance tracking"
+  ]
+}

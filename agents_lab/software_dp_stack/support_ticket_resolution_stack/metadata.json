@@ -1,0 +1,58 @@
+{
+  "id": "support_ticket_resolution_stack",
+  "name": "Support Ticket Resolution Agent Stack",
+  "version": "1.0.0",
+  "description": "Resolves L1/L2 support tickets autonomously",
+  "category": "software_dp",
+  "complexity": "intermediate",
+  "features": [
+    "Automated ticket triage",
+    "Knowledge base search",
+    "Solution recommendation"
+  ],
+  "benefits": [
+    "Reduces ticket resolution time by 60%",
+    "Improves customer satisfaction",
+    "Frees up support staff"
+  ],
+  "technicalRequirements": {
+    "platforms": [
+      "Windows",
+      "macOS",
+      "Linux"
+    ],
+    "dependencies": [
+      "Python 3.8+",
+      "requests",
+      "json"
+    ],
+    "apiKeys": [
+      "ZENDESK_API_KEY",
+      "SALESFORCE_SERVICE_CLOUD_API_KEY"
+    ],
+    "integrations": [
+      "Zendesk",
+      "Salesforce Service Cloud",
+      "ServiceNow",
+      "Azure OpenAI"
+    ]
+  },
+  "components": [
+    {
+      "name": "support_ticket_resolution_agent.py",
+      "description": "Resolves L1/L2 support tickets autonomously",
+      "role": "Primary processing engine"
+    }
+  ],
+  "demo": {
+    "available": true,
+    "url": "agents_lab/software_dp_stack/support_ticket_resolution_stack/demos/support_ticket_resolution_demo.html",
+    "title": "Support Ticket Resolution Agent Interactive Demo",
+    "description": "Interactive demonstration of Support Ticket Resolution Agent capabilities"
+  },
+  "useCases": [
+    "Automated ticket triage",
+    "Knowledge base search",
+    "Solution recommendation"
+  ]
+}

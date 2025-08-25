@@ -1,0 +1,58 @@
+{
+  "id": "fraud_detection_alert_stack",
+  "name": "Fraud Detection & Alert Agent Stack",
+  "version": "1.0.0",
+  "description": "Monitors transactions for suspicious activity patterns",
+  "category": "financial_services",
+  "complexity": "intermediate",
+  "features": [
+    "Transaction monitoring",
+    "Pattern detection",
+    "Alert generation"
+  ],
+  "benefits": [
+    "Reduces fraud losses",
+    "Improves detection accuracy",
+    "Enables real-time prevention"
+  ],
+  "technicalRequirements": {
+    "platforms": [
+      "Windows",
+      "macOS",
+      "Linux"
+    ],
+    "dependencies": [
+      "Python 3.8+",
+      "requests",
+      "json"
+    ],
+    "apiKeys": [
+      "CORE_BANKING_API_KEY",
+      "AZURE_AI_API_KEY"
+    ],
+    "integrations": [
+      "Core Banking",
+      "Azure AI",
+      "Fraud Platforms",
+      "Power BI"
+    ]
+  },
+  "components": [
+    {
+      "name": "fraud_detection_alert_agent.py",
+      "description": "Monitors transactions for suspicious activity patterns",
+      "role": "Primary processing engine"
+    }
+  ],
+  "demo": {
+    "available": true,
+    "url": "agents_lab/financial_services_stack/fraud_detection_alert_stack/demos/fraud_detection_alert_demo.html",
+    "title": "Fraud Detection & Alert Agent Interactive Demo",
+    "description": "Interactive demonstration of Fraud Detection & Alert Agent capabilities"
+  },
+  "useCases": [
+    "Transaction monitoring",
+    "Pattern detection",
+    "Alert generation"
+  ]
+}

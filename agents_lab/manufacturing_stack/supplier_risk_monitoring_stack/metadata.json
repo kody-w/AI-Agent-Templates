@@ -1,0 +1,58 @@
+{
+  "id": "supplier_risk_monitoring_stack",
+  "name": "Supplier Risk Monitoring Agent Stack",
+  "version": "1.0.0",
+  "description": "Detects supply chain risks and recommends mitigation strategies",
+  "category": "manufacturing",
+  "complexity": "intermediate",
+  "features": [
+    "Supplier performance tracking",
+    "Risk assessment",
+    "Alternative sourcing"
+  ],
+  "benefits": [
+    "Reduces supply chain disruptions",
+    "Improves supplier reliability",
+    "Enables proactive risk management"
+  ],
+  "technicalRequirements": {
+    "platforms": [
+      "Windows",
+      "macOS",
+      "Linux"
+    ],
+    "dependencies": [
+      "Python 3.8+",
+      "requests",
+      "json"
+    ],
+    "apiKeys": [
+      "SAP_ARIBA_API_KEY",
+      "D365_SCM_API_KEY"
+    ],
+    "integrations": [
+      "SAP Ariba",
+      "D365 SCM",
+      "Oracle SCM",
+      "Azure AI"
+    ]
+  },
+  "components": [
+    {
+      "name": "supplier_risk_monitoring_agent.py",
+      "description": "Detects supply chain risks and recommends mitigation strategies",
+      "role": "Primary processing engine"
+    }
+  ],
+  "demo": {
+    "available": true,
+    "url": "agents_lab/manufacturing_stack/supplier_risk_monitoring_stack/demos/supplier_risk_monitoring_demo.html",
+    "title": "Supplier Risk Monitoring Agent Interactive Demo",
+    "description": "Interactive demonstration of Supplier Risk Monitoring Agent capabilities"
+  },
+  "useCases": [
+    "Supplier performance tracking",
+    "Risk assessment",
+    "Alternative sourcing"
+  ]
+}

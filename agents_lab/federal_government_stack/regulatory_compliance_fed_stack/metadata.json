@@ -1,0 +1,58 @@
+{
+  "id": "regulatory_compliance_fed_stack",
+  "name": "Regulatory Compliance Agent Stack",
+  "version": "1.0.0",
+  "description": "Monitors and reports FedRAMP/NIST compliance",
+  "category": "federal_government",
+  "complexity": "intermediate",
+  "features": [
+    "Compliance monitoring",
+    "Audit preparation",
+    "Risk assessment"
+  ],
+  "benefits": [
+    "Ensures compliance",
+    "Automates reporting",
+    "Reduces audit findings"
+  ],
+  "technicalRequirements": {
+    "platforms": [
+      "Windows",
+      "macOS",
+      "Linux"
+    ],
+    "dependencies": [
+      "Python 3.8+",
+      "requests",
+      "json"
+    ],
+    "apiKeys": [
+      "SAP_API_KEY",
+      "SERVICENOW_GRC_API_KEY"
+    ],
+    "integrations": [
+      "SAP",
+      "ServiceNow GRC",
+      "OpenText",
+      "Power BI"
+    ]
+  },
+  "components": [
+    {
+      "name": "regulatory_compliance_fed_agent.py",
+      "description": "Monitors and reports FedRAMP/NIST compliance",
+      "role": "Primary processing engine"
+    }
+  ],
+  "demo": {
+    "available": true,
+    "url": "agents_lab/federal_government_stack/regulatory_compliance_fed_stack/demos/regulatory_compliance_fed_demo.html",
+    "title": "Regulatory Compliance Agent Interactive Demo",
+    "description": "Interactive demonstration of Regulatory Compliance Agent capabilities"
+  },
+  "useCases": [
+    "Compliance monitoring",
+    "Audit preparation",
+    "Risk assessment"
+  ]
+}

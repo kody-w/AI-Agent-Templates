@@ -1,0 +1,58 @@
+{
+  "id": "competitive_intel_stack",
+  "name": "Competitive Intelligence Agent Stack",
+  "version": "1.0.0",
+  "description": "Pulls competitor news, pricing, and feature updates",
+  "category": "software_dp",
+  "complexity": "intermediate",
+  "features": [
+    "Market analysis",
+    "Competitive tracking",
+    "Win/loss analysis"
+  ],
+  "benefits": [
+    "Enables competitive positioning",
+    "Informs product strategy",
+    "Supports sales enablement"
+  ],
+  "technicalRequirements": {
+    "platforms": [
+      "Windows",
+      "macOS",
+      "Linux"
+    ],
+    "dependencies": [
+      "Python 3.8+",
+      "requests",
+      "json"
+    ],
+    "apiKeys": [
+      "CRM_API_KEY",
+      "SALES_ENABLEMENT_PLATFORMS_API_KEY"
+    ],
+    "integrations": [
+      "CRM",
+      "Sales Enablement Platforms",
+      "Copilot Studio",
+      "Power BI"
+    ]
+  },
+  "components": [
+    {
+      "name": "competitive_intel_agent.py",
+      "description": "Pulls competitor news, pricing, and feature updates",
+      "role": "Primary processing engine"
+    }
+  ],
+  "demo": {
+    "available": true,
+    "url": "agents_lab/software_dp_stack/competitive_intel_stack/demos/competitive_intel_demo.html",
+    "title": "Competitive Intelligence Agent Interactive Demo",
+    "description": "Interactive demonstration of Competitive Intelligence Agent capabilities"
+  },
+  "useCases": [
+    "Market analysis",
+    "Competitive tracking",
+    "Win/loss analysis"
+  ]
+}

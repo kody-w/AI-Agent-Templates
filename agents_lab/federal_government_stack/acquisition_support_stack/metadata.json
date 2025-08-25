@@ -1,0 +1,58 @@
+{
+  "id": "acquisition_support_stack",
+  "name": "Acquisition Support Agent Stack",
+  "version": "1.0.0",
+  "description": "Summarizes proposals and checks procurement compliance",
+  "category": "federal_government",
+  "complexity": "intermediate",
+  "features": [
+    "Proposal evaluation",
+    "Compliance checking",
+    "Vendor assessment"
+  ],
+  "benefits": [
+    "Accelerates procurement",
+    "Ensures compliance",
+    "Improves decisions"
+  ],
+  "technicalRequirements": {
+    "platforms": [
+      "Windows",
+      "macOS",
+      "Linux"
+    ],
+    "dependencies": [
+      "Python 3.8+",
+      "requests",
+      "json"
+    ],
+    "apiKeys": [
+      "PRISM_API_KEY",
+      "CONCURGOV_API_KEY"
+    ],
+    "integrations": [
+      "PRISM",
+      "ConcurGov",
+      "SAP Ariba",
+      "D365 Project Ops"
+    ]
+  },
+  "components": [
+    {
+      "name": "acquisition_support_agent.py",
+      "description": "Summarizes proposals and checks procurement compliance",
+      "role": "Primary processing engine"
+    }
+  ],
+  "demo": {
+    "available": true,
+    "url": "agents_lab/federal_government_stack/acquisition_support_stack/demos/acquisition_support_demo.html",
+    "title": "Acquisition Support Agent Interactive Demo",
+    "description": "Interactive demonstration of Acquisition Support Agent capabilities"
+  },
+  "useCases": [
+    "Proposal evaluation",
+    "Compliance checking",
+    "Vendor assessment"
+  ]
+}

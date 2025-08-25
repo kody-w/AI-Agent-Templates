@@ -1,0 +1,58 @@
+{
+  "id": "returns_exchange_stack",
+  "name": "Returns & Exchange Agent Stack",
+  "version": "1.0.0",
+  "description": "Automates return and refund workflows",
+  "category": "b2c_sales",
+  "complexity": "intermediate",
+  "features": [
+    "Return processing",
+    "Exchange management",
+    "Refund automation"
+  ],
+  "benefits": [
+    "Reduces processing time",
+    "Improves satisfaction",
+    "Minimizes losses"
+  ],
+  "technicalRequirements": {
+    "platforms": [
+      "Windows",
+      "macOS",
+      "Linux"
+    ],
+    "dependencies": [
+      "Python 3.8+",
+      "requests",
+      "json"
+    ],
+    "apiKeys": [
+      "ERP_API_KEY",
+      "COMMERCE_ENGINES_API_KEY"
+    ],
+    "integrations": [
+      "ERP",
+      "Commerce Engines",
+      "Service Platforms",
+      "D365"
+    ]
+  },
+  "components": [
+    {
+      "name": "returns_exchange_agent.py",
+      "description": "Automates return and refund workflows",
+      "role": "Primary processing engine"
+    }
+  ],
+  "demo": {
+    "available": true,
+    "url": "agents_lab/b2c_sales_stack/returns_exchange_stack/demos/returns_exchange_demo.html",
+    "title": "Returns & Exchange Agent Interactive Demo",
+    "description": "Interactive demonstration of Returns & Exchange Agent capabilities"
+  },
+  "useCases": [
+    "Return processing",
+    "Exchange management",
+    "Refund automation"
+  ]
+}

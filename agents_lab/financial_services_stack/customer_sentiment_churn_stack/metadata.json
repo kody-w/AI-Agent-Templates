@@ -1,0 +1,58 @@
+{
+  "id": "customer_sentiment_churn_stack",
+  "name": "Customer Sentiment & Churn Risk Agent Stack",
+  "version": "1.0.0",
+  "description": "Analyzes interactions to identify at-risk customers",
+  "category": "financial_services",
+  "complexity": "intermediate",
+  "features": [
+    "Sentiment analysis",
+    "Churn prediction",
+    "Retention campaigns"
+  ],
+  "benefits": [
+    "Reduces churn by 25%",
+    "Improves retention",
+    "Enables proactive intervention"
+  ],
+  "technicalRequirements": {
+    "platforms": [
+      "Windows",
+      "macOS",
+      "Linux"
+    ],
+    "dependencies": [
+      "Python 3.8+",
+      "requests",
+      "json"
+    ],
+    "apiKeys": [
+      "SALESFORCE_API_KEY",
+      "D365_API_KEY"
+    ],
+    "integrations": [
+      "Salesforce",
+      "D365",
+      "Genesys",
+      "Power BI"
+    ]
+  },
+  "components": [
+    {
+      "name": "customer_sentiment_churn_agent.py",
+      "description": "Analyzes interactions to identify at-risk customers",
+      "role": "Primary processing engine"
+    }
+  ],
+  "demo": {
+    "available": true,
+    "url": "agents_lab/financial_services_stack/customer_sentiment_churn_stack/demos/customer_sentiment_churn_demo.html",
+    "title": "Customer Sentiment & Churn Risk Agent Interactive Demo",
+    "description": "Interactive demonstration of Customer Sentiment & Churn Risk Agent capabilities"
+  },
+  "useCases": [
+    "Sentiment analysis",
+    "Churn prediction",
+    "Retention campaigns"
+  ]
+}
