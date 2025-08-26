@@ -1,0 +1,58 @@
+{
+  "id": "deal_progression_stack",
+  "name": "Deal Progression Agent Stack",
+  "version": "1.0.0",
+  "description": "Flags stalled deals and recommends next actions",
+  "category": "b2b_sales",
+  "complexity": "intermediate",
+  "features": [
+    "Pipeline management",
+    "Risk identification",
+    "Action recommendations"
+  ],
+  "benefits": [
+    "Reduces deal slippage",
+    "Improves forecast accuracy",
+    "Accelerates closure"
+  ],
+  "technicalRequirements": {
+    "platforms": [
+      "Windows",
+      "macOS",
+      "Linux"
+    ],
+    "dependencies": [
+      "Python 3.8+",
+      "requests",
+      "json"
+    ],
+    "apiKeys": [
+      "SALESFORCE_API_KEY",
+      "D365_API_KEY"
+    ],
+    "integrations": [
+      "Salesforce",
+      "D365",
+      "Power BI",
+      "Gong"
+    ]
+  },
+  "components": [
+    {
+      "name": "deal_progression_agent.py",
+      "description": "Flags stalled deals and recommends next actions",
+      "role": "Primary processing engine"
+    }
+  ],
+  "demo": {
+    "available": true,
+    "url": "agents_lab/b2b_sales_stack/deal_progression_stack/demos/deal_progression_demo.html",
+    "title": "Deal Progression Agent Interactive Demo",
+    "description": "Interactive demonstration of Deal Progression Agent capabilities"
+  },
+  "useCases": [
+    "Pipeline management",
+    "Risk identification",
+    "Action recommendations"
+  ]
+}
