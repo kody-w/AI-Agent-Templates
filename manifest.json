@@ -1,6 +1,6 @@
 {
   "version": "1.0.0",
-  "generated": "2025-08-25T16:51:22.708945Z",
+  "generated": "2025-08-26T19:37:30.148367Z",
   "repository": "kody-w/AI-Agent-Templates",
   "branch": "main",
   "agents": [
@@ -294,6 +294,176 @@
     }
   ],
   "stacks": [
+    {
+      "id": "deal_progression_stack",
+      "name": "Deal Progression Stack",
+      "path": "agent_stacks/deal_progression_stack",
+      "agents": [
+        {
+          "id": "deal_progression_stack_deal_progression_agent",
+          "name": "Deal Progression Agent",
+          "filename": "deal_progression_agent.py",
+          "path": "agent_stacks/deal_progression_stack/agents/deal_progression_agent.py",
+          "url": "https://raw.githubusercontent.com/kody-w/AI-Agent-Templates/main/agent_stacks/deal_progression_stack/agents/deal_progression_agent.py",
+          "size": 5275,
+          "size_formatted": "5.2KB",
+          "type": "stack",
+          "stack_name": "Deal Progression Stack",
+          "stack_path": "deal_progression_stack",
+          "icon": "\ud83e\udd16",
+          "description": "AI agent for task automation and workflow optimization",
+          "features": [
+            "AI-powered automation",
+            "Easy integration",
+            "Scalable architecture",
+            "Production ready"
+          ]
+        }
+      ],
+      "metadata": {
+        "id": "deal_progression_stack",
+        "name": "Deal Progression Agent Stack",
+        "version": "1.0.0",
+        "description": "Flags stalled deals and recommends next actions",
+        "category": "b2b_sales",
+        "complexity": "intermediate",
+        "features": [
+          "Pipeline management",
+          "Risk identification",
+          "Action recommendations"
+        ],
+        "benefits": [
+          "Reduces deal slippage",
+          "Improves forecast accuracy",
+          "Accelerates closure"
+        ],
+        "technicalRequirements": {
+          "platforms": [
+            "Windows",
+            "macOS",
+            "Linux"
+          ],
+          "dependencies": [
+            "Python 3.8+",
+            "requests",
+            "json"
+          ],
+          "apiKeys": [
+            "SALESFORCE_API_KEY",
+            "D365_API_KEY"
+          ],
+          "integrations": [
+            "Salesforce",
+            "D365",
+            "Power BI",
+            "Gong"
+          ]
+        },
+        "components": [
+          {
+            "name": "deal_progression_agent.py",
+            "description": "Flags stalled deals and recommends next actions",
+            "role": "Primary processing engine"
+          }
+        ],
+        "demo": {
+          "available": true,
+          "url": "agents_lab/b2b_sales_stack/deal_progression_stack/demos/deal_progression_demo.html",
+          "title": "Deal Progression Agent Interactive Demo",
+          "description": "Interactive demonstration of Deal Progression Agent capabilities"
+        },
+        "useCases": [
+          "Pipeline management",
+          "Risk identification",
+          "Action recommendations"
+        ]
+      }
+    },
+    {
+      "id": "proposal_generation_stack",
+      "name": "Proposal Generation Stack",
+      "path": "agent_stacks/proposal_generation_stack",
+      "agents": [
+        {
+          "id": "proposal_generation_stack_proposal_generation_agent",
+          "name": "Proposal Generation Agent",
+          "filename": "proposal_generation_agent.py",
+          "path": "agent_stacks/proposal_generation_stack/agents/proposal_generation_agent.py",
+          "url": "https://raw.githubusercontent.com/kody-w/AI-Agent-Templates/main/agent_stacks/proposal_generation_stack/agents/proposal_generation_agent.py",
+          "size": 5296,
+          "size_formatted": "5.2KB",
+          "type": "stack",
+          "stack_name": "Proposal Generation Stack",
+          "stack_path": "proposal_generation_stack",
+          "icon": "\ud83e\udd16",
+          "description": "AI agent for task automation and workflow optimization",
+          "features": [
+            "AI-powered automation",
+            "Easy integration",
+            "Scalable architecture",
+            "Production ready"
+          ]
+        }
+      ],
+      "metadata": {
+        "id": "proposal_generation_stack",
+        "name": "Proposal Generation Agent Stack",
+        "version": "1.0.0",
+        "description": "Creates tailored proposals from prior successful deals",
+        "category": "b2b_sales",
+        "complexity": "intermediate",
+        "features": [
+          "Proposal creation",
+          "Content customization",
+          "Pricing optimization"
+        ],
+        "benefits": [
+          "Reduces proposal time",
+          "Improves win rates",
+          "Ensures consistency"
+        ],
+        "technicalRequirements": {
+          "platforms": [
+            "Windows",
+            "macOS",
+            "Linux"
+          ],
+          "dependencies": [
+            "Python 3.8+",
+            "requests",
+            "json"
+          ],
+          "apiKeys": [
+            "SHAREPOINT_API_KEY",
+            "WORD_API_KEY"
+          ],
+          "integrations": [
+            "SharePoint",
+            "Word",
+            "D365",
+            "Salesforce"
+          ]
+        },
+        "components": [
+          {
+            "name": "proposal_generation_agent.py",
+            "description": "Creates tailored proposals from prior successful deals",
+            "role": "Primary processing engine"
+          }
+        ],
+        "demo": {
+          "available": true,
+          "url": "agents_lab/b2b_sales_stack/proposal_generation_stack/demos/proposal_generation_demo.html",
+          "title": "Proposal Generation Agent Interactive Demo",
+          "description": "Interactive demonstration of Proposal Generation Agent capabilities"
+        },
+        "useCases": [
+          "Proposal creation",
+          "Content customization",
+          "Pricing optimization"
+        ]
+      }
+    },
     {
       "id": "crm_bulk_data_creator_stack",
       "name": "Crm Bulk Data Creator Stack",
@@ -821,6 +991,91 @@
       }
     },
     {
+      "id": "account_intelligence_stack",
+      "name": "Account Intelligence Stack",
+      "path": "agent_stacks/account_intelligence_stack",
+      "agents": [
+        {
+          "id": "account_intelligence_stack_account_intelligence_agent",
+          "name": "Account Intelligence Agent",
+          "filename": "account_intelligence_agent.py",
+          "path": "agent_stacks/account_intelligence_stack/agents/account_intelligence_agent.py",
+          "url": "https://raw.githubusercontent.com/kody-w/AI-Agent-Templates/main/agent_stacks/account_intelligence_stack/agents/account_intelligence_agent.py",
+          "size": 5321,
+          "size_formatted": "5.2KB",
+          "type": "stack",
+          "stack_name": "Account Intelligence Stack",
+          "stack_path": "account_intelligence_stack",
+          "icon": "\ud83e\udd16",
+          "description": "AI agent for task automation and workflow optimization",
+          "features": [
+            "AI-powered automation",
+            "Easy integration",
+            "Scalable architecture",
+            "Production ready"
+          ]
+        }
+      ],
+      "metadata": {
+        "id": "account_intelligence_stack",
+        "name": "Account Intelligence Agent Stack",
+        "version": "1.0.0",
+        "description": "Surfaces org charts, news, and stakeholder interests",
+        "category": "b2b_sales",
+        "complexity": "intermediate",
+        "features": [
+          "Account mapping",
+          "Stakeholder analysis",
+          "Opportunity identification"
+        ],
+        "benefits": [
+          "Improves account penetration",
+          "Enables strategic selling",
+          "Increases deal size"
+        ],
+        "technicalRequirements": {
+          "platforms": [
+            "Windows",
+            "macOS",
+            "Linux"
+          ],
+          "dependencies": [
+            "Python 3.8+",
+            "requests",
+            "json"
+          ],
+          "apiKeys": [
+            "CRM_API_KEY",
+            "LINKEDIN_API_KEY"
+          ],
+          "integrations": [
+            "CRM",
+            "LinkedIn",
+            "Power BI",
+            "Sales Enablement"
+          ]
+        },
+        "components": [
+          {
+            "name": "account_intelligence_agent.py",
+            "description": "Surfaces org charts, news, and stakeholder interests",
+            "role": "Primary processing engine"
+          }
+        ],
+        "demo": {
+          "available": true,
+          "url": "agents_lab/b2b_sales_stack/account_intelligence_stack/demos/account_intelligence_demo.html",
+          "title": "Account Intelligence Agent Interactive Demo",
+          "description": "Interactive demonstration of Account Intelligence Agent capabilities"
+        },
+        "useCases": [
+          "Account mapping",
+          "Stakeholder analysis",
+          "Opportunity identification"
+        ]
+      }
+    },
+    {
       "id": "simulation_sales_stack",
       "name": "Simulation Sales Stack",
       "path": "agent_stacks/simulation_sales_stack",
@@ -1167,6 +1422,176 @@
           "communication",
           "productivity",
           "nlp"
+        ]
+      }
+    },
+    {
+      "id": "win_loss_analysis_stack",
+      "name": "Win Loss Analysis Stack",
+      "path": "agent_stacks/win_loss_analysis_stack",
+      "agents": [
+        {
+          "id": "win_loss_analysis_stack_win_loss_analysis_agent",
+          "name": "Win Loss Analysis Agent",
+          "filename": "win_loss_analysis_agent.py",
+          "path": "agent_stacks/win_loss_analysis_stack/agents/win_loss_analysis_agent.py",
+          "url": "https://raw.githubusercontent.com/kody-w/AI-Agent-Templates/main/agent_stacks/win_loss_analysis_stack/agents/win_loss_analysis_agent.py",
+          "size": 5264,
+          "size_formatted": "5.1KB",
+          "type": "stack",
+          "stack_name": "Win Loss Analysis Stack",
+          "stack_path": "win_loss_analysis_stack",
+          "icon": "\ud83e\udd16",
+          "description": "AI agent for task automation and workflow optimization",
+          "features": [
+            "AI-powered automation",
+            "Easy integration",
+            "Scalable architecture",
+            "Production ready"
+          ]
+        }
+      ],
+      "metadata": {
+        "id": "win_loss_analysis_stack",
+        "name": "Win/Loss Analysis Agent Stack",
+        "version": "1.0.0",
+        "description": "Analyzes closed deals for trends and insights",
+        "category": "b2b_sales",
+        "complexity": "intermediate",
+        "features": [
+          "Deal analysis",
+          "Competitive insights",
+          "Process improvement"
+        ],
+        "benefits": [
+          "Improves win rates",
+          "Identifies success patterns",
+          "Informs strategy"
+        ],
+        "technicalRequirements": {
+          "platforms": [
+            "Windows",
+            "macOS",
+            "Linux"
+          ],
+          "dependencies": [
+            "Python 3.8+",
+            "requests",
+            "json"
+          ],
+          "apiKeys": [
+            "CRM_API_KEY",
+            "POWER_BI_API_KEY"
+          ],
+          "integrations": [
+            "CRM",
+            "Power BI",
+            "Copilot Studio",
+            "Clari"
+          ]
+        },
+        "components": [
+          {
+            "name": "win_loss_analysis_agent.py",
+            "description": "Analyzes closed deals for trends and insights",
+            "role": "Primary processing engine"
+          }
+        ],
+        "demo": {
+          "available": true,
+          "url": "agents_lab/b2b_sales_stack/win_loss_analysis_stack/demos/win_loss_analysis_demo.html",
+          "title": "Win/Loss Analysis Agent Interactive Demo",
+          "description": "Interactive demonstration of Win/Loss Analysis Agent capabilities"
+        },
+        "useCases": [
+          "Deal analysis",
+          "Competitive insights",
+          "Process improvement"
+        ]
+      }
+    },
+    {
+      "id": "sales_qualification_stack",
+      "name": "Sales Qualification Stack",
+      "path": "agent_stacks/sales_qualification_stack",
+      "agents": [
+        {
+          "id": "sales_qualification_stack_sales_qualification_agent",
+          "name": "Sales Qualification Agent",
+          "filename": "sales_qualification_agent.py",
+          "path": "agent_stacks/sales_qualification_stack/agents/sales_qualification_agent.py",
+          "url": "https://raw.githubusercontent.com/kody-w/AI-Agent-Templates/main/agent_stacks/sales_qualification_stack/agents/sales_qualification_agent.py",
+          "size": 5307,
+          "size_formatted": "5.2KB",
+          "type": "stack",
+          "stack_name": "Sales Qualification Stack",
+          "stack_path": "sales_qualification_stack",
+          "icon": "\ud83e\udd16",
+          "description": "AI agent for task automation and workflow optimization",
+          "features": [
+            "AI-powered automation",
+            "Easy integration",
+            "Scalable architecture",
+            "Production ready"
+          ]
+        }
+      ],
+      "metadata": {
+        "id": "sales_qualification_stack",
+        "name": "Sales Qualification Agent Stack",
+        "version": "1.0.0",
+        "description": "Assesses leads and prioritizes by fit and intent",
+        "category": "b2b_sales",
+        "complexity": "intermediate",
+        "features": [
+          "Lead scoring",
+          "Qualification automation",
+          "Priority ranking"
+        ],
+        "benefits": [
+          "Improves conversion rates",
+          "Focuses sales efforts",
+          "Reduces sales cycle"
+        ],
+        "technicalRequirements": {
+          "platforms": [
+            "Windows",
+            "macOS",
+            "Linux"
+          ],
+          "dependencies": [
+            "Python 3.8+",
+            "requests",
+            "json"
+          ],
+          "apiKeys": [
+            "D365_SALES_API_KEY",
+            "SALESFORCE_API_KEY"
+          ],
+          "integrations": [
+            "D365 Sales",
+            "Salesforce",
+            "LinkedIn Sales Navigator",
+            "6sense"
+          ]
+        },
+        "components": [
+          {
+            "name": "sales_qualification_agent.py",
+            "description": "Assesses leads and prioritizes by fit and intent",
+            "role": "Primary processing engine"
+          }
+        ],
+        "demo": {
+          "available": true,
+          "url": "agents_lab/b2b_sales_stack/sales_qualification_stack/demos/sales_qualification_demo.html",
+          "title": "Sales Qualification Agent Interactive Demo",
+          "description": "Interactive demonstration of Sales Qualification Agent capabilities"
+        },
+        "useCases": [
+          "Lead scoring",
+          "Qualification automation",
+          "Priority ranking"
         ]
       }
     }
