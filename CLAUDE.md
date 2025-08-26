@@ -4,177 +4,106 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Repository Overview
 
-This is a Python-based AI agent template repository that provides modular, reusable agent components for building intelligent automation solutions. The project focuses on business integration scenarios including CRM systems (Dynamics 365, Salesforce, ServiceNow), email management, calendar scheduling, and document processing.
+AI Agent Templates is a comprehensive collection of modular AI agents and stacks for building intelligent automation solutions with Azure and Microsoft 365 integration. The repository contains both individual agents and complete agent stacks organized by industry verticals.
 
 ## Architecture
 
-### Core Pattern: Agent Inheritance
+### Core Agent Pattern
 All agents inherit from `BasicAgent` class (`agents/basic_agent.py`):
-- Base class with `__init__(name, metadata)` and abstract `perform()` method
-- Metadata structure defines agent capabilities, parameters, and descriptions
-- Each agent implements `perform(**kwargs)` to execute its specific functionality
+```python
+class BasicAgent:
+    def __init__(self, name, metadata):
+        self.name = name
+        self.metadata = metadata
+    
+    def perform(self):
+        pass
+```
 
 ### Directory Structure
 - `agents/` - Individual agent implementations (single-purpose components)
-- `agent_stacks/` - Complete solutions combining multiple agents for complex workflows
-  - Each stack follows a standardized structure:
-    - `agents/` - Stack-specific agent implementations
-    - `demos/` - Interactive HTML demonstrations
-    - `files/` - Additional resources (zip files, templates, etc.)
-    - `metadata.json` - Complete stack configuration and documentation
-- `index.html` - Web interface gallery for browsing agents and stacks
-- `generate_trading_card.js` - Utility for exporting standalone HTML agent cards
+- `agent_stacks/` - Legacy complete solutions (voice_to_crm, email_drafting, etc.)
+- `agents_lab/` - Industry-specific agent stacks organized by vertical:
+  - `b2b_sales_stack/` - B2B sales automation agents
+  - `b2c_sales_stack/` - B2C retail and e-commerce agents
+  - `healthcare_stack/` - Healthcare and clinical agents
+  - `financial_services_stack/` - Banking and insurance agents
+  - `energy_stack/` - Energy and utilities agents
+  - `manufacturing_stack/` - Manufacturing and supply chain agents
+  - `federal_government_stack/` - Federal government agents
+  - `slg_government_stack/` - State and local government agents
+  - `professional_services_stack/` - Professional services agents
+  - `retail_cpg_stack/` - Retail and CPG agents
+  - `software_dp_stack/` - Software and digital products agents
 
-### Key Design Patterns
-1. **Metadata-Driven**: Agents self-describe their capabilities through structured metadata
-2. **Parameter Validation**: Agents validate required parameters before execution
-3. **JSON Communication**: All agents return JSON-formatted results
-4. **Environment Configuration**: External service credentials via environment variables
-5. **Error Handling**: Consistent error reporting through JSON responses
+### Stack Structure Pattern
+Each agent stack follows standardized organization:
+```
+stack_name/
+├── agents/
+│   └── stack_agent.py         # Python agent implementation
+├── demos/
+│   └── stack_demo.html        # Interactive HTML demonstration
+├── metadata.json              # Stack configuration and documentation
+└── files/ (optional)          # Supporting resources
+```
 
 ## Common Development Tasks
 
-### Running Python Scripts
+### Running Agent Scripts
 ```bash
-# Execute individual agents
+# Individual agents
 python agents/[agent_name].py
 
-# Execute stack-specific agents
+# Stack-specific agents (legacy)
 python agent_stacks/[stack_name]/agents/[agent_name].py
 
-# Run interactive demos
-# Open in browser: agent_stacks/[stack_name]/demos/[demo_name].html
+# Industry vertical agents
+python agents_lab/[vertical]_stack/[stack_name]/agents/[agent_name].py
+
+# Batch generate all industry stacks
+python agents_lab/generate_all_stacks.py
+
+# Update all demo files
+python agents_lab/update_all_demos.py
+
+# Update manifest for web interface
+python update_manifest.py
 ```
 
 ### Testing Agents
-Since no test framework is configured, test agents by:
+No formal test framework is configured. Test agents by:
 1. Creating test scripts that import and instantiate agents
-2. Calling `perform()` with appropriate test parameters
-3. Validating JSON response structure and content
+2. Calling `perform(**kwargs)` with test parameters
+3. Validating JSON response structure
 
-## Agent Stack Development
+## Azure Deployment
 
-### Stack Metadata Structure
-Each agent stack must include a `metadata.json` file with:
-```json
-{
-  "id": "stack_identifier",
-  "name": "Human-readable name",
-  "version": "1.0.0",
-  "description": "Brief description",
-  "category": "communication|data-management|training|etc",
-  "complexity": "starter|intermediate|advanced",
-  "features": ["array", "of", "features"],
-  "benefits": ["key", "benefits"],
-  "technicalRequirements": {
-    "platforms": ["Windows", "macOS", "Linux"],
-    "dependencies": ["Python 3.8+", "etc"],
-    "apiKeys": ["REQUIRED_API_KEY_NAMES"]
-  },
-  "components": [
-    {
-      "name": "agent_file.py",
-      "description": "What this agent does",
-      "role": "Agent's role in the stack"
-    }
-  ],
-  "demo": {
-    "available": true,
-    "url": "agent_stacks/stack_name/demos/demo.html",
-    "title": "Demo title",
-    "description": "What the demo shows"
-  }
-}
-```
+### One-Click Deployment
+Deploy complete infrastructure using ARM template:
+- Azure OpenAI Service (GPT-4o)
+- Azure Function App for agent execution
+- Storage Account for data persistence
+- Application Insights for monitoring
 
-### Creating New Agent Stacks
-1. Create directory: `agent_stacks/your_stack_name/`
-2. Add subdirectories:
-   - `agents/` - All Python agent files
-   - `demos/` - Interactive HTML demonstrations
-   - `files/` - Supporting resources (optional)
-3. Create `metadata.json` with complete configuration
-4. Ensure all agents follow the BasicAgent pattern
-5. Add demo HTML to showcase functionality
+Deploy via: `azuredeploy.json`
+
+### Microsoft 365 Integration
+1. Import Power Platform solution: `MSFTAIBASMultiAgentCopilot_1_0_0_2.zip`
+2. Configure Power Automate flow with Azure Function endpoint
+3. Deploy to Teams/M365 Copilot via Copilot Studio
 
 ## Agent Development Guidelines
 
-### Creating New Individual Agents
-1. Extend `BasicAgent` class
-2. Define metadata with name, description, and parameters schema
-3. Implement `perform(**kwargs)` method
-4. Return JSON-formatted results
-5. Handle errors gracefully with informative messages
-
-### Required Environment Variables
-Agents requiring external services expect these environment variables:
-- **Dynamics 365**: `DYNAMICS_365_CLIENT_ID`, `DYNAMICS_365_CLIENT_SECRET`, `DYNAMICS_365_TENANT_ID`, `DYNAMICS_365_RESOURCE`
-- **Azure OpenAI**: `AZURE_OPENAI_API_KEY`, `AZURE_OPENAI_ENDPOINT`
-- **Azure Storage**: `AZURE_STORAGE_CONNECTION_STRING`
-
-### Parameter Structure
-All agents follow consistent parameter patterns:
-- Required parameters defined in metadata `required` array
-- Optional parameters with defaults or conditional logic
-- Nested objects for complex configurations
-- Validation before execution
-
-## Available Agent Stacks
-
-### voice_to_crm_stack
-- **Purpose**: Voice-enabled CRM data entry with real-time processing
-- **Key Agents**: dynamics_365_agent, servicenow-agent, email_drafting_agent, extract_sharepoint_document_url_agent
-- **Demo**: Interactive voice recording with live API integration mode
-- **Use Cases**: Field sales updates, customer service call logging, executive meeting notes
-
-### crm_bulk_data_creator_stack
-- **Purpose**: Generate and import large volumes of test data into CRM systems
-- **Key Agents**: bulk_crm_data_generator, dynamics_365_agent, OneClickCRMIntakeAgent
-- **Use Cases**: Testing environment setup, sales training data, demo preparation
-
-### email_drafting_stack
-- **Purpose**: AI-powered email composition and automation
-- **Key Agents**: email_drafting_agent
-- **Use Cases**: Customer support responses, sales outreach, internal communications
-
-### simulation_sales_stack
-- **Purpose**: Advanced sales training and simulation platform
-- **Key Agents**: sales_simulation_agent
-- **Demo**: Interactive sales scenario simulations
-- **Use Cases**: New hire onboarding, objection handling practice, negotiation training
-
-## Integration Points
-
-### CRM Integrations
-- **Dynamics 365**: Full CRUD operations via Web API
-- **Salesforce**: Query operations via REST API
-- **ServiceNow**: Ticket and workflow management
-
-### Agent Composition
-- Agents can instantiate and call other agents (e.g., `BulkCRMDataGeneratorAgent` uses `OneClickCRMIntakeAgent`)
-- Stack solutions combine multiple agents for end-to-end workflows
-- Stack agents are located in `agent_stacks/[stack_name]/agents/` directory
-
-### Web Interface
-- `index.html` provides comprehensive gallery and agent browser
-  - Dynamic loading from GitHub repository
-  - Interactive stack templates with metadata
-  - Trading card export functionality
-  - Live API integration capabilities
-- Stack demos located in `agent_stacks/[stack_name]/demos/`
-  - `voice_to_crm_showcase.html` - Voice recording and CRM integration
-  - `ai-simulation-sales-demo.html` - Sales simulation interface
-  - Additional demos for each stack's specific workflow
-
-## Code Conventions
-
-### Python Style
-- Class names: PascalCase (e.g., `CalendarAgent`)
-- Method names: snake_case (e.g., `perform()`, `validate_parameters()`)
-- Private methods: Leading underscore (e.g., `_perform_operation()`)
+### Metadata Structure
+All agents must define metadata with:
+- `name`: Agent identifier
+- `description`: Clear purpose statement
+- `parameters`: Input schema with types and requirements
+- `required`: Array of mandatory parameters
 
 ### Response Format
-All agents return JSON with consistent structure:
+Consistent JSON structure:
 ```json
 {
   "status": "success|error",
@@ -184,25 +113,35 @@ All agents return JSON with consistent structure:
 }
 ```
 
-### Error Handling
-- Validate parameters before processing
-- Return structured error responses
-- Include helpful error details for debugging
-- Use try-except blocks for external service calls
+### Environment Variables
+External service credentials:
+- **Dynamics 365**: `DYNAMICS_365_CLIENT_ID`, `DYNAMICS_365_CLIENT_SECRET`, `DYNAMICS_365_TENANT_ID`, `DYNAMICS_365_RESOURCE`
+- **Azure OpenAI**: `AZURE_OPENAI_API_KEY`, `AZURE_OPENAI_ENDPOINT`
+- **Azure Storage**: `AZURE_STORAGE_CONNECTION_STRING`
 
-## Web Interface Features
+## Web Interface
 
-### index.html Capabilities
-- **Agent Gallery**: Browse all individual agents with GitHub integration
-- **Stack Templates**: Explore complete agent stacks with metadata
-- **Trading Card Export**: Generate standalone HTML files for sharing stacks
-- **Live Demo Mode**: Test stacks with simulated data
-- **Live API Mode**: Connect to real Azure Functions endpoints
-- **Dynamic Loading**: Automatically fetches latest agents from GitHub
+### Main Gallery (`index.html`)
+- Dynamic agent/stack browsing from GitHub
+- Trading card export functionality
+- Live API integration mode
+- Simulated demo mode
 
-### Stack Demo Pages
-Each stack can include demo HTML files in `demos/` directory:
-- Interactive UI for testing agent functionality
-- Live mode for production API integration
-- Simulated mode for testing without credentials
-- Visual feedback and real-time processing
+### Demo Pages
+Each stack includes interactive HTML demo in `demos/` directory showcasing:
+- Agent capabilities and workflow
+- Input/output examples
+- Integration points
+- Business value proposition
+
+### Trading Card Export
+Generate standalone HTML agent cards: `generate_trading_card.js`
+
+## Python Code Conventions
+
+- **Classes**: PascalCase (e.g., `CalendarAgent`)
+- **Methods**: snake_case (e.g., `perform()`, `validate_parameters()`)
+- **Private methods**: Leading underscore (e.g., `_internal_method()`)
+- **Agent inheritance**: All agents extend `BasicAgent`
+- **Error handling**: Try-except blocks with structured error responses
+- **Parameter validation**: Validate before processing

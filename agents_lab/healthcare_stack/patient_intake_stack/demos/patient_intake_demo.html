@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Contract Risk Review - Conversational Demo</title>
+    <title>Patient Intake Agent - Conversational Demo</title>
     <style>
         * {
             margin: 0;
@@ -647,8 +647,8 @@
     <div class="main-container">
         <div class="header">
             <div class="header-content">
-                <h1>⚖️ Contract Risk Review</h1>
-                <p>Review contracts for risk clauses and compliance issues</p>
+                <h1>🏥 Patient Intake Agent</h1>
+                <p>Streamline patient registration with AI-powered conversational intake</p>
             </div>
         </div>
 
@@ -674,7 +674,7 @@
                     </div>
                     <div class="input-group">
                         <label>Function App URL</label>
-                        <input type="text" id="apiEndpoint" placeholder="https://your-app.azurewebsites.net/api/contract-risk-review">
+                        <input type="text" id="apiEndpoint" placeholder="https://your-app.azurewebsites.net/api/patient-intake-agent">
                     </div>
                     <button class="btn btn-primary" onclick="testConnection()">
                         Test Connection
@@ -775,45 +775,48 @@
 
         // Demo script
         const demoScript = [
-        {
-            type: 'conversation',
-            messages: [
-                {
-                    role: 'user',
-                    content: 'Help me with this task',
-                    typingTime: 1500,
-                    delay: 1000
-                },
-                {
-                    role: 'assistant',
-                    content: 'I\'ll help you with that. Let me process your request...',
-                    typingTime: 2000,
-                    delay: 1500,
-                    action: 'step1'
-                }
-            ]
-        },
-        {
-            type: 'result',
-            messages: [
-                {
-                    role: 'assistant',
-                    content: '✅ Task completed successfully!',
-                    showResult: true,
-                    resultData: {
-                        result: {
-                            status: 'Complete',
-                            timestamp: new Date().toISOString(),
-                            details: 'Task processed successfully'
-                        }
+            {
+                type: 'conversation',
+                messages: [
+                    {
+                        role: 'user',
+                        content: 'Schedule an appointment for John Smith next Tuesday at 2 PM for a general checkup',
+                        typingTime: 1500,
+                        delay: 1000
                     },
-                    typingTime: 2000,
-                    delay: 1500,
-                    action: 'step2'
-                }
-            ]
-        }
-    ];
+                    {
+                        role: 'assistant',
+                        content: 'I\'ll help you schedule an appointment for John Smith. Let me collect the necessary information and check availability...',
+                        typingTime: 2000,
+                        delay: 1500,
+                        action: 'step1'
+                    }
+                ]
+            },
+            {
+                type: 'result',
+                messages: [
+                    {
+                        role: 'assistant',
+                        content: '✅ Appointment scheduled successfully!',
+                        showResult: true,
+                        resultData: {
+                            appointment: {
+                                patientName: 'John Smith',
+                                date: 'Tuesday, January 30, 2024',
+                                time: '2:00 PM',
+                                type: 'General Checkup',
+                                provider: 'Dr. Sarah Johnson',
+                                location: 'Main Clinic - Room 203'
+                            }
+                        },
+                        typingTime: 2000,
+                        delay: 1500,
+                        action: 'step2'
+                    }
+                ]
+            }
+        ];
 
         let currentScriptIndex = 0;
         let currentMessageIndex = 0;
@@ -843,7 +846,7 @@
                             <span class="message-time">${getCurrentTime()}</span>
                         </div>
                         <div class="message-text">
-                            Welcome to the Contract Risk Review Demo! 
+                            Welcome to the Patient Intake Agent Demo! 
                             
                             Click "Start Demo" to see how I can help, or switch to "Live Mode" to connect to your system.
                         </div>

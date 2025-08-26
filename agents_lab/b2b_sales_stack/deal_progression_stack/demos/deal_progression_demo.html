@@ -3,278 +3,1233 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Deal Progression Agent - Interactive Demo</title>
+    <title>Deal Progression - Conversational Demo</title>
     <style>
-        :root {
-            --primary: #742774;
-            --secondary: #00a651;
-            --accent: #4a90e2;
-            --dark: #1e1e1e;
-            --light: #f5f5f5;
-            --error: #e74c3c;
-        }
-
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
 
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            min-height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            padding: 20px;
+        :root {
+            --primary: #742774;
+            --primary-dark: #4f1c4f;
+            --secondary: #00a651;
+            --secondary-dark: #008441;
+            --accent: #40e0d0;
+            --success: #10b981;
+            --danger: #ef4444;
+            --warning: #f59e0b;
+            --dark: #1f2937;
+            --gray: #6b7280;
+            --light: #f3f4f6;
+            --lighter: #f9fafb;
+            --border: #e5e7eb;
+            --text-primary: #111827;
+            --text-secondary: #4b5563;
+            --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+            --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1);
+            --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1);
+            --shadow-xl: 0 20px 25px -5px rgb(0 0 0 / 0.1);
         }
 
-        .container {
+        body {
+            font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, 'Helvetica Neue', sans-serif;
+            background: linear-gradient(135deg, #742774 0%, #00a651 100%);
+            min-height: 100vh;
+            padding: 20px;
+            color: var(--text-primary);
+        }
+
+        .main-container {
+            max-width: 1600px;
+            margin: 0 auto;
             background: white;
-            border-radius: 20px;
-            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
-            max-width: 1200px;
-            width: 100%;
+            border-radius: 24px;
+            box-shadow: var(--shadow-xl);
             overflow: hidden;
         }
 
         .header {
             background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
             color: white;
-            padding: 30px;
+            padding: 2.5rem;
             text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E") repeat;
+        }
+
+        .header-content {
+            position: relative;
+            z-index: 1;
         }
 
         .header h1 {
-            font-size: 2.5em;
-            margin-bottom: 10px;
+            font-size: 2.5rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.1);
         }
 
-        .mode-toggle {
+        .header p {
+            font-size: 1.15rem;
+            opacity: 0.95;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        .mode-selector {
+            background: var(--lighter);
+            padding: 1.5rem;
+            border-bottom: 1px solid var(--border);
             display: flex;
             justify-content: center;
-            gap: 20px;
-            margin-top: 20px;
+            align-items: center;
+            gap: 2rem;
+            flex-wrap: wrap;
         }
 
-        .mode-btn {
-            padding: 10px 20px;
-            border: 2px solid white;
-            background: transparent;
-            color: white;
-            border-radius: 25px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            font-weight: bold;
-        }
-
-        .mode-btn.active {
-            background: white;
-            color: var(--primary);
-        }
-
-        .content {
-            padding: 30px;
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 30px;
-        }
-
-        .panel {
-            background: var(--light);
-            border-radius: 15px;
-            padding: 25px;
-        }
-
-        .form-group {
-            margin-bottom: 20px;
-        }
-
-        .form-group label {
-            display: block;
-            margin-bottom: 8px;
-            font-weight: 600;
-            color: var(--dark);
-        }
-
-        .form-group input, .form-group select {
-            width: 100%;
-            padding: 12px;
-            border: 2px solid #e0e0e0;
-            border-radius: 8px;
-            font-size: 14px;
-        }
-
-        .btn {
-            padding: 12px 24px;
-            border: none;
-            border-radius: 8px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            width: 100%;
-            margin-top: 10px;
-        }
-
-        .btn-primary {
-            background: linear-gradient(135deg, var(--primary), var(--secondary));
-            color: white;
-        }
-
-        .btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
-        }
-
-        .results {
-            margin-top: 20px;
-            padding: 20px;
-            background: white;
-            border-radius: 10px;
+        .config-panel {
+            background: var(--lighter);
+            padding: 1.5rem;
+            border-bottom: 2px solid var(--border);
             display: none;
         }
 
-        .results.active {
+        .config-panel.active {
             display: block;
         }
 
-        .metrics {
+        .config-content {
+            max-width: 1200px;
+            margin: 0 auto;
             display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 15px;
-            margin-top: 20px;
+            gap: 1rem;
         }
 
-        .metric {
-            text-align: center;
-            padding: 15px;
-            background: var(--light);
-            border-radius: 10px;
+        .input-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr auto;
+            gap: 1rem;
+            align-items: end;
         }
 
-        .metric-value {
-            font-size: 24px;
-            font-weight: bold;
-            color: var(--primary);
-        }
-
-        .metric-label {
-            color: #666;
-            margin-top: 5px;
-        }
-
-        .systems {
+        .input-group {
             display: flex;
-            flex-wrap: wrap;
-            gap: 10px;
-            margin-top: 15px;
+            flex-direction: column;
+            gap: 0.5rem;
         }
 
-        .system-badge {
-            padding: 5px 12px;
-            background: var(--secondary);
+        .input-group label {
+            font-size: 0.875rem;
+            font-weight: 600;
+            color: var(--text-secondary);
+        }
+
+        .input-group input {
+            padding: 0.75rem;
+            border: 2px solid var(--border);
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            background: white;
+        }
+
+        .input-group input:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(116, 39, 116, 0.1);
+        }
+
+        .connection-status {
+            padding: 0.75rem 1rem;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.875rem;
+            background: var(--light);
+            color: var(--text-secondary);
+            justify-content: center;
+            margin-top: 1rem;
+        }
+
+        .connection-status.connected {
+            background: #d1fae5;
+            color: #065f46;
+        }
+
+        .connection-status.error {
+            background: #fee2e2;
+            color: #991b1b;
+        }
+
+        .mode-toggle {
+            background: white;
+            border-radius: 12px;
+            padding: 4px;
+            display: flex;
+            gap: 4px;
+            box-shadow: var(--shadow-sm);
+            border: 1px solid var(--border);
+        }
+
+        .mode-btn {
+            padding: 0.75rem 1.5rem;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            background: transparent;
+            color: var(--text-secondary);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .mode-btn.active {
+            background: var(--primary);
             color: white;
-            border-radius: 15px;
-            font-size: 12px;
+            box-shadow: var(--shadow-md);
+        }
+
+        .mode-btn:hover:not(.active) {
+            background: var(--light);
+        }
+
+        .content-area {
+            display: grid;
+            grid-template-columns: 350px 1fr;
+            height: 600px;
+        }
+
+        .sidebar {
+            background: var(--lighter);
+            border-right: 1px solid var(--border);
+            padding: 1.5rem;
+            overflow-y: auto;
+        }
+
+        .control-section {
+            margin-bottom: 2rem;
+        }
+
+        .control-section h3 {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            color: var(--text-primary);
+        }
+
+        .demo-controls {
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+        }
+
+        .control-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 0.75rem;
+        }
+
+        .btn {
+            padding: 0.75rem 1.5rem;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            white-space: nowrap;
+        }
+
+        .btn-primary {
+            background: var(--primary);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: var(--primary-dark);
+        }
+
+        .btn-success {
+            background: var(--success);
+            color: white;
+        }
+
+        .btn-success:hover {
+            background: #059669;
+        }
+
+        .btn-secondary {
+            background: var(--gray);
+            color: white;
+        }
+
+        .btn-secondary:hover {
+            background: #4b5563;
+        }
+
+        .btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .speed-control {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-top: 1rem;
+            padding-top: 1rem;
+            border-top: 1px solid var(--border);
+        }
+
+        .speed-label {
+            font-size: 0.875rem;
+            font-weight: 600;
+            color: var(--text-secondary);
+        }
+
+        .speed-slider {
+            flex: 1;
+            -webkit-appearance: none;
+            appearance: none;
+            height: 6px;
+            border-radius: 3px;
+            background: var(--border);
+            outline: none;
+        }
+
+        .speed-slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            background: var(--primary);
+            cursor: pointer;
+        }
+
+        .progress-section {
+            margin-bottom: 2rem;
+        }
+
+        .progress-bar {
+            height: 8px;
+            background: var(--border);
+            border-radius: 4px;
+            overflow: hidden;
+            margin-bottom: 1rem;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--primary) 0%, var(--secondary) 100%);
+            border-radius: 4px;
+            width: 0%;
+            transition: width 0.5s ease;
+        }
+
+        .step-indicators {
+            display: flex;
+            justify-content: space-between;
+            gap: 0.5rem;
+        }
+
+        .step-indicator {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.5rem;
+            flex: 1;
+        }
+
+        .step-circle {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: white;
+            border: 3px solid var(--border);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            color: var(--text-secondary);
+            transition: all 0.3s ease;
+        }
+
+        .step-indicator.active .step-circle {
+            background: var(--primary);
+            border-color: var(--primary);
+            color: white;
+            transform: scale(1.1);
+        }
+
+        .step-indicator.completed .step-circle {
+            background: var(--success);
+            border-color: var(--success);
+            color: white;
+        }
+
+        .step-label {
+            font-size: 0.75rem;
+            color: var(--text-secondary);
+            text-align: center;
+        }
+
+        .chat-container {
+            background: white;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .chat-header {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            color: white;
+            padding: 1rem 1.5rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .chat-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+        }
+
+        .status-indicator {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .status-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: #10b981;
+            animation: none;
+        }
+
+        .status-dot.processing {
+            background: #f59e0b;
+            animation: statusPulse 1s infinite;
+        }
+
+        @keyframes statusPulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+
+        .chat-messages {
+            flex: 1;
+            overflow-y: auto;
+            padding: 1.5rem;
+            background: var(--lighter);
+        }
+
+        .message {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+            animation: messageSlide 0.3s ease;
+        }
+
+        @keyframes messageSlide {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .message-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.25rem;
+            flex-shrink: 0;
+        }
+
+        .message.user .message-avatar {
+            background: linear-gradient(135deg, var(--secondary) 0%, var(--secondary-dark) 100%);
+        }
+
+        .message.assistant .message-avatar {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+        }
+
+        .message-content {
+            flex: 1;
+        }
+
+        .message-header {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .message-sender {
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+
+        .message-time {
+            font-size: 0.75rem;
+            color: var(--text-secondary);
+        }
+
+        .message-text {
+            background: white;
+            padding: 1rem;
+            border-radius: 12px;
+            box-shadow: var(--shadow-sm);
+            line-height: 1.6;
+            border: 1px solid var(--border);
+        }
+
+        .message.user .message-text {
+            background: linear-gradient(135deg, var(--secondary) 0%, var(--secondary-dark) 100%);
+            color: white;
+            border: none;
+        }
+
+        .result-card {
+            background: white;
+            border: 2px solid var(--primary);
+            border-radius: 12px;
+            padding: 1rem;
+            margin-top: 1rem;
+        }
+
+        .result-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+            padding-bottom: 0.75rem;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .result-title {
+            font-weight: 600;
+            color: var(--primary);
+            font-size: 1.1rem;
+        }
+
+        .result-status {
+            padding: 0.25rem 0.75rem;
+            background: var(--success);
+            color: white;
+            border-radius: 12px;
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+
+        .result-fields {
+            display: grid;
+            gap: 0.75rem;
+        }
+
+        .result-field {
+            display: grid;
+            grid-template-columns: 120px 1fr;
+            gap: 0.5rem;
+            padding: 0.5rem;
+            background: var(--lighter);
+            border-radius: 6px;
+        }
+
+        .result-label {
+            font-weight: 600;
+            color: var(--text-secondary);
+            font-size: 0.875rem;
+        }
+
+        .result-value {
+            color: var(--text-primary);
+        }
+
+        .typing-indicator {
+            display: none;
+            padding: 0.75rem 1rem;
+            background: white;
+            border-radius: 12px;
+            box-shadow: var(--shadow-sm);
+            border: 1px solid var(--border);
+            width: fit-content;
+        }
+
+        .typing-indicator.active {
+            display: inline-block;
+        }
+
+        .typing-dots {
+            display: flex;
+            gap: 4px;
+        }
+
+        .typing-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: var(--gray);
+            animation: typingPulse 1.4s infinite ease-in-out;
+        }
+
+        .typing-dot:nth-child(1) { animation-delay: -0.32s; }
+        .typing-dot:nth-child(2) { animation-delay: -0.16s; }
+
+        @keyframes typingPulse {
+            0%, 80%, 100% {
+                opacity: 0.5;
+                transform: scale(1);
+            }
+            40% {
+                opacity: 1;
+                transform: scale(1.2);
+            }
+        }
+
+        @media (max-width: 1024px) {
+            .content-area {
+                grid-template-columns: 1fr;
+                height: auto;
+            }
+
+            .sidebar {
+                border-right: none;
+                border-bottom: 1px solid var(--border);
+            }
+        }
+
+        @media (max-width: 640px) {
+            .header h1 {
+                font-size: 1.75rem;
+            }
+
+            .mode-selector {
+                padding: 1rem;
+            }
+
+            .chat-messages {
+                padding: 1rem;
+            }
         }
     </style>
 </head>
 <body>
-    <div class="container">
+    <div class="main-container">
         <div class="header">
-            <h1>🚀 Deal Progression Agent</h1>
-            <p>Flags stalled deals and recommends next actions</p>
-            <div class="mode-toggle">
-                <button class="mode-btn active" onclick="setMode('demo')">Demo Mode</button>
-                <button class="mode-btn" onclick="setMode('live')">Live Mode</button>
+            <div class="header-content">
+                <h1>📈 Deal Progression</h1>
+                <p>Identify and progress stalled deals</p>
             </div>
         </div>
 
-        <div class="content">
-            <div class="panel">
-                <h2>Configuration</h2>
-                
-                <div class="form-group">
-                    <label>Entity ID</label>
-                    <input type="text" id="entityId" placeholder="Enter entity ID" value="DEMO123">
+        <div class="mode-selector">
+            <div class="mode-toggle">
+                <button class="mode-btn active" onclick="switchMode('demo')" id="demoModeBtn">
+                    <span>🎬</span>
+                    <span>Demo Mode</span>
+                </button>
+                <button class="mode-btn" onclick="switchMode('live')" id="liveModeBtn">
+                    <span>🔴</span>
+                    <span>Live Mode</span>
+                </button>
+            </div>
+        </div>
+
+        <div class="config-panel" id="liveConfig">
+            <div class="config-content">
+                <div class="input-row">
+                    <div class="input-group">
+                        <label>Azure Function Key</label>
+                        <input type="password" id="apiKey" placeholder="Enter your function key">
+                    </div>
+                    <div class="input-group">
+                        <label>Function App URL</label>
+                        <input type="text" id="apiEndpoint" placeholder="https://your-app.azurewebsites.net/api/deal-progression">
+                    </div>
+                    <button class="btn btn-primary" onclick="testConnection()">
+                        Test Connection
+                    </button>
+                </div>
+                <div class="connection-status" id="connectionStatus">
+                    <span class="status-dot idle"></span>
+                    <span>Not Connected</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="content-area">
+            <div class="sidebar">
+                <div class="control-section">
+                    <h3>🎮 Demo Controls</h3>
+                    <div class="demo-controls">
+                        <div class="control-row">
+                            <button class="btn btn-success" onclick="startDemo()" id="startBtn">
+                                ▶️ Start Demo
+                            </button>
+                            <button class="btn btn-secondary" onclick="pauseDemo()" id="pauseBtn" disabled>
+                                ⏸️ Pause
+                            </button>
+                        </div>
+                        <div class="control-row">
+                            <button class="btn btn-secondary" onclick="resetDemo()" id="resetBtn">
+                                🔄 Reset
+                            </button>
+                            <button class="btn btn-secondary" onclick="skipToNext()" id="skipBtn" disabled>
+                                ⏭️ Skip
+                            </button>
+                        </div>
+                    </div>
+                    <div class="speed-control">
+                        <span class="speed-label">Speed:</span>
+                        <input type="range" class="speed-slider" id="speedSlider" min="0.5" max="3" step="0.5" value="1">
+                        <span class="speed-label" id="speedLabel">1x</span>
+                    </div>
                 </div>
 
-                <div class="form-group">
-                    <label>Action</label>
-                    <select id="action">
-                        <option value="execute">Execute</option>
-                        <option value="analyze">Analyze</option>
-                        <option value="report">Generate Report</option>
-                        <option value="optimize">Optimize</option>
-                    </select>
+                <div class="progress-section">
+                    <h3>📊 Demo Progress</h3>
+                    <div class="progress-bar">
+                        <div class="progress-fill" id="progressBar"></div>
+                    </div>
+                    <div class="step-indicators">
+                        <div class="step-indicator" id="step1">
+                            <div class="step-circle">📝</div>
+                            <div class="step-label">Collect</div>
+                        </div>
+                        <div class="step-indicator" id="step2">
+                            <div class="step-circle">🧠</div>
+                            <div class="step-label">Process</div>
+                        </div>
+                        <div class="step-indicator" id="step3">
+                            <div class="step-circle">✅</div>
+                            <div class="step-label">Complete</div>
+                        </div>
+                    </div>
                 </div>
-
-                <div class="form-group">
-                    <label>Processing Mode</label>
-                    <select id="mode">
-                        <option value="real-time">Real-time</option>
-                        <option value="batch">Batch</option>
-                        <option value="scheduled">Scheduled</option>
-                    </select>
-                </div>
-
-                <button class="btn btn-primary" onclick="executeAgent()">Execute Agent</button>
             </div>
 
-            <div class="panel">
-                <h2>Results</h2>
-                
-                <div class="results" id="results">
-                    <h3>Operation Complete</h3>
-                    <div class="metrics">
-                        <div class="metric">
-                            <div class="metric-value" id="processed">-</div>
-                            <div class="metric-label">Items Processed</div>
-                        </div>
-                        <div class="metric">
-                            <div class="metric-value" id="efficiency">-</div>
-                            <div class="metric-label">Efficiency</div>
-                        </div>
-                        <div class="metric">
-                            <div class="metric-value" id="time">-</div>
-                            <div class="metric-label">Time Saved</div>
-                        </div>
+            <div class="chat-container">
+                <div class="chat-header">
+                    <div class="chat-title">Conversation</div>
+                    <div class="status-indicator">
+                        <span class="status-dot" id="statusDot"></span>
+                        <span id="statusText">Ready</span>
                     </div>
-                    
-                    <h4 style="margin-top: 20px;">Integrated Systems</h4>
-                    <div class="systems" id="systems">
-                        <span class="system-badge">Salesforce</span> <span class="system-badge">D365</span> <span class="system-badge">Power BI</span> <span class="system-badge">Gong</span>
-                    </div>
-                    
-                    <h4 style="margin-top: 20px;">Benefits</h4>
-                    <ul id="benefits">
-                        <li>Reduces deal slippage</li><li>Improves forecast accuracy</li><li>Accelerates closure</li>
-                    </ul>
+                </div>
+
+                <div class="chat-messages" id="chatMessages">
+                    <!-- Messages will be inserted here -->
                 </div>
             </div>
         </div>
     </div>
 
     <script>
+        // Global state
         let currentMode = 'demo';
+        let demoState = {
+            isPlaying: false,
+            isPaused: false,
+            currentMessageIndex: 0,
+            currentStep: 0,
+            speed: 1,
+            typingTimer: null,
+            messageTimer: null
+        };
 
-        function setMode(mode) {
-            currentMode = mode;
-            document.querySelectorAll('.mode-btn').forEach(btn => {
-                btn.classList.remove('active');
+        let liveState = {
+            isConnected: false,
+            apiKey: '',
+            endpoint: ''
+        };
+
+        // Demo script
+        const demoScript = [
+        {
+            type: 'conversation',
+            messages: [
+                {
+                    role: 'user',
+                    content: 'Analyze my pipeline and tell me which deals need attention this week. Focus on deals at risk and what actions I should take.',
+                    typingTime: 1500,
+                    delay: 1000
+                },
+                {
+                    role: 'assistant',
+                    content: `I've analyzed your pipeline and identified 4 critical deals requiring immediate attention:
+
+<strong>🔴 HIGH RISK - Immediate Action Required:</strong>
+
+<strong>1. Acme Corp - $450K (Closing Friday)</strong>
+• Stage: Contract Negotiation
+• Risk: Legal redlines pending for 8 days (avg is 3 days)
+• Last Contact: 4 days ago
+• Action Required: 
+  - Call legal team NOW for status
+  - Schedule call with Acme's CFO Sarah Chen today
+  - Prepare concession strategy (payment terms vs. liability caps)
+• Talking Points: "We can expedite implementation if we finalize by Friday"
+
+<strong>2. TechStart Inc - $230K (Closing in 2 weeks)</strong>
+• Stage: Proposal Review
+• Risk: Champion (Mike Ross) unresponsive for 6 days
+• Competition: Competitor submitted revised proposal yesterday
+• Action Required:
+  - Send "breakup" email within 2 hours
+  - Reach out to economic buyer (Jennifer Park) directly
+  - Offer exclusive pricing valid for 48 hours
+• Recovery Script: "Jennifer, Mike mentioned you had concerns about implementation timeline..."
+
+<strong>🟡 MEDIUM RISK - Attention Needed:</strong>
+
+<strong>3. Global Manufacturing - $875K (Closing in 3 weeks)</strong>
+• Stage: Technical Validation
+• Risk: POC success criteria not formally documented
+• Engagement: Healthy (daily interactions)
+• Action Required:
+  - Document success criteria by EOD
+  - Schedule POC review for Thursday
+  - Involve technical win team
+• Next Step: "Let's align on what success looks like in writing"
+
+<strong>4. Regional Bank - $320K (Closing in 30 days)</strong>
+• Stage: Security Review
+• Risk: Procurement involved earlier than usual
+• Budget: Confirmed but competing priority emerged
+• Action Required:
+  - Provide security documentation proactively
+  - Schedule meeting with procurement this week
+  - Create ROI one-pager comparing to competing initiative`,
+                    typingTime: 3000,
+                    delay: 2000,
+                    action: 'step1'
+                }
+            ]
+        },
+        {
+            type: 'result',
+            messages: [
+                {
+                    role: 'assistant',
+                    content: `<strong>🟢 PROGRESSING WELL (Monitor Only):</strong>
+• DataCorp Solutions - $190K - On track, meeting scheduled tomorrow
+• Retail Chain Plus - $420K - Champion strongly engaged, legal review started
+
+<strong>Pipeline Health Metrics:</strong>
+• Win Rate Trending: 34% (down from 41% last quarter)
+• Average Deal Size: $380K (up 12%)
+• Sales Cycle: 67 days (5 days longer than target)
+• Stage Conversion Issue: Proposal → Negotiation dropped 15%
+
+<strong>Recommended Actions for This Week:</strong>
+1. Block 2 hours today for Acme Corp deal recovery
+2. Send 3 "breakup" emails to stalled deals by noon
+3. Schedule pipeline review with manager re: conversion rates
+4. Document competition strategies for top 5 deals
+
+Need me to draft any of these communications or create a detailed recovery plan for a specific deal?`,
+                    showResult: true,
+                    resultData: {
+                        'Pipeline Analysis Summary': {
+                            'Total Pipeline Value': '$2.39M',
+                            'At-Risk Revenue': '$680K',
+                            'Deals Requiring Action': '4 critical, 2 medium',
+                            'Win Probability': '34% (below target)',
+                            'Biggest Risk': 'Acme Corp - $450K closing Friday',
+                            'Competition Threat': 'TechStart Inc actively comparing',
+                            'Recovery Actions': '7 immediate tasks identified',
+                            'Expected Close This Quarter': '$1.77M (74% of quota)'
+                        }
+                    },
+                    typingTime: 2500,
+                    delay: 2000,
+                    action: 'step2'
+                }
+            ]
+        }
+    ];
+
+        let currentScriptIndex = 0;
+        let currentMessageIndex = 0;
+
+        // Initialize on page load
+        window.addEventListener('DOMContentLoaded', () => {
+            setupEventListeners();
+            addInitialMessage();
+        });
+
+        function setupEventListeners() {
+            const speedSlider = document.getElementById('speedSlider');
+            speedSlider.addEventListener('input', (e) => {
+                demoState.speed = parseFloat(e.target.value);
+                document.getElementById('speedLabel').textContent = `${demoState.speed}x`;
             });
-            event.target.classList.add('active');
         }
 
-        function executeAgent() {
-            const results = document.getElementById('results');
-            results.classList.add('active');
+        function addInitialMessage() {
+            const messagesContainer = document.getElementById('chatMessages');
+            messagesContainer.innerHTML = `
+                <div class="message assistant">
+                    <div class="message-avatar">🤖</div>
+                    <div class="message-content">
+                        <div class="message-header">
+                            <span class="message-sender">AI Assistant</span>
+                            <span class="message-time">${getCurrentTime()}</span>
+                        </div>
+                        <div class="message-text">
+                            Welcome to the Deal Progression Demo! 
+                            
+                            Click "Start Demo" to see how I can help, or switch to "Live Mode" to connect to your system.
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        function switchMode(mode) {
+            currentMode = mode;
+            document.getElementById('demoModeBtn').classList.toggle('active', mode === 'demo');
+            document.getElementById('liveModeBtn').classList.toggle('active', mode === 'live');
+            document.getElementById('liveConfig').classList.toggle('active', mode === 'live');
             
-            // Simulate results
-            document.getElementById('processed').textContent = Math.floor(Math.random() * 90) + 10;
-            document.getElementById('efficiency').textContent = Math.floor(Math.random() * 30) + 70 + '%';
-            document.getElementById('time').textContent = Math.floor(Math.random() * 35) + 5 + ' hours';
+            if (mode === 'demo') {
+                resetDemo();
+            } else {
+                const savedConfig = localStorage.getItem('agentConfig');
+                if (savedConfig) {
+                    const config = JSON.parse(savedConfig);
+                    document.getElementById('apiKey').value = config.apiKey || '';
+                    document.getElementById('apiEndpoint').value = config.endpoint || '';
+                }
+            }
+        }
+
+        async function testConnection() {
+            const apiKey = document.getElementById('apiKey').value;
+            const endpoint = document.getElementById('apiEndpoint').value;
+            
+            if (!apiKey || !endpoint) {
+                updateConnectionStatus('error', 'Please enter both API Key and Endpoint');
+                return;
+            }
+            
+            updateConnectionStatus('processing', 'Testing connection...');
+            
+            try {
+                const response = await fetch(endpoint, {
+                    method: 'POST',
+                    headers: {
+                        'x-functions-key': apiKey,
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        action: 'health',
+                        test: true
+                    })
+                });
+                
+                if (response.ok) {
+                    liveState.isConnected = true;
+                    liveState.apiKey = apiKey;
+                    liveState.endpoint = endpoint;
+                    
+                    localStorage.setItem('agentConfig', JSON.stringify({
+                        apiKey: apiKey,
+                        endpoint: endpoint
+                    }));
+                    
+                    updateConnectionStatus('connected', 'Connected Successfully');
+                } else {
+                    throw new Error(`Connection failed: ${response.status}`);
+                }
+            } catch (error) {
+                updateConnectionStatus('error', `Connection Failed: ${error.message}`);
+                liveState.isConnected = false;
+            }
+        }
+
+        function updateConnectionStatus(status, message) {
+            const statusElement = document.getElementById('connectionStatus');
+            statusElement.className = `connection-status ${status}`;
+            statusElement.innerHTML = `
+                <span class="status-dot ${status}"></span>
+                <span>${message}</span>
+            `;
+        }
+
+        function startDemo() {
+            if (demoState.isPlaying && !demoState.isPaused) return;
+            
+            demoState.isPlaying = true;
+            demoState.isPaused = false;
+            
+            document.getElementById('startBtn').disabled = true;
+            document.getElementById('pauseBtn').disabled = false;
+            document.getElementById('skipBtn').disabled = false;
+            
+            updateStatus('processing', 'Running Demo...');
+            
+            if (currentScriptIndex === 0 && currentMessageIndex === 0) {
+                const messagesContainer = document.getElementById('chatMessages');
+                messagesContainer.innerHTML = '';
+            }
+            
+            playNextMessage();
+        }
+
+        function pauseDemo() {
+            demoState.isPaused = true;
+            document.getElementById('startBtn').disabled = false;
+            document.getElementById('pauseBtn').disabled = true;
+            
+            clearTimeout(demoState.messageTimer);
+            clearTimeout(demoState.typingTimer);
+            
+            updateStatus('idle', 'Paused');
+        }
+
+        function resetDemo() {
+            clearTimeout(demoState.messageTimer);
+            clearTimeout(demoState.typingTimer);
+            
+            demoState.isPlaying = false;
+            demoState.isPaused = false;
+            demoState.currentStep = 0;
+            currentScriptIndex = 0;
+            currentMessageIndex = 0;
+            
+            document.getElementById('startBtn').disabled = false;
+            document.getElementById('pauseBtn').disabled = true;
+            document.getElementById('skipBtn').disabled = true;
+            
+            document.getElementById('progressBar').style.width = '0%';
+            
+            document.querySelectorAll('.step-indicator').forEach(step => {
+                step.classList.remove('active', 'completed');
+            });
+            
+            updateStatus('idle', 'Ready');
+            addInitialMessage();
+        }
+
+        function skipToNext() {
+            clearTimeout(demoState.messageTimer);
+            clearTimeout(demoState.typingTimer);
+            
+            currentMessageIndex++;
+            if (currentMessageIndex >= demoScript[currentScriptIndex].messages.length) {
+                currentScriptIndex++;
+                currentMessageIndex = 0;
+            }
+            
+            if (currentScriptIndex < demoScript.length) {
+                playNextMessage();
+            }
+        }
+
+        function playNextMessage() {
+            if (!demoState.isPlaying || demoState.isPaused) return;
+            
+            if (currentScriptIndex >= demoScript.length) {
+                completeDemo();
+                return;
+            }
+            
+            const currentSection = demoScript[currentScriptIndex];
+            const currentMessage = currentSection.messages[currentMessageIndex];
+            
+            if (!currentMessage) {
+                currentScriptIndex++;
+                currentMessageIndex = 0;
+                if (currentScriptIndex < demoScript.length) {
+                    playNextMessage();
+                } else {
+                    completeDemo();
+                }
+                return;
+            }
+            
+            showTypingIndicator();
+            
+            demoState.typingTimer = setTimeout(() => {
+                hideTypingIndicator();
+                addMessage(currentMessage, currentSection);
+                
+                updateProgress();
+                
+                if (currentMessage.action) {
+                    updateStep(currentMessage.action);
+                }
+                
+                currentMessageIndex++;
+                if (currentMessageIndex >= currentSection.messages.length) {
+                    currentScriptIndex++;
+                    currentMessageIndex = 0;
+                }
+                
+                const delay = (currentMessage.delay || 2000) / demoState.speed;
+                demoState.messageTimer = setTimeout(() => {
+                    playNextMessage();
+                }, delay);
+                
+            }, (currentMessage.typingTime || 2000) / demoState.speed);
+        }
+
+        function addMessage(message, section) {
+            const messagesContainer = document.getElementById('chatMessages');
+            const messageDiv = document.createElement('div');
+            messageDiv.className = `message ${message.role}`;
+            
+            let contentHTML = `
+                <div class="message-avatar">${message.role === 'user' ? '👤' : '🤖'}</div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-sender">${message.role === 'user' ? 'You' : 'AI Assistant'}</span>
+                        <span class="message-time">${getCurrentTime()}</span>
+                    </div>
+                    <div class="message-text">${message.content}</div>
+            `;
+            
+            if (message.showResult && message.resultData) {
+                contentHTML += createResultCard(message.resultData);
+            }
+            
+            contentHTML += '</div>';
+            messageDiv.innerHTML = contentHTML;
+            
+            messagesContainer.appendChild(messageDiv);
+            messagesContainer.scrollTop = messagesContainer.scrollHeight;
+        }
+
+        function createResultCard(data) {
+            let html = '';
+            
+            for (const [key, value] of Object.entries(data)) {
+                html += `
+                    <div class="result-card">
+                        <div class="result-header">
+                            <div class="result-title">${key.charAt(0).toUpperCase() + key.slice(1)}</div>
+                            <div class="result-status">Success</div>
+                        </div>
+                        <div class="result-fields">
+                `;
+                
+                for (const [field, fieldValue] of Object.entries(value)) {
+                    html += `
+                        <div class="result-field">
+                            <div class="result-label">${field.replace(/([A-Z])/g, ' $1').trim()}:</div>
+                            <div class="result-value">${fieldValue}</div>
+                        </div>
+                    `;
+                }
+                
+                html += `
+                        </div>
+                    </div>
+                `;
+            }
+            
+            return html;
+        }
+
+        function showTypingIndicator() {
+            const messagesContainer = document.getElementById('chatMessages');
+            const indicator = document.createElement('div');
+            indicator.className = 'typing-indicator active';
+            indicator.id = 'typingIndicator';
+            indicator.innerHTML = `
+                <div class="typing-dots">
+                    <div class="typing-dot"></div>
+                    <div class="typing-dot"></div>
+                    <div class="typing-dot"></div>
+                </div>
+            `;
+            messagesContainer.appendChild(indicator);
+            messagesContainer.scrollTop = messagesContainer.scrollHeight;
+        }
+
+        function hideTypingIndicator() {
+            const indicator = document.getElementById('typingIndicator');
+            if (indicator) {
+                indicator.remove();
+            }
+        }
+
+        function updateProgress() {
+            const totalMessages = demoScript.reduce((sum, section) => sum + section.messages.length, 0);
+            const currentProgress = (currentScriptIndex * 10 + currentMessageIndex) / totalMessages * 100;
+            document.getElementById('progressBar').style.width = `${currentProgress}%`;
+        }
+
+        function updateStep(action) {
+            if (action === 'step1') {
+                document.getElementById('step1').classList.add('active');
+            } else if (action === 'step2') {
+                document.getElementById('step1').classList.remove('active');
+                document.getElementById('step1').classList.add('completed');
+                document.getElementById('step2').classList.add('active');
+            } else if (action === 'step3') {
+                document.getElementById('step2').classList.remove('active');
+                document.getElementById('step2').classList.add('completed');
+                document.getElementById('step3').classList.add('active');
+            }
+        }
+
+        function updateStatus(status, text) {
+            const statusDot = document.getElementById('statusDot');
+            const statusText = document.getElementById('statusText');
+            
+            statusDot.className = `status-dot ${status}`;
+            statusText.textContent = text;
+        }
+
+        function completeDemo() {
+            demoState.isPlaying = false;
+            document.getElementById('startBtn').disabled = false;
+            document.getElementById('pauseBtn').disabled = true;
+            document.getElementById('skipBtn').disabled = true;
+            
+            document.getElementById('step3').classList.remove('active');
+            document.getElementById('step3').classList.add('completed');
+            
+            document.getElementById('progressBar').style.width = '100%';
+            
+            updateStatus('idle', 'Demo Complete');
+        }
+
+        function getCurrentTime() {
+            const now = new Date();
+            return now.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' });
         }
     </script>
 </body>
