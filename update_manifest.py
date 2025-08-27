@@ -158,57 +158,119 @@ def scan_agents():
     return agents
 
 def scan_stacks():
-    """Scan the agent_stacks directory"""
+    """Scan the agent_stacks directory with industry organization"""
     stacks = []
     stacks_dir = Path("agent_stacks")
     
     if not stacks_dir.exists():
         return stacks
     
-    for stack_dir in stacks_dir.iterdir():
-        if not stack_dir.is_dir():
+    # Map industry folder names to display names
+    INDUSTRY_NAMES = {
+        'b2b_sales_stacks': 'B2B Sales',
+        'b2c_sales_stacks': 'B2C Sales',
+        'energy_stacks': 'Energy & Utilities',
+        'federal_government_stacks': 'Federal Government',
+        'financial_services_stacks': 'Financial Services',
+        'general_stacks': 'Cross-Industry',
+        'healthcare_stacks': 'Healthcare',
+        'manufacturing_stacks': 'Manufacturing',
+        'professional_services_stacks': 'Professional Services',
+        'retail_cpg_stacks': 'Retail & CPG',
+        'slg_government_stacks': 'State & Local Government',
+        'software_dp_stacks': 'Software & Digital Products'
+    }
+    
+    # First check for industry folders
+    for industry_dir in stacks_dir.iterdir():
+        if not industry_dir.is_dir() or not industry_dir.name.endswith('_stacks'):
             continue
+            
+        industry_key = industry_dir.name
+        industry_name = INDUSTRY_NAMES.get(industry_key, industry_key.replace('_', ' ').title())
         
-        stack_info = {
-            "id": stack_dir.name,
-            "name": stack_dir.name.replace('_', ' ').title(),
-            "path": f"agent_stacks/{stack_dir.name}",
-            "agents": [],
-            "metadata": None
-        }
-        
-        # Load metadata.json if it exists
-        metadata_file = stack_dir / "metadata.json"
-        if metadata_file.exists():
-            with open(metadata_file, 'r') as f:
-                stack_info["metadata"] = json.load(f)
-        
-        # Scan agents subdirectory
-        agents_dir = stack_dir / "agents"
-        if agents_dir.exists():
-            for py_file in agents_dir.glob("*.py"):
-                if py_file.name == "__init__.py":
-                    continue
+        # Scan stacks within this industry
+        for stack_dir in industry_dir.iterdir():
+            if not stack_dir.is_dir():
+                continue
                 
-                size = py_file.stat().st_size
-                agent = {
-                    "id": f"{stack_dir.name}_{py_file.stem}",
-                    "name": py_file.stem.replace('_', ' ').title(),
-                    "filename": py_file.name,
-                    "path": f"agent_stacks/{stack_dir.name}/agents/{py_file.name}",
-                    "url": f"https://raw.githubusercontent.com/kody-w/AI-Agent-Templates/main/agent_stacks/{stack_dir.name}/agents/{py_file.name}",
-                    "size": size,
-                    "size_formatted": format_file_size(size),
-                    "type": "stack",
-                    "stack_name": stack_info["name"],
-                    "stack_path": stack_dir.name,
-                    "icon": get_agent_icon(py_file.name),
-                    "description": get_agent_description(py_file.name),
-                    "features": get_agent_features(py_file.name)
-                }
-                stack_info["agents"].append(agent)
+            process_stack(stack_dir, stacks, industry_name)
+    
+    # Also check for any stacks at root level (backwards compatibility)
+    for stack_dir in stacks_dir.iterdir():
+        if not stack_dir.is_dir() or stack_dir.name.endswith('_stacks'):
+            continue
+            
+        process_stack(stack_dir, stacks, 'General')
+    
+    return stacks
+
+def process_stack(stack_dir, stacks, industry='General'):
+    """Process a single stack directory"""
+    # Get the relative path from agent_stacks
+    if stack_dir.parent.name.endswith('_stacks'):
+        # Stack is in an industry folder
+        relative_path = f"{stack_dir.parent.name}/{stack_dir.name}"
+    else:
+        # Stack is at root level
+        relative_path = stack_dir.name
         
-        stacks.append(stack_info)
+    stack_info = {
+        "id": stack_dir.name,
+        "name": stack_dir.name.replace('_', ' ').title(),
+        "path": f"agent_stacks/{relative_path}",
+        "industry": industry,
+        "agents": [],
+        "metadata": None
+    }
+    
+    # Load metadata.json if it exists
+    metadata_file = stack_dir / "metadata.json"
+    if metadata_file.exists():
+        with open(metadata_file, 'r') as f:
+            stack_info["metadata"] = json.load(f)
+    
+    # Check for demo files
+    demos_dir = stack_dir / "demos"
+    if demos_dir.exists():
+        demo_files = list(demos_dir.glob("*.html"))
+        if demo_files:
+            # Use the first HTML file found as the demo
+            demo_file = demo_files[0]
+            if not stack_info["metadata"]:
+                stack_info["metadata"] = {}
+            stack_info["metadata"]["demo"] = {
+                "available": True,
+                "url": f"agent_stacks/{relative_path}/demos/{demo_file.name}"
+            }
+    
+    # Scan agents subdirectory
+    agents_dir = stack_dir / "agents"
+    if agents_dir.exists():
+        for py_file in agents_dir.glob("*.py"):
+            if py_file.name == "__init__.py":
+                continue
+            
+            size = py_file.stat().st_size
+            agent = {
+                "id": f"{stack_dir.name}_{py_file.stem}",
+                "name": py_file.stem.replace('_', ' ').title(),
+                "filename": py_file.name,
+                "path": f"agent_stacks/{relative_path}/agents/{py_file.name}",
+                "url": f"https://raw.githubusercontent.com/kody-w/AI-Agent-Templates/main/agent_stacks/{relative_path}/agents/{py_file.name}",
+                "size": size,
+                "size_formatted": format_file_size(size),
+                "type": "stack",
+                "stack_name": stack_info["name"],
+                "stack_path": relative_path,
+                "industry": industry,
+                "icon": get_agent_icon(py_file.name),
+                "description": get_agent_description(py_file.name),
+                "features": get_agent_features(py_file.name)
+            }
+            stack_info["agents"].append(agent)
+    
+    stacks.append(stack_info)
     
     return stacks
 

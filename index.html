@@ -1638,17 +1638,16 @@ graph TB
     <!-- Template Library Section -->
     <div id="templatesApp" class="app-section active">
       <div class="container">
-        <header>
-          <div class="ms-logo">MICROSOFT AI ACCELERATE</div>
-          <h1>Agentic Template Library</h1>
-          <p class="subtitle">
-            Pre-configured Agent Stacks for Common Use Cases
-          </p>
-          <div style="text-align: center; margin-top: 1rem">
+        <header style="padding: 1rem 0 0.5rem;">
+          <div style="display: flex; justify-content: space-between; align-items: center;">
+            <div>
+              <div class="ms-logo" style="font-size: 0.8rem;">MICROSOFT AI ACCELERATE</div>
+              <h1 style="font-size: 1.8rem; margin: 0.5rem 0;">Agentic Template Library</h1>
+            </div>
             <button
               class="btn btn-primary"
               onclick="agentStore.toggleCart()"
-              style="display: inline-flex"
+              style="display: inline-flex; align-items: center; gap: 0.5rem;"
             >
               <span>🛒</span>
               <span class="badge" id="templateCartCount">0</span>
@@ -1656,6 +1655,19 @@ graph TB
             </button>
           </div>
         </header>
+
+        <!-- Industry Filter -->
+        <div class="industry-filter-section" style="background: linear-gradient(135deg, #f8f9fa 0%, #ffffff 100%); padding: 1.25rem; border-radius: 12px; margin-bottom: 1.5rem; box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08); border: 1px solid #e0e0e0;">
+          <h3 style="margin-bottom: 0.75rem; color: #0078d4; font-size: 1.2rem;">🏢 Select Your Industry</h3>
+          <div id="industryButtons" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 0.75rem; margin-bottom: 1rem;">
+            <!-- Industry buttons will be dynamically added here -->
+          </div>
+          <div style="text-align: center; margin-top: 1rem;">
+            <button class="btn btn-secondary" onclick="templateManager.clearIndustryFilter()" style="padding: 0.5rem 1.5rem;">
+              <span>🌐</span> Show All Industries
+            </button>
+          </div>
+        </div>
 
         <!-- View Controls -->
         <div class="view-controls">
@@ -1675,8 +1687,8 @@ graph TB
         </div>
 
         <!-- Search and Filter -->
-        <div class="search-section">
-          <h3 style="margin-bottom: 1rem">Find Your Perfect Agent Stack</h3>
+        <div class="search-section" style="padding: 0.75rem; background: white; border-radius: 8px; margin-bottom: 1rem;">
+          <h4 style="margin-bottom: 0.75rem; font-size: 1rem; color: #666;">Refine Your Search</h4>
           <div class="search-box">
             <input
               type="text"
@@ -2143,11 +2155,11 @@ graph TB
             await agentStore.loadAgents();
           }
 
-          // Load dynamic stacks from GitHub
+          // Load dynamic stacks from GitHub FIRST and wait for completion
           await this.loadDynamicStacks();
-
-          // Combine hardcoded templates with dynamic stacks
-          this.agentTemplates = [
+          
+          // Define hardcoded templates
+          const hardcodedTemplates = [
             {
               id: "basic-starter",
               name: "Basic Starter Pack",
@@ -2156,6 +2168,7 @@ graph TB
               useCase: "productivity",
               complexity: "starter",
               estimatedTime: "1 week",
+              industry: "Cross-Industry",
               agents: [
                 "basic_agent", // References basic_agent.py
                 "context_memory_agent", // References context_memory_agent.py
@@ -2176,6 +2189,7 @@ graph TB
               useCase: "communication",
               complexity: "starter",
               estimatedTime: "1-2 weeks",
+              industry: "Cross-Industry",
               agents: [
                 "email_drafting_agent", // References email_drafting_agent.py
                 "context_memory_agent", // References context_memory_agent.py
@@ -2196,6 +2210,7 @@ graph TB
               useCase: "productivity",
               complexity: "intermediate",
               estimatedTime: "2-3 weeks",
+              industry: "Cross-Industry",
               agents: [
                 "extract_sharepoint_document_url_agent", // References extract_sharepoint_document_url_agent.py
                 "image_generation_agent", // References image_generation_agent.py
@@ -2217,6 +2232,7 @@ graph TB
               useCase: "productivity",
               complexity: "advanced",
               estimatedTime: "3-4 weeks",
+              industry: "Cross-Industry",
               agents: [
                 "dynamics_365_agent", // References dynamics_365_agent.py
                 "powerpoint_agent", // References powerpoint_agent.py
@@ -2239,6 +2255,7 @@ graph TB
               useCase: "analytics",
               complexity: "starter",
               estimatedTime: "1 week",
+              industry: "Cross-Industry",
               agents: [
                 "hacker_news_agent", // References hacker_news_agent.py
                 "adaptive_card_agent", // References adaptive_card_agent.py
@@ -2259,6 +2276,7 @@ graph TB
               useCase: "communication",
               complexity: "intermediate",
               estimatedTime: "2-3 weeks",
+              industry: "Cross-Industry",
               agents: [
                 "image_generation_agent", // References image_generation_agent.py
                 "powerpoint_agent", // References powerpoint_agent.py
@@ -2280,6 +2298,7 @@ graph TB
               useCase: "productivity",
               complexity: "advanced",
               estimatedTime: "4-6 weeks",
+              industry: "Cross-Industry",
               agents: [
                 "basic_agent",
                 "context_memory_agent",
@@ -2301,8 +2320,9 @@ graph TB
             },
           ];
 
-          // Append dynamic stacks to the templates
-          this.agentTemplates = [...this.agentTemplates, ...this.dynamicStacks];
+          // Combine hardcoded templates with dynamic stacks that were loaded
+          this.agentTemplates = [...hardcodedTemplates, ...this.dynamicStacks];
+          console.log(`Total templates after combining: ${this.agentTemplates.length} (7 hardcoded + ${this.dynamicStacks.length} dynamic)`);
           
           // Sort templates by data completeness (most complete first)
           this.agentTemplates.sort((a, b) => {
@@ -2358,10 +2378,33 @@ graph TB
 
         async loadDynamicStacks() {
           try {
-            // First try to use manifest data if available
-            if (agentStore.stacksManifest && agentStore.stacksManifest.length > 0) {
-              console.log("Loading stacks from manifest");
-              this.loadStacksFromManifest(agentStore.stacksManifest);
+            // Wait a bit for agentStore to fully initialize if needed
+            if (!agentStore.stacksManifest && window.agentStore) {
+              await new Promise(resolve => setTimeout(resolve, 100));
+            }
+            
+            // Check for pending manifest that might not have been shared yet
+            if (!this.stacksManifest && window.pendingStacksManifest) {
+              this.stacksManifest = window.pendingStacksManifest;
+              console.log(`Retrieved ${this.stacksManifest.length} pending stacks from window`);
+            }
+            
+            // First try to use manifest data if available (check all sources)
+            const manifestStacks = this.stacksManifest || 
+                                  agentStore.stacksManifest || 
+                                  (window.agentStore && window.agentStore.stacksManifest) ||
+                                  window.pendingStacksManifest;
+            
+            console.log('Checking for manifest stacks:', {
+              'this.stacksManifest': this.stacksManifest ? this.stacksManifest.length : 'none',
+              'agentStore.stacksManifest': agentStore.stacksManifest ? agentStore.stacksManifest.length : 'none',
+              'window.agentStore': window.agentStore ? (window.agentStore.stacksManifest ? window.agentStore.stacksManifest.length : 'none') : 'no window.agentStore',
+              'window.pendingStacksManifest': window.pendingStacksManifest ? window.pendingStacksManifest.length : 'none'
+            });
+            
+            if (manifestStacks && manifestStacks.length > 0) {
+              console.log(`Loading ${manifestStacks.length} stacks from manifest`);
+              this.loadStacksFromManifest(manifestStacks);
               return;
             }
             
@@ -2398,6 +2441,7 @@ graph TB
 
         loadStacksFromManifest(stacksData) {
           this.dynamicStacks = [];
+          console.log(`Processing ${stacksData.length} stacks from manifest`);
           
           for (const stack of stacksData) {
             // Extract files list from manifest or detect from stack structure
@@ -2430,6 +2474,7 @@ graph TB
               isDynamic: true,
               stackPath: stack.id,
               hasMetadata: !!stack.metadata,
+              industry: stack.industry || 'General',
               manifestData: stack  // Store the full manifest data for later use
             };
             
@@ -2656,16 +2701,82 @@ graph TB
 
           // Render based on current view
           if (this.currentView === 'list') {
-            // Render list view
+            // Render list view with industry grouping when not filtered
             if (list) {
-              list.innerHTML = templates
-                .map((template) => {
-                  const isInCart = this.isTemplateInCart(template);
-                  const complexityLabel = {
-                    starter: "Starter",
-                    intermediate: "Intermediate",
-                    advanced: "Advanced",
-                  }[template.complexity];
+              let html = '';
+              
+              // If no specific industry is selected, group by industry
+              if (!this.selectedIndustry) {
+                // Define industry order and config
+                const industryOrder = [
+                  'B2B Sales',
+                  'B2C Sales',
+                  'Healthcare',
+                  'Financial Services',
+                  'Manufacturing',
+                  'Retail & CPG',
+                  'Energy & Utilities',
+                  'Professional Services',
+                  'Software & Digital Products',
+                  'Federal Government',
+                  'State & Local Government',
+                  'Cross-Industry',
+                  'General'
+                ];
+                
+                const industryConfig = {
+                  'B2B Sales': { icon: '💼', color: '#0078d4' },
+                  'B2C Sales': { icon: '🛍️', color: '#e74c3c' },
+                  'Healthcare': { icon: '🏥', color: '#27ae60' },
+                  'Financial Services': { icon: '🏦', color: '#2c3e50' },
+                  'Energy & Utilities': { icon: '⚡', color: '#f39c12' },
+                  'Manufacturing': { icon: '🏭', color: '#34495e' },
+                  'Professional Services': { icon: '💻', color: '#8e44ad' },
+                  'Software & Digital Products': { icon: '📱', color: '#3498db' },
+                  'Retail & CPG': { icon: '🛒', color: '#e67e22' },
+                  'Federal Government': { icon: '🏛️', color: '#c0392b' },
+                  'State & Local Government': { icon: '🏢', color: '#16a085' },
+                  'Cross-Industry': { icon: '🌐', color: '#95a5a6' },
+                  'General': { icon: '📦', color: '#7f8c8d' }
+                };
+                
+                // Group templates by industry
+                const templatesByIndustry = {};
+                templates.forEach(template => {
+                  const industry = template.industry || 'General';
+                  if (!templatesByIndustry[industry]) {
+                    templatesByIndustry[industry] = [];
+                  }
+                  templatesByIndustry[industry].push(template);
+                });
+                
+                // Render each industry group in order
+                industryOrder.forEach(industry => {
+                  if (templatesByIndustry[industry] && templatesByIndustry[industry].length > 0) {
+                    const config = industryConfig[industry];
+                    
+                    // Add industry header
+                    html += `
+                      <div style="background: linear-gradient(135deg, ${config.color}15 0%, ${config.color}05 100%); border-left: 4px solid ${config.color}; padding: 1rem; margin: 1.5rem 0 1rem; border-radius: 8px;">
+                        <h3 style="color: ${config.color}; margin: 0; display: flex; align-items: center; gap: 0.75rem;">
+                          <span style="font-size: 1.5rem;">${config.icon}</span>
+                          <span>${industry}</span>
+                          <span style="background: ${config.color}; color: white; padding: 0.2rem 0.6rem; border-radius: 12px; font-size: 0.9rem; margin-left: auto;">
+                            ${templatesByIndustry[industry].length} stacks
+                          </span>
+                        </h3>
+                      </div>
+                    `;
+                    
+                    // Add templates for this industry
+                    html += templatesByIndustry[industry]
+                      .map((template) => {
+                        const isInCart = this.isTemplateInCart(template);
+                        const complexityLabel = {
+                          starter: "Starter",
+                          intermediate: "Intermediate",
+                          advanced: "Advanced",
+                        }[template.complexity];
 
                   // Get agent details for display
                   const agentDetails = template.agents.map((agentId) => {
@@ -2706,7 +2817,7 @@ graph TB
                                 </span>
                                 <span style="color: #666; font-size: 0.85rem;">${template.estimatedTime}</span>
                                 ${
-                                  template.demo && template.demo.available
+                                  (template.demo && template.demo.available) || template.isDynamic
                                     ? '<span style="color: #10b981; font-size: 0.85rem; font-weight: 500;">🎮 Demo Available</span>'
                                     : ''
                                 }
@@ -2716,11 +2827,11 @@ graph TB
                                 <div style="font-size: 0.8rem; color: #666;">Agents</div>
                             </div>
                             <div class="template-list-actions">
-                                <button class="btn btn-secondary" onclick="templateManager.viewTemplate('${template.id}')">
+                                <button class="btn btn-secondary" onclick="(async () => await templateManager.viewTemplateDetails('${template.id}'))()">
                                     👁️ View
                                 </button>
                                 ${
-                                  template.demo && template.demo.available
+                                  (template.demo && template.demo.available) || template.isDynamic
                                     ? `<button class="btn btn-secondary" onclick="templateManager.openDemo('${template.id}')">
                                         🎮 Demo
                                        </button>`
@@ -2728,10 +2839,10 @@ graph TB
                                 }
                                 ${
                                   isInCart
-                                    ? `<button class="btn btn-danger" onclick="templateManager.removeTemplate('${template.id}')">
+                                    ? `<button class="btn btn-danger" onclick="templateManager.removeTemplateFromCart('${template.id}')">
                                         ✕ Remove
                                        </button>`
-                                    : `<button class="btn btn-primary" onclick="templateManager.addTemplate('${template.id}')">
+                                    : `<button class="btn btn-primary" onclick="templateManager.addTemplateToCart('${template.id}')">
                                         ➕ Add
                                        </button>`
                                 }
@@ -2739,15 +2850,138 @@ graph TB
                         </div>
                     </div>
                   `;
-                })
-                .join("");
+                      })
+                      .join("");
+                  }
+                });
+                
+                list.innerHTML = html;
+              } else {
+                // If industry is selected, render normally without grouping
+                list.innerHTML = templates
+                  .map((template) => {
+                    const isInCart = this.isTemplateInCart(template);
+                    const complexityLabel = {
+                      starter: "Starter",
+                      intermediate: "Intermediate",
+                      advanced: "Advanced",
+                    }[template.complexity];
+
+                    // Get agent details for display
+                    const agentDetails = template.agents.map((agentId) => {
+                      const agent = agentStore.agents.find((a) => a.id === agentId);
+                      return agent
+                        ? { id: agentId, name: agent.name, icon: agent.icon }
+                        : {
+                            id: agentId,
+                            name: this.formatAgentName(agentId),
+                            icon: "🤖",
+                          };
+                    });
+
+                    return `
+                      <div class="template-list-item ${template.isDynamic ? 'dynamic-stack' : ''}">
+                          <div class="template-list-content">
+                              <div class="template-list-main">
+                                  <div class="template-list-title">${template.name}</div>
+                                  <div class="template-list-description">${template.description}</div>
+                                  <div class="template-list-agents">
+                                      ${agentDetails
+                                        .map(
+                                          (agent) =>
+                                            `<span class="agent-pill">${agent.icon} ${agent.name}</span>`
+                                        )
+                                        .join("")}
+                                  </div>
+                              </div>
+                              <div class="template-list-meta">
+                                  <span class="badge badge-complexity-${
+                                    template.complexity === "starter"
+                                      ? "low"
+                                      : template.complexity === "intermediate"
+                                      ? "medium"
+                                      : "high"
+                                  }">
+                                      ${complexityLabel}
+                                  </span>
+                                  <span style="color: #666; font-size: 0.85rem;">${template.estimatedTime}</span>
+                                  ${
+                                    (template.demo && template.demo.available) || template.isDynamic
+                                      ? '<span style="color: #10b981; font-size: 0.85rem; font-weight: 500;">🎮 Demo Available</span>'
+                                      : ''
+                                  }
+                              </div>
+                              <div class="template-list-stats">
+                                  <div style="font-size: 1.2rem; font-weight: 600; color: #0078d4;">${template.agents.length}</div>
+                                  <div style="font-size: 0.8rem; color: #666;">Agents</div>
+                              </div>
+                              <div class="template-list-actions">
+                                  <button class="btn btn-secondary" onclick="(async () => await templateManager.viewTemplateDetails('${template.id}'))()">
+                                      👁️ View
+                                  </button>
+                                  ${
+                                    (template.demo && template.demo.available) || template.isDynamic
+                                      ? `<button class="btn btn-secondary" onclick="templateManager.openDemo('${template.id}')">
+                                          🎮 Demo
+                                         </button>`
+                                      : ''
+                                  }
+                                  ${
+                                    isInCart
+                                      ? `<button class="btn btn-danger" onclick="templateManager.removeTemplateFromCart('${template.id}')">
+                                          ✕ Remove
+                                         </button>`
+                                      : `<button class="btn btn-primary" onclick="templateManager.addTemplateToCart('${template.id}')">
+                                          ➕ Add
+                                         </button>`
+                                  }
+                              </div>
+                          </div>
+                      </div>
+                    `;
+                  })
+                  .join("");
+              }
             }
           } else {
-            // Render gallery view (existing code)
+            // Render gallery view (sorted by industry)
             if (grid) {
               grid.style.display = "grid";
+              
+              // Sort templates by industry for consistent display
+              const sortedTemplates = [...templates].sort((a, b) => {
+                const industryOrder = [
+                  'B2B Sales',
+                  'B2C Sales',
+                  'Healthcare',
+                  'Financial Services',
+                  'Manufacturing',
+                  'Retail & CPG',
+                  'Energy & Utilities',
+                  'Professional Services',
+                  'Software & Digital Products',
+                  'Federal Government',
+                  'State & Local Government',
+                  'Cross-Industry',
+                  'General'
+                ];
+                
+                const industryA = a.industry || 'General';
+                const industryB = b.industry || 'General';
+                const indexA = industryOrder.indexOf(industryA);
+                const indexB = industryOrder.indexOf(industryB);
+                
+                if (indexA !== indexB) {
+                  const orderA = indexA === -1 ? 999 : indexA;
+                  const orderB = indexB === -1 ? 999 : indexB;
+                  return orderA - orderB;
+                }
+                
+                // Within same industry, sort by name
+                return a.name.localeCompare(b.name);
+              });
 
-          grid.innerHTML = templates
+              grid.innerHTML = sortedTemplates
             .map((template) => {
               const isInCart = this.isTemplateInCart(template);
               const complexityLabel = {
@@ -2794,7 +3028,7 @@ graph TB
                                 🚀 Dynamic GitHub Stack
                             </div>
                             ` : ''}
-                            ${template.demo && template.demo.available ? `
+                            ${(template.demo && template.demo.available) || template.isDynamic ? `
                             <div style="background: linear-gradient(135deg, #10b981 0%, #059669 100%); color: white; padding: 0.5rem; border-radius: 6px; margin-bottom: 0.75rem; text-align: center; font-weight: 500;">
                                 🎮 Interactive Demo Available
                             </div>
@@ -2864,6 +3098,13 @@ graph TB
                                 <button class="btn btn-secondary" onclick="(async () => await templateManager.viewTemplateDetails('${template.id.replace(/'/g, "\\'")}'))()">
                                     👁️ View Details
                                 </button>
+                                ${
+                                  (template.demo && template.demo.available) || template.isDynamic
+                                    ? `<button class="btn btn-secondary" onclick="templateManager.openDemo('${template.id.replace(/'/g, "\\'")}')">
+                                        🎮 Open Demo
+                                       </button>`
+                                    : ''
+                                }
                             </div>
                         </div>
                     `;
@@ -2873,6 +3114,157 @@ graph TB
           }
         }
 
+        openDemo(templateId) {
+          // Find the template
+          const template = [...this.agentTemplates, ...this.dynamicStacks].find(t => t.id === templateId);
+          if (!template) return;
+
+          // Build demo URL based on template type
+          let demoUrl = '';
+          if (template.demo && template.demo.url) {
+            // Use the provided demo URL from manifest (should now have correct paths)
+            demoUrl = template.demo.url;
+          } else if (template.isDynamic && template.stackPath) {
+            // For dynamic stacks, use the stackPath which may include industry folder
+            const demoFileName = templateId.replace('_stack', '_demo.html');
+            demoUrl = `agent_stacks/${template.stackPath}/demos/${demoFileName}`;
+          } else {
+            // Default path - try with industry folder structure
+            const demoFileName = templateId.replace('_stack', '_demo.html');
+            demoUrl = `agent_stacks/${templateId}/demos/${demoFileName}`;
+          }
+
+          // Open the demo in same window
+          if (demoUrl) {
+            window.location.href = demoUrl;
+          } else {
+            console.error('Demo URL not found for template:', templateId);
+            showToast('Demo not available for this template', 'warning');
+          }
+        }
+
+        clearIndustryFilter() {
+          this.selectedIndustry = null;
+          localStorage.removeItem('selectedIndustry');
+          
+          // Reset to all templates
+          this.filteredTemplates = [...this.agentTemplates];
+          this.renderTemplates(this.filteredTemplates);
+          this.renderIndustryButtons();
+          
+          // Reset search placeholder
+          const searchInput = document.getElementById('templateSearchInput');
+          if (searchInput) {
+            searchInput.placeholder = 'Search templates by name, description, or use case...';
+          }
+          
+          showToast('Showing all stacks', 'info');
+        }
+        
+        filterByIndustry(industry, save = true) {
+          this.selectedIndustry = industry;
+          
+          if (save) {
+            localStorage.setItem('selectedIndustry', industry);
+          }
+          
+          // Filter templates
+          this.filteredTemplates = this.agentTemplates.filter(template => 
+            template.industry === industry
+          );
+          
+          // Update UI
+          this.renderTemplates(this.filteredTemplates);
+          this.renderIndustryButtons();
+          
+          // Update the search placeholder
+          const searchInput = document.getElementById('templateSearchInput');
+          if (searchInput) {
+            searchInput.placeholder = `Search within ${industry}...`;
+          }
+          
+          // Show toast
+          showToast(`Showing ${this.filteredTemplates.length} stacks for ${industry}`, 'info');
+        }
+        
+        buildIndustryMap() {
+          this.industries.clear();
+          
+          // Industry display names and icons
+          const industryConfig = {
+            'B2B Sales': { icon: '💼', color: '#0078d4' },
+            'B2C Sales': { icon: '🛍️', color: '#e74c3c' },
+            'Healthcare': { icon: '🏥', color: '#27ae60' },
+            'Financial Services': { icon: '🏦', color: '#2c3e50' },
+            'Energy & Utilities': { icon: '⚡', color: '#f39c12' },
+            'Manufacturing': { icon: '🏭', color: '#34495e' },
+            'Professional Services': { icon: '💻', color: '#8e44ad' },
+            'Software & Digital Products': { icon: '📱', color: '#3498db' },
+            'Retail & CPG': { icon: '🛒', color: '#e67e22' },
+            'Federal Government': { icon: '🏛️', color: '#c0392b' },
+            'State & Local Government': { icon: '🏢', color: '#16a085' },
+            'Cross-Industry': { icon: '🌐', color: '#95a5a6' },
+            'General': { icon: '📦', color: '#7f8c8d' }
+          };
+          
+          // Count stacks per industry
+          this.agentTemplates.forEach(template => {
+            const industry = template.industry || 'General';
+            if (!this.industries.has(industry)) {
+              this.industries.set(industry, {
+                count: 0,
+                ...industryConfig[industry] || { icon: '📁', color: '#95a5a6' }
+              });
+            }
+            this.industries.get(industry).count++;
+          });
+        }
+        
+        renderIndustryButtons() {
+          const container = document.getElementById('industryButtons');
+          if (!container) return;
+          
+          // Sort industries by count (descending) but put General/Cross-Industry last
+          const sortedIndustries = Array.from(this.industries.entries())
+            .sort((a, b) => {
+              if (a[0] === 'General' || a[0] === 'Cross-Industry') return 1;
+              if (b[0] === 'General' || b[0] === 'Cross-Industry') return -1;
+              return b[1].count - a[1].count;
+            });
+          
+          container.innerHTML = sortedIndustries
+            .map(([industry, data]) => `
+              <button 
+                class="industry-btn ${this.selectedIndustry === industry ? 'active' : ''}" 
+                onclick="templateManager.filterByIndustry('${industry.replace(/'/g, "\\'")}')" 
+                style="
+                  background: ${this.selectedIndustry === industry ? data.color : 'white'};
+                  color: ${this.selectedIndustry === industry ? 'white' : data.color};
+                  border: 2px solid ${data.color};
+                  padding: 0.75rem;
+                  border-radius: 8px;
+                  cursor: pointer;
+                  transition: all 0.3s;
+                  display: flex;
+                  align-items: center;
+                  justify-content: space-between;
+                  font-weight: 500;
+                "
+                onmouseover="if(!this.classList.contains('active')) { this.style.background='${data.color}'; this.style.color='white'; }"
+                onmouseout="if(!this.classList.contains('active')) { this.style.background='white'; this.style.color='${data.color}'; }"
+              >
+                <span style="display: flex; align-items: center; gap: 0.5rem;">
+                  <span style="font-size: 1.2rem;">${data.icon}</span>
+                  <span>${industry}</span>
+                </span>
+                <span style="background: rgba(255, 255, 255, 0.3); padding: 0.2rem 0.5rem; border-radius: 12px;">
+                  ${data.count}
+                </span>
+              </button>
+            `)
+            .join('');
+        }
+        
         formatAgentName(agentId) {
           return agentId
             .split("_")
@@ -2891,15 +3283,26 @@ graph TB
         async loadStackAgentsIfNeeded(template) {
           // Check if this is a dynamic stack that hasn't loaded agents yet
           if (template.isDynamic && !template.agentsLoaded) {
-            console.log(`Lazy loading agents for stack: ${template.name}`);
+            console.log(`Checking agents for stack: ${template.name}`);
             
-            try {
-              // Load the stack agents from GitHub
-              const stackAgents = await agentStore.loadStackAgents({
-                name: template.stackPath,
-                path: `${agentStore.STACKS_PATH}/${template.stackPath}`,
-                type: "dir"
+            // First check if agents are already in the manifest data
+            if (template.manifestData && template.manifestData.agents && template.manifestData.agents.length > 0) {
+              // Agents are already loaded from manifest
+              template.manifestData.agents.forEach(agent => {
+                if (!agentStore.agents.find(a => a.id === agent.id)) {
+                  agentStore.agents.push(agent);
+                }
               });
+              template.agents = template.manifestData.agents.map(a => a.id);
+              template.agentsLoaded = true;
+              console.log(`Using ${template.manifestData.agents.length} agents from manifest for ${template.name}`);
+              return;
+            }
+            
+            // If not in manifest, try loading via raw URLs (no API limits)
+            try {
+              console.log(`Loading agents via raw URLs for stack: ${template.name}`);
+              const stackAgents = await agentStore.loadStackAgentsViaRawUrls(template.stackPath);
               
               // Add loaded agents to the agent store
               stackAgents.forEach(agent => {
@@ -2912,10 +3315,12 @@ graph TB
               template.agents = stackAgents.map(a => a.id);
               template.agentsLoaded = true;
               
-              console.log(`Loaded ${stackAgents.length} agents for ${template.name}`);
+              console.log(`Loaded ${stackAgents.length} agents for ${template.name} via raw URLs`);
             } catch (error) {
               console.error(`Failed to load agents for stack ${template.name}:`, error);
-              showToast("Failed to load stack agents. Using cached data.", "warning");
+              // Use empty array if loading fails
+              template.agents = [];
+              template.agentsLoaded = true;
             }
           }
         }
@@ -3890,6 +4295,49 @@ graph TB
           }
         }
 
+        async loadStackAgentsViaRawUrls(stackName) {
+          console.log(`Loading agents for stack ${stackName} via raw URLs...`);
+          const stackAgents = [];
+          
+          try {
+            // Load the metadata.json for this specific stack
+            const metadataUrl = `https://raw.githubusercontent.com/${this.GITHUB_REPO}/${this.BRANCH}/${this.STACKS_PATH}/${stackName}/metadata.json`;
+            const response = await fetch(metadataUrl);
+            
+            if (response.ok) {
+              const metadata = await response.json();
+              
+              // Add agents from this stack
+              if (metadata.agents) {
+                metadata.agents.forEach(agentFile => {
+                  const filename = agentFile.split('/').pop();
+                  const id = `${stackName}_${filename.replace('.py', '')}`;
+                  
+                  stackAgents.push({
+                    id: id,
+                    name: this.formatAgentName(filename),
+                    filename: filename,
+                    path: `${this.STACKS_PATH}/${stackName}/agents/${filename}`,
+                    url: `https://raw.githubusercontent.com/${this.GITHUB_REPO}/${this.BRANCH}/${this.STACKS_PATH}/${stackName}/agents/${filename}`,
+                    icon: '📦',
+                    category: 'stack',
+                    description: `Part of ${metadata.name || stackName.replace(/_/g, ' ').replace(/\b\w/g, l => l.toUpperCase())}`,
+                    features: metadata.features || ["Stack functionality", "Integrated solution", "Production ready", "Enterprise scale"],
+                    size: "~15KB",
+                    type: "stack",
+                    stackName: metadata.name || stackName.replace(/_/g, ' ').replace(/\b\w/g, l => l.toUpperCase()),
+                    stackPath: stackName
+                  });
+                });
+              }
+            }
+          } catch (error) {
+            console.error(`Failed to load metadata for stack ${stackName}:`, error);
+          }
+          
+          return stackAgents;
+        }
+
         async loadStacksViaRawUrls() {
           console.log("Loading stacks via raw URLs...");
           
@@ -3946,19 +4394,13 @@ graph TB
 
         async loadFromManifest() {
           try {
-            // Try loading from local manifest first, then from raw GitHub URL
-            let response = await fetch('manifest.json');
+            // Load directly from GitHub raw URL (works without server)
+            const manifestUrl = `https://raw.githubusercontent.com/${this.GITHUB_REPO}/${this.BRANCH}/manifest.json`;
+            const response = await fetch(manifestUrl);
             
             if (!response.ok) {
-              // Try loading from GitHub raw URL as fallback
-              console.warn("Local manifest not found, trying GitHub raw URL");
-              const manifestUrl = `https://raw.githubusercontent.com/${this.GITHUB_REPO}/${this.BRANCH}/manifest.json`;
-              response = await fetch(manifestUrl);
-              
-              if (!response.ok) {
-                console.warn("Manifest file not found at GitHub either");
-                return false;
-              }
+              console.warn("Manifest file not found at GitHub");
+              return false;
             }
             
             const manifest = await response.json();
@@ -3978,10 +4420,16 @@ graph TB
             
             // Store stack information for lazy loading
             this.stacksManifest = manifest.stacks || [];
+            console.log(`Manifest has ${this.stacksManifest.length} stacks`);
             
             // Also share with TemplateManager for stack templates
             if (window.templateManager) {
               window.templateManager.stacksManifest = this.stacksManifest;
+              console.log(`Shared ${this.stacksManifest.length} stacks with templateManager`);
+            } else {
+              console.warn('TemplateManager not available yet, will retry sharing manifest');
+              // Store in window for later access
+              window.pendingStacksManifest = this.stacksManifest;
             }
             
             console.log(`Loaded ${this.agents.length} agents from manifest`);
@@ -5329,10 +5777,14 @@ graph TB
         }
       }
 
-      // Initialize all modules
-      const templateManager = new TemplateManager();
-      const discoveryTool = new DiscoveryTool();
+      // Initialize all modules - AgentStore MUST be created first
       const agentStore = new AgentStore();
+      window.agentStore = agentStore;  // Make it globally accessible
+      
+      const templateManager = new TemplateManager();
+      window.templateManager = templateManager;  // Make it globally accessible
+      
+      const discoveryTool = new DiscoveryTool();
       
       // Load the trading card generator script
       const tradingCardScript = document.createElement('script');
@@ -5358,8 +5810,11 @@ graph TB
           });
         }
         
-        // Load templates on start
-        templateManager.loadTemplates();
+        // Load templates on start (ensure agents load first)
+        (async () => {
+          await agentStore.loadAgents();
+          await templateManager.loadTemplates();
+        })();
         
         // Handle permalinks - check if there's a hash in the URL
         const checkHashAndOpenModal = async () => {
