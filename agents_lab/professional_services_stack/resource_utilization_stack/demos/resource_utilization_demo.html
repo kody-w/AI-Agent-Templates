@@ -773,23 +773,44 @@
             endpoint: ''
         };
 
-        // Demo script
+        // Demo script - Domain-Specific Content
         const demoScript = [
         {
             type: 'conversation',
             messages: [
                 {
                     role: 'user',
-                    content: 'Help me with this task',
+                    content: 'Optimize consultant allocation across 8 projects. Have 45 consultants, current utilization at 72%. Three projects behind schedule, two new RFPs won. Need rebalancing plan that maintains margins above 35%.',
                     typingTime: 1500,
                     delay: 1000
                 },
                 {
                     role: 'assistant',
-                    content: 'I\'ll help you with that. Let me process your request...',
+                    content: 'I'll optimize your consultant allocation across 8 projects, improving utilization while addressing schedule delays and maintaining your 35% margin target...',
                     typingTime: 2000,
                     delay: 1500,
                     action: 'step1'
+                }
+            ]
+        },
+        {
+            type: 'processing',
+            messages: [
+                {
+                    role: 'assistant',
+                    content: '📊 Analyzing resource allocation...
+
+• Current Utilization: 72% (target 85%)
+• Project Health: 3 behind, 2 new starting
+• Skills Matrix: Matching expertise to needs
+• Margin Analysis: Project-level profitability
+• Bench Management: 12 consultants available
+• Pipeline Impact: 2 new projects staffing
+
+Optimizing resource deployment...',
+                    typingTime: 2500,
+                    delay: 2000,
+                    action: 'step2'
                 }
             ]
         },
@@ -798,18 +819,12 @@
             messages: [
                 {
                     role: 'assistant',
-                    content: '✅ Task completed successfully!',
+                    content: '✅ Process Complete - Results Generated!',
                     showResult: true,
-                    resultData: {
-                        result: {
-                            status: 'Complete',
-                            timestamp: new Date().toISOString(),
-                            details: 'Task processed successfully'
-                        }
-                    },
+                    resultData: {"Current State": {"Total Consultants": "45 (38 Senior, 7 Junior)", "Overall Utilization": "72% (32.4 billable FTEs)", "Projects Behind": "3 of 8 (37.5%)", "Margin Average": "32% (below 35% target)", "Bench Cost": "$280K monthly", "Revenue at Risk": "$1.2M from delays"}, "Optimization Plan": {"Target Utilization": "85% achievable", "Redeployments": "14 consultants reassigned", "Behind Projects": "+6 seniors to accelerate", "New Projects": "8 allocated, 2 hiring needed", "Margin Improvement": "38.5% projected", "Timeline": "2-week transition plan"}, "Project Rebalancing": {"Project Alpha": "+2 seniors from bench", "Project Beta": "+3 moved from Delta", "Project Gamma": "+1 senior architect", "New RFP 1": "5 starting March 1", "New RFP 2": "3 starting March 15", "Low Margin": "Reduce 2 from Project Echo"}, "Skills Optimization": {"Cloud Architects": "Move 2 to critical projects", "Data Scientists": "Share across 3 projects", "PMO": "Centralize to reduce overhead", "Junior Training": "Pair with seniors", "Specialized Skills": "2 contractors approved", "Upskilling": "5 in AWS certification"}, "Financial Impact": {"Utilization Revenue": "+$340K monthly", "Margin Improvement": "+6.5 points", "Delay Penalties Avoided": "$200K", "Bench Reduction": "Save $140K monthly", "Net Impact": "+$480K monthly profit", "ROI": "Rebalancing worth $5.76M annual"}, "Implementation Steps": {"Week 1": "Knowledge transfer sessions", "Week 2": "Onboard new project teams", "Week 3": "Monitor and adjust", "Ongoing": "Weekly utilization reviews"}},
                     typingTime: 2000,
                     delay: 1500,
-                    action: 'step2'
+                    action: 'step3'
                 }
             ]
         }

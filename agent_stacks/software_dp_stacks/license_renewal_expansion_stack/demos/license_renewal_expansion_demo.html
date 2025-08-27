@@ -780,13 +780,13 @@
             messages: [
                 {
                     role: 'user',
-                    content: 'Help me with this task',
+                    content: 'GlobalBank license expires in 45 days. Currently 2,000 seats at $1M ARR. Usage shows they need 500 more seats. Competitor offering 30% discount.',
                     typingTime: 1500,
                     delay: 1000
                 },
                 {
                     role: 'assistant',
-                    content: 'I\'ll help you with that. Let me process your request...',
+                    content: 'I'll prepare a strategic renewal and expansion proposal for GlobalBank, addressing their need for 500 additional seats while countering the competitor's 30% discount offer. Let me analyze their usage and create a compelling retention package...',
                     typingTime: 2000,
                     delay: 1500,
                     action: 'step1'
@@ -798,13 +798,36 @@
             messages: [
                 {
                     role: 'assistant',
-                    content: '✅ Task completed successfully!',
+                    content: '✅ Renewal Strategy Prepared!',
                     showResult: true,
                     resultData: {
-                        result: {
-                            status: 'Complete',
-                            timestamp: new Date().toISOString(),
-                            details: 'Task processed successfully'
+                        'Account Overview': {
+                            'Customer': 'GlobalBank Corporation',
+                            'Current Contract': '$1M ARR (2,000 seats)',
+                            'Expiration': '45 days (May 15, 2024)',
+                            'Health Score': '87/100 - Growth opportunity',
+                            'Competitor Threat': 'FinTech Solutions - 30% discount'
+                        },
+                        'Usage Analytics': {
+                            'Active Users': '1,987 of 2,000 (99.4%)',
+                            'Over-usage': '500 unique users on waitlist',
+                            'Feature Adoption': '12 of 15 modules active',
+                            'API Calls': '2.3M/month (growing 15% MoM)',
+                            'Value Realized': '$4.2M cost savings documented'
+                        },
+                        'Renewal Proposal': {
+                            'Base Renewal': '2,000 seats maintained',
+                            'Expansion': '500 additional seats',
+                            'New ARR': '$1.2M (20% growth)',
+                            'Multi-year Discount': '3-year: 25% off',
+                            'Payment Terms': 'Annual upfront for max discount'
+                        },
+                        'Retention Strategy': {
+                            'Price Match Plus': '30% discount + premium support',
+                            'Added Value': 'Free implementation for new module',
+                            'Executive Briefing': 'CTO roadmap session included',
+                            'Success Package': 'Dedicated CSM + quarterly reviews',
+                            'Switch Prevention': 'Migration costs $500K for competitor'
                         }
                     },
                     typingTime: 2000,

@@ -773,23 +773,44 @@
             endpoint: ''
         };
 
-        // Demo script
+        // Demo script - Domain-Specific Content
         const demoScript = [
         {
             type: 'conversation',
             messages: [
                 {
                     role: 'user',
-                    content: 'Help me with this task',
+                    content: 'Evaluate proposals for $450M IT modernization contract (cloud migration). 5 bidders submitted. Need technical scoring, past performance review, and best value determination per FAR guidelines.',
                     typingTime: 1500,
                     delay: 1000
                 },
                 {
                     role: 'assistant',
-                    content: 'I\'ll help you with that. Let me process your request...',
+                    content: 'I'll evaluate all 5 proposals for the $450M IT modernization contract, conducting technical scoring, past performance reviews, and best value analysis per FAR requirements...',
                     typingTime: 2000,
                     delay: 1500,
                     action: 'step1'
+                }
+            ]
+        },
+        {
+            type: 'processing',
+            messages: [
+                {
+                    role: 'assistant',
+                    content: '📋 Analyzing contract proposals per FAR 15.305...
+
+• Technical Evaluation: Scoring against PWS requirements
+• Past Performance: CPARS and PPIRS review
+• Price Analysis: Cost realism and competitiveness
+• Small Business Goals: Subcontracting plans review
+• Risk Assessment: Technical, schedule, cost risks
+• Security Clearance: Facility and personnel verification
+
+Generating Source Selection documentation...',
+                    typingTime: 2500,
+                    delay: 2000,
+                    action: 'step2'
                 }
             ]
         },
@@ -798,18 +819,12 @@
             messages: [
                 {
                     role: 'assistant',
-                    content: '✅ Task completed successfully!',
+                    content: '✅ Process Complete - Results Generated!',
                     showResult: true,
-                    resultData: {
-                        result: {
-                            status: 'Complete',
-                            timestamp: new Date().toISOString(),
-                            details: 'Task processed successfully'
-                        }
-                    },
+                    resultData: {"Evaluation Summary": {"Contract Value": "$450M (5-year IDIQ)", "Proposals Received": "5 compliant bids", "Evaluation Method": "Best Value Trade-off", "NAICS Code": "541512", "Set-Aside": "None - Full & Open", "Recommendation": "Award to TechCorp Solutions"}, "Technical Scores": {"TechCorp Solutions": "94/100 - Exceptional", "Federal Systems Inc": "87/100 - Good", "CloudFirst Gov": "85/100 - Good", "DataMigrate LLC": "78/100 - Acceptable", "Legacy Transform Co": "72/100 - Acceptable", "Key Discriminators": "Architecture, innovation, staffing"}, "Past Performance": {"TechCorp": "Exceptional - 7 relevant, all satisfied", "Federal Systems": "Very Good - 1 marginal CPAR", "CloudFirst": "Satisfactory - Limited federal", "DataMigrate": "Satisfactory - Smaller contracts", "Legacy Transform": "Unknown Risk - No relevant", "CPARS Average": "4.2, 3.8, 3.5, 3.4, N/A"}, "Price Analysis": {"TechCorp": "$441M (2% under IGCE)", "Federal Systems": "$438M (2.7% under)", "CloudFirst": "$455M (1.1% over)", "DataMigrate": "$425M (5.6% under - risk)", "Legacy Transform": "$468M (4% over)", "Best Value": "TechCorp - superior technical worth 3%"}, "Risk Assessment": {"TechCorp": "Low - proven platform, cleared staff", "Federal Systems": "Low-Moderate - integration concerns", "CloudFirst": "Moderate - federal experience gaps", "DataMigrate": "High - understaffed approach", "Legacy Transform": "High - unrealistic schedule", "Migration Risk": "TechCorp phased approach optimal"}, "Recommendation": {"Award To": "TechCorp Solutions", "Justification": "Best Value despite 3% premium", "Strengths": "FedRAMP solution, cleared staff ready", "Small Business": "32% subcontracting committed", "Protest Risk": "Low - clear technical superiority", "Next Steps": "Pre-award survey, negotiations, Congressional notification"}},
                     typingTime: 2000,
                     delay: 1500,
-                    action: 'step2'
+                    action: 'step3'
                 }
             ]
         }

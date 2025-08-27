@@ -780,13 +780,13 @@
             messages: [
                 {
                     role: 'user',
-                    content: 'Help me with this task',
+                    content: 'Monitor risks for our critical semiconductor suppliers. We source from Taiwan, China, and Malaysia. Recent geopolitical tensions concern me.',
                     typingTime: 1500,
                     delay: 1000
                 },
                 {
                     role: 'assistant',
-                    content: 'I\'ll help you with that. Let me process your request...',
+                    content: 'I\'ll analyze the risk profiles for your semiconductor suppliers across Taiwan, China, and Malaysia. Let me assess geopolitical, operational, and financial risks...',
                     typingTime: 2000,
                     delay: 1500,
                     action: 'step1'
@@ -798,13 +798,36 @@
             messages: [
                 {
                     role: 'assistant',
-                    content: '✅ Task completed successfully!',
+                    content: '✅ Supplier Risk Assessment Complete!',
                     showResult: true,
                     resultData: {
-                        result: {
-                            status: 'Complete',
-                            timestamp: new Date().toISOString(),
-                            details: 'Task processed successfully'
+                        'High Risk Suppliers': {
+                            'TechnoCore Taiwan': 'Risk Score: 8.2/10',
+                            'Primary Risk': 'Geopolitical - Cross-strait tensions',
+                            'Secondary Risk': 'Single facility concentration',
+                            'Impact': '40% of MCU supply',
+                            'Mitigation': 'Dual sourcing initiated with Korean supplier',
+                            'Timeline': 'Alternative qualified in 6 months'
+                        },
+                        'Medium Risk Suppliers': {
+                            'Shenzhen Electronics': 'Risk Score: 6.5/10',
+                            'Concerns': 'Trade restrictions, IP protection',
+                            'Financial Health': 'Debt-to-equity ratio increased 35%',
+                            'Quality Issues': '2.3% defect rate (up from 1.8%)',
+                            'Action': 'Increased inspection, payment terms adjusted'
+                        },
+                        'Stable Suppliers': {
+                            'Malaysia Semicon': 'Risk Score: 3.8/10',
+                            'Strengths': 'Political stability, diversified customer base',
+                            'Capacity': '120% of current demand available',
+                            'Opportunity': 'Volume discount tier available at +20%'
+                        },
+                        'Risk Mitigation Strategy': {
+                            'Inventory Buffer': 'Increase safety stock to 45 days',
+                            'Alternative Sources': '3 qualified, 2 in qualification',
+                            'Contract Updates': 'Force majeure clauses strengthened',
+                            'Early Warning System': 'Real-time monitoring activated',
+                            'Estimated Risk Reduction': '65% over 12 months'
                         }
                     },
                     typingTime: 2000,

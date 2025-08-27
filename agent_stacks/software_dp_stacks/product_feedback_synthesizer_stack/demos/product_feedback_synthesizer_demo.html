@@ -780,13 +780,13 @@
             messages: [
                 {
                     role: 'user',
-                    content: 'Help me with this task',
+                    content: 'Analyze product feedback from last quarter. 8,500 support tickets, 1,200 feature requests, 450 reviews. Need priorities for next sprint.',
                     typingTime: 1500,
                     delay: 1000
                 },
                 {
                     role: 'assistant',
-                    content: 'I\'ll help you with that. Let me process your request...',
+                    content: 'I'll analyze the quarterly product feedback from 8,500 support tickets, 1,200 feature requests, and 450 reviews to identify top priorities for your next sprint. Let me synthesize patterns and create actionable recommendations...',
                     typingTime: 2000,
                     delay: 1500,
                     action: 'step1'
@@ -798,13 +798,37 @@
             messages: [
                 {
                     role: 'assistant',
-                    content: '✅ Task completed successfully!',
+                    content: '✅ Product Feedback Analysis Complete!',
                     showResult: true,
                     resultData: {
-                        result: {
-                            status: 'Complete',
-                            timestamp: new Date().toISOString(),
-                            details: 'Task processed successfully'
+                        'Feedback Volume': {
+                            'Support Tickets': '8,500 analyzed',
+                            'Feature Requests': '1,200 categorized',
+                            'Product Reviews': '450 processed',
+                            'NPS Responses': '2,100 evaluated',
+                            'Sentiment Score': '7.2/10 (up from 6.8)'
+                        },
+                        'Top Issues Identified': {
+                            'Issue #1': 'Mobile app crashes (1,230 reports)',
+                            'Issue #2': 'Search performance slow (890 mentions)',
+                            'Issue #3': 'Export function limited (670 requests)',
+                            'Issue #4': 'Dashboard loads slowly (560 tickets)',
+                            'Issue #5': 'API rate limits too restrictive (445 complaints)'
+                        },
+                        'Feature Request Themes': {
+                            'Integration': '340 requests for Zoom/Teams',
+                            'Automation': '280 workflow automation asks',
+                            'Analytics': '230 advanced reporting needs',
+                            'Mobile': '190 offline mode requests',
+                            'Collaboration': '160 real-time editing requests'
+                        },
+                        'Sprint Priorities': {
+                            'P0 - Critical': 'Fix mobile crashes (iOS 17.4)',
+                            'P1 - High': 'Optimize search indexing',
+                            'P1 - High': 'Increase API rate limits 2x',
+                            'P2 - Medium': 'Add CSV export options',
+                            'P2 - Medium': 'Implement Teams integration',
+                            'Effort Estimate': '3 sprints for top 5 items'
                         }
                     },
                     typingTime: 2000,

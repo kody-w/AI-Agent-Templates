@@ -773,23 +773,44 @@
             endpoint: ''
         };
 
-        // Demo script
+        // Demo script - Domain-Specific Content
         const demoScript = [
         {
             type: 'conversation',
             messages: [
                 {
                     role: 'user',
-                    content: 'Help me with this task',
+                    content: 'Help associate with customer looking for complete home theater setup under $3000. They want 65" TV, soundbar, streaming device, and installation. Check inventory across 3 nearby stores.',
                     typingTime: 1500,
                     delay: 1000
                 },
                 {
                     role: 'assistant',
-                    content: 'I\'ll help you with that. Let me process your request...',
+                    content: 'I'll help find the perfect home theater setup under $3000, checking inventory across nearby stores and calculating the total with installation services...',
                     typingTime: 2000,
                     delay: 1500,
                     action: 'step1'
+                }
+            ]
+        },
+        {
+            type: 'processing',
+            messages: [
+                {
+                    role: 'assistant',
+                    content: '🖥️ Searching for home theater components...
+
+• TV Options: 65" models under $1,500
+• Sound Systems: Soundbars with subwoofer
+• Streaming: Latest devices in stock
+• Installation: Next available appointments
+• Bundle Deals: Checking promotional offers
+• Store Inventory: Real-time stock levels
+
+Generating personalized recommendations...',
+                    typingTime: 2500,
+                    delay: 2000,
+                    action: 'step2'
                 }
             ]
         },
@@ -798,18 +819,12 @@
             messages: [
                 {
                     role: 'assistant',
-                    content: '✅ Task completed successfully!',
+                    content: '✅ Process Complete - Results Generated!',
                     showResult: true,
-                    resultData: {
-                        result: {
-                            status: 'Complete',
-                            timestamp: new Date().toISOString(),
-                            details: 'Task processed successfully'
-                        }
-                    },
+                    resultData: {"Recommended Setup": {"TV": "Samsung 65" QLED Q70C", "Price": "$1,199 (was $1,499)", "Soundbar": "Samsung HW-Q600B with subwoofer", "Sound Price": "$399 (bundled discount)", "Streaming": "Apple TV 4K 128GB", "Streaming Price": "$149", "Installation": "Professional mounting & setup", "Install Price": "$199", "Total Package": "$1,946 (35% under budget)"}, "Inventory Status": {"Current Store": "All items in stock", "Store #1247": "2 miles - TV available", "Store #1251": "4 miles - Full set available", "Warehouse": "Next day delivery available", "Display Model": "TV on floor (customer can see)", "Hold Status": "Reserved for 2 hours"}, "Alternative Options": {"Premium": "LG 65" OLED - $2,299 total", "Budget": "TCL 65" + Roku - $1,447 total", "Sony Package": "TV + Sony sound - $2,150", "Open Box": "Save $300 on display model", "Last Year": "2023 models save $400", "Finance": "12 months 0% APR available"}, "Value Adds": {"Extended Warranty": "5 years for $249", "Cables Included": "HDMI 2.1 (3x) - FREE", "Setup Service": "Smart home integration", "Streaming Trial": "6 months Netflix included", "Loyalty Points": "4,850 points earned", "Price Match": "Guaranteed lowest price"}, "Installation Details": {"Next Available": "Tomorrow 2-4 PM", "Service Includes": "Mount, cable management, setup", "Wall Type Check": "Drywall confirmed OK", "Additional Work": "Hide cables in-wall +$75", "Smart Setup": "Connect all devices included", "Tutorial": "30-min operation training"}, "Associate Tools": {"Commission": "$97 on this sale", "Upsell Opportunities": "Protection plan, cables", "Customer Profile": "Saved for future", "Follow-up": "Satisfaction call scheduled", "Manager Override": "Additional 5% available", "Close Support": "Technical specs ready"}},
                     typingTime: 2000,
                     delay: 1500,
-                    action: 'step2'
+                    action: 'step3'
                 }
             ]
         }

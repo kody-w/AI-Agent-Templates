@@ -773,23 +773,41 @@
             endpoint: ''
         };
 
-        // Demo script
+        // Demo script - Predictive Asset Maintenance
         const demoScript = [
         {
             type: 'conversation',
             messages: [
                 {
                     role: 'user',
-                    content: 'Help me with this task',
+                    content: 'Analyze maintenance needs for our wind farm turbines. We have 45 Vestas V150 turbines, with vibration sensors showing anomalies on units WT-12, WT-23, and WT-37. Need predictive maintenance schedule for next quarter.',
                     typingTime: 1500,
                     delay: 1000
                 },
                 {
                     role: 'assistant',
-                    content: 'I\'ll help you with that. Let me process your request...',
+                    content: 'I\'ll analyze the maintenance needs for your 45 Vestas V150 wind turbines and create a predictive maintenance schedule. Let me examine the vibration anomalies on units WT-12, WT-23, and WT-37...',
                     typingTime: 2000,
                     delay: 1500,
                     action: 'step1'
+                }
+            ]
+        },
+        {
+            type: 'analysis',
+            messages: [
+                {
+                    role: 'assistant',
+                    content: '🔍 Analyzing SCADA data and sensor readings...\n\n• WT-12: Main bearing vibration 0.42 g RMS (threshold: 0.35 g)\n• WT-23: Gearbox temperature trending 8°C above normal\n• WT-37: Blade pitch motor current draw +23% from baseline\n\nCross-referencing with historical failure patterns and weather forecasts...',
+                    typingTime: 2500,
+                    delay: 2000
+                },
+                {
+                    role: 'assistant',
+                    content: '⚡ Applying machine learning models to predict failure probability...\n\nProcessing 18 months of operational data:\n• 12.7 million SCADA data points analyzed\n• Wind speed patterns: Average 8.2 m/s\n• Capacity factor: 42.3% YTD\n• Similar fleet failure correlations identified\n\nGenerating risk-based maintenance priorities...',
+                    typingTime: 3000,
+                    delay: 2000,
+                    action: 'step2'
                 }
             ]
         },
@@ -798,18 +816,50 @@
             messages: [
                 {
                     role: 'assistant',
-                    content: '✅ Task completed successfully!',
+                    content: '📋 Predictive Maintenance Forecast Complete!\n\nCritical maintenance identified for 3 units, preventive maintenance scheduled for 8 additional turbines. Optimized schedule minimizes downtime during high-wind season.',
                     showResult: true,
                     resultData: {
-                        result: {
-                            status: 'Complete',
-                            timestamp: new Date().toISOString(),
-                            details: 'Task processed successfully'
+                        'Critical Maintenance Required': {
+                            'WT-12': 'Main bearing replacement - 72hr window',
+                            'Risk Level': 'HIGH (85% failure in 30 days)',
+                            'Recommended Date': 'January 12-14, 2025',
+                            'Parts Required': 'SKF 240/630 bearing (in stock)',
+                            'Est. Downtime': '72 hours',
+                            'Revenue Impact': '$42,000 avoided loss'
+                        },
+                        'Priority Maintenance': {
+                            'WT-23': 'Gearbox oil change & inspection',
+                            'Risk Level': 'MEDIUM (60% degradation)',
+                            'Scheduled': 'January 18, 2025',
+                            'WT-37': 'Pitch motor replacement',
+                            'Scheduled Date': 'January 25, 2025',
+                            'Combined Savings': '$127,500'
+                        },
+                        'Preventive Schedule Q1 2025': {
+                            'Week 2': 'WT-04, WT-18 blade inspections',
+                            'Week 4': 'WT-09, WT-31 generator brush replacement',
+                            'Week 6': 'WT-15, WT-22, WT-41 yaw motor service',
+                            'Week 8': 'WT-02, WT-28 control system updates',
+                            'Week 10': 'Annual inspection batch 1 (10 units)'
+                        },
+                        'Performance Optimization': {
+                            'Blade Cleaning': '12 units - +3% efficiency gain',
+                            'Pitch Optimization': '8 units - +2.1% AEP',
+                            'Yaw Alignment': '6 units - +1.8% capture',
+                            'Total AEP Improvement': '+847 MWh/year',
+                            'Additional Revenue': '$38,115/year'
+                        },
+                        'Inventory Management': {
+                            'Parts to Order': 'Main bearing, 2 pitch motors',
+                            'Lead Time': '6 weeks from Vestas',
+                            'Critical Spares': 'All available on-site',
+                            'Budget Required': '$285,000',
+                            'vs Reactive Costs': '67% savings'
                         }
                     },
                     typingTime: 2000,
                     delay: 1500,
-                    action: 'step2'
+                    action: 'step3'
                 }
             ]
         }

@@ -773,23 +773,44 @@
             endpoint: ''
         };
 
-        // Demo script
+        // Demo script - Domain-Specific Content
         const demoScript = [
         {
             type: 'conversation',
             messages: [
                 {
                     role: 'user',
-                    content: 'Help me with this task',
+                    content: 'Review master services agreement with GlobalTech Corp. $10M annual value, unlimited liability clause, IP ownership concerns, and aggressive SLAs with penalties. Need risk assessment and negotiation points.',
                     typingTime: 1500,
                     delay: 1000
                 },
                 {
                     role: 'assistant',
-                    content: 'I\'ll help you with that. Let me process your request...',
+                    content: 'I'll review the GlobalTech Corp MSA, analyzing the unlimited liability exposure, IP ownership issues, and SLA penalties to provide risk assessment and strategic negotiation recommendations...',
                     typingTime: 2000,
                     delay: 1500,
                     action: 'step1'
+                }
+            ]
+        },
+        {
+            type: 'processing',
+            messages: [
+                {
+                    role: 'assistant',
+                    content: '⚖️ Analyzing contract terms and risks...
+
+• Liability Exposure: Uncapped damages clause
+• IP Rights: Work product ownership terms
+• SLA Penalties: 99.99% uptime requirement
+• Indemnification: Broad client protections
+• Termination: Unfavorable exit clauses
+• Payment Terms: 90-day payment cycle
+
+Generating risk matrix and counter-proposals...',
+                    typingTime: 2500,
+                    delay: 2000,
+                    action: 'step2'
                 }
             ]
         },
@@ -798,18 +819,12 @@
             messages: [
                 {
                     role: 'assistant',
-                    content: '✅ Task completed successfully!',
+                    content: '✅ Process Complete - Results Generated!',
                     showResult: true,
-                    resultData: {
-                        result: {
-                            status: 'Complete',
-                            timestamp: new Date().toISOString(),
-                            details: 'Task processed successfully'
-                        }
-                    },
+                    resultData: {"Risk Assessment": {"Overall Risk": "HIGH - Multiple red flags", "Liability Exposure": "CRITICAL - Unlimited damages", "IP Risk": "HIGH - All rights transfer", "SLA Risk": "MEDIUM - Aggressive penalties", "Payment Risk": "MEDIUM - 90 days excessive", "Relationship Value": "$10M annual (strategic)"}, "Critical Issues": {"Issue 1": "Unlimited liability - existential risk", "Impact": "$50K penalty per hour", "Issue 2": "IP assignment includes pre-existing", "Issue 3": "99.99% SLA = 52 min/year downtime"}, "Negotiation Strategy": {"Liability Cap": "Propose $10M or annual fees", "Fallback": "Carve out gross negligence only", "IP Rights": "License not assignment", "Alternative": "Residual rights retention", "SLA Adjustment": "99.5% (more realistic)", "Credit System": "Service credits not penalties"}, "Recommended Changes": {"Clause 7.2": "Cap liability at annual contract value", "Clause 12.1": "Retain IP, grant usage license", "Clause 4.3": "Mutual indemnification only", "Clause 15.4": "30-day payment terms", "Clause 18.2": "90-day termination notice", "Clause 22.1": "Arbitration not litigation"}, "Negotiation Points": {"Must Have": "Liability cap, IP retention", "Important": "Reasonable SLAs, 30-day payment", "Nice to Have": "Inflation adjustments, auto-renewal", "Trade-offs": "Volume discount for better terms", "Walk-away": "If no liability cap agreed", "BATNA": "CompetitorCo at $8M with better terms"}, "Action Plan": {"Step 1": "Redline MSA with critical changes", "Step 2": "Schedule call with their legal", "Step 3": "Escalate to business if stuck", "Step 4": "Prepare limited liability entity option", "Timeline": "2 weeks to signature needed", "Authority": "Board approval required >$5M"}},
                     typingTime: 2000,
                     delay: 1500,
-                    action: 'step2'
+                    action: 'step3'
                 }
             ]
         }

@@ -773,23 +773,44 @@
             endpoint: ''
         };
 
-        // Demo script
+        // Demo script - Domain-Specific Content
         const demoScript = [
         {
             type: 'conversation',
             messages: [
                 {
                     role: 'user',
-                    content: 'Help me with this task',
+                    content: 'Handle surge of 234 customer complaints from defective holiday lights recall. Process returns, issue refunds, and manage brand reputation. Some customers reporting safety concerns and property damage.',
                     typingTime: 1500,
                     delay: 1000
                 },
                 {
                     role: 'assistant',
-                    content: 'I\'ll help you with that. Let me process your request...',
+                    content: 'I'll manage the holiday lights recall situation, processing all 234 complaints, coordinating returns and refunds, while addressing safety concerns and protecting brand reputation...',
                     typingTime: 2000,
                     delay: 1500,
                     action: 'step1'
+                }
+            ]
+        },
+        {
+            type: 'processing',
+            messages: [
+                {
+                    role: 'assistant',
+                    content: '⚠️ Processing recall-related complaints...
+
+• Safety Assessment: Identifying injury/damage claims
+• Return Authorization: Generating RMA numbers
+• Refund Processing: Calculating compensation
+• Legal Review: Liability and documentation
+• PR Response: Crafting public statements
+• Vendor Accountability: Supplier charge-backs
+
+Coordinating crisis response team...',
+                    typingTime: 2500,
+                    delay: 2000,
+                    action: 'step2'
                 }
             ]
         },
@@ -798,18 +819,12 @@
             messages: [
                 {
                     role: 'assistant',
-                    content: '✅ Task completed successfully!',
+                    content: '✅ Process Complete - Results Generated!',
                     showResult: true,
-                    resultData: {
-                        result: {
-                            status: 'Complete',
-                            timestamp: new Date().toISOString(),
-                            details: 'Task processed successfully'
-                        }
-                    },
+                    resultData: {"Incident Overview": {"Total Complaints": "234 customers affected", "Safety Reports": "18 overheating, 3 minor fires", "Property Damage": "7 claims totaling $14,200", "Injuries": "None reported (monitoring)", "Product Lots": "Lots #2024-447 through #2024-451", "Regulatory Status": "CPSC notification filed"}, "Return Processing": {"RMAs Issued": "234 (100% coverage)", "Prepaid Labels": "Email sent to all", "Return Method": "Direct to manufacturer", "Refund Type": "Full refund + 25% credit", "Processing Time": "2-3 business days", "Total Liability": "$28,450 in refunds"}, "Customer Resolution": {"Tier 1 (Safety)": "21 executive escalations", "Compensation": "$500 credits + full refund", "Tier 2 (Damage)": "7 insurance claims filed", "Settlement": "Up to $5,000 pre-approved", "Tier 3 (Standard)": "206 standard returns", "Goodwill": "$25 future purchase credit"}, "Brand Protection": {"Public Statement": "CEO apology drafted", "Social Media": "Response team activated", "Review Sites": "Proactive responses posted", "Media Inquiries": "3 handled, statement issued", "Influencer Outreach": "5 partners briefed", "Trust Score": "Monitoring sentiment (72% positive)"}, "Vendor Recovery": {"Supplier": "Guangzhou Lighting Co", "Liability": "$42,650 charge-back initiated", "Quality Failure": "Contract breach documented", "Future Orders": "Suspended pending review", "Alternative Source": "3 vetted suppliers identified", "Testing Protocol": "Enhanced QC implemented"}, "Follow-up Actions": {"24 Hours": "All customers contacted", "48 Hours": "Safety reports to CPSC", "Week 1": "Insurance claims processed", "Week 2": "Vendor negotiations complete", "Month 1": "Product line replacement", "Ongoing": "Weekly safety monitoring"}},
                     typingTime: 2000,
                     delay: 1500,
-                    action: 'step2'
+                    action: 'step3'
                 }
             ]
         }

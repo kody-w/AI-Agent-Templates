@@ -780,13 +780,13 @@
             messages: [
                 {
                     role: 'user',
-                    content: 'Help me with this task',
+                    content: 'Send order updates to Ford for PO #F2024-3847. They\'re asking about the transmission housings delivery. We had a supplier delay.',
                     typingTime: 1500,
                     delay: 1000
                 },
                 {
                     role: 'assistant',
-                    content: 'I\'ll help you with that. Let me process your request...',
+                    content: 'I\'ll prepare a comprehensive order status update for Ford PO #F2024-3847 regarding the transmission housings. Let me compile the current production status and revised timeline...',
                     typingTime: 2000,
                     delay: 1500,
                     action: 'step1'
@@ -798,13 +798,38 @@
             messages: [
                 {
                     role: 'assistant',
-                    content: '✅ Task completed successfully!',
+                    content: '✅ Customer Communication Sent!',
                     showResult: true,
                     resultData: {
-                        result: {
-                            status: 'Complete',
-                            timestamp: new Date().toISOString(),
-                            details: 'Task processed successfully'
+                        'Order Status Summary': {
+                            'PO Number': 'F2024-3847',
+                            'Customer': 'Ford Motor Company - Dearborn',
+                            'Product': '6R140 Transmission Housing',
+                            'Quantity': '2,500 units',
+                            'Original Delivery': 'April 15, 2024',
+                            'Revised Delivery': 'April 18, 2024'
+                        },
+                        'Production Update': {
+                            'Completed': '1,850 units (74%)',
+                            'In Production': '350 units',
+                            'Queued': '300 units',
+                            'Quality Passed': '1,847 units (99.8% yield)',
+                            'Daily Output': '250 units/day increased to 325'
+                        },
+                        'Delay Mitigation': {
+                            'Root Cause': 'Aluminum casting supplier force majeure',
+                            'Resolution': 'Alternative supplier activated',
+                            'Extra Shifts': 'Weekend production approved',
+                            'Air Freight': 'First 500 units expedited at our cost',
+                            'Recovery Plan': '3-day delay reduced from initial 7-day impact'
+                        },
+                        'Communication Sent': {
+                            'Primary Contact': 'James Mitchell (Procurement)',
+                            'CC List': 'Plant manager, Quality team, Logistics',
+                            'EDI Update': '856 ASN will reflect new dates',
+                            'Portal Status': 'Ford Supplier Portal updated',
+                            'Follow-up Call': 'Scheduled today at 2 PM EST',
+                            'Compensation': '2% discount applied for inconvenience'
                         }
                     },
                     typingTime: 2000,

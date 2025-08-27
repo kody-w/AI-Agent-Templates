@@ -780,13 +780,13 @@
             messages: [
                 {
                     role: 'user',
-                    content: 'Help me with this task',
+                    content: 'Process commercial building permit for new 50,000 sq ft retail center on Oak Street. Developer submitted plans yesterday.',
                     typingTime: 1500,
                     delay: 1000
                 },
                 {
                     role: 'assistant',
-                    content: 'I\'ll help you with that. Let me process your request...',
+                    content: 'I'll process the commercial building permit application for the 50,000 sq ft retail center on Oak Street. Let me review the submitted plans for code compliance and coordinate required departmental reviews...',
                     typingTime: 2000,
                     delay: 1500,
                     action: 'step1'
@@ -798,13 +798,36 @@
             messages: [
                 {
                     role: 'assistant',
-                    content: '✅ Task completed successfully!',
+                    content: '✅ Permit Review Initiated!',
                     showResult: true,
                     resultData: {
-                        result: {
-                            status: 'Complete',
-                            timestamp: new Date().toISOString(),
-                            details: 'Task processed successfully'
+                        'Project Details': {
+                            'Project Type': 'Commercial Retail Center',
+                            'Square Footage': '50,000 sq ft',
+                            'Location': '1200 Oak Street (Parcel 23-456-789)',
+                            'Zoning': 'C-2 Commercial (Compliant)',
+                            'Estimated Value': '$8.5 million'
+                        },
+                        'Plan Review Status': {
+                            'Structural': '⏳ In review (3 of 5 days)',
+                            'Electrical': '✅ Approved with conditions',
+                            'Plumbing': '✅ Approved',
+                            'Mechanical': '⏳ Review scheduled tomorrow',
+                            'Fire/Life Safety': '⚠️ Sprinkler design revision needed'
+                        },
+                        'Code Compliance': {
+                            'Building Code': '2021 IBC compliant',
+                            'ADA Requirements': 'Ramp slope adjustment required',
+                            'Parking': '175 spaces (Requires 150 minimum)',
+                            'Setbacks': 'All requirements met',
+                            'Stormwater': 'Management plan approved'
+                        },
+                        'Next Steps': {
+                            'Developer Action': 'Submit revised fire sprinkler plans',
+                            'City Review': 'Planning Commission - April 10',
+                            'Public Comment': '15-day period starts April 1',
+                            'Estimated Approval': 'April 25, 2024',
+                            'Permit Fee': '$42,500 (0.5% of project value)'
                         }
                     },
                     typingTime: 2000,

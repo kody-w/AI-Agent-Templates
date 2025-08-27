@@ -773,23 +773,44 @@
             endpoint: ''
         };
 
-        // Demo script
+        // Demo script - Domain-Specific Content
         const demoScript = [
         {
             type: 'conversation',
             messages: [
                 {
                     role: 'user',
-                    content: 'Help me with this task',
+                    content: 'Create proposal for $2.5M digital transformation consulting project for Fortune 500 retail client. 18-month timeline, need cloud migration, AI implementation, and change management. RFP response due in 48 hours.',
                     typingTime: 1500,
                     delay: 1000
                 },
                 {
                     role: 'assistant',
-                    content: 'I\'ll help you with that. Let me process your request...',
+                    content: 'I'll create a comprehensive $2.5M digital transformation proposal for your Fortune 500 retail client, covering cloud migration, AI implementation, and change management within the RFP timeline...',
                     typingTime: 2000,
                     delay: 1500,
                     action: 'step1'
+                }
+            ]
+        },
+        {
+            type: 'processing',
+            messages: [
+                {
+                    role: 'assistant',
+                    content: '📝 Generating strategic proposal content...
+
+• Win Themes: Innovation, proven success, ROI focus
+• Technical Solution: AWS migration, AI/ML platform
+• Staffing Plan: 12 consultants, 3 workstreams
+• Pricing Strategy: Fixed fee with performance bonus
+• Risk Mitigation: Phased approach, quick wins
+• Differentiators: Retail expertise, accelerators
+
+Compiling executive summary and graphics...',
+                    typingTime: 2500,
+                    delay: 2000,
+                    action: 'step2'
                 }
             ]
         },
@@ -798,18 +819,12 @@
             messages: [
                 {
                     role: 'assistant',
-                    content: '✅ Task completed successfully!',
+                    content: '✅ Process Complete - Results Generated!',
                     showResult: true,
-                    resultData: {
-                        result: {
-                            status: 'Complete',
-                            timestamp: new Date().toISOString(),
-                            details: 'Task processed successfully'
-                        }
-                    },
+                    resultData: {"Proposal Structure": {"Title": "Retail Transformation Excellence Program", "Value": "$2.5M fixed fee", "Duration": "18 months (6 phases)", "Team Size": "12 consultants + PMO", "Start Date": "March 1, 2025", "Executive Sponsor": "John Smith, Partner"}, "Technical Approach": {"Phase 1": "Assessment & Strategy (2 months)", "Phase 2": "Cloud Foundation (3 months)", "Phase 3": "Data Platform Build (3 months)", "Phase 4": "AI Implementation (4 months)", "Phase 5": "Change Management (concurrent)", "Phase 6": "Optimization & Handoff (2 months)"}, "Solution Components": {"Cloud Migration": "200+ applications to AWS", "Infrastructure": "Kubernetes, microservices", "AI Capabilities": "Demand forecasting, personalization", "Data Lake": "Real-time customer insights", "Training": "500+ employees upskilled", "ROI Projection": "$8.5M annual savings"}, "Staffing Plan": {"Engagement Lead": "Sarah Chen (15 yrs retail)", "Cloud Architect": "2 senior AWS certified", "Data Scientists": "3 PhD-level experts", "Change Consultants": "2 certified prosci", "Developers": "4 full-stack engineers", "Project Manager": "PMP, agile certified"}, "Pricing Breakdown": {"Professional Fees": "$2,100,000", "Accelerators/IP": "$200,000 (included)", "Travel & Expenses": "$150,000 (capped)", "Contingency": "$50,000 (5%)", "Performance Bonus": "Up to $250K (KPI-based)", "Payment Terms": "Monthly, Net 30"}, "Win Strategy": {"Differentiator 1": "Pre-built retail accelerators", "Differentiator 2": "3 similar transformations", "Case Study": "Saved MegaRetailer $12M", "Innovation Lab": "Free POC included", "Risk Sharing": "30% fees at risk", "References": "3 C-suite testimonials ready"}},
                     typingTime: 2000,
                     delay: 1500,
-                    action: 'step2'
+                    action: 'step3'
                 }
             ]
         }

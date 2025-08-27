@@ -773,23 +773,44 @@
             endpoint: ''
         };
 
-        // Demo script
+        // Demo script - Domain-Specific Content
         const demoScript = [
         {
             type: 'conversation',
             messages: [
                 {
                     role: 'user',
-                    content: 'Help me with this task',
+                    content: 'Prioritize and resolve 47 support tickets from the weekend. 5 critical production issues, 12 bugs, 18 feature requests, 12 how-to questions. Major customer threatening to churn over performance issues.',
                     typingTime: 1500,
                     delay: 1000
                 },
                 {
                     role: 'assistant',
-                    content: 'I\'ll help you with that. Let me process your request...',
+                    content: 'I'll prioritize and resolve the 47 weekend support tickets, focusing on the critical production issues and the major customer's performance concerns to prevent churn...',
                     typingTime: 2000,
                     delay: 1500,
                     action: 'step1'
+                }
+            ]
+        },
+        {
+            type: 'processing',
+            messages: [
+                {
+                    role: 'assistant',
+                    content: '🎫 Analyzing support ticket queue...
+
+• Severity Triage: 5 P1 critical issues
+• Churn Risk: MajorCustomer performance case
+• Bug Investigation: 12 defects to verify
+• Feature Requests: 18 to product backlog
+• Knowledge Base: 12 how-to's documented
+• SLA Compliance: 4 tickets approaching breach
+
+Routing to engineering teams...',
+                    typingTime: 2500,
+                    delay: 2000,
+                    action: 'step2'
                 }
             ]
         },
@@ -798,18 +819,12 @@
             messages: [
                 {
                     role: 'assistant',
-                    content: '✅ Task completed successfully!',
+                    content: '✅ Process Complete - Results Generated!',
                     showResult: true,
-                    resultData: {
-                        result: {
-                            status: 'Complete',
-                            timestamp: new Date().toISOString(),
-                            details: 'Task processed successfully'
-                        }
-                    },
+                    resultData: {"Ticket Overview": {"Total Queue": "47 tickets", "Critical (P1)": "5 production issues", "High (P2)": "8 including churn risk", "Medium (P3)": "22 bugs and features", "Low (P4)": "12 how-to questions", "SLA Status": "91% within target"}, "Critical Issues": {"API Timeout": "Fixed - connection pool increased", "Data Loss": "Recovered - backup restored", "Login Failures": "Resolved - OAuth token refresh", "Performance": "Optimized - query indexing", "Integration": "Patched - webhook retry logic", "Resolution Time": "Average 2.3 hours"}, "Churn Prevention": {"Customer": "GlobalFinance ($240K ARR)", "Issue": "Dashboard loading 45 seconds", "Root Cause": "Inefficient data aggregation", "Fix Applied": "Caching layer implemented", "Performance Now": "3 second load time", "Follow-up": "CEO call scheduled Monday"}, "Bug Resolution": {"Verified": "8 of 12 confirmed", "Fixed": "5 hotfixes deployed", "In Progress": "3 in sprint", "Cannot Reproduce": "4 need more info", "Regression": "1 from last release", "Test Coverage": "Added 15 new cases"}, "Feature Requests": {"Product Backlog": "18 items added", "High Value": "3 for next sprint", "Quick Wins": "5 (< 2 story points)", "Enterprise": "4 from key accounts", "Voting": "Posted to feedback portal", "Roadmap Impact": "Q2 priorities adjusted"}, "Customer Communication": {"Auto-Responses": "47 acknowledgments sent", "Resolutions": "22 closed with confirmation", "Updates": "20 progress notifications", "Escalations": "5 manager touches", "Satisfaction": "4.2/5 average CSAT", "Knowledge Base": "12 new articles created"}},
                     typingTime: 2000,
                     delay: 1500,
-                    action: 'step2'
+                    action: 'step3'
                 }
             ]
         }

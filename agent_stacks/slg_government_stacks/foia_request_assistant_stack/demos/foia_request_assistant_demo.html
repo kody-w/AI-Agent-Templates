@@ -780,13 +780,13 @@
             messages: [
                 {
                     role: 'user',
-                    content: 'Help me with this task',
+                    content: 'Process FOIA request from local newspaper for all city council emails regarding downtown development project from past 6 months.',
                     typingTime: 1500,
                     delay: 1000
                 },
                 {
                     role: 'assistant',
-                    content: 'I\'ll help you with that. Let me process your request...',
+                    content: 'I'll process the FOIA request from the local newspaper for city council emails regarding the downtown development project from the past 6 months. Let me search, review for exemptions, and prepare the responsive documents...',
                     typingTime: 2000,
                     delay: 1500,
                     action: 'step1'
@@ -798,13 +798,36 @@
             messages: [
                 {
                     role: 'assistant',
-                    content: '✅ Task completed successfully!',
+                    content: '✅ FOIA Request Processed!',
                     showResult: true,
                     resultData: {
-                        result: {
-                            status: 'Complete',
-                            timestamp: new Date().toISOString(),
-                            details: 'Task processed successfully'
+                        'Request Details': {
+                            'Requestor': 'Daily Tribune Newspaper',
+                            'Request Date': 'March 25, 2024',
+                            'Scope': 'Council emails - downtown development',
+                            'Time Period': 'Sept 2023 - March 2024',
+                            'Tracking #': 'FOIA-2024-0847'
+                        },
+                        'Document Search': {
+                            'Total Emails Found': '3,427 messages',
+                            'Relevant Documents': '847 responsive',
+                            'Attachments': '234 files',
+                            'Total Pages': 'Approximately 2,100',
+                            'Search Time': '4.5 hours'
+                        },
+                        'Exemption Review': {
+                            'Attorney-Client': '127 emails withheld',
+                            'Deliberative Process': '43 partially redacted',
+                            'Personal Privacy': '89 redactions (phone, SSN)',
+                            'Trade Secrets': '12 attachments withheld',
+                            'Released in Full': '576 documents'
+                        },
+                        'Response Package': {
+                            'Documents Provided': '720 items (1,843 pages)',
+                            'Format': 'PDF on USB drive',
+                            'Fees': '$92.15 (waived for media)',
+                            'Response Deadline': 'April 4, 2024',
+                            'Appeal Rights': 'Notice included with response'
                         }
                     },
                     typingTime: 2000,

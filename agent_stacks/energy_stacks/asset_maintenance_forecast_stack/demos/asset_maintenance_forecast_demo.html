@@ -780,16 +780,28 @@
             messages: [
                 {
                     role: 'user',
-                    content: 'Help me with this task',
+                    content: 'Analyze predictive maintenance needs for our wind farm turbines. We have 45 GE 2.5MW units with recent vibration anomalies on units 12, 23, and 37.',
                     typingTime: 1500,
                     delay: 1000
                 },
                 {
                     role: 'assistant',
-                    content: 'I\'ll help you with that. Let me process your request...',
+                    content: 'I\'ll analyze the predictive maintenance requirements for your 45 GE 2.5MW wind turbines, focusing on the units showing vibration anomalies. Let me access the SCADA data and maintenance history...',
                     typingTime: 2000,
                     delay: 1500,
                     action: 'step1'
+                }
+            ]
+        },
+        {
+            type: 'processing',
+            messages: [
+                {
+                    role: 'assistant',
+                    content: 'Analyzing turbine health data and vibration patterns...\n\n🔍 Unit 12: Main bearing vibration 0.38 IPS (threshold: 0.3 IPS)\n🔍 Unit 23: Gearbox high-speed shaft vibration spike detected\n🔍 Unit 37: Generator bearing temperature trending upward\n\nApplying machine learning models to predict failure probability...',
+                    typingTime: 2500,
+                    delay: 2000,
+                    action: 'step2'
                 }
             ]
         },
@@ -798,18 +810,66 @@
             messages: [
                 {
                     role: 'assistant',
-                    content: '✅ Task completed successfully!',
+                    content: '✅ Predictive Maintenance Forecast Complete!',
                     showResult: true,
                     resultData: {
-                        result: {
-                            status: 'Complete',
-                            timestamp: new Date().toISOString(),
-                            details: 'Task processed successfully'
+                        'Critical Maintenance Required': {
+                            'Unit 12': 'Main bearing replacement within 30 days',
+                            'Risk Score': '8.7/10 (Critical)',
+                            'Estimated Downtime': '3 days',
+                            'Parts Cost': '$45,000',
+                            'Labor Cost': '$12,000',
+                            'Lost Production': '180 MWh (~$9,000)'
+                        },
+                        'Scheduled Maintenance': {
+                            'Unit 23': 'Gearbox inspection in 60 days',
+                            'Risk Score': '6.2/10 (Moderate)',
+                            'Inspection Time': '8 hours',
+                            'Unit 37': 'Generator bearing lubrication',
+                            'Schedule': 'Next maintenance window (14 days)',
+                            'Preventive Action': 'Oil analysis recommended'
+                        },
+                        'Fleet Health Overview': {
+                            'Operational Units': '42 of 45 (93.3%)',
+                            'Average Capacity Factor': '41.2%',
+                            'MTBF': '4,320 hours',
+                            'Availability': '96.8%',
+                            'Next Major Overhaul': '8 units due in Q3 2024'
+                        },
+                        'Cost Optimization': {
+                            'Bulk Parts Order': 'Save 15% ordering 5+ bearings',
+                            'Crew Coordination': 'Schedule 3 units together',
+                            'Estimated Savings': '$28,000',
+                            'Revenue Protection': '$145,000 avoided losses',
+                            'ROI on Predictive Maintenance': '412%'
                         }
                     },
                     typingTime: 2000,
                     delay: 1500,
-                    action: 'step2'
+                    action: 'step3'
+                }
+            ]
+        },
+        {
+            type: 'follow-up',
+            messages: [
+                {
+                    role: 'user',
+                    content: 'What about our solar inverters? We have 12 SMA central inverters at the adjacent solar farm.',
+                    typingTime: 1500,
+                    delay: 2000
+                },
+                {
+                    role: 'assistant',
+                    content: 'Now analyzing your 12 SMA central inverters for predictive maintenance needs. Accessing performance data and thermal imaging results...',
+                    typingTime: 2000,
+                    delay: 1500
+                },
+                {
+                    role: 'assistant',
+                    content: '☀️ Solar Inverter Maintenance Forecast:\n\n🔧 Immediate Actions (Within 7 days):\n• Inverter #3: Replace cooling fans (running at 82% efficiency)\n• Inverter #7: Clean heat sinks and filters (thermal rise detected)\n\n📅 Scheduled Maintenance (30-60 days):\n• Inverters #1, #5, #9: Capacitor bank inspection\n• All units: Firmware update v4.2.1 (improves MPPT tracking)\n\n💡 Performance Insights:\n• Average Efficiency: 98.2% (target: 98.5%)\n• Power Factor: 0.99 lagging\n• Total DC/AC Conversion Loss: 1.8%\n• Est. Annual Maintenance Cost: $24,000\n• Predicted Lifespan Extension: +3 years with proposed maintenance',
+                    typingTime: 2500,
+                    delay: 2000
                 }
             ]
         }

@@ -780,13 +780,13 @@
             messages: [
                 {
                     role: 'user',
-                    content: 'Help me with this task',
+                    content: 'Schedule maintenance for Line 3 injection molding machines. We have a big order next week but machine #7 is showing wear indicators.',
                     typingTime: 1500,
                     delay: 1000
                 },
                 {
                     role: 'assistant',
-                    content: 'I\'ll help you with that. Let me process your request...',
+                    content: 'I\'ll optimize the maintenance schedule for Line 3 injection molding machines while ensuring production targets are met. Analyzing machine #7\'s condition and upcoming production requirements...',
                     typingTime: 2000,
                     delay: 1500,
                     action: 'step1'
@@ -798,13 +798,34 @@
             messages: [
                 {
                     role: 'assistant',
-                    content: '✅ Task completed successfully!',
+                    content: '✅ Maintenance Schedule Optimized!',
                     showResult: true,
                     resultData: {
-                        result: {
-                            status: 'Complete',
-                            timestamp: new Date().toISOString(),
-                            details: 'Task processed successfully'
+                        'Machine #7 Analysis': {
+                            'Current Status': 'Yellow Alert - Preventive maintenance required',
+                            'Wear Indicators': 'Screw wear at 78%, barrel temp variance +3°C',
+                            'Estimated Time to Failure': '120 operating hours',
+                            'Required Maintenance': '4-hour overhaul',
+                            'Parts Needed': 'Screw assembly, heating bands (in stock)'
+                        },
+                        'Optimized Schedule': {
+                            'Immediate Action': 'Run Machine #7 for current batch only',
+                            'Maintenance Window': 'Saturday 6 AM - 10 AM',
+                            'Production Impact': 'Zero - using machines #5, #6, #8',
+                            'Backup Plan': 'Machine #9 from Line 2 on standby',
+                            'Crew Assignment': 'Team B (certified for IM-2000 series)'
+                        },
+                        'Production Continuity': {
+                            'Next Week Order': '50,000 units - automotive brackets',
+                            'Capacity Without #7': '52,000 units (104% coverage)',
+                            'Quality Risk': 'Low - other machines within spec',
+                            'Delivery Date': 'On track for Thursday shipment'
+                        },
+                        'Cost Analysis': {
+                            'Preventive Maintenance': '$3,200',
+                            'Potential Breakdown Cost': '$18,500 + 2 day delay',
+                            'ROI': '478% by avoiding unplanned downtime',
+                            'Labor Optimization': 'Weekend overtime avoided'
                         }
                     },
                     typingTime: 2000,

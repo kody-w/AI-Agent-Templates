@@ -780,13 +780,13 @@
             messages: [
                 {
                     role: 'user',
-                    content: 'Help me with this task',
+                    content: 'Optimize consultant utilization for next quarter. Have 200 consultants, current 72% billable, need to reach 85% target.',
                     typingTime: 1500,
                     delay: 1000
                 },
                 {
                     role: 'assistant',
-                    content: 'I\'ll help you with that. Let me process your request...',
+                    content: 'I'll optimize utilization for your 200 consultants to reach the 85% billable target from current 72%. Let me analyze bench resources, pipeline opportunities, and create an allocation plan...',
                     typingTime: 2000,
                     delay: 1500,
                     action: 'step1'
@@ -798,13 +798,36 @@
             messages: [
                 {
                     role: 'assistant',
-                    content: '✅ Task completed successfully!',
+                    content: '✅ Resource Optimization Plan Ready!',
                     showResult: true,
                     resultData: {
-                        result: {
-                            status: 'Complete',
-                            timestamp: new Date().toISOString(),
-                            details: 'Task processed successfully'
+                        'Current Utilization': {
+                            'Total Consultants': '200 professionals',
+                            'Current Billable': '72% (144 consultants)',
+                            'Bench Resources': '56 consultants available',
+                            'Target Rate': '85% (170 consultants)',
+                            'Gap to Close': '26 consultants to deploy'
+                        },
+                        'Bench Analysis': {
+                            'Senior Consultants': '12 available (highest cost)',
+                            'Mid-level': '28 available',
+                            'Junior/Analysts': '16 available',
+                            'Skill Gaps': 'Need 5 cloud architects',
+                            'Training Pipeline': '8 completing certs this month'
+                        },
+                        'Deployment Strategy': {
+                            'Confirmed Starts': '15 consultants next week',
+                            'Pipeline Probable': '8 consultants (75% likely)',
+                            'Internal Projects': '7 assigned to innovation',
+                            'Cross-training': '5 reskilling to high-demand',
+                            'Subcontractor Opps': '4 potential assignments'
+                        },
+                        'Financial Impact': {
+                            'Current Bench Cost': '$840K/month',
+                            'At 85% Target': '$450K/month savings',
+                            'Revenue Increase': '$1.3M/month potential',
+                            'Margin Improvement': '8.5% to 14.2%',
+                            'Quarterly Impact': '+$5.2M contribution'
                         }
                     },
                     typingTime: 2000,

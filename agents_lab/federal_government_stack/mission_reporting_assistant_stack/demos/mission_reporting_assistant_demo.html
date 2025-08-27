@@ -773,23 +773,44 @@
             endpoint: ''
         };
 
-        // Demo script
+        // Demo script - Domain-Specific Content
         const demoScript = [
         {
             type: 'conversation',
             messages: [
                 {
                     role: 'user',
-                    content: 'Help me with this task',
+                    content: 'Generate quarterly mission readiness report for CENTCOM operations. Include personnel readiness (85%), equipment status, training metrics, and deployment capabilities across 5 bases.',
                     typingTime: 1500,
                     delay: 1000
                 },
                 {
                     role: 'assistant',
-                    content: 'I\'ll help you with that. Let me process your request...',
+                    content: 'I'll generate a comprehensive quarterly mission readiness report for CENTCOM operations, analyzing personnel, equipment, training, and deployment capabilities across your 5 bases...',
                     typingTime: 2000,
                     delay: 1500,
                     action: 'step1'
+                }
+            ]
+        },
+        {
+            type: 'processing',
+            messages: [
+                {
+                    role: 'assistant',
+                    content: '🎖️ Compiling mission readiness metrics...
+
+• Personnel Status: 42,000 active duty across 5 bases
+• Equipment Readiness: Checking 1,847 critical systems
+• Training Compliance: Analyzing 15 readiness categories
+• Deployment Status: Force projection capabilities
+• Logistics Assessment: Supply chain and sustainment
+• Threat Analysis: Current OPTEMPO and requirements
+
+Generating commander's dashboard...',
+                    typingTime: 2500,
+                    delay: 2000,
+                    action: 'step2'
                 }
             ]
         },
@@ -798,18 +819,12 @@
             messages: [
                 {
                     role: 'assistant',
-                    content: '✅ Task completed successfully!',
+                    content: '✅ Process Complete - Results Generated!',
                     showResult: true,
-                    resultData: {
-                        result: {
-                            status: 'Complete',
-                            timestamp: new Date().toISOString(),
-                            details: 'Task processed successfully'
-                        }
-                    },
+                    resultData: {"Overall Readiness": {"Mission Capability": "C-2 (Substantially Ready)", "Personnel": "85% (37,145 of 43,700)", "Equipment": "78% mission capable", "Training": "91% current qualifications", "Deployment Ready": "3 BCTs within 96 hours", "Assessment Date": "January 27, 2025"}, "Personnel Metrics": {"Authorized Strength": "43,700", "Assigned": "42,145 (96.4%)", "Deployable": "37,145 (85%)", "Medical Non-Deployable": "2,341", "Critical MOS Shortage": "Cyber, Intel, Maintenance", "Re-enlistment Rate": "82% (target: 85%)"}, "Equipment Status": {"Aircraft": "142 of 168 FMC (84.5%)", "Ground Vehicles": "3,421 of 4,200 (81.5%)", "Communications": "92% operational", "Weapons Systems": "88% certified", "Critical Shortfalls": "NVGs, body armor, crypto", "Maintenance Backlog": "$47M parts on order"}, "Training Readiness": {"Individual Training": "91% qualified", "Collective Training": "Last CTC rotation Nov 2024", "Weapons Qualification": "94% current", "Medical Training": "88% TCCC certified", "Language Proficiency": "340 linguists (need 400)", "Cyber Training": "67% (improving)"}, "Base-Specific Status": {"Base Alpha": "C-1 Fully Ready", "Base Bravo": "C-2 Aviation maintenance issues", "Base Charlie": "C-2 Personnel shortage", "Base Delta": "C-3 Equipment reset ongoing", "Base Echo": "C-2 Training cycle", "Deployment Hub": "Kuwait - 100% operational"}, "Commander"s Priorities": {"Issue 1": "Fill 287 critical billets by March", "Issue 2": "Complete equipment reset $127M", "Issue 3": "Pre-deployment training for 2nd BCT", "Issue 4": "Establish cyber protection team", "Issue 5": "Improve family support programs", "Timeline": "C-1 readiness target Q3 2025"}},
                     typingTime: 2000,
                     delay: 1500,
-                    action: 'step2'
+                    action: 'step3'
                 }
             ]
         }

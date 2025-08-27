@@ -780,13 +780,13 @@
             messages: [
                 {
                     role: 'user',
-                    content: 'Help me with this task',
+                    content: 'Onboard new enterprise customer TechCorp with 5,000 users for our SaaS platform. They need SSO, custom workflows, and API access.',
                     typingTime: 1500,
                     delay: 1000
                 },
                 {
                     role: 'assistant',
-                    content: 'I\'ll help you with that. Let me process your request...',
+                    content: 'I'll orchestrate the enterprise onboarding for TechCorp with 5,000 users, including SSO integration, custom workflows, and API access. Let me initiate the technical setup and implementation plan...',
                     typingTime: 2000,
                     delay: 1500,
                     action: 'step1'
@@ -798,13 +798,36 @@
             messages: [
                 {
                     role: 'assistant',
-                    content: '✅ Task completed successfully!',
+                    content: '✅ Enterprise Onboarding Initiated!',
                     showResult: true,
                     resultData: {
-                        result: {
-                            status: 'Complete',
-                            timestamp: new Date().toISOString(),
-                            details: 'Task processed successfully'
+                        'Customer Profile': {
+                            'Company': 'TechCorp Industries',
+                            'Contract Value': '$450K ARR',
+                            'Users': '5,000 licenses',
+                            'Plan': 'Enterprise Plus',
+                            'Go-Live Target': 'May 1, 2024'
+                        },
+                        'Technical Setup': {
+                            'SSO Integration': 'Okta SAML 2.0 configured',
+                            'Provisioning': 'SCIM enabled for auto-sync',
+                            'Environments': 'Production + Staging deployed',
+                            'Data Migration': '2.3M records scheduled',
+                            'API Keys': 'Generated with 10K/hour limit'
+                        },
+                        'Custom Configuration': {
+                            'Workflows': '7 custom automation flows built',
+                            'Roles/Permissions': '12 custom roles defined',
+                            'Integrations': 'Salesforce, Slack, Jira connected',
+                            'Branding': 'White-label UI configured',
+                            'Reports': '15 custom dashboards created'
+                        },
+                        'Implementation Plan': {
+                            'Week 1': 'Core setup and SSO testing',
+                            'Week 2': 'Pilot with 50 power users',
+                            'Week 3': 'Department rollout (500 users/day)',
+                            'Week 4': 'Full deployment and training',
+                            'Success Metrics': '80% adoption target in 30 days'
                         }
                     },
                     typingTime: 2000,

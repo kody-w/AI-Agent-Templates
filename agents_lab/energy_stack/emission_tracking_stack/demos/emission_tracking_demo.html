@@ -773,23 +773,41 @@
             endpoint: ''
         };
 
-        // Demo script
+        // Demo script - Real-time Emission Tracking
         const demoScript = [
         {
             type: 'conversation',
             messages: [
                 {
                     role: 'user',
-                    content: 'Track emissions for our natural gas plant. Generated 850 GWh last month. Need EPA reporting',
+                    content: 'Track emissions for our Riverside natural gas plant. Generated 850 GWh last month with 3 turbines running. Need real-time CO2 calculations and EPA reporting metrics.',
                     typingTime: 1500,
                     delay: 1000
                 },
                 {
                     role: 'assistant',
-                    content: 'I\'ll help you with that. Let me process your request...',
+                    content: 'I\'ll track the emissions for your Riverside natural gas plant based on 850 GWh generation last month. Let me calculate real-time CO2 emissions and prepare EPA reporting metrics...',
                     typingTime: 2000,
                     delay: 1500,
                     action: 'step1'
+                }
+            ]
+        },
+        {
+            type: 'calculation',
+            messages: [
+                {
+                    role: 'assistant',
+                    content: '🔍 Analyzing generation data and emission factors...\n\n• Total Generation: 850,000 MWh\n• Fuel Type: Natural Gas (Combined Cycle)\n• Operating Units: 3 x GE 7FA.05 turbines\n• Heat Rate: 6,430 BTU/kWh (58% efficiency)\n• Natural Gas Carbon Content: 117 lbs CO2/MMBtu\n\nCalculating emissions using EPA Method 40 CFR Part 75...',
+                    typingTime: 2500,
+                    delay: 2000
+                },
+                {
+                    role: 'assistant',
+                    content: '📊 Real-time emission tracking initiated!\n\nConnecting to CEMS (Continuous Emission Monitoring System):\n• Stack Monitor #1: Online - 187 ppm CO2\n• Stack Monitor #2: Online - 193 ppm CO2  \n• Stack Monitor #3: Online - 181 ppm CO2\n• Ambient Monitor: 415 ppm baseline\n\nCross-referencing with fuel flow meters for mass balance verification...',
+                    typingTime: 3000,
+                    delay: 2000,
+                    action: 'step2'
                 }
             ]
         },
@@ -798,18 +816,48 @@
             messages: [
                 {
                     role: 'assistant',
-                    content: '✅ Task completed successfully!',
+                    content: '🌍 Emission Tracking Complete - EPA Report Ready!\n\nYour Riverside plant emissions have been calculated and verified against continuous monitoring data. Carbon intensity is 15% below state average for natural gas generation.',
                     showResult: true,
                     resultData: {
-                        result: {
-                            status: 'Complete',
-                            timestamp: new Date().toISOString(),
-                            details: 'Task processed successfully'
+                        'Monthly Emissions Summary': {
+                            'Total CO2 Emissions': '338,475 metric tons',
+                            'CO2 Rate': '398.2 kg/MWh',
+                            'CH4 Emissions': '67.3 metric tons',
+                            'N2O Emissions': '3.4 metric tons',
+                            'CO2 Equivalent': '340,285 metric tons'
+                        },
+                        'Performance Metrics': {
+                            'Carbon Intensity': '0.87 lbs CO2/kWh',
+                            'vs Grid Average': '43% cleaner',
+                            'vs Coal Baseline': '61% reduction',
+                            'Efficiency Rating': '58.2% (Excellent)',
+                            'Capacity Factor': '78.4%'
+                        },
+                        'Regulatory Compliance': {
+                            'EPA Facility ID': 'ORISPL-54876',
+                            'Title V Permit': 'In Compliance',
+                            'Allowance Balance': '412,000 tons remaining',
+                            'RGGI Credits': '85,230 required',
+                            'Reporting Status': 'Q4 2024 Submitted'
+                        },
+                        'Real-Time Monitoring': {
+                            'Current Hour CO2': '453.2 tons/hr',
+                            'Today\'s Total': '8,457 metric tons',
+                            'Week-to-Date': '61,299 metric tons',
+                            'Trend': '↓ 3.2% from last month',
+                            'Alert Status': 'Normal - All limits met'
+                        },
+                        'Offset Programs': {
+                            'Carbon Credits': '12,500 purchased',
+                            'Renewable Integration': '15% wind offset',
+                            'Net Emissions': '327,785 metric tons',
+                            'Science-Based Target': 'On track for 2030',
+                            'CDP Score': 'B+ (Leadership)'
                         }
                     },
                     typingTime: 2000,
                     delay: 1500,
-                    action: 'step2'
+                    action: 'step3'
                 }
             ]
         }

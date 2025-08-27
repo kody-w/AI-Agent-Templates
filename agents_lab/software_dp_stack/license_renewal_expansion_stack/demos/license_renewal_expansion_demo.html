@@ -773,23 +773,44 @@
             endpoint: ''
         };
 
-        // Demo script
+        // Demo script - Domain-Specific Content
         const demoScript = [
         {
             type: 'conversation',
             messages: [
                 {
                     role: 'user',
-                    content: 'Help me with this task',
+                    content: 'Manage Q1 renewals for 87 accounts totaling $3.2M ARR. 12 accounts at risk, 23 expansion opportunities identified. Need renewal strategies and upsell playbooks for customer success team.',
                     typingTime: 1500,
                     delay: 1000
                 },
                 {
                     role: 'assistant',
-                    content: 'I\'ll help you with that. Let me process your request...',
+                    content: 'I'll manage your Q1 renewal portfolio of $3.2M across 87 accounts, developing retention strategies for at-risk accounts and expansion playbooks for growth opportunities...',
                     typingTime: 2000,
                     delay: 1500,
                     action: 'step1'
+                }
+            ]
+        },
+        {
+            type: 'processing',
+            messages: [
+                {
+                    role: 'assistant',
+                    content: '💎 Analyzing renewal portfolio...
+
+• Renewal Health: Risk scoring 87 accounts
+• Usage Analytics: Login and feature adoption
+• Expansion Signals: 23 accounts growing
+• Competitive Threats: 5 evaluating alternatives
+• Price Sensitivity: Increase tolerance analysis
+• Success Metrics: ROI documentation
+
+Generating renewal playbooks...',
+                    typingTime: 2500,
+                    delay: 2000,
+                    action: 'step2'
                 }
             ]
         },
@@ -798,18 +819,12 @@
             messages: [
                 {
                     role: 'assistant',
-                    content: '✅ Task completed successfully!',
+                    content: '✅ Process Complete - Results Generated!',
                     showResult: true,
-                    resultData: {
-                        result: {
-                            status: 'Complete',
-                            timestamp: new Date().toISOString(),
-                            details: 'Task processed successfully'
-                        }
-                    },
+                    resultData: {"Renewal Portfolio": {"Total ARR": "$3,200,000", "Accounts": "87 renewing Q1", "Secured": "52 already committed (60%)", "In Negotiation": "23 active discussions", "At Risk": "12 accounts ($420K)", "Expansion Pipeline": "$680K identified"}, "Risk Analysis": {"High Risk": "4 accounts - $180K ARR", "Reasons": "Low usage, budget cuts, competition", "Medium Risk": "8 accounts - $240K", "Save Rate": "Historical 75% recovery", "Intervention": "Executive sponsors engaged", "Offers": "3-month extension, 20% discount"}, "Expansion Opportunities": {"Tier 1": "5 accounts ready for Enterprise", "Value": "+$320K potential", "Tier 2": "8 needing more seats", "Seat Growth": "+$180K (450 users)", "Add-ons": "10 accounts - API, analytics", "Module Revenue": "+$180K available"}, "Retention Strategies": {"Account 1": "TechCo - Exec business review", "Account 2": "FinanceOrg - ROI case study", "Account 3": "RetailChain - Feature roadmap", "Account 4": "HealthSystem - Training boost", "Standard Play": "Success story + discount", "Emergency": "Free month + dedicated support"}, "Pricing Strategy": {"Increases": "3-5% for healthy accounts", "Flat Renewals": "At-risk accounts", "Discounts": "Max 20% with 2-year commit", "Multi-year": "15% for 3-year deals", "Payment Terms": "Annual upfront preferred", "Auto-renewal": "Push for 45 accounts"}, "Action Plan": {"Week 1": "Contact all at-risk accounts", "Week 2": "Expansion demos scheduled", "Week 3": "Pricing conversations", "Week 4": "Legal/contract review", "Month 2": "Close 75% of renewals", "Month 3": "Final push, save campaigns"}},
                     typingTime: 2000,
                     delay: 1500,
-                    action: 'step2'
+                    action: 'step3'
                 }
             ]
         }

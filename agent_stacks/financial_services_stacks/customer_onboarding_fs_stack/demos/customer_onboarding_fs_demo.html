@@ -780,13 +780,13 @@
             messages: [
                 {
                     role: 'user',
-                    content: 'New customer John Smith applying for checking and savings. Need KYC, AML check, and account setup',
+                    content: 'Onboard new corporate client Nexus Industries for commercial banking. They need treasury management, credit line, and FX services.',
                     typingTime: 1500,
                     delay: 1000
                 },
                 {
                     role: 'assistant',
-                    content: 'I\'ll help you with that. Let me process your request...',
+                    content: 'I\'ll initiate the onboarding process for Nexus Industries with commercial banking services including treasury management, credit facilities, and foreign exchange. Let me start KYC verification and product setup...',
                     typingTime: 2000,
                     delay: 1500,
                     action: 'step1'
@@ -798,13 +798,36 @@
             messages: [
                 {
                     role: 'assistant',
-                    content: '✅ Task completed successfully!',
+                    content: '✅ Corporate Onboarding Initiated!',
                     showResult: true,
                     resultData: {
-                        result: {
-                            status: 'Complete',
-                            timestamp: new Date().toISOString(),
-                            details: 'Task processed successfully'
+                        'Company Verification': {
+                            'Entity Name': 'Nexus Industries Inc.',
+                            'Registration': 'Delaware C-Corp, EIN: 88-1234567',
+                            'Industry': 'Advanced Manufacturing',
+                            'Annual Revenue': '$125M',
+                            'KYC Status': 'Enhanced due diligence in progress'
+                        },
+                        'Documentation Status': {
+                            'Corporate Resolution': '✅ Received and verified',
+                            'Articles of Incorporation': '✅ Authenticated',
+                            'Financial Statements': '✅ 3 years reviewed',
+                            'Beneficial Ownership': '⏳ Pending (2 of 3 owners verified)',
+                            'OFAC Screening': '✅ Clear - No matches'
+                        },
+                        'Products Setup': {
+                            'Operating Account': 'Account #****7823 provisioned',
+                            'Treasury Management': 'ACH, wires, positive pay enabled',
+                            'Credit Line': '$5M pre-approved, final review pending',
+                            'FX Services': 'Spot and forward contracts activated',
+                            'Online Banking': 'Admin users configured'
+                        },
+                        'Next Steps': {
+                            'Today': 'Complete beneficial ownership verification',
+                            'Tomorrow': 'Credit committee review at 2 PM',
+                            'Day 3': 'Signature cards and service agreements',
+                            'Day 5': 'Full account activation',
+                            'Week 2': 'Relationship manager introduction call'
                         }
                     },
                     typingTime: 2000,

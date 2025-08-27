@@ -780,13 +780,13 @@
             messages: [
                 {
                     role: 'user',
-                    content: 'Help me with this task',
+                    content: 'Review our Q2 trading desk activities for MiFID II compliance. We executed 12,000 trades last quarter with new algo strategies.',
                     typingTime: 1500,
                     delay: 1000
                 },
                 {
                     role: 'assistant',
-                    content: 'I\'ll help you with that. Let me process your request...',
+                    content: 'I'll analyze your Q2 trading desk activities for MiFID II compliance, focusing on the 12,000 trades and algorithmic trading strategies. Let me review transaction reporting, best execution, and market abuse surveillance requirements...',
                     typingTime: 2000,
                     delay: 1500,
                     action: 'step1'
@@ -798,13 +798,36 @@
             messages: [
                 {
                     role: 'assistant',
-                    content: '✅ Task completed successfully!',
+                    content: '✅ MiFID II Compliance Review Complete!',
                     showResult: true,
                     resultData: {
-                        result: {
-                            status: 'Complete',
-                            timestamp: new Date().toISOString(),
-                            details: 'Task processed successfully'
+                        'Compliance Overview': {
+                            'Total Trades Reviewed': '12,000 transactions',
+                            'Reporting Status': '99.8% compliant',
+                            'Issues Identified': '24 trades requiring amendment',
+                            'Risk Level': 'Low - Minor technical deficiencies',
+                            'Deadline': 'T+1 reporting met for 11,976 trades'
+                        },
+                        'Algorithm Trading': {
+                            'Strategies Reviewed': '5 new algo strategies',
+                            'Testing Documentation': 'Complete for 4 of 5',
+                            'Kill Switch Compliance': 'All systems operational',
+                            'Market Making Obligations': 'Met 98.5% uptime requirement',
+                            'Audit Trail': 'Full reconstruction capability verified'
+                        },
+                        'Best Execution': {
+                            'Client Orders': '8,432 client trades analyzed',
+                            'Execution Quality': '97% within best bid/offer',
+                            'Venue Analysis': 'Optimal venue selection 94% of time',
+                            'Slippage': 'Average 2.3 bps (benchmark: 3.0 bps)',
+                            'Documentation': 'Quarterly RTS 28 report ready'
+                        },
+                        'Action Required': {
+                            'Immediate': 'Amend 24 transaction reports by EOD',
+                            'This Week': 'Complete algo strategy #5 documentation',
+                            'Monthly': 'Submit systematic internaliser calculations',
+                            'Training': '3 traders need updated certification',
+                            'System Update': 'Deploy v2.3 reporting enhancement'
                         }
                     },
                     typingTime: 2000,

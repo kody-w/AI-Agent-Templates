@@ -773,23 +773,44 @@
             endpoint: ''
         };
 
-        // Demo script
+        // Demo script - Domain-Specific Content
         const demoScript = [
         {
             type: 'conversation',
             messages: [
                 {
                     role: 'user',
-                    content: 'Help me with this task',
+                    content: 'Process FOIA request #2025-234 for police incident reports from January 2024, body camera footage for case #45782, and all emails between mayor and police chief about overtime policies.',
                     typingTime: 1500,
                     delay: 1000
                 },
                 {
                     role: 'assistant',
-                    content: 'I\'ll help you with that. Let me process your request...',
+                    content: 'I'll process FOIA request #2025-234, reviewing the requested police records, body camera footage, and official communications while applying appropriate exemptions and redactions...',
                     typingTime: 2000,
                     delay: 1500,
                     action: 'step1'
+                }
+            ]
+        },
+        {
+            type: 'processing',
+            messages: [
+                {
+                    role: 'assistant',
+                    content: '📁 Processing FOIA request #2025-234...
+
+• Records Search: Police database and email systems
+• Legal Review: Exemptions and privacy laws
+• Redaction Requirements: PII and investigation data
+• Body Camera: Locating case #45782 footage
+• Email Search: Mayor-Chief communications
+• Time Estimate: Complexity assessment
+
+Applying state sunshine law requirements...',
+                    typingTime: 2500,
+                    delay: 2000,
+                    action: 'step2'
                 }
             ]
         },
@@ -798,18 +819,12 @@
             messages: [
                 {
                     role: 'assistant',
-                    content: '✅ Task completed successfully!',
+                    content: '✅ Process Complete - Results Generated!',
                     showResult: true,
-                    resultData: {
-                        result: {
-                            status: 'Complete',
-                            timestamp: new Date().toISOString(),
-                            details: 'Task processed successfully'
-                        }
-                    },
+                    resultData: {"Request Summary": {"FOIA Number": "2025-234", "Requestor": "Jane Smith - Local News Channel 7", "Date Received": "January 15, 2025", "Statutory Deadline": "February 14, 2025", "Complexity": "Complex - multiple components", "Status": "Partial Release Recommended"}, "Records Located": {"Incident Reports": "287 responsive (Jan 2024)", "Body Camera": "4.5 hours footage located", "Emails": "43 responsive communications", "Total Pages": "1,847 pages", "Total Video": "4.5 hours", "Processing Time": "Estimated 18 hours"}, "Exemptions Applied": {"Privacy (b)(6)": "Victim names, addresses", "Investigation (b)(7)": "3 ongoing cases", "Juvenile Records": "27 reports involving minors", "Medical Information": "HIPAA protected", "Officer Safety": "Tactical information redacted", "Personnel (b)(6)": "Disciplinary records exempt"}, "Release Determination": {"Full Release": "198 incident reports", "Partial Release": "62 reports (redacted)", "Withheld": "27 reports (juvenile)", "Body Camera": "2.5 hours releasable", "Emails": "38 of 43 (5 privileged)", "Estimated Redactions": "3,200 items"}, "Fees Assessment": {"Search Time": "2 hours @ $32/hr = $64", "Review Time": "16 hours @ $45/hr = $720", "Duplication": "1,847 pages @ $0.10 = $184.70", "Video Processing": "$150 flat fee", "Total Fees": "$1,118.70", "Fee Waiver": "Denied - commercial use"}, "Next Steps": {"Today": "Send fee estimate letter", "Day 5": "Begin redaction if approved", "Day 10": "Legal review completed", "Day 20": "Quality control check", "Day 28": "Final release package", "Appeals Rights": "Include appeal notice"}},
                     typingTime: 2000,
                     delay: 1500,
-                    action: 'step2'
+                    action: 'step3'
                 }
             ]
         }

@@ -773,23 +773,43 @@
             endpoint: ''
         };
 
-        // Demo script
+        // Demo script - Domain-Specific Content
         const demoScript = [
         {
             type: 'conversation',
             messages: [
                 {
                     role: 'user',
-                    content: 'Client inherited 00K, age 45, has 00K in 401k, wants to retire at 60. What is optimal strategy?',
+                    content: 'My client Robert Chen (age 58, $2.3M portfolio) wants to retire in 4 years. He's 70% stocks, 20% bonds, 10% cash. Market volatility concerns him. Need comprehensive retirement planning analysis.',
                     typingTime: 1500,
                     delay: 1000
                 },
                 {
                     role: 'assistant',
-                    content: 'I\'ll help you with that. Let me process your request...',
+                    content: 'I'll perform a comprehensive retirement analysis for Robert Chen's $2.3M portfolio, evaluating his current allocation against his 4-year retirement timeline and market volatility concerns...',
                     typingTime: 2000,
                     delay: 1500,
                     action: 'step1'
+                }
+            ]
+        },
+        {
+            type: 'processing',
+            messages: [
+                {
+                    role: 'assistant',
+                    content: '📊 Analyzing portfolio composition and risk metrics...
+
+• Current allocation: 70/20/10 (aggressive for pre-retirement)
+• Monte Carlo simulation: Running 10,000 scenarios
+• Volatility analysis: VIX at 23, elevated risk period
+• Social Security optimization: Age 62 vs 67 vs 70
+• Healthcare cost projections: Pre-Medicare planning
+
+Generating personalized retirement roadmap...',
+                    typingTime: 2500,
+                    delay: 2000,
+                    action: 'step2'
                 }
             ]
         },
@@ -798,18 +818,12 @@
             messages: [
                 {
                     role: 'assistant',
-                    content: '✅ Task completed successfully!',
+                    content: '✅ Process Complete - Results Generated!',
                     showResult: true,
-                    resultData: {
-                        result: {
-                            status: 'Complete',
-                            timestamp: new Date().toISOString(),
-                            details: 'Task processed successfully'
-                        }
-                    },
+                    resultData: {"Portfolio Analysis": {"Current Value": "$2,300,000", "Risk Score": "7.2/10 (Too aggressive)", "Expected Return": "8.3% annual", "Downside Risk": "-24% worst case", "Success Probability": "73% (needs improvement)", "Recommended Allocation": "55% stocks, 35% bonds, 10% alternatives"}, "Retirement Projections": {"Annual Income Need": "$145,000 (inflation adjusted)", "Safe Withdrawal Rate": "3.8% initial", "Portfolio Longevity": "92% chance to age 95", "Social Security Strategy": "Delay to 67 (+$412K lifetime)", "Tax-Efficient Drawdown": "Traditional IRA first 5 years", "Healthcare Bridge": "$78,000 reserved (age 62-65)"}, "Action Items": {"Immediate": "Reduce equity allocation by 15%", "Q1 2025": "Harvest tax losses ($34,000 available)", "Q2 2025": "Establish bond ladder ($500K)", "Q3 2025": "Review estate planning documents", "Q4 2025": "Implement Roth conversions", "2026 Plan": "Create 2-year cash reserve"}},
                     typingTime: 2000,
                     delay: 1500,
-                    action: 'step2'
+                    action: 'step3'
                 }
             ]
         }

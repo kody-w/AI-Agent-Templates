@@ -780,13 +780,13 @@
             messages: [
                 {
                     role: 'user',
-                    content: 'Help me with this task',
+                    content: 'Critical production issue: Major client's API integration failing intermittently. 500 errors affecting their checkout flow. Revenue impact $50K/hour.',
                     typingTime: 1500,
                     delay: 1000
                 },
                 {
                     role: 'assistant',
-                    content: 'I\'ll help you with that. Let me process your request...',
+                    content: 'I'm escalating this critical production issue immediately. The API integration failures affecting checkout with $50K/hour revenue impact requires our immediate response team. Let me coordinate the investigation and resolution...',
                     typingTime: 2000,
                     delay: 1500,
                     action: 'step1'
@@ -798,13 +798,36 @@
             messages: [
                 {
                     role: 'assistant',
-                    content: '✅ Task completed successfully!',
+                    content: '✅ Critical Issue Resolved!',
                     showResult: true,
                     resultData: {
-                        result: {
-                            status: 'Complete',
-                            timestamp: new Date().toISOString(),
-                            details: 'Task processed successfully'
+                        'Incident Details': {
+                            'Severity': 'P1 - Critical Production',
+                            'Client': 'Major Enterprise Customer',
+                            'Impact': '$50K/hour revenue loss',
+                            'Affected Service': 'Payment API Gateway',
+                            'Error Pattern': 'Intermittent 500 errors (30% of requests)'
+                        },
+                        'Root Cause Analysis': {
+                            'Issue Found': 'Database connection pool exhaustion',
+                            'Trigger': 'Spike to 10K concurrent connections',
+                            'Configuration': 'Max pool was 100, needed 500',
+                            'Related Issues': 'Memory leak in v2.3.1',
+                            'Time to Identify': '23 minutes'
+                        },
+                        'Resolution Actions': {
+                            'Immediate Fix': 'Increased pool size, restart services',
+                            'Rollback': 'Reverted problematic code deploy',
+                            'Performance': 'Added caching layer',
+                            'Monitoring': 'New alerts for pool saturation',
+                            'Time to Resolve': '47 minutes total'
+                        },
+                        'Follow-up Items': {
+                            'Client Credit': '$25K SLA credit processed',
+                            'Post-Mortem': 'Scheduled for tomorrow 2 PM',
+                            'Patch Release': 'v2.3.2 deploying tonight',
+                            'Prevention': 'Load testing increased 3x',
+                            'Documentation': 'Runbook updated with fix'
                         }
                     },
                     typingTime: 2000,

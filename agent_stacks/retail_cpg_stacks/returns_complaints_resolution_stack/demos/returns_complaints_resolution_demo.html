@@ -780,13 +780,13 @@
             messages: [
                 {
                     role: 'user',
-                    content: 'Help me with this task',
+                    content: 'Handle escalated complaint about defective laptop purchased online. Customer angry about two failed units, threatening social media campaign.',
                     typingTime: 1500,
                     delay: 1000
                 },
                 {
                     role: 'assistant',
-                    content: 'I\'ll help you with that. Let me process your request...',
+                    content: 'I'll handle this escalated complaint about the defective laptops immediately. With two failed units and social media threats, let me implement service recovery and ensure complete customer satisfaction...',
                     typingTime: 2000,
                     delay: 1500,
                     action: 'step1'
@@ -798,13 +798,36 @@
             messages: [
                 {
                     role: 'assistant',
-                    content: '✅ Task completed successfully!',
+                    content: '✅ Complaint Resolved - Customer Retained!',
                     showResult: true,
                     resultData: {
-                        result: {
-                            status: 'Complete',
-                            timestamp: new Date().toISOString(),
-                            details: 'Task processed successfully'
+                        'Complaint Details': {
+                            'Customer': 'VIP Silver Tier Member',
+                            'Issue': '2 consecutive defective laptops',
+                            'Purchase Value': '$1,899 gaming laptop',
+                            'Escalation Level': 'Executive - Social media threat',
+                            'Sentiment Score': 'Negative (-8.5/10)'
+                        },
+                        'Service Recovery': {
+                            'Immediate Action': 'Executive team callback in 1 hour',
+                            'Resolution': 'Full refund + replacement offered',
+                            'Compensation': '$200 credit + 1-year warranty ext',
+                            'Upgrade Offered': 'Next model up at same price',
+                            'Shipping': 'Overnight delivery at no cost'
+                        },
+                        'Quality Investigation': {
+                            'Batch Analysis': 'Known issue in lot #A2347',
+                            'Affected Units': '127 potentially defective',
+                            'Proactive Outreach': 'Contacting all buyers',
+                            'Vendor Action': 'Claim filed with manufacturer',
+                            'Process Update': 'Enhanced QC for this SKU'
+                        },
+                        'Outcome': {
+                            'Customer Decision': 'Accepted upgrade option',
+                            'Sentiment Change': 'Positive (+7.2/10)',
+                            'Social Media': 'Posted positive resolution update',
+                            'Retention Value': '$8,500 lifetime value saved',
+                            'Case Study': 'Added to training materials'
                         }
                     },
                     typingTime: 2000,

@@ -780,13 +780,13 @@
             messages: [
                 {
                     role: 'user',
-                    content: 'Help me with this task',
+                    content: 'Review master services agreement with new client. $25M over 3 years, concerned about liability caps and IP ownership clauses.',
                     typingTime: 1500,
                     delay: 1000
                 },
                 {
                     role: 'assistant',
-                    content: 'I\'ll help you with that. Let me process your request...',
+                    content: 'I'll review the $25M master services agreement focusing on liability caps and IP ownership clauses. Let me analyze the risk exposure and recommend protective amendments...',
                     typingTime: 2000,
                     delay: 1500,
                     action: 'step1'
@@ -798,13 +798,36 @@
             messages: [
                 {
                     role: 'assistant',
-                    content: '✅ Task completed successfully!',
+                    content: '✅ Contract Risk Analysis Complete!',
                     showResult: true,
                     resultData: {
-                        result: {
-                            status: 'Complete',
-                            timestamp: new Date().toISOString(),
-                            details: 'Task processed successfully'
+                        'Contract Overview': {
+                            'Agreement Type': 'Master Services Agreement',
+                            'Total Value': '$25M over 3 years',
+                            'Client': 'Global Technology Corporation',
+                            'Governing Law': 'Delaware',
+                            'Risk Level': 'Medium-High (6.5/10)'
+                        },
+                        'Liability Analysis': {
+                            'Current Cap': 'Limited to fees paid (inadequate)',
+                            'Recommended': 'Annual contract value minimum',
+                            'Carve-outs Needed': 'IP indemnity, data breach',
+                            'Insurance Gap': '$10M coverage shortfall',
+                            'Mutual Indemnity': 'Currently one-sided to client'
+                        },
+                        'IP Ownership Issues': {
+                            'Work Product': 'All IP to client (problematic)',
+                            'Pre-existing IP': 'Not adequately protected',
+                            'Improvements': 'Client claims all derivatives',
+                            'Recommended Fix': 'License-back provisions',
+                            'Residual Knowledge': 'No protection currently'
+                        },
+                        'Key Risk Mitigation': {
+                            'Payment Terms': 'Change from 60 to 30 days',
+                            'Termination': 'Add 30-day cure period',
+                            'SLA Penalties': 'Cap at 10% monthly fees',
+                            'Change Orders': 'Require written approval',
+                            'Dispute Resolution': 'Add escalation before litigation'
                         }
                     },
                     typingTime: 2000,

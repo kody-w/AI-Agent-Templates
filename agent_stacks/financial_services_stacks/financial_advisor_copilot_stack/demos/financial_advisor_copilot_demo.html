@@ -780,13 +780,13 @@
             messages: [
                 {
                     role: 'user',
-                    content: 'Client inherited 00K, age 45, has 00K in 401k, wants to retire at 60. What is optimal strategy?',
+                    content: 'Client Sarah Johnson inherited $500K, age 45, has $200K in 401k, wants to retire at 60. What is optimal strategy?',
                     typingTime: 1500,
                     delay: 1000
                 },
                 {
                     role: 'assistant',
-                    content: 'I\'ll help you with that. Let me process your request...',
+                    content: 'I\'ll analyze Sarah Johnson\'s financial situation and create an optimal retirement strategy for age 60 retirement. Let me evaluate her inheritance, current savings, and project her retirement needs...',
                     typingTime: 2000,
                     delay: 1500,
                     action: 'step1'
@@ -798,13 +798,36 @@
             messages: [
                 {
                     role: 'assistant',
-                    content: '✅ Task completed successfully!',
+                    content: '✅ Comprehensive Financial Plan Generated!',
                     showResult: true,
                     resultData: {
-                        result: {
-                            status: 'Complete',
-                            timestamp: new Date().toISOString(),
-                            details: 'Task processed successfully'
+                        'Client Profile': {
+                            'Current Age': '45 years',
+                            'Target Retirement': 'Age 60 (15 years)',
+                            'Current Assets': '$700K ($500K inheritance + $200K 401k)',
+                            'Annual Income': '$125,000 (estimated)',
+                            'Risk Tolerance': 'Moderate (age-appropriate)'
+                        },
+                        'Retirement Projections': {
+                            'Needed at Age 60': '$2.8M (4% rule, $112K/year)',
+                            'Current Trajectory': '$2.1M by age 60',
+                            'Gap to Close': '$700K',
+                            'Success Probability': '78% (Monte Carlo simulation)',
+                            'Life Expectancy Plan': 'Through age 95'
+                        },
+                        'Investment Strategy': {
+                            'Taxable Account': '$300K - 60% stocks, 40% bonds',
+                            'Roth IRA Conversion': '$50K/year for 4 years',
+                            'Max 401k': '$23,000/year + $7,500 catch-up',
+                            'Backdoor Roth': '$6,500/year contribution',
+                            'Tax-Loss Harvesting': 'Automated strategy enabled'
+                        },
+                        'Action Items': {
+                            'Immediate': 'Open brokerage and Roth IRA accounts',
+                            'This Month': 'Increase 401k to maximum contribution',
+                            'Tax Planning': 'Quarterly estimated tax payments',
+                            'Estate Planning': 'Update beneficiaries, consider trust',
+                            'Insurance Review': 'Disability and umbrella policies'
                         }
                     },
                     typingTime: 2000,

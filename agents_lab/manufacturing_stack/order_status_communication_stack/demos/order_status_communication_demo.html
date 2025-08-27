@@ -773,23 +773,41 @@
             endpoint: ''
         };
 
-        // Demo script
+        // Demo script - Order Status Communication
         const demoScript = [
         {
             type: 'conversation',
             messages: [
                 {
                     role: 'user',
-                    content: 'Help me with this task',
+                    content: 'Send status updates for PO-45782 (Tesla, 10,000 battery housings). Production delayed 3 days due to aluminum shortage. Need to notify all stakeholders and propose recovery plan.',
                     typingTime: 1500,
                     delay: 1000
                 },
                 {
                     role: 'assistant',
-                    content: 'I\'ll help you with that. Let me process your request...',
+                    content: 'I\'ll prepare and send comprehensive status updates for PO-45782 to Tesla and all internal stakeholders, including the delay notification and recovery plan. Let me compile the current production status and mitigation options...',
                     typingTime: 2000,
                     delay: 1500,
                     action: 'step1'
+                }
+            ]
+        },
+        {
+            type: 'communication',
+            messages: [
+                {
+                    role: 'assistant',
+                    content: '📧 Preparing stakeholder communications...\n\n• Customer: Tesla Procurement Team (3 contacts)\n• Internal: Production, Supply Chain, Sales, Quality\n• Logistics: DHL Express (dedicated lane)\n• Tier-2 Supplier: Alcoa (aluminum supplier)\n\nDrafting customized messages for each stakeholder group...',
+                    typingTime: 2500,
+                    delay: 2000
+                },
+                {
+                    role: 'assistant',
+                    content: '📊 Generating recovery plan options...\n\n• Option A: Weekend overtime + air freight (2-day recovery)\n• Option B: Partial shipment + expedited balance\n• Option C: Alternative supplier for 2,000 units\n\nCalculating cost impacts and feasibility...',
+                    typingTime: 3000,
+                    delay: 2000,
+                    action: 'step2'
                 }
             ]
         },
@@ -798,18 +816,61 @@
             messages: [
                 {
                     role: 'assistant',
-                    content: '✅ Task completed successfully!',
+                    content: '✓ Order Status Communications Sent Successfully!\n\n7 stakeholder notifications delivered with personalized updates. Recovery plan approved by production team. Customer response SLA tracking activated.',
                     showResult: true,
                     resultData: {
-                        result: {
-                            status: 'Complete',
-                            timestamp: new Date().toISOString(),
-                            details: 'Task processed successfully'
+                        'Order Summary': {
+                            'PO Number': 'PO-45782',
+                            'Customer': 'Tesla Inc. - Fremont Factory',
+                            'Product': 'Battery Housing Assembly BH-2170',
+                            'Quantity': '10,000 units',
+                            'Original Delivery': 'February 15, 2025',
+                            'Revised Delivery': 'February 18, 2025'
+                        },
+                        'Customer Communication': {
+                            'Primary Contact': 'John Smith (Sr. Buyer)',
+                            'Message Sent': '2:47 PM via API',
+                            'Escalation Level': 'Level 2 - Managed',
+                            'Delay Reason': 'Force majeure - supplier shortage',
+                            'Compensation': '2% discount offered',
+                            'Response': 'Acknowledged - reviewing internally'
+                        },
+                        'Recovery Plan Presented': {
+                            'Selected Option': 'A - Weekend overtime',
+                            'Recovery Timeline': '48 hours acceleration',
+                            'Additional Cost': '$47,500',
+                            'Resources': '3 shifts, 45 operators',
+                            'Quality Impact': 'None - normal QC maintained',
+                            'Confidence Level': '95% success probability'
+                        },
+                        'Internal Updates Sent': {
+                            'Production Manager': 'Overtime approved',
+                            'Supply Chain': 'Expediting remaining aluminum',
+                            'Quality Assurance': 'Additional inspectors scheduled',
+                            'Finance': 'Cost overrun documented',
+                            'Sales Director': 'Customer relationship briefed',
+                            'Plant Manager': 'Executive summary delivered'
+                        },
+                        'Supplier Coordination': {
+                            'Alcoa Status': '3,000 lbs arriving Feb 2',
+                            'Alternative Source': 'Norsk Hydro - 1,000 lbs backup',
+                            'Expedite Fee': '$8,500 approved',
+                            'Transport': 'Dedicated truck arranged',
+                            'ETA Confirmation': '6:00 AM Saturday',
+                            'Quality Cert': 'Pre-approved for Tesla spec'
+                        },
+                        'Next Actions': {
+                            'Hour 4': 'Customer call scheduled',
+                            'Hour 8': 'Production progress update',
+                            'Day 1': 'First 2,500 units complete',
+                            'Day 2': 'Shipment #1 departs',
+                            'Day 3': 'Full order fulfilled',
+                            'Follow-up': 'Lessons learned meeting Feb 20'
                         }
                     },
                     typingTime: 2000,
                     delay: 1500,
-                    action: 'step2'
+                    action: 'step3'
                 }
             ]
         }

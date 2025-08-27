@@ -780,16 +780,28 @@
             messages: [
                 {
                     role: 'user',
-                    content: 'Help me with this task',
+                    content: 'I need to return the Nike Air Max shoes I ordered last week. Order #48392. They\'re too small and I want size 11 instead of 10.',
                     typingTime: 1500,
                     delay: 1000
                 },
                 {
                     role: 'assistant',
-                    content: 'I\'ll help you with that. Let me process your request...',
+                    content: 'I\'ll help you process the exchange for your Nike Air Max shoes from order #48392. Let me pull up your order details and check the availability of size 11...',
                     typingTime: 2000,
                     delay: 1500,
                     action: 'step1'
+                }
+            ]
+        },
+        {
+            type: 'processing',
+            messages: [
+                {
+                    role: 'assistant',
+                    content: 'Verifying your order and return eligibility...\n\n📦 Order #48392 found\n👟 Nike Air Max 270 - Black/White\n📅 Purchased: March 22, 2024\n✅ Within 30-day return window\n\nChecking size 11 availability in our inventory...',
+                    typingTime: 2500,
+                    delay: 2000,
+                    action: 'step2'
                 }
             ]
         },
@@ -798,18 +810,63 @@
             messages: [
                 {
                     role: 'assistant',
-                    content: '✅ Task completed successfully!',
+                    content: '✅ Exchange Request Approved!',
                     showResult: true,
                     resultData: {
-                        result: {
-                            status: 'Complete',
-                            timestamp: new Date().toISOString(),
-                            details: 'Task processed successfully'
+                        'Exchange Details': {
+                            'RMA Number': 'RMA-2024-48392-EX',
+                            'Original Item': 'Nike Air Max 270 - Size 10',
+                            'Exchange Item': 'Nike Air Max 270 - Size 11',
+                            'Status': 'Size 11 reserved for you',
+                            'Price Difference': '$0.00 (same model)'
+                        },
+                        'Return Instructions': {
+                            'Return Label': 'Pre-paid FedEx label emailed',
+                            'Packaging': 'Use original box if available',
+                            'Drop-off': 'Any FedEx location or schedule pickup',
+                            'Deadline': 'Ship by April 5, 2024',
+                            'Tracking': 'Updates sent to your email'
+                        },
+                        'Exchange Timeline': {
+                            'Return Received': '2-3 business days after shipment',
+                            'Quality Check': '1 business day',
+                            'New Item Ships': 'Same day as approval',
+                            'Delivery': '2-3 business days (expedited)',
+                            'Total Time': '5-7 business days'
+                        },
+                        'Customer Benefits': {
+                            'Shipping Cost': 'Free both ways',
+                            'Loyalty Points': '+50 points for feedback',
+                            'Discount Code': '10% off next purchase (EXCHANGE10)',
+                            'Extended Return': '60 days for exchanged item'
                         }
                     },
                     typingTime: 2000,
                     delay: 1500,
-                    action: 'step2'
+                    action: 'step3'
+                }
+            ]
+        },
+        {
+            type: 'follow-up',
+            messages: [
+                {
+                    role: 'user',
+                    content: 'Can I also return the Adidas hoodie from the same order? It doesn\'t fit well.',
+                    typingTime: 1500,
+                    delay: 2000
+                },
+                {
+                    role: 'assistant',
+                    content: 'Of course! Let me add the Adidas hoodie to your return. Checking the item details from order #48392...',
+                    typingTime: 2000,
+                    delay: 1500
+                },
+                {
+                    role: 'assistant',
+                    content: '🔄 Return Added Successfully!\n\n• Item: Adidas Originals Hoodie - Gray, Size L\n• Purchase Price: $65.00\n• Condition: Unworn with tags required\n• Refund Method: Original payment (Visa ****4823)\n• Refund Amount: $65.00 + tax ($69.88)\n• Processing Time: 3-5 days after receipt\n\n📦 Combined Shipment:\n• Both items can use the same return label\n• Updated RMA: RMA-2024-48392-EXR\n• No additional shipping cost\n\nWould you like store credit instead for faster processing (+5% bonus)?',
+                    typingTime: 2500,
+                    delay: 2000
                 }
             ]
         }

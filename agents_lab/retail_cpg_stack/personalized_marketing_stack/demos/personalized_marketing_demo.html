@@ -773,23 +773,44 @@
             endpoint: ''
         };
 
-        // Demo script
+        // Demo script - Domain-Specific Content
         const demoScript = [
         {
             type: 'conversation',
             messages: [
                 {
                     role: 'user',
-                    content: 'Help me with this task',
+                    content: 'Create personalized marketing campaigns for our Black Friday sale. Target 50,000 loyalty members based on purchase history. Focus on electronics, apparel, and home goods. Need email, SMS, and app notifications.',
                     typingTime: 1500,
                     delay: 1000
                 },
                 {
                     role: 'assistant',
-                    content: 'I\'ll help you with that. Let me process your request...',
+                    content: 'I'll create personalized Black Friday marketing campaigns for your 50,000 loyalty members, segmenting by purchase history and delivering targeted messages across email, SMS, and app channels...',
                     typingTime: 2000,
                     delay: 1500,
                     action: 'step1'
+                }
+            ]
+        },
+        {
+            type: 'processing',
+            messages: [
+                {
+                    role: 'assistant',
+                    content: '🎯 Analyzing customer data for personalization...
+
+• Purchase History: Last 12 months transactions
+• Segment Creation: RFM analysis and clustering
+• Product Affinity: Electronics, apparel, home goods
+• Channel Preference: Email vs SMS vs app behavior
+• Predictive Scoring: Likely to purchase probability
+• Budget Allocation: Optimal discount strategies
+
+Generating personalized campaigns...',
+                    typingTime: 2500,
+                    delay: 2000,
+                    action: 'step2'
                 }
             ]
         },
@@ -798,18 +819,12 @@
             messages: [
                 {
                     role: 'assistant',
-                    content: '✅ Task completed successfully!',
+                    content: '✅ Process Complete - Results Generated!',
                     showResult: true,
-                    resultData: {
-                        result: {
-                            status: 'Complete',
-                            timestamp: new Date().toISOString(),
-                            details: 'Task processed successfully'
-                        }
-                    },
+                    resultData: {"Campaign Overview": {"Target Audience": "50,000 loyalty members", "Segments Created": "8 distinct groups", "Personalization Level": "Product + discount + timing", "Channels": "Email (50K), SMS (28K), App (35K)", "Launch Date": "November 24, 5:00 AM", "Expected Revenue": "$4.2M projected"}, "Customer Segments": {"Tech Enthusiasts": "8,500 - Electronics focus", "Fashion Forward": "12,000 - Apparel deals", "Home Decorators": "7,200 - Home goods", "VIP Big Spenders": "2,300 - Exclusive early access", "Bargain Hunters": "9,000 - Doorbusters", "Gift Buyers": "11,000 - Bundle offers"}, "Personalized Offers": {"Tech Segment": "30% off laptops, TVs + free shipping", "Fashion": "BOGO designer brands + style tips", "Home": "40% off furniture + room makeover guide", "VIP": "Additional 15% + concierge service", "Bargain": "$10 off $50 + flash sale alerts", "Gifts": "Gift guides + free wrapping"}, "Channel Strategy": {"Email": "50,000 sends, 8 variants", "Open Rate": "42% predicted (holiday avg 32%)", "SMS": "28,000 opted in", "Click Rate": "18% expected", "App Push": "35,000 active users", "Conversion": "8.2% projected"}, "Content Personalization": {"Subject Lines": "287 variants using first name + interest", "Hero Images": "Dynamic based on browsing", "Product Recs": "AI-powered, 6 items each", "Countdown Timers": "Personalized urgency", "Social Proof": "Similar shoppers bought", "Abandonment": "Cart recovery sequences ready"}, "Performance Tracking": {"A/B Tests": "15% holdout for measurement", "Real-time Dashboard": "Conversion by segment", "Inventory Sync": "Stock levels integrated", "Budget Pacing": "$125K promo budget", "ROI Target": "12:1 return", "Optimization": "ML model updating hourly"}},
                     typingTime: 2000,
                     delay: 1500,
-                    action: 'step2'
+                    action: 'step3'
                 }
             ]
         }

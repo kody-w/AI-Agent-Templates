@@ -773,23 +773,44 @@
             endpoint: ''
         };
 
-        // Demo script
+        // Demo script - Domain-Specific Content
         const demoScript = [
         {
             type: 'conversation',
             messages: [
                 {
                     role: 'user',
-                    content: 'Help me with this task',
+                    content: 'Monitor $850M in federal grants across 47 recipients. Need compliance check, spending analysis, and performance metrics for upcoming OMB review. Flag any at-risk grants.',
                     typingTime: 1500,
                     delay: 1000
                 },
                 {
                     role: 'assistant',
-                    content: 'I\'ll help you with that. Let me process your request...',
+                    content: 'I'll analyze your $850M federal grant portfolio across 47 recipients, checking compliance, spending patterns, and performance metrics to prepare for the OMB review...',
                     typingTime: 2000,
                     delay: 1500,
                     action: 'step1'
+                }
+            ]
+        },
+        {
+            type: 'processing',
+            messages: [
+                {
+                    role: 'assistant',
+                    content: '💰 Analyzing federal grant portfolio...
+
+• Financial Reviews: FFRs and SF-425 analysis
+• Performance Metrics: Progress against milestones
+• Compliance Monitoring: 2 CFR 200 requirements
+• Risk Scoring: High-risk recipient identification
+• Spending Velocity: Burn rate analysis
+• Audit Findings: Single Audit Act reviews
+
+Compiling OMB review documentation...',
+                    typingTime: 2500,
+                    delay: 2000,
+                    action: 'step2'
                 }
             ]
         },
@@ -798,18 +819,12 @@
             messages: [
                 {
                     role: 'assistant',
-                    content: '✅ Task completed successfully!',
+                    content: '✅ Process Complete - Results Generated!',
                     showResult: true,
-                    resultData: {
-                        result: {
-                            status: 'Complete',
-                            timestamp: new Date().toISOString(),
-                            details: 'Task processed successfully'
-                        }
-                    },
+                    resultData: {"Portfolio Overview": {"Total Grants": "$850M across 47 recipients", "Disbursed to Date": "$412M (48.5%)", "Performance Score": "87% meeting objectives", "Compliance Rate": "91% fully compliant", "At-Risk Grants": "4 requiring intervention", "OMB Rating": "Satisfactory (improving)"}, "Financial Analysis": {"On-Budget": "38 recipients (80.9%)", "Underspending": "6 recipients (<70% burn rate)", "Overspending Risk": "3 recipients (>95% used)", "Drawdown Delays": "$47M pending requests", "Cost Overruns": "$8.3M identified", "Unexpended Balances": "$23M for reallocation"}, "Compliance Status": {"Reporting Current": "43 of 47 (91.5%)", "Audit Findings": "12 with findings (clearing)", "Suspension Risk": "2 recipients - immediate action", "Documentation": "4 missing required reports", "Sub-recipient Monitoring": "78% compliant", "Data Quality": "Score: 8.2/10"}, "At-Risk Grants": {"Grant #2024-145": "State DOT - 43% behind schedule", "Risk Level": "HIGH - $127M infrastructure", "Grant #2024-067": "Research university - audit findings", "Grant #2024-234": "Nonprofit - leadership change", "Grant #2024-445": "Tribal - capacity issues", "Recovery Plans": "CAPs required within 30 days"}, "Performance Metrics": {"Objectives Met": "741 of 850 (87%)", "Jobs Created": "4,234 (target: 5,000)", "People Served": "2.3M (exceeding 2M target)", "Infrastructure": "67 projects (58 complete)", "Research Outputs": "234 publications", "ROI Achieved": "3.2x federal investment"}, "OMB Review Prep": {"Dashboard Ready": "Real-time metrics live", "Success Stories": "15 high-impact cases documented", "Problem Grants": "Mitigation plans prepared", "Budget Execution": "94% obligation rate", "Future Funding": "$340M FY26 justified", "Recommendations": "Increase monitoring for 4 recipients"}},
                     typingTime: 2000,
                     delay: 1500,
-                    action: 'step2'
+                    action: 'step3'
                 }
             ]
         }

@@ -773,23 +773,44 @@
             endpoint: ''
         };
 
-        // Demo script
+        // Demo script - Domain-Specific Content
         const demoScript = [
         {
             type: 'conversation',
             messages: [
                 {
                     role: 'user',
-                    content: 'Help me with this task',
+                    content: 'Process commercial building permit for new 50,000 sq ft retail center at 1200 Main Street. Need zoning compliance, environmental review, and department approvals. Expedited timeline requested.',
                     typingTime: 1500,
                     delay: 1000
                 },
                 {
                     role: 'assistant',
-                    content: 'I\'ll help you with that. Let me process your request...',
+                    content: 'I'll process the commercial building permit for the 50,000 sq ft retail center at 1200 Main Street, conducting all required reviews and coordinating department approvals for expedited processing...',
                     typingTime: 2000,
                     delay: 1500,
                     action: 'step1'
+                }
+            ]
+        },
+        {
+            type: 'processing',
+            messages: [
+                {
+                    role: 'assistant',
+                    content: '🏗️ Processing commercial permit application...
+
+• Zoning Review: C-2 commercial district verification
+• Environmental Impact: CEQA initial study
+• Fire Department: Access and safety review
+• Public Works: Traffic and utility assessment
+• Planning Dept: Design and landscaping review
+• Building Safety: Structural plan check
+
+Coordinating multi-department approvals...',
+                    typingTime: 2500,
+                    delay: 2000,
+                    action: 'step2'
                 }
             ]
         },
@@ -798,18 +819,12 @@
             messages: [
                 {
                     role: 'assistant',
-                    content: '✅ Task completed successfully!',
+                    content: '✅ Process Complete - Results Generated!',
                     showResult: true,
-                    resultData: {
-                        result: {
-                            status: 'Complete',
-                            timestamp: new Date().toISOString(),
-                            details: 'Task processed successfully'
-                        }
-                    },
+                    resultData: {"Permit Status": {"Application Number": "BLD-2025-0847", "Project Address": "1200 Main Street", "Type": "New Commercial Construction", "Square Footage": "50,000 sq ft retail", "Valuation": "$12,500,000", "Status": "Approved with Conditions"}, "Zoning Compliance": {"Zone": "C-2 Commercial", "Use Permitted": "Yes - retail allowed", "Setbacks": "Compliant - 25ft front, 10ft sides", "Height": "35ft proposed (45ft max)", "Parking": "250 spaces (200 required)", "Lot Coverage": "42% (65% maximum)"}, "Department Approvals": {"Planning": "Approved - Design Review passed", "Fire": "Conditional - sprinkler specs needed", "Public Works": "Approved - traffic mitigation accepted", "Environmental": "CEQA Negative Declaration", "Building Safety": "Approved pending Cal-Green", "Health Dept": "Food court permits separate"}, "Conditions of Approval": {"Condition 1": "Install traffic signal at Main/2nd", "Condition 2": "Contribute $125K to traffic fund", "Condition 3": "15% affordable housing fee", "Condition 4": "Public art 1% of valuation", "Condition 5": "Stormwater management plan", "Condition 6": "Construction hours 7AM-6PM M-F"}, "Fees and Timeline": {"Permit Fee": "$87,500", "Plan Check": "$52,200", "Impact Fees": "$234,000", "School Fees": "$31,250", "Total Due": "$404,950", "Issuance": "February 5, 2025 (expedited)"}, "Next Steps": {"Payment Due": "Within 10 days", "Pre-construction Meeting": "February 7", "Inspection Schedule": "Foundation - Week 2", "Utility Connections": "Coordinate with providers", "Business License": "Required before opening", "Certificate of Occupancy": "Est. September 2025"}},
                     typingTime: 2000,
                     delay: 1500,
-                    action: 'step2'
+                    action: 'step3'
                 }
             ]
         }

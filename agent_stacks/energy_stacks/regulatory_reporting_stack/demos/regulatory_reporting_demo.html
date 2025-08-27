@@ -780,16 +780,28 @@
             messages: [
                 {
                     role: 'user',
-                    content: 'Help me with this task',
+                    content: 'I need to generate our quarterly EPA Title V air emissions report for our Houston refinery. We had two minor excursions last month.',
                     typingTime: 1500,
                     delay: 1000
                 },
                 {
                     role: 'assistant',
-                    content: 'I\'ll help you with that. Let me process your request...',
+                    content: 'I\'ll help you generate the EPA Title V quarterly emissions report for the Houston refinery. Let me collect the emissions data and excursion records from the past quarter...',
                     typingTime: 2000,
                     delay: 1500,
                     action: 'step1'
+                }
+            ]
+        },
+        {
+            type: 'processing',
+            messages: [
+                {
+                    role: 'assistant',
+                    content: 'Analyzing emissions data from continuous monitoring systems (CEMS)... Found 2 excursion events:\n\n📊 Excursion #1: March 15, Unit 3 - SO₂ exceeded 150 ppm for 2 hours\n📊 Excursion #2: March 28, Unit 7 - NOx exceeded 180 ppm for 45 minutes\n\nCompiling quarterly averages and validating against permit limits...',
+                    typingTime: 2500,
+                    delay: 2000,
+                    action: 'step2'
                 }
             ]
         },
@@ -798,18 +810,62 @@
             messages: [
                 {
                     role: 'assistant',
-                    content: '✅ Task completed successfully!',
+                    content: '✅ EPA Title V Quarterly Report Generated Successfully!',
                     showResult: true,
                     resultData: {
-                        result: {
-                            status: 'Complete',
-                            timestamp: new Date().toISOString(),
-                            details: 'Task processed successfully'
+                        'Report Summary': {
+                            'Facility': 'Houston Refinery Complex',
+                            'Permit Number': 'TX-EPA-2023-4521V',
+                            'Reporting Period': 'Q1 2024 (Jan 1 - Mar 31)',
+                            'Total Operating Hours': '2,160 hours',
+                            'Compliance Rate': '99.2%'
+                        },
+                        'Emissions Data': {
+                            'SO₂ Average': '112 ppm (Limit: 150 ppm)',
+                            'NOx Average': '145 ppm (Limit: 180 ppm)',
+                            'CO Average': '85 ppm (Limit: 100 ppm)',
+                            'PM2.5 Average': '12 mg/m³ (Limit: 15 mg/m³)',
+                            'VOCs Total': '324 tons (Permit: 350 tons/quarter)'
+                        },
+                        'Excursions Documented': {
+                            'Total Events': '2 minor excursions',
+                            'Root Causes': 'Documented and corrective actions implemented',
+                            'Agency Notification': 'Completed within 24 hours per requirement',
+                            'Follow-up Actions': 'Equipment maintenance scheduled, operator retraining completed'
+                        },
+                        'Report Actions': {
+                            'Status': 'Ready for submission',
+                            'EPA Portal': 'Draft uploaded to CEDRI system',
+                            'Certification': 'Pending responsible official signature',
+                            'Deadline': 'April 30, 2024 (29 days remaining)'
                         }
                     },
                     typingTime: 2000,
                     delay: 1500,
-                    action: 'step2'
+                    action: 'step3'
+                }
+            ]
+        },
+        {
+            type: 'follow-up',
+            messages: [
+                {
+                    role: 'user',
+                    content: 'Can you also prepare the FERC Form 552 natural gas storage report for the same quarter?',
+                    typingTime: 1500,
+                    delay: 2000
+                },
+                {
+                    role: 'assistant',
+                    content: 'Certainly! I\'ll now generate the FERC Form 552 for your natural gas storage facilities. Accessing storage inventory data and injection/withdrawal records...',
+                    typingTime: 2000,
+                    delay: 1500
+                },
+                {
+                    role: 'assistant',
+                    content: '📈 FERC Form 552 Generated:\n\n• Working Gas Volume: 42.3 Bcf (Beginning) → 38.7 Bcf (Ending)\n• Base Gas: 15.2 Bcf (unchanged)\n• Total Injections: 8.4 Bcf\n• Total Withdrawals: 12.0 Bcf\n• Maximum Daily Withdrawal: 450 MMcf/day\n• Days at Full Capacity: 18 days\n• Facility Availability: 98.5%\n\nReport has been formatted per FERC specifications and is ready for electronic filing through eForms.',
+                    typingTime: 2500,
+                    delay: 2000
                 }
             ]
         }

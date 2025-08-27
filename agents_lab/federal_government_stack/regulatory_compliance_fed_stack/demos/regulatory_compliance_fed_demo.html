@@ -773,23 +773,44 @@
             endpoint: ''
         };
 
-        // Demo script
+        // Demo script - Domain-Specific Content
         const demoScript = [
         {
             type: 'conversation',
             messages: [
                 {
                     role: 'user',
-                    content: 'Help me with this task',
+                    content: 'Audit our agency's compliance with FISMA, Section 508, and Records Management requirements. 47 systems, 3,200 users, annual FITARA scorecard due next month.',
                     typingTime: 1500,
                     delay: 1000
                 },
                 {
                     role: 'assistant',
-                    content: 'I\'ll help you with that. Let me process your request...',
+                    content: 'I'll conduct a comprehensive compliance audit for FISMA, Section 508, and Records Management across your 47 systems and 3,200 users, preparing for the FITARA scorecard submission...',
                     typingTime: 2000,
                     delay: 1500,
                     action: 'step1'
+                }
+            ]
+        },
+        {
+            type: 'processing',
+            messages: [
+                {
+                    role: 'assistant',
+                    content: '🔒 Running federal compliance assessments...
+
+• FISMA Controls: Testing NIST 800-53 requirements
+• Section 508: Accessibility scanning all systems
+• Records Management: NARA compliance review
+• POA&Ms: Analyzing 234 open items
+• Continuous Diagnostics: CDM dashboard review
+• FITARA Metrics: Compiling scorecard data
+
+Generating compliance dashboard...',
+                    typingTime: 2500,
+                    delay: 2000,
+                    action: 'step2'
                 }
             ]
         },
@@ -798,18 +819,12 @@
             messages: [
                 {
                     role: 'assistant',
-                    content: '✅ Task completed successfully!',
+                    content: '✅ Process Complete - Results Generated!',
                     showResult: true,
-                    resultData: {
-                        result: {
-                            status: 'Complete',
-                            timestamp: new Date().toISOString(),
-                            details: 'Task processed successfully'
-                        }
-                    },
+                    resultData: {"Compliance Overview": {"Overall Score": "B+ (Improving from C+)", "FISMA Status": "82% compliant", "Section 508": "71% accessible", "Records Management": "88% compliant", "Open POA&Ms": "234 (down from 312)", "FITARA Projection": "B (target met)"}, "FISMA Assessment": {"High Value Assets": "7 of 8 fully compliant", "ATO Status": "42 current, 5 expire Q1", "Security Controls": "823 of 1,004 satisfied", "Critical Findings": "12 Cat I, 47 Cat II", "Incident Response": "MTTR 4.2 hours", "Zero Trust Progress": "42% implementation"}, "Section 508 Compliance": {"Public Facing": "18 of 23 compliant (78%)", "Internal Systems": "21 of 32 (65%)", "Documents": "12,450 of 15,000 (83%)", "Videos": "234 of 890 captioned (26%)", "Critical Issues": "3 systems need redesign", "Remediation Cost": "$2.3M estimated"}, "Records Management": {"Schedule Coverage": "88% records scheduled", "NARA Approved": "76% schedules current", "Email Capstone": "Implemented 94%", "Permanent Records": "2.3TB identified", "Disposition Ready": "47,000 records", "M-23-07 Compliance": "On track for June deadline"}, "FITARA Scorecard": {"Data Center Optimization": "A (target exceeded)", "Software Licensing": "B (improved)", "Cloud Strategy": "B+ (71% migrated)", "Cybersecurity": "B (rising trend)", "CIO Authority": "A- (enhanced)", "Overall Projection": "B (from C+ last period)"}, "Remediation Priorities": {"Week 1": "Close 12 critical FISMA findings", "Month 1": "508 fixes for public sites", "Quarter 1": "Complete 5 ATO renewals", "Quarter 2": "Achieve 90% records scheduling", "FY2025": "Zero Trust architecture 75%", "Budget Need": "$4.7M for full compliance"}},
                     typingTime: 2000,
                     delay: 1500,
-                    action: 'step2'
+                    action: 'step3'
                 }
             ]
         }

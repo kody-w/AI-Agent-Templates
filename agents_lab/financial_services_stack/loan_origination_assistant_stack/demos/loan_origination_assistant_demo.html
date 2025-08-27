@@ -773,23 +773,44 @@
             endpoint: ''
         };
 
-        // Demo script
+        // Demo script - Domain-Specific Content
         const demoScript = [
         {
             type: 'conversation',
             messages: [
                 {
                     role: 'user',
-                    content: 'Help me with this task',
+                    content: 'Process mortgage application for David and Sarah Thompson. Purchase price $650K, 20% down, combined income $145K, credit scores 760/745. Need pre-approval decision and rate options.',
                     typingTime: 1500,
                     delay: 1000
                 },
                 {
                     role: 'assistant',
-                    content: 'I\'ll help you with that. Let me process your request...',
+                    content: 'I'll process the mortgage application for David and Sarah Thompson, evaluating their creditworthiness and providing pre-approval decision with competitive rate options...',
                     typingTime: 2000,
                     delay: 1500,
                     action: 'step1'
+                }
+            ]
+        },
+        {
+            type: 'processing',
+            messages: [
+                {
+                    role: 'assistant',
+                    content: '🏠 Evaluating mortgage application...
+
+• Credit Analysis: Pulling tri-merge credit reports
+• Income Verification: W-2s, pay stubs, tax returns
+• DTI Calculation: Current debts vs income
+• Asset Verification: Down payment and reserves
+• Property Details: $650K purchase in suburban market
+• Automated Underwriting: Running through DU/LP
+
+Generating loan options and pricing...',
+                    typingTime: 2500,
+                    delay: 2000,
+                    action: 'step2'
                 }
             ]
         },
@@ -798,18 +819,12 @@
             messages: [
                 {
                     role: 'assistant',
-                    content: '✅ Task completed successfully!',
+                    content: '✅ Process Complete - Results Generated!',
                     showResult: true,
-                    resultData: {
-                        result: {
-                            status: 'Complete',
-                            timestamp: new Date().toISOString(),
-                            details: 'Task processed successfully'
-                        }
-                    },
+                    resultData: {"Pre-Approval Decision": {"Status": "APPROVED - Excellent Profile", "Maximum Loan": "$520,000", "Purchase Price": "$650,000", "Down Payment": "$130,000 (20%)", "Credit Decision": "Tier 1 Pricing", "Approval Expires": "April 27, 2025"}, "Borrower Profile": {"Primary": "David Thompson - 760 FICO", "Co-Borrower": "Sarah Thompson - 745 FICO", "Combined Income": "$145,000 verified", "Employment": "Both 5+ years stable", "DTI Ratio": "28.3% (Excellent)", "Assets": "$195,000 verified"}, "Rate Options": {"30-Year Fixed": "6.375% - 0 points", "Option 2": "6.125% - 1 point ($5,200)", "Option 3": "5.875% - 2 points ($10,400)", "15-Year Fixed": "5.625% - 0 points", "7/1 ARM": "5.750% - 0 points", "Monthly P&I": "$3,244 (30yr @ 6.375%)"}, "Loan Details": {"Loan Amount": "$520,000", "LTV Ratio": "80%", "No PMI Required": "20% down achieved", "Estimated Closing": "$12,400", "Escrow Required": "Taxes & Insurance", "Lock Period": "45 days available"}, "Next Steps": {"Immediate": "Rate lock recommendation", "24 Hours": "Submit purchase offer", "Property": "Order appraisal upon acceptance", "Timeline": "21-day close feasible", "Documents Needed": "Purchase contract, insurance quote", "Processor Assigned": "Michelle Roberts"}},
                     typingTime: 2000,
                     delay: 1500,
-                    action: 'step2'
+                    action: 'step3'
                 }
             ]
         }

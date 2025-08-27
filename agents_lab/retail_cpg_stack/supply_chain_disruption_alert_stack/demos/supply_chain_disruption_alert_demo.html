@@ -773,23 +773,44 @@
             endpoint: ''
         };
 
-        // Demo script
+        // Demo script - Domain-Specific Content
         const demoScript = [
         {
             type: 'conversation',
             messages: [
                 {
                     role: 'user',
-                    content: 'Help me with this task',
+                    content: 'Monitor supply chain for critical SKUs: baby formula (50 SKUs), paper products (30 SKUs), and seasonal items (75 SKUs). Port strike threatens West Coast deliveries. Need contingency planning.',
                     typingTime: 1500,
                     delay: 1000
                 },
                 {
                     role: 'assistant',
-                    content: 'I\'ll help you with that. Let me process your request...',
+                    content: 'I'll monitor your critical SKUs across baby formula, paper products, and seasonal items, analyzing the West Coast port strike impact and developing contingency plans...',
                     typingTime: 2000,
                     delay: 1500,
                     action: 'step1'
+                }
+            ]
+        },
+        {
+            type: 'processing',
+            messages: [
+                {
+                    role: 'assistant',
+                    content: '🚢 Analyzing supply chain disruptions...
+
+• Port Status: Long Beach/LA 70% capacity
+• Inventory Levels: Current stock analysis
+• Alternative Routes: East Coast and air freight
+• Supplier Communications: Real-time updates
+• Demand Forecasting: Panic buying risk
+• Competition Monitoring: Market availability
+
+Generating contingency strategies...',
+                    typingTime: 2500,
+                    delay: 2000,
+                    action: 'step2'
                 }
             ]
         },
@@ -798,18 +819,12 @@
             messages: [
                 {
                     role: 'assistant',
-                    content: '✅ Task completed successfully!',
+                    content: '✅ Process Complete - Results Generated!',
                     showResult: true,
-                    resultData: {
-                        result: {
-                            status: 'Complete',
-                            timestamp: new Date().toISOString(),
-                            details: 'Task processed successfully'
-                        }
-                    },
+                    resultData: {"Disruption Impact": {"Affected SKUs": "87 of 155 (56%)", "Baby Formula": "HIGH RISK - 28 SKUs critical", "Paper Products": "MEDIUM - 3 weeks stock", "Seasonal Items": "LOW - alternatives available", "Revenue at Risk": "$4.7M next 30 days", "Port Delays": "14-21 days estimated"}, "Inventory Analysis": {"Baby Formula Stock": "12 days at current rate", "Similac": "8 days (rationing needed)", "Enfamil": "15 days available", "Paper Towels": "21 days stock", "Toilet Paper": "18 days (monitor)", "Holiday Items": "45% received"}, "Contingency Plans": {"Plan A": "Reroute to Houston +7 days", "Cost Impact": "+$340K shipping", "Plan B": "Air freight critical items", "Air Cost": "+$1.2M for 2 weeks", "Plan C": "Alternative suppliers Mexico", "Lead Time": "5 days for paper products"}, "Immediate Actions": {"Purchase Limits": "Baby formula - 2 per customer", "Stock Transfer": "Pull from 47 stores", "Emergency Orders": "East Coast suppliers", "Price Protection": "Lock current costs", "Customer Comms": "Availability updates", "Staff Briefing": "Talking points distributed"}, "Alternative Sourcing": {"New Vendors": "3 qualified for paper", "Cross-Border": "Mexico suppliers ready", "Competitor Stock": "Grey market available", "Direct Import": "Charter vessel option", "Local Production": "2 regional suppliers", "Cost Premium": "12-18% average increase"}, "Risk Mitigation": {"Week 1": "Implement purchase limits", "Week 2": "Activate alt suppliers", "Week 3": "Air freight if needed", "Week 4": "Review and adjust", "Long-term": "Diversify supply base", "Investment": "$2.3M contingency approved"}},
                     typingTime: 2000,
                     delay: 1500,
-                    action: 'step2'
+                    action: 'step3'
                 }
             ]
         }

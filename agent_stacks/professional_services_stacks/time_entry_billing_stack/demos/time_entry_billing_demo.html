@@ -780,13 +780,13 @@
             messages: [
                 {
                     role: 'user',
-                    content: 'Help me with this task',
+                    content: 'Process month-end billing for all clients. 15,000 hours logged, need to review/approve and generate invoices by tomorrow.',
                     typingTime: 1500,
                     delay: 1000
                 },
                 {
                     role: 'assistant',
-                    content: 'I\'ll help you with that. Let me process your request...',
+                    content: 'I'll process the month-end billing for 15,000 logged hours across all clients. Let me review time entries, flag anomalies, apply billing rules, and generate client invoices for tomorrow's deadline...',
                     typingTime: 2000,
                     delay: 1500,
                     action: 'step1'
@@ -798,13 +798,36 @@
             messages: [
                 {
                     role: 'assistant',
-                    content: '✅ Task completed successfully!',
+                    content: '✅ Month-End Billing Complete!',
                     showResult: true,
                     resultData: {
-                        result: {
-                            status: 'Complete',
-                            timestamp: new Date().toISOString(),
-                            details: 'Task processed successfully'
+                        'Billing Summary': {
+                            'Total Hours': '15,247 hours logged',
+                            'Billable Hours': '14,122 (92.6%)',
+                            'Non-billable': '1,125 hours',
+                            'Total Invoice Value': '$2,847,500',
+                            'Number of Clients': '67 active projects'
+                        },
+                        'Time Entry Review': {
+                            'Auto-approved': '13,855 hours (standard)',
+                            'Flagged Entries': '267 hours need review',
+                            'Missing Descriptions': '45 entries updated',
+                            'Weekend/OT': '892 hours at premium rates',
+                            'Corrections Made': '127 project codes fixed'
+                        },
+                        'Invoice Generation': {
+                            'Invoices Created': '67 client invoices',
+                            'Largest Invoice': 'Tech Corp - $342,000',
+                            'Fixed Fee Projects': '23 reconciled',
+                            'T&M Projects': '44 detailed backups',
+                            'Ready for Review': '100% by deadline'
+                        },
+                        'Exceptions Handled': {
+                            'Budget Overruns': '5 projects need approval',
+                            'Disputed Hours': '78 hours under review',
+                            'Write-offs': '$23,400 recommended',
+                            'Rate Adjustments': '3 clients updated rates',
+                            'Credits Issued': '$8,200 for SLA miss'
                         }
                     },
                     typingTime: 2000,

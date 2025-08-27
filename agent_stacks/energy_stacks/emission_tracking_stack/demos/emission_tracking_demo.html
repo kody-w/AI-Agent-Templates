@@ -780,16 +780,28 @@
             messages: [
                 {
                     role: 'user',
-                    content: 'Track emissions for our natural gas plant. Generated 850 GWh last month. Need EPA reporting',
+                    content: 'Track emissions for our natural gas plant. Generated 850 GWh last month. Need EPA reporting and carbon offset calculations.',
                     typingTime: 1500,
                     delay: 1000
                 },
                 {
                     role: 'assistant',
-                    content: 'I\'ll help you with that. Let me process your request...',
+                    content: 'I\'ll track the emissions for your natural gas plant based on 850 GWh generation last month. Let me calculate CO₂ equivalents and prepare EPA-compliant reporting...',
                     typingTime: 2000,
                     delay: 1500,
                     action: 'step1'
+                }
+            ]
+        },
+        {
+            type: 'processing',
+            messages: [
+                {
+                    role: 'assistant',
+                    content: 'Analyzing generation data and applying emission factors...\n\n🔍 Natural Gas Combined Cycle Plant\n📊 Generation: 850,000 MWh\n⚡ Heat Rate: 7,200 BTU/kWh (estimated)\n🔥 Fuel Consumption: ~6.12 million MMBtu\n\nCalculating emissions using EPA Method 40 CFR Part 75...',
+                    typingTime: 2500,
+                    delay: 2000,
+                    action: 'step2'
                 }
             ]
         },
@@ -798,18 +810,64 @@
             messages: [
                 {
                     role: 'assistant',
-                    content: '✅ Task completed successfully!',
+                    content: '✅ Emissions Tracking Report Complete!',
                     showResult: true,
                     resultData: {
-                        result: {
-                            status: 'Complete',
-                            timestamp: new Date().toISOString(),
-                            details: 'Task processed successfully'
+                        'Emissions Summary': {
+                            'Total CO₂ Emissions': '324,360 metric tons',
+                            'CO₂ Rate': '381.6 kg/MWh',
+                            'CH₄ Emissions': '58.3 metric tons',
+                            'N₂O Emissions': '3.2 metric tons',
+                            'CO₂e Total': '326,485 metric tons'
+                        },
+                        'Performance Metrics': {
+                            'Carbon Intensity': '0.384 tCO₂/MWh',
+                            'vs Industry Average': '23% lower emissions',
+                            'Efficiency Rating': '48.5% thermal efficiency',
+                            'Capacity Factor': '78.2%',
+                            'EPA Performance Score': '92/100'
+                        },
+                        'Regulatory Compliance': {
+                            'EPA Part 75 Status': 'Compliant',
+                            'CEMS Data Quality': '99.7% valid hours',
+                            'Missing Data Periods': '26 hours (substituted per procedures)',
+                            'Quarterly Report': 'Auto-generated for eGGRT submission',
+                            'Mass Balance Verification': 'Within 2% tolerance'
+                        },
+                        'Carbon Offset Requirements': {
+                            'Voluntary Target': '200,000 tCO₂e reduction',
+                            'Current Achievement': '126,485 tCO₂e to offset',
+                            'Recommended Actions': 'Purchase 127,000 carbon credits',
+                            'Estimated Cost': '$3.81M at $30/credit',
+                            'Alternative': '254 MW solar capacity equivalent'
                         }
                     },
                     typingTime: 2000,
                     delay: 1500,
-                    action: 'step2'
+                    action: 'step3'
+                }
+            ]
+        },
+        {
+            type: 'follow-up',
+            messages: [
+                {
+                    role: 'user',
+                    content: 'What about our Scope 2 emissions from purchased electricity at our corporate offices?',
+                    typingTime: 1500,
+                    delay: 2000
+                },
+                {
+                    role: 'assistant',
+                    content: 'I\'ll calculate Scope 2 emissions from your purchased electricity. Accessing utility data and regional emission factors...',
+                    typingTime: 2000,
+                    delay: 1500
+                },
+                {
+                    role: 'assistant',
+                    content: '📊 Scope 2 Emissions Analysis:\n\n• Total Electricity Purchased: 4,250 MWh\n• Grid Emission Factor (ERCOT): 0.427 tCO₂/MWh\n• Total Scope 2 Emissions: 1,815 tCO₂e\n• Monthly Average: 151 tCO₂e\n\n🌱 Green Power Options:\n• RECs Available: 4,250 MWh at $8/MWh\n• On-site Solar Potential: 1.2 MW capacity\n• PPA Opportunity: 15-year agreement at $42/MWh\n\nAdding to enterprise carbon inventory dashboard...',
+                    typingTime: 2500,
+                    delay: 2000
                 }
             ]
         }

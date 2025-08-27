@@ -773,23 +773,44 @@
             endpoint: ''
         };
 
-        // Demo script
+        // Demo script - Domain-Specific Content
         const demoScript = [
         {
             type: 'conversation',
             messages: [
                 {
                     role: 'user',
-                    content: 'Help me with this task',
+                    content: 'Onboard enterprise customer MegaCorp with 5,000 users for our SaaS platform. Need SSO integration, custom training, data migration from competitor, and dedicated success manager assignment.',
                     typingTime: 1500,
                     delay: 1000
                 },
                 {
                     role: 'assistant',
-                    content: 'I\'ll help you with that. Let me process your request...',
+                    content: 'I'll coordinate the enterprise onboarding for MegaCorp's 5,000 users, including SSO setup, data migration, custom training, and success management resources...',
                     typingTime: 2000,
                     delay: 1500,
                     action: 'step1'
+                }
+            ]
+        },
+        {
+            type: 'processing',
+            messages: [
+                {
+                    role: 'assistant',
+                    content: '🚀 Initiating enterprise onboarding...
+
+• SSO Configuration: SAML 2.0 with Azure AD
+• User Provisioning: SCIM automation setup
+• Data Migration: 2.3TB from CompetitorSoft
+• Training Plan: Role-based learning paths
+• Success Resources: Dedicated CSM assignment
+• Security Review: SOC2 and compliance docs
+
+Orchestrating technical implementation...',
+                    typingTime: 2500,
+                    delay: 2000,
+                    action: 'step2'
                 }
             ]
         },
@@ -798,18 +819,12 @@
             messages: [
                 {
                     role: 'assistant',
-                    content: '✅ Task completed successfully!',
+                    content: '✅ Process Complete - Results Generated!',
                     showResult: true,
-                    resultData: {
-                        result: {
-                            status: 'Complete',
-                            timestamp: new Date().toISOString(),
-                            details: 'Task processed successfully'
-                        }
-                    },
+                    resultData: {"Account Setup": {"Customer": "MegaCorp Industries", "Contract Value": "$480,000 annual", "User Licenses": "5,000 Enterprise tier", "Go-Live Target": "March 15, 2025", "Success Manager": "Lisa Chen assigned", "Executive Sponsor": "CTO engaged"}, "Technical Implementation": {"SSO Status": "Azure AD configured", "SAML Endpoint": "https://megacorp.ourapp.com", "User Sync": "SCIM provisioning active", "API Keys": "Generated, 10M calls/month", "Sandbox": "UAT environment ready", "Security": "IP whitelist configured"}, "Data Migration": {"Source System": "CompetitorSoft v8.2", "Data Volume": "2.3TB (14M records)", "Migration Plan": "3-phase approach", "Test Migration": "100K records successful", "Full Timeline": "72 hours estimated", "Validation": "99.7% accuracy achieved"}, "Training Program": {"Admin Training": "8 hours - 25 admins", "Power Users": "4 hours - 150 users", "End Users": "2 hours - 4,825 users", "Materials": "Custom videos, guides created", "LMS Integration": "Content uploaded", "Certification": "300 users targeted"}, "Success Plan": {"Week 1": "Technical setup complete", "Week 2": "Admin training delivered", "Week 3": "Pilot with 500 users", "Week 4": "Full rollout begins", "Month 2": "Adoption review meeting", "Quarterly": "Business reviews scheduled"}, "Launch Readiness": {"Checklist": "47 of 52 items complete", "Blockers": "Firewall rules pending", "Risks": "Change management resistance", "Mitigation": "Champions identified", "Support": "Dedicated Slack channel", "Escalation": "24/7 hotline first 30 days"}},
                     typingTime: 2000,
                     delay: 1500,
-                    action: 'step2'
+                    action: 'step3'
                 }
             ]
         }

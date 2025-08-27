@@ -773,23 +773,44 @@
             endpoint: ''
         };
 
-        // Demo script
+        // Demo script - Domain-Specific Content
         const demoScript = [
         {
             type: 'conversation',
             messages: [
                 {
                     role: 'user',
-                    content: 'Help me with this task',
+                    content: 'Generate wealth insights for the Henderson Family Office. $45M AUM across 8 family members, 3 trusts, 2 foundations. Focus on tax optimization and generational wealth transfer strategies.',
                     typingTime: 1500,
                     delay: 1000
                 },
                 {
                     role: 'assistant',
-                    content: 'I\'ll help you with that. Let me process your request...',
+                    content: 'I'll generate comprehensive wealth insights for the Henderson Family Office, analyzing $45M in assets across multiple entities and providing tax optimization and wealth transfer strategies...',
                     typingTime: 2000,
                     delay: 1500,
                     action: 'step1'
+                }
+            ]
+        },
+        {
+            type: 'processing',
+            messages: [
+                {
+                    role: 'assistant',
+                    content: '💰 Analyzing family office portfolio...
+
+• Asset Allocation: Stocks, bonds, real estate, alternatives
+• Entity Structure: 3 trusts, 2 foundations, 8 individuals
+• Tax Exposure: Federal, state, estate tax projections
+• Cash Flow Analysis: Income, expenses, distributions
+• Generational Planning: G2 and G3 wealth transfer
+• Risk Assessment: Concentration, liquidity, market risks
+
+Generating optimization strategies...',
+                    typingTime: 2500,
+                    delay: 2000,
+                    action: 'step2'
                 }
             ]
         },
@@ -798,18 +819,12 @@
             messages: [
                 {
                     role: 'assistant',
-                    content: '✅ Task completed successfully!',
+                    content: '✅ Process Complete - Results Generated!',
                     showResult: true,
-                    resultData: {
-                        result: {
-                            status: 'Complete',
-                            timestamp: new Date().toISOString(),
-                            details: 'Task processed successfully'
-                        }
-                    },
+                    resultData: {"Portfolio Overview": {"Total AUM": "$45,000,000", "Family Members": "8 across 3 generations", "Entity Breakdown": "Individuals $28M, Trusts $12M, Foundations $5M", "Asset Mix": "Equities 55%, Bonds 20%, RE 15%, Alts 10%", "Annual Income": "$2.1M (4.7% yield)", "Risk Profile": "Moderate Conservative"}, "Tax Optimization Opportunities": {"Current Tax Burden": "$847,000 annual", "Savings Identified": "$234,000 (27.6%)", "Strategy 1": "Charitable Lead Trust - $75K savings", "Strategy 2": "Muni bond ladder - $82K savings", "Strategy 3": "Qualified Opportunity Zones - $47K", "Strategy 4": "Tax loss harvesting - $30K available"}, "Wealth Transfer Planning": {"Estate Tax Exposure": "$8.2M (current law)", "Exemption Usage": "62% of $13.61M used", "GRAT Opportunity": "$5M asset freeze strategy", "Dynasty Trust": "Perpetual wealth for 4+ generations", "Annual Gifting": "$136K unused capacity", "529 Super-Funding": "$900K education endowment"}, "Investment Insights": {"Performance": "+11.3% YTD (benchmark +9.8%)", "Alpha Generated": "+1.5% risk-adjusted", "Concentration Risk": "AAPL 8.2% (reduce by 3%)", "Rebalancing Needed": "$2.3M equity trim", "Private Markets": "Increase allocation to 15%", "ESG Integration": "27% aligned, target 40%"}, "Strategic Recommendations": {"Q1 2025": "Establish Charitable Lead Trust", "Q2 2025": "Launch family investment committee", "Q3 2025": "Implement direct indexing strategy", "Q4 2025": "Create family governance charter", "2026 Focus": "Next-gen financial education", "Long-term": "Family office institutionalization"}},
                     typingTime: 2000,
                     delay: 1500,
-                    action: 'step2'
+                    action: 'step3'
                 }
             ]
         }

@@ -773,23 +773,44 @@
             endpoint: ''
         };
 
-        // Demo script
+        // Demo script - Domain-Specific Content
         const demoScript = [
         {
             type: 'conversation',
             messages: [
                 {
                     role: 'user',
-                    content: 'Help me with this task',
+                    content: 'Manage our city's $45M federal infrastructure grant portfolio. Track spending across 12 projects, ensure compliance with federal requirements, and prepare quarterly performance reports.',
                     typingTime: 1500,
                     delay: 1000
                 },
                 {
                     role: 'assistant',
-                    content: 'I\'ll help you with that. Let me process your request...',
+                    content: 'I'll help manage your city's $45M federal infrastructure grant portfolio, tracking spending across 12 projects while ensuring federal compliance and preparing quarterly reports...',
                     typingTime: 2000,
                     delay: 1500,
                     action: 'step1'
+                }
+            ]
+        },
+        {
+            type: 'processing',
+            messages: [
+                {
+                    role: 'assistant',
+                    content: '📊 Analyzing infrastructure grant portfolio...
+
+• Project Status: Reviewing 12 active projects
+• Financial Tracking: Federal funds expenditure
+• Compliance Check: 2 CFR 200 requirements
+• Performance Metrics: Milestone achievement
+• Risk Assessment: Schedule and budget risks
+• DBE Participation: Disadvantaged business goals
+
+Compiling federal quarterly reports...',
+                    typingTime: 2500,
+                    delay: 2000,
+                    action: 'step2'
                 }
             ]
         },
@@ -798,18 +819,12 @@
             messages: [
                 {
                     role: 'assistant',
-                    content: '✅ Task completed successfully!',
+                    content: '✅ Process Complete - Results Generated!',
                     showResult: true,
-                    resultData: {
-                        result: {
-                            status: 'Complete',
-                            timestamp: new Date().toISOString(),
-                            details: 'Task processed successfully'
-                        }
-                    },
+                    resultData: {"Portfolio Summary": {"Total Grants": "$45,000,000", "Active Projects": "12 infrastructure projects", "Funds Disbursed": "$18.7M (41.6%)", "Obligated": "$31.2M (69.3%)", "Performance Score": "92% on track", "Compliance Status": "Fully compliant"}, "Project Status": {"Bridge Repairs": "$8.2M - 65% complete", "Water Main": "$6.5M - 45% complete", "Street Resurfacing": "$5.3M - 78% complete", "Traffic Signals": "$4.1M - 90% complete", "Bike Lanes": "$3.2M - 55% complete", "Remaining 7": "$17.7M - various stages"}, "Financial Performance": {"Budget Status": "94% within budget", "Cost Overruns": "$1.2M on bridge project", "Cost Savings": "$780K from competitive bids", "Reimbursements Pending": "$3.4M submitted", "Cash Flow": "Adequate through Q2", "Match Funds": "$9M local (secured)"}, "Compliance Metrics": {"Reporting": "100% on time", "Davis-Bacon": "All wages compliant", "Buy America": "98% materials compliant", "DBE Goal": "27% achieved (25% required)", "Environmental": "NEPA clearances complete", "Single Audit": "No findings FY2024"}, "Risk Analysis": {"High Risk": "Bridge project - weather delays", "Medium Risk": "Material cost inflation 8%", "Low Risk": "8 projects on schedule", "Mitigation": "Accelerated summer schedule", "Contingency": "$2.2M available", "Insurance": "All bonds current"}, "Quarterly Report": {"Period": "Q4 2024 (Oct-Dec)", "Jobs Created": "127 direct, 340 indirect", "Businesses Supported": "47 contractors", "Community Benefit": "85,000 residents served", "Safety Improvements": "3 intersections upgraded", "Submission Date": "January 30, 2025"}},
                     typingTime: 2000,
                     delay: 1500,
-                    action: 'step2'
+                    action: 'step3'
                 }
             ]
         }

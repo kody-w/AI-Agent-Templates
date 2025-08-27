@@ -773,23 +773,41 @@
             endpoint: ''
         };
 
-        // Demo script
+        // Demo script - Supply Chain Risk Monitoring
         const demoScript = [
         {
             type: 'conversation',
             messages: [
                 {
                     role: 'user',
-                    content: 'Help me with this task',
+                    content: 'Monitor risks for our tier-1 suppliers. We have critical dependencies on Shanghai Motors (electric motors), TechnoSteel India (precision components), and Brazilian Rubber Co (seals). Need immediate risk assessment.',
                     typingTime: 1500,
                     delay: 1000
                 },
                 {
                     role: 'assistant',
-                    content: 'I\'ll help you with that. Let me process your request...',
+                    content: 'I\'ll perform a comprehensive risk assessment for your three critical tier-1 suppliers. Let me analyze financial health, geopolitical factors, delivery performance, and current market conditions...',
                     typingTime: 2000,
                     delay: 1500,
                     action: 'step1'
+                }
+            ]
+        },
+        {
+            type: 'analysis',
+            messages: [
+                {
+                    role: 'assistant',
+                    content: '🔍 Scanning global risk indicators and supplier data...\n\n• Shanghai Motors: Checking port congestion levels\n• TechnoSteel India: Analyzing financial statements Q4 2024\n• Brazilian Rubber Co: Monitoring weather impacts & logistics\n\nAccessing real-time data from Bloomberg, Reuters, and trade databases...',
+                    typingTime: 2500,
+                    delay: 2000
+                },
+                {
+                    role: 'assistant',
+                    content: '⚠️ ALERT: Critical risk detected for Shanghai Motors!\n\nPort of Shanghai experiencing 40% capacity reduction due to COVID restrictions. Lead times increasing from 45 to 72 days.\n\nAnalyzing alternative sourcing options and mitigation strategies...',
+                    typingTime: 3000,
+                    delay: 2000,
+                    action: 'step2'
                 }
             ]
         },
@@ -798,18 +816,53 @@
             messages: [
                 {
                     role: 'assistant',
-                    content: '✅ Task completed successfully!',
+                    content: '📊 Supplier Risk Assessment Complete - Immediate Action Required!\n\nCritical risks identified for 1 of 3 suppliers. Recommended mitigation strategies prepared with alternative sourcing options.',
                     showResult: true,
                     resultData: {
-                        result: {
-                            status: 'Complete',
-                            timestamp: new Date().toISOString(),
-                            details: 'Task processed successfully'
+                        'Shanghai Motors (HIGH RISK)': {
+                            'Risk Level': '🔴 CRITICAL (Score: 85/100)',
+                            'Primary Issues': 'Port congestion, COVID lockdowns',
+                            'Delivery Impact': '+27 days to lead time',
+                            'Financial Health': 'Stable (Dun & Bradstreet: 2)',
+                            'Inventory on Hand': '6 weeks supply',
+                            'Recommended Action': 'Activate secondary supplier'
+                        },
+                        'TechnoSteel India (MEDIUM)': {
+                            'Risk Level': '🟡 MODERATE (Score: 45/100)',
+                            'Primary Issues': 'Raw material cost inflation 12%',
+                            'Delivery Performance': '94% on-time (acceptable)',
+                            'Financial Health': 'Good (Credit rating: BB+)',
+                            'Quality Metrics': '99.7% acceptance rate',
+                            'Contract Status': 'Renegotiation due Q2 2025'
+                        },
+                        'Brazilian Rubber Co (LOW)': {
+                            'Risk Level': '🟢 STABLE (Score: 22/100)',
+                            'Primary Issues': 'Minor transport delays',
+                            'Delivery Performance': '98% on-time',
+                            'Financial Health': 'Excellent (A- rating)',
+                            'Sustainability': 'FSC certified, carbon neutral',
+                            'Partnership Status': 'Strategic partner since 2019'
+                        },
+                        'Mitigation Strategies': {
+                            'Immediate Actions': 'Increase safety stock by 30%',
+                            'Alternative Supplier': 'Osaka Precision Motors (qualified)',
+                            'Lead Time': '35 days from Japan',
+                            'Cost Impact': '+8% per unit',
+                            'Capacity Available': '10,000 units/month',
+                            'Approval Status': 'Pre-approved for emergency orders'
+                        },
+                        'Market Intelligence': {
+                            'Commodity Trends': 'Steel +15%, Copper +22% YoY',
+                            'Shipping Rates': 'Asia-US routes +$2,400/TEU',
+                            'Force Majeure Events': '3 declared in region',
+                            'Competition Activity': '2 competitors securing inventory',
+                            'Regulatory Changes': 'New tariffs effective Feb 2025',
+                            'Next Review': 'Daily monitoring activated'
                         }
                     },
                     typingTime: 2000,
                     delay: 1500,
-                    action: 'step2'
+                    action: 'step3'
                 }
             ]
         }

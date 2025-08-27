@@ -780,13 +780,13 @@
             messages: [
                 {
                     role: 'user',
-                    content: 'Help me with this task',
+                    content: 'Help residential customer with high water bill complaint. Usage shows 15,000 gallons last month, normally uses 3,000.',
                     typingTime: 1500,
                     delay: 1000
                 },
                 {
                     role: 'assistant',
-                    content: 'I\'ll help you with that. Let me process your request...',
+                    content: 'I'll investigate the high water bill complaint showing 15,000 gallons usage compared to the normal 3,000 gallons. Let me analyze the consumption pattern and check for potential leaks or meter issues...',
                     typingTime: 2000,
                     delay: 1500,
                     action: 'step1'
@@ -798,13 +798,36 @@
             messages: [
                 {
                     role: 'assistant',
-                    content: '✅ Task completed successfully!',
+                    content: '✅ Billing Investigation Complete!',
                     showResult: true,
                     resultData: {
-                        result: {
-                            status: 'Complete',
-                            timestamp: new Date().toISOString(),
-                            details: 'Task processed successfully'
+                        'Account Analysis': {
+                            'Account Number': 'RES-445678',
+                            'Customer': '423 Maple Avenue',
+                            'Normal Usage': '3,000 gallons/month average',
+                            'Current Reading': '15,000 gallons',
+                            'Bill Amount': '$127.50 vs normal $42.00'
+                        },
+                        'Usage Investigation': {
+                            'Spike Date': 'March 12-14 (3 days)',
+                            'Daily Usage': '4,000 gal/day during spike',
+                            'Meter Reading': 'Verified accurate by technician',
+                            'Leak Detection': 'Continuous flow detected',
+                            'Probable Cause': 'Toilet flapper or irrigation leak'
+                        },
+                        'Customer Assistance': {
+                            'Leak Adjustment': '$63.75 credit approved',
+                            'Payment Plan': '3-month option available',
+                            'Repair Resources': 'List of licensed plumbers provided',
+                            'Conservation Kit': 'Free kit scheduled for delivery',
+                            'Follow-up': 'Recheck in 30 days'
+                        },
+                        'Resolution Actions': {
+                            'Immediate': 'Applied one-time leak adjustment',
+                            'New Bill': '$63.75 (50% reduction)',
+                            'Service Order': 'Free leak inspection tomorrow',
+                            'Education': 'Water conservation tips emailed',
+                            'Case Status': 'Resolved - Customer satisfied'
                         }
                     },
                     typingTime: 2000,

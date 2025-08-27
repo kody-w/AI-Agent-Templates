@@ -773,23 +773,43 @@
             endpoint: ''
         };
 
-        // Demo script
+        // Demo script - Domain-Specific Content
         const demoScript = [
         {
             type: 'conversation',
             messages: [
                 {
                     role: 'user',
-                    content: 'Help me with this task',
+                    content: 'Run compliance check for Q4 2024 trading activities. Need SOX, Dodd-Frank, and MiFID II validation for 847,000 transactions. Flag any violations for immediate review.',
                     typingTime: 1500,
                     delay: 1000
                 },
                 {
                     role: 'assistant',
-                    content: 'I\'ll help you with that. Let me process your request...',
+                    content: 'I'll run comprehensive compliance validation for your Q4 2024 trading activities across SOX, Dodd-Frank, and MiFID II requirements. Analyzing 847,000 transactions for potential violations...',
                     typingTime: 2000,
                     delay: 1500,
                     action: 'step1'
+                }
+            ]
+        },
+        {
+            type: 'processing',
+            messages: [
+                {
+                    role: 'assistant',
+                    content: '🔍 Scanning transaction records against regulatory frameworks...
+
+• SOX Controls: Testing 302 and 404 requirements
+• Dodd-Frank: Volcker Rule and swap reporting checks
+• MiFID II: Best execution and transparency validation
+• Pattern Analysis: Detecting wash trades and layering
+• Risk Concentration: Position limit monitoring
+
+Processing 847,000 transactions through compliance engine...',
+                    typingTime: 2500,
+                    delay: 2000,
+                    action: 'step2'
                 }
             ]
         },
@@ -798,18 +818,12 @@
             messages: [
                 {
                     role: 'assistant',
-                    content: '✅ Task completed successfully!',
+                    content: '✅ Process Complete - Results Generated!',
                     showResult: true,
-                    resultData: {
-                        result: {
-                            status: 'Complete',
-                            timestamp: new Date().toISOString(),
-                            details: 'Task processed successfully'
-                        }
-                    },
+                    resultData: {"Compliance Summary": {"Transactions Analyzed": "847,000", "Clean Transactions": "845,892 (99.87%)", "Flagged for Review": "1,108 (0.13%)", "Critical Violations": "3 (immediate action required)", "Warning Level": "47 (monitor closely)", "Documentation Gaps": "156 (remediation needed)"}, "Regulatory Breakdown": {"SOX Compliance": "99.94% - 2 control weaknesses", "Dodd-Frank": "99.91% - 8 reporting delays", "MiFID II": "99.89% - Best execution gaps", "Basel III": "Tier 1 Capital Ratio: 13.2% (compliant)", "GDPR": "3 data retention issues", "AML/KYC": "12 enhanced due diligence triggers"}, "Critical Findings": {"Issue 1": "Position limit breach - Copper futures", "Risk Level": "HIGH - $2.3M exposure over limit", "Issue 2": "Wash trade pattern detected", "Accounts": "Prop desk and hedge fund client", "Issue 3": "Missing pre-trade transparency", "Impact": "€50,000 potential MiFID II fine"}, "Remediation Plan": {"Immediate": "Reduce copper position by 15%", "24 Hours": "File amended Dodd-Frank reports", "48 Hours": "Complete missing trade documentation", "1 Week": "Implement additional SOX controls", "1 Month": "Staff training on MiFID II requirements", "Ongoing": "Daily compliance monitoring dashboard"}},
                     typingTime: 2000,
                     delay: 1500,
-                    action: 'step2'
+                    action: 'step3'
                 }
             ]
         }

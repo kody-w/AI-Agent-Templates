@@ -773,23 +773,41 @@
             endpoint: ''
         };
 
-        // Demo script
+        // Demo script - Predictive Maintenance Scheduling
         const demoScript = [
         {
             type: 'conversation',
             messages: [
                 {
                     role: 'user',
-                    content: 'Help me with this task',
+                    content: 'Schedule maintenance for Line 3 CNC machines. Machine CNC-304 showing 0.003" tolerance drift, CNC-307 vibration increasing, and CNC-312 at 8,500 hours runtime. Need to minimize production impact.',
                     typingTime: 1500,
                     delay: 1000
                 },
                 {
                     role: 'assistant',
-                    content: 'I\'ll help you with that. Let me process your request...',
+                    content: 'I\'ll analyze the condition of your Line 3 CNC machines and create an optimized maintenance schedule that minimizes production downtime. Let me assess machine health data and production schedules...',
                     typingTime: 2000,
                     delay: 1500,
                     action: 'step1'
+                }
+            ]
+        },
+        {
+            type: 'analysis',
+            messages: [
+                {
+                    role: 'assistant',
+                    content: '🔧 Analyzing machine condition data...\n\n• CNC-304: Tolerance drift trend analysis (critical in 5 days)\n• CNC-307: Vibration spectrum FFT analysis (bearing wear detected)\n• CNC-312: Runtime approaching 10,000 hr service interval\n\nCross-referencing with production schedule and order backlog...',
+                    typingTime: 2500,
+                    delay: 2000
+                },
+                {
+                    role: 'assistant',
+                    content: '📅 Optimizing maintenance windows...\n\nProduction gaps identified:\n• Saturday 2/3: 6-hour window (shift change)\n• Sunday 2/4: Full day available\n• Wednesday 2/7: 4-hour lunch shutdown\n\nCalculating technician availability and parts inventory...',
+                    typingTime: 3000,
+                    delay: 2000,
+                    action: 'step2'
                 }
             ]
         },
@@ -798,18 +816,64 @@
             messages: [
                 {
                     role: 'assistant',
-                    content: '✅ Task completed successfully!',
+                    content: '🎯 Optimized Maintenance Schedule Generated!\n\nAll three machines scheduled for maintenance with minimal production impact. Total downtime reduced by 40% through parallel work scheduling.',
                     showResult: true,
                     resultData: {
-                        result: {
-                            status: 'Complete',
-                            timestamp: new Date().toISOString(),
-                            details: 'Task processed successfully'
+                        'CNC-304 (CRITICAL)': {
+                            'Current Status': '🟡 Tolerance drift 0.003"',
+                            'Failure Risk': '72% within 5 days',
+                            'Scheduled': 'Saturday Feb 3, 6:00 AM',
+                            'Work Required': 'Spindle alignment & calibration',
+                            'Duration': '4 hours',
+                            'Parts Needed': 'Alignment kit (in stock)',
+                            'Technician': 'Team A - Johnson & Martinez'
+                        },
+                        'CNC-307 (HIGH PRIORITY)': {
+                            'Current Status': '🟠 Vibration 0.18 IPS',
+                            'Failure Risk': '45% within 10 days',
+                            'Scheduled': 'Sunday Feb 4, 8:00 AM',
+                            'Work Required': 'Bearing replacement, motor balance',
+                            'Duration': '6 hours',
+                            'Parts Needed': 'SKF 6208 bearings (2 units)',
+                            'Technician': 'Team B - Chen & Williams'
+                        },
+                        'CNC-312 (PREVENTIVE)': {
+                            'Current Status': '🟢 8,500 runtime hours',
+                            'Next Service': '10,000 hours',
+                            'Scheduled': 'Sunday Feb 4, 2:00 PM',
+                            'Work Required': '10K hour service package',
+                            'Duration': '3 hours',
+                            'Parts Needed': 'Service kit PM-10K (ordered)',
+                            'Technician': 'Team A - Available after CNC-304'
+                        },
+                        'Production Impact': {
+                            'Total Downtime': '13 hours (vs 22 planned)',
+                            'Production Loss': '780 units',
+                            'Recovery Plan': 'Overtime approved Tuesday',
+                            'Customer Impact': 'None - buffer stock adequate',
+                            'Cost Savings': '$45,000 vs breakdown',
+                            'Efficiency Gain': '+2.3% post-maintenance'
+                        },
+                        'Resource Allocation': {
+                            'Technicians Required': '4 (2 teams)',
+                            'Parts Status': '87% in stock',
+                            'Special Tools': 'Laser alignment system reserved',
+                            'External Support': 'None required',
+                            'Safety Requirements': 'LOTO procedures ready',
+                            'Documentation': 'Work orders generated'
+                        },
+                        'Follow-up Actions': {
+                            'Next Review': 'Monday Feb 5, 7:00 AM',
+                            'Monitoring': 'Real-time vibration tracking enabled',
+                            'Spare Parts': 'Reorder point adjusted',
+                            'Training': 'Operator PM training Feb 8',
+                            'Audit': 'Reliability audit scheduled Feb 15',
+                            'KPI Update': 'MTBF target adjusted to 850 hrs'
                         }
                     },
                     typingTime: 2000,
                     delay: 1500,
-                    action: 'step2'
+                    action: 'step3'
                 }
             ]
         }

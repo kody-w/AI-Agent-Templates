@@ -780,13 +780,13 @@
             messages: [
                 {
                     role: 'user',
-                    content: 'Help me with this task',
+                    content: 'Customer looking for outfit for beach wedding next week. Budget $300, size 8, prefers blue or coral colors.',
                     typingTime: 1500,
                     delay: 1000
                 },
                 {
                     role: 'assistant',
-                    content: 'I\'ll help you with that. Let me process your request...',
+                    content: 'I'll help find the perfect beach wedding outfit for your customer within the $300 budget. Let me search our inventory for size 8 options in blue and coral tones suitable for a beach wedding setting...',
                     typingTime: 2000,
                     delay: 1500,
                     action: 'step1'
@@ -798,13 +798,36 @@
             messages: [
                 {
                     role: 'assistant',
-                    content: '✅ Task completed successfully!',
+                    content: '✅ Perfect Outfit Options Found!',
                     showResult: true,
                     resultData: {
-                        result: {
-                            status: 'Complete',
-                            timestamp: new Date().toISOString(),
-                            details: 'Task processed successfully'
+                        'Customer Profile': {
+                            'Event': 'Beach Wedding Guest',
+                            'Budget': '$300 total',
+                            'Size': 'US 8 / Medium',
+                            'Color Preference': 'Blue or Coral',
+                            'Timeline': 'Needed within 7 days'
+                        },
+                        'Recommended Outfits': {
+                            'Option 1': 'Coral Maxi Dress + Sandals ($189)',
+                            'Option 2': 'Blue Midi Dress + Wedges ($225)',
+                            'Option 3': 'Linen Set + Accessories ($275)',
+                            'Best Seller': 'Floral Wrap Dress - 5 star rated',
+                            'In Stock': 'All items available in store'
+                        },
+                        'Complete Look Details': {
+                            'Primary Piece': 'Coral Chiffon Maxi - $149',
+                            'Shoes': 'Gold Strappy Sandals - $65',
+                            'Accessories': 'Pearl Earrings & Clutch - $45',
+                            'Cover-up': 'Light Pashmina - $35',
+                            'Total': '$294 (under budget!)'
+                        },
+                        'Additional Services': {
+                            'Alterations': 'Available - 3 day turnaround',
+                            'Styling Session': 'Free 15-min consultation',
+                            'Hold Items': '24-hour reserve approved',
+                            'Similar Online': '5 alternatives if needed',
+                            'Weather Tip': 'Beach-friendly fabrics selected'
                         }
                     },
                     typingTime: 2000,

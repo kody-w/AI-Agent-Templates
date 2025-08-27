@@ -773,23 +773,41 @@
             endpoint: ''
         };
 
-        // Demo script
+        // Demo script - E-commerce Returns Processing
         const demoScript = [
         {
             type: 'conversation',
             messages: [
                 {
                     role: 'user',
-                    content: 'Help me with this task',
+                    content: 'I need to return my Nike Air Max 270 shoes (Order #ORD-2024-78432). They\'re size 10 but too small. Can I exchange for size 11? Purchased 12 days ago for $159.99.',
                     typingTime: 1500,
                     delay: 1000
                 },
                 {
                     role: 'assistant',
-                    content: 'I\'ll help you with that. Let me process your request...',
+                    content: 'I\'ll help you exchange your Nike Air Max 270 shoes for a size 11. Let me check your order details and our current inventory for the exchange...',
                     typingTime: 2000,
                     delay: 1500,
                     action: 'step1'
+                }
+            ]
+        },
+        {
+            type: 'verification',
+            messages: [
+                {
+                    role: 'assistant',
+                    content: '🔍 Verifying order and return eligibility...\n\n✅ Order #ORD-2024-78432 found\n• Customer: Sarah Johnson\n• Product: Nike Air Max 270 - Black/White\n• Size: 10 US\n• Purchase Date: January 15, 2025\n• Price Paid: $159.99\n• Payment Method: Visa ending in 4823\n\nChecking return policy compliance...',
+                    typingTime: 2500,
+                    delay: 2000
+                },
+                {
+                    role: 'assistant',
+                    content: '✅ Return eligible! Within 30-day window (12 days elapsed)\n\n📦 Checking inventory for size 11...\n• Size 11 in Black/White: IN STOCK (7 units)\n• Same price point - no additional charge\n• Free exchange shipping available\n\nGenerating return authorization...',
+                    typingTime: 3000,
+                    delay: 2000,
+                    action: 'step2'
                 }
             ]
         },
@@ -798,18 +816,52 @@
             messages: [
                 {
                     role: 'assistant',
-                    content: '✅ Task completed successfully!',
+                    content: '🎉 Exchange Approved and Processed!\n\nYour Nike Air Max 270 exchange has been authorized. I\'ve emailed you a prepaid return label and your new shoes will ship once we receive the return.',
                     showResult: true,
                     resultData: {
-                        result: {
-                            status: 'Complete',
-                            timestamp: new Date().toISOString(),
-                            details: 'Task processed successfully'
+                        'Return Authorization': {
+                            'RMA Number': 'RMA-2025-94521',
+                            'Original Order': 'ORD-2024-78432',
+                            'Return Reason': 'Size Exchange',
+                            'Return Window': '18 days remaining',
+                            'Authorization Status': 'APPROVED',
+                            'Customer Satisfaction': 'Priority handling'
+                        },
+                        'Exchange Details': {
+                            'Original Item': 'Nike Air Max 270 - Size 10',
+                            'Exchange Item': 'Nike Air Max 270 - Size 11',
+                            'SKU Match': 'DH0251-001-11',
+                            'Availability': '7 units in stock',
+                            'Price Difference': '$0.00',
+                            'Exchange Type': 'Even exchange'
+                        },
+                        'Shipping Information': {
+                            'Return Label': 'FedEx Prepaid - Emailed',
+                            'Tracking Number': '7823 4512 8934',
+                            'Drop-off Locations': '3 nearby (map sent)',
+                            'Return Deadline': 'February 8, 2025',
+                            'New Shipment': 'Ships within 24hrs of receipt',
+                            'Expedited Option': 'Free 2-day shipping applied'
+                        },
+                        'Customer Benefits': {
+                            'Loyalty Points': '+50 points added',
+                            'Return Credits': '$10 future purchase credit',
+                            'VIP Status': 'Gold member - priority processing',
+                            'Satisfaction Score': '98% positive history',
+                            'Special Offer': '15% off next purchase included'
+                        },
+                        'Process Timeline': {
+                            'Return Label Sent': 'Immediately',
+                            'Package Drop-off': 'By January 29',
+                            'Return Processing': '1-2 business days',
+                            'Exchange Ships': 'Same day as receipt',
+                            'Total Timeline': '5-7 business days',
+                            'SMS Updates': 'Enabled for tracking'
                         }
                     },
                     typingTime: 2000,
                     delay: 1500,
-                    action: 'step2'
+                    action: 'step3'
                 }
             ]
         }

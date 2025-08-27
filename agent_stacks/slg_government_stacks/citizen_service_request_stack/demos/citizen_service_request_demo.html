@@ -780,13 +780,13 @@
             messages: [
                 {
                     role: 'user',
-                    content: 'Help me with this task',
+                    content: 'Report from citizen: Large pothole on Main Street near Elementary School, multiple complaints, needs urgent repair for student safety.',
                     typingTime: 1500,
                     delay: 1000
                 },
                 {
                     role: 'assistant',
-                    content: 'I\'ll help you with that. Let me process your request...',
+                    content: 'I'll process this urgent citizen service request for the pothole on Main Street near the Elementary School. Let me create a priority work order and coordinate with Public Works for immediate repair...',
                     typingTime: 2000,
                     delay: 1500,
                     action: 'step1'
@@ -798,13 +798,36 @@
             messages: [
                 {
                     role: 'assistant',
-                    content: '✅ Task completed successfully!',
+                    content: '✅ Service Request Created - Priority Status!',
                     showResult: true,
                     resultData: {
-                        result: {
-                            status: 'Complete',
-                            timestamp: new Date().toISOString(),
-                            details: 'Task processed successfully'
+                        'Request Information': {
+                            'Request ID': 'SR-2024-9823',
+                            'Type': 'Pothole Repair - URGENT',
+                            'Location': 'Main Street @ Elementary School',
+                            'Priority': 'Level 1 - Safety Hazard',
+                            'Reporter': 'Multiple citizens (5 complaints)'
+                        },
+                        'Site Assessment': {
+                            'Pothole Size': 'Estimated 3ft x 2ft x 6in deep',
+                            'Traffic Impact': 'High - School zone',
+                            'Safety Risk': 'Critical - Student pedestrian area',
+                            'Previous Reports': '3 in past week',
+                            'Weather Conditions': 'Clear - Suitable for repair'
+                        },
+                        'Work Order Details': {
+                            'Assigned To': 'Public Works Crew B',
+                            'Scheduled': 'Tomorrow 7:00 AM',
+                            'Materials Needed': '150 lbs hot asphalt mix',
+                            'Equipment': 'Patch truck and compactor',
+                            'Estimated Time': '2 hours including traffic control'
+                        },
+                        'Communication Plan': {
+                            'School Notified': 'Principal aware of repair schedule',
+                            'Traffic Alert': 'Posted on city website/app',
+                            'Citizens Updated': 'Auto-email to all reporters',
+                            'Council Member': 'Ward 3 representative informed',
+                            'Follow-up': '30-day quality check scheduled'
                         }
                     },
                     typingTime: 2000,

@@ -773,23 +773,44 @@
             endpoint: ''
         };
 
-        // Demo script
+        // Demo script - Domain-Specific Content
         const demoScript = [
         {
             type: 'conversation',
             messages: [
                 {
                     role: 'user',
-                    content: 'Help me with this task',
+                    content: 'Analyze customer sentiment for our premium banking segment (5,000 accounts). Recent fee increases and service changes. Identify high-risk churn accounts for retention campaigns.',
                     typingTime: 1500,
                     delay: 1000
                 },
                 {
                     role: 'assistant',
-                    content: 'I\'ll help you with that. Let me process your request...',
+                    content: 'I'll analyze sentiment across your 5,000 premium banking accounts, identifying churn risks from recent fee increases and service changes. Running predictive models for targeted retention...',
                     typingTime: 2000,
                     delay: 1500,
                     action: 'step1'
+                }
+            ]
+        },
+        {
+            type: 'processing',
+            messages: [
+                {
+                    role: 'assistant',
+                    content: '🎯 Analyzing customer sentiment indicators...
+
+• Transaction patterns: Detecting reduction in activity
+• Support interactions: Sentiment scoring on 3,847 tickets
+• Product usage: Identifying service discontinuation
+• NPS responses: 1,245 recent survey results
+• Social mentions: Monitoring brand sentiment
+• Competitive activity: Tracking account closures
+
+Building churn prediction models...',
+                    typingTime: 2500,
+                    delay: 2000,
+                    action: 'step2'
                 }
             ]
         },
@@ -798,18 +819,12 @@
             messages: [
                 {
                     role: 'assistant',
-                    content: '✅ Task completed successfully!',
+                    content: '✅ Process Complete - Results Generated!',
                     showResult: true,
-                    resultData: {
-                        result: {
-                            status: 'Complete',
-                            timestamp: new Date().toISOString(),
-                            details: 'Task processed successfully'
-                        }
-                    },
+                    resultData: {"Sentiment Overview": {"Total Accounts Analyzed": "5,000", "Positive Sentiment": "2,890 (57.8%)", "Neutral": "1,456 (29.1%)", "Negative": "654 (13.1%)", "High Churn Risk": "187 accounts (3.7%)", "Immediate Action Required": "47 accounts"}, "Churn Risk Segments": {"Critical (90% probability)": "47 accounts", "Value at Risk": "$8.3M AUM, $124K annual revenue", "High Risk (70-89%)": "140 accounts", "Medium Risk (40-69%)": "423 accounts", "Key Triggers": "Fee increases (67%), wait times (23%)", "Competitor Pull": "Chase Private Client (34 accounts)"}, "Top Issues Identified": {"Issue 1": "New $50 monthly fee - 412 complaints", "Issue 2": "Reduced branch hours - 278 mentions", "Issue 3": "Mobile app issues - 189 tickets", "Issue 4": "Investment fees increased - 156 concerns", "Issue 5": "Removed free wire transfers - 134 complaints", "Resolution Rate": "62% satisfied after intervention"}, "Retention Strategy": {"Immediate Outreach": "47 personal banker calls today", "Fee Waivers": "Authorize $50K in concessions", "Service Recovery": "Assign dedicated advisors", "Loyalty Rewards": "Double points for 6 months", "Executive Escalation": "12 CEO letter candidates", "Win-back Offers": "$500 bonus for retained accounts"}, "Predictive Insights": {"30-Day Churn Forecast": "89 accounts likely to close", "Revenue Impact": "$1.34M annual at risk", "Intervention Success Rate": "68% historical save rate", "Lifetime Value": "Average $45K per saved account", "ROI of Retention": "12:1 vs acquisition cost", "Next Review": "Weekly sentiment monitoring"}},
                     typingTime: 2000,
                     delay: 1500,
-                    action: 'step2'
+                    action: 'step3'
                 }
             ]
         }

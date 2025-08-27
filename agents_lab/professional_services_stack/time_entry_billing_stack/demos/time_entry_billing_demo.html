@@ -773,23 +773,44 @@
             endpoint: ''
         };
 
-        // Demo script
+        // Demo script - Domain-Specific Content
         const demoScript = [
         {
             type: 'conversation',
             messages: [
                 {
                     role: 'user',
-                    content: 'Help me with this task',
+                    content: 'Process month-end billing for 127 client projects. $4.7M in billable time, 15 disputes pending, 8 projects exceeded budget. Need invoices generated with proper approvals and writeoffs documented.',
                     typingTime: 1500,
                     delay: 1000
                 },
                 {
                     role: 'assistant',
-                    content: 'I\'ll help you with that. Let me process your request...',
+                    content: 'I'll process your month-end billing for all 127 projects, handling the $4.7M in billable time, resolving disputes, and managing budget overruns with proper documentation...',
                     typingTime: 2000,
                     delay: 1500,
                     action: 'step1'
+                }
+            ]
+        },
+        {
+            type: 'processing',
+            messages: [
+                {
+                    role: 'assistant',
+                    content: '💰 Processing month-end billing cycle...
+
+• Time Entry Review: Validating 8,450 timesheets
+• Budget Analysis: 8 projects over budget
+• Dispute Resolution: 15 client challenges
+• Writeoff Documentation: Partner approvals
+• Invoice Generation: 127 client invoices
+• Revenue Recognition: ASC 606 compliance
+
+Finalizing billing packages...',
+                    typingTime: 2500,
+                    delay: 2000,
+                    action: 'step2'
                 }
             ]
         },
@@ -798,18 +819,12 @@
             messages: [
                 {
                     role: 'assistant',
-                    content: '✅ Task completed successfully!',
+                    content: '✅ Process Complete - Results Generated!',
                     showResult: true,
-                    resultData: {
-                        result: {
-                            status: 'Complete',
-                            timestamp: new Date().toISOString(),
-                            details: 'Task processed successfully'
-                        }
-                    },
+                    resultData: {"Billing Summary": {"Total Billable": "$4,700,000", "Projects Billed": "127 clients", "Hours Logged": "28,450 hours", "Average Rate": "$165/hour", "Disputes": "$287,000 (6.1%)", "Collection Risk": "$45,000 identified"}, "Budget Status": {"Over Budget": "8 projects ($340K over)", "Project Alpha": "+$125K (25% over)", "Change Orders": "3 pending approval", "Writeoffs Required": "$67,000", "Partner Approval": "4 of 8 approved", "Client Communications": "Sent for remaining"}, "Dispute Resolution": {"Open Disputes": "15 totaling $287K", "Resolved": "7 disputes ($124K recovered)", "Pending": "5 in negotiation ($98K)", "Writeoff": "3 approved ($65K)", "Documentation": "All backed up in CRM", "Average Resolution": "12 days"}, "Invoice Processing": {"Generated": "127 invoices created", "Total Value": "$4,633,000 net", "Payment Terms": "89 Net 30, 38 Net 45", "Early Payment": "2% discount offered", "Electronic Delivery": "94 via portal", "Paper Required": "33 clients"}, "Revenue Recognition": {"Recognized": "$4,420,000 this period", "Deferred": "$213,000 milestone-based", "Unbilled": "$147,000 (approved WIP)", "Holdbacks": "$67,000 pending", "Adjustments": "Per ASC 606 compliance", "Audit Trail": "Complete documentation"}, "Collections Forecast": {"30-Day Expected": "$3.8M (82%)", "60-Day Expected": "$650K (14%)", "90-Day Risk": "$183K (4%)", "DSO Current": "42 days", "Top Risk": "ClientCo - $145K overdue", "Action Items": "5 escalations to partners"}},
                     typingTime: 2000,
                     delay: 1500,
-                    action: 'step2'
+                    action: 'step3'
                 }
             ]
         }

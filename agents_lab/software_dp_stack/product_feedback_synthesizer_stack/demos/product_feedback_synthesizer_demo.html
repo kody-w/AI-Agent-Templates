@@ -773,23 +773,44 @@
             endpoint: ''
         };
 
-        // Demo script
+        // Demo script - Domain-Specific Content
         const demoScript = [
         {
             type: 'conversation',
             messages: [
                 {
                     role: 'user',
-                    content: 'Help me with this task',
+                    content: 'Analyze 1,847 pieces of product feedback from last quarter: support tickets, NPS comments, feature requests, app reviews. Identify top themes and create prioritized product roadmap recommendations.',
                     typingTime: 1500,
                     delay: 1000
                 },
                 {
                     role: 'assistant',
-                    content: 'I\'ll help you with that. Let me process your request...',
+                    content: 'I'll analyze all 1,847 pieces of product feedback from Q4, identifying key themes and patterns to create prioritized roadmap recommendations for your product team...',
                     typingTime: 2000,
                     delay: 1500,
                     action: 'step1'
+                }
+            ]
+        },
+        {
+            type: 'processing',
+            messages: [
+                {
+                    role: 'assistant',
+                    content: '🔍 Processing product feedback...
+
+• NPS Analysis: 423 promoter/detractor comments
+• Support Tickets: 678 feature-related issues
+• App Reviews: 234 store ratings analyzed
+• Feature Requests: 512 portal submissions
+• Sentiment Analysis: ML categorization
+• Theme Clustering: Pattern identification
+
+Synthesizing insights and priorities...',
+                    typingTime: 2500,
+                    delay: 2000,
+                    action: 'step2'
                 }
             ]
         },
@@ -798,18 +819,12 @@
             messages: [
                 {
                     role: 'assistant',
-                    content: '✅ Task completed successfully!',
+                    content: '✅ Process Complete - Results Generated!',
                     showResult: true,
-                    resultData: {
-                        result: {
-                            status: 'Complete',
-                            timestamp: new Date().toISOString(),
-                            details: 'Task processed successfully'
-                        }
-                    },
+                    resultData: {"Feedback Overview": {"Total Items": "1,847 analyzed", "NPS Score": "42 (up from 38)", "App Rating": "4.2 stars average", "Support Sentiment": "68% positive", "Feature Requests": "512 unique items", "Active Customers": "73% provided feedback"}, "Top Themes": {"Theme 1": "Mobile App Performance (387 mentions)", "Impact": "Affecting 23% of users", "Theme 2": "Advanced Reporting (298 mentions)", "Theme 3": "Integration APIs (241 mentions)", "Theme 4": "User Permissions (189 mentions)", "Theme 5": "Dashboard Customization (156 mentions)"}, "Critical Issues": {"App Crashes": "iOS 17 compatibility - 147 reports", "Severity": "P1 - Revenue impacting", "Data Export": "Large exports failing - 89 cases", "Search Function": "Not finding recent items", "Notifications": "Delayed or missing - 67 reports", "Login Issues": "SSO timeout problems"}, "Feature Demand": {"Reporting Dashboard": "198 requests (Enterprise)", "Revenue Impact": "$1.2M expansion opportunity", "API Webhooks": "145 requests", "Mobile Offline": "134 requests", "Bulk Operations": "122 requests", "AI Assistant": "98 requests (trending up)"}, "Competitive Insights": {"Lost Deals": "34 mentioned competitors", "Missing Features": "Advanced analytics, AI", "Price Sensitivity": "27% mention cost", "Migration Pain": "45 want easier switching", "Differentiators": "UI/UX still winning", "Threats": "NewCompetitor gaining share"}, "Roadmap Recommendations": {"Q1 Priority": "Fix iOS crashes, improve performance", "Q2 Priority": "Launch advanced reporting", "Q3 Priority": "API v2 with webhooks", "Q4 Priority": "AI-powered features", "Quick Wins": "15 small fixes for satisfaction", "Revenue Impact": "$2.8M retention + $1.2M expansion"}},
                     typingTime: 2000,
                     delay: 1500,
-                    action: 'step2'
+                    action: 'step3'
                 }
             ]
         }

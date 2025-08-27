@@ -780,13 +780,13 @@
             messages: [
                 {
                     role: 'user',
-                    content: 'Help me with this task',
+                    content: 'Create personalized campaign for dormant customers who haven't purchased in 90 days. We have 50,000 inactive accounts worth $2M annual revenue.',
                     typingTime: 1500,
                     delay: 1000
                 },
                 {
                     role: 'assistant',
-                    content: 'I\'ll help you with that. Let me process your request...',
+                    content: 'I'll create a personalized re-engagement campaign for your 50,000 dormant customers who haven't purchased in 90+ days. Let me segment these accounts and design targeted offers to recover the $2M annual revenue potential...',
                     typingTime: 2000,
                     delay: 1500,
                     action: 'step1'
@@ -798,13 +798,36 @@
             messages: [
                 {
                     role: 'assistant',
-                    content: '✅ Task completed successfully!',
+                    content: '✅ Personalized Campaign Created!',
                     showResult: true,
                     resultData: {
-                        result: {
-                            status: 'Complete',
-                            timestamp: new Date().toISOString(),
-                            details: 'Task processed successfully'
+                        'Dormant Customer Analysis': {
+                            'Total Inactive': '50,000 accounts',
+                            'Revenue at Risk': '$2M annual value',
+                            'Avg Customer Value': '$40/year',
+                            'Last Purchase': '90-365 days ago',
+                            'Previous Engagement': '3.2 purchases/year average'
+                        },
+                        'Segmentation Strategy': {
+                            'High Value Lapsed': '5,000 customers - $75+ CLV',
+                            'Seasonal Shoppers': '12,000 - Holiday only buyers',
+                            'Price Sensitive': '18,000 - Coupon dependent',
+                            'Brand Loyalists': '8,000 - Single category buyers',
+                            'New Customer Churn': '7,000 - One purchase only'
+                        },
+                        'Personalized Offers': {
+                            'Segment A': '30% off + Free shipping',
+                            'Segment B': 'Early access Black Friday preview',
+                            'Segment C': '$10 off $30 purchase',
+                            'Segment D': 'Category-specific 25% discount',
+                            'Segment E': 'Welcome back - 40% first order'
+                        },
+                        'Campaign Execution': {
+                            'Email Waves': '3 touchpoints over 2 weeks',
+                            'SMS Follow-up': 'Day 7 for non-openers',
+                            'Direct Mail': 'Top 5,000 customers',
+                            'Predicted Response': '12% re-activation rate',
+                            'Revenue Recovery': '$240K in first 30 days'
                         }
                     },
                     typingTime: 2000,

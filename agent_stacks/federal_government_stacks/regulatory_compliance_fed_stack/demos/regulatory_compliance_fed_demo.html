@@ -780,13 +780,13 @@
             messages: [
                 {
                     role: 'user',
-                    content: 'Help me with this task',
+                    content: 'Audit our agency's compliance with new OMB data governance memorandum M-23-16. We manage 50TB of citizen data.',
                     typingTime: 1500,
                     delay: 1000
                 },
                 {
                     role: 'assistant',
-                    content: 'I\'ll help you with that. Let me process your request...',
+                    content: 'I'll audit your agency's compliance with OMB Memorandum M-23-16 on data governance for your 50TB citizen data repository. Let me review your current policies, technical controls, and identify compliance gaps...',
                     typingTime: 2000,
                     delay: 1500,
                     action: 'step1'
@@ -798,13 +798,36 @@
             messages: [
                 {
                     role: 'assistant',
-                    content: '✅ Task completed successfully!',
+                    content: '✅ OMB M-23-16 Compliance Audit Complete!',
                     showResult: true,
                     resultData: {
-                        result: {
-                            status: 'Complete',
-                            timestamp: new Date().toISOString(),
-                            details: 'Task processed successfully'
+                        'Compliance Summary': {
+                            'Overall Score': '82% compliant',
+                            'Critical Gaps': '3 high-priority items',
+                            'Data Volume': '50.3TB citizen records',
+                            'Systems Reviewed': '12 major data systems',
+                            'Deadline': '60 days to full compliance'
+                        },
+                        'Data Governance': {
+                            'CDO Appointed': '✅ Chief Data Officer in place',
+                            'Data Strategy': '⚠️ Needs 2024 update',
+                            'Inventory Complete': '✅ 98% systems cataloged',
+                            'Quality Standards': '✅ ISO 8000 implemented',
+                            'Lifecycle Management': '⚠️ Retention policies outdated'
+                        },
+                        'Privacy & Security': {
+                            'PII Inventory': '✅ All PII mapped and classified',
+                            'Encryption': '✅ AES-256 at rest and transit',
+                            'Access Controls': '⚠️ Need zero-trust migration',
+                            'Audit Logging': '✅ SIEM monitoring active',
+                            'Privacy Impact': '✅ All PIAs current'
+                        },
+                        'Action Plan': {
+                            'Week 1': 'Update data retention policies',
+                            'Week 2-3': 'Implement zero-trust architecture',
+                            'Week 4': 'Revise data strategy document',
+                            'Week 6': 'Submit compliance certification',
+                            'Ongoing': 'Monthly governance board meetings'
                         }
                     },
                     typingTime: 2000,

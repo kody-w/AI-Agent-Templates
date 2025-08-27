@@ -773,23 +773,44 @@
             endpoint: ''
         };
 
-        // Demo script
+        // Demo script - Domain-Specific Content
         const demoScript = [
         {
             type: 'conversation',
             messages: [
                 {
                     role: 'user',
-                    content: 'New customer John Smith applying for checking and savings. Need KYC, AML check, and account setup',
+                    content: 'Onboard new wealth management client Jennifer Martinez. Net worth $8.5M, owns 3 businesses, needs full KYC/AML screening plus investment account setup. Expedited processing requested.',
                     typingTime: 1500,
                     delay: 1000
                 },
                 {
                     role: 'assistant',
-                    content: 'I\'ll help you with that. Let me process your request...',
+                    content: 'I'll process expedited onboarding for Jennifer Martinez, conducting comprehensive KYC/AML screening and setting up her wealth management accounts. Initiating enhanced due diligence for high net worth profile...',
                     typingTime: 2000,
                     delay: 1500,
                     action: 'step1'
+                }
+            ]
+        },
+        {
+            type: 'processing',
+            messages: [
+                {
+                    role: 'assistant',
+                    content: '🔐 Performing enhanced due diligence checks...
+
+• Identity Verification: Passport, driver's license validated
+• Wealth Source: 3 business ownership verified
+• AML Screening: Checking global sanctions lists
+• PEP Database: Scanning for political exposure
+• Credit Bureau: Pulling comprehensive reports
+• Risk Scoring: Calculating customer risk rating
+
+Setting up account infrastructure...',
+                    typingTime: 2500,
+                    delay: 2000,
+                    action: 'step2'
                 }
             ]
         },
@@ -798,18 +819,12 @@
             messages: [
                 {
                     role: 'assistant',
-                    content: '✅ Task completed successfully!',
+                    content: '✅ Process Complete - Results Generated!',
                     showResult: true,
-                    resultData: {
-                        result: {
-                            status: 'Complete',
-                            timestamp: new Date().toISOString(),
-                            details: 'Task processed successfully'
-                        }
-                    },
+                    resultData: {"Client Profile": {"Name": "Jennifer Martinez", "Client Type": "Ultra High Net Worth Individual", "Net Worth": "$8,500,000 verified", "Risk Rating": "Medium (business owner)", "Onboarding Status": "APPROVED - Expedited", "Time to Completion": "2.5 hours (vs 48hr standard)"}, "KYC/AML Results": {"Identity Score": "98/100 - Fully verified", "Sanctions Check": "Clear - No matches", "PEP Status": "Not a PEP", "Adverse Media": "None found", "Source of Wealth": "Verified - Business ownership", "Documentation": "100% complete"}, "Account Setup": {"Primary Account": "WM-2025-JM-8847", "Account Types": "Taxable, IRA, Trust", "Investment Mandate": "Balanced Growth", "Initial Funding": "$2,000,000 wire pending", "Trading Authority": "Discretionary approved", "Online Access": "Portal credentials sent"}, "Business Verification": {"Business 1": "Martinez Tech Solutions LLC", "Revenue": "$4.2M annual (verified)", "Business 2": "JM Real Estate Holdings", "Assets": "$3.1M property portfolio", "Business 3": "Sunrise Consulting Inc", "Status": "Active, good standing"}, "Next Steps": {"Immediate": "Investment policy statement review", "Day 1": "Initial portfolio allocation call", "Day 2": "Estate planning introduction", "Week 1": "Tax optimization strategy session", "Month 1": "Quarterly review scheduled", "Ongoing": "24/7 concierge service activated"}},
                     typingTime: 2000,
                     delay: 1500,
-                    action: 'step2'
+                    action: 'step3'
                 }
             ]
         }

@@ -780,13 +780,13 @@
             messages: [
                 {
                     role: 'user',
-                    content: 'Help me with this task',
+                    content: 'Manage our city's federal grant applications. We're applying for $5M COPS grant and $3M EPA brownfield cleanup funds.',
                     typingTime: 1500,
                     delay: 1000
                 },
                 {
                     role: 'assistant',
-                    content: 'I\'ll help you with that. Let me process your request...',
+                    content: 'I'll manage your city's federal grant applications for the $5M COPS program and $3M EPA brownfield cleanup funds. Let me track application requirements, deadlines, and compile necessary documentation...',
                     typingTime: 2000,
                     delay: 1500,
                     action: 'step1'
@@ -798,13 +798,36 @@
             messages: [
                 {
                     role: 'assistant',
-                    content: '✅ Task completed successfully!',
+                    content: '✅ Grant Applications Managed!',
                     showResult: true,
                     resultData: {
-                        result: {
-                            status: 'Complete',
-                            timestamp: new Date().toISOString(),
-                            details: 'Task processed successfully'
+                        'COPS Grant Application': {
+                            'Program': 'Community Oriented Policing Services',
+                            'Amount Requested': '$5M over 3 years',
+                            'Officers Funded': '25 new positions',
+                            'Match Required': '25% local match ($1.67M)',
+                            'Application Status': '75% complete'
+                        },
+                        'EPA Brownfield Grant': {
+                            'Program': 'Brownfield Cleanup Grant',
+                            'Amount Requested': '$3M',
+                            'Site': 'Former Industrial Park - 45 acres',
+                            'Contamination': 'Petroleum and heavy metals',
+                            'Jobs Created': 'Estimated 200 after cleanup'
+                        },
+                        'Application Progress': {
+                            'Narratives': '✅ Both drafted and reviewed',
+                            'Budget Justification': '✅ Finance approved',
+                            'Letters of Support': '18 of 20 received',
+                            'Environmental Reports': '✅ Phase I & II complete',
+                            'Council Resolution': 'Vote scheduled April 8'
+                        },
+                        'Submission Timeline': {
+                            'COPS Deadline': 'April 15, 2024 (12 days)',
+                            'EPA Deadline': 'May 1, 2024 (28 days)',
+                            'Review Period': 'Legal review Apr 5-7',
+                            'Submission Method': 'Grants.gov validated',
+                            'Award Announcement': 'Expected July 2024'
                         }
                     },
                     typingTime: 2000,

@@ -773,23 +773,44 @@
             endpoint: ''
         };
 
-        // Demo script
+        // Demo script - Domain-Specific Content
         const demoScript = [
         {
             type: 'conversation',
             messages: [
                 {
                     role: 'user',
-                    content: 'Help me with this task',
+                    content: 'Evaluate commercial property loan application: $4.5M for downtown office building, 65% LTV, borrower credit 720, property valued at $7M. Need risk assessment and terms recommendation.',
                     typingTime: 1500,
                     delay: 1000
                 },
                 {
                     role: 'assistant',
-                    content: 'I\'ll help you with that. Let me process your request...',
+                    content: 'I'll evaluate this $4.5M commercial property loan application, analyzing the borrower's creditworthiness, property valuation, and market conditions to provide risk assessment and recommended terms...',
                     typingTime: 2000,
                     delay: 1500,
                     action: 'step1'
+                }
+            ]
+        },
+        {
+            type: 'processing',
+            messages: [
+                {
+                    role: 'assistant',
+                    content: '📋 Analyzing loan application components...
+
+• Property Analysis: Downtown office, Class B, 85% occupied
+• Market Comps: 5 similar properties sold last 12 months
+• Cash Flow: NOI $485,000, DSCR 1.42x
+• Borrower History: 3 successful CRE loans, no defaults
+• Environmental: Phase I clear, no issues
+• Title Search: Clean, no liens or encumbrances
+
+Running proprietary risk models...',
+                    typingTime: 2500,
+                    delay: 2000,
+                    action: 'step2'
                 }
             ]
         },
@@ -798,18 +819,12 @@
             messages: [
                 {
                     role: 'assistant',
-                    content: '✅ Task completed successfully!',
+                    content: '✅ Process Complete - Results Generated!',
                     showResult: true,
-                    resultData: {
-                        result: {
-                            status: 'Complete',
-                            timestamp: new Date().toISOString(),
-                            details: 'Task processed successfully'
-                        }
-                    },
+                    resultData: {"Loan Assessment": {"Requested Amount": "$4,500,000", "Property Value": "$7,000,000 (confirmed)", "LTV Ratio": "64.3% (within guidelines)", "Credit Score": "720 (Strong)", "Risk Rating": "2 - Low/Moderate Risk", "Recommendation": "APPROVE with conditions"}, "Property Analysis": {"Property Type": "Office Building - Class B", "Location Score": "8.5/10 (Prime downtown)", "Occupancy": "85% (above market avg 78%)", "Tenant Quality": "3 anchor tenants, 5+ year leases", "NOI": "$485,000 annual", "Cap Rate": "6.93% (market: 6.5-7.5%)"}, "Recommended Terms": {"Loan Amount": "$4,500,000", "Interest Rate": "7.25% (Prime + 2.25%)", "Term": "10 years", "Amortization": "25 years", "Prepayment": "3-2-1 step-down", "Recourse": "Limited to 25%"}, "Risk Mitigants": {"Condition 1": "Maintain 80% occupancy minimum", "Condition 2": "Debt service reserve: 6 months", "Condition 3": "Quarterly financial reporting", "Condition 4": "Key tenant loss insurance", "Covenant": "Minimum DSCR 1.25x", "Guarantee": "Personal guarantee capped at $1.125M"}, "Market Context": {"Office Vacancy": "22% citywide (subject: 15%)", "Rental Trends": "+2.3% YoY growth", "Competition": "2 new buildings (2026)", "Economic Factors": "Tech sector expansion", "Risk Factors": "Remote work trend", "Opportunity": "Building renovation potential +20% value"}},
                     typingTime: 2000,
                     delay: 1500,
-                    action: 'step2'
+                    action: 'step3'
                 }
             ]
         }

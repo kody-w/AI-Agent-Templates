@@ -773,23 +773,44 @@
             endpoint: ''
         };
 
-        // Demo script
+        // Demo script - Domain-Specific Content
         const demoScript = [
         {
             type: 'conversation',
             messages: [
                 {
                     role: 'user',
-                    content: 'Help me with this task',
+                    content: 'Route and prioritize 127 citizen service requests from weekend: 34 potholes, 28 streetlight outages, 19 illegal dumping, 23 graffiti, and 23 other. Generate work orders and response timeline.',
                     typingTime: 1500,
                     delay: 1000
                 },
                 {
                     role: 'assistant',
-                    content: 'I\'ll help you with that. Let me process your request...',
+                    content: 'I'll route and prioritize all 127 weekend service requests, generating departmental work orders with appropriate response timelines based on severity and safety concerns...',
                     typingTime: 2000,
                     delay: 1500,
                     action: 'step1'
+                }
+            ]
+        },
+        {
+            type: 'processing',
+            messages: [
+                {
+                    role: 'assistant',
+                    content: '📱 Processing citizen service requests...
+
+• Safety Priority: Identifying hazardous conditions
+• Department Routing: DPW, utilities, code enforcement
+• Geographic Clustering: Optimizing crew dispatch
+• Resource Allocation: Available crews and equipment
+• SLA Compliance: Response time requirements
+• Duplicate Check: Consolidating repeat reports
+
+Generating work order queue...',
+                    typingTime: 2500,
+                    delay: 2000,
+                    action: 'step2'
                 }
             ]
         },
@@ -798,18 +819,12 @@
             messages: [
                 {
                     role: 'assistant',
-                    content: '✅ Task completed successfully!',
+                    content: '✅ Process Complete - Results Generated!',
                     showResult: true,
-                    resultData: {
-                        result: {
-                            status: 'Complete',
-                            timestamp: new Date().toISOString(),
-                            details: 'Task processed successfully'
-                        }
-                    },
+                    resultData: {"Request Summary": {"Total Requests": "127 from weekend", "Emergency": "8 requiring immediate response", "High Priority": "34 (24-48 hour response)", "Standard": "85 (5-7 day response)", "Duplicates Merged": "12 consolidated", "Work Orders Created": "115 unique"}, "Pothole Repairs (34)": {"Emergency": "3 on Main St (traffic hazard)", "Crew Assigned": "DPW Team A - Monday AM", "Locations Clustered": "5 zones for efficiency", "Materials Needed": "4.5 tons cold patch", "Completion Target": "28 within 48hrs", "Rain Delay Risk": "6 weather dependent"}, "Streetlight Outages (28)": {"Safety Critical": "5 at crosswalks", "Utility Ticket": "ELE-2025-1847 opened", "LED Retrofits": "8 upgrade opportunities", "Parts on Hand": "22 bulbs in inventory", "Contractor Needed": "6 high-mount fixtures", "Timeline": "Critical 24hrs, others 72hrs"}, "Illegal Dumping (19)": {"Hazmat Identified": "2 sites (paint, chemicals)", "Large Items": "8 furniture/appliance sites", "Investigation": "4 with evidence for prosecution", "Cleanup Scheduled": "Tuesday special crew", "Cameras Requested": "3 repeat locations", "Cost Recovery": "$3,200 possible fines"}, "Graffiti Removal (23)": {"Offensive Content": "4 priority removal", "Public Property": "15 city facilities", "Private Property": "8 owner notifications sent", "Gang-Related": "2 (police notified)", "Removal Method": "14 paint, 9 pressure wash", "Completion": "Priority 24hrs, others 5 days"}, "Response Metrics": {"Average Response": "4.2 days projected", "SLA Compliance": "94% within target", "Crew Hours": "287 hours allocated", "Cost Estimate": "$42,500 total", "Citizen Notification": "115 emails sent", "Mobile App Updates": "Real-time tracking enabled"}},
                     typingTime: 2000,
                     delay: 1500,
-                    action: 'step2'
+                    action: 'step3'
                 }
             ]
         }

@@ -780,13 +780,13 @@
             messages: [
                 {
                     role: 'user',
-                    content: 'Help me with this task',
+                    content: 'Port strike announced starting Monday. We have 500 containers in transit from Asia. Need contingency plan for inventory.',
                     typingTime: 1500,
                     delay: 1000
                 },
                 {
                     role: 'assistant',
-                    content: 'I\'ll help you with that. Let me process your request...',
+                    content: 'I'll create an immediate contingency plan for the port strike affecting your 500 containers from Asia. Let me assess inventory impact, identify alternatives, and develop mitigation strategies...',
                     typingTime: 2000,
                     delay: 1500,
                     action: 'step1'
@@ -798,13 +798,36 @@
             messages: [
                 {
                     role: 'assistant',
-                    content: '✅ Task completed successfully!',
+                    content: '✅ Supply Chain Contingency Plan Activated!',
                     showResult: true,
                     resultData: {
-                        result: {
-                            status: 'Complete',
-                            timestamp: new Date().toISOString(),
-                            details: 'Task processed successfully'
+                        'Disruption Impact': {
+                            'Containers Affected': '500 units in transit',
+                            'Value at Risk': '$45M inventory',
+                            'ETA Impact': '15-30 day delay expected',
+                            'Product Categories': 'Electronics, apparel, home goods',
+                            'Store Impact': '2,100 stores affected'
+                        },
+                        'Inventory Analysis': {
+                            'Current Stock': '32 days on hand',
+                            'Critical Items': '147 SKUs below safety stock',
+                            'Season Items': 'Summer collection at risk',
+                            'High Velocity': '23 best sellers impacted',
+                            'Coverage Gap': 'Weeks 3-5 most critical'
+                        },
+                        'Mitigation Actions': {
+                            'Air Freight': '50 priority containers - $2M cost',
+                            'Alt Ports': 'Reroute 150 to Houston/Savannah',
+                            'Local Sourcing': '75 SKUs from domestic suppliers',
+                            'Inventory Shift': 'Redistribute from 6 DCs',
+                            'Expedite Production': 'Next batch moved up 2 weeks'
+                        },
+                        'Financial Impact': {
+                            'Additional Costs': '$5.2M logistics premium',
+                            'Lost Sales Risk': '$8M if no action',
+                            'Mitigation ROI': '54% sales recovery',
+                            'Insurance Claim': 'Force majeure filing ready',
+                            'Vendor Negotiations': 'Cost sharing discussions started'
                         }
                     },
                     typingTime: 2000,

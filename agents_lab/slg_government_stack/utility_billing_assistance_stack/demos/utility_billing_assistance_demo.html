@@ -773,23 +773,44 @@
             endpoint: ''
         };
 
-        // Demo script
+        // Demo script - Domain-Specific Content
         const demoScript = [
         {
             type: 'conversation',
             messages: [
                 {
                     role: 'user',
-                    content: 'Help me with this task',
+                    content: 'Process utility assistance applications for 45 residents affected by recent layoffs. Average past due $450, need payment plans and identify state/federal aid eligibility. Winter moratorium considerations.',
                     typingTime: 1500,
                     delay: 1000
                 },
                 {
                     role: 'assistant',
-                    content: 'I\'ll help you with that. Let me process your request...',
+                    content: 'I'll process utility assistance applications for the 45 affected residents, establishing payment plans and identifying all available aid programs while considering winter moratorium protections...',
                     typingTime: 2000,
                     delay: 1500,
                     action: 'step1'
+                }
+            ]
+        },
+        {
+            type: 'processing',
+            messages: [
+                {
+                    role: 'assistant',
+                    content: '💡 Processing utility assistance applications...
+
+• Account Review: Past due balances and history
+• Income Verification: Unemployment status confirmed
+• Aid Programs: LIHEAP, CARE, local funds
+• Payment Plans: Calculating affordable options
+• Winter Rules: Moratorium eligibility check
+• Case Prioritization: Medical baseline customers
+
+Coordinating with social services...',
+                    typingTime: 2500,
+                    delay: 2000,
+                    action: 'step2'
                 }
             ]
         },
@@ -798,18 +819,12 @@
             messages: [
                 {
                     role: 'assistant',
-                    content: '✅ Task completed successfully!',
+                    content: '✅ Process Complete - Results Generated!',
                     showResult: true,
-                    resultData: {
-                        result: {
-                            status: 'Complete',
-                            timestamp: new Date().toISOString(),
-                            details: 'Task processed successfully'
-                        }
-                    },
+                    resultData: {"Application Summary": {"Total Applications": "45 residents", "Total Past Due": "$20,250", "Average Balance": "$450", "Moratorium Protected": "41 eligible", "Immediate Assistance": "12 critical cases", "Processing Status": "All approved for aid"}, "Assistance Approved": {"LIHEAP Federal": "32 qualify - $350 average", "CARE Discount": "38 eligible - 30% ongoing", "Emergency Fund": "12 approved - $200 each", "Utility Credits": "$8,750 total applied", "Payment Plans": "45 established", "Shutoff Prevention": "100% protected"}, "Payment Plan Details": {"Plan A (15 residents)": "$50/month x 12 months", "Plan B (20 residents)": "$75/month x 8 months", "Plan C (10 residents)": "$25/month x 18 months", "Down Payment": "Waived for all", "Interest": "0% for hardship cases", "Auto-Pay Setup": "28 enrolled (discount)"}, "Program Eligibility": {"LIHEAP": "$11,200 allocated", "State Emergency": "$2,400 approved", "County Assistance": "$3,150 available", "Nonprofit Aid": "$1,500 secured", "Total Aid": "$18,250 (90% of debt)", "Remaining Balance": "$2,000 (payment plans)"}, "Winter Protection": {"Moratorium Period": "Nov 1 - March 31", "Medical Baseline": "8 customers protected", "Seniors (65+)": "12 additional protection", "Families w/ Children": "18 protected", "Temperature Rule": "No shutoffs <32°F", "Restoration Priority": "4 reconnected today"}, "Follow-up Actions": {"Week 1": "Process LIHEAP applications", "Week 2": "Apply account credits", "Monthly": "Payment plan monitoring", "Ongoing": "Energy efficiency referrals", "Q2 2025": "Weatherization program", "Annual": "Rate assistance renewal"}},
                     typingTime: 2000,
                     delay: 1500,
-                    action: 'step2'
+                    action: 'step3'
                 }
             ]
         }
