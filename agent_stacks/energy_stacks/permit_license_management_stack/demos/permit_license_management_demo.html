@@ -780,13 +780,13 @@
             messages: [
                 {
                     role: 'user',
-                    content: 'Help me with this task',
+                    content: 'Show me all permits expiring in the next 90 days across our Texas facilities',
                     typingTime: 1500,
                     delay: 1000
                 },
                 {
                     role: 'assistant',
-                    content: 'I\'ll help you with that. Let me process your request...',
+                    content: 'Scanning permit database for Texas facilities... Analyzing expiration dates and renewal requirements...',
                     typingTime: 2000,
                     delay: 1500,
                     action: 'step1'
@@ -798,18 +798,152 @@
             messages: [
                 {
                     role: 'assistant',
-                    content: '✅ Task completed successfully!',
+                    content: `I've identified 12 permits requiring attention across your Texas operations:
+
+<strong>🔴 CRITICAL - Expiring within 30 days (3 permits):</strong>
+
+1. <strong>Air Quality Permit (TCEQ-2024-AQ-78234)</strong>
+   • Facility: Houston Refinery Unit 3
+   • Expires: March 15, 2025 (28 days)
+   • Renewal Lead Time: 60 days (ACTION OVERDUE)
+   • Annual Fee: $45,000
+   • Required Documents: Emissions inventory, stack test results
+   
+2. <strong>Wastewater Discharge Permit (TPDES-2020-WW-45)</strong>
+   • Facility: Corpus Christi Processing Plant
+   • Expires: March 22, 2025 (35 days)
+   • Renewal Lead Time: 45 days
+   • Annual Fee: $12,500
+   • Last inspection: Passed (Nov 2024)
+
+3. <strong>Underground Storage Tank Permit (UST-TX-9876)</strong>
+   • Facility: Dallas Distribution Terminal
+   • Expires: March 18, 2025 (31 days)
+   • Renewal Lead Time: 30 days
+   • Annual Fee: $3,200
+   • Compliance Status: 2 minor violations pending correction
+
+<strong>⚠️ WARNING - Expiring in 31-60 days (5 permits):</strong>
+
+4. <strong>Title V Operating Permit (TV-2020-234)</strong>
+   • Facility: Midland Gas Processing
+   • Expires: April 10, 2025 (54 days)
+   • Annual Compliance Cost: $125,000
+   • Status: Renewal application in progress (75% complete)
+
+5. <strong>Hazardous Waste Generator License (RCRA-TX-5643)</strong>
+   • Facility: Port Arthur Chemical Plant
+   • Expires: April 15, 2025 (59 days)
+   • Required Training: 8 operators need HAZWOPER renewal
+
+<strong>📋 UPCOMING - Expiring in 61-90 days (4 permits):</strong>
+• Pipeline Right-of-Way Permit (Eagle Ford region)
+• Stormwater Pollution Prevention (3 facilities)
+• Combustion Equipment Registration (2 units)
+• Railroad Commission drilling permits (6 wells)
+
+<strong>TOTAL RENEWAL COSTS:</strong> $342,500
+<strong>COMPLIANCE RISK:</strong> High - immediate action required
+<strong>RECOMMENDED ACTIONS:</strong> Initiate emergency renewal for top 3 permits today`,
                     showResult: true,
                     resultData: {
-                        result: {
-                            status: 'Complete',
-                            timestamp: new Date().toISOString(),
-                            details: 'Task processed successfully'
+                        'Permit Analysis': {
+                            'Critical Permits': '3 (expiring <30 days)',
+                            'Warning Permits': '5 (expiring 31-60 days)',
+                            'Upcoming Permits': '4 (expiring 61-90 days)',
+                            'Total Renewal Cost': '$342,500',
+                            'Compliance Risk': 'HIGH',
+                            'Facilities Affected': '8 locations',
+                            'Immediate Actions': '3 emergency renewals needed'
                         }
                     },
+                    typingTime: 3000,
+                    delay: 2000,
+                    action: 'step2'
+                }
+            ]
+        },
+        {
+            type: 'conversation',
+            messages: [
+                {
+                    role: 'user',
+                    content: 'Start the renewal process for the Houston Air Quality permit immediately',
+                    typingTime: 1500,
+                    delay: 1000
+                },
+                {
+                    role: 'assistant',
+                    content: 'Initiating emergency renewal process for Air Quality Permit TCEQ-2024-AQ-78234...',
                     typingTime: 2000,
                     delay: 1500,
-                    action: 'step2'
+                    action: 'step3'
+                }
+            ]
+        },
+        {
+            type: 'result',
+            messages: [
+                {
+                    role: 'assistant',
+                    content: `✅ Emergency renewal process initiated for Houston Refinery Air Quality Permit:
+
+<strong>ACTIONS COMPLETED:</strong>
+
+1. ✅ <strong>Renewal Application Created</strong>
+   • Form TCEQ-10233 pre-populated with facility data
+   • Previous permit conditions imported
+   • 2024 emissions data attached (3.2M tons CO2e)
+
+2. ✅ <strong>Required Documents Compiled</strong>
+   • Latest stack test results (Dec 2024) - ATTACHED
+   • Emissions inventory report - ATTACHED  
+   • Compliance certification (signed by EHS Director) - PENDING
+   • Updated P&ID diagrams - ATTACHED
+   • Environmental audit report - ATTACHED
+
+3. ✅ <strong>Fee Payment Processed</strong>
+   • Renewal fee: $45,000
+   • Expedited processing fee: $5,000
+   • Payment authorization sent to Finance (Invoice #INV-2025-3847)
+
+4. ✅ <strong>Stakeholders Notified</strong>
+   • Email sent to: Plant Manager (Jim Roberts)
+   • Email sent to: EHS Director (Sarah Chen)
+   • Email sent to: Legal Compliance (Mark Thompson)
+   • Teams meeting scheduled: Tomorrow 10 AM CST
+
+5. ✅ <strong>Compliance Tasks Created</strong>
+   • Stack testing scheduled for March 5, 2025
+   • Quarterly monitoring report due March 1, 2025
+   • Public notice requirement initiated
+
+<strong>NEXT STEPS:</strong>
+• <span style="color: #dc2626;">URGENT:</span> EHS Director signature needed by EOD
+• TCEQ submission portal opens at 8 AM tomorrow
+• Expect 10-15 business day review period
+• Temporary authorization likely while under review
+
+<strong>RISK MITIGATION:</strong>
+I've also initiated a continuity plan that allows operations under current permit terms during renewal review, preventing any production interruption.
+
+Would you like me to prepare similar renewal packages for the other two critical permits?`,
+                    showResult: true,
+                    resultData: {
+                        'Renewal Status': {
+                            'Permit Number': 'TCEQ-2024-AQ-78234',
+                            'Application Status': '85% Complete',
+                            'Documents': '5 of 6 attached',
+                            'Payment': '$50,000 authorized',
+                            'Stakeholders Notified': '4 people',
+                            'Submission Deadline': 'Tomorrow 8 AM',
+                            'Expected Approval': 'March 14, 2025',
+                            'Operational Risk': 'Mitigated'
+                        }
+                    },
+                    typingTime: 3500,
+                    delay: 2000,
+                    action: 'complete'
                 }
             ]
         }
@@ -843,9 +977,9 @@
                             <span class="message-time">${getCurrentTime()}</span>
                         </div>
                         <div class="message-text">
-                            Welcome to the Permit License Management Demo! 
+                            Welcome to the Energy Sector Permit & License Management System! 
                             
-                            Click "Start Demo" to see how I can help, or switch to "Live Mode" to connect to your system.
+                            I help energy companies track, renew, and maintain compliance for operational permits across refineries, pipelines, processing plants, and drilling operations. Click "Start Demo" to see how I prevent costly permit lapses and regulatory violations.
                         </div>
                     </div>
                 </div>

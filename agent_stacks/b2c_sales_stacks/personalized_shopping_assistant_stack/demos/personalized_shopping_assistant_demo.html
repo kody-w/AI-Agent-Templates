@@ -780,13 +780,13 @@
             messages: [
                 {
                     role: 'user',
-                    content: 'Help me with this task',
+                    content: 'I need a laptop for graphic design work, budget around $1500',
                     typingTime: 1500,
                     delay: 1000
                 },
                 {
                     role: 'assistant',
-                    content: 'I\'ll help you with that. Let me process your request...',
+                    content: 'Great! I\'ll help you find the perfect laptop for graphic design. Let me analyze your needs and check our current inventory...',
                     typingTime: 2000,
                     delay: 1500,
                     action: 'step1'
@@ -798,18 +798,154 @@
             messages: [
                 {
                     role: 'assistant',
-                    content: '✅ Task completed successfully!',
+                    content: `Based on your graphic design needs and $1500 budget, I've found 3 excellent options:
+
+🏆 <strong>TOP RECOMMENDATION: ASUS ProArt StudioBook 15</strong>
+• <strong>Price:</strong> $1,449 <span style="color: #10b981;">(🔥 15% OFF - Flash Sale)</span>
+• <strong>Display:</strong> 15.6" 4K OLED, 100% DCI-P3 color accuracy
+• <strong>Performance:</strong> Intel i7-12700H, NVIDIA RTX 3060 (6GB)
+• <strong>Memory:</strong> 32GB RAM, 1TB NVMe SSD
+• <strong>Why Perfect for You:</strong> PANTONE validated display, Adobe RGB coverage
+• 🌟 <strong>4.8/5 stars</strong> from 287 creative professionals
+• 🚚 Free shipping + Adobe Creative Cloud 3-month trial
+
+🥈 <strong>RUNNER-UP: Dell XPS 15 Creative Edition</strong>
+• <strong>Price:</strong> $1,399 (was $1,599)
+• <strong>Display:</strong> 15.6" 3.5K OLED touchscreen
+• <strong>Performance:</strong> Intel i7-12th Gen, RTX 3050 Ti
+• <strong>Memory:</strong> 16GB RAM (upgradeable), 512GB SSD
+• <strong>Bonus:</strong> Includes stylus for digital sketching
+• 🌟 <strong>4.7/5 stars</strong> from 412 reviews
+
+🥉 <strong>BUDGET WINNER: Lenovo IdeaPad Creator 5</strong>
+• <strong>Price:</strong> $1,199 <span style="color: #f59e0b;">(Save $300 for accessories!)</span>
+• <strong>Display:</strong> 15.6" 2.5K IPS, 95% sRGB
+• <strong>Performance:</strong> AMD Ryzen 7, GTX 1650
+• <strong>Memory:</strong> 16GB RAM, 512GB SSD
+• <strong>Best Value:</strong> Leaves room for external monitor or tablet
+• 🌟 <strong>4.5/5 stars</strong> from 198 reviews
+
+<strong>💡 PERSONALIZED INSIGHTS:</strong>
+• Based on "graphic design," I prioritized color-accurate displays
+• All models run Photoshop, Illustrator, and InDesign smoothly
+• The ASUS ProArt has dedicated color calibration hardware
+• Consider: 78% of designers in your range chose 32GB RAM models
+
+<strong>🎁 BUNDLE DEALS AVAILABLE:</strong>
+• Add Wacom Intuos Pro for $199 (normally $379)
+• 27" 4K External Monitor: $299 with laptop purchase
+• Extended warranty (3 years): Extra $149
+
+<strong>📊 COMPARISON TOOL:</strong>
+Would you like me to show a detailed side-by-side comparison or discuss specific software requirements?`,
                     showResult: true,
                     resultData: {
-                        result: {
-                            status: 'Complete',
-                            timestamp: new Date().toISOString(),
-                            details: 'Task processed successfully'
+                        'Shopping Assistant Results': {
+                            'Products Found': '3 laptops',
+                            'Best Match': 'ASUS ProArt StudioBook',
+                            'Price Range': '$1,199 - $1,449',
+                            'Top Feature': '4K OLED display',
+                            'Savings Available': 'Up to $150 off',
+                            'Bundle Options': '3 available',
+                            'Customer Rating': '4.8/5 stars',
+                            'Delivery': 'Free 2-day shipping'
                         }
                     },
+                    typingTime: 3000,
+                    delay: 2000,
+                    action: 'step2'
+                }
+            ]
+        },
+        {
+            type: 'conversation',
+            messages: [
+                {
+                    role: 'user',
+                    content: 'The ASUS looks great! Can you check if it\'s compatible with my existing peripherals?',
+                    typingTime: 1500,
+                    delay: 1000
+                },
+                {
+                    role: 'assistant',
+                    content: 'Absolutely! Let me check the ASUS ProArt\'s compatibility with common peripherals and your setup...',
                     typingTime: 2000,
                     delay: 1500,
-                    action: 'step2'
+                    action: 'step3'
+                }
+            ]
+        },
+        {
+            type: 'result',
+            messages: [
+                {
+                    role: 'assistant',
+                    content: `✅ <strong>COMPATIBILITY CHECK - ASUS ProArt StudioBook 15</strong>
+
+<strong>🔌 PORT CONFIGURATION:</strong>
+• <strong>3x USB-A 3.2:</strong> Perfect for existing mice, keyboards, drives
+• <strong>2x USB-C Thunderbolt 4:</strong> Supports displays, fast charging, eGPUs
+• <strong>1x HDMI 2.1:</strong> 4K@120Hz or 8K@60Hz external display
+• <strong>SD Card Reader:</strong> Direct camera import (UHS-II speeds)
+• <strong>3.5mm Audio:</strong> Headphone/mic combo jack
+• <strong>RJ45 Ethernet:</strong> Gigabit wired connection
+
+<strong>🖨️ COMMON PERIPHERALS - CONFIRMED COMPATIBLE:</strong>
+✅ Wacom tablets (all models via USB)
+✅ External monitors up to 8K resolution
+✅ Drawing displays (Huion, XP-Pen)
+✅ Color calibration tools (X-Rite, Datacolor)
+✅ External SSDs (up to 40Gbps via Thunderbolt)
+✅ Audio interfaces (USB and Thunderbolt)
+✅ Wireless mouse/keyboard (built-in Bluetooth 5.2)
+
+<strong>🔋 POWER & CHARGING:</strong>
+• Includes 180W power adapter
+• USB-C charging supported (100W PD)
+• Battery life: 8-10 hours typical design work
+• Fast charge: 50% in 30 minutes
+
+<strong>🎨 DESIGNER-SPECIFIC FEATURES:</strong>
+• ASUS Dial: Physical control wheel for brush size/zoom
+• Stylus support on trackpad (palm rejection)
+• MyASUS app: Custom color profiles per project
+• ProArt Creator Hub: Hardware monitoring
+
+<strong>📦 WHAT'S IN THE BOX:</strong>
+• ASUS ProArt StudioBook 15
+• 180W power adapter
+• USB-C to HDMI adapter
+• Carrying sleeve
+• Stylus (passive)
+
+<strong>⚠️ HEADS UP:</strong>
+• No built-in DVD drive (external USB drive needed if required)
+• Dongles not needed for most setups
+• Supports up to 3 external displays simultaneously
+
+<strong>🎁 LIMITED TIME BONUS:</strong>
+Order in the next 2 hours and get:
+• FREE USB-C hub (7-in-1, $79 value)
+• FREE laptop stand ($49 value)
+• 6 months Adobe Creative Cloud ($359 value)
+
+🛒 <strong>Add to cart now?</strong> Only 3 units left at this price!
+Or would you like to see customer reviews from other graphic designers?`,
+                    showResult: true,
+                    resultData: {
+                        'Compatibility Report': {
+                            'USB Ports': '5 total (3x USB-A, 2x USB-C)',
+                            'Display Support': 'Up to 3 external monitors',
+                            'Peripheral Compatibility': '100% compatible',
+                            'Included Accessories': '5 items',
+                            'Bonus Value': '$487 in freebies',
+                            'Stock Status': '3 units remaining',
+                            'Warranty': '1 year (extendable to 3)'
+                        }
+                    },
+                    typingTime: 3500,
+                    delay: 2000,
+                    action: 'complete'
                 }
             ]
         }
@@ -843,9 +979,9 @@
                             <span class="message-time">${getCurrentTime()}</span>
                         </div>
                         <div class="message-text">
-                            Welcome to the Personalized Shopping Assistant Demo! 
+                            Welcome to your AI Shopping Assistant! 
                             
-                            Click "Start Demo" to see how I can help, or switch to "Live Mode" to connect to your system.
+                            I help you find perfect products by understanding your needs, comparing options, checking compatibility, and finding the best deals. Click "Start Demo" to experience personalized shopping recommendations tailored just for you!
                         </div>
                     </div>
                 </div>

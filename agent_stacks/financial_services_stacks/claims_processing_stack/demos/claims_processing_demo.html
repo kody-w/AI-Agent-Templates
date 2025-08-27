@@ -780,13 +780,13 @@
             messages: [
                 {
                     role: 'user',
-                    content: 'Help me with this task',
+                    content: 'Process auto accident claim #CLM-2025-3847. Customer hit a deer on Highway 101 last night.',
                     typingTime: 1500,
                     delay: 1000
                 },
                 {
                     role: 'assistant',
-                    content: 'I\'ll help you with that. Let me process your request...',
+                    content: 'Retrieving claim details and initiating comprehensive processing workflow for auto accident claim CLM-2025-3847...',
                     typingTime: 2000,
                     delay: 1500,
                     action: 'step1'
@@ -798,18 +798,181 @@
             messages: [
                 {
                     role: 'assistant',
-                    content: '✅ Task completed successfully!',
+                    content: `📁 <strong>CLAIM PROCESSING INITIATED - Auto Accident CLM-2025-3847</strong>
+
+<strong>👥 POLICYHOLDER INFORMATION:</strong>
+• Name: Jennifer Martinez
+• Policy #: AUTO-CA-789456
+• Coverage: Comprehensive + Collision
+• Deductible: $500
+• Claims History: 1 claim in past 5 years (not at fault)
+• Premium Status: Current (no outstanding payments)
+
+<strong>🚗 VEHICLE DETAILS:</strong>
+• 2022 Honda CR-V EX-L
+• VIN: 7FARW2H89NE123456
+• Current Value: $32,500 (per Kelley Blue Book)
+• Mileage: 24,387
+• Prior Damage: None reported
+
+<strong>🚨 INCIDENT ANALYSIS:</strong>
+• Date/Time: March 14, 2025, 11:47 PM
+• Location: Highway 101 Mile Marker 42 (GPS verified)
+• Weather: Clear, dry conditions (NOAA confirmed)
+• Police Report: #PR-2025-8974 (obtained automatically)
+• Type: Animal collision (deer) - covered under comprehensive
+• Injuries: None reported
+• Towing: AAA to Certified Auto Body ($175)
+
+<strong>🖼️ SUBMITTED DOCUMENTATION:</strong>
+✅ Photos (12): Front bumper, hood, windshield damage
+✅ Police Report: Uploaded and verified
+✅ Towing Receipt: $175 (reimbursable)
+✅ Initial Repair Estimate: $4,850 from Certified Auto Body
+
+<strong>🔍 AI FRAUD DETECTION ANALYSIS:</strong>
+• Risk Score: <span style="color: #10b981;">LOW (12/100)</span>
+• Location verified via phone GPS
+• Damage consistent with deer collision patterns
+• No red flags detected
+• Weather/time corroborates wildlife activity
+
+<strong>💰 SETTLEMENT CALCULATION:</strong>
+• Repair Estimate: $4,850
+• Towing: $175
+• Rental Car (7 days): $280
+• <strong>Total Claim:</strong> $5,305
+• <strong>Less Deductible:</strong> -$500
+• <strong>APPROVED PAYOUT:</strong> <span style="color: #10b981; font-size: 1.2em;">$4,805</span>
+
+<strong>✅ AUTOMATED ACTIONS COMPLETED:</strong>
+1. Verified coverage and policy status
+2. Obtained police report from database
+3. Ran fraud detection algorithms
+4. Cross-referenced repair estimate with database
+5. Reserved rental car with Enterprise (confirmed)
+6. Scheduled adjuster video inspection for tomorrow 2 PM
+7. Notified preferred repair shop of incoming vehicle
+
+<strong>📧 CUSTOMER COMMUNICATION:</strong>
+• SMS sent: Claim approved, next steps provided
+• Email sent: Detailed settlement breakdown
+• App notification: Digital claim card available
+
+<strong>NEXT STEPS:</strong>
+• Customer can proceed to Certified Auto Body immediately
+• Rental car available for pickup
+• Payment processing: Direct deposit in 24-48 hours`,
                     showResult: true,
                     resultData: {
-                        result: {
-                            status: 'Complete',
-                            timestamp: new Date().toISOString(),
-                            details: 'Task processed successfully'
+                        'Claim Processing Summary': {
+                            'Claim Number': 'CLM-2025-3847',
+                            'Status': 'APPROVED',
+                            'Settlement Amount': '$4,805',
+                            'Processing Time': '4 minutes 32 seconds',
+                            'Fraud Risk': 'Low (12/100)',
+                            'Policy Verified': 'Yes - Active',
+                            'Documents Processed': '14 items',
+                            'Payment Method': 'Direct Deposit'
                         }
                     },
+                    typingTime: 3000,
+                    delay: 2000,
+                    action: 'step2'
+                }
+            ]
+        },
+        {
+            type: 'conversation',
+            messages: [
+                {
+                    role: 'user',
+                    content: 'The customer just called - can we expedite payment since their only vehicle is damaged?',
+                    typingTime: 1500,
+                    delay: 1000
+                },
+                {
+                    role: 'assistant',
+                    content: 'Checking customer priority status and available expedite options...',
                     typingTime: 2000,
                     delay: 1500,
-                    action: 'step2'
+                    action: 'step3'
+                }
+            ]
+        },
+        {
+            type: 'result',
+            messages: [
+                {
+                    role: 'assistant',
+                    content: `⚡ <strong>PAYMENT EXPEDITE REQUEST PROCESSED</strong>
+
+<strong>🌟 CUSTOMER PRIORITY ASSESSMENT:</strong>
+• Single Vehicle Household: CONFIRMED
+• Customer Since: 2018 (7 years)
+• Lifetime Value: $14,280 in premiums
+• Payment History: Excellent (never late)
+• Priority Status: <span style="color: #f59e0b;">GOLD MEMBER</span>
+
+<strong>💳 EXPEDITED PAYMENT APPROVED:</strong>
+• Original Timeline: 24-48 hours
+• <strong>NEW TIMELINE: 2-4 HOURS</strong>
+• Payment Method: ACH Express Transfer
+• Amount: $4,805.00
+• Confirmation #: EXP-PAY-789456
+
+<strong>🚗 ENHANCED SERVICES ACTIVATED:</strong>
+
+1. <strong>Premium Rental Upgrade:</strong>
+   • Original: Economy car
+   • Upgraded to: Honda CR-V (same as damaged vehicle)
+   • Extended to: 10 days (no extra charge)
+   • Delivery: To customer’s home by 5 PM today
+
+2. <strong>Concierge Repair Service:</strong>
+   • Dedicated service advisor assigned
+   • Daily progress updates via text
+   • Priority queue at repair shop (saves 2-3 days)
+   • Direct billing - no out-of-pocket needed
+
+3. <strong>Additional Support:</strong>
+   • $50 Uber credit activated immediately
+   • Dedicated claims specialist: Sarah Chen
+   • Direct line: 1-800-FAST-CLM ext 4823
+
+<strong>📨 REAL-TIME NOTIFICATIONS SENT:</strong>
+✅ SMS: "Payment expedited - funds arriving in 2-4 hours"
+✅ Email: Detailed expedite confirmation
+✅ App: Push notification with tracking
+✅ Phone: Automated courtesy call placed
+
+<strong>🎯 RETENTION OPPORTUNITY IDENTIFIED:</strong>
+System recommends offering:
+• Accident forgiveness add-on (prevent rate increase)
+• Only $8/month with current claim waiver
+• Script prepared for agent follow-up
+
+<strong>CUSTOMER SATISFACTION TRACKING:</strong>
+• Expedite requests: 89% become promoters (NPS)
+• Retention rate: 94% after expedited claims
+• Follow-up survey scheduled for day 7
+
+Is there anything else I can help expedite for Ms. Martinez?`,
+                    showResult: true,
+                    resultData: {
+                        'Expedite Status': {
+                            'Payment Speed': '2-4 hours (expedited)',
+                            'Rental Upgrade': 'Honda CR-V delivered',
+                            'Priority Repairs': 'Queue jumped - saves 3 days',
+                            'Customer Value': 'GOLD - 7 year customer',
+                            'Additional Benefits': '$50 Uber + Concierge',
+                            'Specialist Assigned': 'Sarah Chen',
+                            'Satisfaction Predicted': '94% likely promoter'
+                        }
+                    },
+                    typingTime: 3500,
+                    delay: 2000,
+                    action: 'complete'
                 }
             ]
         }
@@ -843,9 +1006,9 @@
                             <span class="message-time">${getCurrentTime()}</span>
                         </div>
                         <div class="message-text">
-                            Welcome to the Claims Processing Demo! 
+                            Welcome to the AI-Powered Insurance Claims Processing System! 
                             
-                            Click "Start Demo" to see how I can help, or switch to "Live Mode" to connect to your system.
+                            I automate claim intake, fraud detection, damage assessment, and settlement calculation in minutes instead of days. Click "Start Demo" to see how I transform claims processing with intelligent automation.
                         </div>
                     </div>
                 </div>

@@ -780,13 +780,13 @@
             messages: [
                 {
                     role: 'user',
-                    content: 'Help me with this task',
+                    content: 'Show me the health scores for our top 10 consulting clients and flag any at risk',
                     typingTime: 1500,
                     delay: 1000
                 },
                 {
                     role: 'assistant',
-                    content: 'I\'ll help you with that. Let me process your request...',
+                    content: 'Analyzing client engagement metrics, project satisfaction scores, and financial indicators across your portfolio...',
                     typingTime: 2000,
                     delay: 1500,
                     action: 'step1'
@@ -798,18 +798,212 @@
             messages: [
                 {
                     role: 'assistant',
-                    content: '✅ Task completed successfully!',
+                    content: `📊 <strong>CLIENT HEALTH SCORE ANALYSIS - Top 10 Accounts</strong>
+
+<strong>🔴 CRITICAL RISK (Immediate Action Required):</strong>
+
+1. <strong>TechCorp Industries</strong> - Score: <span style="color: #dc2626;">42/100 ↓ -18</span>
+   • Contract Value: $2.4M annually
+   • Engagement: 3 months since last executive contact
+   • Satisfaction: Dropped from 8.2 to 5.1 (last project issues)
+   • Invoice Status: 67 days overdue ($340K outstanding)
+   • Risk Factors: Key stakeholder left, considering competitor
+   • 🚨 ACTION: Schedule CEO call TODAY
+
+<strong>⚠️ AT RISK (Intervention Needed):</strong>
+
+2. <strong>Global Finance Corp</strong> - Score: <span style="color: #f59e0b;">58/100 ↓ -7</span>
+   • Contract Value: $1.8M annually  
+   • Utilization: Only 45% of contracted hours used
+   • NPS: -20 (detractor status)
+   • Project Status: 2 deliverables delayed
+   • Renewal Risk: High (expires in 90 days)
+
+3. <strong>Healthcare Solutions Inc</strong> - Score: <span style="color: #f59e0b;">61/100 →</span>
+   • Contract Value: $900K annually
+   • Adoption: 23% below target metrics
+   • Support Tickets: 47 open (15 critical)
+   • Stakeholder Sentiment: Mixed (new CTO skeptical)
+
+<strong>🟡 STABLE (Monitor):</strong>
+
+4. <strong>Retail Dynamics</strong> - Score: <span style="color: #eab308;">74/100 ↑ +3</span>
+   • Contract Value: $3.1M annually
+   • Satisfaction: 7.8/10 (improving)
+   • Growth Opportunity: Discussing $500K expansion
+
+5. <strong>Manufacturing Plus</strong> - Score: <span style="color: #eab308;">72/100 →</span>
+   • Contract Value: $1.2M annually
+   • Steady engagement, payment on time
+
+<strong>🟢 HEALTHY (Growth Opportunities):</strong>
+
+6. <strong>CloudFirst Software</strong> - Score: <span style="color: #10b981;">88/100 ↑ +5</span>
+   • Contract Value: $4.2M annually
+   • NPS: +72 (strong promoter)
+   • Expansion: Approved $1.2M add-on project
+   • Reference: Willing to do case study
+
+7. <strong>Energy Innovations</strong> - Score: <span style="color: #10b981;">91/100 ↑ +8</span>
+   • Contract Value: $2.7M annually
+   • 100% on-time delivery record
+   • Executive Sponsor: CEO actively engaged
+
+8-10. <strong>DataTech, SecureNet, LogiCorp</strong> - Scores: 82-85/100
+   • Combined Value: $5.4M annually
+   • All stable with upsell opportunities
+
+<strong>📈 PORTFOLIO INSIGHTS:</strong>
+• Total Portfolio Value: $22.3M
+• At-Risk Revenue: $5.1M (23%)
+• Average Health Score: 71/100 (↓ -4 from last quarter)
+• Churn Prediction: 2 clients likely to leave without intervention
+
+<strong>🎯 RECOMMENDED ACTIONS:</strong>
+1. 🔴 TechCorp: Emergency retention meeting with full team
+2. 🟡 Global Finance: Renegotiate contract terms, offer credits
+3. 🟢 CloudFirst: Leverage for reference sales
+4. Portfolio: Implement weekly health score reviews
+
+<strong>🔔 AI PREDICTIONS:</strong>
+• 78% chance TechCorp churns without intervention
+• Global Finance likely to renew with 30% reduction
+• CloudFirst expansion could reach $2M additional`,
                     showResult: true,
                     resultData: {
-                        result: {
-                            status: 'Complete',
-                            timestamp: new Date().toISOString(),
-                            details: 'Task processed successfully'
+                        'Portfolio Health Summary': {
+                            'Critical Risk': '1 client ($2.4M)',
+                            'At Risk': '2 clients ($2.7M)',
+                            'Stable': '2 clients ($4.3M)',
+                            'Healthy': '5 clients ($12.9M)',
+                            'Average Score': '71/100',
+                            'Revenue at Risk': '$5.1M (23%)',
+                            'Top Action': 'TechCorp CEO call today'
                         }
                     },
+                    typingTime: 3000,
+                    delay: 2000,
+                    action: 'step2'
+                }
+            ]
+        },
+        {
+            type: 'conversation',
+            messages: [
+                {
+                    role: 'user',
+                    content: 'Create an action plan to save TechCorp and show me what touchpoints we\'ve had',
+                    typingTime: 1500,
+                    delay: 1000
+                },
+                {
+                    role: 'assistant',
+                    content: 'Analyzing TechCorp engagement history and generating strategic retention plan...',
                     typingTime: 2000,
                     delay: 1500,
-                    action: 'step2'
+                    action: 'step3'
+                }
+            ]
+        },
+        {
+            type: 'result',
+            messages: [
+                {
+                    role: 'assistant',
+                    content: `🎯 <strong>TECHCORP RETENTION STRATEGY - Critical Account Save Plan</strong>
+
+<strong>📅 ENGAGEMENT HISTORY (Last 6 Months):</strong>
+
+<span style="color: #10b981;">6 months ago:</span> Successful project kickoff (Score: 85/100)
+<span style="color: #10b981;">5 months ago:</span> Phase 1 delivered on time
+<span style="color: #f59e0b;">4 months ago:</span> Budget overrun flagged ($200K)
+<span style="color: #dc2626;">3 months ago:</span> Key stakeholder (John Davis, CTO) resigned
+<span style="color: #dc2626;">2 months ago:</span> Project delay, quality issues reported
+<span style="color: #dc2626;">6 weeks ago:</span> Invoice dispute started
+<span style="color: #dc2626;">3 weeks ago:</span> Competitor (Accenture) spotted on-site
+<span style="color: #dc2626;">Last week:</span> Contract renewal discussion postponed
+
+<strong>🔍 ROOT CAUSE ANALYSIS:</strong>
+1. Loss of executive champion (CTO departure)
+2. New stakeholder not briefed on value delivered
+3. Project team burnout (3 resources changed)
+4. Communication gap - no executive reviews for 3 months
+5. Invoice dispute creating negative sentiment
+
+<strong>🚀 30-DAY RETENTION ACTION PLAN:</strong>
+
+<strong>WEEK 1 - Immediate Stabilization:</strong>
+• <strong>Day 1:</strong> CEO to CEO call (your CEO + their CEO)
+  - Acknowledge issues, commit to resolution
+  - Offer immediate remediation plan
+• <strong>Day 2:</strong> Resolve invoice dispute
+  - Apply $50K good faith credit
+  - Payment plan for outstanding balance
+• <strong>Day 3:</strong> Deploy "SWAT team"
+  - Your best senior consultant on-site
+  - Fix critical project issues
+
+<strong>WEEK 2 - Rebuild Trust:</strong>
+• Executive Business Review with new CTO
+• Present value realization report:
+  - $4.2M cost savings delivered to date
+  - 34% efficiency improvement metrics
+  - 12 successful implementations
+• Introduce dedicated account team
+• Offer complimentary strategic workshop
+
+<strong>WEEK 3 - Demonstrate Value:</strong>
+• Quick win: Deliver delayed milestone
+• Implement weekly stakeholder updates
+• Share industry best practices session
+• Provide benchmark study showing ROI
+
+<strong>WEEK 4 - Secure Future:</strong>
+• Present revised contract terms:
+  - 20% discount for 2-year commitment
+  - Success guarantee with SLAs
+  - Executive sponsor program
+• Roadmap session for next phase
+• Introduction to innovation lab offerings
+
+<strong>💰 RETENTION INVESTMENT:</strong>
+• Credits & Discounts: $480K
+• Additional Resources: $120K
+• Total Investment: $600K
+• Revenue Protected: $2.4M/year
+• ROI: 300% over 2 years
+
+<strong>📧 STAKEHOLDER OUTREACH PLAN:</strong>
+1. <strong>Sarah Mitchell (New CTO):</strong> Technical deep dive Tuesday
+2. <strong>Mark Thompson (CFO):</strong> ROI review Wednesday  
+3. <strong>Jennifer Lee (COO):</strong> Process optimization Thursday
+4. <strong>David Kim (CEO):</strong> Strategic partnership Friday
+
+<strong>✅ AUTOMATED ACTIONS INITIATED:</strong>
+• Calendar invites sent to all stakeholders
+• Executive briefing deck prepared
+• Account team notified and briefed
+• Success metrics dashboard created
+• Escalation process activated
+
+<strong>SUCCESS PROBABILITY:</strong>
+With full plan execution: <span style="color: #10b981;">73% retention likelihood</span>
+Without intervention: <span style="color: #dc2626;">22% retention likelihood</span>`,
+                    showResult: true,
+                    resultData: {
+                        'TechCorp Retention Plan': {
+                            'Account Value': '$2.4M annual',
+                            'Current Risk': 'CRITICAL',
+                            'Retention Investment': '$600K',
+                            'Success Probability': '73% with plan',
+                            'Key Action': 'CEO call Day 1',
+                            'Decision Deadline': '30 days',
+                            'ROI if Saved': '300% over 2 years'
+                        }
+                    },
+                    typingTime: 3500,
+                    delay: 2000,
+                    action: 'complete'
                 }
             ]
         }
@@ -843,9 +1037,9 @@
                             <span class="message-time">${getCurrentTime()}</span>
                         </div>
                         <div class="message-text">
-                            Welcome to the Client Health Score Demo! 
+                            Welcome to the Client Health Score Intelligence System! 
                             
-                            Click "Start Demo" to see how I can help, or switch to "Live Mode" to connect to your system.
+                            I analyze client engagement, satisfaction, and financial metrics to predict churn risk and identify growth opportunities across your consulting portfolio. Click "Start Demo" to see proactive client retention in action.
                         </div>
                     </div>
                 </div>

@@ -780,13 +780,13 @@
             messages: [
                 {
                     role: 'user',
-                    content: 'Help me with this task',
+                    content: 'What are our top 3 competitors doing in the AI/ML space and how does our product compare?',
                     typingTime: 1500,
                     delay: 1000
                 },
                 {
                     role: 'assistant',
-                    content: 'I\'ll help you with that. Let me process your request...',
+                    content: 'Analyzing competitor movements in AI/ML, scanning recent announcements, pricing changes, and feature releases...',
                     typingTime: 2000,
                     delay: 1500,
                     action: 'step1'
@@ -798,17 +798,50 @@
             messages: [
                 {
                     role: 'assistant',
-                    content: '✅ Task completed successfully!',
+                    content: `🎯 <strong>COMPETITIVE INTELLIGENCE REPORT - AI/ML Space</strong>
+
+<strong>🥇 COMPETITOR #1: DataFlow AI</strong>
+<strong>Recent Moves:</strong>
+• <span style="color: #dc2626;">NEW:</span> Launched AutoML 3.0 yesterday
+• Pricing: Dropped enterprise tier by 25% ($4,999/mo)
+• Feature: No-code model training
+• Partnership: AWS exclusive deal
+• Funding: $125M Series C
+
+<strong>Their Strengths vs Ours:</strong>
+✅ 3x faster model training
+✅ Better documentation
+❌ We win on: Accuracy (+12%), Custom models
+
+<strong>🥈 COMPETITOR #2: NeuralStack</strong>
+<strong>Recent Moves:</strong>
+• Computer Vision v4.2 update
+• Healthcare expansion
+• Major outage last week (14hr)
+
+<strong>🥉 COMPETITOR #3: Quantum ML</strong>
+<strong>Recent Moves:</strong>
+• Open sourced core engine
+• Edge deployment focus
+• 40% QoQ growth in fintech
+
+<strong>📊 OUR POSITION:</strong>
+• Win Rate vs DataFlow: 38% ↓
+• Key Gap: No-code interface
+• Advantage: Enterprise compliance
+• Action: Match pricing + launch no-code beta`,
                     showResult: true,
                     resultData: {
-                        result: {
-                            status: 'Complete',
-                            timestamp: new Date().toISOString(),
-                            details: 'Task processed successfully'
+                        'Competitive Analysis': {
+                            'Top Threat': 'DataFlow AI',
+                            'Market Position': '#2 Enterprise',
+                            'Win Rate': '38% vs leader',
+                            'Key Gap': 'No-code interface',
+                            'Action Priority': 'Price match + beta'
                         }
                     },
-                    typingTime: 2000,
-                    delay: 1500,
+                    typingTime: 3000,
+                    delay: 2000,
                     action: 'step2'
                 }
             ]
@@ -843,9 +876,9 @@
                             <span class="message-time">${getCurrentTime()}</span>
                         </div>
                         <div class="message-text">
-                            Welcome to the Competitive Intelligence Demo! 
+                            Welcome to the Competitive Intelligence Command Center! 
                             
-                            Click "Start Demo" to see how I can help, or switch to "Live Mode" to connect to your system.
+                            I track competitor moves, analyze market positioning, and generate battle cards to help your sales team win. Click "Start Demo" to see real-time competitive analysis.
                         </div>
                     </div>
                 </div>

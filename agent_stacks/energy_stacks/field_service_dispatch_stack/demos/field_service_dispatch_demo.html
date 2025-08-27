@@ -780,13 +780,13 @@
             messages: [
                 {
                     role: 'user',
-                    content: 'Power outage affecting 2000 customers in downtown. Dispatch nearest crew and estimate restoration',
+                    content: 'CRITICAL: Transformer explosion at Substation 47-B affecting 2,000 customers in downtown. Need immediate dispatch',
                     typingTime: 1500,
                     delay: 1000
                 },
                 {
                     role: 'assistant',
-                    content: 'I\'ll help you with that. Let me process your request...',
+                    content: '🚨 Emergency detected. Analyzing outage scope, locating available crews, and checking equipment inventory...',
                     typingTime: 2000,
                     delay: 1500,
                     action: 'step1'
@@ -798,18 +798,169 @@
             messages: [
                 {
                     role: 'assistant',
-                    content: '✅ Task completed successfully!',
+                    content: `🔴 <strong>EMERGENCY DISPATCH INITIATED - Substation 47-B Transformer Failure</strong>
+
+<strong>OUTAGE DETAILS:</strong>
+• Location: Downtown Grid Section 12 (34.0522°N, 118.2437°W)
+• Customers Affected: 2,147 (including 1 hospital, 3 schools)
+• Critical Infrastructure: Regional Medical Center on backup power (4 hrs remaining)
+• Cause: 138kV transformer explosion - confirmed via SCADA telemetry
+• Weather: Clear, 72°F, winds 5mph NW
+
+<strong>👷 CREW DISPATCH STATUS:</strong>
+
+1. <strong>Crew Alpha-7 (DISPATCHED)</strong>
+   • Location: 3.2 miles away (ETA: 12 minutes)
+   • Lead Tech: Mike Rodriguez (20 yrs experience, HV specialist)
+   • Crew Size: 4 technicians + 1 apprentice
+   • Equipment: Bucket truck, 138kV rated PPE, portable ground sets
+   • Status: En route - Code 3 with police escort
+
+2. <strong>Crew Bravo-3 (STANDBY)</strong>
+   • Location: 8.5 miles away (ETA: 25 minutes)
+   • Currently finishing residential restoration
+   • Available as backup crew
+
+3. <strong>Emergency Response Team (MOBILIZING)</strong>
+   • Hazmat unit for transformer oil containment
+   • Environmental compliance officer notified
+   • Fire department on scene for cooling
+
+<strong>🔧 EQUIPMENT & PARTS STATUS:</strong>
+• Replacement Transformer: 138kV unit available at Central Warehouse
+• Mobile Substation: Unit MS-03 being prepped (45 min to site)
+• Required Parts: All critical components in stock
+• Heavy Equipment: Crane contractor notified (Morrison Heavy Lift)
+
+<strong>⏱ RESTORATION TIMELINE:</strong>
+• T+00:12 - Crew arrival & safety assessment
+• T+00:45 - Mobile substation connection begins
+• T+02:00 - Partial restoration (1,000 customers)
+• T+04:00 - Hospital grid priority restoration
+• T+08:00 - Full restoration with mobile unit
+• T+72:00 - Permanent transformer replacement
+
+<strong>📞 CUSTOMER COMMUNICATION:</strong>
+• Automated calls sent: 2,147 customers
+• Text alerts: 1,892 enrolled customers notified
+• Social media: Updates posted to Twitter/Facebook
+• Media statement: Prepared for 6 PM news cycle
+• Website: Outage map updated with restoration ETAs
+
+<strong>ESTIMATED RESTORATION:</strong> 8:00 PM tonight (temporary)
+<strong>CREW SAFETY BRIEFING:</strong> Completed - all hazards identified
+<strong>SWITCHING ORDERS:</strong> Approved by Grid Operations`,
                     showResult: true,
                     resultData: {
-                        result: {
-                            status: 'Complete',
-                            timestamp: new Date().toISOString(),
-                            details: 'Task processed successfully'
+                        'Emergency Response': {
+                            'Incident Type': 'Transformer Explosion',
+                            'Priority': 'CRITICAL - P1',
+                            'Customers Affected': '2,147',
+                            'Crew Dispatched': 'Alpha-7 (ETA 12 min)',
+                            'Restoration Time': '8 hours',
+                            'Hospital Status': 'On backup (4hr remaining)',
+                            'Mobile Substation': 'MS-03 deploying',
+                            'Safety Status': 'Area secured'
                         }
                     },
+                    typingTime: 3000,
+                    delay: 2000,
+                    action: 'step2'
+                }
+            ]
+        },
+        {
+            type: 'conversation',
+            messages: [
+                {
+                    role: 'user',
+                    content: 'Good. Also schedule routine maintenance for the 5 distribution transformers due this week',
+                    typingTime: 1500,
+                    delay: 1000
+                },
+                {
+                    role: 'assistant',
+                    content: 'Analyzing maintenance schedule and optimizing crew routes for 5 distribution transformers...',
                     typingTime: 2000,
                     delay: 1500,
-                    action: 'step2'
+                    action: 'step3'
+                }
+            ]
+        },
+        {
+            type: 'result',
+            messages: [
+                {
+                    role: 'assistant',
+                    content: `📅 <strong>ROUTINE MAINTENANCE SCHEDULE OPTIMIZED</strong>
+
+<strong>5 Distribution Transformers - Preventive Maintenance Due This Week:</strong>
+
+<strong>MONDAY, MARCH 18 - Crew Delta-2</strong>
+🕰 08:00-10:30 | <strong>DT-4821</strong> (25kVA Residential)
+• Location: Oak Street & 5th Avenue
+• Last Service: 09/18/2024 (6 months ago)
+• Oil Test Results: Dielectric strength declining (action needed)
+• Customer Notice: 47 residents notified of 2hr planned outage
+
+🕰 11:00-13:30 | <strong>DT-4822</strong> (50kVA Commercial)
+• Location: Industrial Park Zone B
+• Work: Bushing replacement, oil filtering
+• Parts: Pre-staged at location
+• Customer: Miller Manufacturing (scheduled during lunch break)
+
+<strong>WEDNESDAY, MARCH 20 - Crew Charlie-5</strong>
+🕰 07:00-11:00 | <strong>DT-4823</strong> (75kVA Padmount)
+• Location: Riverside Shopping Center
+• Issue: Thermal imaging showed hot spot (85°C) on C-phase
+• Priority: Elevated due to thermal anomaly
+• Backup Power: Mobile generator on standby for retailers
+
+<strong>THURSDAY, MARCH 21 - Crew Echo-1</strong>
+🕰 09:00-11:30 | <strong>DT-4824</strong> (37.5kVA Pole Mount)
+• Location: Rural Route 47
+• Access: 4WD required, weather dependent
+• Wildlife Protection: Installing guards (osprey nest nearby)
+
+🕰 14:00-16:30 | <strong>DT-4825</strong> (100kVA School)
+• Location: Jefferson Elementary
+• Coordination: After school hours only
+• Special Requirements: Background checks completed for all techs
+
+<strong>🚚 CREW OPTIMIZATION METRICS:</strong>
+• Total Drive Time: Reduced by 34% through route optimization
+• Fuel Savings: 47 miles less than original schedule
+• Crew Hours: 28 total (within regular shifts, no OT required)
+• Parts Efficiency: All materials pre-positioned at sites
+
+<strong>🔍 MAINTENANCE PRIORITIES:</strong>
+1. DT-4823: Thermal anomaly (potential failure risk)
+2. DT-4821: Degrading oil quality  
+3. DT-4825: School infrastructure
+4. Others: Standard preventive maintenance
+
+<strong>📦 EQUIPMENT & SUPPLIES:</strong>
+• Oil Testing Kits: 5 units allocated
+• Replacement Bushings: In stock for all units
+• PPE Inspection: All crews compliant
+• Test Equipment: Calibrated and ready
+
+All maintenance windows coordinated with customers. Outage notifications sent via automated system. Weather forecast favorable for all scheduled dates.`,
+                    showResult: true,
+                    resultData: {
+                        'Maintenance Schedule': {
+                            'Transformers Scheduled': '5 units',
+                            'Crew Hours': '28 hours',
+                            'Route Optimization': '34% improvement',
+                            'High Priority': 'DT-4823 (thermal issue)',
+                            'Customer Notifications': 'All sent',
+                            'Completion Date': 'March 21, 2025',
+                            'Cost Savings': '$3,400 in efficiency gains'
+                        }
+                    },
+                    typingTime: 3500,
+                    delay: 2000,
+                    action: 'complete'
                 }
             ]
         }
@@ -843,9 +994,9 @@
                             <span class="message-time">${getCurrentTime()}</span>
                         </div>
                         <div class="message-text">
-                            Welcome to the Field Service Dispatch Demo! 
+                            Welcome to the Energy Field Service Dispatch System! 
                             
-                            Click "Start Demo" to see how I can help, or switch to "Live Mode" to connect to your system.
+                            I optimize emergency response and routine maintenance dispatch for utility crews, considering technician skills, location, equipment availability, and customer priority. Click "Start Demo" to see real-time crew coordination in action.
                         </div>
                     </div>
                 </div>

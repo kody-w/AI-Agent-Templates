@@ -786,7 +786,7 @@
                 },
                 {
                     role: 'assistant',
-                    content: 'I\'ll help you with that. Let me process your request...',
+                    content: 'Analyzing diabetic patient population for HEDIS care gaps and quality measure compliance...',
                     typingTime: 2000,
                     delay: 1500,
                     action: 'step1'
@@ -798,17 +798,50 @@
             messages: [
                 {
                     role: 'assistant',
-                    content: '✅ Task completed successfully!',
+                    content: `🏥 <strong>DIABETIC CARE GAP ANALYSIS - 1,247 Patients</strong>
+
+<strong>🔴 CRITICAL GAPS:</strong>
+
+<strong>142 Patients - Overdue A1C (>6 months)</strong>
+• High Risk (A1C >9.0): 47 patients
+• Medicare: 89 patients ($445/patient at risk)
+• Top Barrier: Transportation (34%)
+
+<strong>89 Patients - Missing Eye Exam</strong>
+• Retinopathy Risk: 23 patients
+• Never examined: 12 patients
+
+<strong>76 Patients - No Foot Exam</strong>
+• Neuropathy: 28 patients
+• Ulcer history: 8 patients
+
+<strong>📊 QUALITY IMPACT:</strong>
+• HEDIS Score: 72% (need 75%)
+• Revenue Risk: $387,450
+• Star Rating: -0.5 stars
+
+<strong>🎯 TOP PRIORITY:</strong>
+1. Rodriguez, M. - A1C 11.2%, multiple gaps
+2. Johnson, R. - Neuropathy, no foot exam
+3. Chen, L. - New diagnosis, 4 gaps
+
+<strong>📧 OUTREACH INITIATED:</strong>
+• 234 texts sent
+• 142 calls queued
+• Mobile clinic scheduled
+• Saturday slots opened`,
                     showResult: true,
                     resultData: {
-                        result: {
-                            status: 'Complete',
-                            timestamp: new Date().toISOString(),
-                            details: 'Task processed successfully'
+                        'Care Gaps': {
+                            'Total Patients': '1,247',
+                            'With Gaps': '307 (24.6%)',
+                            'Revenue Risk': '$387,450',
+                            'HEDIS Score': '72%',
+                            'Outreach Sent': '234 patients'
                         }
                     },
-                    typingTime: 2000,
-                    delay: 1500,
+                    typingTime: 3000,
+                    delay: 2000,
                     action: 'step2'
                 }
             ]
@@ -843,9 +876,9 @@
                             <span class="message-time">${getCurrentTime()}</span>
                         </div>
                         <div class="message-text">
-                            Welcome to the Care Gap Closure Agent Demo! 
+                            Welcome to the Care Gap Closure Intelligence System! 
                             
-                            Click "Start Demo" to see how I can help, or switch to "Live Mode" to connect to your system.
+                            I identify missing preventive care, analyze quality metrics, and automate patient outreach to improve HEDIS scores. Click "Start Demo" to see population health management in action.
                         </div>
                     </div>
                 </div>
