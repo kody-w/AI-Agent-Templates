@@ -1,0 +1,58 @@
+{
+  "id": "care_gap_closure_stack",
+  "name": "Care Gap Closure Agent Stack",
+  "version": "1.0.0",
+  "description": "Identifies missing screenings and automates patient outreach",
+  "category": "healthcare",
+  "complexity": "intermediate",
+  "features": [
+    "Preventive care reminders",
+    "Chronic disease management",
+    "Quality measure tracking"
+  ],
+  "benefits": [
+    "Improves quality scores",
+    "Increases preventive care compliance",
+    "Reduces readmission rates"
+  ],
+  "technicalRequirements": {
+    "platforms": [
+      "Windows",
+      "macOS",
+      "Linux"
+    ],
+    "dependencies": [
+      "Python 3.8+",
+      "requests",
+      "json"
+    ],
+    "apiKeys": [
+      "EHR_API_KEY",
+      "CRM_API_KEY"
+    ],
+    "integrations": [
+      "EHR",
+      "CRM",
+      "Azure Data Lake",
+      "Power Automate"
+    ]
+  },
+  "components": [
+    {
+      "name": "care_gap_closure_agent.py",
+      "description": "Identifies missing screenings and automates patient outreach",
+      "role": "Primary processing engine"
+    }
+  ],
+  "demo": {
+    "available": true,
+    "url": "agents_lab/healthcare_stack/care_gap_closure_stack/demos/care_gap_closure_demo.html",
+    "title": "Care Gap Closure Agent Interactive Demo",
+    "description": "Interactive demonstration of Care Gap Closure Agent capabilities"
+  },
+  "useCases": [
+    "Preventive care reminders",
+    "Chronic disease management",
+    "Quality measure tracking"
+  ]
+}

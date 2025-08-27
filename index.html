@@ -274,10 +274,95 @@
 
       /* Template Grid */
       .template-grid {
-        display: grid;
+        display: none;
         grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
         gap: 2rem;
         margin-bottom: 2rem;
+      }
+
+      /* Template List View Styles */
+      .template-list {
+        display: none;
+      }
+
+      .template-list.active {
+        display: block;
+      }
+
+      .template-list-item {
+        background: white;
+        border: 1px solid #e0e0e0;
+        border-radius: 12px;
+        padding: 1.5rem;
+        margin-bottom: 1rem;
+        transition: all 0.2s;
+        display: flex;
+        gap: 1.5rem;
+        align-items: start;
+      }
+
+      .template-list-item:hover {
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        transform: translateX(4px);
+        border-color: #0078d4;
+      }
+
+      .template-list-item.dynamic-stack {
+        border: 2px solid #667eea;
+        background: linear-gradient(to right, #ffffff, #f8f6ff);
+      }
+
+      .template-list-content {
+        flex: 1;
+        display: grid;
+        grid-template-columns: 1.5fr 1fr 0.5fr 200px;
+        gap: 1.5rem;
+        align-items: center;
+      }
+
+      .template-list-main {
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+      }
+
+      .template-list-title {
+        font-size: 1.2rem;
+        font-weight: 600;
+        color: #0078d4;
+        margin-bottom: 0.25rem;
+      }
+
+      .template-list-description {
+        color: #666;
+        font-size: 0.9rem;
+        line-height: 1.4;
+      }
+
+      .template-list-agents {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.3rem;
+        margin-top: 0.5rem;
+      }
+
+      .template-list-meta {
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+      }
+
+      .template-list-stats {
+        display: flex;
+        flex-direction: column;
+        gap: 0.25rem;
+        text-align: center;
+      }
+
+      .template-list-actions {
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
       }
 
       .template-card {
@@ -400,6 +485,156 @@
         display: grid;
         grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
         gap: 2rem;
+      }
+
+      /* View Toggle Styles */
+      .view-controls {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 1.5rem;
+        padding: 1rem;
+        background: white;
+        border-radius: 8px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+      }
+
+      .view-toggle {
+        display: flex;
+        gap: 0.5rem;
+        background: #f5f5f5;
+        padding: 0.25rem;
+        border-radius: 6px;
+      }
+
+      .view-btn {
+        padding: 0.5rem 1rem;
+        background: transparent;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        font-size: 0.9rem;
+        color: #666;
+        transition: all 0.2s;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+      }
+
+      .view-btn:hover {
+        background: rgba(0, 120, 212, 0.1);
+        color: #0078d4;
+      }
+
+      .view-btn.active {
+        background: white;
+        color: #0078d4;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      }
+
+      /* List View Styles */
+      .agent-list {
+        display: none;
+      }
+
+      .agent-list.active {
+        display: block;
+      }
+
+      .agent-grid.list-view {
+        display: none;
+      }
+
+      .list-item {
+        background: white;
+        border: 1px solid #e0e0e0;
+        border-radius: 8px;
+        padding: 1.25rem;
+        margin-bottom: 0.75rem;
+        transition: all 0.2s;
+        display: flex;
+        align-items: center;
+        gap: 1.5rem;
+      }
+
+      .list-item:hover {
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+        transform: translateX(4px);
+        border-color: #0078d4;
+      }
+
+      .list-item-icon {
+        font-size: 2rem;
+        min-width: 50px;
+        text-align: center;
+      }
+
+      .list-item-content {
+        flex: 1;
+        display: grid;
+        grid-template-columns: 2fr 1fr 150px 200px;
+        gap: 1.5rem;
+        align-items: center;
+      }
+
+      .list-item-main {
+        display: flex;
+        flex-direction: column;
+        gap: 0.25rem;
+      }
+
+      .list-item-name {
+        font-size: 1.1rem;
+        font-weight: 600;
+        color: #0078d4;
+      }
+
+      .list-item-description {
+        color: #666;
+        font-size: 0.9rem;
+        line-height: 1.4;
+      }
+
+      .list-item-meta {
+        display: flex;
+        flex-direction: column;
+        gap: 0.25rem;
+      }
+
+      .list-item-category {
+        font-size: 0.85rem;
+        color: #666;
+        background: #f5f5f5;
+        padding: 0.25rem 0.75rem;
+        border-radius: 12px;
+        text-align: center;
+      }
+
+      .list-item-size {
+        font-size: 0.85rem;
+        color: #999;
+        text-align: center;
+      }
+
+      .list-item-actions {
+        display: flex;
+        gap: 0.5rem;
+      }
+
+      .list-item-actions .btn {
+        padding: 0.4rem 0.8rem;
+        font-size: 0.85rem;
+      }
+
+      @media (max-width: 1024px) {
+        .list-item-content {
+          grid-template-columns: 1fr;
+          gap: 0.75rem;
+        }
+
+        .list-item-actions {
+          justify-content: flex-start;
+        }
       }
 
       .agent-card {
@@ -1422,6 +1657,23 @@ graph TB
           </div>
         </header>
 
+        <!-- View Controls -->
+        <div class="view-controls">
+          <div class="view-info">
+            <span id="templateCount" style="color: #666; font-size: 0.95rem;">0 templates</span>
+          </div>
+          <div class="view-toggle">
+            <button class="view-btn" id="templateGalleryBtn" onclick="templateManager.setView('gallery')">
+              <span>🏛️</span>
+              <span>Gallery</span>
+            </button>
+            <button class="view-btn active" id="templateListBtn" onclick="templateManager.setView('list')">
+              <span>📋</span>
+              <span>List</span>
+            </button>
+          </div>
+        </div>
+
         <!-- Search and Filter -->
         <div class="search-section">
           <h3 style="margin-bottom: 1rem">Find Your Perfect Agent Stack</h3>
@@ -1480,6 +1732,11 @@ graph TB
 
         <div class="template-grid" id="templateGrid">
           <!-- Templates will be dynamically loaded here -->
+        </div>
+
+        <!-- Template List View -->
+        <div class="template-list active" id="templateList">
+          <!-- List items will be dynamically loaded here -->
         </div>
 
         <div class="empty-state" id="templateEmptyState" style="display: none">
@@ -1725,9 +1982,31 @@ graph TB
           </div>
         </div>
 
+        <!-- View Controls -->
+        <div class="view-controls">
+          <div class="view-info">
+            <span id="agentCount" style="color: #666; font-size: 0.95rem;">0 agents</span>
+          </div>
+          <div class="view-toggle">
+            <button class="view-btn" id="galleryViewBtn" onclick="agentStore.setView('gallery')">
+              <span>🏛️</span>
+              <span>Gallery</span>
+            </button>
+            <button class="view-btn active" id="listViewBtn" onclick="agentStore.setView('list')">
+              <span>📋</span>
+              <span>List</span>
+            </button>
+          </div>
+        </div>
+
         <!-- Agent Grid -->
         <div class="agent-grid" id="agentGrid">
           <!-- Agent cards will be dynamically loaded here -->
+        </div>
+
+        <!-- Agent List View -->
+        <div class="agent-list" id="agentList">
+          <!-- List items will be dynamically loaded here -->
         </div>
 
         <div class="empty-state" id="agentEmptyState" style="display: none">
@@ -1855,6 +2134,7 @@ graph TB
           this.agentTemplates = [];
           this.filteredTemplates = [];
           this.dynamicStacks = [];
+          this.currentView = "list";
         }
 
         async loadTemplates() {
@@ -2330,20 +2610,142 @@ graph TB
           return "productivity";
         }
 
+        setView(view) {
+          this.currentView = view;
+          const grid = document.getElementById("templateGrid");
+          const list = document.getElementById("templateList");
+          const galleryBtn = document.getElementById("templateGalleryBtn");
+          const listBtn = document.getElementById("templateListBtn");
+
+          if (view === 'list') {
+            if (grid) grid.style.display = 'none';
+            if (list) list.classList.add('active');
+            if (galleryBtn) galleryBtn.classList.remove('active');
+            if (listBtn) listBtn.classList.add('active');
+          } else {
+            if (grid) grid.style.display = 'grid';
+            if (list) list.classList.remove('active');
+            if (galleryBtn) galleryBtn.classList.add('active');
+            if (listBtn) listBtn.classList.remove('active');
+          }
+
+          this.renderTemplates(this.filteredTemplates);
+        }
+
         renderTemplates(templates) {
           const grid = document.getElementById("templateGrid");
+          const list = document.getElementById("templateList");
           const emptyState = document.getElementById("templateEmptyState");
+          const templateCount = document.getElementById("templateCount");
 
-          if (!grid) return;
+          if (!grid && !list) return;
+
+          // Update template count
+          if (templateCount) {
+            templateCount.textContent = `${templates.length} template${templates.length !== 1 ? 's' : ''}`;
+          }
 
           if (templates.length === 0) {
-            grid.style.display = "none";
+            if (grid) grid.style.display = "none";
+            if (list) list.innerHTML = "";
             if (emptyState) emptyState.style.display = "block";
             return;
           }
 
           if (emptyState) emptyState.style.display = "none";
-          grid.style.display = "grid";
+
+          // Render based on current view
+          if (this.currentView === 'list') {
+            // Render list view
+            if (list) {
+              list.innerHTML = templates
+                .map((template) => {
+                  const isInCart = this.isTemplateInCart(template);
+                  const complexityLabel = {
+                    starter: "Starter",
+                    intermediate: "Intermediate",
+                    advanced: "Advanced",
+                  }[template.complexity];
+
+                  // Get agent details for display
+                  const agentDetails = template.agents.map((agentId) => {
+                    const agent = agentStore.agents.find((a) => a.id === agentId);
+                    return agent
+                      ? { id: agentId, name: agent.name, icon: agent.icon }
+                      : {
+                          id: agentId,
+                          name: this.formatAgentName(agentId),
+                          icon: "🤖",
+                        };
+                  });
+
+                  return `
+                    <div class="template-list-item ${template.isDynamic ? 'dynamic-stack' : ''}">
+                        <div class="template-list-content">
+                            <div class="template-list-main">
+                                <div class="template-list-title">${template.name}</div>
+                                <div class="template-list-description">${template.description}</div>
+                                <div class="template-list-agents">
+                                    ${agentDetails
+                                      .map(
+                                        (agent) =>
+                                          `<span class="agent-pill">${agent.icon} ${agent.name}</span>`
+                                      )
+                                      .join("")}
+                                </div>
+                            </div>
+                            <div class="template-list-meta">
+                                <span class="badge badge-complexity-${
+                                  template.complexity === "starter"
+                                    ? "low"
+                                    : template.complexity === "intermediate"
+                                    ? "medium"
+                                    : "high"
+                                }">
+                                    ${complexityLabel}
+                                </span>
+                                <span style="color: #666; font-size: 0.85rem;">${template.estimatedTime}</span>
+                                ${
+                                  template.demo && template.demo.available
+                                    ? '<span style="color: #10b981; font-size: 0.85rem; font-weight: 500;">🎮 Demo Available</span>'
+                                    : ''
+                                }
+                            </div>
+                            <div class="template-list-stats">
+                                <div style="font-size: 1.2rem; font-weight: 600; color: #0078d4;">${template.agents.length}</div>
+                                <div style="font-size: 0.8rem; color: #666;">Agents</div>
+                            </div>
+                            <div class="template-list-actions">
+                                <button class="btn btn-secondary" onclick="templateManager.viewTemplate('${template.id}')">
+                                    👁️ View
+                                </button>
+                                ${
+                                  template.demo && template.demo.available
+                                    ? `<button class="btn btn-secondary" onclick="templateManager.openDemo('${template.id}')">
+                                        🎮 Demo
+                                       </button>`
+                                    : ''
+                                }
+                                ${
+                                  isInCart
+                                    ? `<button class="btn btn-danger" onclick="templateManager.removeTemplate('${template.id}')">
+                                        ✕ Remove
+                                       </button>`
+                                    : `<button class="btn btn-primary" onclick="templateManager.addTemplate('${template.id}')">
+                                        ➕ Add
+                                       </button>`
+                                }
+                            </div>
+                        </div>
+                    </div>
+                  `;
+                })
+                .join("");
+            }
+          } else {
+            // Render gallery view (existing code)
+            if (grid) {
+              grid.style.display = "grid";
 
           grid.innerHTML = templates
             .map((template) => {
@@ -2465,8 +2867,10 @@ graph TB
                             </div>
                         </div>
                     `;
-            })
-            .join("");
+              })
+              .join("");
+            }
+          }
         }
 
         formatAgentName(agentId) {
@@ -3376,6 +3780,7 @@ graph TB
           this.agentCode = {};
           this.currentAgent = null;
           this.currentFilter = "all";
+          this.currentView = "list";
         }
 
         async loadAgents() {
@@ -4177,63 +4582,139 @@ graph TB
           }
         }
 
+        setView(view) {
+          this.currentView = view;
+          const grid = document.getElementById("agentGrid");
+          const list = document.getElementById("agentList");
+          const galleryBtn = document.getElementById("galleryViewBtn");
+          const listBtn = document.getElementById("listViewBtn");
+
+          if (view === 'list') {
+            if (grid) grid.style.display = 'none';
+            if (list) list.classList.add('active');
+            if (galleryBtn) galleryBtn.classList.remove('active');
+            if (listBtn) listBtn.classList.add('active');
+          } else {
+            if (grid) grid.style.display = 'grid';
+            if (list) list.classList.remove('active');
+            if (galleryBtn) galleryBtn.classList.add('active');
+            if (listBtn) listBtn.classList.remove('active');
+          }
+
+          this.renderAgents();
+        }
+
         renderAgents(agentsToRender = this.filteredAgents) {
           const grid = document.getElementById("agentGrid");
+          const list = document.getElementById("agentList");
           const emptyState = document.getElementById("agentEmptyState");
+          const agentCount = document.getElementById("agentCount");
 
-          if (!grid) return;
+          if (!grid && !list) return;
+
+          // Update agent count
+          if (agentCount) {
+            agentCount.textContent = `${agentsToRender.length} agent${agentsToRender.length !== 1 ? 's' : ''}`;
+          }
 
           if (agentsToRender.length === 0) {
-            grid.innerHTML = "";
+            if (grid) grid.innerHTML = "";
+            if (list) list.innerHTML = "";
             if (emptyState) emptyState.style.display = "block";
             return;
           }
 
           if (emptyState) emptyState.style.display = "none";
 
-          grid.innerHTML = agentsToRender
-            .map(
-              (agent) => `
-                    <div class="agent-card">
-                        <div class="agent-header">
-                            <div>
-                                <div class="agent-icon">${agent.icon || '🤖'}</div>
-                                <h3 class="agent-name">${agent.name}</h3>
+          // Render based on current view
+          if (this.currentView === 'list') {
+            // Render list view
+            if (list) {
+              list.innerHTML = agentsToRender
+                .map(
+                  (agent) => `
+                    <div class="list-item">
+                        <div class="list-item-icon">${agent.icon || '🤖'}</div>
+                        <div class="list-item-content">
+                            <div class="list-item-main">
+                                <div class="list-item-name">${agent.name}</div>
+                                <div class="list-item-description">${agent.description || 'No description available'}</div>
                             </div>
-                            <span class="agent-badge">${agent.size || agent.size_formatted || 'N/A'}</span>
-                        </div>
-                        <p class="agent-description">${agent.description || 'No description available'}</p>
-                        <ul class="agent-features">
-                            ${(agent.features || [])
-                              .map((f) => `<li>${f}</li>`)
-                              .join("")}
-                        </ul>
-                        <div style="display: flex; justify-content: space-between; padding: 1rem 0; border-top: 1px solid #e0e0e0;">
-                            <span style="color: #666; font-size: 0.85rem;">${
-                              agent.filename || 'Unknown'
-                            }</span>
-                            <span style="color: #666; font-size: 0.85rem;">${
-                              agent.category || agent.type || 'general'
-                            }</span>
-                        </div>
-                        <div class="action-buttons">
-                            <button class="btn btn-secondary" onclick="agentStore.viewCode('${agent.id.replace(/'/g, "\\'")}')">
-                                👁️ View Code
-                            </button>
-                            ${
-                              this.cart.find((item) => item.id === agent.id)
-                                ? `<button class="btn btn-danger" onclick="agentStore.removeFromCart('${agent.id.replace(/'/g, "\\'")}')">
-                                    ✕ Remove
-                                   </button>`
-                                : `<button class="btn btn-primary" onclick="agentStore.addToCart('${agent.id.replace(/'/g, "\\'")}')">
-                                    ➕ Add to Stack
-                                   </button>`
-                            }
+                            <div class="list-item-meta">
+                                <div class="list-item-category">${agent.category || agent.type || 'general'}</div>
+                                <div class="list-item-size">${agent.size || agent.size_formatted || 'N/A'}</div>
+                            </div>
+                            <div class="list-item-filename" style="color: #999; font-size: 0.85rem;">
+                                ${agent.filename || 'Unknown'}
+                            </div>
+                            <div class="list-item-actions">
+                                <button class="btn btn-secondary" onclick="agentStore.viewCode('${agent.id.replace(/'/g, "\\'")}')">
+                                    👁️ View
+                                </button>
+                                ${
+                                  this.cart.find((item) => item.id === agent.id)
+                                    ? `<button class="btn btn-danger" onclick="agentStore.removeFromCart('${agent.id.replace(/'/g, "\\'")}')">
+                                        ✕ Remove
+                                       </button>`
+                                    : `<button class="btn btn-primary" onclick="agentStore.addToCart('${agent.id.replace(/'/g, "\\'")}')">
+                                        ➕ Add
+                                       </button>`
+                                }
+                            </div>
                         </div>
                     </div>
-                `
-            )
-            .join("");
+                  `
+                )
+                .join("");
+            }
+          } else {
+            // Render gallery view (existing grid code)
+            if (grid) {
+              grid.innerHTML = agentsToRender
+                .map(
+                  (agent) => `
+                        <div class="agent-card">
+                            <div class="agent-header">
+                                <div>
+                                    <div class="agent-icon">${agent.icon || '🤖'}</div>
+                                    <h3 class="agent-name">${agent.name}</h3>
+                                </div>
+                                <span class="agent-badge">${agent.size || agent.size_formatted || 'N/A'}</span>
+                            </div>
+                            <p class="agent-description">${agent.description || 'No description available'}</p>
+                            <ul class="agent-features">
+                                ${(agent.features || [])
+                                  .map((f) => `<li>${f}</li>`)
+                                  .join("")}
+                            </ul>
+                            <div style="display: flex; justify-content: space-between; padding: 1rem 0; border-top: 1px solid #e0e0e0;">
+                                <span style="color: #666; font-size: 0.85rem;">${
+                                  agent.filename || 'Unknown'
+                                }</span>
+                                <span style="color: #666; font-size: 0.85rem;">${
+                                  agent.category || agent.type || 'general'
+                                }</span>
+                            </div>
+                            <div class="action-buttons">
+                                <button class="btn btn-secondary" onclick="agentStore.viewCode('${agent.id.replace(/'/g, "\\'")}')">
+                                    👁️ View Code
+                                </button>
+                                ${
+                                  this.cart.find((item) => item.id === agent.id)
+                                    ? `<button class="btn btn-danger" onclick="agentStore.removeFromCart('${agent.id.replace(/'/g, "\\'")}')">
+                                        ✕ Remove
+                                       </button>`
+                                    : `<button class="btn btn-primary" onclick="agentStore.addToCart('${agent.id.replace(/'/g, "\\'")}')">
+                                        ➕ Add to Stack
+                                       </button>`
+                                }
+                            </div>
+                        </div>
+                    `
+                )
+                .join("");
+            }
+          }
         }
 
         async viewCode(agentId) {

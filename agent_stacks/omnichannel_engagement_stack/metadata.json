@@ -1,0 +1,58 @@
+{
+  "id": "omnichannel_engagement_stack",
+  "name": "Omnichannel Engagement Agent Stack",
+  "version": "1.0.0",
+  "description": "Coordinates messaging across all customer channels",
+  "category": "b2c_sales",
+  "complexity": "intermediate",
+  "features": [
+    "Cross-channel campaigns",
+    "Journey orchestration",
+    "Personalization"
+  ],
+  "benefits": [
+    "Improves consistency",
+    "Increases engagement",
+    "Enhances experience"
+  ],
+  "technicalRequirements": {
+    "platforms": [
+      "Windows",
+      "macOS",
+      "Linux"
+    ],
+    "dependencies": [
+      "Python 3.8+",
+      "requests",
+      "json"
+    ],
+    "apiKeys": [
+      "ADOBE_API_KEY",
+      "SALESFORCE_MARKETING_CLOUD_API_KEY"
+    ],
+    "integrations": [
+      "Adobe",
+      "Salesforce Marketing Cloud",
+      "D365 Marketing",
+      "Braze"
+    ]
+  },
+  "components": [
+    {
+      "name": "omnichannel_engagement_agent.py",
+      "description": "Coordinates messaging across all customer channels",
+      "role": "Primary processing engine"
+    }
+  ],
+  "demo": {
+    "available": true,
+    "url": "agents_lab/b2c_sales_stack/omnichannel_engagement_stack/demos/omnichannel_engagement_demo.html",
+    "title": "Omnichannel Engagement Agent Interactive Demo",
+    "description": "Interactive demonstration of Omnichannel Engagement Agent capabilities"
+  },
+  "useCases": [
+    "Cross-channel campaigns",
+    "Journey orchestration",
+    "Personalization"
+  ]
+}

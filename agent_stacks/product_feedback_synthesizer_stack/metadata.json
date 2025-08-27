@@ -1,0 +1,58 @@
+{
+  "id": "product_feedback_synthesizer_stack",
+  "name": "Product Feedback Synthesizer Stack",
+  "version": "1.0.0",
+  "description": "Analyzes customer feedback for feature requests and fixes",
+  "category": "software_dp",
+  "complexity": "intermediate",
+  "features": [
+    "Feature prioritization",
+    "Bug tracking",
+    "Customer sentiment analysis"
+  ],
+  "benefits": [
+    "Improves product-market fit",
+    "Prioritizes development efforts",
+    "Reduces churn"
+  ],
+  "technicalRequirements": {
+    "platforms": [
+      "Windows",
+      "macOS",
+      "Linux"
+    ],
+    "dependencies": [
+      "Python 3.8+",
+      "requests",
+      "json"
+    ],
+    "apiKeys": [
+      "AZURE_OPENAI_API_KEY",
+      "JIRA_API_KEY"
+    ],
+    "integrations": [
+      "Azure OpenAI",
+      "Jira",
+      "DevOps",
+      "GitHub"
+    ]
+  },
+  "components": [
+    {
+      "name": "product_feedback_synthesizer_agent.py",
+      "description": "Analyzes customer feedback for feature requests and fixes",
+      "role": "Primary processing engine"
+    }
+  ],
+  "demo": {
+    "available": true,
+    "url": "agents_lab/software_dp_stack/product_feedback_synthesizer_stack/demos/product_feedback_synthesizer_demo.html",
+    "title": "Product Feedback Synthesizer Interactive Demo",
+    "description": "Interactive demonstration of Product Feedback Synthesizer capabilities"
+  },
+  "useCases": [
+    "Feature prioritization",
+    "Bug tracking",
+    "Customer sentiment analysis"
+  ]
+}

@@ -1,0 +1,58 @@
+{
+  "id": "asset_maintenance_forecast_stack",
+  "name": "Asset Maintenance Forecast Agent Stack",
+  "version": "1.0.0",
+  "description": "Predicts equipment failure and schedules maintenance proactively",
+  "category": "energy",
+  "complexity": "intermediate",
+  "features": [
+    "Predictive maintenance",
+    "Equipment lifecycle management",
+    "Maintenance scheduling"
+  ],
+  "benefits": [
+    "Reduces unplanned downtime by 40%",
+    "Extends equipment life",
+    "Optimizes maintenance costs"
+  ],
+  "technicalRequirements": {
+    "platforms": [
+      "Windows",
+      "macOS",
+      "Linux"
+    ],
+    "dependencies": [
+      "Python 3.8+",
+      "requests",
+      "json"
+    ],
+    "apiKeys": [
+      "SAP_PM_API_KEY",
+      "IBM_MAXIMO_API_KEY"
+    ],
+    "integrations": [
+      "SAP PM",
+      "IBM Maximo",
+      "D365 F&O",
+      "Azure IoT"
+    ]
+  },
+  "components": [
+    {
+      "name": "asset_maintenance_forecast_agent.py",
+      "description": "Predicts equipment failure and schedules maintenance proactively",
+      "role": "Primary processing engine"
+    }
+  ],
+  "demo": {
+    "available": true,
+    "url": "agents_lab/energy_stack/asset_maintenance_forecast_stack/demos/asset_maintenance_forecast_demo.html",
+    "title": "Asset Maintenance Forecast Agent Interactive Demo",
+    "description": "Interactive demonstration of Asset Maintenance Forecast Agent capabilities"
+  },
+  "useCases": [
+    "Predictive maintenance",
+    "Equipment lifecycle management",
+    "Maintenance scheduling"
+  ]
+}

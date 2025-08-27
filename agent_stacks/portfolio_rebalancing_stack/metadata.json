@@ -1,0 +1,58 @@
+{
+  "id": "portfolio_rebalancing_stack",
+  "name": "Portfolio Rebalancing Agent Stack",
+  "version": "1.0.0",
+  "description": "Detects drift and recommends rebalancing actions",
+  "category": "financial_services",
+  "complexity": "intermediate",
+  "features": [
+    "Drift detection",
+    "Rebalancing recommendations",
+    "Risk management"
+  ],
+  "benefits": [
+    "Maintains target allocations",
+    "Reduces risk",
+    "Improves returns"
+  ],
+  "technicalRequirements": {
+    "platforms": [
+      "Windows",
+      "macOS",
+      "Linux"
+    ],
+    "dependencies": [
+      "Python 3.8+",
+      "requests",
+      "json"
+    ],
+    "apiKeys": [
+      "INVESTMENT_PLATFORMS_API_KEY",
+      "BLOOMBERG_API_KEY"
+    ],
+    "integrations": [
+      "Investment Platforms",
+      "Bloomberg",
+      "CRM",
+      "Risk Engines"
+    ]
+  },
+  "components": [
+    {
+      "name": "portfolio_rebalancing_agent.py",
+      "description": "Detects drift and recommends rebalancing actions",
+      "role": "Primary processing engine"
+    }
+  ],
+  "demo": {
+    "available": true,
+    "url": "agents_lab/financial_services_stack/portfolio_rebalancing_stack/demos/portfolio_rebalancing_demo.html",
+    "title": "Portfolio Rebalancing Agent Interactive Demo",
+    "description": "Interactive demonstration of Portfolio Rebalancing Agent capabilities"
+  },
+  "useCases": [
+    "Drift detection",
+    "Rebalancing recommendations",
+    "Risk management"
+  ]
+}

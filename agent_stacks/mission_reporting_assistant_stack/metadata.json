@@ -1,0 +1,58 @@
+{
+  "id": "mission_reporting_assistant_stack",
+  "name": "Mission Reporting Assistant Stack",
+  "version": "1.0.0",
+  "description": "Generates reports from classified and unclassified sources",
+  "category": "federal_government",
+  "complexity": "intermediate",
+  "features": [
+    "Mission reporting",
+    "Data aggregation",
+    "Executive briefings"
+  ],
+  "benefits": [
+    "Improves decision-making",
+    "Accelerates reporting",
+    "Enhances visibility"
+  ],
+  "technicalRequirements": {
+    "platforms": [
+      "Windows",
+      "macOS",
+      "Linux"
+    ],
+    "dependencies": [
+      "Python 3.8+",
+      "requests",
+      "json"
+    ],
+    "apiKeys": [
+      "SHAREPOINT_API_KEY",
+      "AZURE_GOVCLOUD_API_KEY"
+    ],
+    "integrations": [
+      "SharePoint",
+      "Azure GovCloud",
+      "Palantir",
+      "Power BI"
+    ]
+  },
+  "components": [
+    {
+      "name": "mission_reporting_assistant_agent.py",
+      "description": "Generates reports from classified and unclassified sources",
+      "role": "Primary processing engine"
+    }
+  ],
+  "demo": {
+    "available": true,
+    "url": "agents_lab/federal_government_stack/mission_reporting_assistant_stack/demos/mission_reporting_assistant_demo.html",
+    "title": "Mission Reporting Assistant Interactive Demo",
+    "description": "Interactive demonstration of Mission Reporting Assistant capabilities"
+  },
+  "useCases": [
+    "Mission reporting",
+    "Data aggregation",
+    "Executive briefings"
+  ]
+}

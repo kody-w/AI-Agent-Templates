@@ -1,0 +1,58 @@
+{
+  "id": "clinical_notes_summarizer_stack",
+  "name": "Clinical Notes Summarizer Stack",
+  "version": "1.0.0",
+  "description": "Generates real-time summaries from provider-patient conversations",
+  "category": "healthcare",
+  "complexity": "intermediate",
+  "features": [
+    "Real-time visit summarization",
+    "Post-visit documentation",
+    "Clinical decision support"
+  ],
+  "benefits": [
+    "Reduces documentation time by 60%",
+    "Improves note accuracy",
+    "Enables real-time decision support"
+  ],
+  "technicalRequirements": {
+    "platforms": [
+      "Windows",
+      "macOS",
+      "Linux"
+    ],
+    "dependencies": [
+      "Python 3.8+",
+      "requests",
+      "json"
+    ],
+    "apiKeys": [
+      "EPIC_API_KEY",
+      "CERNER_API_KEY"
+    ],
+    "integrations": [
+      "Epic",
+      "Cerner",
+      "Power Platform",
+      "Azure OpenAI"
+    ]
+  },
+  "components": [
+    {
+      "name": "clinical_notes_summarizer_agent.py",
+      "description": "Generates real-time summaries from provider-patient conversations",
+      "role": "Primary processing engine"
+    }
+  ],
+  "demo": {
+    "available": true,
+    "url": "agents_lab/healthcare_stack/clinical_notes_summarizer_stack/demos/clinical_notes_summarizer_demo.html",
+    "title": "Clinical Notes Summarizer Interactive Demo",
+    "description": "Interactive demonstration of Clinical Notes Summarizer capabilities"
+  },
+  "useCases": [
+    "Real-time visit summarization",
+    "Post-visit documentation",
+    "Clinical decision support"
+  ]
+}

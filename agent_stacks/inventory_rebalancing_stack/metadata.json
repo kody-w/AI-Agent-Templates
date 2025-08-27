@@ -1,0 +1,58 @@
+{
+  "id": "inventory_rebalancing_stack",
+  "name": "Inventory Rebalancing Agent Stack",
+  "version": "1.0.0",
+  "description": "Prevents overstock and stockouts through intelligent rebalancing",
+  "category": "manufacturing",
+  "complexity": "intermediate",
+  "features": [
+    "Stock level optimization",
+    "Demand forecasting",
+    "Warehouse transfers"
+  ],
+  "benefits": [
+    "Reduces inventory costs by 25%",
+    "Improves order fulfillment",
+    "Optimizes working capital"
+  ],
+  "technicalRequirements": {
+    "platforms": [
+      "Windows",
+      "macOS",
+      "Linux"
+    ],
+    "dependencies": [
+      "Python 3.8+",
+      "requests",
+      "json"
+    ],
+    "apiKeys": [
+      "D365_F&O_API_KEY",
+      "SAP_API_KEY"
+    ],
+    "integrations": [
+      "D365 F&O",
+      "SAP",
+      "NetSuite",
+      "Power BI"
+    ]
+  },
+  "components": [
+    {
+      "name": "inventory_rebalancing_agent.py",
+      "description": "Prevents overstock and stockouts through intelligent rebalancing",
+      "role": "Primary processing engine"
+    }
+  ],
+  "demo": {
+    "available": true,
+    "url": "agents_lab/manufacturing_stack/inventory_rebalancing_stack/demos/inventory_rebalancing_demo.html",
+    "title": "Inventory Rebalancing Agent Interactive Demo",
+    "description": "Interactive demonstration of Inventory Rebalancing Agent capabilities"
+  },
+  "useCases": [
+    "Stock level optimization",
+    "Demand forecasting",
+    "Warehouse transfers"
+  ]
+}

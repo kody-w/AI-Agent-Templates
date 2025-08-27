@@ -1,0 +1,58 @@
+{
+  "id": "wealth_insights_generator_stack",
+  "name": "Wealth Insights Generator Stack",
+  "version": "1.0.0",
+  "description": "Consolidates assets and generates comprehensive reports",
+  "category": "financial_services",
+  "complexity": "intermediate",
+  "features": [
+    "Wealth reporting",
+    "Performance analysis",
+    "Goal tracking"
+  ],
+  "benefits": [
+    "Provides holistic view",
+    "Improves advisory quality",
+    "Increases client engagement"
+  ],
+  "technicalRequirements": {
+    "platforms": [
+      "Windows",
+      "macOS",
+      "Linux"
+    ],
+    "dependencies": [
+      "Python 3.8+",
+      "requests",
+      "json"
+    ],
+    "apiKeys": [
+      "CRM_API_KEY",
+      "D365_CE_API_KEY"
+    ],
+    "integrations": [
+      "CRM",
+      "D365 CE",
+      "Power BI",
+      "Core Banking"
+    ]
+  },
+  "components": [
+    {
+      "name": "wealth_insights_generator_agent.py",
+      "description": "Consolidates assets and generates comprehensive reports",
+      "role": "Primary processing engine"
+    }
+  ],
+  "demo": {
+    "available": true,
+    "url": "agents_lab/financial_services_stack/wealth_insights_generator_stack/demos/wealth_insights_generator_demo.html",
+    "title": "Wealth Insights Generator Interactive Demo",
+    "description": "Interactive demonstration of Wealth Insights Generator capabilities"
+  },
+  "useCases": [
+    "Wealth reporting",
+    "Performance analysis",
+    "Goal tracking"
+  ]
+}

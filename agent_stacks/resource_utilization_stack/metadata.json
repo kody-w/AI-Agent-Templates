@@ -1,0 +1,58 @@
+{
+  "id": "resource_utilization_stack",
+  "name": "Resource Utilization Agent Stack",
+  "version": "1.0.0",
+  "description": "Matches staff skills to project requirements optimally",
+  "category": "professional_services",
+  "complexity": "intermediate",
+  "features": [
+    "Resource planning",
+    "Skills matching",
+    "Capacity forecasting"
+  ],
+  "benefits": [
+    "Improves utilization rates",
+    "Reduces bench time",
+    "Optimizes project staffing"
+  ],
+  "technicalRequirements": {
+    "platforms": [
+      "Windows",
+      "macOS",
+      "Linux"
+    ],
+    "dependencies": [
+      "Python 3.8+",
+      "requests",
+      "json"
+    ],
+    "apiKeys": [
+      "WORKDAY_API_KEY",
+      "D365_HR_API_KEY"
+    ],
+    "integrations": [
+      "Workday",
+      "D365 HR",
+      "SAP SuccessFactors",
+      "ProjectPro"
+    ]
+  },
+  "components": [
+    {
+      "name": "resource_utilization_agent.py",
+      "description": "Matches staff skills to project requirements optimally",
+      "role": "Primary processing engine"
+    }
+  ],
+  "demo": {
+    "available": true,
+    "url": "agents_lab/professional_services_stack/resource_utilization_stack/demos/resource_utilization_demo.html",
+    "title": "Resource Utilization Agent Interactive Demo",
+    "description": "Interactive demonstration of Resource Utilization Agent capabilities"
+  },
+  "useCases": [
+    "Resource planning",
+    "Skills matching",
+    "Capacity forecasting"
+  ]
+}

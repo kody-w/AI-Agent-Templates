@@ -1,0 +1,58 @@
+{
+  "id": "returns_complaints_resolution_stack",
+  "name": "Returns & Complaints Resolution Agent Stack",
+  "version": "1.0.0",
+  "description": "Handles customer issues and return processing",
+  "category": "retail_cpg",
+  "complexity": "intermediate",
+  "features": [
+    "Return processing",
+    "Complaint handling",
+    "Issue resolution"
+  ],
+  "benefits": [
+    "Reduces resolution time",
+    "Improves customer satisfaction",
+    "Decreases return rates"
+  ],
+  "technicalRequirements": {
+    "platforms": [
+      "Windows",
+      "macOS",
+      "Linux"
+    ],
+    "dependencies": [
+      "Python 3.8+",
+      "requests",
+      "json"
+    ],
+    "apiKeys": [
+      "SERVICENOW_API_KEY",
+      "D365_CE_API_KEY"
+    ],
+    "integrations": [
+      "ServiceNow",
+      "D365 CE",
+      "Zendesk",
+      "SAP"
+    ]
+  },
+  "components": [
+    {
+      "name": "returns_complaints_resolution_agent.py",
+      "description": "Handles customer issues and return processing",
+      "role": "Primary processing engine"
+    }
+  ],
+  "demo": {
+    "available": true,
+    "url": "agents_lab/retail_cpg_stack/returns_complaints_resolution_stack/demos/returns_complaints_resolution_demo.html",
+    "title": "Returns & Complaints Resolution Agent Interactive Demo",
+    "description": "Interactive demonstration of Returns & Complaints Resolution Agent capabilities"
+  },
+  "useCases": [
+    "Return processing",
+    "Complaint handling",
+    "Issue resolution"
+  ]
+}

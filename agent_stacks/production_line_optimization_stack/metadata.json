@@ -1,0 +1,58 @@
+{
+  "id": "production_line_optimization_stack",
+  "name": "Production Line Optimization Agent Stack",
+  "version": "1.0.0",
+  "description": "Analyzes production output and suggests efficiency improvements",
+  "category": "manufacturing",
+  "complexity": "intermediate",
+  "features": [
+    "Line balancing",
+    "Bottleneck analysis",
+    "Quality optimization"
+  ],
+  "benefits": [
+    "Increases OEE by 15%",
+    "Reduces waste",
+    "Improves throughput"
+  ],
+  "technicalRequirements": {
+    "platforms": [
+      "Windows",
+      "macOS",
+      "Linux"
+    ],
+    "dependencies": [
+      "Python 3.8+",
+      "requests",
+      "json"
+    ],
+    "apiKeys": [
+      "MES_API_KEY",
+      "D365_SCM_API_KEY"
+    ],
+    "integrations": [
+      "MES",
+      "D365 SCM",
+      "Siemens",
+      "Azure IoT"
+    ]
+  },
+  "components": [
+    {
+      "name": "production_line_optimization_agent.py",
+      "description": "Analyzes production output and suggests efficiency improvements",
+      "role": "Primary processing engine"
+    }
+  ],
+  "demo": {
+    "available": true,
+    "url": "agents_lab/manufacturing_stack/production_line_optimization_stack/demos/production_line_optimization_demo.html",
+    "title": "Production Line Optimization Agent Interactive Demo",
+    "description": "Interactive demonstration of Production Line Optimization Agent capabilities"
+  },
+  "useCases": [
+    "Line balancing",
+    "Bottleneck analysis",
+    "Quality optimization"
+  ]
+}

@@ -1,0 +1,58 @@
+{
+  "id": "maintenance_scheduling_stack",
+  "name": "Maintenance Scheduling Agent Stack",
+  "version": "1.0.0",
+  "description": "Reduces downtime by predicting equipment failures",
+  "category": "manufacturing",
+  "complexity": "intermediate",
+  "features": [
+    "Predictive maintenance",
+    "Scheduled maintenance",
+    "Resource planning"
+  ],
+  "benefits": [
+    "Reduces maintenance costs by 30%",
+    "Minimizes production disruptions",
+    "Extends equipment life"
+  ],
+  "technicalRequirements": {
+    "platforms": [
+      "Windows",
+      "macOS",
+      "Linux"
+    ],
+    "dependencies": [
+      "Python 3.8+",
+      "requests",
+      "json"
+    ],
+    "apiKeys": [
+      "IBM_MAXIMO_API_KEY",
+      "SAP_PM_API_KEY"
+    ],
+    "integrations": [
+      "IBM Maximo",
+      "SAP PM",
+      "Azure IoT",
+      "D365"
+    ]
+  },
+  "components": [
+    {
+      "name": "maintenance_scheduling_agent.py",
+      "description": "Reduces downtime by predicting equipment failures",
+      "role": "Primary processing engine"
+    }
+  ],
+  "demo": {
+    "available": true,
+    "url": "agents_lab/manufacturing_stack/maintenance_scheduling_stack/demos/maintenance_scheduling_demo.html",
+    "title": "Maintenance Scheduling Agent Interactive Demo",
+    "description": "Interactive demonstration of Maintenance Scheduling Agent capabilities"
+  },
+  "useCases": [
+    "Predictive maintenance",
+    "Scheduled maintenance",
+    "Resource planning"
+  ]
+}

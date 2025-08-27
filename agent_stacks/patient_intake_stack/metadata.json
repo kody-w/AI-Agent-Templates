@@ -1,0 +1,65 @@
+{
+  "id": "patient_intake_stack",
+  "name": "Patient Intake & Scheduling Agent Stack",
+  "version": "1.0.0",
+  "description": "Automates patient intake, appointment coordination, and reminders to reduce no-shows. Integrates with major EHR systems and CRM platforms.",
+  "category": "healthcare",
+  "sector": "Healthcare",
+  "complexity": "intermediate",
+  "business_benefit": "Reduces no-show rates by 40%, improves patient satisfaction, and increases staff efficiency by automating intake and scheduling workflows",
+  "lob_systems_integrated": [
+    "Epic",
+    "Cerner", 
+    "Dynamics 365 CRM",
+    "Salesforce Health Cloud"
+  ],
+  "features": [
+    "Automated patient intake with form completion",
+    "Real-time appointment scheduling",
+    "Multi-channel appointment reminders (SMS, Email, Voice)",
+    "Insurance verification and eligibility checks",
+    "Provider availability management",
+    "No-show prediction and prevention",
+    "HIPAA-compliant data handling"
+  ],
+  "benefits": [
+    "40% reduction in no-show rates",
+    "60% faster patient intake process",
+    "Improved patient satisfaction scores",
+    "Reduced administrative burden on staff",
+    "Better resource utilization"
+  ],
+  "technical_requirements": {
+    "platforms": ["Windows", "macOS", "Linux"],
+    "dependencies": [
+      "Python 3.8+",
+      "Azure OpenAI Service",
+      "HL7 FHIR API access",
+      "SMS/Email gateway"
+    ],
+    "api_keys": [
+      "EPIC_API_KEY",
+      "CERNER_API_KEY",
+      "DYNAMICS_365_CLIENT_ID",
+      "SALESFORCE_HEALTH_TOKEN"
+    ]
+  },
+  "components": [
+    {
+      "name": "patient_intake_agent.py",
+      "description": "Core agent handling patient intake and scheduling operations",
+      "role": "Primary orchestrator for all patient-related workflows"
+    }
+  ],
+  "demo": {
+    "available": true,
+    "url": "agents_lab/healthcare_stack/patient_intake_stack/demos/patient_intake_demo.html",
+    "title": "Patient Intake & Scheduling Interactive Demo",
+    "description": "Experience how AI automates patient intake, schedules appointments, and sends reminders"
+  },
+  "compliance": {
+    "standards": ["HIPAA", "HITECH", "HL7 FHIR"],
+    "data_handling": "PHI encrypted at rest and in transit",
+    "audit_logging": true
+  }
+}

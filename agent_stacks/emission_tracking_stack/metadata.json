@@ -1,0 +1,58 @@
+{
+  "id": "emission_tracking_stack",
+  "name": "Emission Tracking Agent Stack",
+  "version": "1.0.0",
+  "description": "Tracks, analyzes, and reports carbon emissions across operations",
+  "category": "energy",
+  "complexity": "intermediate",
+  "features": [
+    "Carbon footprint tracking",
+    "Emissions reporting",
+    "Sustainability monitoring"
+  ],
+  "benefits": [
+    "Ensures environmental compliance",
+    "Supports sustainability goals",
+    "Provides real-time emissions data"
+  ],
+  "technicalRequirements": {
+    "platforms": [
+      "Windows",
+      "macOS",
+      "Linux"
+    ],
+    "dependencies": [
+      "Python 3.8+",
+      "requests",
+      "json"
+    ],
+    "apiKeys": [
+      "AZURE_IOT_API_KEY",
+      "SAP_API_KEY"
+    ],
+    "integrations": [
+      "Azure IoT",
+      "SAP",
+      "Enablon",
+      "Power BI"
+    ]
+  },
+  "components": [
+    {
+      "name": "emission_tracking_agent.py",
+      "description": "Tracks, analyzes, and reports carbon emissions across operations",
+      "role": "Primary processing engine"
+    }
+  ],
+  "demo": {
+    "available": true,
+    "url": "agents_lab/energy_stack/emission_tracking_stack/demos/emission_tracking_demo.html",
+    "title": "Emission Tracking Agent Interactive Demo",
+    "description": "Interactive demonstration of Emission Tracking Agent capabilities"
+  },
+  "useCases": [
+    "Carbon footprint tracking",
+    "Emissions reporting",
+    "Sustainability monitoring"
+  ]
+}

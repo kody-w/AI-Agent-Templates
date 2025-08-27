@@ -1,0 +1,58 @@
+{
+  "id": "proposal_copilot_stack",
+  "name": "Proposal Co-Pilot Agent Stack",
+  "version": "1.0.0",
+  "description": "Builds proposals from requirements and templates",
+  "category": "professional_services",
+  "complexity": "intermediate",
+  "features": [
+    "RFP responses",
+    "SOW creation",
+    "Proposal customization"
+  ],
+  "benefits": [
+    "Reduces proposal creation time by 50%",
+    "Improves win rates",
+    "Ensures consistency"
+  ],
+  "technicalRequirements": {
+    "platforms": [
+      "Windows",
+      "macOS",
+      "Linux"
+    ],
+    "dependencies": [
+      "Python 3.8+",
+      "requests",
+      "json"
+    ],
+    "apiKeys": [
+      "SHAREPOINT_API_KEY",
+      "POWERPOINT_API_KEY"
+    ],
+    "integrations": [
+      "SharePoint",
+      "PowerPoint",
+      "Word",
+      "D365 CE"
+    ]
+  },
+  "components": [
+    {
+      "name": "proposal_copilot_agent.py",
+      "description": "Builds proposals from requirements and templates",
+      "role": "Primary processing engine"
+    }
+  ],
+  "demo": {
+    "available": true,
+    "url": "agents_lab/professional_services_stack/proposal_copilot_stack/demos/proposal_copilot_demo.html",
+    "title": "Proposal Co-Pilot Agent Interactive Demo",
+    "description": "Interactive demonstration of Proposal Co-Pilot Agent capabilities"
+  },
+  "useCases": [
+    "RFP responses",
+    "SOW creation",
+    "Proposal customization"
+  ]
+}

@@ -1,0 +1,58 @@
+{
+  "id": "customer_onboarding_stack",
+  "name": "Customer Onboarding Agent Stack",
+  "version": "1.0.0",
+  "description": "Walks users through setup and configuration processes",
+  "category": "software_dp",
+  "complexity": "intermediate",
+  "features": [
+    "Guided setup",
+    "Configuration assistance",
+    "Training delivery"
+  ],
+  "benefits": [
+    "Reduces time to value",
+    "Improves adoption rates",
+    "Decreases support tickets"
+  ],
+  "technicalRequirements": {
+    "platforms": [
+      "Windows",
+      "macOS",
+      "Linux"
+    ],
+    "dependencies": [
+      "Python 3.8+",
+      "requests",
+      "json"
+    ],
+    "apiKeys": [
+      "GAINSIGHT_API_KEY",
+      "SALESFORCE_API_KEY"
+    ],
+    "integrations": [
+      "Gainsight",
+      "Salesforce",
+      "D365 CE",
+      "Power Platform"
+    ]
+  },
+  "components": [
+    {
+      "name": "customer_onboarding_agent.py",
+      "description": "Walks users through setup and configuration processes",
+      "role": "Primary processing engine"
+    }
+  ],
+  "demo": {
+    "available": true,
+    "url": "agents_lab/software_dp_stack/customer_onboarding_stack/demos/customer_onboarding_demo.html",
+    "title": "Customer Onboarding Agent Interactive Demo",
+    "description": "Interactive demonstration of Customer Onboarding Agent capabilities"
+  },
+  "useCases": [
+    "Guided setup",
+    "Configuration assistance",
+    "Training delivery"
+  ]
+}

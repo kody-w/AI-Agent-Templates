@@ -1,0 +1,58 @@
+{
+  "id": "contract_risk_review_stack",
+  "name": "Contract Risk Review Agent Stack",
+  "version": "1.0.0",
+  "description": "Reviews contracts for risk and compliance issues",
+  "category": "professional_services",
+  "complexity": "intermediate",
+  "features": [
+    "Contract analysis",
+    "Risk assessment",
+    "Compliance checking"
+  ],
+  "benefits": [
+    "Reduces contract review time by 70%",
+    "Minimizes legal risks",
+    "Ensures compliance"
+  ],
+  "technicalRequirements": {
+    "platforms": [
+      "Windows",
+      "macOS",
+      "Linux"
+    ],
+    "dependencies": [
+      "Python 3.8+",
+      "requests",
+      "json"
+    ],
+    "apiKeys": [
+      "DOCUSIGN_API_KEY",
+      "ADOBE_SIGN_API_KEY"
+    ],
+    "integrations": [
+      "DocuSign",
+      "Adobe Sign",
+      "SharePoint",
+      "Azure OpenAI"
+    ]
+  },
+  "components": [
+    {
+      "name": "contract_risk_review_agent.py",
+      "description": "Reviews contracts for risk and compliance issues",
+      "role": "Primary processing engine"
+    }
+  ],
+  "demo": {
+    "available": true,
+    "url": "agents_lab/professional_services_stack/contract_risk_review_stack/demos/contract_risk_review_demo.html",
+    "title": "Contract Risk Review Agent Interactive Demo",
+    "description": "Interactive demonstration of Contract Risk Review Agent capabilities"
+  },
+  "useCases": [
+    "Contract analysis",
+    "Risk assessment",
+    "Compliance checking"
+  ]
+}

@@ -1,0 +1,58 @@
+{
+  "id": "citizen_service_request_stack",
+  "name": "Citizen Service Request Agent Stack",
+  "version": "1.0.0",
+  "description": "24/7 intake and routing of non-emergency issues",
+  "category": "slg_government",
+  "complexity": "intermediate",
+  "features": [
+    "Service requests",
+    "Issue reporting",
+    "Status tracking"
+  ],
+  "benefits": [
+    "Improves citizen satisfaction",
+    "Reduces response times",
+    "Increases efficiency"
+  ],
+  "technicalRequirements": {
+    "platforms": [
+      "Windows",
+      "macOS",
+      "Linux"
+    ],
+    "dependencies": [
+      "Python 3.8+",
+      "requests",
+      "json"
+    ],
+    "apiKeys": [
+      "D365_CE_API_KEY",
+      "SALESFORCE_API_KEY"
+    ],
+    "integrations": [
+      "D365 CE",
+      "Salesforce",
+      "ServiceNow",
+      "Accela"
+    ]
+  },
+  "components": [
+    {
+      "name": "citizen_service_request_agent.py",
+      "description": "24/7 intake and routing of non-emergency issues",
+      "role": "Primary processing engine"
+    }
+  ],
+  "demo": {
+    "available": true,
+    "url": "agents_lab/slg_government_stack/citizen_service_request_stack/demos/citizen_service_request_demo.html",
+    "title": "Citizen Service Request Agent Interactive Demo",
+    "description": "Interactive demonstration of Citizen Service Request Agent capabilities"
+  },
+  "useCases": [
+    "Service requests",
+    "Issue reporting",
+    "Status tracking"
+  ]
+}

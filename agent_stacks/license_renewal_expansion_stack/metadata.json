@@ -1,0 +1,58 @@
+{
+  "id": "license_renewal_expansion_stack",
+  "name": "License Renewal & Expansion Agent Stack",
+  "version": "1.0.0",
+  "description": "Flags expiring licenses and triggers customer success motions",
+  "category": "software_dp",
+  "complexity": "intermediate",
+  "features": [
+    "Renewal forecasting",
+    "Upsell identification",
+    "Churn prevention"
+  ],
+  "benefits": [
+    "Increases renewal rates",
+    "Identifies expansion opportunities",
+    "Reduces revenue leakage"
+  ],
+  "technicalRequirements": {
+    "platforms": [
+      "Windows",
+      "macOS",
+      "Linux"
+    ],
+    "dependencies": [
+      "Python 3.8+",
+      "requests",
+      "json"
+    ],
+    "apiKeys": [
+      "SALESFORCE_CPQ_API_KEY",
+      "D365_API_KEY"
+    ],
+    "integrations": [
+      "Salesforce CPQ",
+      "D365",
+      "NetSuite",
+      "Gainsight"
+    ]
+  },
+  "components": [
+    {
+      "name": "license_renewal_expansion_agent.py",
+      "description": "Flags expiring licenses and triggers customer success motions",
+      "role": "Primary processing engine"
+    }
+  ],
+  "demo": {
+    "available": true,
+    "url": "agents_lab/software_dp_stack/license_renewal_expansion_stack/demos/license_renewal_expansion_demo.html",
+    "title": "License Renewal & Expansion Agent Interactive Demo",
+    "description": "Interactive demonstration of License Renewal & Expansion Agent capabilities"
+  },
+  "useCases": [
+    "Renewal forecasting",
+    "Upsell identification",
+    "Churn prevention"
+  ]
+}

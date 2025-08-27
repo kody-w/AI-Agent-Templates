@@ -1,0 +1,58 @@
+{
+  "id": "client_health_score_stack",
+  "name": "Client Health Score Agent Stack",
+  "version": "1.0.0",
+  "description": "Aggregates sentiment, usage, and satisfaction metrics",
+  "category": "professional_services",
+  "complexity": "intermediate",
+  "features": [
+    "Health scoring",
+    "Risk monitoring",
+    "Success planning"
+  ],
+  "benefits": [
+    "Predicts churn risk",
+    "Identifies growth opportunities",
+    "Improves client retention"
+  ],
+  "technicalRequirements": {
+    "platforms": [
+      "Windows",
+      "macOS",
+      "Linux"
+    ],
+    "dependencies": [
+      "Python 3.8+",
+      "requests",
+      "json"
+    ],
+    "apiKeys": [
+      "D365_CE_API_KEY",
+      "GAINSIGHT_API_KEY"
+    ],
+    "integrations": [
+      "D365 CE",
+      "Gainsight",
+      "Power BI",
+      "ServiceNow"
+    ]
+  },
+  "components": [
+    {
+      "name": "client_health_score_agent.py",
+      "description": "Aggregates sentiment, usage, and satisfaction metrics",
+      "role": "Primary processing engine"
+    }
+  ],
+  "demo": {
+    "available": true,
+    "url": "agents_lab/professional_services_stack/client_health_score_stack/demos/client_health_score_demo.html",
+    "title": "Client Health Score Agent Interactive Demo",
+    "description": "Interactive demonstration of Client Health Score Agent capabilities"
+  },
+  "useCases": [
+    "Health scoring",
+    "Risk monitoring",
+    "Success planning"
+  ]
+}

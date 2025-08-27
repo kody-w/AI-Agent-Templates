@@ -1,0 +1,58 @@
+{
+  "id": "financial_advisor_copilot_stack",
+  "name": "Financial Advisor Copilot Stack",
+  "version": "1.0.0",
+  "description": "Surfaces investment strategies and client insights",
+  "category": "financial_services",
+  "complexity": "intermediate",
+  "features": [
+    "Portfolio recommendations",
+    "Client insights",
+    "Market analysis"
+  ],
+  "benefits": [
+    "Improves advisor productivity",
+    "Enhances client outcomes",
+    "Increases AUM"
+  ],
+  "technicalRequirements": {
+    "platforms": [
+      "Windows",
+      "macOS",
+      "Linux"
+    ],
+    "dependencies": [
+      "Python 3.8+",
+      "requests",
+      "json"
+    ],
+    "apiKeys": [
+      "CRM_API_KEY",
+      "BLOOMBERG_API_KEY"
+    ],
+    "integrations": [
+      "CRM",
+      "Bloomberg",
+      "Power BI",
+      "Advisor Portals"
+    ]
+  },
+  "components": [
+    {
+      "name": "financial_advisor_copilot_agent.py",
+      "description": "Surfaces investment strategies and client insights",
+      "role": "Primary processing engine"
+    }
+  ],
+  "demo": {
+    "available": true,
+    "url": "agents_lab/financial_services_stack/financial_advisor_copilot_stack/demos/financial_advisor_copilot_demo.html",
+    "title": "Financial Advisor Copilot Interactive Demo",
+    "description": "Interactive demonstration of Financial Advisor Copilot capabilities"
+  },
+  "useCases": [
+    "Portfolio recommendations",
+    "Client insights",
+    "Market analysis"
+  ]
+}

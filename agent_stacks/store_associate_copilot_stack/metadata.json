@@ -1,0 +1,58 @@
+{
+  "id": "store_associate_copilot_stack",
+  "name": "Store Associate Copilot Stack",
+  "version": "1.0.0",
+  "description": "Assists staff with product information and promotions",
+  "category": "retail_cpg",
+  "complexity": "intermediate",
+  "features": [
+    "Product lookup",
+    "Promotion assistance",
+    "Customer service support"
+  ],
+  "benefits": [
+    "Improves sales conversion",
+    "Enhances customer service",
+    "Reduces training time"
+  ],
+  "technicalRequirements": {
+    "platforms": [
+      "Windows",
+      "macOS",
+      "Linux"
+    ],
+    "dependencies": [
+      "Python 3.8+",
+      "requests",
+      "json"
+    ],
+    "apiKeys": [
+      "POS_API_KEY",
+      "D365_API_KEY"
+    ],
+    "integrations": [
+      "POS",
+      "D365",
+      "Salesforce",
+      "Power Platform"
+    ]
+  },
+  "components": [
+    {
+      "name": "store_associate_copilot_agent.py",
+      "description": "Assists staff with product information and promotions",
+      "role": "Primary processing engine"
+    }
+  ],
+  "demo": {
+    "available": true,
+    "url": "agents_lab/retail_cpg_stack/store_associate_copilot_stack/demos/store_associate_copilot_demo.html",
+    "title": "Store Associate Copilot Interactive Demo",
+    "description": "Interactive demonstration of Store Associate Copilot capabilities"
+  },
+  "useCases": [
+    "Product lookup",
+    "Promotion assistance",
+    "Customer service support"
+  ]
+}
