@@ -1638,19 +1638,46 @@ graph TB
     <!-- Template Library Section -->
     <div id="templatesApp" class="app-section active">
       <div class="container">
-        <header style="padding: 1rem 0 0.5rem;">
+        <header style="background: linear-gradient(135deg, #4f6fc4 0%, #3b5998 100%); 
+                       color: white; 
+                       padding: 1.5rem; 
+                       border-radius: 12px; 
+                       margin-bottom: 1.5rem;
+                       box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);">
           <div style="display: flex; justify-content: space-between; align-items: center;">
             <div>
-              <div class="ms-logo" style="font-size: 0.8rem;">MICROSOFT AI ACCELERATE</div>
-              <h1 style="font-size: 1.8rem; margin: 0.5rem 0;">Agentic Template Library</h1>
+              <div style="font-size: 0.75rem; 
+                          letter-spacing: 0.15em; 
+                          text-transform: uppercase; 
+                          opacity: 0.9;
+                          font-weight: 500;">Microsoft AI Accelerate</div>
+              <h1 style="font-size: 2rem; 
+                         margin: 0.5rem 0 0 0; 
+                         font-weight: 600;
+                         text-shadow: 0 2px 4px rgba(0,0,0,0.1);">
+                🚀 Agentic Template Library
+              </h1>
             </div>
             <button
-              class="btn btn-primary"
+              class="btn"
               onclick="agentStore.toggleCart()"
-              style="display: inline-flex; align-items: center; gap: 0.5rem;"
+              style="background: rgba(255, 255, 255, 0.2);
+                     backdrop-filter: blur(10px);
+                     border: 1px solid rgba(255, 255, 255, 0.3);
+                     color: white;
+                     padding: 0.75rem 1.5rem;
+                     border-radius: 8px;
+                     display: inline-flex; 
+                     align-items: center; 
+                     gap: 0.5rem;
+                     transition: all 0.3s ease;
+                     cursor: pointer;
+                     font-weight: 500;"
+              onmouseover="this.style.background='rgba(255, 255, 255, 0.3)'"
+              onmouseout="this.style.background='rgba(255, 255, 255, 0.2)'"
             >
               <span>🛒</span>
-              <span class="badge" id="templateCartCount">0</span>
+              <span class="badge" id="templateCartCount" style="background: #ff6b6b; padding: 0.25rem 0.5rem; border-radius: 12px;">0</span>
               <span>My Stack</span>
             </button>
           </div>
@@ -1669,22 +1696,6 @@ graph TB
           </div>
         </div>
 
-        <!-- View Controls -->
-        <div class="view-controls">
-          <div class="view-info">
-            <span id="templateCount" style="color: #666; font-size: 0.95rem;">0 templates</span>
-          </div>
-          <div class="view-toggle">
-            <button class="view-btn" id="templateGalleryBtn" onclick="templateManager.setView('gallery')">
-              <span>🏛️</span>
-              <span>Gallery</span>
-            </button>
-            <button class="view-btn active" id="templateListBtn" onclick="templateManager.setView('list')">
-              <span>📋</span>
-              <span>List</span>
-            </button>
-          </div>
-        </div>
 
         <!-- Search and Filter -->
         <div class="search-section" style="padding: 0.75rem; background: white; border-radius: 8px; margin-bottom: 1rem;">
@@ -1742,7 +1753,7 @@ graph TB
           </div>
         </div>
 
-        <div class="template-grid" id="templateGrid">
+        <div class="template-grid" id="templateGrid" style="display: none;">
           <!-- Templates will be dynamically loaded here -->
         </div>
 
@@ -1994,30 +2005,14 @@ graph TB
           </div>
         </div>
 
-        <!-- View Controls -->
-        <div class="view-controls">
-          <div class="view-info">
-            <span id="agentCount" style="color: #666; font-size: 0.95rem;">0 agents</span>
-          </div>
-          <div class="view-toggle">
-            <button class="view-btn" id="galleryViewBtn" onclick="agentStore.setView('gallery')">
-              <span>🏛️</span>
-              <span>Gallery</span>
-            </button>
-            <button class="view-btn active" id="listViewBtn" onclick="agentStore.setView('list')">
-              <span>📋</span>
-              <span>List</span>
-            </button>
-          </div>
-        </div>
 
         <!-- Agent Grid -->
-        <div class="agent-grid" id="agentGrid">
+        <div class="agent-grid" id="agentGrid" style="display: none;">
           <!-- Agent cards will be dynamically loaded here -->
         </div>
 
         <!-- Agent List View -->
-        <div class="agent-list" id="agentList">
+        <div class="agent-list active" id="agentList">
           <!-- List items will be dynamically loaded here -->
         </div>
 
@@ -2147,6 +2142,8 @@ graph TB
           this.filteredTemplates = [];
           this.dynamicStacks = [];
           this.currentView = "list";
+          this.industries = new Map();
+          this.selectedIndustry = null;
         }
 
         async loadTemplates() {
@@ -2373,7 +2370,18 @@ graph TB
           
           this.filteredTemplates = [...this.agentTemplates];
           this.templatesLoaded = true;
-          this.renderTemplates(this.filteredTemplates);
+          
+          // Build industry map for filtering
+          this.buildIndustryMap();
+          
+          // Check for saved industry preference
+          const savedIndustry = localStorage.getItem('selectedIndustry');
+          if (savedIndustry && this.industries.has(savedIndustry)) {
+            this.filterByIndustry(savedIndustry);
+          } else {
+            this.renderTemplates(this.filteredTemplates);
+            this.renderIndustryButtons();
+          }
         }
 
         async loadDynamicStacks() {
@@ -2656,24 +2664,8 @@ graph TB
         }
 
         setView(view) {
-          this.currentView = view;
-          const grid = document.getElementById("templateGrid");
-          const list = document.getElementById("templateList");
-          const galleryBtn = document.getElementById("templateGalleryBtn");
-          const listBtn = document.getElementById("templateListBtn");
-
-          if (view === 'list') {
-            if (grid) grid.style.display = 'none';
-            if (list) list.classList.add('active');
-            if (galleryBtn) galleryBtn.classList.remove('active');
-            if (listBtn) listBtn.classList.add('active');
-          } else {
-            if (grid) grid.style.display = 'grid';
-            if (list) list.classList.remove('active');
-            if (galleryBtn) galleryBtn.classList.add('active');
-            if (listBtn) listBtn.classList.remove('active');
-          }
-
+          // Always use list view
+          this.currentView = 'list';
           this.renderTemplates(this.filteredTemplates);
         }
 
@@ -3223,6 +3215,12 @@ graph TB
         renderIndustryButtons() {
           const container = document.getElementById('industryButtons');
           if (!container) return;
+          
+          // Ensure industries map exists
+          if (!this.industries || this.industries.size === 0) {
+            console.warn('Industries not yet loaded, building map now');
+            this.buildIndustryMap();
+          }
           
           // Sort industries by count (descending) but put General/Cross-Industry last
           const sortedIndustries = Array.from(this.industries.entries())
@@ -5031,24 +5029,8 @@ graph TB
         }
 
         setView(view) {
-          this.currentView = view;
-          const grid = document.getElementById("agentGrid");
-          const list = document.getElementById("agentList");
-          const galleryBtn = document.getElementById("galleryViewBtn");
-          const listBtn = document.getElementById("listViewBtn");
-
-          if (view === 'list') {
-            if (grid) grid.style.display = 'none';
-            if (list) list.classList.add('active');
-            if (galleryBtn) galleryBtn.classList.remove('active');
-            if (listBtn) listBtn.classList.add('active');
-          } else {
-            if (grid) grid.style.display = 'grid';
-            if (list) list.classList.remove('active');
-            if (galleryBtn) galleryBtn.classList.add('active');
-            if (listBtn) listBtn.classList.remove('active');
-          }
-
+          // Always use list view
+          this.currentView = 'list';
           this.renderAgents();
         }
 
