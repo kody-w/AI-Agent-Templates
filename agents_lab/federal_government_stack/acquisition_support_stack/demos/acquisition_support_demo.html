@@ -798,7 +798,7 @@
             messages: [
                 {
                     role: 'assistant',
-                    content: '📋 Analyzing contract proposals per FAR 15.305...
+                    content: `📋 Analyzing contract proposals per FAR 15.305...
 
 • Technical Evaluation: Scoring against PWS requirements
 • Past Performance: CPARS and PPIRS review
@@ -807,7 +807,7 @@
 • Risk Assessment: Technical, schedule, cost risks
 • Security Clearance: Facility and personnel verification
 
-Generating Source Selection documentation...',
+Generating Source Selection documentation...`,
                     typingTime: 2500,
                     delay: 2000,
                     action: 'step2'
@@ -819,11 +819,54 @@ Generating Source Selection documentation...',
             messages: [
                 {
                     role: 'assistant',
-                    content: '✅ Process Complete - Results Generated!',
+                    content: `📊 Contract Evaluation Complete - $450M IT Modernization
+
+<strong>PROPOSAL RANKINGS & SCORING</strong>
+
+<strong>1. TechCorp Solutions - Score: 94/100 (RECOMMENDED)</strong>
+• Technical: 48/50 - Cloud-native architecture, zero-trust security
+• Past Performance: 28/30 - 12 successful federal contracts, all "Exceptional"
+• Price: $441M (2% under IGCE)
+• Small Business: 32% subcontracting commitment
+• FedRAMP High authorization already in place
+
+<strong>2. Federal Systems Inc - Score: 87/100</strong>
+• Technical: 44/50 - Strong cybersecurity, limited AI capabilities
+• Past Performance: 26/30 - 8 contracts, one "Marginal" CPAR
+• Price: $438M (2.7% under IGCE)
+• Small Business: 28% subcontracting
+
+<strong>3. CloudFirst Gov - Score: 85/100</strong>
+• Technical: 42/50 - Good cloud approach, limited federal experience
+• Past Performance: 24/30 - Limited federal contract history
+• Price: $455M (1.1% over IGCE)
+
+<strong>KEY DISCRIMINATORS</strong>
+✅ TechCorp's AI-powered automation saves 3,200 hours annually
+✅ Zero-downtime migration with proven rollback capabilities
+✅ Section 508 compliance exceeds requirements by 40%
+✅ 95% of proposed staff hold active clearances
+
+<strong>RISK ASSESSMENT</strong>
+• Low Risk: TechCorp (proven platform, cleared staff ready)
+• Low-Moderate: Federal Systems (integration concerns)
+• High Risk: DataMigrate (understaffed approach)
+
+<strong>RECOMMENDATION</strong>
+Award to TechCorp Solutions based on best value determination. Superior technical approach and past performance justify 3% premium over lowest bidder. Clear technical superiority minimizes protest risk.
+
+Next Steps: Pre-award survey, negotiations, Congressional notification`,
                     showResult: true,
-                    resultData: {"Evaluation Summary": {"Contract Value": "$450M (5-year IDIQ)", "Proposals Received": "5 compliant bids", "Evaluation Method": "Best Value Trade-off", "NAICS Code": "541512", "Set-Aside": "None - Full & Open", "Recommendation": "Award to TechCorp Solutions"}, "Technical Scores": {"TechCorp Solutions": "94/100 - Exceptional", "Federal Systems Inc": "87/100 - Good", "CloudFirst Gov": "85/100 - Good", "DataMigrate LLC": "78/100 - Acceptable", "Legacy Transform Co": "72/100 - Acceptable", "Key Discriminators": "Architecture, innovation, staffing"}, "Past Performance": {"TechCorp": "Exceptional - 7 relevant, all satisfied", "Federal Systems": "Very Good - 1 marginal CPAR", "CloudFirst": "Satisfactory - Limited federal", "DataMigrate": "Satisfactory - Smaller contracts", "Legacy Transform": "Unknown Risk - No relevant", "CPARS Average": "4.2, 3.8, 3.5, 3.4, N/A"}, "Price Analysis": {"TechCorp": "$441M (2% under IGCE)", "Federal Systems": "$438M (2.7% under)", "CloudFirst": "$455M (1.1% over)", "DataMigrate": "$425M (5.6% under - risk)", "Legacy Transform": "$468M (4% over)", "Best Value": "TechCorp - superior technical worth 3%"}, "Risk Assessment": {"TechCorp": "Low - proven platform, cleared staff", "Federal Systems": "Low-Moderate - integration concerns", "CloudFirst": "Moderate - federal experience gaps", "DataMigrate": "High - understaffed approach", "Legacy Transform": "High - unrealistic schedule", "Migration Risk": "TechCorp phased approach optimal"}, "Recommendation": {"Award To": "TechCorp Solutions", "Justification": "Best Value despite 3% premium", "Strengths": "FedRAMP solution, cleared staff ready", "Small Business": "32% subcontracting committed", "Protest Risk": "Low - clear technical superiority", "Next Steps": "Pre-award survey, negotiations, Congressional notification"}},
-                    typingTime: 2000,
-                    delay: 1500,
+                    resultData: {
+                        "Contract Value": "$450M (5-year IDIQ)",
+                        "Evaluation Method": "Best Value Trade-off",
+                        "Award Recommendation": "TechCorp Solutions",
+                        "Protest Risk": "Low - clear technical superiority",
+                        "Small Business Goal": "32% commitment secured",
+                        "Congressional Notification": "Required for >$100M"
+                    },
+                    typingTime: 3000,
+                    delay: 2000,
                     action: 'step3'
                 }
             ]

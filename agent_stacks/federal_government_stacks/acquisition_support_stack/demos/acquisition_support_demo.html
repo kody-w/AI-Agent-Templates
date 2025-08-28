@@ -780,13 +780,13 @@
             messages: [
                 {
                     role: 'user',
-                    content: 'Help me with this task',
+                    content: 'We need to evaluate 5 proposals for the $450M IT modernization contract. Can you perform technical evaluation, past performance review, and best value analysis?',
                     typingTime: 1500,
                     delay: 1000
                 },
                 {
                     role: 'assistant',
-                    content: 'I\'ll help you with that. Let me process your request...',
+                    content: 'I\'ll evaluate all 5 proposals for the $450M IT modernization contract, conducting technical scoring, past performance reviews, and best value analysis per FAR requirements. Let me begin the comprehensive evaluation...',
                     typingTime: 2000,
                     delay: 1500,
                     action: 'step1'
@@ -798,17 +798,53 @@
             messages: [
                 {
                     role: 'assistant',
-                    content: '✅ Task completed successfully!',
+                    content: `📊 Contract Evaluation Complete - $450M IT Modernization
+
+<strong>PROPOSAL RANKINGS & SCORING</strong>
+
+<strong>1. TechCorp Solutions - Score: 94.2/100 (RECOMMENDED)</strong>
+• Technical: 48/50 - Cloud-native architecture, zero-trust security
+• Past Performance: 28/30 - 12 successful federal contracts, all "Exceptional"
+• Price: $425M (-5.6% from estimate)
+• Small Business: 42% subcontracting commitment
+
+<strong>2. Federal Systems Inc - Score: 87.5/100</strong>
+• Technical: 44/50 - Strong cybersecurity, limited AI capabilities
+• Past Performance: 26/30 - 8 contracts, one "Marginal" rating
+• Price: $438M (-2.7% from estimate)
+• Small Business: 35% subcontracting
+
+<strong>3. GlobalTech Partners - Score: 82.3/100</strong>
+• Technical: 41/50 - Conventional approach, meets minimum requirements
+• Past Performance: 24/30 - 6 contracts, recent contract dispute
+• Price: $445M (-1.1% from estimate)
+
+<strong>KEY DIFFERENTIATORS</strong>
+✅ TechCorp's AI-powered automation saves 3,200 hours annually
+✅ Zero-downtime migration plan with rollback capabilities
+✅ Section 508 compliance exceeds requirements by 40%
+✅ FedRAMP High authorization already in place
+
+<strong>RISK ASSESSMENT</strong>
+• Low Risk: TechCorp (proven architecture, strong team)
+• Medium Risk: Federal Systems (capability gaps in emerging tech)
+• High Risk: GlobalTech (recent performance issues)
+
+<strong>RECOMMENDATION</strong>
+Award to TechCorp Solutions based on best value determination. Superior technical approach and past performance justify selection despite not being lowest price.`,
                     showResult: true,
                     resultData: {
                         result: {
-                            status: 'Complete',
-                            timestamp: new Date().toISOString(),
-                            details: 'Task processed successfully'
+                            status: 'Evaluation Complete',
+                            contract_value: '$450,000,000',
+                            recommended_vendor: 'TechCorp Solutions',
+                            proposals_evaluated: 5,
+                            evaluation_factors: ['Technical Merit', 'Past Performance', 'Price', 'Small Business Participation'],
+                            compliance: 'FAR Part 15 compliant'
                         }
                     },
-                    typingTime: 2000,
-                    delay: 1500,
+                    typingTime: 3000,
+                    delay: 2000,
                     action: 'step2'
                 }
             ]
