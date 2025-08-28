@@ -780,13 +780,13 @@
             messages: [
                 {
                     role: 'user',
-                    content: 'I need to return my Nike Air Max 270 shoes (Order #ORD-2024-78432). They\'re size 10 but too small. Can I exchange for size 11? Purchased 12 days ago for $159.99.',
+                    content: `I need to return my Nike Air Max 270 shoes (Order #ORD-2024-78432). They\'re size 10 but too small. Can I exchange for size 11? Purchased 12 days ago for $159.99.`,
                     typingTime: 1500,
                     delay: 1000
                 },
                 {
                     role: 'assistant',
-                    content: 'I\'ll help you exchange your Nike Air Max 270 shoes for a size 11. Let me check your order details and our current inventory for the exchange...',
+                    content: `I\'ll help you exchange your Nike Air Max 270 shoes for a size 11. Let me check your order details and our current inventory for the exchange...`,
                     typingTime: 2000,
                     delay: 1500,
                     action: 'step1'
@@ -816,7 +816,7 @@
             messages: [
                 {
                     role: 'assistant',
-                    content: '🎉 Exchange Approved and Processed!\n\nYour Nike Air Max 270 exchange has been authorized. I\'ve emailed you a prepaid return label and your new shoes will ship once we receive the return.',
+                    content: `🎉 Exchange Approved and Processed!\n\nYour Nike Air Max 270 exchange has been authorized. I\'ve emailed you a prepaid return label and your new shoes will ship once we receive the return.`,
                     showResult: true,
                     resultData: {
                         'Return Authorization': {
