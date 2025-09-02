@@ -22,7 +22,8 @@ class BasicAgent:
 
 ### Directory Structure
 - `agents/` - Individual agent implementations (single-purpose components)
-- `agent_stacks/` - Legacy complete solutions (voice_to_crm, email_drafting, etc.)
+- `agent_stacks/` - Complete solutions organized by industry:
+  - `general_stacks/` - Cross-industry solutions (voice_to_crm, email_drafting, simulation_sales)
 - `agents_lab/` - Industry-specific agent stacks organized by vertical:
   - `b2b_sales_stack/` - B2B sales automation agents
   - `b2c_sales_stack/` - B2C retail and e-commerce agents
@@ -55,17 +56,11 @@ stack_name/
 # Individual agents
 python agents/[agent_name].py
 
-# Stack-specific agents (legacy)
-python agent_stacks/[stack_name]/agents/[agent_name].py
+# Stack-specific agents (general)
+python agent_stacks/general_stacks/[stack_name]/agents/[agent_name].py
 
 # Industry vertical agents
 python agents_lab/[vertical]_stack/[stack_name]/agents/[agent_name].py
-
-# Batch generate all industry stacks
-python agents_lab/generate_all_stacks.py
-
-# Update all demo files
-python agents_lab/update_all_demos.py
 
 # Update manifest for web interface
 python update_manifest.py
@@ -136,6 +131,13 @@ Each stack includes interactive HTML demo in `demos/` directory showcasing:
 
 ### Trading Card Export
 Generate standalone HTML agent cards: `generate_trading_card.js`
+
+### Manifest Generation
+The `update_manifest.py` script scans the repository and generates `manifest.json` with:
+- All agents from `agents/` directory
+- All stacks from `agent_stacks/` with industry categorization
+- Deduplication of agents that exist in both locations
+- File sizes, URLs, and metadata for web interface
 
 ## Python Code Conventions
 
