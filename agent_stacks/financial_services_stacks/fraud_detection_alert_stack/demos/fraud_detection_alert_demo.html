@@ -793,74 +793,28 @@
 
         // Demo script
         const demoScript = [
-        {
-                "type": "conversation",
-                "messages": [
-                        {
-                                "role": "user",
-                                "content": "Customer usually spends $200-500/month. Today: $3000 electronics in Miami, $2500 ATM, $5000 wire attempt to Cyprus.",
-                                "typingTime": 1500,
-                                "delay": 1000
-                        },
-                        {
-                                "role": "assistant",
-                                "content": "🚨 <strong>CRITICAL FRAUD ALERT</strong>
-
-<strong>Risk Score: 96/100 - EXTREME</strong>
-
-<strong>SUSPICIOUS PATTERN DETECTED</strong>
-
-<strong>Normal Behavior:</strong>
-• Monthly: $200-500
-• Location: Local only
-• ATM: $100-200 weekly
-
-<strong>Today's Activity:</strong>
-1. $3,000 Best Buy Miami (2,847 miles away)
-2. $2,500 ATM withdrawal 
-3. $5,000 wire to Cyprus
-
-<strong>Pattern: ACCOUNT TAKEOVER</strong>
-
-<strong>Velocity Analysis:</strong>
-• $10,500 in 51 minutes
-• 21x monthly average
-• 3 channels attacked
-
-<strong>ACTIONS TAKEN:</strong>
-✅ Cards hotlisted
-✅ Wire blocked
-✅ Account locked
-✅ Case #FR-2024-0847291
-
-<strong>Customer Contact:</strong>
-• Calling primary: (555) 123-4567
-• Spouse backup ready
-• Push notification sent
-
-<strong>Loss Prevented: $10,500</strong>
-
-<strong>Law Enforcement:</strong>
-• FBI IC3 report filed
-• Local PD notified
-• SAR filing in progress",
-                                "typingTime": 3000,
-                                "delay": 2000,
-                                "action": "step2",
-                                "showResult": true,
-                                "resultData": {
-                                        "Fraud Detection": {
-                                                "Risk Score": "96/100",
-                                                "Pattern": "Account Takeover",
-                                                "Amount at Risk": "$10,500",
-                                                "Status": "BLOCKED",
-                                                "Case Number": "FR-2024-0847291"
-                                        }
-                                }
-                        }
-                ]
-        }
-];
+            {
+                "type": "user",
+                "content": "Customer usually spends $200-500/month. Today: $3000 electronics in Miami, $2500 ATM, $5000 wire attempt to Cyprus.",
+                "typingTime": 1500,
+                "delay": 1000
+            },
+            {
+                "type": "agent",
+                "content": "🚨 <strong>CRITICAL FRAUD ALERT</strong><br><br><strong>Risk Score: 96/100 - EXTREME</strong><br><br><strong>SUSPICIOUS PATTERN DETECTED</strong><br><br><strong>Normal Behavior:</strong><br>• Monthly: $200-500<br>• Location: Local only<br>• ATM: $100-200 weekly<br><br><strong>Today's Activity:</strong><br>1. $3,000 Best Buy Miami (2,847 miles away)<br>2. $2,500 ATM withdrawal<br>3. $5,000 wire to Cyprus<br><br><strong>Pattern: ACCOUNT TAKEOVER</strong><br><br><strong>Velocity Analysis:</strong><br>• $10,500 in 51 minutes<br>• 21x monthly average<br>• 3 channels attacked<br><br><strong>ACTIONS TAKEN:</strong><br>✅ Cards hotlisted<br>✅ Wire blocked<br>✅ Account locked<br>✅ Case #FR-2024-0847291<br><br><strong>Customer Contact:</strong><br>• Calling primary: (555) 123-4567<br>• Spouse backup ready<br>• Push notification sent<br><br><strong>Loss Prevented: $10,500</strong><br><br><strong>Law Enforcement:</strong><br>• FBI IC3 report filed<br>• Local PD notified<br>• SAR filing in progress",
+                "typingTime": 3000,
+                "delay": 2000,
+                "agentData": {
+                    "Fraud Detection": {
+                        "Risk Score": "96/100",
+                        "Pattern": "Account Takeover",
+                        "Amount at Risk": "$10,500",
+                        "Status": "BLOCKED",
+                        "Case Number": "FR-2024-0847291"
+                    }
+                }
+            }
+        ];
 
         let currentMessageIndex = 0;
 
@@ -1040,7 +994,20 @@
             if (message.type === 'user') {
                 addMessage('user', message.content);
             } else if (message.type === 'agent') {
-                addMessage('agent', message.content, message.agentData);
+                // Format agentData if present
+                let formattedAgentData = null;
+                if (message.agentData) {
+                    // Get the first key (e.g., "Fraud Detection")
+                    const dataKey = Object.keys(message.agentData)[0];
+                    if (dataKey) {
+                        formattedAgentData = {
+                            title: dataKey,
+                            status: message.agentData[dataKey].Status || '',
+                            details: message.agentData[dataKey]
+                        };
+                    }
+                }
+                addMessage('agent', message.content, formattedAgentData);
             }
         }
 

@@ -24,18 +24,8 @@ class BasicAgent:
 - `agents/` - Individual agent implementations (single-purpose components)
 - `agent_stacks/` - Complete solutions organized by industry:
   - `general_stacks/` - Cross-industry solutions (voice_to_crm, email_drafting, simulation_sales)
-- `agents_lab/` - Industry-specific agent stacks organized by vertical:
-  - `b2b_sales_stack/` - B2B sales automation agents
-  - `b2c_sales_stack/` - B2C retail and e-commerce agents
-  - `healthcare_stack/` - Healthcare and clinical agents
-  - `financial_services_stack/` - Banking and insurance agents
-  - `energy_stack/` - Energy and utilities agents
-  - `manufacturing_stack/` - Manufacturing and supply chain agents
-  - `federal_government_stack/` - Federal government agents
-  - `slg_government_stack/` - State and local government agents
-  - `professional_services_stack/` - Professional services agents
-  - `retail_cpg_stack/` - Retail and CPG agents
-  - `software_dp_stack/` - Software and digital products agents
+  - `[industry]_stacks/` - Industry-specific stacks (financial_services, healthcare, retail_cpg, etc.)
+- `agents_lab/` - Legacy industry-specific agent stacks (being migrated to agent_stacks/)
 
 ### Stack Structure Pattern
 Each agent stack follows standardized organization:
@@ -60,7 +50,7 @@ python agents/[agent_name].py
 python agent_stacks/general_stacks/[stack_name]/agents/[agent_name].py
 
 # Industry vertical agents
-python agents_lab/[vertical]_stack/[stack_name]/agents/[agent_name].py
+python agent_stacks/[industry]_stacks/[stack_name]/agents/[agent_name].py
 
 # Update manifest for web interface
 python update_manifest.py
@@ -71,6 +61,40 @@ No formal test framework is configured. Test agents by:
 1. Creating test scripts that import and instantiate agents
 2. Calling `perform(**kwargs)` with test parameters
 3. Validating JSON response structure
+
+## Demo HTML Structure
+
+### M365 Copilot Pattern
+All demo files follow the Microsoft 365 Copilot design system (`m365_copilot_demo_template.html`):
+- Segoe UI font family
+- Sidebar navigation with Copilot branding
+- Chat-based interface with typing indicators
+- Demo controls (Play/Pause/Skip/Reset)
+- Agent result cards with structured data display
+
+### Demo Script Format
+Demo conversations use this structure:
+```javascript
+const demoScript = [
+    {
+        "type": "user",
+        "content": "User message",
+        "typingTime": 1500,
+        "delay": 1000
+    },
+    {
+        "type": "agent", 
+        "content": "Agent response",
+        "typingTime": 2000,
+        "delay": 1500,
+        "agentData": {
+            "Category": {
+                "Field": "Value"
+            }
+        }
+    }
+];
+```
 
 ## Azure Deployment
 
@@ -122,13 +146,6 @@ External service credentials:
 - Live API integration mode
 - Simulated demo mode
 
-### Demo Pages
-Each stack includes interactive HTML demo in `demos/` directory showcasing:
-- Agent capabilities and workflow
-- Input/output examples
-- Integration points
-- Business value proposition
-
 ### Trading Card Export
 Generate standalone HTML agent cards: `generate_trading_card.js`
 
@@ -147,3 +164,38 @@ The `update_manifest.py` script scans the repository and generates `manifest.jso
 - **Agent inheritance**: All agents extend `BasicAgent`
 - **Error handling**: Try-except blocks with structured error responses
 - **Parameter validation**: Validate before processing
+
+## AI Decision System Pattern
+
+For agents requiring probabilistic decision-making:
+```python
+def make_decision(self, context):
+    decision = {
+        "recommendation": "action",
+        "confidence": 0.85,
+        "reasoning": "Detailed explanation",
+        "factors": {
+            "factor1": {"weight": 0.4, "value": 0.9},
+            "factor2": {"weight": 0.6, "value": 0.7}
+        },
+        "alternatives": [
+            {"action": "alternative", "confidence": 0.65}
+        ]
+    }
+    return decision
+```
+
+## Common Issues and Solutions
+
+### Demo Not Playing
+If demo doesn't show content when Play is clicked:
+1. Check JavaScript console for errors
+2. Verify `demoScript` array structure matches expected format (type: "user"/"agent")
+3. Ensure HTML strings in content are properly escaped with `<br>` tags for line breaks
+4. Check that `playNextMessage()` function correctly reads message type
+
+### Agent Not Found
+If agents aren't loading:
+1. Run `python update_manifest.py` to regenerate manifest
+2. Check file paths match expected pattern
+3. Verify metadata.json exists in stack directories
