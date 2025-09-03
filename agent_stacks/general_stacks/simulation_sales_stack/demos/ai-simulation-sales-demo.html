@@ -1,536 +1,1029 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>AI Simulation Platform - Beyond Execution to Modeling</title>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>M365 Copilot - AI Simulation Platform</title>
     <style>
-      * {
-        margin: 0;
-        padding: 0;
-        box-sizing: border-box;
-      }
-
-      body {
-        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
-          Oxygen, Ubuntu, Cantarell, sans-serif;
-        background: linear-gradient(135deg, #0f0f23 0%, #1a1a3a 100%);
-        color: #e0e0e0;
-        min-height: 100vh;
-        overflow-x: hidden;
-      }
-
-      .container {
-        max-width: 1400px;
-        margin: 0 auto;
-        padding: 20px;
-      }
-
-      .header {
-        text-align: center;
-        padding: 40px 0;
-        position: relative;
-        overflow: hidden;
-      }
-
-      .header::before {
-        content: "";
-        position: absolute;
-        top: -50%;
-        left: -50%;
-        width: 200%;
-        height: 200%;
-        background: radial-gradient(
-          circle,
-          rgba(99, 102, 241, 0.1) 0%,
-          transparent 70%
-        );
-        animation: pulse 15s ease-in-out infinite;
-      }
-
-      @keyframes pulse {
-        0%,
-        100% {
-          transform: scale(1);
-          opacity: 0.5;
-        }
-        50% {
-          transform: scale(1.1);
-          opacity: 0.8;
-        }
-      }
-
-      h1 {
-        font-size: 3em;
-        background: linear-gradient(135deg, #6366f1 0%, #a855f7 100%);
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
-        margin-bottom: 10px;
-        position: relative;
-        z-index: 1;
-      }
-
-      .subtitle {
-        font-size: 1.3em;
-        color: #9ca3af;
-        position: relative;
-        z-index: 1;
-      }
-
-      .value-comparison {
-        display: grid;
-        grid-template-columns: 1fr 1fr;
-        gap: 30px;
-        margin: 40px 0;
-      }
-
-      .comparison-card {
-        background: rgba(255, 255, 255, 0.05);
-        border: 1px solid rgba(255, 255, 255, 0.1);
-        border-radius: 16px;
-        padding: 30px;
-        backdrop-filter: blur(10px);
-        transition: all 0.3s ease;
-      }
-
-      .comparison-card:hover {
-        transform: translateY(-5px);
-        box-shadow: 0 10px 30px rgba(99, 102, 241, 0.3);
-      }
-
-      .comparison-card h3 {
-        font-size: 1.5em;
-        margin-bottom: 15px;
-      }
-
-      .linear-value {
-        border-color: rgba(239, 68, 68, 0.3);
-      }
-
-      .linear-value h3 {
-        color: #ef4444;
-      }
-
-      .exponential-value {
-        border-color: rgba(34, 197, 94, 0.3);
-      }
-
-      .exponential-value h3 {
-        color: #22c55e;
-      }
-
-      .use-cases {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
-        gap: 25px;
-        margin-top: 50px;
-      }
-
-      .use-case-card {
-        background: rgba(255, 255, 255, 0.03);
-        border: 1px solid rgba(255, 255, 255, 0.1);
-        border-radius: 16px;
-        padding: 25px;
-        transition: all 0.3s ease;
-        cursor: pointer;
-        position: relative;
-        overflow: hidden;
-      }
-
-      .use-case-card::before {
-        content: "";
-        position: absolute;
-        top: 0;
-        left: 0;
-        right: 0;
-        height: 3px;
-        background: linear-gradient(90deg, #6366f1 0%, #a855f7 100%);
-        transform: scaleX(0);
-        transition: transform 0.3s ease;
-      }
-
-      .use-case-card:hover::before {
-        transform: scaleX(1);
-      }
-
-      .use-case-card:hover {
-        transform: translateY(-3px);
-        background: rgba(255, 255, 255, 0.06);
-        box-shadow: 0 10px 30px rgba(99, 102, 241, 0.2);
-      }
-
-      .use-case-card h4 {
-        font-size: 1.3em;
-        color: #e0e6ed;
-        margin-bottom: 10px;
-      }
-
-      .use-case-card p {
-        color: #9ca3af;
-        line-height: 1.6;
-        margin-bottom: 20px;
-      }
-
-      .simulate-btn {
-        background: linear-gradient(135deg, #6366f1 0%, #a855f7 100%);
-        color: white;
-        border: none;
-        padding: 12px 24px;
-        border-radius: 8px;
-        font-size: 1em;
-        cursor: pointer;
-        transition: all 0.3s ease;
-        width: 100%;
-        font-weight: 600;
-      }
-
-      .simulate-btn:hover {
-        transform: scale(1.05);
-        box-shadow: 0 5px 20px rgba(99, 102, 241, 0.4);
-      }
-
-      .modal {
-        display: none;
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background: rgba(0, 0, 0, 0.8);
-        z-index: 1000;
-        backdrop-filter: blur(5px);
-      }
-
-      .modal-content {
-        position: relative;
-        background: linear-gradient(135deg, #1a1a3a 0%, #0f0f23 100%);
-        border: 1px solid rgba(255, 255, 255, 0.1);
-        border-radius: 20px;
-        max-width: 800px;
-        max-height: 80vh;
-        margin: 50px auto;
-        padding: 40px;
-        overflow-y: auto;
-        animation: slideIn 0.3s ease;
-      }
-
-      @keyframes slideIn {
-        from {
-          transform: translateY(-50px);
-          opacity: 0;
-        }
-        to {
-          transform: translateY(0);
-          opacity: 1;
-        }
-      }
-
-      .close-modal {
-        position: absolute;
-        top: 20px;
-        right: 20px;
-        font-size: 30px;
-        color: #9ca3af;
-        cursor: pointer;
-        transition: color 0.3s ease;
-      }
-
-      .close-modal:hover {
-        color: #ef4444;
-      }
-
-      .simulation-container {
-        margin-top: 20px;
-      }
-
-      .input-group {
-        margin-bottom: 20px;
-      }
-
-      .input-group label {
-        display: block;
-        margin-bottom: 8px;
-        color: #e0e6ed;
-        font-weight: 500;
-      }
-
-      .input-group input,
-      .input-group select,
-      .input-group textarea {
-        width: 100%;
-        padding: 12px;
-        background: rgba(255, 255, 255, 0.05);
-        border: 1px solid rgba(255, 255, 255, 0.1);
-        border-radius: 8px;
-        color: #e0e6ed;
-        font-size: 1em;
-        transition: all 0.3s ease;
-      }
-
-      .input-group input:focus,
-      .input-group select:focus,
-      .input-group textarea:focus {
-        outline: none;
-        border-color: #6366f1;
-        background: rgba(255, 255, 255, 0.08);
-      }
-
-      .run-simulation-btn {
-        background: linear-gradient(135deg, #22c55e 0%, #10b981 100%);
-        color: white;
-        border: none;
-        padding: 15px 30px;
-        border-radius: 10px;
-        font-size: 1.1em;
-        cursor: pointer;
-        transition: all 0.3s ease;
-        width: 100%;
-        font-weight: 600;
-        margin-top: 20px;
-      }
-
-      .run-simulation-btn:hover {
-        transform: scale(1.05);
-        box-shadow: 0 5px 20px rgba(34, 197, 94, 0.4);
-      }
-
-      .simulation-results {
-        margin-top: 30px;
-        padding: 20px;
-        background: rgba(255, 255, 255, 0.03);
-        border: 1px solid rgba(255, 255, 255, 0.1);
-        border-radius: 12px;
-        display: none;
-      }
-
-      .result-item {
-        margin-bottom: 15px;
-        padding: 15px;
-        background: rgba(255, 255, 255, 0.05);
-        border-radius: 8px;
-        border-left: 3px solid #6366f1;
-      }
-
-      .result-timeline {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-        gap: 15px;
-        margin-top: 20px;
-      }
-
-      .timeline-card {
-        background: rgba(255, 255, 255, 0.05);
-        padding: 15px;
-        border-radius: 8px;
-        text-align: center;
-        transition: all 0.3s ease;
-      }
-
-      .timeline-card:hover {
-        background: rgba(99, 102, 241, 0.1);
-        transform: scale(1.05);
-      }
-
-      .timeline-card h5 {
-        color: #a855f7;
-        margin-bottom: 5px;
-      }
-
-      .timeline-card .value {
-        font-size: 1.5em;
-        color: #22c55e;
-        font-weight: bold;
-      }
-
-      .loading {
-        display: none;
-        text-align: center;
-        padding: 40px;
-      }
-
-      .loading-spinner {
-        width: 50px;
-        height: 50px;
-        border: 3px solid rgba(255, 255, 255, 0.1);
-        border-top: 3px solid #6366f1;
-        border-radius: 50%;
-        animation: spin 1s linear infinite;
-        margin: 0 auto 20px;
-      }
-
-      @keyframes spin {
-        0% {
-          transform: rotate(0deg);
-        }
-        100% {
-          transform: rotate(360deg);
-        }
-      }
-
-      .chart-container {
-        margin-top: 30px;
-        padding: 20px;
-        background: rgba(255, 255, 255, 0.03);
-        border-radius: 12px;
-        height: 300px;
-        position: relative;
-      }
-
-      .value-metrics {
-        display: grid;
-        grid-template-columns: repeat(3, 1fr);
-        gap: 20px;
-        margin-top: 30px;
-      }
-
-      .metric-card {
-        background: rgba(255, 255, 255, 0.05);
-        padding: 20px;
-        border-radius: 12px;
-        text-align: center;
-        border: 1px solid rgba(255, 255, 255, 0.1);
-      }
-
-      .metric-card h5 {
-        color: #9ca3af;
-        font-size: 0.9em;
-        margin-bottom: 10px;
-        text-transform: uppercase;
-        letter-spacing: 1px;
-      }
-
-      .metric-card .metric-value {
-        font-size: 2em;
-        font-weight: bold;
-        background: linear-gradient(135deg, #6366f1 0%, #a855f7 100%);
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
-      }
-
-      @media (max-width: 768px) {
-        .value-comparison {
-          grid-template-columns: 1fr;
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
         }
 
-        .use-cases {
-          grid-template-columns: 1fr;
+        body {
+            font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+            background: #faf9f8;
+            height: 100vh;
+            display: flex;
+            overflow: hidden;
+            color: #323130;
         }
 
-        h1 {
-          font-size: 2em;
+        /* Sidebar */
+        .sidebar {
+            width: 260px;
+            background: #ffffff;
+            display: flex;
+            flex-direction: column;
+            border-right: 1px solid #edebe9;
         }
-      }
+
+        /* Sidebar Header */
+        .sidebar-header {
+            padding: 12px 16px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            border-bottom: 1px solid #edebe9;
+            height: 48px;
+        }
+
+        .copilot-icon {
+            width: 24px;
+            height: 24px;
+            background: linear-gradient(135deg, #b4a0ff 0%, #ff7eb9 50%, #7ee7fc 100%);
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+
+        .copilot-icon::before {
+            content: '';
+            position: absolute;
+            width: 12px;
+            height: 12px;
+            background: white;
+            border-radius: 2px;
+            opacity: 0.9;
+        }
+
+        .sidebar-title {
+            font-size: 14px;
+            font-weight: 600;
+            color: #323130;
+        }
+
+        .sidebar-button {
+            margin-left: auto;
+            background: none;
+            border: none;
+            padding: 4px;
+            cursor: pointer;
+            color: #605e5c;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 4px;
+            width: 32px;
+            height: 32px;
+        }
+
+        .sidebar-button:hover {
+            background: #f3f2f1;
+        }
+
+        /* Search Box */
+        .search-container {
+            padding: 8px 16px;
+            border-bottom: 1px solid #edebe9;
+        }
+
+        .search-box {
+            position: relative;
+            width: 100%;
+        }
+
+        .search-icon {
+            position: absolute;
+            left: 8px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #605e5c;
+            font-size: 14px;
+        }
+
+        .search-input {
+            width: 100%;
+            padding: 6px 8px 6px 32px;
+            border: 1px solid #d2d0ce;
+            border-radius: 4px;
+            font-size: 14px;
+            background: #faf9f8;
+            outline: none;
+            transition: all 0.2s;
+        }
+
+        .search-input:focus {
+            border-color: #605e5c;
+            background: #ffffff;
+        }
+
+        /* Navigation */
+        .nav-section {
+            flex: 1;
+            overflow-y: auto;
+            padding: 4px 0;
+        }
+
+        .nav-item {
+            padding: 8px 16px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            cursor: pointer;
+            font-size: 14px;
+            color: #323130;
+            transition: background 0.1s;
+            position: relative;
+            user-select: none;
+        }
+
+        .nav-item:hover {
+            background: #f3f2f1;
+        }
+
+        .nav-item.active {
+            background: #f3f2f1;
+        }
+
+        .nav-item.active::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 8px;
+            bottom: 8px;
+            width: 2px;
+            background: #742774;
+            border-radius: 1px;
+        }
+
+        .nav-icon {
+            width: 20px;
+            height: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+
+        /* Demo Controls Section */
+        .demo-controls-section {
+            border-top: 1px solid #edebe9;
+            padding: 12px 16px;
+            background: #faf9f8;
+        }
+
+        .demo-controls-title {
+            font-size: 12px;
+            font-weight: 600;
+            color: #605e5c;
+            margin-bottom: 8px;
+        }
+
+        .demo-controls {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 8px;
+        }
+
+        .demo-btn {
+            padding: 6px 12px;
+            border: 1px solid #d2d0ce;
+            border-radius: 4px;
+            background: white;
+            font-size: 12px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 4px;
+            color: #323130;
+            transition: all 0.2s;
+        }
+
+        .demo-btn:hover:not(:disabled) {
+            background: #f3f2f1;
+            border-color: #605e5c;
+        }
+
+        .demo-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .demo-btn.primary {
+            background: #742774;
+            color: white;
+            border-color: #742774;
+        }
+
+        .demo-btn.primary:hover:not(:disabled) {
+            background: #5a1d5a;
+        }
+
+        /* Bottom section */
+        .sidebar-bottom {
+            border-top: 1px solid #edebe9;
+            padding: 8px 0;
+        }
+
+        .user-section {
+            padding: 8px 16px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            cursor: pointer;
+            transition: background 0.1s;
+        }
+
+        .user-section:hover {
+            background: #f3f2f1;
+        }
+
+        .user-avatar {
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            background: #742774;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        /* Main Content */
+        .main-content {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            background: #faf9f8;
+        }
+
+        /* Header */
+        .content-header {
+            height: 48px;
+            padding: 0 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: #ffffff;
+            border-bottom: 1px solid #edebe9;
+        }
+
+        .header-title {
+            font-size: 14px;
+            color: #605e5c;
+        }
+
+        .header-actions {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .status-indicator {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 6px 12px;
+            background: #f3f2f1;
+            border-radius: 4px;
+            font-size: 12px;
+            color: #605e5c;
+        }
+
+        .status-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: #10b981;
+        }
+
+        .status-dot.processing {
+            background: #f59e0b;
+            animation: pulse 1s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+
+        /* Chat Container */
+        .chat-container {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+
+        /* Chat Messages */
+        .chat-messages {
+            flex: 1;
+            overflow-y: auto;
+            padding: 20px;
+            display: block;
+        }
+
+        .message {
+            max-width: 900px;
+            margin: 0 auto 24px;
+        }
+
+        .message-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 8px;
+        }
+
+        .message-avatar-user {
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            background: #00a651;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .message-avatar-agent {
+            width: 28px;
+            height: 28px;
+            border-radius: 6px;
+            background: linear-gradient(135deg, #742774 0%, #00a651 100%);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        .message-author {
+            font-size: 14px;
+            font-weight: 600;
+            color: #323130;
+        }
+
+        .message-tag {
+            padding: 2px 8px;
+            background: #f3f2f1;
+            border-radius: 4px;
+            font-size: 12px;
+            color: #605e5c;
+        }
+
+        .message-time {
+            font-size: 12px;
+            color: #a19f9d;
+        }
+
+        .message-content {
+            margin-left: 40px;
+            font-size: 14px;
+            line-height: 1.6;
+            color: #323130;
+        }
+
+        /* Simulation Cards */
+        .simulation-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 16px;
+            margin-left: 40px;
+            margin-top: 16px;
+        }
+
+        .simulation-card {
+            background: white;
+            border: 1px solid #edebe9;
+            border-radius: 8px;
+            padding: 16px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .simulation-card:hover {
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            transform: translateY(-2px);
+            border-color: #742774;
+        }
+
+        .simulation-card h4 {
+            font-size: 16px;
+            font-weight: 600;
+            color: #323130;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .simulation-card p {
+            font-size: 13px;
+            color: #605e5c;
+            line-height: 1.4;
+            margin-bottom: 12px;
+        }
+
+        .simulate-btn {
+            width: 100%;
+            padding: 8px 16px;
+            background: linear-gradient(135deg, #742774 0%, #00a651 100%);
+            color: white;
+            border: none;
+            border-radius: 4px;
+            font-size: 13px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .simulate-btn:hover {
+            background: linear-gradient(135deg, #5a1d5a 0%, #008441 100%);
+        }
+
+        /* Agent Card */
+        .agent-card {
+            margin-left: 40px;
+            margin-top: 16px;
+            background: white;
+            border: 1px solid #edebe9;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        .agent-card-header {
+            padding: 16px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            border-bottom: 1px solid #edebe9;
+            background: linear-gradient(135deg, rgba(116, 39, 116, 0.05) 0%, rgba(0, 166, 81, 0.05) 100%);
+        }
+
+        .agent-card-icon {
+            font-size: 20px;
+        }
+
+        .agent-card-title {
+            font-size: 16px;
+            font-weight: 600;
+            color: #323130;
+        }
+
+        .agent-card-status {
+            margin-left: auto;
+            padding: 4px 12px;
+            background: #10b981;
+            color: white;
+            border-radius: 12px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .agent-card-content {
+            padding: 16px;
+        }
+
+        /* Comparison section */
+        .comparison-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-left: 40px;
+            margin-top: 16px;
+        }
+
+        .comparison-card {
+            background: white;
+            border: 1px solid #edebe9;
+            border-radius: 8px;
+            padding: 20px;
+        }
+
+        .comparison-card.traditional {
+            border-left: 3px solid #ef4444;
+        }
+
+        .comparison-card.simulation {
+            border-left: 3px solid #22c55e;
+        }
+
+        .comparison-card h3 {
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .comparison-card ul {
+            list-style: none;
+            font-size: 14px;
+            color: #605e5c;
+        }
+
+        .comparison-card li {
+            padding: 6px 0;
+            border-bottom: 1px solid #f3f2f1;
+        }
+
+        .comparison-card li:last-child {
+            border-bottom: none;
+        }
+
+        /* Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+            backdrop-filter: blur(2px);
+        }
+
+        .modal-content {
+            position: relative;
+            background: white;
+            border-radius: 8px;
+            max-width: 800px;
+            max-height: 80vh;
+            margin: 50px auto;
+            padding: 32px;
+            overflow-y: auto;
+            animation: slideIn 0.3s ease;
+        }
+
+        @keyframes slideIn {
+            from {
+                transform: translateY(-50px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        .close-modal {
+            position: absolute;
+            top: 16px;
+            right: 16px;
+            font-size: 24px;
+            color: #605e5c;
+            cursor: pointer;
+            transition: color 0.3s ease;
+            background: none;
+            border: none;
+        }
+
+        .close-modal:hover {
+            color: #323130;
+        }
+
+        /* Form inputs */
+        .input-group {
+            margin-bottom: 16px;
+        }
+
+        .input-group label {
+            display: block;
+            margin-bottom: 6px;
+            color: #323130;
+            font-size: 14px;
+            font-weight: 500;
+        }
+
+        .input-group input,
+        .input-group select,
+        .input-group textarea {
+            width: 100%;
+            padding: 8px 12px;
+            border: 1px solid #d2d0ce;
+            border-radius: 4px;
+            font-size: 14px;
+            font-family: inherit;
+            outline: none;
+            transition: all 0.2s;
+            background: #faf9f8;
+        }
+
+        .input-group input:focus,
+        .input-group select:focus,
+        .input-group textarea:focus {
+            border-color: #742774;
+            background: white;
+        }
+
+        .run-simulation-btn {
+            width: 100%;
+            padding: 12px 24px;
+            background: #742774;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+            margin-top: 20px;
+        }
+
+        .run-simulation-btn:hover {
+            background: #5a1d5a;
+        }
+
+        /* Results */
+        .simulation-results {
+            margin-top: 24px;
+            padding: 20px;
+            background: #faf9f8;
+            border: 1px solid #edebe9;
+            border-radius: 8px;
+            display: none;
+        }
+
+        .result-item {
+            margin-bottom: 12px;
+            padding: 12px;
+            background: white;
+            border-radius: 4px;
+            border-left: 3px solid #742774;
+        }
+
+        /* Loading */
+        .loading {
+            display: none;
+            text-align: center;
+            padding: 40px;
+        }
+
+        .loading-spinner {
+            width: 40px;
+            height: 40px;
+            border: 3px solid #edebe9;
+            border-top: 3px solid #742774;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 20px;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* Input Container */
+        .input-container {
+            padding: 16px 20px;
+            background: white;
+            border-top: 1px solid #edebe9;
+        }
+
+        .input-wrapper {
+            max-width: 900px;
+            margin: 0 auto;
+            position: relative;
+        }
+
+        .input-field {
+            width: 100%;
+            padding: 12px 48px 12px 16px;
+            border: 1px solid #d2d0ce;
+            border-radius: 8px;
+            font-size: 14px;
+            font-family: inherit;
+            resize: none;
+            outline: none;
+            background: #faf9f8;
+            transition: all 0.2s;
+            min-height: 44px;
+            max-height: 120px;
+        }
+
+        .input-field:focus {
+            border-color: #742774;
+            background: white;
+        }
+
+        .input-actions {
+            position: absolute;
+            right: 8px;
+            bottom: 8px;
+            display: flex;
+            gap: 4px;
+        }
+
+        .input-button {
+            width: 28px;
+            height: 28px;
+            border: none;
+            background: none;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 4px;
+            color: #605e5c;
+            transition: all 0.1s;
+        }
+
+        .input-button:hover {
+            background: #f3f2f1;
+        }
+
+        .input-button.send {
+            color: #742774;
+        }
+
+        .input-button:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        /* Welcome screen */
+        .welcome-screen {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 40px;
+            max-width: 1200px;
+            margin: 0 auto;
+            width: 100%;
+        }
+
+        .welcome-screen.hidden {
+            display: none;
+        }
+
+        .welcome-title {
+            font-size: 36px;
+            font-weight: 600;
+            color: #323130;
+            margin-bottom: 16px;
+            text-align: center;
+            background: linear-gradient(135deg, #742774 0%, #00a651 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .welcome-subtitle {
+            font-size: 16px;
+            color: #605e5c;
+            margin-bottom: 48px;
+            text-align: center;
+        }
+
+        /* Typing indicator */
+        .typing-indicator {
+            margin-left: 40px;
+            display: flex;
+            gap: 4px;
+            padding: 8px 0;
+        }
+
+        .typing-dot {
+            width: 8px;
+            height: 8px;
+            background: #605e5c;
+            border-radius: 50%;
+            animation: typing 1.4s infinite;
+        }
+
+        .typing-dot:nth-child(2) {
+            animation-delay: 0.2s;
+        }
+
+        .typing-dot:nth-child(3) {
+            animation-delay: 0.4s;
+        }
+
+        @keyframes typing {
+            0%, 60%, 100% {
+                transform: translateY(0);
+                opacity: 0.5;
+            }
+            30% {
+                transform: translateY(-10px);
+                opacity: 1;
+            }
+        }
     </style>
-  </head>
-  <body>
-    <div class="container">
-      <div class="header">
-        <h1>AI Simulation Platform</h1>
-        <p class="subtitle">
-          Transform Decision-Making from Linear to Exponential Value
-        </p>
-      </div>
-
-      <div class="value-comparison">
-        <div class="comparison-card linear-value">
-          <h3>❌ Traditional AI Agents (Doers)</h3>
-          <ul>
-            <li>Linear time savings</li>
-            <li>Task automation focus</li>
-            <li>10-minute email → 0-minute email</li>
-            <li>Incremental improvements</li>
-            <li>Reactive approach</li>
-          </ul>
-        </div>
-        <div class="comparison-card exponential-value">
-          <h3>✅ AI Simulation Agents (Modelers)</h3>
-          <ul>
-            <li>Exponential value creation</li>
-            <li>Reality simulation focus</li>
-            <li>10-year cycle → 10-hour simulation</li>
-            <li>Breakthrough discoveries</li>
-            <li>Proactive exploration</li>
-          </ul>
-        </div>
-      </div>
-
-      <h2 style="text-align: center; margin: 40px 0; color: #e0e6ed">
-        Sales & Business Use Cases
-      </h2>
-
-      <div class="use-cases">
-        <div class="use-case-card" onclick="openModal('customer-response')">
-          <h4>🎯 Customer Response Simulator</h4>
-          <p>
-            Simulate how different customer segments will react to your product
-            launch before spending a single dollar on development.
-          </p>
-          <button class="simulate-btn">Simulate Customer Response</button>
+</head>
+<body>
+    <!-- Sidebar -->
+    <div class="sidebar">
+        <div class="sidebar-header">
+            <div class="copilot-icon"></div>
+            <span class="sidebar-title">M365 Copilot</span>
+            <button class="sidebar-button">☰</button>
         </div>
 
-        <div class="use-case-card" onclick="openModal('marketing-campaign')">
-          <h4>📢 Marketing Campaign Universe</h4>
-          <p>
-            Test thousands of marketing campaign variations in minutes to find
-            the optimal creative mix without spending your budget.
-          </p>
-          <button class="simulate-btn">Test Campaign Universe</button>
+        <div class="search-container">
+            <div class="search-box">
+                <span class="search-icon">🔍</span>
+                <input type="text" class="search-input" placeholder="Search simulations">
+            </div>
         </div>
 
-        <div class="use-case-card" onclick="openModal('pricing-cliff')">
-          <h4>💰 Pricing Cliff Finder</h4>
-          <p>
-            Discover optimal pricing points and hidden revenue cliffs by
-            simulating customer behavior across price ranges.
-          </p>
-          <button class="simulate-btn">Find Pricing Sweet Spot</button>
+        <div class="nav-section">
+            <div class="nav-item active">
+                <div class="nav-icon">🎯</div>
+                <span>Simulations</span>
+            </div>
+            <div class="nav-item">
+                <div class="nav-icon">💼</div>
+                <span>Use Cases</span>
+            </div>
+            <div class="nav-item">
+                <div class="nav-icon">📊</div>
+                <span>Analytics</span>
+            </div>
+            <div class="nav-item">
+                <div class="nav-icon">🔮</div>
+                <span>Predictions</span>
+            </div>
+            <div class="nav-item">
+                <div class="nav-icon">⚙️</div>
+                <span>Settings</span>
+            </div>
         </div>
 
-        <div class="use-case-card" onclick="openModal('timeline-explorer')">
-          <h4>🔮 Business Timeline Explorer</h4>
-          <p>
-            Explore multiple business growth timelines simultaneously to
-            identify the highest-value strategic path.
-          </p>
-          <button class="simulate-btn">Explore Timelines</button>
+        <!-- Demo Controls -->
+        <div class="demo-controls-section">
+            <div class="demo-controls-title">Demo Controls</div>
+            <div class="demo-controls">
+                <button class="demo-btn primary" onclick="startDemo()" id="startBtn">
+                    ▶️ Start
+                </button>
+                <button class="demo-btn" onclick="pauseDemo()" id="pauseBtn" disabled>
+                    ⏸️ Pause
+                </button>
+                <button class="demo-btn" onclick="resetDemo()" id="resetBtn">
+                    🔄 Reset
+                </button>
+                <button class="demo-btn" onclick="skipToNext()" id="skipBtn" disabled>
+                    ⏭️ Skip
+                </button>
+            </div>
         </div>
 
-        <div class="use-case-card" onclick="openModal('decision-quality')">
-          <h4>🎲 Decision Quality Optimizer</h4>
-          <p>
-            Improve decision-making by simulating outcomes of major business
-            choices before committing resources.
-          </p>
-          <button class="simulate-btn">Optimize Decisions</button>
+        <div class="sidebar-bottom">
+            <div class="user-section">
+                <div class="user-avatar">DU</div>
+                <span style="font-size: 14px;">Demo User</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="main-content">
+        <div class="content-header">
+            <div class="header-title">AI Simulation Platform - Beyond Execution to Modeling</div>
+            <div class="header-actions">
+                <div class="status-indicator">
+                    <span class="status-dot" id="statusDot"></span>
+                    <span id="statusText">Ready</span>
+                </div>
+            </div>
         </div>
 
-        <div class="use-case-card" onclick="openModal('hidden-segments')">
-          <h4>🔍 Hidden Segment Discoverer</h4>
-          <p>
-            Uncover profitable customer segments you didn't know existed through
-            advanced behavioral simulation.
-          </p>
-          <button class="simulate-btn">Discover Segments</button>
+        <div class="chat-container">
+            <!-- Welcome Screen -->
+            <div class="welcome-screen" id="welcomeScreen">
+                <h1 class="welcome-title">🚀 AI Simulation Platform</h1>
+                <p class="welcome-subtitle">Transform Decision-Making from Linear to Exponential Value</p>
+                
+                <div class="comparison-container">
+                    <div class="comparison-card traditional">
+                        <h3>❌ Traditional AI Agents (Doers)</h3>
+                        <ul>
+                            <li>Linear time savings</li>
+                            <li>Task automation focus</li>
+                            <li>10-minute email → 0-minute email</li>
+                            <li>Incremental improvements</li>
+                            <li>Reactive approach</li>
+                        </ul>
+                    </div>
+                    <div class="comparison-card simulation">
+                        <h3>✅ AI Simulation Agents (Modelers)</h3>
+                        <ul>
+                            <li>Exponential value creation</li>
+                            <li>Reality simulation focus</li>
+                            <li>10-year cycle → 10-hour simulation</li>
+                            <li>Breakthrough discoveries</li>
+                            <li>Proactive exploration</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Chat Messages -->
+            <div class="chat-messages" id="chatMessages" style="display: none;">
+                <!-- Messages will be dynamically added here -->
+            </div>
+
+            <!-- Input Container -->
+            <div class="input-container">
+                <div class="input-wrapper">
+                    <textarea 
+                        class="input-field" 
+                        id="messageInput" 
+                        placeholder="Ask about simulations or start exploring use cases..."
+                        rows="1"
+                        onkeypress="handleKeyPress(event)"
+                        oninput="autoResize(this)"
+                    ></textarea>
+                    <div class="input-actions">
+                        <button class="input-button">📎</button>
+                        <button class="input-button send" onclick="sendCurrentMessage()" id="sendButton">
+                            ➤
+                        </button>
+                    </div>
+                </div>
+            </div>
         </div>
-      </div>
     </div>
 
     <!-- Modal -->
     <div id="simulationModal" class="modal">
-      <div class="modal-content">
-        <span class="close-modal" onclick="closeModal()">&times;</span>
-        <div id="modalContent"></div>
-      </div>
+        <div class="modal-content">
+            <button class="close-modal" onclick="closeModal()">&times;</button>
+            <div id="modalContent"></div>
+        </div>
     </div>
 
     <script>
-      // Simulation configurations for each use case
-      const simulations = {
-        "customer-response": {
-          title: "Customer Response Simulator",
-          description:
-            "Simulate how different customer segments will react to your product launch.",
-          inputs: `
+        // State management
+        let demoState = {
+            isPlaying: false,
+            isPaused: false,
+            currentStep: 0,
+            messageTimer: null,
+            typingTimer: null
+        };
+
+        // Demo script
+        const demoScript = [
+            {
+                type: 'user',
+                content: 'Show me how AI simulation can help with customer response predictions for a new product launch.',
+                delay: 1000
+            },
+            {
+                type: 'agent',
+                content: 'I\'ll demonstrate our AI Simulation Platform with practical business use cases. Let me show you how simulation agents create exponential value compared to traditional task automation:',
+                showUseCases: true,
+                typingTime: 2000,
+                delay: 2000
+            },
+            {
+                type: 'user',
+                content: 'Run a customer response simulation for an AI Analytics Dashboard targeting enterprise clients at $999/month',
+                delay: 1500
+            },
+            {
+                type: 'agent',
+                content: 'Running multi-scenario simulation across different customer segments and market conditions...',
+                simulationData: {
+                    title: 'Customer Response Simulation Results',
+                    status: 'Complete',
+                    scenarios: [
+                        { name: 'Best Case', adoption: '45%', sentiment: 'Positive', nps: 72, revenue: '$450K' },
+                        { name: 'Expected', adoption: '32%', sentiment: 'Positive', nps: 58, revenue: '$320K' },
+                        { name: 'Conservative', adoption: '18%', sentiment: 'Neutral', nps: 42, revenue: '$180K' },
+                        { name: 'Competitive', adoption: '25%', sentiment: 'Neutral', nps: 50, revenue: '$250K' },
+                        { name: 'Market Shift', adoption: '38%', sentiment: 'Positive', nps: 65, revenue: '$380K' }
+                    ]
+                },
+                typingTime: 2500,
+                delay: 2000
+            }
+        ];
+
+        // Simulation configurations
+        const simulations = {
+            'customer-response': {
+                title: 'Customer Response Simulator',
+                description: 'Simulate how different customer segments will react to your product launch.',
+                icon: '🎯',
+                inputs: `
                     <div class="input-group">
                         <label>Product Name</label>
                         <input type="text" id="productName" placeholder="e.g., AI Analytics Dashboard" value="AI Analytics Dashboard">
@@ -545,76 +1038,16 @@
                         </select>
                     </div>
                     <div class="input-group">
-                        <label>Key Features (comma-separated)</label>
-                        <input type="text" id="features" placeholder="e.g., Real-time analytics, AI predictions" value="Real-time analytics, AI predictions, Custom dashboards">
-                    </div>
-                    <div class="input-group">
-                        <label>Price Point</label>
+                        <label>Price Point ($)</label>
                         <input type="number" id="pricePoint" placeholder="e.g., 999" value="999">
                     </div>
-                `,
-          simulate: function () {
-            const segment = document.getElementById("targetSegment").value;
-            const price = parseInt(document.getElementById("pricePoint").value);
-            const features = document
-              .getElementById("features")
-              .value.split(",").length;
-
-            // Simulate different response scenarios
-            const scenarios = [];
-            const baseAdoption = {
-              enterprise: 0.15,
-              midmarket: 0.25,
-              smb: 0.35,
-              startup: 0.45,
-            };
-
-            for (let i = 0; i < 5; i++) {
-              const priceMultiplier = 1 - price / 5000;
-              const featureBonus = features * 0.05;
-              const randomVariance = (Math.random() - 0.5) * 0.2;
-
-              const adoptionRate = Math.max(
-                0.05,
-                Math.min(
-                  0.95,
-                  baseAdoption[segment] +
-                    priceMultiplier * 0.3 +
-                    featureBonus +
-                    randomVariance
-                )
-              );
-
-              const sentiment =
-                adoptionRate > 0.5
-                  ? "Positive"
-                  : adoptionRate > 0.3
-                  ? "Neutral"
-                  : "Negative";
-              const nps = Math.round(
-                adoptionRate * 100 - 20 + Math.random() * 20
-              );
-
-              scenarios.push({
-                scenario: `Scenario ${i + 1}`,
-                adoptionRate: (adoptionRate * 100).toFixed(1) + "%",
-                sentiment: sentiment,
-                nps: nps,
-                revenue: "$" + (adoptionRate * 1000000).toFixed(0),
-              });
-            }
-
-            return {
-              type: "timeline",
-              data: scenarios,
-            };
-          },
-        },
-        "marketing-campaign": {
-          title: "Marketing Campaign Universe Tester",
-          description:
-            "Test multiple campaign variations to find the optimal mix.",
-          inputs: `
+                `
+            },
+            'marketing-campaign': {
+                title: 'Marketing Campaign Universe',
+                description: 'Test thousands of marketing campaign variations.',
+                icon: '📢',
+                inputs: `
                     <div class="input-group">
                         <label>Campaign Type</label>
                         <select id="campaignType">
@@ -625,165 +1058,34 @@
                         </select>
                     </div>
                     <div class="input-group">
-                        <label>Target Audience</label>
-                        <input type="text" id="audience" placeholder="e.g., Tech decision makers" value="Tech decision makers">
-                    </div>
-                    <div class="input-group">
-                        <label>Message Focus</label>
-                        <select id="messageFocus">
-                            <option value="roi">ROI & Cost Savings</option>
-                            <option value="innovation">Innovation & Technology</option>
-                            <option value="ease">Ease of Use</option>
-                            <option value="security">Security & Compliance</option>
-                        </select>
-                    </div>
-                    <div class="input-group">
                         <label>Budget ($)</label>
                         <input type="number" id="budget" placeholder="e.g., 50000" value="50000">
                     </div>
-                `,
-          simulate: function () {
-            const campaignType = document.getElementById("campaignType").value;
-            const messageFocus = document.getElementById("messageFocus").value;
-            const budget = parseInt(document.getElementById("budget").value);
-
-            const campaigns = [];
-            const channels = [
-              "LinkedIn",
-              "Google Ads",
-              "Facebook",
-              "Email",
-              "Content",
-            ];
-
-            channels.forEach((channel) => {
-              const basePerformance = {
-                social: { LinkedIn: 0.8, Facebook: 0.6, "Google Ads": 0.5 },
-                email: { Email: 0.9, LinkedIn: 0.6, Content: 0.7 },
-                content: { Content: 0.95, LinkedIn: 0.7, Email: 0.6 },
-                ppc: { "Google Ads": 0.9, LinkedIn: 0.7, Facebook: 0.6 },
-              };
-
-              const performance = basePerformance[campaignType][channel] || 0.5;
-              const variance = (Math.random() - 0.5) * 0.3;
-              const effectiveness = Math.max(
-                0.1,
-                Math.min(0.95, performance + variance)
-              );
-
-              const impressions = Math.round(budget * effectiveness * 100);
-              const clicks = Math.round(impressions * 0.02 * effectiveness);
-              const conversions = Math.round(clicks * 0.05 * effectiveness);
-              const roi = (
-                ((conversions * 5000 - budget) / budget) *
-                100
-              ).toFixed(1);
-
-              campaigns.push({
-                channel: channel,
-                impressions: impressions.toLocaleString(),
-                clicks: clicks.toLocaleString(),
-                conversions: conversions,
-                roi: roi + "%",
-                cost: "$" + (budget * 0.2).toFixed(0),
-              });
-            });
-
-            return {
-              type: "comparison",
-              data: campaigns,
-            };
-          },
-        },
-        "pricing-cliff": {
-          title: "Pricing Cliff Finder",
-          description: "Discover optimal pricing points and revenue cliffs.",
-          inputs: `
-                    <div class="input-group">
-                        <label>Product Category</label>
-                        <select id="category">
-                            <option value="saas">SaaS Software</option>
-                            <option value="hardware">Hardware</option>
-                            <option value="service">Professional Service</option>
-                            <option value="consumer">Consumer Product</option>
-                        </select>
-                    </div>
+                `
+            },
+            'pricing-cliff': {
+                title: 'Pricing Cliff Finder',
+                description: 'Discover optimal pricing points and revenue cliffs.',
+                icon: '💰',
+                inputs: `
                     <div class="input-group">
                         <label>Current Price ($)</label>
                         <input type="number" id="currentPrice" placeholder="e.g., 99" value="99">
                     </div>
                     <div class="input-group">
-                        <label>Market Position</label>
-                        <select id="marketPosition">
-                            <option value="premium">Premium</option>
-                            <option value="competitive">Competitive</option>
-                            <option value="budget">Budget</option>
-                        </select>
-                    </div>
-                    <div class="input-group">
                         <label>Customer Base Size</label>
                         <input type="number" id="customerBase" placeholder="e.g., 1000" value="1000">
                     </div>
-                `,
-          simulate: function () {
-            const currentPrice = parseInt(
-              document.getElementById("currentPrice").value
-            );
-            const customerBase = parseInt(
-              document.getElementById("customerBase").value
-            );
-            const position = document.getElementById("marketPosition").value;
-
-            const pricePoints = [];
-            const priceMultipliers = [0.5, 0.7, 0.85, 1.0, 1.15, 1.3, 1.5, 2.0];
-
-            // Price elasticity based on market position
-            const elasticity = {
-              premium: 0.6,
-              competitive: 0.9,
-              budget: 1.2,
-            };
-
-            priceMultipliers.forEach((multiplier) => {
-              const newPrice = currentPrice * multiplier;
-              const priceChange = multiplier - 1;
-              const demandChange = -priceChange * elasticity[position];
-              const newCustomers = Math.round(
-                customerBase * (1 + demandChange)
-              );
-              const revenue = newPrice * newCustomers;
-
-              // Identify cliffs
-              const isCliff = multiplier > 1.3 && position !== "premium";
-
-              pricePoints.push({
-                price: "$" + newPrice.toFixed(0),
-                customers: newCustomers.toLocaleString(),
-                revenue: "$" + revenue.toLocaleString(),
-                change: (demandChange * 100).toFixed(1) + "%",
-                optimal: multiplier >= 0.85 && multiplier <= 1.15,
-                cliff: isCliff,
-              });
-            });
-
-            return {
-              type: "pricing",
-              data: pricePoints,
-            };
-          },
-        },
-        "timeline-explorer": {
-          title: "Business Timeline Explorer",
-          description: "Explore multiple growth timelines for your business.",
-          inputs: `
+                `
+            },
+            'timeline-explorer': {
+                title: 'Business Timeline Explorer',
+                description: 'Explore multiple growth timelines simultaneously.',
+                icon: '🔮',
+                inputs: `
                     <div class="input-group">
-                        <label>Business Model</label>
-                        <select id="businessModel">
-                            <option value="subscription">Subscription</option>
-                            <option value="transaction">Transaction-based</option>
-                            <option value="marketplace">Marketplace</option>
-                            <option value="advertising">Advertising</option>
-                        </select>
+                        <label>Starting ARR ($)</label>
+                        <input type="number" id="startingArr" placeholder="e.g., 1000000" value="1000000">
                     </div>
                     <div class="input-group">
                         <label>Growth Strategy</label>
@@ -791,283 +1093,339 @@
                             <option value="organic">Organic Growth</option>
                             <option value="aggressive">Aggressive Marketing</option>
                             <option value="partnership">Partnership-driven</option>
-                            <option value="acquisition">Acquisition-focused</option>
                         </select>
                     </div>
-                    <div class="input-group">
-                        <label>Starting ARR ($)</label>
-                        <input type="number" id="startingArr" placeholder="e.g., 1000000" value="1000000">
-                    </div>
-                    <div class="input-group">
-                        <label>Investment Available ($)</label>
-                        <input type="number" id="investment" placeholder="e.g., 5000000" value="5000000">
-                    </div>
-                `,
-          simulate: function () {
-            const strategy = document.getElementById("growthStrategy").value;
-            const startingArr = parseInt(
-              document.getElementById("startingArr").value
-            );
-            const investment = parseInt(
-              document.getElementById("investment").value
-            );
-
-            const timelines = [];
-            const strategies = {
-              organic: { growth: 1.3, risk: 0.1, cost: 0.2 },
-              aggressive: { growth: 1.8, risk: 0.3, cost: 0.6 },
-              partnership: { growth: 1.5, risk: 0.2, cost: 0.3 },
-              acquisition: { growth: 2.2, risk: 0.4, cost: 0.8 },
-            };
-
-            // Generate 5 different timeline scenarios
-            for (let i = 0; i < 5; i++) {
-              const variance = (Math.random() - 0.5) * 0.4;
-              const growthRate = strategies[strategy].growth + variance;
-              const risk = strategies[strategy].risk;
-              const costMultiplier = strategies[strategy].cost;
-
-              let arr = startingArr;
-              const timeline = [];
-
-              for (let year = 1; year <= 5; year++) {
-                const randomEvent = Math.random();
-                if (randomEvent < risk) {
-                  // Negative event
-                  arr *= 0.85;
-                } else {
-                  arr *= growthRate;
-                }
-
-                timeline.push({
-                  year: year,
-                  arr: "$" + Math.round(arr).toLocaleString(),
-                  investment:
-                    "$" +
-                    Math.round(
-                      investment * costMultiplier * year
-                    ).toLocaleString(),
-                });
-              }
-
-              timelines.push({
-                scenario: `Timeline ${i + 1}`,
-                finalArr: "$" + Math.round(arr).toLocaleString(),
-                growth: ((arr / startingArr - 1) * 100).toFixed(1) + "%",
-                risk: risk < 0.2 ? "Low" : risk < 0.35 ? "Medium" : "High",
-                details: timeline,
-              });
-            }
-
-            return {
-              type: "timelines",
-              data: timelines,
-            };
-          },
-        },
-        "decision-quality": {
-          title: "Decision Quality Optimizer",
-          description: "Simulate outcomes of major business decisions.",
-          inputs: `
+                `
+            },
+            'decision-quality': {
+                title: 'Decision Quality Optimizer',
+                description: 'Simulate outcomes of major business decisions.',
+                icon: '🎲',
+                inputs: `
                     <div class="input-group">
                         <label>Decision Type</label>
                         <select id="decisionType">
                             <option value="expansion">Market Expansion</option>
                             <option value="product">New Product Launch</option>
                             <option value="pivot">Business Pivot</option>
-                            <option value="investment">Major Investment</option>
-                        </select>
-                    </div>
-                    <div class="input-group">
-                        <label>Risk Tolerance</label>
-                        <select id="riskTolerance">
-                            <option value="conservative">Conservative</option>
-                            <option value="moderate">Moderate</option>
-                            <option value="aggressive">Aggressive</option>
                         </select>
                     </div>
                     <div class="input-group">
                         <label>Time Horizon (months)</label>
                         <input type="number" id="timeHorizon" placeholder="e.g., 24" value="24">
                     </div>
-                    <div class="input-group">
-                        <label>Success Criteria</label>
-                        <textarea id="criteria" placeholder="e.g., 2x revenue, market leadership" rows="3">2x revenue growth, 30% market share, positive cash flow</textarea>
-                    </div>
-                `,
-          simulate: function () {
-            const decisionType = document.getElementById("decisionType").value;
-            const riskTolerance =
-              document.getElementById("riskTolerance").value;
-            const timeHorizon = parseInt(
-              document.getElementById("timeHorizon").value
-            );
-
-            const outcomes = [];
-            const decisionProfiles = {
-              expansion: { success: 0.6, impact: 2.5 },
-              product: { success: 0.5, impact: 3.0 },
-              pivot: { success: 0.4, impact: 4.0 },
-              investment: { success: 0.7, impact: 2.0 },
-            };
-
-            const riskModifiers = {
-              conservative: { success: 1.2, impact: 0.7 },
-              moderate: { success: 1.0, impact: 1.0 },
-              aggressive: { success: 0.8, impact: 1.5 },
-            };
-
-            // Generate multiple outcome scenarios
-            const scenarios = [
-              "Best Case",
-              "Expected Case",
-              "Worst Case",
-              "Black Swan",
-              "Surprise Upside",
-            ];
-            const modifiers = [1.5, 1.0, 0.5, 0.2, 2.0];
-
-            scenarios.forEach((scenario, index) => {
-              const baseSuccess = decisionProfiles[decisionType].success;
-              const baseImpact = decisionProfiles[decisionType].impact;
-              const riskMod = riskModifiers[riskTolerance];
-
-              const successProb = Math.min(
-                0.95,
-                baseSuccess * riskMod.success * modifiers[index]
-              );
-              const impact = baseImpact * riskMod.impact * modifiers[index];
-
-              const outcome = {
-                scenario: scenario,
-                probability: (successProb * 100).toFixed(1) + "%",
-                impact: impact.toFixed(1) + "x",
-                timeline:
-                  Math.round(timeHorizon / modifiers[index]) + " months",
-                recommendation:
-                  successProb > 0.6
-                    ? "Proceed"
-                    : successProb > 0.4
-                    ? "Proceed with caution"
-                    : "Reconsider",
-                keyRisks: generateRisks(decisionType, successProb),
-              };
-
-              outcomes.push(outcome);
-            });
-
-            return {
-              type: "decision",
-              data: outcomes,
-            };
-          },
-        },
-        "hidden-segments": {
-          title: "Hidden Segment Discoverer",
-          description:
-            "Uncover profitable customer segments through simulation.",
-          inputs: `
+                `
+            },
+            'hidden-segments': {
+                title: 'Hidden Segment Discoverer',
+                description: 'Uncover profitable customer segments.',
+                icon: '🔍',
+                inputs: `
                     <div class="input-group">
                         <label>Industry</label>
                         <select id="industry">
                             <option value="tech">Technology</option>
                             <option value="retail">Retail</option>
                             <option value="finance">Finance</option>
-                            <option value="healthcare">Healthcare</option>
-                        </select>
-                    </div>
-                    <div class="input-group">
-                        <label>Current Target Market</label>
-                        <input type="text" id="currentTarget" placeholder="e.g., Enterprise companies" value="Enterprise B2B companies">
-                    </div>
-                    <div class="input-group">
-                        <label>Product Type</label>
-                        <select id="productType">
-                            <option value="software">Software</option>
-                            <option value="service">Service</option>
-                            <option value="platform">Platform</option>
-                            <option value="hardware">Hardware</option>
                         </select>
                     </div>
                     <div class="input-group">
                         <label>Data Points Available</label>
                         <input type="number" id="dataPoints" placeholder="e.g., 10000" value="10000">
                     </div>
-                `,
-          simulate: function () {
-            const industry = document.getElementById("industry").value;
-            const dataPoints = parseInt(
-              document.getElementById("dataPoints").value
-            );
-
-            const segments = [];
-            const hiddenSegments = [
-              { name: "Power Users", base: 0.15, value: 3.2 },
-              { name: "Silent Majority", base: 0.45, value: 1.8 },
-              { name: "Early Adopters", base: 0.08, value: 4.5 },
-              { name: "Price Sensitive", base: 0.25, value: 1.2 },
-              { name: "Feature Maximizers", base: 0.12, value: 2.8 },
-              { name: "Brand Loyalists", base: 0.18, value: 2.5 },
-            ];
-
-            hiddenSegments.forEach((segment) => {
-              const discovered = Math.random() > 0.3; // 70% chance of discovery
-              if (discovered) {
-                const size = Math.round(
-                  dataPoints * segment.base * (0.8 + Math.random() * 0.4)
-                );
-                const value = segment.value * (0.9 + Math.random() * 0.2);
-                const growth = (Math.random() * 30 + 10).toFixed(1);
-
-                segments.push({
-                  segment: segment.name,
-                  size: size.toLocaleString(),
-                  avgValue: "$" + (value * 1000).toFixed(0),
-                  growth: growth + "%",
-                  opportunity: "$" + (size * value * 1000).toLocaleString(),
-                  confidence: (Math.random() * 40 + 60).toFixed(0) + "%",
-                });
-              }
-            });
-
-            return {
-              type: "segments",
-              data: segments,
-            };
-          },
-        },
-      };
-
-      function generateRisks(decisionType, successProb) {
-        const risks = {
-          expansion: [
-            "Market saturation",
-            "Cultural differences",
-            "Regulatory challenges",
-          ],
-          product: ["Product-market fit", "Competition", "Development delays"],
-          pivot: ["Customer retention", "Team alignment", "Brand confusion"],
-          investment: [
-            "ROI uncertainty",
-            "Integration challenges",
-            "Opportunity cost",
-          ],
+                `
+            }
         };
 
-        const selectedRisks = risks[decisionType];
-        const numRisks = successProb < 0.5 ? 3 : successProb < 0.7 ? 2 : 1;
+        // Initialize
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('AI Simulation Platform initialized');
+        });
 
-        return selectedRisks.slice(0, numRisks).join(", ");
-      }
+        // Auto resize textarea
+        function autoResize(textarea) {
+            textarea.style.height = 'auto';
+            textarea.style.height = Math.min(textarea.scrollHeight, 120) + 'px';
+        }
 
-      function openModal(useCase) {
-        const modal = document.getElementById("simulationModal");
-        const modalContent = document.getElementById("modalContent");
-        const sim = simulations[useCase];
+        // Handle key press
+        function handleKeyPress(event) {
+            if (event.key === 'Enter' && !event.shiftKey) {
+                event.preventDefault();
+                sendCurrentMessage();
+            }
+        }
 
-        modalContent.innerHTML = `
-                <h2>${sim.title}</h2>
-                <p>${sim.description}</p>
+        // Send current message
+        function sendCurrentMessage() {
+            const input = document.getElementById('messageInput');
+            const message = input.value.trim();
+            if (message) {
+                // Hide welcome screen and show chat
+                document.getElementById('welcomeScreen').classList.add('hidden');
+                document.getElementById('chatMessages').style.display = 'block';
+                
+                // Add user message
+                addMessage('user', message);
+                
+                input.value = '';
+                autoResize(input);
+                
+                // Simulate agent response
+                setTimeout(() => {
+                    showTypingIndicator();
+                    setTimeout(() => {
+                        hideTypingIndicator();
+                        addMessage('agent', 'I can help you explore various business simulations. Click "Start Demo" to see a full demonstration, or choose from these simulation use cases:', true);
+                    }, 1500);
+                }, 500);
+            }
+        }
+
+        // Demo controls
+        function startDemo() {
+            if (demoState.isPlaying && !demoState.isPaused) return;
+            
+            demoState.isPlaying = true;
+            demoState.isPaused = false;
+            
+            document.getElementById('startBtn').disabled = true;
+            document.getElementById('pauseBtn').disabled = false;
+            document.getElementById('skipBtn').disabled = false;
+            
+            updateStatus('processing', 'Running Demo...');
+            
+            // Hide welcome and show chat
+            document.getElementById('welcomeScreen').classList.add('hidden');
+            document.getElementById('chatMessages').style.display = 'block';
+            
+            if (demoState.currentStep === 0) {
+                document.getElementById('chatMessages').innerHTML = '';
+            }
+            
+            playNextMessage();
+        }
+
+        function pauseDemo() {
+            demoState.isPaused = true;
+            document.getElementById('startBtn').disabled = false;
+            document.getElementById('pauseBtn').disabled = true;
+            
+            clearTimeout(demoState.messageTimer);
+            clearTimeout(demoState.typingTimer);
+            
+            updateStatus('idle', 'Paused');
+        }
+
+        function resetDemo() {
+            clearTimeout(demoState.messageTimer);
+            clearTimeout(demoState.typingTimer);
+            
+            demoState.isPlaying = false;
+            demoState.isPaused = false;
+            demoState.currentStep = 0;
+            
+            document.getElementById('startBtn').disabled = false;
+            document.getElementById('pauseBtn').disabled = true;
+            document.getElementById('skipBtn').disabled = true;
+            
+            updateStatus('idle', 'Ready');
+            
+            // Show welcome screen
+            document.getElementById('welcomeScreen').classList.remove('hidden');
+            document.getElementById('chatMessages').style.display = 'none';
+            document.getElementById('chatMessages').innerHTML = '';
+        }
+
+        function skipToNext() {
+            clearTimeout(demoState.messageTimer);
+            clearTimeout(demoState.typingTimer);
+            hideTypingIndicator();
+            
+            if (demoState.currentStep < demoScript.length) {
+                const message = demoScript[demoState.currentStep];
+                addDemoMessage(message);
+                demoState.currentStep++;
+                
+                if (demoState.currentStep < demoScript.length) {
+                    demoState.messageTimer = setTimeout(() => {
+                        playNextMessage();
+                    }, 1000);
+                } else {
+                    completeDemo();
+                }
+            }
+        }
+
+        function playNextMessage() {
+            if (!demoState.isPlaying || demoState.isPaused) return;
+            
+            if (demoState.currentStep >= demoScript.length) {
+                completeDemo();
+                return;
+            }
+            
+            const message = demoScript[demoState.currentStep];
+            
+            if (message.type === 'agent') {
+                showTypingIndicator();
+                demoState.typingTimer = setTimeout(() => {
+                    hideTypingIndicator();
+                    addDemoMessage(message);
+                    demoState.currentStep++;
+                    
+                    const delay = message.delay || 2000;
+                    demoState.messageTimer = setTimeout(() => {
+                        playNextMessage();
+                    }, delay);
+                }, message.typingTime || 2000);
+            } else {
+                addDemoMessage(message);
+                demoState.currentStep++;
+                
+                const delay = message.delay || 1500;
+                demoState.messageTimer = setTimeout(() => {
+                    playNextMessage();
+                }, delay);
+            }
+        }
+
+        function addDemoMessage(message) {
+            if (message.type === 'user') {
+                addMessage('user', message.content);
+            } else if (message.type === 'agent') {
+                addMessage('agent', message.content, message.showUseCases, message.simulationData);
+            }
+        }
+
+        function addMessage(type, content, showUseCases = false, simulationData = null) {
+            const chatMessages = document.getElementById('chatMessages');
+            const messageDiv = document.createElement('div');
+            messageDiv.className = 'message';
+            
+            const time = new Date().toLocaleString('en-US', { 
+                hour: 'numeric', 
+                minute: '2-digit'
+            });
+
+            if (type === 'user') {
+                messageDiv.innerHTML = `
+                    <div class="message-header">
+                        <div class="message-avatar-user">U</div>
+                        <span class="message-author">You</span>
+                        <span class="message-time">${time}</span>
+                    </div>
+                    <div class="message-content">${content}</div>
+                `;
+            } else {
+                let html = `
+                    <div class="message-header">
+                        <div class="message-avatar-agent">🚀</div>
+                        <span class="message-author">AI Simulator</span>
+                        <span class="message-tag">Agent</span>
+                        <span class="message-time">${time}</span>
+                    </div>
+                    <div class="message-content">${content}</div>
+                `;
+                
+                if (showUseCases) {
+                    html += `
+                        <div class="simulation-grid">
+                            ${Object.keys(simulations).map(key => {
+                                const sim = simulations[key];
+                                return `
+                                    <div class="simulation-card" onclick="openModal('${key}')">
+                                        <h4>${sim.icon} ${sim.title}</h4>
+                                        <p>${sim.description}</p>
+                                        <button class="simulate-btn">Simulate Now</button>
+                                    </div>
+                                `;
+                            }).join('')}
+                        </div>
+                    `;
+                }
+                
+                if (simulationData) {
+                    html += `
+                        <div class="agent-card">
+                            <div class="agent-card-header">
+                                <span class="agent-card-icon">📊</span>
+                                <span class="agent-card-title">${simulationData.title}</span>
+                                ${simulationData.status ? `<span class="agent-card-status">${simulationData.status}</span>` : ''}
+                            </div>
+                            <div class="agent-card-content">
+                                ${simulationData.scenarios ? `
+                                    <div style="display: grid; gap: 8px;">
+                                        ${simulationData.scenarios.map(s => `
+                                            <div style="padding: 8px; background: #faf9f8; border-radius: 4px; display: flex; justify-content: space-between; align-items: center;">
+                                                <strong>${s.name}</strong>
+                                                <div style="display: flex; gap: 16px; font-size: 13px;">
+                                                    <span>Adoption: ${s.adoption}</span>
+                                                    <span>NPS: ${s.nps}</span>
+                                                    <span style="color: #00a651; font-weight: 600;">${s.revenue}</span>
+                                                </div>
+                                            </div>
+                                        `).join('')}
+                                    </div>
+                                ` : ''}
+                            </div>
+                        </div>
+                    `;
+                }
+                
+                messageDiv.innerHTML = html;
+            }
+
+            chatMessages.appendChild(messageDiv);
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+        }
+
+        function showTypingIndicator() {
+            const chatMessages = document.getElementById('chatMessages');
+            const indicator = document.createElement('div');
+            indicator.id = 'typingIndicator';
+            indicator.className = 'typing-indicator';
+            indicator.innerHTML = `
+                <div class="typing-dot"></div>
+                <div class="typing-dot"></div>
+                <div class="typing-dot"></div>
+            `;
+            chatMessages.appendChild(indicator);
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+        }
+
+        function hideTypingIndicator() {
+            const indicator = document.getElementById('typingIndicator');
+            if (indicator) {
+                indicator.remove();
+            }
+        }
+
+        function updateStatus(status, text) {
+            const statusDot = document.getElementById('statusDot');
+            const statusText = document.getElementById('statusText');
+            
+            statusDot.className = `status-dot ${status}`;
+            statusText.textContent = text;
+        }
+
+        function completeDemo() {
+            demoState.isPlaying = false;
+            document.getElementById('startBtn').disabled = false;
+            document.getElementById('pauseBtn').disabled = true;
+            document.getElementById('skipBtn').disabled = true;
+            
+            updateStatus('idle', 'Demo Complete');
+        }
+
+        function openModal(useCase) {
+            const modal = document.getElementById('simulationModal');
+            const modalContent = document.getElementById('modalContent');
+            const sim = simulations[useCase];
+
+            modalContent.innerHTML = `
+                <h2>${sim.icon} ${sim.title}</h2>
+                <p style="color: #605e5c; margin-bottom: 24px;">${sim.description}</p>
                 <div class="simulation-container">
                     ${sim.inputs}
                     <button class="run-simulation-btn" onclick="runSimulation('${useCase}')">
@@ -1081,353 +1439,51 @@
                 </div>
             `;
 
-        modal.style.display = "block";
-      }
+            modal.style.display = 'block';
+        }
 
-      function closeModal() {
-        document.getElementById("simulationModal").style.display = "none";
-      }
+        function closeModal() {
+            document.getElementById('simulationModal').style.display = 'none';
+        }
 
-      // API configuration - pointing to your local Azure Function
-      const API_ENDPOINT =
-        "https://azfbusinessbot.azurewebsites.net/api/businessinsightbot_function";
+        function runSimulation(useCase) {
+            const loading = document.getElementById('loading');
+            const results = document.getElementById('results');
 
-      async function runSimulation(useCase) {
-        const loading = document.getElementById("loading");
-        const results = document.getElementById("results");
+            loading.style.display = 'block';
+            results.style.display = 'none';
 
-        loading.style.display = "block";
-        results.style.display = "none";
+            // Simulate processing
+            setTimeout(() => {
+                loading.style.display = 'none';
+                results.style.display = 'block';
 
-        try {
-          const simulation = simulations[useCase];
-          const inputs = gatherInputs(useCase);
-
-          // Create a prompt that instructs the AI to act as a reality simulator
-          const simulationPrompt = createSimulationPrompt(
-            useCase,
-            simulation,
-            inputs
-          );
-
-          console.log("Sending simulation request:", simulationPrompt);
-
-          const response = await fetch(API_ENDPOINT, {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify({
-              user_input: simulationPrompt,
-              conversation_history: [],
-              user_guid:
-                localStorage.getItem("simulation_user_guid") ||
-                "simulation-demo-" + Date.now(),
-            }),
-          });
-
-          if (!response.ok) {
-            throw new Error(`API request failed: ${response.status}`);
-          }
-
-          const data = await response.json();
-          console.log("API Response:", data);
-
-          loading.style.display = "none";
-          results.style.display = "block";
-
-          // Display the AI's simulation response
-          displayAIResponse(data, useCase);
-
-          // If there's a voice response, log it
-          if (data.voice_response) {
-            console.log("Voice summary:", data.voice_response);
-          }
-        } catch (error) {
-          console.error("API Error:", error);
-          loading.style.display = "none";
-          results.style.display = "block";
-
-          // Show error message with fallback option
-          const resultsDiv = document.getElementById("results");
-          resultsDiv.innerHTML = `
-                    <div class="result-item" style="background: rgba(239, 68, 68, 0.1); border-left-color: #ef4444;">
-                        <h4>Connection Error</h4>
-                        <p>Unable to connect to the AI simulation engine: ${error.message}</p>
-                        <p>Make sure your Azure Function is running on port 7071.</p>
-                        <button class="simulate-btn" onclick="runLocalSimulation('${useCase}')" style="margin-top: 15px;">
-                            Run Local Simulation Instead
-                        </button>
+                // Display sample results
+                results.innerHTML = `
+                    <h3>Simulation Complete</h3>
+                    <div class="result-item">
+                        <strong>Primary Outcome:</strong> High probability of success (78%)
+                    </div>
+                    <div class="result-item">
+                        <strong>Key Insights:</strong> Optimal pricing point identified at current level
+                    </div>
+                    <div class="result-item">
+                        <strong>Recommendation:</strong> Proceed with launch focusing on enterprise segment
+                    </div>
+                    <div style="margin-top: 16px; padding: 12px; background: #f0fdf4; border-radius: 4px; border-left: 3px solid #22c55e;">
+                        <strong style="color: #22c55e;">💡 Simulation Advantage:</strong> This analysis compressed 6 months of market testing into seconds.
                     </div>
                 `;
+            }, 2000);
         }
-      }
 
-      function createSimulationPrompt(useCase, simulation, inputs) {
-        const prompts = {
-          "customer-response": `You are an AI business reality simulator. Simulate customer response scenarios for the following:
-
-Product: ${inputs.productName}
-Target Segment: ${inputs.targetSegment}
-Features: ${inputs.features}
-Price Point: ${inputs.pricePoint}
-
-Generate 5 different realistic scenarios showing:
-- Adoption rate percentage
-- Customer sentiment (Positive/Neutral/Negative)
-- Net Promoter Score (NPS)
-- Projected revenue impact
-
-Consider market dynamics, competition, and segment-specific behaviors. Format each scenario clearly with these metrics.`,
-
-          "marketing-campaign": `You are an AI marketing campaign simulator. Analyze and simulate outcomes for:
-
-Campaign Type: ${inputs.campaignType}
-Target Audience: ${inputs.audience}
-Message Focus: ${inputs.messageFocus}
-Budget: ${inputs.budget}
-
-Simulate performance across 5 different channels (LinkedIn, Google Ads, Facebook, Email, Content) showing:
-- Impressions
-- Clicks
-- Conversions
-- ROI percentage
-- Cost per channel
-
-Consider channel-audience fit, message resonance, and budget allocation strategies.`,
-
-          "pricing-cliff": `You are an AI pricing optimization simulator. Find optimal pricing and revenue cliffs for:
-
-Product Category: ${inputs.category}
-Current Price: ${inputs.currentPrice}
-Market Position: ${inputs.marketPosition}
-Customer Base: ${inputs.customerBase} customers
-
-Simulate 8 different price points (from 50% to 200% of current price) showing:
-- Customer retention/loss
-- Total revenue impact
-- Demand elasticity
-- Identify any "pricing cliffs" where small increases cause large customer losses
-
-Use economic principles and market psychology in your analysis.`,
-
-          "timeline-explorer": `You are an AI business timeline simulator. Explore growth scenarios for:
-
-Business Model: ${inputs.businessModel}
-Growth Strategy: ${inputs.growthStrategy}
-Starting ARR: ${inputs.startingArr}
-Available Investment: ${inputs.investment}
-
-Generate 5 different timeline scenarios over 5 years showing:
-- Year-by-year ARR progression
-- Growth rate
-- Risk level (Low/Medium/High)
-- Key inflection points
-- Final ARR outcome
-
-Consider market conditions, strategy risks, and compound growth effects.`,
-
-          "decision-quality": `You are an AI decision outcome simulator. Analyze the following business decision:
-
-Decision Type: ${inputs.decisionType}
-Risk Tolerance: ${inputs.riskTolerance}
-Time Horizon: ${inputs.timeHorizon} months
-Success Criteria: ${inputs.criteria}
-
-Simulate 5 scenarios (Best Case, Expected Case, Worst Case, Black Swan, Surprise Upside) showing:
-- Probability of success
-- Impact multiplier
-- Timeline to results
-- Key risks
-- Recommendation (Proceed/Proceed with caution/Reconsider)
-
-Apply decision theory and risk analysis frameworks.`,
-
-          "hidden-segments": `You are an AI market segment discovery simulator. Uncover hidden segments for:
-
-Industry: ${inputs.industry}
-Current Target: ${inputs.currentTarget}
-Product Type: ${inputs.productType}
-Data Points: ${inputs.dataPoints} customers
-
-Discover 4-6 hidden customer segments showing:
-- Segment name and characteristics
-- Size (number of customers)
-- Average value per customer
-- Growth rate
-- Total opportunity value
-- Confidence level
-
-Use clustering patterns and behavioral analysis to identify non-obvious segments.`,
+        // Close modal when clicking outside
+        window.onclick = function(event) {
+            const modal = document.getElementById('simulationModal');
+            if (event.target === modal) {
+                closeModal();
+            }
         };
-
-        return (
-          prompts[useCase] ||
-          "Simulate business scenarios based on the provided inputs."
-        );
-      }
-
-      function gatherInputs(useCase) {
-        const inputs = {};
-        const inputElements = document.querySelectorAll(
-          ".input-group input, .input-group select, .input-group textarea"
-        );
-
-        inputElements.forEach((element) => {
-          inputs[element.id] = element.value;
-        });
-
-        return inputs;
-      }
-
-      function displayAIResponse(data, useCase) {
-        const resultsDiv = document.getElementById("results");
-        let html = "<h3>AI Simulation Results</h3>";
-
-        // Display the formatted response from the AI
-        html +=
-          '<div class="ai-response" style="white-space: pre-wrap; line-height: 1.6;">';
-        html += data.assistant_response.replace(
-          /\*\*(.*?)\*\*/g,
-          "<strong>$1</strong>"
-        );
-        html += "</div>";
-
-        // Add voice summary if available
-        if (data.voice_response) {
-          html += `
-                    <div style="margin-top: 20px; padding: 15px; background: rgba(99, 102, 241, 0.1); border-radius: 8px;">
-                        <h4 style="color: #a855f7;">🎯 Quick Summary</h4>
-                        <p>${data.voice_response}</p>
-                    </div>
-                `;
-        }
-
-        // Add simulation insight
-        html += `
-                <div style="margin-top: 30px; padding: 20px; background: rgba(34, 197, 94, 0.1); border-radius: 12px;">
-                    <h4 style="color: #22c55e;">💡 Simulation Advantage</h4>
-                    <p>This AI-powered simulation compressed months of real-world testing into seconds. By leveraging the AI's vast knowledge of market patterns and business dynamics, you've explored scenarios that would be impossible to test in reality without significant time and resource investment.</p>
-                </div>
-            `;
-
-        resultsDiv.innerHTML = html;
-      }
-
-      function runLocalSimulation(useCase) {
-        const loading = document.getElementById("loading");
-        const results = document.getElementById("results");
-
-        loading.style.display = "block";
-        results.style.display = "none";
-
-        setTimeout(() => {
-          const simulation = simulations[useCase];
-          const result = simulation.simulate();
-
-          loading.style.display = "none";
-          results.style.display = "block";
-
-          displayResults(result);
-        }, 2000);
-      }
-
-      function displayResults(result) {
-        const resultsDiv = document.getElementById("results");
-        let html = "<h3>Simulation Results</h3>";
-
-        if (result.type === "timeline") {
-          html += '<div class="result-timeline">';
-          result.data.forEach((item) => {
-            html += `
-                        <div class="timeline-card">
-                            <h5>${item.scenario}</h5>
-                            <div class="value">${
-                              item.adoptionRate || item.revenue
-                            }</div>
-                            <p>Sentiment: ${item.sentiment || "N/A"}</p>
-                            <p>NPS: ${item.nps || "N/A"}</p>
-                        </div>
-                    `;
-          });
-          html += "</div>";
-        } else if (result.type === "comparison") {
-          result.data.forEach((item) => {
-            html += `
-                        <div class="result-item">
-                            <h4>${item.channel}</h4>
-                            <div class="value-metrics">
-                                <div class="metric-card">
-                                    <h5>Impressions</h5>
-                                    <div class="metric-value">${item.impressions}</div>
-                                </div>
-                                <div class="metric-card">
-                                    <h5>Conversions</h5>
-                                    <div class="metric-value">${item.conversions}</div>
-                                </div>
-                                <div class="metric-card">
-                                    <h5>ROI</h5>
-                                    <div class="metric-value">${item.roi}</div>
-                                </div>
-                            </div>
-                        </div>
-                    `;
-          });
-        } else if (result.type === "pricing") {
-          html += '<div class="chart-container">';
-          result.data.forEach((item) => {
-            const bgColor = item.optimal
-              ? "rgba(34, 197, 94, 0.2)"
-              : item.cliff
-              ? "rgba(239, 68, 68, 0.2)"
-              : "rgba(99, 102, 241, 0.1)";
-            const borderColor = item.optimal
-              ? "#22c55e"
-              : item.cliff
-              ? "#ef4444"
-              : "#6366f1";
-
-            html += `
-                        <div class="result-item" style="background: ${bgColor}; border-left-color: ${borderColor};">
-                            <h4>Price: ${item.price} ${
-              item.optimal ? "(Optimal)" : item.cliff ? "(Cliff Warning!)" : ""
-            }</h4>
-                            <p>Customers: ${item.customers} | Revenue: ${
-              item.revenue
-            } | Change: ${item.change}</p>
-                        </div>
-                    `;
-          });
-          html += "</div>";
-        } else {
-          result.data.forEach((item) => {
-            html += '<div class="result-item">';
-            Object.entries(item).forEach(([key, value]) => {
-              if (key !== "details") {
-                html += `<p><strong>${key}:</strong> ${value}</p>`;
-              }
-            });
-            html += "</div>";
-          });
-        }
-
-        html += `
-                <div style="margin-top: 30px; padding: 20px; background: rgba(99, 102, 241, 0.1); border-radius: 12px;">
-                    <h4 style="color: #a855f7;">💡 Simulation Insight</h4>
-                    <p>This simulation compressed months of real-world testing into seconds, revealing patterns and opportunities that traditional analysis would miss. By exploring multiple timelines simultaneously, you can make decisions with unprecedented confidence.</p>
-                </div>
-            `;
-
-        resultsDiv.innerHTML = html;
-      }
-
-      // Close modal when clicking outside
-      window.onclick = function (event) {
-        const modal = document.getElementById("simulationModal");
-        if (event.target === modal) {
-          closeModal();
-        }
-      };
     </script>
-  </body>
+</body>
 </html>
