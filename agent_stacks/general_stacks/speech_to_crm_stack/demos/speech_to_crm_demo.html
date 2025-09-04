@@ -1,0 +1,508 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Speech to CRM Agent - M365 Copilot</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+            background: #faf9f8;
+            height: 100vh;
+            display: flex;
+            overflow: hidden;
+            color: #323130;
+        }
+
+        /* Sidebar */
+        .sidebar {
+            width: 260px;
+            background: #ffffff;
+            display: flex;
+            flex-direction: column;
+            border-right: 1px solid #edebe9;
+        }
+
+        .sidebar-header {
+            padding: 12px 16px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            border-bottom: 1px solid #edebe9;
+            height: 48px;
+        }
+
+        .copilot-icon {
+            width: 24px;
+            height: 24px;
+            background: linear-gradient(135deg, #0078d4 0%, #00bcf2 100%);
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            color: white;
+            font-weight: bold;
+        }
+
+        .copilot-icon::before {
+            content: "🎤";
+        }
+
+        .sidebar-title {
+            font-size: 14px;
+            font-weight: 600;
+            color: #323130;
+        }
+
+        /* Main Content */
+        .main-content {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            background: #faf9f8;
+        }
+
+        .header {
+            background: white;
+            padding: 12px 24px;
+            border-bottom: 1px solid #edebe9;
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            height: 48px;
+        }
+
+        .header-title {
+            font-size: 18px;
+            font-weight: 600;
+            color: #323130;
+        }
+
+        /* Chat Container */
+        .chat-container {
+            flex: 1;
+            padding: 24px;
+            overflow-y: auto;
+            max-width: 1200px;
+            width: 100%;
+            margin: 0 auto;
+        }
+
+        /* Messages */
+        .message {
+            margin-bottom: 24px;
+            animation: fadeIn 0.3s ease-in;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .message-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 8px;
+        }
+
+        .avatar {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            color: white;
+            font-size: 14px;
+        }
+
+        .user-avatar {
+            background: #0078d4;
+        }
+
+        .agent-avatar {
+            background: linear-gradient(135deg, #0078d4 0%, #00bcf2 100%);
+        }
+
+        .message-name {
+            font-weight: 600;
+            color: #323130;
+            font-size: 14px;
+        }
+
+        .message-content {
+            padding-left: 44px;
+            color: #323130;
+            line-height: 1.5;
+            font-size: 14px;
+        }
+
+        /* Agent Data Card */
+        .agent-data-card {
+            background: white;
+            border-radius: 8px;
+            padding: 16px;
+            margin-top: 12px;
+            border: 1px solid #edebe9;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+
+        .data-section {
+            margin-bottom: 16px;
+        }
+
+        .data-section:last-child {
+            margin-bottom: 0;
+        }
+
+        .section-title {
+            font-weight: 600;
+            color: #323130;
+            margin-bottom: 8px;
+            font-size: 13px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .data-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 12px;
+        }
+
+        .data-item {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .data-label {
+            font-size: 12px;
+            color: #605e5c;
+        }
+
+        .data-value {
+            font-size: 14px;
+            color: #323130;
+            font-weight: 500;
+        }
+
+        /* Demo Controls */
+        .demo-controls {
+            background: #f3f2f1;
+            padding: 12px 24px;
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            border-top: 1px solid #edebe9;
+        }
+
+        .demo-button {
+            padding: 6px 16px;
+            border-radius: 4px;
+            border: 1px solid #d1d1d1;
+            background: white;
+            cursor: pointer;
+            font-size: 13px;
+            transition: all 0.2s;
+        }
+
+        .demo-button:hover:not(:disabled) {
+            background: #f3f2f1;
+        }
+
+        .demo-button:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .demo-button.primary {
+            background: #0078d4;
+            color: white;
+            border: none;
+        }
+
+        .demo-button.primary:hover:not(:disabled) {
+            background: #005a9e;
+        }
+
+        .demo-status {
+            margin-left: auto;
+            font-size: 13px;
+            color: #605e5c;
+        }
+
+        /* Input Area */
+        .input-area {
+            background: white;
+            border-top: 1px solid #edebe9;
+            padding: 16px 24px;
+        }
+
+        .input-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            gap: 12px;
+            align-items: center;
+        }
+
+        .input-field {
+            flex: 1;
+            padding: 10px 16px;
+            border: 1px solid #d1d1d1;
+            border-radius: 20px;
+            font-size: 14px;
+            outline: none;
+            font-family: inherit;
+        }
+
+        .input-field:focus {
+            border-color: #0078d4;
+        }
+
+        .send-button {
+            background: #0078d4;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 500;
+            transition: background 0.2s;
+        }
+
+        .send-button:hover:not(:disabled) {
+            background: #005a9e;
+        }
+
+        .send-button:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+    </style>
+</head>
+<body>
+    <!-- Sidebar -->
+    <div class="sidebar">
+        <div class="sidebar-header">
+            <div class="copilot-icon"></div>
+            <div class="sidebar-title">Speech to CRM</div>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="main-content">
+        <div class="header">
+            <div class="header-title">Speech to CRM Agent</div>
+        </div>
+
+        <div class="chat-container" id="chat-container">
+            <!-- Messages will be added here -->
+        </div>
+
+        <div class="demo-controls">
+            <button class="demo-button primary" id="playBtn">▶️ Play Demo</button>
+            <button class="demo-button" id="pauseBtn" disabled>⏸️ Pause</button>
+            <button class="demo-button" id="resetBtn">🔄 Reset</button>
+            <span class="demo-status" id="demoStatus">Ready to start</span>
+        </div>
+
+        <div class="input-area">
+            <div class="input-container">
+                <input type="text" class="input-field" placeholder="Speak or type to update CRM..." disabled>
+                <button class="send-button" disabled>Send</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const demoScript = [
+            {
+                type: "user",
+                content: "I just finished a call with John Smith from TechCorp. He's interested in our enterprise solution and wants a demo next week. Budget is around 100-150k. Please update the CRM.",
+                typingTime: 2000,
+                delay: 1000
+            },
+            {
+                type: "agent",
+                content: "I'll process that call information and update your CRM with the details from your conversation with John Smith at TechCorp.",
+                typingTime: 2000,
+                delay: 1500,
+                agentData: {
+                    "Contact Created": {
+                        "Name": "John Smith",
+                        "Company": "TechCorp Industries",
+                        "Title": "VP of Operations",
+                        "Email": "john.smith@techcorp.com",
+                        "Phone": "Extracted from call"
+                    },
+                    "Opportunity Details": {
+                        "Deal Name": "TechCorp Enterprise Solution",
+                        "Stage": "Qualification",
+                        "Amount": "$100,000 - $150,000",
+                        "Close Date": "Q2 2024",
+                        "Probability": "60%"
+                    },
+                    "Next Actions": {
+                        "Demo Scheduled": "Next Week",
+                        "Follow-up Email": "Send within 24 hours",
+                        "Proposal": "Prepare custom pricing",
+                        "Materials": "Share case studies"
+                    },
+                    "Call Summary": {
+                        "Duration": "45 minutes",
+                        "Sentiment": "Positive",
+                        "Key Topics": "ROI, Integration, Timeline",
+                        "Competitors Mentioned": "None"
+                    }
+                }
+            }
+        ];
+
+        let currentIndex = 0;
+        let isPlaying = false;
+
+        const chatContainer = document.getElementById('chat-container');
+        const playBtn = document.getElementById('playBtn');
+        const pauseBtn = document.getElementById('pauseBtn');
+        const resetBtn = document.getElementById('resetBtn');
+        const demoStatus = document.getElementById('demoStatus');
+
+        function createMessage(type, content, agentData = null) {
+            const messageDiv = document.createElement('div');
+            messageDiv.className = 'message';
+            
+            const headerDiv = document.createElement('div');
+            headerDiv.className = 'message-header';
+            
+            const avatar = document.createElement('div');
+            avatar.className = type === 'user' ? 'avatar user-avatar' : 'avatar agent-avatar';
+            avatar.textContent = type === 'user' ? 'U' : 'AI';
+            
+            const name = document.createElement('div');
+            name.className = 'message-name';
+            name.textContent = type === 'user' ? 'You' : 'Speech to CRM Agent';
+            
+            headerDiv.appendChild(avatar);
+            headerDiv.appendChild(name);
+            
+            const contentDiv = document.createElement('div');
+            contentDiv.className = 'message-content';
+            contentDiv.innerHTML = content;
+            
+            messageDiv.appendChild(headerDiv);
+            messageDiv.appendChild(contentDiv);
+            
+            if (agentData) {
+                const dataCard = createDataCard(agentData);
+                contentDiv.appendChild(dataCard);
+            }
+            
+            return messageDiv;
+        }
+
+        function createDataCard(data) {
+            const card = document.createElement('div');
+            card.className = 'agent-data-card';
+            
+            for (const [sectionName, sectionData] of Object.entries(data)) {
+                const section = document.createElement('div');
+                section.className = 'data-section';
+                
+                const title = document.createElement('div');
+                title.className = 'section-title';
+                title.textContent = sectionName;
+                section.appendChild(title);
+                
+                const grid = document.createElement('div');
+                grid.className = 'data-grid';
+                
+                for (const [key, value] of Object.entries(sectionData)) {
+                    const item = document.createElement('div');
+                    item.className = 'data-item';
+                    
+                    const label = document.createElement('div');
+                    label.className = 'data-label';
+                    label.textContent = key;
+                    
+                    const val = document.createElement('div');
+                    val.className = 'data-value';
+                    val.textContent = value;
+                    
+                    item.appendChild(label);
+                    item.appendChild(val);
+                    grid.appendChild(item);
+                }
+                
+                section.appendChild(grid);
+                card.appendChild(section);
+            }
+            
+            return card;
+        }
+
+        function playNextMessage() {
+            if (!isPlaying || currentIndex >= demoScript.length) {
+                if (currentIndex >= demoScript.length) {
+                    demoStatus.textContent = 'Demo completed';
+                    playBtn.disabled = false;
+                    pauseBtn.disabled = true;
+                    isPlaying = false;
+                }
+                return;
+            }
+
+            const message = demoScript[currentIndex];
+            const messageElement = createMessage(message.type, message.content, message.agentData);
+            chatContainer.appendChild(messageElement);
+            chatContainer.scrollTop = chatContainer.scrollHeight;
+            
+            currentIndex++;
+            
+            if (currentIndex < demoScript.length) {
+                setTimeout(playNextMessage, demoScript[currentIndex].delay || 2000);
+            } else {
+                playNextMessage();
+            }
+        }
+
+        playBtn.addEventListener('click', () => {
+            isPlaying = true;
+            playBtn.disabled = true;
+            pauseBtn.disabled = false;
+            
+            if (currentIndex === 0) {
+                chatContainer.innerHTML = '';
+            }
+            
+            playNextMessage();
+        });
+
+        resetBtn.addEventListener('click', () => {
+            isPlaying = false;
+            currentIndex = 0;
+            chatContainer.innerHTML = '';
+            playBtn.disabled = false;
+            pauseBtn.disabled = true;
+            demoStatus.textContent = 'Ready to start';
+        });
+    </script>
+</body>
+</html>

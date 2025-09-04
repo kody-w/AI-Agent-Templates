@@ -1,0 +1,54 @@
+{
+  "id": "speech_to_crm_stack",
+  "name": "Speech to CRM Stack",
+  "version": "1.0.0",
+  "author": "Microsoft AI Voice Intelligence Team",
+  "description": "Convert voice conversations into structured CRM data. Automatically transcribe, analyze, and update CRM records from calls, meetings, and voice notes.",
+  "longDescription": "The Speech to CRM Stack transforms voice interactions into actionable CRM data through advanced speech recognition and NLP. It automatically creates contacts, updates opportunities, logs activities, and extracts key insights from phone calls, meetings, and voice memos.",
+  "category": "voice-automation",
+  "complexity": "intermediate",
+  "estimatedSetupTime": "1 hour",
+  "maintenanceEffort": "low",
+  "features": [
+    "Real-time speech transcription",
+    "Automatic CRM record creation",
+    "Entity and intent extraction",
+    "Multi-speaker identification",
+    "Sentiment analysis",
+    "Action item detection",
+    "Meeting summary generation",
+    "Multi-language support",
+    "Custom vocabulary training",
+    "Integration with major CRM platforms"
+  ],
+  "benefits": [
+    "100% call logging accuracy",
+    "75% reduction in manual data entry",
+    "Never miss important details",
+    "30% increase in CRM data quality",
+    "Instant meeting follow-ups",
+    "Better pipeline visibility"
+  ],
+  "technicalRequirements": {
+    "platforms": ["Windows", "macOS", "Linux", "Cloud"],
+    "dependencies": [
+      "Python 3.8+",
+      "Azure Cognitive Services",
+      "Microsoft Dynamics 365 or Salesforce",
+      "Azure Functions"
+    ],
+    "apiKeys": [
+      "AZURE_SPEECH_KEY",
+      "CRM_API_KEY",
+      "AZURE_COGNITIVE_KEY"
+    ]
+  },
+  "tags": [
+    "speech-to-text",
+    "crm",
+    "voice",
+    "automation",
+    "nlp",
+    "sales"
+  ]
+}
