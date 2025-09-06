@@ -1,0 +1,919 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Find Accurate Models Agent - M365 Copilot</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+            background: #faf9f8;
+            height: 100vh;
+            display: flex;
+            overflow: hidden;
+            color: #323130;
+        }
+
+        /* Sidebar */
+        .sidebar {
+            width: 260px;
+            background: #ffffff;
+            display: flex;
+            flex-direction: column;
+            border-right: 1px solid #edebe9;
+        }
+
+        /* Sidebar Header */
+        .sidebar-header {
+            padding: 12px 16px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            border-bottom: 1px solid #edebe9;
+            height: 48px;
+        }
+
+        .copilot-icon {
+            width: 24px;
+            height: 24px;
+            background: linear-gradient(135deg, #6366f1 0%, #a855f7 100%);
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+
+        .copilot-icon::before {
+            content: "🤖";
+            font-size: 14px;
+            filter: brightness(0) invert(1);
+        }
+
+        .sidebar-title {
+            font-size: 14px;
+            font-weight: 600;
+            color: #323130;
+        }
+
+        /* Navigation */
+        .nav-section {
+            flex: 1;
+            overflow-y: auto;
+            padding: 4px 0;
+        }
+
+        .nav-item {
+            padding: 8px 16px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            cursor: pointer;
+            font-size: 14px;
+            color: #323130;
+            transition: background 0.1s;
+            position: relative;
+            user-select: none;
+        }
+
+        .nav-item:hover {
+            background: #f3f2f1;
+        }
+
+        .nav-item.active {
+            background: #f3f2f1;
+        }
+
+        .nav-item.active::before {
+            content: "";
+            position: absolute;
+            left: 0;
+            top: 8px;
+            bottom: 8px;
+            width: 2px;
+            background: #6366f1;
+            border-radius: 1px;
+        }
+
+        /* Main Content */
+        .main-content {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            background: #faf9f8;
+        }
+
+        /* Header */
+        .content-header {
+            height: 48px;
+            padding: 0 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: #ffffff;
+            border-bottom: 1px solid #edebe9;
+        }
+
+        /* Demo Controls */
+        .demo-controls {
+            padding: 16px 20px;
+            background: #f3f2f1;
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            border-bottom: 1px solid #edebe9;
+        }
+
+        .demo-button {
+            padding: 8px 16px;
+            background: #6366f1;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 600;
+            transition: background 0.2s;
+        }
+
+        .demo-button:hover {
+            background: #4f46e5;
+        }
+
+        .demo-button:disabled {
+            background: #a19f9d;
+            cursor: not-allowed;
+        }
+
+        .demo-button.secondary {
+            background: #605e5c;
+        }
+
+        /* Chat Container */
+        .chat-container {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+
+        .chat-messages {
+            flex: 1;
+            overflow-y: auto;
+            padding: 20px;
+        }
+
+        .message {
+            max-width: 900px;
+            margin: 0 auto 24px;
+            animation: fadeIn 0.5s ease-in;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .message-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 8px;
+        }
+
+        .message-avatar-user {
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            background: #5b5fc7;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .message-avatar-agent {
+            width: 28px;
+            height: 28px;
+            border-radius: 6px;
+            background: #6366f1;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        .message-content {
+            margin-left: 40px;
+            font-size: 14px;
+            line-height: 1.6;
+            color: #323130;
+        }
+
+        /* Agent Cards */
+        .agent-card {
+            margin-left: 40px;
+            margin-top: 16px;
+            background: white;
+            border: 1px solid #edebe9;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+        }
+
+        .agent-card-header {
+            padding: 16px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            border-bottom: 1px solid #edebe9;
+            background: #faf9f8;
+        }
+
+        .agent-card-content {
+            padding: 16px;
+        }
+
+        .detail-list {
+            list-style: none;
+        }
+
+        .detail-item {
+            padding: 8px 0;
+            font-size: 14px;
+            color: #323130;
+            display: flex;
+            gap: 8px;
+        }
+
+        .detail-label {
+            font-weight: 600;
+            min-width: 140px;
+            color: #605e5c;
+        }
+
+        .accuracy-badge {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 16px;
+            font-size: 12px;
+            font-weight: 600;
+            margin-left: 8px;
+        }
+
+        .accuracy-high {
+            background: #e7f3e7;
+            color: #107c10;
+        }
+
+        .accuracy-medium {
+            background: #fff4ce;
+            color: #ffb900;
+        }
+
+        .model-comparison {
+            background: #f0f8ff;
+            border: 1px solid #0078d4;
+            border-radius: 8px;
+            padding: 12px;
+            margin: 8px 0;
+        }
+
+        .data-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 14px;
+            margin-top: 12px;
+        }
+
+        .data-table th {
+            background: #faf9f8;
+            padding: 12px;
+            text-align: left;
+            font-weight: 600;
+            border-bottom: 2px solid #edebe9;
+        }
+
+        .data-table td {
+            padding: 12px;
+            border-bottom: 1px solid #edebe9;
+        }
+
+        /* Loading */
+        .typing-indicator {
+            margin-left: 40px;
+            display: flex;
+            gap: 4px;
+            padding: 8px 0;
+        }
+
+        .typing-dot {
+            width: 8px;
+            height: 8px;
+            background: #605e5c;
+            border-radius: 50%;
+            animation: typing 1.4s infinite;
+        }
+
+        .typing-dot:nth-child(2) { animation-delay: 0.2s; }
+        .typing-dot:nth-child(3) { animation-delay: 0.4s; }
+
+        @keyframes typing {
+            0%, 60%, 100% { transform: translateY(0); opacity: 0.5; }
+            30% { transform: translateY(-10px); opacity: 1; }
+        }
+    </style>
+</head>
+<body>
+    <!-- Sidebar -->
+    <div class="sidebar">
+        <div class="sidebar-header">
+            <div class="copilot-icon"></div>
+            <span class="sidebar-title">AI Model Finder</span>
+        </div>
+
+        <div class="nav-section">
+            <div class="nav-item active">
+                <span>🔍</span>
+                <span>Model Discovery</span>
+            </div>
+            <div class="nav-item">
+                <span>📊</span>
+                <span>Benchmark Results</span>
+            </div>
+            <div class="nav-item">
+                <span>⚙️</span>
+                <span>Configuration</span>
+            </div>
+            <div class="nav-item">
+                <span>🎯</span>
+                <span>Recommendations</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="main-content">
+        <div class="content-header">
+            <div class="header-title">AI Model Optimization Assistant</div>
+        </div>
+
+        <!-- Demo Controls -->
+        <div class="demo-controls">
+            <button class="demo-button" onclick="startDemo()" id="playButton">▶ Play Demo</button>
+            <button class="demo-button secondary" onclick="pauseDemo()" id="pauseButton" disabled>⏸ Pause</button>
+            <button class="demo-button secondary" onclick="resetDemo()">↺ Reset</button>
+            <button class="demo-button secondary" onclick="skipMessage()">⏭ Skip</button>
+            <span class="demo-status" id="demoStatus" style="margin-left: auto;">Ready to start</span>
+        </div>
+
+        <div class="chat-container">
+            <div class="chat-messages" id="chatMessages"></div>
+        </div>
+    </div>
+
+    <script>
+        let currentMessageIndex = 0;
+        let isPlaying = false;
+        let isPaused = false;
+        let messageTimeout;
+        let typingTimeout;
+
+        const demoScript = [
+            {
+                "type": "user",
+                "content": "I need to find the most accurate AI model for our customer sentiment analysis project. We process about 50,000 reviews daily across multiple languages.",
+                "typingTime": 1500,
+                "delay": 1000
+            },
+            {
+                "type": "agent",
+                "content": "I'll help you find the most accurate AI model for your sentiment analysis needs. Let me analyze your requirements and recommend the best options based on performance benchmarks.",
+                "typingTime": 2000,
+                "delay": 1500,
+                "agentData": {
+                    "Requirements Analysis": {
+                        "Use Case": "Customer Sentiment Analysis",
+                        "Volume": "50,000 reviews/day",
+                        "Languages": "Multiple language support required",
+                        "Priority": "Accuracy over speed",
+                        "Infrastructure": "Cloud-based deployment preferred"
+                    },
+                    "Top Model Recommendations": {
+                        "1. GPT-4 Turbo": {
+                            "Accuracy": "96.8% <span class='accuracy-badge accuracy-high'>Best in Class</span>",
+                            "Languages": "95+ languages supported",
+                            "Throughput": "2,000 requests/min",
+                            "Cost": "$0.01 per 1K tokens",
+                            "Pros": "Highest accuracy, excellent multilingual",
+                            "Cons": "Higher cost, some latency"
+                        },
+                        "2. Claude 3 Opus": {
+                            "Accuracy": "95.2% <span class='accuracy-badge accuracy-high'>Excellent</span>",
+                            "Languages": "50+ languages",
+                            "Throughput": "1,500 requests/min",
+                            "Cost": "$0.015 per 1K tokens",
+                            "Pros": "Great accuracy, strong context understanding",
+                            "Cons": "Limited availability"
+                        },
+                        "3. BERT-Large Multilingual": {
+                            "Accuracy": "92.5% <span class='accuracy-badge accuracy-medium'>Good</span>",
+                            "Languages": "104 languages",
+                            "Throughput": "5,000 requests/min",
+                            "Cost": "$0.002 per 1K tokens",
+                            "Pros": "Cost-effective, fast processing",
+                            "Cons": "Lower accuracy on complex sentiments"
+                        }
+                    },
+                    "Performance Benchmarks": {
+                        "Accuracy Comparison": {
+                            "Positive Sentiment": "GPT-4: 98% | Claude: 96% | BERT: 94%",
+                            "Negative Sentiment": "GPT-4: 97% | Claude: 95% | BERT: 91%",
+                            "Neutral Detection": "GPT-4: 94% | Claude: 94% | BERT: 90%",
+                            "Sarcasm Detection": "GPT-4: 89% | Claude: 87% | BERT: 72%",
+                            "Mixed Sentiment": "GPT-4: 91% | Claude: 89% | BERT: 78%"
+                        }
+                    }
+                }
+            },
+            {
+                "type": "user",
+                "content": "What about fine-tuning options? Can we improve accuracy for our specific industry (e-commerce electronics)?",
+                "typingTime": 1500,
+                "delay": 2000
+            },
+            {
+                "type": "agent",
+                "content": "Excellent question! Fine-tuning for your e-commerce electronics domain can significantly improve accuracy. Let me show you the optimization potential and recommended approaches.",
+                "typingTime": 2000,
+                "delay": 1500,
+                "agentData": {
+                    "Fine-Tuning Analysis": {
+                        "Domain": "E-commerce Electronics",
+                        "Expected Improvement": "8-15% accuracy gain",
+                        "Training Data Needed": "10,000-50,000 labeled examples",
+                        "Time to Deploy": "2-4 weeks",
+                        "ROI": "Break-even at 3 months"
+                    },
+                    "Fine-Tuning Options": {
+                        "Option 1: GPT-4 Fine-Tuning": {
+                            "Base Accuracy": "96.8%",
+                            "Expected After Fine-Tuning": "98.5-99.2%",
+                            "Training Cost": "$2,000-5,000",
+                            "Training Time": "24-48 hours",
+                            "Recommendation": "Best for maximum accuracy"
+                        },
+                        "Option 2: Open-Source Fine-Tuning": {
+                            "Model": "LLaMA 2 70B",
+                            "Base Accuracy": "91%",
+                            "Expected After Fine-Tuning": "94-96%",
+                            "Training Cost": "$500-1,500",
+                            "Training Time": "12-24 hours",
+                            "Recommendation": "Best value for performance"
+                        },
+                        "Option 3: Domain-Specific Model": {
+                            "Model": "Custom BERT for E-commerce",
+                            "Base Accuracy": "89%",
+                            "Expected After Fine-Tuning": "93-95%",
+                            "Training Cost": "$300-800",
+                            "Training Time": "6-12 hours",
+                            "Recommendation": "Most cost-effective"
+                        }
+                    },
+                    "Industry-Specific Features": {
+                        "Product Aspects": [
+                            "Battery life sentiment",
+                            "Build quality assessment",
+                            "Value for money analysis",
+                            "Feature satisfaction",
+                            "Shipping experience"
+                        ],
+                        "Technical Terms": [
+                            "Specialized vocabulary (GPU, RAM, SSD)",
+                            "Model numbers and specifications",
+                            "Brand-specific terminology",
+                            "Technical issue descriptions"
+                        ]
+                    }
+                }
+            },
+            {
+                "type": "user",
+                "content": "Can you compare the deployment options and show me the total cost of ownership for each model?",
+                "typingTime": 1500,
+                "delay": 2000
+            },
+            {
+                "type": "agent",
+                "content": "I'll provide a comprehensive deployment comparison and TCO analysis for your 50,000 daily reviews. This includes all infrastructure, API, and operational costs.",
+                "typingTime": 2000,
+                "delay": 1500,
+                "agentData": {
+                    "Deployment Comparison": {
+                        "Cloud API (GPT-4)": {
+                            "Setup Time": "1-2 days",
+                            "Infrastructure": "None required",
+                            "Scalability": "Automatic",
+                            "Maintenance": "Fully managed",
+                            "Security": "Enterprise-grade",
+                            "SLA": "99.9% uptime"
+                        },
+                        "Self-Hosted (Open Source)": {
+                            "Setup Time": "2-4 weeks",
+                            "Infrastructure": "8x A100 GPUs required",
+                            "Scalability": "Manual scaling",
+                            "Maintenance": "Team required",
+                            "Security": "Self-managed",
+                            "SLA": "Depends on team"
+                        },
+                        "Hybrid Approach": {
+                            "Setup Time": "1-2 weeks",
+                            "Infrastructure": "Edge servers + cloud backup",
+                            "Scalability": "Auto-scaling with limits",
+                            "Maintenance": "Partial management",
+                            "Security": "Shared responsibility",
+                            "SLA": "99.5% uptime"
+                        }
+                    },
+                    "Total Cost of Ownership (Annual)": {
+                        "GPT-4 Turbo (Cloud)": {
+                            "API Costs": "$73,000/year",
+                            "Infrastructure": "$0",
+                            "Maintenance": "$0",
+                            "Team (0.5 FTE)": "$60,000",
+                            "Total Annual": "$133,000",
+                            "Per Review": "$0.0073"
+                        },
+                        "LLaMA 2 (Self-Hosted)": {
+                            "API Costs": "$0",
+                            "Infrastructure": "$96,000/year",
+                            "Maintenance": "$12,000",
+                            "Team (2 FTE)": "$240,000",
+                            "Total Annual": "$348,000",
+                            "Per Review": "$0.019"
+                        },
+                        "BERT (Hybrid)": {
+                            "API Costs": "$18,000/year",
+                            "Infrastructure": "$36,000/year",
+                            "Maintenance": "$6,000",
+                            "Team (1 FTE)": "$120,000",
+                            "Total Annual": "$180,000",
+                            "Per Review": "$0.0099"
+                        }
+                    },
+                    "Recommendation": {
+                        "Best Overall": "GPT-4 Turbo with fine-tuning",
+                        "Reasoning": "Lowest TCO, highest accuracy, fastest deployment",
+                        "Alternative": "BERT Hybrid for budget constraints",
+                        "Implementation Plan": "Start with API, evaluate after 3 months"
+                    }
+                }
+            },
+            {
+                "type": "user",
+                "content": "Great analysis! Can you help me set up a proof of concept to test GPT-4 against our current system?",
+                "typingTime": 1500,
+                "delay": 2000
+            },
+            {
+                "type": "agent",
+                "content": "Absolutely! I'll create a comprehensive proof of concept plan to validate GPT-4's performance against your current system. This will give you concrete data for decision-making.",
+                "typingTime": 2000,
+                "delay": 1500,
+                "agentData": {
+                    "POC Implementation Plan": {
+                        "Phase 1: Setup (Week 1)": {
+                            "Tasks": [
+                                "Obtain GPT-4 API access",
+                                "Set up test environment",
+                                "Prepare 1,000 sample reviews",
+                                "Define success metrics",
+                                "Create evaluation dashboard"
+                            ],
+                            "Deliverables": "Test environment ready",
+                            "Resources": "1 developer, 1 data scientist"
+                        },
+                        "Phase 2: Testing (Week 2-3)": {
+                            "Tasks": [
+                                "Process sample reviews through both systems",
+                                "Collect performance metrics",
+                                "A/B test with live data (10%)",
+                                "Monitor accuracy and latency",
+                                "Gather user feedback"
+                            ],
+                            "Deliverables": "Performance comparison report",
+                            "Resources": "Full team involvement"
+                        },
+                        "Phase 3: Analysis (Week 4)": {
+                            "Tasks": [
+                                "Analyze accuracy improvements",
+                                "Calculate ROI projections",
+                                "Identify edge cases",
+                                "Document findings",
+                                "Present to stakeholders"
+                            ],
+                            "Deliverables": "Final recommendation",
+                            "Resources": "Leadership review"
+                        }
+                    },
+                    "Success Metrics": {
+                        "Accuracy Targets": {
+                            "Overall Accuracy": "> 95%",
+                            "False Positive Rate": "< 3%",
+                            "False Negative Rate": "< 5%",
+                            "Multi-language Accuracy": "> 92%"
+                        },
+                        "Performance Targets": {
+                            "Latency": "< 200ms per review",
+                            "Throughput": "> 1000 reviews/min",
+                            "Availability": "> 99.5%",
+                            "Error Rate": "< 0.1%"
+                        },
+                        "Business Targets": {
+                            "Customer Satisfaction": "+10% improvement",
+                            "Manual Review Reduction": "50% decrease",
+                            "Cost per Review": "< $0.01",
+                            "Time to Insight": "80% faster"
+                        }
+                    },
+                    "Risk Mitigation": {
+                        "Technical Risks": {
+                            "API Rate Limits": "Implement caching and queuing",
+                            "Latency Spikes": "Set up fallback to current system",
+                            "Data Privacy": "Ensure PII redaction"
+                        },
+                        "Business Risks": {
+                            "Cost Overrun": "Set spending alerts at 80%",
+                            "Accuracy Issues": "Human review for low-confidence",
+                            "Change Management": "Gradual rollout plan"
+                        }
+                    },
+                    "Next Steps": {
+                        "Immediate": [
+                            "Get API keys approved",
+                            "Assign project team",
+                            "Schedule kickoff meeting"
+                        ],
+                        "Week 1": [
+                            "Begin implementation",
+                            "Start data preparation",
+                            "Set up monitoring"
+                        ]
+                    }
+                }
+            }
+        ];
+
+        function startDemo() {
+            if (!isPlaying || isPaused) {
+                isPlaying = true;
+                isPaused = false;
+                document.getElementById('playButton').disabled = true;
+                document.getElementById('pauseButton').disabled = false;
+                document.getElementById('demoStatus').textContent = 'Playing demo...';
+                
+                if (currentMessageIndex === 0) {
+                    document.getElementById('chatMessages').innerHTML = '';
+                }
+                
+                playNextMessage();
+            }
+        }
+
+        function pauseDemo() {
+            if (isPlaying) {
+                isPaused = true;
+                isPlaying = false;
+                clearTimeout(messageTimeout);
+                clearTimeout(typingTimeout);
+                document.getElementById('playButton').disabled = false;
+                document.getElementById('pauseButton').disabled = true;
+                document.getElementById('demoStatus').textContent = 'Demo paused';
+                removeTypingIndicator();
+            }
+        }
+
+        function resetDemo() {
+            clearTimeout(messageTimeout);
+            clearTimeout(typingTimeout);
+            currentMessageIndex = 0;
+            isPlaying = false;
+            isPaused = false;
+            document.getElementById('chatMessages').innerHTML = '';
+            document.getElementById('playButton').disabled = false;
+            document.getElementById('pauseButton').disabled = true;
+            document.getElementById('demoStatus').textContent = 'Ready to start';
+            removeTypingIndicator();
+        }
+
+        function skipMessage() {
+            if (currentMessageIndex < demoScript.length) {
+                clearTimeout(messageTimeout);
+                clearTimeout(typingTimeout);
+                removeTypingIndicator();
+                
+                const message = demoScript[currentMessageIndex];
+                addMessage(message);
+                currentMessageIndex++;
+                
+                if (isPlaying && currentMessageIndex < demoScript.length) {
+                    playNextMessage();
+                } else if (currentMessageIndex >= demoScript.length) {
+                    demoComplete();
+                }
+            }
+        }
+
+        function playNextMessage() {
+            if (currentMessageIndex < demoScript.length && isPlaying && !isPaused) {
+                const message = demoScript[currentMessageIndex];
+                
+                messageTimeout = setTimeout(() => {
+                    if (message.type === 'agent') {
+                        showTypingIndicator();
+                        typingTimeout = setTimeout(() => {
+                            removeTypingIndicator();
+                            addMessage(message);
+                            currentMessageIndex++;
+                            
+                            if (currentMessageIndex < demoScript.length) {
+                                playNextMessage();
+                            } else {
+                                demoComplete();
+                            }
+                        }, message.typingTime || 2000);
+                    } else {
+                        addMessage(message);
+                        currentMessageIndex++;
+                        
+                        if (currentMessageIndex < demoScript.length) {
+                            playNextMessage();
+                        } else {
+                            demoComplete();
+                        }
+                    }
+                }, message.delay || 1000);
+            }
+        }
+
+        function demoComplete() {
+            isPlaying = false;
+            document.getElementById('playButton').disabled = false;
+            document.getElementById('pauseButton').disabled = true;
+            document.getElementById('demoStatus').textContent = 'Demo complete';
+        }
+
+        function addMessage(message) {
+            const chatMessages = document.getElementById('chatMessages');
+            const messageDiv = document.createElement('div');
+            messageDiv.className = 'message';
+            
+            const time = new Date().toLocaleString('en-US', {
+                hour: 'numeric',
+                minute: '2-digit',
+                hour12: true
+            });
+            
+            if (message.type === 'user') {
+                messageDiv.innerHTML = `
+                    <div class="message-header">
+                        <div class="message-avatar-user">TL</div>
+                        <span class="message-author" style="font-weight: 600;">You</span>
+                        <span class="message-time" style="font-size: 12px; color: #a19f9d;">${time}</span>
+                    </div>
+                    <div class="message-content">${message.content}</div>
+                `;
+            } else if (message.type === 'agent') {
+                let html = `
+                    <div class="message-header">
+                        <div class="message-avatar-agent">AI</div>
+                        <span class="message-author" style="font-weight: 600;">Model Finder Agent</span>
+                        <span class="message-time" style="font-size: 12px; color: #a19f9d;">${time}</span>
+                    </div>
+                    <div class="message-content">${message.content}</div>
+                `;
+                
+                if (message.agentData) {
+                    html += renderAgentData(message.agentData);
+                }
+                
+                messageDiv.innerHTML = html;
+            }
+            
+            chatMessages.appendChild(messageDiv);
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+        }
+
+        function renderAgentData(data) {
+            let html = '';
+            
+            for (const [category, details] of Object.entries(data)) {
+                html += `
+                    <div class="agent-card">
+                        <div class="agent-card-header">
+                            <span style="font-size: 20px;">${getIconForCategory(category)}</span>
+                            <span style="font-size: 16px; font-weight: 600;">${category}</span>
+                        </div>
+                        <div class="agent-card-content">
+                `;
+                
+                if (Array.isArray(details)) {
+                    html += '<ul style="list-style: none; padding: 0;">';
+                    details.forEach(item => {
+                        html += `<li style="padding: 4px 0;">${item}</li>`;
+                    });
+                    html += '</ul>';
+                } else if (typeof details === 'object') {
+                    html += '<ul class="detail-list">';
+                    for (const [key, value] of Object.entries(details)) {
+                        if (typeof value === 'object') {
+                            html += `
+                                <li class="detail-item">
+                                    <span class="detail-label">${key}:</span>
+                                    <div style="margin-left: 20px;">
+                            `;
+                            for (const [subKey, subValue] of Object.entries(value)) {
+                                if (Array.isArray(subValue)) {
+                                    html += `<div style="margin: 8px 0;"><strong>${subKey}:</strong><br>${subValue.join('<br>')}</div>`;
+                                } else {
+                                    html += `<div style="margin: 4px 0;"><strong>${subKey}:</strong> ${subValue}</div>`;
+                                }
+                            }
+                            html += '</div></li>';
+                        } else if (Array.isArray(value)) {
+                            html += `
+                                <li class="detail-item">
+                                    <span class="detail-label">${key}:</span>
+                                    <div>${value.join(', ')}</div>
+                                </li>
+                            `;
+                        } else {
+                            html += `
+                                <li class="detail-item">
+                                    <span class="detail-label">${key}:</span>
+                                    <span>${value}</span>
+                                </li>
+                            `;
+                        }
+                    }
+                    html += '</ul>';
+                }
+                
+                html += '</div></div>';
+            }
+            
+            return html;
+        }
+
+        function getIconForCategory(category) {
+            const icons = {
+                'Requirements Analysis': '📋',
+                'Top Model Recommendations': '🏆',
+                'Performance Benchmarks': '📊',
+                'Fine-Tuning Analysis': '🎯',
+                'Fine-Tuning Options': '⚙️',
+                'Industry-Specific Features': '🏭',
+                'Deployment Comparison': '🚀',
+                'Total Cost of Ownership (Annual)': '💰',
+                'Recommendation': '✨',
+                'POC Implementation Plan': '🗓️',
+                'Success Metrics': '📈',
+                'Risk Mitigation': '🛡️',
+                'Next Steps': '➡️'
+            };
+            return icons[category] || '📌';
+        }
+
+        function showTypingIndicator() {
+            const chatMessages = document.getElementById('chatMessages');
+            const indicator = document.createElement('div');
+            indicator.className = 'typing-indicator';
+            indicator.id = 'typingIndicator';
+            indicator.innerHTML = `
+                <div class="typing-dot"></div>
+                <div class="typing-dot"></div>
+                <div class="typing-dot"></div>
+            `;
+            chatMessages.appendChild(indicator);
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+        }
+
+        function removeTypingIndicator() {
+            const indicator = document.getElementById('typingIndicator');
+            if (indicator) {
+                indicator.remove();
+            }
+        }
+    </script>
+</body>
+</html>

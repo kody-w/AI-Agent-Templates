@@ -1,0 +1,1140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sales Coach Agent - M365 Copilot</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+            background: #faf9f8;
+            height: 100vh;
+            display: flex;
+            overflow: hidden;
+            color: #323130;
+        }
+
+        /* Sidebar */
+        .sidebar {
+            width: 260px;
+            background: #ffffff;
+            display: flex;
+            flex-direction: column;
+            border-right: 1px solid #edebe9;
+        }
+
+        /* Sidebar Header */
+        .sidebar-header {
+            padding: 12px 16px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            border-bottom: 1px solid #edebe9;
+            height: 48px;
+        }
+
+        .copilot-icon {
+            width: 24px;
+            height: 24px;
+            background: linear-gradient(135deg, #ff6b6b 0%, #4ecdc4 100%);
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+
+        .copilot-icon::before {
+            content: "🎯";
+            font-size: 14px;
+            filter: brightness(0) invert(1);
+        }
+
+        .sidebar-title {
+            font-size: 14px;
+            font-weight: 600;
+            color: #323130;
+        }
+
+        .sidebar-button {
+            margin-left: auto;
+            background: none;
+            border: none;
+            padding: 4px;
+            cursor: pointer;
+            color: #605e5c;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 4px;
+            width: 32px;
+            height: 32px;
+        }
+
+        .sidebar-button:hover {
+            background: #f3f2f1;
+        }
+
+        /* Navigation */
+        .nav-section {
+            flex: 1;
+            overflow-y: auto;
+            padding: 4px 0;
+        }
+
+        .nav-item {
+            padding: 8px 16px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            cursor: pointer;
+            font-size: 14px;
+            color: #323130;
+            transition: background 0.1s;
+            position: relative;
+            user-select: none;
+        }
+
+        .nav-item:hover {
+            background: #f3f2f1;
+        }
+
+        .nav-item.active {
+            background: #f3f2f1;
+        }
+
+        .nav-item.active::before {
+            content: "";
+            position: absolute;
+            left: 0;
+            top: 8px;
+            bottom: 8px;
+            width: 2px;
+            background: #ff6b6b;
+            border-radius: 1px;
+        }
+
+        /* Main Content */
+        .main-content {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            background: #faf9f8;
+        }
+
+        /* Header */
+        .content-header {
+            height: 48px;
+            padding: 0 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: #ffffff;
+            border-bottom: 1px solid #edebe9;
+        }
+
+        .header-title {
+            font-size: 14px;
+            color: #605e5c;
+        }
+
+        .header-actions {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        /* Demo Controls */
+        .demo-controls {
+            padding: 16px 20px;
+            background: #f3f2f1;
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            border-bottom: 1px solid #edebe9;
+        }
+
+        .demo-button {
+            padding: 8px 16px;
+            background: #ff6b6b;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 600;
+            transition: background 0.2s;
+        }
+
+        .demo-button:hover {
+            background: #ff5252;
+        }
+
+        .demo-button:disabled {
+            background: #a19f9d;
+            cursor: not-allowed;
+        }
+
+        .demo-button.secondary {
+            background: #605e5c;
+        }
+
+        .demo-button.secondary:hover {
+            background: #323130;
+        }
+
+        .demo-status {
+            margin-left: auto;
+            font-size: 14px;
+            color: #605e5c;
+        }
+
+        /* Chat Container */
+        .chat-container {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+
+        /* Chat Messages */
+        .chat-messages {
+            flex: 1;
+            overflow-y: auto;
+            padding: 20px;
+        }
+
+        .message {
+            max-width: 900px;
+            margin: 0 auto 24px;
+            animation: fadeIn 0.5s ease-in;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .message-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 8px;
+        }
+
+        .message-avatar-user {
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            background: #5b5fc7;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .message-avatar-agent {
+            width: 28px;
+            height: 28px;
+            border-radius: 6px;
+            background: #ff6b6b;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        .message-author {
+            font-size: 14px;
+            font-weight: 600;
+            color: #323130;
+        }
+
+        .message-time {
+            font-size: 12px;
+            color: #a19f9d;
+        }
+
+        .message-content {
+            margin-left: 40px;
+            font-size: 14px;
+            line-height: 1.6;
+            color: #323130;
+        }
+
+        /* Agent Cards */
+        .agent-card {
+            margin-left: 40px;
+            margin-top: 16px;
+            background: white;
+            border: 1px solid #edebe9;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+        }
+
+        .agent-card-header {
+            padding: 16px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            border-bottom: 1px solid #edebe9;
+            background: #faf9f8;
+        }
+
+        .agent-card-icon {
+            font-size: 20px;
+        }
+
+        .agent-card-title {
+            font-size: 16px;
+            font-weight: 600;
+            color: #323130;
+        }
+
+        .agent-card-content {
+            padding: 16px;
+        }
+
+        .detail-list {
+            list-style: none;
+        }
+
+        .detail-item {
+            padding: 8px 0;
+            font-size: 14px;
+            color: #323130;
+            display: flex;
+            gap: 8px;
+        }
+
+        .detail-label {
+            font-weight: 600;
+            min-width: 140px;
+            color: #605e5c;
+        }
+
+        .detail-value {
+            color: #323130;
+        }
+
+        .score-badge {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 16px;
+            font-size: 12px;
+            font-weight: 600;
+            margin-left: 8px;
+        }
+
+        .score-high {
+            background: #e7f3e7;
+            color: #107c10;
+        }
+
+        .score-medium {
+            background: #fff4ce;
+            color: #ffb900;
+        }
+
+        .score-low {
+            background: #fde7e9;
+            color: #d83b01;
+        }
+
+        .improvement-item {
+            padding: 8px;
+            background: #faf9f8;
+            border-left: 3px solid #ff6b6b;
+            margin: 8px 0;
+        }
+
+        .strength-item {
+            padding: 8px;
+            background: #e7f3e7;
+            border-left: 3px solid #107c10;
+            margin: 8px 0;
+        }
+
+        /* Data Table */
+        .data-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 14px;
+            margin-top: 12px;
+        }
+
+        .data-table th {
+            background: #faf9f8;
+            padding: 12px 16px;
+            text-align: left;
+            font-weight: 600;
+            color: #323130;
+            border-bottom: 2px solid #edebe9;
+        }
+
+        .data-table td {
+            padding: 12px 16px;
+            color: #605e5c;
+            border-bottom: 1px solid #edebe9;
+        }
+
+        /* Loading */
+        .typing-indicator {
+            margin-left: 40px;
+            display: flex;
+            gap: 4px;
+            padding: 8px 0;
+        }
+
+        .typing-dot {
+            width: 8px;
+            height: 8px;
+            background: #605e5c;
+            border-radius: 50%;
+            animation: typing 1.4s infinite;
+        }
+
+        .typing-dot:nth-child(2) {
+            animation-delay: 0.2s;
+        }
+
+        .typing-dot:nth-child(3) {
+            animation-delay: 0.4s;
+        }
+
+        @keyframes typing {
+            0%, 60%, 100% {
+                transform: translateY(0);
+                opacity: 0.5;
+            }
+            30% {
+                transform: translateY(-10px);
+                opacity: 1;
+            }
+        }
+
+        .role-play-scenario {
+            background: #f0f8ff;
+            border: 1px solid #0078d4;
+            border-radius: 8px;
+            padding: 16px;
+            margin-top: 12px;
+        }
+
+        .scenario-title {
+            font-weight: 600;
+            color: #0078d4;
+            margin-bottom: 8px;
+        }
+
+        .objection-response {
+            background: #fff9e6;
+            border-left: 3px solid #ffb900;
+            padding: 12px;
+            margin: 8px 0;
+        }
+    </style>
+</head>
+<body>
+    <!-- Sidebar -->
+    <div class="sidebar">
+        <div class="sidebar-header">
+            <div class="copilot-icon"></div>
+            <span class="sidebar-title">Sales Coach</span>
+            <button class="sidebar-button">☰</button>
+        </div>
+
+        <div class="nav-section">
+            <div class="nav-item active">
+                <span>📞</span>
+                <span>Call Review</span>
+            </div>
+            <div class="nav-item">
+                <span>🎭</span>
+                <span>Role Play</span>
+            </div>
+            <div class="nav-item">
+                <span>💬</span>
+                <span>Objection Handling</span>
+            </div>
+            <div class="nav-item">
+                <span>🎯</span>
+                <span>Pitch Practice</span>
+            </div>
+            <div class="nav-item">
+                <span>📊</span>
+                <span>Performance Review</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="main-content">
+        <div class="content-header">
+            <div class="header-title">AI Sales Coaching Assistant</div>
+            <div class="header-actions">
+                <button class="demo-button" style="font-size: 12px;">Live Demo</button>
+            </div>
+        </div>
+
+        <!-- Demo Controls -->
+        <div class="demo-controls">
+            <button class="demo-button" onclick="startDemo()" id="playButton">▶ Play Demo</button>
+            <button class="demo-button secondary" onclick="pauseDemo()" id="pauseButton" disabled>⏸ Pause</button>
+            <button class="demo-button secondary" onclick="resetDemo()">↺ Reset</button>
+            <button class="demo-button secondary" onclick="skipMessage()">⏭ Skip</button>
+            <span class="demo-status" id="demoStatus">Ready to start</span>
+        </div>
+
+        <div class="chat-container">
+            <div class="chat-messages" id="chatMessages">
+                <!-- Messages will be added dynamically -->
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let currentMessageIndex = 0;
+        let isPlaying = false;
+        let isPaused = false;
+        let messageTimeout;
+        let typingTimeout;
+
+        const demoScript = [
+            {
+                "type": "user",
+                "content": "I just finished a discovery call with a Fortune 500 prospect. Can you review my performance and provide coaching feedback?",
+                "typingTime": 1500,
+                "delay": 1000
+            },
+            {
+                "type": "agent",
+                "content": "I'll analyze your discovery call and provide comprehensive coaching feedback. Let me review your conversation flow, questioning techniques, and overall performance.",
+                "typingTime": 2000,
+                "delay": 1500,
+                "agentData": {
+                    "Call Analysis": {
+                        "Overall Score": "82/100 <span class='score-badge score-high'>Good Performance</span>",
+                        "Call Duration": "32 minutes",
+                        "Talk Ratio": "Rep: 35% | Customer: 65% (Ideal!)",
+                        "Engagement Level": "High",
+                        "Next Steps": "Successfully scheduled"
+                    },
+                    "Strengths Identified": [
+                        "<div class='strength-item'><strong>Excellent Rapport Building:</strong> Strong opening with personalized reference to their recent expansion news</div>",
+                        "<div class='strength-item'><strong>Active Listening:</strong> Good use of clarifying questions and paraphrasing</div>",
+                        "<div class='strength-item'><strong>Value Articulation:</strong> Clear connection between features and customer pain points</div>"
+                    ],
+                    "Areas for Improvement": [
+                        "<div class='improvement-item'><strong>Deeper Discovery:</strong> Missed opportunity to explore budget and timeline constraints</div>",
+                        "<div class='improvement-item'><strong>Competition Discussion:</strong> Should have probed about current vendors and alternatives</div>",
+                        "<div class='improvement-item'><strong>ROI Quantification:</strong> Could have explored specific metrics for success</div>"
+                    ],
+                    "Key Moments": {
+                        "02:15": "✅ Excellent discovery question about current challenges",
+                        "08:43": "⚠️ Missed buying signal when customer mentioned urgency",
+                        "15:20": "✅ Great handling of technical concerns",
+                        "22:30": "⚠️ Could have been more specific about implementation timeline",
+                        "28:45": "✅ Strong close with clear next steps"
+                    }
+                }
+            },
+            {
+                "type": "user",
+                "content": "The prospect mentioned they're evaluating competitors. Can you help me practice handling competitive objections?",
+                "typingTime": 1500,
+                "delay": 2000
+            },
+            {
+                "type": "agent",
+                "content": "Excellent focus area! Let me provide you with a comprehensive objection handling framework specifically for competitive situations, along with practice scenarios.",
+                "typingTime": 2000,
+                "delay": 1500,
+                "agentData": {
+                    "Common Competitive Objections": {
+                        "Objection 1": {
+                            "Statement": "Your competitor is 30% cheaper",
+                            "Response Framework": "<div class='objection-response'><strong>Acknowledge:</strong> 'I understand price is important...'<br><strong>Reframe:</strong> 'Let's look at total value and ROI...'<br><strong>Differentiate:</strong> 'Here's what's included that others charge extra for...'<br><strong>Proof:</strong> 'Customer X saved 40% overall by choosing us...'</div>"
+                        },
+                        "Objection 2": {
+                            "Statement": "We're already using Competitor Y",
+                            "Response Framework": "<div class='objection-response'><strong>Respect:</strong> 'They're a good company...'<br><strong>Probe:</strong> 'What do you like most? What could be better?'<br><strong>Position:</strong> 'We actually complement/enhance their solution...'<br><strong>Migrate:</strong> 'Many customers transitioned smoothly with our migration support...'</div>"
+                        },
+                        "Objection 3": {
+                            "Statement": "Competitor Z has more features",
+                            "Response Framework": "<div class='objection-response'><strong>Quality over Quantity:</strong> 'More features doesn't always mean better outcomes...'<br><strong>Focus on Use:</strong> 'Which specific features are critical for your use case?'<br><strong>ROI Focus:</strong> 'Our customers achieve results 50% faster with our streamlined approach...'<br><strong>Support Difference:</strong> 'Plus, our implementation support ensures you actually use what you buy...'</div>"
+                        }
+                    },
+                    "Practice Tips": {
+                        "Do's": [
+                            "Stay calm and confident",
+                            "Ask clarifying questions",
+                            "Use customer success stories",
+                            "Focus on unique value props",
+                            "Acknowledge competitor strengths gracefully"
+                        ],
+                        "Don'ts": [
+                            "Never badmouth competitors",
+                            "Don't get defensive",
+                            "Avoid feature wars",
+                            "Don't promise what you can't deliver",
+                            "Never lie about competitor capabilities"
+                        ]
+                    }
+                }
+            },
+            {
+                "type": "user",
+                "content": "Great! Now I need to prepare for an executive pitch tomorrow. Can you help me practice and give me a role-play scenario?",
+                "typingTime": 1500,
+                "delay": 2000
+            },
+            {
+                "type": "agent",
+                "content": "Perfect timing! Let me create a realistic executive pitch scenario for you to practice. I'll play the role of the executives and provide you with context and coaching.",
+                "typingTime": 2000,
+                "delay": 1500,
+                "agentData": {
+                    "Role-Play Scenario": {
+                        "Company": "GlobalTech Manufacturing Inc.",
+                        "Meeting Type": "Executive Briefing (Virtual)",
+                        "Duration": "30 minutes (strict)",
+                        "Participants": [
+                            "Sarah Chen - CFO (Cost-conscious, ROI-focused)",
+                            "Michael Torres - CTO (Technical, innovation-minded)",
+                            "Jennifer Park - CEO (Strategic, growth-oriented)"
+                        ],
+                        "Your Objective": "Secure executive sponsorship for enterprise-wide deployment",
+                        "Context": "<div class='role-play-scenario'><div class='scenario-title'>Background Information:</div>• Company Revenue: $2.5B annually<br>• Current Challenge: Digital transformation initiative stalled<br>• Budget: Approved but needs justification<br>• Timeline: Decision needed this quarter<br>• Competition: Evaluating 2 other vendors<br>• Key Pain Points: Operational inefficiency, data silos, slow time-to-market</div>"
+                    },
+                    "Executive Pitch Structure": {
+                        "Opening (2 min)": {
+                            "Hook": "Start with industry insight relevant to their business",
+                            "Connection": "Reference their recent earnings call or strategic initiative",
+                            "Agenda": "Preview 3 key points you'll cover",
+                            "Example": "I noticed in your Q3 earnings call, you mentioned operational efficiency as a key priority for 2024..."
+                        },
+                        "Problem/Opportunity (5 min)": {
+                            "Industry Context": "Share relevant market trends",
+                            "Specific Challenges": "Mirror their stated pain points",
+                            "Cost of Inaction": "Quantify the risk of status quo",
+                            "Example": "Manufacturing companies losing 23% productivity due to disconnected systems..."
+                        },
+                        "Solution Overview (10 min)": {
+                            "Strategic Alignment": "Connect to their business goals",
+                            "Unique Approach": "Differentiate from competitors",
+                            "Success Metrics": "Define measurable outcomes",
+                            "Proof Points": "Share relevant case studies"
+                        },
+                        "Business Case (8 min)": {
+                            "ROI Timeline": "Show payback period",
+                            "Risk Mitigation": "Address implementation concerns",
+                            "Quick Wins": "Identify 90-day victories",
+                            "Long-term Value": "Paint the 3-year vision"
+                        },
+                        "Next Steps (5 min)": {
+                            "Clear Ask": "Request specific commitment",
+                            "Timeline": "Propose concrete dates",
+                            "Resources": "Identify who needs to be involved",
+                            "Success Criteria": "Define mutual success"
+                        }
+                    },
+                    "Anticipated Executive Questions": {
+                        "From CFO": [
+                            "What's the total cost of ownership over 3 years?",
+                            "How quickly will we see ROI?",
+                            "What are the hidden costs?"
+                        ],
+                        "From CTO": [
+                            "How does this integrate with our tech stack?",
+                            "What's the implementation complexity?",
+                            "How do you handle security and compliance?"
+                        ],
+                        "From CEO": [
+                            "How will this give us competitive advantage?",
+                            "What's the risk if we don't move forward?",
+                            "Who else in our industry uses this?"
+                        ]
+                    }
+                }
+            },
+            {
+                "type": "user",
+                "content": "This is incredibly helpful! Can you now review my overall performance this quarter and suggest a development plan?",
+                "typingTime": 1500,
+                "delay": 2000
+            },
+            {
+                "type": "agent",
+                "content": "I'll provide you with a comprehensive performance review for this quarter along with a personalized development plan to accelerate your sales success.",
+                "typingTime": 2000,
+                "delay": 1500,
+                "agentData": {
+                    "Quarterly Performance Metrics": {
+                        "Quota Attainment": "94% ($2.35M of $2.5M target)",
+                        "Deals Closed": "12 deals (8 new logos, 4 expansions)",
+                        "Average Deal Size": "$196K (↑15% from last quarter)",
+                        "Win Rate": "32% (above team average of 28%)",
+                        "Sales Cycle": "67 days (improved from 78 days)",
+                        "Pipeline Coverage": "3.2x (healthy)"
+                    },
+                    "Strengths Analysis": {
+                        "Relationship Building": {
+                            "Rating": "⭐⭐⭐⭐⭐ Exceptional",
+                            "Evidence": "Customer satisfaction: 4.9/5.0",
+                            "Impact": "85% of deals included referrals"
+                        },
+                        "Product Knowledge": {
+                            "Rating": "⭐⭐⭐⭐ Strong",
+                            "Evidence": "Completed advanced certification",
+                            "Impact": "Trusted advisor status with technical buyers"
+                        },
+                        "Pipeline Management": {
+                            "Rating": "⭐⭐⭐⭐ Strong",
+                            "Evidence": "Accurate forecasting (92% accuracy)",
+                            "Impact": "Consistent quarterly performance"
+                        }
+                    },
+                    "Development Areas": {
+                        "Negotiation Skills": {
+                            "Current State": "Average discount: 18% (team avg: 12%)",
+                            "Goal": "Reduce to 15% within 60 days",
+                            "Action Plan": [
+                                "Complete advanced negotiation training",
+                                "Shadow Jane (top negotiator) on 3 deals",
+                                "Document negotiation strategy before calls",
+                                "Practice with manager weekly"
+                            ]
+                        },
+                        "Executive Engagement": {
+                            "Current State": "Only 40% of deals have exec involvement",
+                            "Goal": "Increase to 70% next quarter",
+                            "Action Plan": [
+                                "Develop executive messaging toolkit",
+                                "Create 5 industry-specific insights",
+                                "Practice executive presence skills",
+                                "Partner with leadership for introductions"
+                            ]
+                        }
+                    },
+                    "90-Day Development Plan": {
+                        "Month 1 Focus": {
+                            "Skill": "Strategic Account Planning",
+                            "Activities": [
+                                "Complete strategic selling course",
+                                "Develop account plans for top 5 accounts",
+                                "Present plan to leadership for feedback"
+                            ],
+                            "Success Metric": "Identify $500K in expansion opportunities"
+                        },
+                        "Month 2 Focus": {
+                            "Skill": "Consultative Selling",
+                            "Activities": [
+                                "Read 'Challenger Sale' and 'SPIN Selling'",
+                                "Implement questioning framework",
+                                "Record and review 5 discovery calls"
+                            ],
+                            "Success Metric": "Increase discovery-to-demo conversion by 20%"
+                        },
+                        "Month 3 Focus": {
+                            "Skill": "Executive Presence",
+                            "Activities": [
+                                "Executive communication workshop",
+                                "Create industry point-of-view content",
+                                "Lead quarterly business review with key account"
+                            ],
+                            "Success Metric": "Secure 3 C-level meetings"
+                        }
+                    },
+                    "Career Progression Path": {
+                        "Current Role": "Senior Account Executive",
+                        "Next Level": "Enterprise Account Executive (6-12 months)",
+                        "Requirements": [
+                            "Consistent 100%+ quota attainment",
+                            "Average deal size > $250K",
+                            "Executive relationship skills",
+                            "Mentor junior team members"
+                        ],
+                        "Long-term Options": [
+                            "Sales Leadership track → Sales Manager → Director",
+                            "Strategic Accounts → Global Account Manager",
+                            "Sales Engineering → Solution Architecture"
+                        ]
+                    }
+                }
+            },
+            {
+                "type": "user",
+                "content": "Thanks! One more thing - I have a difficult negotiation coming up. Can you help me prepare for it?",
+                "typingTime": 1500,
+                "delay": 2000
+            },
+            {
+                "type": "agent",
+                "content": "Absolutely! Let me provide you with a comprehensive negotiation preparation framework and specific tactics for handling difficult negotiations.",
+                "typingTime": 2000,
+                "delay": 1500,
+                "agentData": {
+                    "Negotiation Preparation Checklist": {
+                        "Know Your Position": {
+                            "Walk-Away Point": "Minimum acceptable: $180K (list: $250K)",
+                            "Target Outcome": "Ideal: $220K with 3-year commitment",
+                            "BATNA": "Best Alternative: Focus on other pipeline opportunities",
+                            "Concessions Available": [
+                                "Payment terms (NET 30 → NET 60)",
+                                "Implementation timeline flexibility",
+                                "Training credits (up to $10K value)",
+                                "Success manager allocation"
+                            ]
+                        },
+                        "Understand Their Position": {
+                            "Budget Range": "Research indicates $200-300K approved",
+                            "Decision Timeline": "End of quarter pressure (leverage)",
+                            "Key Stakeholders": "CFO (cost), CTO (value), End Users (features)",
+                            "Alternatives": "Evaluating 2 competitors (we're preferred)"
+                        }
+                    },
+                    "Advanced Negotiation Tactics": {
+                        "Opening Moves": {
+                            "Anchor High": "Start at $250K to set reference point",
+                            "Value Stack": "List all included value before discussing price",
+                            "Create Urgency": "Limited-time incentives expiring end of month",
+                            "Example Script": "Based on the value we've discussed - $2M in savings, 6-month ROI - our standard investment is $250K..."
+                        },
+                        "Middle Game": {
+                            "Trading Strategy": "Never give without getting something back",
+                            "Bracketing": "If they say $150K, counter with $235K to land at $190K+",
+                            "Silence Power": "After stating position, wait for them to respond",
+                            "False Constraints": "I'd need VP approval for anything below $200K..."
+                        },
+                        "Closing Tactics": {
+                            "Split the Difference": "Meet in the middle if within range",
+                            "Nibble Technique": "After agreement, ask for one small addition",
+                            "Future Value": "Lock in multi-year at current pricing",
+                            "Package Deal": "Bundle products for perceived value"
+                        }
+                    },
+                    "Handling Tough Tactics": {
+                        "Good Cop/Bad Cop": {
+                            "Their Move": "One person is tough, other sympathetic",
+                            "Your Counter": "Recognize the tactic and stay focused on value",
+                            "Response": "I appreciate both perspectives. Let's focus on what works for everyone..."
+                        },
+                        "The Squeeze": {
+                            "Their Move": "We only have $150K budget, take it or leave it",
+                            "Your Counter": "Explore creative deal structuring",
+                            "Response": "I understand budget constraints. Let's explore phased implementation or payment terms..."
+                        },
+                        "Deadline Pressure": {
+                            "Their Move": "We need your best price by EOD",
+                            "Your Counter": "Don't rush into bad deals",
+                            "Response": "I want to ensure we structure this right. Let me work on options by tomorrow noon..."
+                        }
+                    },
+                    "Negotiation Success Formula": {
+                        "Preparation (40%)": [
+                            "Research thoroughly",
+                            "Know all stakeholders",
+                            "Understand their business",
+                            "Prepare multiple scenarios"
+                        ],
+                        "Execution (35%)": [
+                            "Stay calm and confident",
+                            "Listen more than talk",
+                            "Ask clarifying questions",
+                            "Document everything"
+                        ],
+                        "Relationship (25%)": [
+                            "Maintain partnership tone",
+                            "Focus on mutual success",
+                            "Be firm but fair",
+                            "Preserve future opportunity"
+                        ]
+                    },
+                    "Post-Negotiation": {
+                        "Document Agreement": "Send summary within 2 hours",
+                        "Internal Alignment": "Brief implementation team immediately",
+                        "Relationship Maintenance": "Thank them for partnership",
+                        "Lessons Learned": "Document what worked for future deals"
+                    }
+                }
+            }
+        ];
+
+        function startDemo() {
+            if (!isPlaying || isPaused) {
+                isPlaying = true;
+                isPaused = false;
+                document.getElementById('playButton').disabled = true;
+                document.getElementById('pauseButton').disabled = false;
+                document.getElementById('demoStatus').textContent = 'Playing demo...';
+                
+                if (currentMessageIndex === 0) {
+                    document.getElementById('chatMessages').innerHTML = '';
+                }
+                
+                playNextMessage();
+            }
+        }
+
+        function pauseDemo() {
+            if (isPlaying) {
+                isPaused = true;
+                isPlaying = false;
+                clearTimeout(messageTimeout);
+                clearTimeout(typingTimeout);
+                document.getElementById('playButton').disabled = false;
+                document.getElementById('pauseButton').disabled = true;
+                document.getElementById('demoStatus').textContent = 'Demo paused';
+                removeTypingIndicator();
+            }
+        }
+
+        function resetDemo() {
+            clearTimeout(messageTimeout);
+            clearTimeout(typingTimeout);
+            currentMessageIndex = 0;
+            isPlaying = false;
+            isPaused = false;
+            document.getElementById('chatMessages').innerHTML = '';
+            document.getElementById('playButton').disabled = false;
+            document.getElementById('pauseButton').disabled = true;
+            document.getElementById('demoStatus').textContent = 'Ready to start';
+            removeTypingIndicator();
+        }
+
+        function skipMessage() {
+            if (currentMessageIndex < demoScript.length) {
+                clearTimeout(messageTimeout);
+                clearTimeout(typingTimeout);
+                removeTypingIndicator();
+                
+                const message = demoScript[currentMessageIndex];
+                addMessage(message);
+                currentMessageIndex++;
+                
+                if (isPlaying && currentMessageIndex < demoScript.length) {
+                    playNextMessage();
+                } else if (currentMessageIndex >= demoScript.length) {
+                    demoComplete();
+                }
+            }
+        }
+
+        function playNextMessage() {
+            if (currentMessageIndex < demoScript.length && isPlaying && !isPaused) {
+                const message = demoScript[currentMessageIndex];
+                
+                messageTimeout = setTimeout(() => {
+                    if (message.type === 'agent') {
+                        showTypingIndicator();
+                        typingTimeout = setTimeout(() => {
+                            removeTypingIndicator();
+                            addMessage(message);
+                            currentMessageIndex++;
+                            
+                            if (currentMessageIndex < demoScript.length) {
+                                playNextMessage();
+                            } else {
+                                demoComplete();
+                            }
+                        }, message.typingTime || 2000);
+                    } else {
+                        addMessage(message);
+                        currentMessageIndex++;
+                        
+                        if (currentMessageIndex < demoScript.length) {
+                            playNextMessage();
+                        } else {
+                            demoComplete();
+                        }
+                    }
+                }, message.delay || 1000);
+            }
+        }
+
+        function demoComplete() {
+            isPlaying = false;
+            document.getElementById('playButton').disabled = false;
+            document.getElementById('pauseButton').disabled = true;
+            document.getElementById('demoStatus').textContent = 'Demo complete';
+        }
+
+        function addMessage(message) {
+            const chatMessages = document.getElementById('chatMessages');
+            const messageDiv = document.createElement('div');
+            messageDiv.className = 'message';
+            
+            const time = new Date().toLocaleString('en-US', {
+                hour: 'numeric',
+                minute: '2-digit',
+                hour12: true
+            });
+            
+            if (message.type === 'user') {
+                messageDiv.innerHTML = `
+                    <div class="message-header">
+                        <div class="message-avatar-user">JD</div>
+                        <span class="message-author">You</span>
+                        <span class="message-time">${time}</span>
+                    </div>
+                    <div class="message-content">${message.content}</div>
+                `;
+            } else if (message.type === 'agent') {
+                let html = `
+                    <div class="message-header">
+                        <div class="message-avatar-agent">SC</div>
+                        <span class="message-author">Sales Coach AI</span>
+                        <span class="message-time">${time}</span>
+                    </div>
+                    <div class="message-content">${message.content}</div>
+                `;
+                
+                if (message.agentData) {
+                    html += renderAgentData(message.agentData);
+                }
+                
+                messageDiv.innerHTML = html;
+            }
+            
+            chatMessages.appendChild(messageDiv);
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+        }
+
+        function renderAgentData(data) {
+            let html = '';
+            
+            for (const [category, details] of Object.entries(data)) {
+                html += `
+                    <div class="agent-card">
+                        <div class="agent-card-header">
+                            <span class="agent-card-icon">${getIconForCategory(category)}</span>
+                            <span class="agent-card-title">${category}</span>
+                        </div>
+                        <div class="agent-card-content">
+                `;
+                
+                if (Array.isArray(details)) {
+                    details.forEach(item => {
+                        html += `<div style="margin: 8px 0;">${item}</div>`;
+                    });
+                } else if (typeof details === 'object') {
+                    html += '<ul class="detail-list">';
+                    for (const [key, value] of Object.entries(details)) {
+                        if (typeof value === 'object' && !Array.isArray(value)) {
+                            html += `
+                                <li class="detail-item">
+                                    <span class="detail-label">${key}:</span>
+                                    <div style="margin-left: 20px;">
+                            `;
+                            for (const [subKey, subValue] of Object.entries(value)) {
+                                if (Array.isArray(subValue)) {
+                                    html += `
+                                        <div class="detail-item">
+                                            <span class="detail-label">${subKey}:</span>
+                                            <div>${subValue.join('<br>')}</div>
+                                        </div>
+                                    `;
+                                } else {
+                                    html += `
+                                        <div class="detail-item">
+                                            <span class="detail-label">${subKey}:</span>
+                                            <span class="detail-value">${subValue}</span>
+                                        </div>
+                                    `;
+                                }
+                            }
+                            html += '</div></li>';
+                        } else if (Array.isArray(value)) {
+                            html += `
+                                <li class="detail-item">
+                                    <span class="detail-label">${key}:</span>
+                                    <div>${value.join('<br>')}</div>
+                                </li>
+                            `;
+                        } else {
+                            html += `
+                                <li class="detail-item">
+                                    <span class="detail-label">${key}:</span>
+                                    <span class="detail-value">${value}</span>
+                                </li>
+                            `;
+                        }
+                    }
+                    html += '</ul>';
+                }
+                
+                html += `
+                        </div>
+                    </div>
+                `;
+            }
+            
+            return html;
+        }
+
+        function getIconForCategory(category) {
+            const icons = {
+                'Call Analysis': '📊',
+                'Strengths Identified': '💪',
+                'Areas for Improvement': '📈',
+                'Key Moments': '🎯',
+                'Common Competitive Objections': '⚔️',
+                'Practice Tips': '💡',
+                'Role-Play Scenario': '🎭',
+                'Executive Pitch Structure': '👔',
+                'Anticipated Executive Questions': '❓',
+                'Quarterly Performance Metrics': '📊',
+                'Strengths Analysis': '⭐',
+                'Development Areas': '🎯',
+                '90-Day Development Plan': '📅',
+                'Career Progression Path': '🚀',
+                'Negotiation Preparation Checklist': '📋',
+                'Advanced Negotiation Tactics': '♟️',
+                'Handling Tough Tactics': '🛡️',
+                'Negotiation Success Formula': '🏆',
+                'Post-Negotiation': '✅'
+            };
+            return icons[category] || '📌';
+        }
+
+        function showTypingIndicator() {
+            const chatMessages = document.getElementById('chatMessages');
+            const indicator = document.createElement('div');
+            indicator.className = 'typing-indicator';
+            indicator.id = 'typingIndicator';
+            indicator.innerHTML = `
+                <div class="typing-dot"></div>
+                <div class="typing-dot"></div>
+                <div class="typing-dot"></div>
+            `;
+            chatMessages.appendChild(indicator);
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+        }
+
+        function removeTypingIndicator() {
+            const indicator = document.getElementById('typingIndicator');
+            if (indicator) {
+                indicator.remove();
+            }
+        }
+    </script>
+</body>
+</html>

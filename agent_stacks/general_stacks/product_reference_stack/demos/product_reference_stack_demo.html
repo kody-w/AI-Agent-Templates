@@ -1,0 +1,1039 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product Reference Agent - M365 Copilot</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+            background: #faf9f8;
+            height: 100vh;
+            display: flex;
+            overflow: hidden;
+            color: #323130;
+        }
+
+        /* Sidebar */
+        .sidebar {
+            width: 260px;
+            background: #ffffff;
+            display: flex;
+            flex-direction: column;
+            border-right: 1px solid #edebe9;
+        }
+
+        /* Sidebar Header */
+        .sidebar-header {
+            padding: 12px 16px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            border-bottom: 1px solid #edebe9;
+            height: 48px;
+        }
+
+        .copilot-icon {
+            width: 24px;
+            height: 24px;
+            background: linear-gradient(135deg, #0078d4 0%, #40E0D0 100%);
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+
+        .copilot-icon::before {
+            content: "📦";
+            font-size: 14px;
+            filter: brightness(0) invert(1);
+        }
+
+        .sidebar-title {
+            font-size: 14px;
+            font-weight: 600;
+            color: #323130;
+        }
+
+        .sidebar-button {
+            margin-left: auto;
+            background: none;
+            border: none;
+            padding: 4px;
+            cursor: pointer;
+            color: #605e5c;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 4px;
+            width: 32px;
+            height: 32px;
+        }
+
+        .sidebar-button:hover {
+            background: #f3f2f1;
+        }
+
+        /* Navigation */
+        .nav-section {
+            flex: 1;
+            overflow-y: auto;
+            padding: 4px 0;
+        }
+
+        .nav-item {
+            padding: 8px 16px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            cursor: pointer;
+            font-size: 14px;
+            color: #323130;
+            transition: background 0.1s;
+            position: relative;
+            user-select: none;
+        }
+
+        .nav-item:hover {
+            background: #f3f2f1;
+        }
+
+        .nav-item.active {
+            background: #f3f2f1;
+        }
+
+        .nav-item.active::before {
+            content: "";
+            position: absolute;
+            left: 0;
+            top: 8px;
+            bottom: 8px;
+            width: 2px;
+            background: #0078d4;
+            border-radius: 1px;
+        }
+
+        /* Main Content */
+        .main-content {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            background: #faf9f8;
+        }
+
+        /* Header */
+        .content-header {
+            height: 48px;
+            padding: 0 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: #ffffff;
+            border-bottom: 1px solid #edebe9;
+        }
+
+        .header-title {
+            font-size: 14px;
+            color: #605e5c;
+        }
+
+        .header-actions {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        /* Demo Controls */
+        .demo-controls {
+            padding: 16px 20px;
+            background: #f3f2f1;
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            border-bottom: 1px solid #edebe9;
+        }
+
+        .demo-button {
+            padding: 8px 16px;
+            background: #0078d4;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 600;
+            transition: background 0.2s;
+        }
+
+        .demo-button:hover {
+            background: #106ebe;
+        }
+
+        .demo-button:disabled {
+            background: #a19f9d;
+            cursor: not-allowed;
+        }
+
+        .demo-button.secondary {
+            background: #605e5c;
+        }
+
+        .demo-button.secondary:hover {
+            background: #323130;
+        }
+
+        .demo-status {
+            margin-left: auto;
+            font-size: 14px;
+            color: #605e5c;
+        }
+
+        /* Chat Container */
+        .chat-container {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+
+        /* Chat Messages */
+        .chat-messages {
+            flex: 1;
+            overflow-y: auto;
+            padding: 20px;
+        }
+
+        .message {
+            max-width: 900px;
+            margin: 0 auto 24px;
+            animation: fadeIn 0.5s ease-in;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .message-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 8px;
+        }
+
+        .message-avatar-user {
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            background: #5b5fc7;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .message-avatar-agent {
+            width: 28px;
+            height: 28px;
+            border-radius: 6px;
+            background: #0078d4;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        .message-author {
+            font-size: 14px;
+            font-weight: 600;
+            color: #323130;
+        }
+
+        .message-time {
+            font-size: 12px;
+            color: #a19f9d;
+        }
+
+        .message-content {
+            margin-left: 40px;
+            font-size: 14px;
+            line-height: 1.6;
+            color: #323130;
+        }
+
+        /* Agent Cards */
+        .agent-card {
+            margin-left: 40px;
+            margin-top: 16px;
+            background: white;
+            border: 1px solid #edebe9;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+        }
+
+        .agent-card-header {
+            padding: 16px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            border-bottom: 1px solid #edebe9;
+            background: #faf9f8;
+        }
+
+        .agent-card-icon {
+            font-size: 20px;
+        }
+
+        .agent-card-title {
+            font-size: 16px;
+            font-weight: 600;
+            color: #323130;
+        }
+
+        .agent-card-content {
+            padding: 16px;
+        }
+
+        .detail-list {
+            list-style: none;
+        }
+
+        .detail-item {
+            padding: 8px 0;
+            font-size: 14px;
+            color: #323130;
+            display: flex;
+            gap: 8px;
+        }
+
+        .detail-label {
+            font-weight: 600;
+            min-width: 140px;
+            color: #605e5c;
+        }
+
+        .detail-value {
+            color: #323130;
+        }
+
+        .feature-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-top: 8px;
+        }
+
+        .feature-tag {
+            padding: 4px 12px;
+            background: #e1f5fe;
+            color: #0078d4;
+            border-radius: 16px;
+            font-size: 12px;
+            font-weight: 500;
+        }
+
+        .rating {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .star {
+            color: #ffb900;
+        }
+
+        /* Data Table */
+        .data-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 14px;
+            margin-top: 12px;
+        }
+
+        .data-table th {
+            background: #faf9f8;
+            padding: 12px 16px;
+            text-align: left;
+            font-weight: 600;
+            color: #323130;
+            border-bottom: 2px solid #edebe9;
+        }
+
+        .data-table td {
+            padding: 12px 16px;
+            color: #605e5c;
+            border-bottom: 1px solid #edebe9;
+        }
+
+        .data-table tr:hover td {
+            background: #faf9f8;
+        }
+
+        /* Loading */
+        .typing-indicator {
+            margin-left: 40px;
+            display: flex;
+            gap: 4px;
+            padding: 8px 0;
+        }
+
+        .typing-dot {
+            width: 8px;
+            height: 8px;
+            background: #605e5c;
+            border-radius: 50%;
+            animation: typing 1.4s infinite;
+        }
+
+        .typing-dot:nth-child(2) {
+            animation-delay: 0.2s;
+        }
+
+        .typing-dot:nth-child(3) {
+            animation-delay: 0.4s;
+        }
+
+        @keyframes typing {
+            0%, 60%, 100% {
+                transform: translateY(0);
+                opacity: 0.5;
+            }
+            30% {
+                transform: translateY(-10px);
+                opacity: 1;
+            }
+        }
+
+        .price-badge {
+            display: inline-block;
+            padding: 4px 8px;
+            background: #107c10;
+            color: white;
+            border-radius: 4px;
+            font-weight: 600;
+            margin-left: 8px;
+        }
+
+        .comparison-table {
+            width: 100%;
+            margin-top: 16px;
+        }
+
+        .comparison-table th {
+            background: #0078d4;
+            color: white;
+            padding: 12px;
+            text-align: left;
+        }
+
+        .comparison-table td {
+            padding: 12px;
+            border-bottom: 1px solid #edebe9;
+        }
+
+        .comparison-table tr:nth-child(even) {
+            background: #faf9f8;
+        }
+
+        .check {
+            color: #107c10;
+            font-weight: 600;
+        }
+
+        .cross {
+            color: #d83b01;
+            font-weight: 600;
+        }
+    </style>
+</head>
+<body>
+    <!-- Sidebar -->
+    <div class="sidebar">
+        <div class="sidebar-header">
+            <div class="copilot-icon"></div>
+            <span class="sidebar-title">Product Reference</span>
+            <button class="sidebar-button">☰</button>
+        </div>
+
+        <div class="nav-section">
+            <div class="nav-item active">
+                <span>🔍</span>
+                <span>Product Search</span>
+            </div>
+            <div class="nav-item">
+                <span>📊</span>
+                <span>Compare Products</span>
+            </div>
+            <div class="nav-item">
+                <span>📋</span>
+                <span>Specifications</span>
+            </div>
+            <div class="nav-item">
+                <span>💡</span>
+                <span>Recommendations</span>
+            </div>
+            <div class="nav-item">
+                <span>📚</span>
+                <span>Documentation</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="main-content">
+        <div class="content-header">
+            <div class="header-title">Product Reference Assistant</div>
+            <div class="header-actions">
+                <button class="demo-button" style="font-size: 12px;">Live Demo</button>
+            </div>
+        </div>
+
+        <!-- Demo Controls -->
+        <div class="demo-controls">
+            <button class="demo-button" onclick="startDemo()" id="playButton">▶ Play Demo</button>
+            <button class="demo-button secondary" onclick="pauseDemo()" id="pauseButton" disabled>⏸ Pause</button>
+            <button class="demo-button secondary" onclick="resetDemo()">↺ Reset</button>
+            <button class="demo-button secondary" onclick="skipMessage()">⏭ Skip</button>
+            <span class="demo-status" id="demoStatus">Ready to start</span>
+        </div>
+
+        <div class="chat-container">
+            <div class="chat-messages" id="chatMessages">
+                <!-- Messages will be added dynamically -->
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let currentMessageIndex = 0;
+        let isPlaying = false;
+        let isPaused = false;
+        let messageTimeout;
+        let typingTimeout;
+
+        const demoScript = [
+            {
+                "type": "user",
+                "content": "I need information about enterprise analytics solutions with AI capabilities. Can you help me find the best options?",
+                "typingTime": 1500,
+                "delay": 1000
+            },
+            {
+                "type": "agent",
+                "content": "I'll help you find the perfect enterprise analytics solution with AI capabilities. Let me search our product database and provide comprehensive information.",
+                "typingTime": 2000,
+                "delay": 1500,
+                "agentData": {
+                    "Product Details": {
+                        "Product Name": "ProMax Enterprise Solution X500",
+                        "Category": "Enterprise Software",
+                        "Manufacturer": "TechCorp Industries",
+                        "Model Number": "X500-ENT-2024",
+                        "Release Date": "January 15, 2024",
+                        "Status": "Available",
+                        "Overall Rating": "4.7/5.0 ⭐⭐⭐⭐⭐"
+                    },
+                    "Pricing Information": {
+                        "List Price": "$4,999",
+                        "Discounted Price": "$4,499",
+                        "Volume Pricing": "Available for 10+ units",
+                        "Subscription Option": "$199/month",
+                        "Trial Available": "30-day free trial"
+                    },
+                    "Key Features": [
+                        "Advanced AI-powered analytics",
+                        "Real-time data synchronization",
+                        "Multi-platform compatibility",
+                        "Enterprise-grade security",
+                        "24/7 customer support",
+                        "Customizable dashboard",
+                        "API integration support",
+                        "Automated reporting"
+                    ],
+                    "Technical Specifications": {
+                        "Processing": "8-core minimum, 10,000 transactions/second",
+                        "Storage": "1TB included, unlimited with cloud",
+                        "Network": "100 Mbps minimum, HTTPS/TLS 1.3",
+                        "Security": "AES-256 encryption, Multi-factor auth",
+                        "Compliance": "SOC 2, GDPR, HIPAA compliant"
+                    }
+                }
+            },
+            {
+                "type": "user",
+                "content": "How does this compare to other solutions in the market? I want to see a comparison with competitors.",
+                "typingTime": 1500,
+                "delay": 2000
+            },
+            {
+                "type": "agent",
+                "content": "I'll provide you with a detailed comparison of the ProMax X500 against leading competitors in the market. This will help you make an informed decision.",
+                "typingTime": 2000,
+                "delay": 1500,
+                "agentData": {
+                    "Comparison Analysis": {
+                        "Products Compared": "ProMax X500 vs CompetitorA Pro vs CompetitorB Enterprise",
+                        "Winner": "ProMax X500",
+                        "Verdict": "Best overall value with superior features and support"
+                    },
+                    "Feature Comparison": {
+                        "AI Analytics": ["ProMax X500: ✓ Full", "CompetitorA: ✓ Full", "CompetitorB: ⚠ Limited"],
+                        "Real-time Sync": ["ProMax X500: ✓ Yes", "CompetitorA: ✗ No", "CompetitorB: ✓ Yes"],
+                        "API Access": ["ProMax X500: ✓ Full", "CompetitorA: ⚠ Limited", "CompetitorB: ✓ Full"],
+                        "Mobile App": ["ProMax X500: ✓ Yes", "CompetitorA: ✓ Yes", "CompetitorB: ✗ No"],
+                        "Custom Reports": ["ProMax X500: Unlimited", "CompetitorA: 10/month", "CompetitorB: 5/month"],
+                        "Storage": ["ProMax X500: 1TB", "CompetitorA: 500GB", "CompetitorB: 750GB"],
+                        "Support": ["ProMax X500: 24/7", "CompetitorA: Business hours", "CompetitorB: 24/7"],
+                        "Price": ["ProMax X500: $4,999", "CompetitorA: $5,499", "CompetitorB: $4,299"]
+                    },
+                    "Pros & Cons": {
+                        "Pros": ["Most comprehensive feature set", "Best customer support", "Competitive pricing", "Strong API ecosystem"],
+                        "Cons": ["Higher learning curve initially", "Requires more setup time"]
+                    }
+                }
+            },
+            {
+                "type": "user",
+                "content": "What alternatives would you recommend if we have a smaller budget? We're looking for something under $3,000.",
+                "typingTime": 1500,
+                "delay": 2000
+            },
+            {
+                "type": "agent",
+                "content": "Based on your budget requirements, I've identified several excellent alternatives under $3,000 that still provide robust analytics capabilities. Let me show you the best options.",
+                "typingTime": 2000,
+                "delay": 1500,
+                "agentData": {
+                    "Budget-Friendly Alternatives": {
+                        "Option 1": {
+                            "Product": "ProMax X300 Standard",
+                            "Price": "$2,999",
+                            "Match Score": "85%",
+                            "Reason": "More affordable option with core features intact",
+                            "Key Features": "AI analytics, Cloud storage, API access, Mobile app",
+                            "Best For": "Mid-size teams (50-200 users)"
+                        },
+                        "Option 2": {
+                            "Product": "QuickStart Business Suite",
+                            "Price": "$1,999",
+                            "Match Score": "72%",
+                            "Reason": "Easier implementation for smaller teams",
+                            "Key Features": "Basic AI, 500GB storage, Standard API, Web-based",
+                            "Best For": "Small teams (10-50 users)"
+                        },
+                        "Option 3": {
+                            "Product": "Analytics Essentials Pro",
+                            "Price": "$2,499",
+                            "Match Score": "78%",
+                            "Reason": "Balanced features at competitive price",
+                            "Key Features": "AI insights, 750GB storage, Full API, Mobile ready",
+                            "Best For": "Growing businesses"
+                        }
+                    },
+                    "Recommendation": {
+                        "Best Value": "ProMax X300 Standard",
+                        "Reasoning": "Provides 85% of X500 capabilities at 60% of the price",
+                        "Upgrade Path": "Can easily upgrade to X500 when budget allows",
+                        "Trial Available": "14-day free trial to test before purchasing"
+                    }
+                }
+            },
+            {
+                "type": "user",
+                "content": "Can you tell me more about the use cases and ROI for the ProMax X300 in the healthcare industry?",
+                "typingTime": 1500,
+                "delay": 2000
+            },
+            {
+                "type": "agent",
+                "content": "Excellent question! Let me provide you with specific healthcare industry use cases and ROI data for the ProMax X300 Standard. This information is based on actual customer implementations.",
+                "typingTime": 2000,
+                "delay": 1500,
+                "agentData": {
+                    "Healthcare Use Cases": {
+                        "Patient Data Management": {
+                            "Scenario": "Centralized patient records and analytics",
+                            "Benefits": "30% improvement in care coordination",
+                            "ROI Timeline": "6-9 months",
+                            "Cost Savings": "$150,000 annually"
+                        },
+                        "Clinical Decision Support": {
+                            "Scenario": "AI-powered diagnosis assistance",
+                            "Benefits": "25% reduction in diagnostic errors",
+                            "ROI Timeline": "12 months",
+                            "Cost Savings": "$200,000 annually"
+                        },
+                        "Resource Optimization": {
+                            "Scenario": "Staff scheduling and equipment utilization",
+                            "Benefits": "20% increase in operational efficiency",
+                            "ROI Timeline": "4-6 months",
+                            "Cost Savings": "$100,000 annually"
+                        }
+                    },
+                    "Implementation Details": {
+                        "Deployment Time": "2-3 weeks for basic setup",
+                        "Training Required": "16 hours for admin, 4 hours for end users",
+                        "Integration": "HL7, FHIR, Epic, Cerner compatible",
+                        "Compliance": "HIPAA, HITECH compliant",
+                        "Support": "Dedicated healthcare support team"
+                    },
+                    "Success Metrics": {
+                        "Average ROI": "287% over 2 years",
+                        "Payback Period": "8-10 months average",
+                        "User Satisfaction": "92% positive feedback",
+                        "Adoption Rate": "85% within first 3 months"
+                    },
+                    "Customer References": {
+                        "Available": "Yes, 15+ healthcare organizations",
+                        "Case Studies": "3 detailed case studies available",
+                        "Peer Reviews": "Healthcare IT community rated 4.6/5"
+                    }
+                }
+            },
+            {
+                "type": "user",
+                "content": "Great! How do I get started with a trial and what documentation is available?",
+                "typingTime": 1500,
+                "delay": 2000
+            },
+            {
+                "type": "agent",
+                "content": "Perfect! I'll guide you through getting started with your trial and show you all available documentation resources. The ProMax X300 offers a comprehensive onboarding experience.",
+                "typingTime": 2000,
+                "delay": 1500,
+                "agentData": {
+                    "Trial Information": {
+                        "Trial Duration": "14 days (extendable to 30 days)",
+                        "Features Included": "All features unlocked",
+                        "Users Allowed": "Up to 25 users",
+                        "Support Level": "Full premium support",
+                        "Data Migration": "Free migration assistance included",
+                        "No Credit Card": "Not required for trial"
+                    },
+                    "Getting Started Steps": {
+                        "Step 1": "Visit portal.techcorp.com/trial",
+                        "Step 2": "Complete 2-minute registration form",
+                        "Step 3": "Receive instant access credentials",
+                        "Step 4": "Schedule optional onboarding call",
+                        "Step 5": "Access quick-start wizard",
+                        "Estimated Time": "Live in under 10 minutes"
+                    },
+                    "Documentation Resources": {
+                        "User Guide": "docs.techcorp.com/x300/user-guide",
+                        "API Reference": "docs.techcorp.com/x300/api",
+                        "Video Tutorials": "learn.techcorp.com/x300 (45+ videos)",
+                        "Quick Start Guide": "docs.techcorp.com/x300/quickstart",
+                        "Healthcare Templates": "docs.techcorp.com/x300/healthcare",
+                        "FAQ Section": "support.techcorp.com/x300/faq",
+                        "Community Forum": "community.techcorp.com/x300"
+                    },
+                    "Support Options": {
+                        "Live Chat": "24/7 available",
+                        "Phone Support": "1-800-PROMAX3",
+                        "Email": "support@techcorp.com",
+                        "Response Time": "< 2 hours for trial users",
+                        "Onboarding Specialist": "Assigned within 1 hour",
+                        "Success Manager": "Available after purchase"
+                    },
+                    "Next Steps": {
+                        "Recommendation": "Start with 14-day trial",
+                        "Training Webinar": "Tomorrow at 2 PM EST",
+                        "Demo Data": "Healthcare sample data pre-loaded",
+                        "Integration Help": "Free consultation available"
+                    }
+                }
+            }
+        ];
+
+        function startDemo() {
+            if (!isPlaying || isPaused) {
+                isPlaying = true;
+                isPaused = false;
+                document.getElementById('playButton').disabled = true;
+                document.getElementById('pauseButton').disabled = false;
+                document.getElementById('demoStatus').textContent = 'Playing demo...';
+                
+                if (currentMessageIndex === 0) {
+                    document.getElementById('chatMessages').innerHTML = '';
+                }
+                
+                playNextMessage();
+            }
+        }
+
+        function pauseDemo() {
+            if (isPlaying) {
+                isPaused = true;
+                isPlaying = false;
+                clearTimeout(messageTimeout);
+                clearTimeout(typingTimeout);
+                document.getElementById('playButton').disabled = false;
+                document.getElementById('pauseButton').disabled = true;
+                document.getElementById('demoStatus').textContent = 'Demo paused';
+                removeTypingIndicator();
+            }
+        }
+
+        function resetDemo() {
+            clearTimeout(messageTimeout);
+            clearTimeout(typingTimeout);
+            currentMessageIndex = 0;
+            isPlaying = false;
+            isPaused = false;
+            document.getElementById('chatMessages').innerHTML = '';
+            document.getElementById('playButton').disabled = false;
+            document.getElementById('pauseButton').disabled = true;
+            document.getElementById('demoStatus').textContent = 'Ready to start';
+            removeTypingIndicator();
+        }
+
+        function skipMessage() {
+            if (currentMessageIndex < demoScript.length) {
+                clearTimeout(messageTimeout);
+                clearTimeout(typingTimeout);
+                removeTypingIndicator();
+                
+                const message = demoScript[currentMessageIndex];
+                addMessage(message);
+                currentMessageIndex++;
+                
+                if (isPlaying && currentMessageIndex < demoScript.length) {
+                    playNextMessage();
+                } else if (currentMessageIndex >= demoScript.length) {
+                    demoComplete();
+                }
+            }
+        }
+
+        function playNextMessage() {
+            if (currentMessageIndex < demoScript.length && isPlaying && !isPaused) {
+                const message = demoScript[currentMessageIndex];
+                
+                messageTimeout = setTimeout(() => {
+                    if (message.type === 'agent') {
+                        showTypingIndicator();
+                        typingTimeout = setTimeout(() => {
+                            removeTypingIndicator();
+                            addMessage(message);
+                            currentMessageIndex++;
+                            
+                            if (currentMessageIndex < demoScript.length) {
+                                playNextMessage();
+                            } else {
+                                demoComplete();
+                            }
+                        }, message.typingTime || 2000);
+                    } else {
+                        addMessage(message);
+                        currentMessageIndex++;
+                        
+                        if (currentMessageIndex < demoScript.length) {
+                            playNextMessage();
+                        } else {
+                            demoComplete();
+                        }
+                    }
+                }, message.delay || 1000);
+            }
+        }
+
+        function demoComplete() {
+            isPlaying = false;
+            document.getElementById('playButton').disabled = false;
+            document.getElementById('pauseButton').disabled = true;
+            document.getElementById('demoStatus').textContent = 'Demo complete';
+        }
+
+        function addMessage(message) {
+            const chatMessages = document.getElementById('chatMessages');
+            const messageDiv = document.createElement('div');
+            messageDiv.className = 'message';
+            
+            const time = new Date().toLocaleString('en-US', {
+                hour: 'numeric',
+                minute: '2-digit',
+                hour12: true
+            });
+            
+            if (message.type === 'user') {
+                messageDiv.innerHTML = `
+                    <div class="message-header">
+                        <div class="message-avatar-user">KA</div>
+                        <span class="message-author">You</span>
+                        <span class="message-time">${time}</span>
+                    </div>
+                    <div class="message-content">${message.content}</div>
+                `;
+            } else if (message.type === 'agent') {
+                let html = `
+                    <div class="message-header">
+                        <div class="message-avatar-agent">PR</div>
+                        <span class="message-author">Product Reference Agent</span>
+                        <span class="message-time">${time}</span>
+                    </div>
+                    <div class="message-content">${message.content}</div>
+                `;
+                
+                if (message.agentData) {
+                    html += renderAgentData(message.agentData);
+                }
+                
+                messageDiv.innerHTML = html;
+            }
+            
+            chatMessages.appendChild(messageDiv);
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+        }
+
+        function renderAgentData(data) {
+            let html = '';
+            
+            for (const [category, details] of Object.entries(data)) {
+                html += `
+                    <div class="agent-card">
+                        <div class="agent-card-header">
+                            <span class="agent-card-icon">${getIconForCategory(category)}</span>
+                            <span class="agent-card-title">${category}</span>
+                        </div>
+                        <div class="agent-card-content">
+                `;
+                
+                if (Array.isArray(details)) {
+                    if (typeof details[0] === 'string' && !details[0].includes(':')) {
+                        // Simple array of features
+                        html += '<div class="feature-list">';
+                        details.forEach(item => {
+                            html += `<span class="feature-tag">${item}</span>`;
+                        });
+                        html += '</div>';
+                    } else {
+                        // Array with formatted items
+                        html += '<ul class="detail-list">';
+                        details.forEach(item => {
+                            if (typeof item === 'string' && item.includes(':')) {
+                                const [label, value] = item.split(':');
+                                const formattedValue = value.trim().replace('✓', '<span class="check">✓</span>').replace('✗', '<span class="cross">✗</span>').replace('⚠', '<span style="color: #ffb900;">⚠</span>');
+                                html += `
+                                    <li class="detail-item">
+                                        <span class="detail-label">${label}:</span>
+                                        <span class="detail-value">${formattedValue}</span>
+                                    </li>
+                                `;
+                            } else {
+                                html += `<li class="detail-item">${item}</li>`;
+                            }
+                        });
+                        html += '</ul>';
+                    }
+                } else if (typeof details === 'object') {
+                    html += '<ul class="detail-list">';
+                    for (const [key, value] of Object.entries(details)) {
+                        if (typeof value === 'object' && !Array.isArray(value)) {
+                            // Nested object
+                            html += `
+                                <li class="detail-item">
+                                    <span class="detail-label">${key}:</span>
+                                    <div style="margin-left: 20px;">
+                            `;
+                            for (const [subKey, subValue] of Object.entries(value)) {
+                                html += `
+                                    <div class="detail-item">
+                                        <span class="detail-label">${subKey}:</span>
+                                        <span class="detail-value">${subValue}</span>
+                                    </div>
+                                `;
+                            }
+                            html += '</div></li>';
+                        } else if (Array.isArray(value)) {
+                            html += `
+                                <li class="detail-item">
+                                    <span class="detail-label">${key}:</span>
+                                    <span class="detail-value">${value.join(', ')}</span>
+                                </li>
+                            `;
+                        } else {
+                            html += `
+                                <li class="detail-item">
+                                    <span class="detail-label">${key}:</span>
+                                    <span class="detail-value">${value}</span>
+                                </li>
+                            `;
+                        }
+                    }
+                    html += '</ul>';
+                }
+                
+                html += `
+                        </div>
+                    </div>
+                `;
+            }
+            
+            return html;
+        }
+
+        function getIconForCategory(category) {
+            const icons = {
+                'Product Details': '📦',
+                'Pricing Information': '💰',
+                'Key Features': '⭐',
+                'Technical Specifications': '⚙️',
+                'Comparison Analysis': '📊',
+                'Feature Comparison': '🔍',
+                'Pros & Cons': '⚖️',
+                'Budget-Friendly Alternatives': '💡',
+                'Recommendation': '✨',
+                'Healthcare Use Cases': '🏥',
+                'Implementation Details': '🔧',
+                'Success Metrics': '📈',
+                'Customer References': '👥',
+                'Trial Information': '🎯',
+                'Getting Started Steps': '🚀',
+                'Documentation Resources': '📚',
+                'Support Options': '🛟',
+                'Next Steps': '➡️'
+            };
+            return icons[category] || '📋';
+        }
+
+        function showTypingIndicator() {
+            const chatMessages = document.getElementById('chatMessages');
+            const indicator = document.createElement('div');
+            indicator.className = 'typing-indicator';
+            indicator.id = 'typingIndicator';
+            indicator.innerHTML = `
+                <div class="typing-dot"></div>
+                <div class="typing-dot"></div>
+                <div class="typing-dot"></div>
+            `;
+            chatMessages.appendChild(indicator);
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+        }
+
+        function removeTypingIndicator() {
+            const indicator = document.getElementById('typingIndicator');
+            if (indicator) {
+                indicator.remove();
+            }
+        }
+    </script>
+</body>
+</html>
