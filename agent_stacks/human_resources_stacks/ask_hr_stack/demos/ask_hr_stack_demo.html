@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ask HR Agent - M365 Copilot</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, system-ui, sans-serif; background: #faf9f8; height: 100vh; display: flex; overflow: hidden; color: #323130; }
+        .sidebar { width: 260px; background: #ffffff; display: flex; flex-direction: column; border-right: 1px solid #edebe9; }
+        .sidebar-header { padding: 12px 16px; display: flex; align-items: center; gap: 10px; border-bottom: 1px solid #edebe9; height: 48px; }
+        .copilot-icon { width: 24px; height: 24px; background: linear-gradient(135deg, #28a745 0%, #20c997 100%); border-radius: 4px; display: flex; align-items: center; justify-content: center; position: relative; }
+        .copilot-icon::before { content: "👥"; font-size: 14px; filter: brightness(0) invert(1); }
+        .sidebar-title { font-size: 14px; font-weight: 600; color: #323130; }
+        .nav-section { flex: 1; overflow-y: auto; padding: 4px 0; }
+        .nav-item { padding: 8px 16px; display: flex; align-items: center; gap: 12px; cursor: pointer; font-size: 14px; color: #323130; transition: background 0.1s; position: relative; user-select: none; }
+        .nav-item:hover { background: #f3f2f1; }
+        .nav-item.active { background: #f3f2f1; }
+        .nav-item.active::before { content: ""; position: absolute; left: 0; top: 8px; bottom: 8px; width: 2px; background: #28a745; border-radius: 1px; }
+        .main-content { flex: 1; display: flex; flex-direction: column; background: #faf9f8; }
+        .content-header { height: 48px; padding: 0 20px; display: flex; align-items: center; justify-content: space-between; background: #ffffff; border-bottom: 1px solid #edebe9; }
+        .demo-controls { padding: 16px 20px; background: #f3f2f1; display: flex; align-items: center; gap: 16px; border-bottom: 1px solid #edebe9; }
+        .demo-button { padding: 8px 16px; background: #28a745; color: white; border: none; border-radius: 4px; cursor: pointer; font-size: 14px; font-weight: 600; transition: background 0.2s; }
+        .demo-button:hover { background: #218838; }
+        .demo-button:disabled { background: #a19f9d; cursor: not-allowed; }
+        .demo-button.secondary { background: #605e5c; }
+        .chat-container { flex: 1; display: flex; flex-direction: column; overflow: hidden; }
+        .chat-messages { flex: 1; overflow-y: auto; padding: 20px; }
+        .message { max-width: 900px; margin: 0 auto 24px; animation: fadeIn 0.5s ease-in; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        .message-header { display: flex; align-items: center; gap: 12px; margin-bottom: 8px; }
+        .message-avatar-user { width: 28px; height: 28px; border-radius: 50%; background: #5b5fc7; color: white; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 600; }
+        .message-avatar-agent { width: 28px; height: 28px; border-radius: 6px; background: linear-gradient(135deg, #28a745 0%, #20c997 100%); color: white; display: flex; align-items: center; justify-content: center; font-size: 14px; font-weight: 600; }
+        .message-content { margin-left: 40px; font-size: 14px; line-height: 1.6; color: #323130; }
+        .agent-card { margin-left: 40px; margin-top: 16px; background: white; border: 1px solid #edebe9; border-radius: 8px; overflow: hidden; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05); }
+        .agent-card-header { padding: 16px; display: flex; align-items: center; gap: 12px; border-bottom: 1px solid #edebe9; background: #faf9f8; }
+        .agent-card-content { padding: 16px; }
+        .detail-list { list-style: none; }
+        .detail-item { padding: 8px 0; font-size: 14px; color: #323130; display: flex; gap: 8px; }
+        .detail-label { font-weight: 600; min-width: 140px; color: #605e5c; }
+        .typing-indicator { margin-left: 40px; display: flex; gap: 4px; padding: 8px 0; }
+        .typing-dot { width: 8px; height: 8px; background: #605e5c; border-radius: 50%; animation: typing 1.4s infinite; }
+        .typing-dot:nth-child(2) { animation-delay: 0.2s; }
+        .typing-dot:nth-child(3) { animation-delay: 0.4s; }
+        @keyframes typing { 0%, 60%, 100% { transform: translateY(0); opacity: 0.5; } 30% { transform: translateY(-10px); opacity: 1; } }
+        .policy-box { margin: 12px 0; padding: 12px; background: #f8f9fa; border-left: 4px solid #28a745; border-radius: 4px; }
+        .benefit-item { margin: 8px 0; padding: 8px 12px; background: #e8f5e9; border-radius: 4px; }
+    </style>
+</head>
+<body>
+    <div class="sidebar">
+        <div class="sidebar-header">
+            <div class="copilot-icon"></div>
+            <span class="sidebar-title">Ask HR Agent</span>
+        </div>
+        <div class="nav-section">
+            <div class="nav-item active"><span>🏖️</span><span>Time Off & Leave</span></div>
+            <div class="nav-item"><span>💰</span><span>Benefits & Compensation</span></div>
+            <div class="nav-item"><span>📋</span><span>Policies & Procedures</span></div>
+            <div class="nav-item"><span>📄</span><span>Documents & Forms</span></div>
+            <div class="nav-item"><span>🎓</span><span>Training & Development</span></div>
+            <div class="nav-item"><span>👥</span><span>Team Directory</span></div>
+        </div>
+    </div>
+    <div class="main-content">
+        <div class="content-header">
+            <div class="header-title">Ask HR Assistant</div>
+        </div>
+        <div class="demo-controls">
+            <button class="demo-button" onclick="startDemo()" id="playButton">▶ Play Demo</button>
+            <button class="demo-button secondary" onclick="pauseDemo()" id="pauseButton" disabled>⏸ Pause</button>
+            <button class="demo-button secondary" onclick="resetDemo()">↺ Reset</button>
+            <button class="demo-button secondary" onclick="skipMessage()">⏭ Skip</button>
+            <span style="margin-left: auto; font-size: 14px; color: #605e5c;" id="demoStatus">Ready to start</span>
+        </div>
+        <div class="chat-container">
+            <div class="chat-messages" id="chatMessages"></div>
+        </div>
+    </div>
+    <script>
+        let currentMessageIndex = 0;
+        let isPlaying = false;
+        let isPaused = false;
+        let messageTimeout;
+        let typingTimeout;
+
+        const demoScript = [
+            {
+                "type": "user",
+                "content": "Hi, I'd like to check my vacation balance and submit a time off request for next month.",
+                "typingTime": 1500,
+                "delay": 1000
+            },
+            {
+                "type": "agent",
+                "content": "I can help you check your vacation balance and submit your time off request. Let me pull up your current leave information.",
+                "typingTime": 2000,
+                "delay": 1500,
+                "agentData": {
+                    "Leave Balance Summary": {
+                        "Vacation Days Available": "15.5 days",
+                        "Sick Leave": "8 days",
+                        "Personal Days": "3 days",
+                        "Accrual Rate": "1.25 days per month",
+                        "Next Accrual": "November 1, 2024 (+1.25 days)"
+                    },
+                    "Upcoming Time Off": {
+                        "Thanksgiving": "Nov 28-29 (Company Holiday)",
+                        "Year-End": "Dec 24-25, Dec 31-Jan 1 (Company Holidays)",
+                        "Your Scheduled": "None currently scheduled"
+                    },
+                    "Time Off Request Options": {
+                        "Quick Request": "Select dates in Teams calendar",
+                        "Extended Leave": "5+ days requires 2 weeks notice",
+                        "Holiday Period": "Dec 15-Jan 5 requires manager pre-approval",
+                        "Rollover Policy": "Max 5 days carry to next year"
+                    }
+                }
+            },
+            {
+                "type": "user",
+                "content": "Great! I want to request November 18-22 for vacation. Also, can you explain our parental leave policy? My wife and I are expecting.",
+                "typingTime": 1800,
+                "delay": 1200
+            },
+            {
+                "type": "agent",
+                "content": "Congratulations on your growing family! I'll process your vacation request and provide details about our parental leave benefits.",
+                "typingTime": 2000,
+                "delay": 1500,
+                "agentData": {
+                    "Vacation Request Submitted": {
+                        "Dates Requested": "November 18-22, 2024",
+                        "Days Used": "5 vacation days",
+                        "Remaining Balance": "10.5 days after approval",
+                        "Status": "Pending Manager Approval",
+                        "Manager": "Sarah Johnson",
+                        "Expected Response": "Within 48 hours"
+                    },
+                    "Parental Leave Policy": {
+                        "Paternity Leave": "8 weeks fully paid",
+                        "Eligibility": "Available after 12 months employment",
+                        "Your Eligibility": "Eligible (hired March 15, 2022)",
+                        "Additional Benefits": [
+                            "Flexible return-to-work schedule available",
+                            "$2,000 family care stipend",
+                            "6 months backup childcare included",
+                            "Lactation room access and support"
+                        ]
+                    },
+                    "Next Steps": {
+                        "Parental Leave": "Submit request 30 days before due date",
+                        "Required Forms": "PL-100 form in HR portal",
+                        "Benefits Enrollment": "Add dependent within 30 days of birth",
+                        "Resources": "Parent Employee Resource Group available"
+                    }
+                }
+            },
+            {
+                "type": "user",
+                "content": "Thank you! That's very helpful. Can you also tell me about our health insurance options for adding a dependent?",
+                "typingTime": 1500,
+                "delay": 1000
+            },
+            {
+                "type": "agent",
+                "content": "I'll provide you with detailed information about adding a dependent to your health insurance and the available plan options.",
+                "typingTime": 1800,
+                "delay": 1500,
+                "agentData": {
+                    "Current Health Plan": {
+                        "Your Plan": "PPO Family Plan",
+                        "Monthly Premium": "$450 (employee contribution)",
+                        "Deductible": "$500 individual / $1,500 family",
+                        "Out-of-Pocket Max": "$3,000 individual / $6,000 family"
+                    },
+                    "Adding a Dependent": {
+                        "Qualifying Event": "Birth of child",
+                        "Enrollment Window": "30 days from birth date",
+                        "Effective Date": "Coverage begins on date of birth",
+                        "Premium Change": "+$125/month for dependent",
+                        "Documentation": "Birth certificate required"
+                    },
+                    "Additional Benefits for New Parents": {
+                        "Well-Baby Care": "100% covered, no deductible",
+                        "Pediatric Visits": "$20 copay after deductible",
+                        "Immunizations": "Fully covered",
+                        "Dependent Care FSA": "Up to $5,000 pre-tax",
+                        "Life Insurance": "Automatic $10,000 for dependent"
+                    },
+                    "Action Items": {
+                        "HR Portal": "benefits.company.com/add-dependent",
+                        "Deadline": "Within 30 days of birth",
+                        "Contact": "benefits@company.com or ext. 5555",
+                        "Benefits Counselor": "Schedule 1:1 session available"
+                    }
+                }
+            },
+            {
+                "type": "user",
+                "content": "Perfect. One more question - what's our remote work policy? I'm thinking about working from home more often once the baby arrives.",
+                "typingTime": 1600,
+                "delay": 1200
+            },
+            {
+                "type": "agent",
+                "content": "Let me share our remote work policy details, which offers good flexibility for new parents.",
+                "typingTime": 1800,
+                "delay": 1500,
+                "agentData": {
+                    "Remote Work Policy": {
+                        "Current Eligibility": "Approved - 90+ days employment",
+                        "Standard Allowance": "Up to 3 days per week",
+                        "New Parent Flexibility": "Additional 2 days/week for 6 months",
+                        "Manager Approval": "Required for permanent schedule change"
+                    },
+                    "Home Office Support": {
+                        "Equipment Stipend": "$1,000 one-time",
+                        "Internet Reimbursement": "$50/month",
+                        "Ergonomic Assessment": "Virtual consultation available",
+                        "IT Support": "Same-day remote assistance",
+                        "Supplies": "Monthly delivery option available"
+                    },
+                    "Remote Work Requirements": {
+                        "Core Hours": "10 AM - 3 PM local time",
+                        "Team Meetings": "Must attend in-person if requested",
+                        "Home Office": "Dedicated workspace required",
+                        "Security": "VPN mandatory, MFA enabled",
+                        "Performance": "Same standards as in-office"
+                    },
+                    "New Parent Considerations": {
+                        "Flexible Schedule": "Discuss with manager",
+                        "Gradual Return": "Part-time option for 4 weeks",
+                        "Backup Care": "10 days emergency childcare/year",
+                        "Resources": "Working Parents ERG and Slack channel"
+                    }
+                }
+            }
+        ];
+
+        function startDemo() {
+            if (!isPlaying || isPaused) {
+                isPlaying = true;
+                isPaused = false;
+                document.getElementById('playButton').disabled = true;
+                document.getElementById('pauseButton').disabled = false;
+                document.getElementById('demoStatus').textContent = 'Playing demo...';
+                if (currentMessageIndex === 0) {
+                    document.getElementById('chatMessages').innerHTML = '';
+                }
+                playNextMessage();
+            }
+        }
+
+        function pauseDemo() {
+            if (isPlaying) {
+                isPaused = true;
+                isPlaying = false;
+                clearTimeout(messageTimeout);
+                clearTimeout(typingTimeout);
+                document.getElementById('playButton').disabled = false;
+                document.getElementById('pauseButton').disabled = true;
+                document.getElementById('demoStatus').textContent = 'Demo paused';
+                removeTypingIndicator();
+            }
+        }
+
+        function resetDemo() {
+            clearTimeout(messageTimeout);
+            clearTimeout(typingTimeout);
+            currentMessageIndex = 0;
+            isPlaying = false;
+            isPaused = false;
+            document.getElementById('chatMessages').innerHTML = '';
+            document.getElementById('playButton').disabled = false;
+            document.getElementById('pauseButton').disabled = true;
+            document.getElementById('demoStatus').textContent = 'Ready to start';
+            removeTypingIndicator();
+        }
+
+        function skipMessage() {
+            if (currentMessageIndex < demoScript.length) {
+                clearTimeout(messageTimeout);
+                clearTimeout(typingTimeout);
+                removeTypingIndicator();
+                const message = demoScript[currentMessageIndex];
+                addMessage(message);
+                currentMessageIndex++;
+                if (isPlaying && currentMessageIndex < demoScript.length) {
+                    playNextMessage();
+                } else if (currentMessageIndex >= demoScript.length) {
+                    demoComplete();
+                }
+            }
+        }
+
+        function playNextMessage() {
+            if (currentMessageIndex < demoScript.length && isPlaying && !isPaused) {
+                const message = demoScript[currentMessageIndex];
+                messageTimeout = setTimeout(() => {
+                    if (message.type === 'agent') {
+                        showTypingIndicator();
+                        typingTimeout = setTimeout(() => {
+                            removeTypingIndicator();
+                            addMessage(message);
+                            currentMessageIndex++;
+                            if (currentMessageIndex < demoScript.length) {
+                                playNextMessage();
+                            } else {
+                                demoComplete();
+                            }
+                        }, message.typingTime || 2000);
+                    } else {
+                        addMessage(message);
+                        currentMessageIndex++;
+                        if (currentMessageIndex < demoScript.length) {
+                            playNextMessage();
+                        } else {
+                            demoComplete();
+                        }
+                    }
+                }, message.delay || 1000);
+            }
+        }
+
+        function demoComplete() {
+            isPlaying = false;
+            document.getElementById('playButton').disabled = false;
+            document.getElementById('pauseButton').disabled = true;
+            document.getElementById('demoStatus').textContent = 'Demo complete';
+        }
+
+        function addMessage(message) {
+            const chatMessages = document.getElementById('chatMessages');
+            const messageDiv = document.createElement('div');
+            messageDiv.className = 'message';
+            const time = new Date().toLocaleString('en-US', { hour: 'numeric', minute: '2-digit', hour12: true });
+            
+            if (message.type === 'user') {
+                messageDiv.innerHTML = `
+                    <div class="message-header">
+                        <div class="message-avatar-user">U</div>
+                        <span class="message-author" style="font-weight: 600;">You</span>
+                        <span class="message-time" style="font-size: 12px; color: #a19f9d;">${time}</span>
+                    </div>
+                    <div class="message-content">${message.content}</div>
+                `;
+            } else if (message.type === 'agent') {
+                let html = `
+                    <div class="message-header">
+                        <div class="message-avatar-agent">HR</div>
+                        <span class="message-author" style="font-weight: 600;">Ask HR Agent</span>
+                        <span class="message-time" style="font-size: 12px; color: #a19f9d;">${time}</span>
+                    </div>
+                    <div class="message-content">${message.content}</div>
+                `;
+                
+                if (message.agentData) {
+                    html += '<div class="agent-card">';
+                    html += '<div class="agent-card-header"><span style="font-weight: 600;">HR Information</span></div>';
+                    html += '<div class="agent-card-content">';
+                    
+                    for (const [category, data] of Object.entries(message.agentData)) {
+                        html += `<div style="margin-bottom: 16px;"><div style="font-weight: 600; color: #28a745; margin-bottom: 8px;">${category}</div>`;
+                        
+                        if (typeof data === 'object' && !Array.isArray(data)) {
+                            html += '<ul class="detail-list">';
+                            for (const [key, value] of Object.entries(data)) {
+                                if (Array.isArray(value)) {
+                                    html += `<li class="detail-item"><span class="detail-label">${key}:</span><span>`;
+                                    value.forEach(item => {
+                                        html += `<div class="benefit-item">${item}</div>`;
+                                    });
+                                    html += '</span></li>';
+                                } else {
+                                    html += `<li class="detail-item"><span class="detail-label">${key}:</span><span>${value}</span></li>`;
+                                }
+                            }
+                            html += '</ul>';
+                        }
+                        html += '</div>';
+                    }
+                    
+                    html += '</div></div>';
+                }
+                
+                messageDiv.innerHTML = html;
+            }
+            
+            chatMessages.appendChild(messageDiv);
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+        }
+
+        function showTypingIndicator() {
+            const chatMessages = document.getElementById('chatMessages');
+            const typingDiv = document.createElement('div');
+            typingDiv.className = 'typing-indicator';
+            typingDiv.id = 'typingIndicator';
+            typingDiv.innerHTML = '<div class="typing-dot"></div><div class="typing-dot"></div><div class="typing-dot"></div>';
+            chatMessages.appendChild(typingDiv);
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+        }
+
+        function removeTypingIndicator() {
+            const typingIndicator = document.getElementById('typingIndicator');
+            if (typingIndicator) {
+                typingIndicator.remove();
+            }
+        }
+    </script>
+</body>
+</html>

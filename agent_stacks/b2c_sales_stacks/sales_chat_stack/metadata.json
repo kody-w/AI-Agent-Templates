@@ -1,0 +1,65 @@
+{
+  "name": "Sales Chat Agent",
+  "description": "Improves sales team access to CRM information, product inventory, and pricing opportunities through an intelligent chat interface",
+  "version": "1.0.0",
+  "category": "B2C Sales",
+  "type": "B2C",
+  "business_impact": {
+    "efficiency_gain": "40% reduction in time spent searching for product and customer information",
+    "revenue_impact": "15% increase in conversion rates through real-time pricing opportunities",
+    "customer_satisfaction": "25% improvement in response time to customer inquiries"
+  },
+  "features": [
+    "Real-time product information and inventory lookup",
+    "CRM integration for customer profile access",
+    "Dynamic pricing opportunity generation",
+    "Personalized product recommendations",
+    "Cross-sell and upsell suggestions",
+    "Customer engagement recommendations based on purchase history"
+  ],
+  "technology_stack": {
+    "primary": ["Python", "Azure OpenAI"],
+    "integrations": ["Dynamics 365", "Microsoft Teams", "SharePoint"],
+    "deployment": ["Azure Functions", "Copilot Studio"]
+  },
+  "parameters": {
+    "action": {
+      "type": "string",
+      "description": "The action to perform",
+      "enum": ["get_product_info", "check_inventory", "get_customer_info", "generate_pricing_opportunity", "get_recommendations"],
+      "required": false,
+      "default": "get_product_info"
+    },
+    "product_id": {
+      "type": "string",
+      "description": "Product identifier for lookups",
+      "required": false
+    },
+    "customer_id": {
+      "type": "string",
+      "description": "Customer identifier for CRM lookups",
+      "required": false
+    },
+    "category": {
+      "type": "string",
+      "description": "Product category filter",
+      "required": false
+    },
+    "threshold": {
+      "type": "integer",
+      "description": "Stock threshold for inventory alerts",
+      "required": false,
+      "default": 30
+    }
+  },
+  "output_schema": {
+    "status": "success or error",
+    "message": "Human-readable message",
+    "data": {
+      "description": "Action-specific response data"
+    },
+    "errors": "Array of error messages if applicable"
+  },
+  "demo_available": true,
+  "demo_url": "demos/sales_chat_demo.html"
+}

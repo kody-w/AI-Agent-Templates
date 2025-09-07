@@ -1,0 +1,468 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sales Chat Agent - M365 Copilot</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, system-ui, sans-serif; background: #faf9f8; height: 100vh; display: flex; overflow: hidden; color: #323130; }
+        .sidebar { width: 260px; background: #ffffff; display: flex; flex-direction: column; border-right: 1px solid #edebe9; }
+        .sidebar-header { padding: 12px 16px; display: flex; align-items: center; gap: 10px; border-bottom: 1px solid #edebe9; height: 48px; }
+        .copilot-icon { width: 24px; height: 24px; background: linear-gradient(135deg, #0078d4 0%, #40e0d0 100%); border-radius: 4px; display: flex; align-items: center; justify-content: center; position: relative; }
+        .copilot-icon::before { content: "💬"; font-size: 14px; filter: brightness(0) invert(1); }
+        .sidebar-title { font-size: 14px; font-weight: 600; color: #323130; }
+        .nav-section { flex: 1; overflow-y: auto; padding: 4px 0; }
+        .nav-item { padding: 8px 16px; display: flex; align-items: center; gap: 12px; cursor: pointer; font-size: 14px; color: #323130; transition: background 0.1s; position: relative; user-select: none; }
+        .nav-item:hover { background: #f3f2f1; }
+        .nav-item.active { background: #f3f2f1; }
+        .nav-item.active::before { content: ""; position: absolute; left: 0; top: 8px; bottom: 8px; width: 2px; background: #0078d4; border-radius: 1px; }
+        .main-content { flex: 1; display: flex; flex-direction: column; background: #faf9f8; }
+        .content-header { height: 48px; padding: 0 20px; display: flex; align-items: center; justify-content: space-between; background: #ffffff; border-bottom: 1px solid #edebe9; }
+        .demo-controls { padding: 16px 20px; background: #f3f2f1; display: flex; align-items: center; gap: 16px; border-bottom: 1px solid #edebe9; }
+        .demo-button { padding: 8px 16px; background: #0078d4; color: white; border: none; border-radius: 4px; cursor: pointer; font-size: 14px; font-weight: 600; transition: background 0.2s; }
+        .demo-button:hover { background: #106ebe; }
+        .demo-button:disabled { background: #a19f9d; cursor: not-allowed; }
+        .demo-button.secondary { background: #605e5c; }
+        .chat-container { flex: 1; display: flex; flex-direction: column; overflow: hidden; }
+        .chat-messages { flex: 1; overflow-y: auto; padding: 20px; }
+        .message { max-width: 900px; margin: 0 auto 24px; animation: fadeIn 0.5s ease-in; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        .message-header { display: flex; align-items: center; gap: 12px; margin-bottom: 8px; }
+        .message-avatar-user { width: 28px; height: 28px; border-radius: 50%; background: #5b5fc7; color: white; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 600; }
+        .message-avatar-agent { width: 28px; height: 28px; border-radius: 6px; background: linear-gradient(135deg, #0078d4 0%, #40e0d0 100%); color: white; display: flex; align-items: center; justify-content: center; font-size: 14px; font-weight: 600; }
+        .message-content { margin-left: 40px; font-size: 14px; line-height: 1.6; color: #323130; }
+        .agent-card { margin-left: 40px; margin-top: 16px; background: white; border: 1px solid #edebe9; border-radius: 8px; overflow: hidden; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05); }
+        .agent-card-header { padding: 16px; display: flex; align-items: center; gap: 12px; border-bottom: 1px solid #edebe9; background: #faf9f8; }
+        .agent-card-content { padding: 16px; }
+        .detail-list { list-style: none; }
+        .detail-item { padding: 8px 0; font-size: 14px; color: #323130; display: flex; gap: 8px; }
+        .detail-label { font-weight: 600; min-width: 140px; color: #605e5c; }
+        .typing-indicator { margin-left: 40px; display: flex; gap: 4px; padding: 8px 0; }
+        .typing-dot { width: 8px; height: 8px; background: #605e5c; border-radius: 50%; animation: typing 1.4s infinite; }
+        .typing-dot:nth-child(2) { animation-delay: 0.2s; }
+        .typing-dot:nth-child(3) { animation-delay: 0.4s; }
+        @keyframes typing { 0%, 60%, 100% { transform: translateY(0); opacity: 0.5; } 30% { transform: translateY(-10px); opacity: 1; } }
+        .data-table { width: 100%; border-collapse: collapse; font-size: 14px; margin-top: 12px; }
+        .data-table th { background: #faf9f8; padding: 12px 16px; text-align: left; font-weight: 600; color: #323130; border-bottom: 1px solid #edebe9; }
+        .data-table td { padding: 12px 16px; color: #605e5c; border-bottom: 1px solid #edebe9; }
+        .data-table tr:hover td { background: #faf9f8; }
+        .recommendation-card { background: #e7f3ff; border-left: 3px solid #0078d4; padding: 12px; margin: 8px 0; border-radius: 4px; }
+        .badge { display: inline-block; padding: 2px 8px; border-radius: 12px; font-size: 11px; font-weight: 600; }
+        .badge.success { background: #d4edda; color: #155724; }
+        .badge.warning { background: #fff3cd; color: #856404; }
+        .badge.info { background: #d1ecf1; color: #0c5460; }
+    </style>
+</head>
+<body>
+    <div class="sidebar">
+        <div class="sidebar-header">
+            <div class="copilot-icon"></div>
+            <span class="sidebar-title">Sales Chat Agent</span>
+        </div>
+        <div class="nav-section">
+            <div class="nav-item active"><span>🛍️</span><span>Product Lookup</span></div>
+            <div class="nav-item"><span>👥</span><span>Customer Insights</span></div>
+            <div class="nav-item"><span>💰</span><span>Pricing Opportunities</span></div>
+            <div class="nav-item"><span>📊</span><span>Inventory Status</span></div>
+            <div class="nav-item"><span>🎯</span><span>Recommendations</span></div>
+        </div>
+    </div>
+    <div class="main-content">
+        <div class="content-header">
+            <div class="header-title">Sales Chat Agent - Intelligent CRM Assistant</div>
+        </div>
+        <div class="demo-controls">
+            <button class="demo-button" onclick="startDemo()" id="playButton">▶ Play Demo</button>
+            <button class="demo-button secondary" onclick="pauseDemo()" id="pauseButton" disabled>⏸ Pause</button>
+            <button class="demo-button secondary" onclick="resetDemo()">↺ Reset</button>
+            <button class="demo-button secondary" onclick="skipMessage()">⏭ Skip</button>
+            <span style="margin-left: auto; font-size: 14px; color: #605e5c;" id="demoStatus">Ready to start</span>
+        </div>
+        <div class="chat-container">
+            <div class="chat-messages" id="chatMessages"></div>
+        </div>
+    </div>
+    <script>
+        let currentMessageIndex = 0;
+        let isPlaying = false;
+        let isPaused = false;
+        let messageTimeout;
+        let typingTimeout;
+
+        const demoScript = [
+            {
+                "type": "user",
+                "content": "I have a customer interested in the new Samsung Galaxy S24 Ultra. Can you get me the product details and current inventory?",
+                "typingTime": 1500,
+                "delay": 1000
+            },
+            {
+                "type": "agent",
+                "content": "I'll look up the Samsung Galaxy S24 Ultra product information and check our current inventory levels across all locations.",
+                "typingTime": 2000,
+                "delay": 1500,
+                "agentData": {
+                    "Product Information": {
+                        "Name": "Samsung Galaxy S24 Ultra",
+                        "SKU": "SGS24U-256-BLK",
+                        "Category": "Premium Smartphones",
+                        "Price": "$1,299.99",
+                        "Features": "6.8\" QHD+ Display, S Pen, 200MP Camera, 256GB Storage"
+                    },
+                    "Inventory Status": {
+                        "Total Stock": "342 units",
+                        "Store Locations": "Downtown: 45 | Mall: 28 | Airport: 12",
+                        "Online Available": "257 units",
+                        "Status": "<span class='badge success'>In Stock</span>",
+                        "Reorder Point": "Below threshold in 2 locations"
+                    },
+                    "Pricing Opportunities": {
+                        "Trade-in Offer": "Up to $800 credit",
+                        "Bundle Deal": "Save $200 with Galaxy Watch6",
+                        "Carrier Promotion": "Verizon: $500 off with new line",
+                        "Limited Time": "Flash sale ends in 48 hours"
+                    }
+                }
+            },
+            {
+                "type": "user",
+                "content": "The customer is John Martinez, customer ID CM-2024-8945. What's his purchase history and any personalized offers we can provide?",
+                "typingTime": 1800,
+                "delay": 1000
+            },
+            {
+                "type": "agent",
+                "content": "Accessing customer profile for John Martinez. I'll analyze his purchase history and generate personalized recommendations and offers based on his preferences.",
+                "typingTime": 2200,
+                "delay": 1500,
+                "agentData": {
+                    "Customer Profile": {
+                        "Name": "John Martinez",
+                        "Customer Since": "2019",
+                        "Loyalty Tier": "<span class='badge info'>Gold Member</span>",
+                        "Lifetime Value": "$8,450",
+                        "Last Purchase": "3 months ago"
+                    },
+                    "Purchase History": {
+                        "Previous Devices": "Samsung Galaxy S21, Galaxy Buds Pro",
+                        "Accessory Purchases": "Cases, Screen Protectors, Wireless Chargers",
+                        "Average Order Value": "$450",
+                        "Preferred Brands": "Samsung (70%), Apple (20%), Google (10%)"
+                    },
+                    "Personalized Recommendations": {
+                        "Primary": "Samsung Galaxy S24 Ultra - Matches brand preference",
+                        "Accessories": "S Pen Pro, LED View Cover, 45W Charger",
+                        "Cross-sell": "Galaxy Watch6 Classic - 85% compatibility score",
+                        "Protection Plan": "Premium Care+ recommended based on history"
+                    },
+                    "Exclusive Offers": {
+                        "Loyalty Discount": "10% Gold Member discount",
+                        "Birthday Special": "Additional 5% off (birthday next month)",
+                        "Bundle Savings": "$350 total savings available",
+                        "Financing": "0% APR for 24 months pre-approved"
+                    }
+                }
+            },
+            {
+                "type": "user",
+                "content": "Generate a pricing opportunity quote including all applicable discounts and the recommended accessories.",
+                "typingTime": 1600,
+                "delay": 1000
+            },
+            {
+                "type": "agent",
+                "content": "I'm creating a comprehensive quote with all available discounts, loyalty benefits, and recommended accessories optimized for maximum value.",
+                "typingTime": 2000,
+                "delay": 1500,
+                "agentData": {
+                    "Quote Summary": {
+                        "Quote ID": "Q-2024-11-27-8945",
+                        "Valid Until": "December 4, 2024",
+                        "Total Items": "5 products",
+                        "Sales Rep": "AI-Assisted Quote"
+                    },
+                    "Line Items": {
+                        "Samsung Galaxy S24 Ultra": "$1,299.99",
+                        "LED View Cover": "$89.99",
+                        "45W Fast Charger": "$49.99",
+                        "Galaxy Watch6 Classic": "$399.99",
+                        "Premium Care+ (2 years)": "$269.00"
+                    },
+                    "Discounts Applied": {
+                        "Subtotal": "$2,108.96",
+                        "Gold Member (10%)": "-$210.90",
+                        "Bundle Discount": "-$200.00",
+                        "Trade-in Credit": "-$450.00",
+                        "Birthday Special (5%)": "-$62.40",
+                        "Final Total": "<strong>$1,185.66</strong>"
+                    },
+                    "Savings Breakdown": {
+                        "Total Savings": "$923.30",
+                        "Percentage Saved": "43.8%",
+                        "Financing Option": "$49.40/month for 24 months",
+                        "Points Earned": "2,371 loyalty points"
+                    }
+                }
+            },
+            {
+                "type": "user",
+                "content": "Check if we have any similar customers who might be interested in this deal and prepare a targeted campaign.",
+                "typingTime": 1700,
+                "delay": 1000
+            },
+            {
+                "type": "agent",
+                "content": "Analyzing customer database for similar profiles and preparing a targeted campaign strategy for the Samsung Galaxy S24 Ultra promotion.",
+                "typingTime": 2100,
+                "delay": 1500,
+                "agentData": {
+                    "Similar Customer Segment": {
+                        "Segment Size": "1,847 customers",
+                        "Match Criteria": "Samsung users, Gold/Platinum tier, Due for upgrade",
+                        "Engagement Rate": "68% historically responsive",
+                        "Projected Revenue": "$2.2M potential"
+                    },
+                    "Campaign Strategy": {
+                        "Campaign Name": "Galaxy S24 Ultra VIP Launch",
+                        "Channel Mix": "Email (40%), SMS (30%), In-app (30%)",
+                        "Timing": "Thursday 10 AM - Highest open rate",
+                        "Personalization": "Dynamic pricing based on loyalty tier"
+                    },
+                    "Expected Results": {
+                        "Open Rate": "45-50%",
+                        "Click-through": "12-15%",
+                        "Conversion": "3-4% (55-75 sales)",
+                        "ROI Projection": "380% return on campaign spend"
+                    },
+                    "Next Actions": {
+                        "1": "Review and approve campaign creative",
+                        "2": "Set up A/B test for subject lines",
+                        "3": "Schedule follow-up sequences",
+                        "4": "Alert store teams for inventory preparation"
+                    }
+                }
+            }
+        ];
+
+        function startDemo() {
+            if (!isPlaying || isPaused) {
+                isPlaying = true;
+                isPaused = false;
+                document.getElementById('playButton').disabled = true;
+                document.getElementById('pauseButton').disabled = false;
+                document.getElementById('demoStatus').textContent = 'Playing demo...';
+                if (currentMessageIndex === 0) {
+                    document.getElementById('chatMessages').innerHTML = '';
+                }
+                playNextMessage();
+            }
+        }
+
+        function pauseDemo() {
+            if (isPlaying) {
+                isPaused = true;
+                isPlaying = false;
+                clearTimeout(messageTimeout);
+                clearTimeout(typingTimeout);
+                document.getElementById('playButton').disabled = false;
+                document.getElementById('pauseButton').disabled = true;
+                document.getElementById('demoStatus').textContent = 'Demo paused';
+                removeTypingIndicator();
+            }
+        }
+
+        function resetDemo() {
+            clearTimeout(messageTimeout);
+            clearTimeout(typingTimeout);
+            currentMessageIndex = 0;
+            isPlaying = false;
+            isPaused = false;
+            document.getElementById('chatMessages').innerHTML = '';
+            document.getElementById('playButton').disabled = false;
+            document.getElementById('pauseButton').disabled = true;
+            document.getElementById('demoStatus').textContent = 'Ready to start';
+            removeTypingIndicator();
+        }
+
+        function skipMessage() {
+            if (currentMessageIndex < demoScript.length) {
+                clearTimeout(messageTimeout);
+                clearTimeout(typingTimeout);
+                removeTypingIndicator();
+                const message = demoScript[currentMessageIndex];
+                addMessage(message);
+                currentMessageIndex++;
+                if (isPlaying && currentMessageIndex < demoScript.length) {
+                    playNextMessage();
+                } else if (currentMessageIndex >= demoScript.length) {
+                    demoComplete();
+                }
+            }
+        }
+
+        function playNextMessage() {
+            if (currentMessageIndex < demoScript.length && isPlaying && !isPaused) {
+                const message = demoScript[currentMessageIndex];
+                messageTimeout = setTimeout(() => {
+                    if (message.type === 'agent') {
+                        showTypingIndicator();
+                        typingTimeout = setTimeout(() => {
+                            removeTypingIndicator();
+                            addMessage(message);
+                            currentMessageIndex++;
+                            if (currentMessageIndex < demoScript.length) {
+                                playNextMessage();
+                            } else {
+                                demoComplete();
+                            }
+                        }, message.typingTime || 2000);
+                    } else {
+                        addMessage(message);
+                        currentMessageIndex++;
+                        if (currentMessageIndex < demoScript.length) {
+                            playNextMessage();
+                        } else {
+                            demoComplete();
+                        }
+                    }
+                }, message.delay || 1000);
+            }
+        }
+
+        function demoComplete() {
+            isPlaying = false;
+            document.getElementById('playButton').disabled = false;
+            document.getElementById('pauseButton').disabled = true;
+            document.getElementById('demoStatus').textContent = 'Demo complete';
+        }
+
+        function addMessage(message) {
+            const chatMessages = document.getElementById('chatMessages');
+            const messageDiv = document.createElement('div');
+            messageDiv.className = 'message';
+            const time = new Date().toLocaleString('en-US', { hour: 'numeric', minute: '2-digit', hour12: true });
+            
+            if (message.type === 'user') {
+                messageDiv.innerHTML = `
+                    <div class="message-header">
+                        <div class="message-avatar-user">JM</div>
+                        <span class="message-author" style="font-weight: 600;">Sales Rep</span>
+                        <span class="message-time" style="font-size: 12px; color: #a19f9d;">${time}</span>
+                    </div>
+                    <div class="message-content">${message.content}</div>
+                `;
+            } else if (message.type === 'agent') {
+                let html = `
+                    <div class="message-header">
+                        <div class="message-avatar-agent">SC</div>
+                        <span class="message-author" style="font-weight: 600;">Sales Chat Agent</span>
+                        <span class="message-time" style="font-size: 12px; color: #a19f9d;">${time}</span>
+                    </div>
+                    <div class="message-content">${message.content}</div>
+                `;
+                
+                if (message.agentData) {
+                    for (const [category, data] of Object.entries(message.agentData)) {
+                        if (category === 'Line Items') {
+                            html += `
+                                <div class="agent-card">
+                                    <div class="agent-card-header">
+                                        <span style="font-size: 20px;">📋</span>
+                                        <span style="font-weight: 600;">${category}</span>
+                                    </div>
+                                    <div class="agent-card-content">
+                                        <table class="data-table">
+                                            <tbody>
+                            `;
+                            for (const [item, value] of Object.entries(data)) {
+                                html += `
+                                    <tr>
+                                        <td style="font-weight: 600;">${item}</td>
+                                        <td style="text-align: right;">${value}</td>
+                                    </tr>
+                                `;
+                            }
+                            html += `
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            `;
+                        } else {
+                            html += `
+                                <div class="agent-card">
+                                    <div class="agent-card-header">
+                                        <span style="font-size: 20px;">${getIconForCategory(category)}</span>
+                                        <span style="font-weight: 600;">${category}</span>
+                                    </div>
+                                    <div class="agent-card-content">
+                                        <ul class="detail-list">
+                            `;
+                            for (const [key, value] of Object.entries(data)) {
+                                html += `
+                                    <li class="detail-item">
+                                        <span class="detail-label">${key}:</span>
+                                        <span class="detail-value">${value}</span>
+                                    </li>
+                                `;
+                            }
+                            html += `
+                                        </ul>
+                                    </div>
+                                </div>
+                            `;
+                        }
+                    }
+                }
+                
+                messageDiv.innerHTML = html;
+            }
+            
+            chatMessages.appendChild(messageDiv);
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+        }
+
+        function getIconForCategory(category) {
+            const icons = {
+                'Product Information': '📱',
+                'Inventory Status': '📦',
+                'Pricing Opportunities': '💰',
+                'Customer Profile': '👤',
+                'Purchase History': '🛍️',
+                'Personalized Recommendations': '🎯',
+                'Exclusive Offers': '🎁',
+                'Quote Summary': '📄',
+                'Discounts Applied': '💵',
+                'Savings Breakdown': '📊',
+                'Similar Customer Segment': '👥',
+                'Campaign Strategy': '📣',
+                'Expected Results': '📈',
+                'Next Actions': '✅'
+            };
+            return icons[category] || '📌';
+        }
+
+        function showTypingIndicator() {
+            const chatMessages = document.getElementById('chatMessages');
+            const indicator = document.createElement('div');
+            indicator.id = 'typingIndicator';
+            indicator.className = 'typing-indicator';
+            indicator.innerHTML = `
+                <div class="typing-dot"></div>
+                <div class="typing-dot"></div>
+                <div class="typing-dot"></div>
+            `;
+            chatMessages.appendChild(indicator);
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+        }
+
+        function removeTypingIndicator() {
+            const indicator = document.getElementById('typingIndicator');
+            if (indicator) {
+                indicator.remove();
+            }
+        }
+    </script>
+</body>
+</html>

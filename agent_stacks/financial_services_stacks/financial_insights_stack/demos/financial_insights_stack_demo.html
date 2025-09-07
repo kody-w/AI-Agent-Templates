@@ -1,0 +1,467 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Financial Insights Agent - M365 Copilot</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, system-ui, sans-serif; background: #faf9f8; height: 100vh; display: flex; overflow: hidden; color: #323130; }
+        .sidebar { width: 260px; background: #ffffff; display: flex; flex-direction: column; border-right: 1px solid #edebe9; }
+        .sidebar-header { padding: 12px 16px; display: flex; align-items: center; gap: 10px; border-bottom: 1px solid #edebe9; height: 48px; }
+        .copilot-icon { width: 24px; height: 24px; background: linear-gradient(135deg, #10b981 0%, #0ea5e9 100%); border-radius: 4px; display: flex; align-items: center; justify-content: center; position: relative; }
+        .copilot-icon::before { content: "💹"; font-size: 14px; filter: brightness(0) invert(1); }
+        .sidebar-title { font-size: 14px; font-weight: 600; color: #323130; }
+        .nav-section { flex: 1; overflow-y: auto; padding: 4px 0; }
+        .nav-item { padding: 8px 16px; display: flex; align-items: center; gap: 12px; cursor: pointer; font-size: 14px; color: #323130; transition: background 0.1s; position: relative; user-select: none; }
+        .nav-item:hover { background: #f3f2f1; }
+        .nav-item.active { background: #f3f2f1; }
+        .nav-item.active::before { content: ""; position: absolute; left: 0; top: 8px; bottom: 8px; width: 2px; background: #10b981; border-radius: 1px; }
+        .main-content { flex: 1; display: flex; flex-direction: column; background: #faf9f8; }
+        .content-header { height: 48px; padding: 0 20px; display: flex; align-items: center; justify-content: space-between; background: #ffffff; border-bottom: 1px solid #edebe9; }
+        .demo-controls { padding: 16px 20px; background: #f3f2f1; display: flex; align-items: center; gap: 16px; border-bottom: 1px solid #edebe9; }
+        .demo-button { padding: 8px 16px; background: #10b981; color: white; border: none; border-radius: 4px; cursor: pointer; font-size: 14px; font-weight: 600; transition: background 0.2s; }
+        .demo-button:hover { background: #059669; }
+        .demo-button:disabled { background: #a19f9d; cursor: not-allowed; }
+        .demo-button.secondary { background: #605e5c; }
+        .chat-container { flex: 1; display: flex; flex-direction: column; overflow: hidden; }
+        .chat-messages { flex: 1; overflow-y: auto; padding: 20px; }
+        .message { max-width: 900px; margin: 0 auto 24px; animation: fadeIn 0.5s ease-in; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        .message-header { display: flex; align-items: center; gap: 12px; margin-bottom: 8px; }
+        .message-avatar-user { width: 28px; height: 28px; border-radius: 50%; background: #5b5fc7; color: white; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 600; }
+        .message-avatar-agent { width: 28px; height: 28px; border-radius: 6px; background: linear-gradient(135deg, #10b981 0%, #0ea5e9 100%); color: white; display: flex; align-items: center; justify-content: center; font-size: 14px; font-weight: 600; }
+        .message-content { margin-left: 40px; font-size: 14px; line-height: 1.6; color: #323130; }
+        .agent-card { margin-left: 40px; margin-top: 16px; background: white; border: 1px solid #edebe9; border-radius: 8px; overflow: hidden; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05); }
+        .agent-card-header { padding: 16px; display: flex; align-items: center; gap: 12px; border-bottom: 1px solid #edebe9; background: #faf9f8; }
+        .agent-card-content { padding: 16px; }
+        .detail-list { list-style: none; }
+        .detail-item { padding: 8px 0; font-size: 14px; color: #323130; display: flex; gap: 8px; }
+        .detail-label { font-weight: 600; min-width: 140px; color: #605e5c; }
+        .typing-indicator { margin-left: 40px; display: flex; gap: 4px; padding: 8px 0; }
+        .typing-dot { width: 8px; height: 8px; background: #605e5c; border-radius: 50%; animation: typing 1.4s infinite; }
+        .typing-dot:nth-child(2) { animation-delay: 0.2s; }
+        .typing-dot:nth-child(3) { animation-delay: 0.4s; }
+        @keyframes typing { 0%, 60%, 100% { transform: translateY(0); opacity: 0.5; } 30% { transform: translateY(-10px); opacity: 1; } }
+        .data-table { width: 100%; border-collapse: collapse; font-size: 14px; margin-top: 12px; }
+        .data-table th { background: #faf9f8; padding: 12px 16px; text-align: left; font-weight: 600; color: #323130; border-bottom: 1px solid #edebe9; }
+        .data-table td { padding: 12px 16px; color: #605e5c; border-bottom: 1px solid #edebe9; }
+        .data-table tr:hover td { background: #faf9f8; }
+        .badge { display: inline-block; padding: 2px 8px; border-radius: 12px; font-size: 11px; font-weight: 600; }
+        .badge.success { background: #d4edda; color: #155724; }
+        .badge.warning { background: #fff3cd; color: #856404; }
+        .badge.danger { background: #f8d7da; color: #721c24; }
+        .badge.info { background: #d1ecf1; color: #0c5460; }
+        .metric-card { background: #f0fdf4; border-left: 3px solid #10b981; padding: 12px; margin: 8px 0; border-radius: 4px; }
+        .metric-value { font-size: 24px; font-weight: 700; color: #10b981; }
+        .metric-label { font-size: 12px; color: #605e5c; margin-top: 4px; }
+        .trend-up { color: #10b981; }
+        .trend-down { color: #dc2626; }
+    </style>
+</head>
+<body>
+    <div class="sidebar">
+        <div class="sidebar-header">
+            <div class="copilot-icon"></div>
+            <span class="sidebar-title">Financial Insights</span>
+        </div>
+        <div class="nav-section">
+            <div class="nav-item active"><span>📊</span><span>Portfolio Analysis</span></div>
+            <div class="nav-item"><span>💰</span><span>Cash Flow</span></div>
+            <div class="nav-item"><span>📈</span><span>Market Trends</span></div>
+            <div class="nav-item"><span>⚠️</span><span>Risk Assessment</span></div>
+            <div class="nav-item"><span>🎯</span><span>Investment Goals</span></div>
+        </div>
+    </div>
+    <div class="main-content">
+        <div class="content-header">
+            <div class="header-title">Financial Insights Agent - Real-Time Portfolio Intelligence</div>
+        </div>
+        <div class="demo-controls">
+            <button class="demo-button" onclick="startDemo()" id="playButton">▶ Play Demo</button>
+            <button class="demo-button secondary" onclick="pauseDemo()" id="pauseButton" disabled>⏸ Pause</button>
+            <button class="demo-button secondary" onclick="resetDemo()">↺ Reset</button>
+            <button class="demo-button secondary" onclick="skipMessage()">⏭ Skip</button>
+            <span style="margin-left: auto; font-size: 14px; color: #605e5c;" id="demoStatus">Ready to start</span>
+        </div>
+        <div class="chat-container">
+            <div class="chat-messages" id="chatMessages"></div>
+        </div>
+    </div>
+    <script>
+        let currentMessageIndex = 0;
+        let isPlaying = false;
+        let isPaused = false;
+        let messageTimeout;
+        let typingTimeout;
+
+        const demoScript = [
+            {
+                "type": "user",
+                "content": "Give me a comprehensive analysis of the Henderson family portfolio. They're meeting with us tomorrow about retirement planning.",
+                "typingTime": 1500,
+                "delay": 1000
+            },
+            {
+                "type": "agent",
+                "content": "Analyzing the Henderson family portfolio across all accounts. I'll provide performance metrics, risk assessment, and retirement readiness insights.",
+                "typingTime": 2000,
+                "delay": 1500,
+                "agentData": {
+                    "Portfolio Overview": {
+                        "Total Assets": "$2,847,500",
+                        "YTD Performance": "<span class='trend-up'>+14.7%</span>",
+                        "Benchmark (S&P 500)": "+12.3%",
+                        "Risk Score": "<span class='badge warning'>Moderate-High (6/10)</span>",
+                        "Accounts": "IRA, 401(k), Taxable, HSA"
+                    },
+                    "Asset Allocation": {
+                        "Equities": "68% ($1,936,300)",
+                        "Fixed Income": "22% ($626,450)",
+                        "Real Estate": "7% ($199,325)",
+                        "Cash & Equivalents": "3% ($85,425)",
+                        "Rebalancing Needed": "<span class='badge warning'>Yes - Equities 8% over target</span>"
+                    },
+                    "Performance Metrics": {
+                        "1-Year Return": "+18.3%",
+                        "3-Year Annualized": "+11.2%",
+                        "5-Year Annualized": "+9.8%",
+                        "Sharpe Ratio": "1.42 (Good)",
+                        "Alpha": "+2.3% vs benchmark"
+                    },
+                    "Retirement Readiness": {
+                        "Current Age": "58 years",
+                        "Target Retirement": "65 years (7 years)",
+                        "Monthly Need": "$12,000 projected",
+                        "Success Probability": "<span class='badge success'>87% Monte Carlo</span>",
+                        "Gap Analysis": "On track, consider reducing risk"
+                    }
+                }
+            },
+            {
+                "type": "user",
+                "content": "What are the top risks in their portfolio and what adjustments would you recommend for their retirement timeline?",
+                "typingTime": 1600,
+                "delay": 1000
+            },
+            {
+                "type": "agent",
+                "content": "Identifying portfolio risks and generating personalized recommendations aligned with their 7-year retirement timeline.",
+                "typingTime": 2100,
+                "delay": 1500,
+                "agentData": {
+                    "Risk Analysis": {
+                        "Concentration Risk": "<span class='badge danger'>High</span> - NVDA 12% of portfolio",
+                        "Sector Exposure": "Tech overweight at 35% (target 25%)",
+                        "Currency Risk": "Minimal - 95% USD denominated",
+                        "Interest Rate Risk": "Moderate - Duration 5.2 years",
+                        "Sequence Risk": "<span class='badge warning'>Increasing</span> - Approaching retirement"
+                    },
+                    "Recommended Adjustments": {
+                        "Immediate Actions": "Reduce NVDA position by 50%",
+                        "Equity Reduction": "Move to 60% equities (from 68%)",
+                        "Bond Ladder": "Build 5-year ladder with $500k",
+                        "Defensive Assets": "Add 5% to dividend aristocrats",
+                        "Tax Strategy": "Harvest $45k in losses available"
+                    },
+                    "Glide Path Strategy": {
+                        "Year 1-2": "65% Stocks, 30% Bonds, 5% Cash",
+                        "Year 3-4": "60% Stocks, 35% Bonds, 5% Cash",
+                        "Year 5-6": "55% Stocks, 38% Bonds, 7% Cash",
+                        "At Retirement": "50% Stocks, 40% Bonds, 10% Cash",
+                        "Expected Volatility": "Reduce from 14% to 9%"
+                    },
+                    "Income Planning": {
+                        "Current Dividends": "$42,000/year",
+                        "Projected at 65": "$68,000/year",
+                        "Social Security": "$48,000/year (combined)",
+                        "Total Income": "$116,000/year",
+                        "Income Gap": "$28,000/year to address"
+                    }
+                }
+            },
+            {
+                "type": "user",
+                "content": "Run a stress test on their portfolio for different market scenarios and show me the impact on their retirement plans.",
+                "typingTime": 1500,
+                "delay": 1000
+            },
+            {
+                "type": "agent",
+                "content": "Running comprehensive stress tests across multiple market scenarios to assess portfolio resilience and retirement plan stability.",
+                "typingTime": 2000,
+                "delay": 1500,
+                "agentData": {
+                    "Scenario Analysis": {
+                        "2008 Crisis Repeat": "Portfolio: -28%, Recovery: 18 months",
+                        "Dot-Com Bubble": "Portfolio: -22%, Recovery: 14 months",
+                        "Inflation Spike (8%)": "Real return: -2.3%, Bonds hit hard",
+                        "Recession 2025": "Portfolio: -15%, Retirement delay: 8 months",
+                        "Bull Market Continues": "Portfolio: +45%, Retire 1 year early"
+                    },
+                    "Stress Test Results": {
+                        "Worst Case": "$1,847,000 (-35%)",
+                        "Base Case": "$3,450,000 (+21%)",
+                        "Best Case": "$4,125,000 (+45%)",
+                        "Break-Even Point": "Portfolio can sustain -42% drop",
+                        "Recovery Time": "Average 16 months to baseline"
+                    },
+                    "Retirement Impact": {
+                        "Severe Downturn": "Delay 2 years or reduce spending 20%",
+                        "Moderate Correction": "No change needed",
+                        "Inflation Scenario": "Increase equity allocation to 70%",
+                        "Success Rate": "73% in worst case, 95% in base case",
+                        "Safe Withdrawal": "$95,000/year (3.3% initial)"
+                    },
+                    "Protective Strategies": {
+                        "Options Overlay": "Collar strategy on large positions",
+                        "Cash Reserve": "Build 2-year expense buffer",
+                        "Alternative Income": "Consider annuity for $30k/year",
+                        "Tax Planning": "Roth conversions during downturns",
+                        "Healthcare Buffer": "Max HSA, project $385k need"
+                    }
+                }
+            },
+            {
+                "type": "user",
+                "content": "Generate a meeting agenda with key talking points and prepare a one-page executive summary for the Hendersons.",
+                "typingTime": 1600,
+                "delay": 1000
+            },
+            {
+                "type": "agent",
+                "content": "Creating comprehensive meeting materials including agenda, talking points, and executive summary for tomorrow's retirement planning discussion.",
+                "typingTime": 2100,
+                "delay": 1500,
+                "agentData": {
+                    "Meeting Agenda": {
+                        "1. Portfolio Review (10 min)": "Current performance and positioning",
+                        "2. Retirement Timeline (15 min)": "7-year glide path discussion",
+                        "3. Risk Assessment (15 min)": "Concentration risks and solutions",
+                        "4. Income Strategy (15 min)": "Bridging the $28k annual gap",
+                        "5. Action Items (10 min)": "Immediate changes and timeline",
+                        "6. Q&A (10 min)": "Address concerns and questions"
+                    },
+                    "Key Talking Points": {
+                        "Positive Opening": "Outperforming market by 2.4% YTD",
+                        "Retirement Confidence": "87% success rate - very strong position",
+                        "Risk Transition": "Time to shift from growth to preservation",
+                        "Tax Opportunity": "$45k in harvesting available",
+                        "Income Focus": "Multiple strategies to close income gap",
+                        "Next Steps": "Quarterly reviews during transition"
+                    },
+                    "Executive Summary": {
+                        "Headline": "Well-Positioned for Retirement in 7 Years",
+                        "Strengths": "Strong returns, diversified assets, ahead of plan",
+                        "Opportunities": "Reduce risk, optimize taxes, build income",
+                        "Recommendations": "Rebalance to 60/35/5, reduce tech exposure",
+                        "Timeline": "Begin transition Q1 2025",
+                        "Bottom Line": "On track with adjustments for security"
+                    },
+                    "Materials Prepared": {
+                        "Presentation Deck": "✓ 12 slides created",
+                        "Risk Reports": "✓ Detailed analysis included",
+                        "Projection Charts": "✓ Multiple scenarios illustrated",
+                        "Action Checklist": "✓ Step-by-step plan provided",
+                        "Follow-up Schedule": "✓ Quarterly reviews booked"
+                    }
+                }
+            }
+        ];
+
+        function startDemo() {
+            if (!isPlaying || isPaused) {
+                isPlaying = true;
+                isPaused = false;
+                document.getElementById('playButton').disabled = true;
+                document.getElementById('pauseButton').disabled = false;
+                document.getElementById('demoStatus').textContent = 'Playing demo...';
+                if (currentMessageIndex === 0) {
+                    document.getElementById('chatMessages').innerHTML = '';
+                }
+                playNextMessage();
+            }
+        }
+
+        function pauseDemo() {
+            if (isPlaying) {
+                isPaused = true;
+                isPlaying = false;
+                clearTimeout(messageTimeout);
+                clearTimeout(typingTimeout);
+                document.getElementById('playButton').disabled = false;
+                document.getElementById('pauseButton').disabled = true;
+                document.getElementById('demoStatus').textContent = 'Demo paused';
+                removeTypingIndicator();
+            }
+        }
+
+        function resetDemo() {
+            clearTimeout(messageTimeout);
+            clearTimeout(typingTimeout);
+            currentMessageIndex = 0;
+            isPlaying = false;
+            isPaused = false;
+            document.getElementById('chatMessages').innerHTML = '';
+            document.getElementById('playButton').disabled = false;
+            document.getElementById('pauseButton').disabled = true;
+            document.getElementById('demoStatus').textContent = 'Ready to start';
+            removeTypingIndicator();
+        }
+
+        function skipMessage() {
+            if (currentMessageIndex < demoScript.length) {
+                clearTimeout(messageTimeout);
+                clearTimeout(typingTimeout);
+                removeTypingIndicator();
+                const message = demoScript[currentMessageIndex];
+                addMessage(message);
+                currentMessageIndex++;
+                if (isPlaying && currentMessageIndex < demoScript.length) {
+                    playNextMessage();
+                } else if (currentMessageIndex >= demoScript.length) {
+                    demoComplete();
+                }
+            }
+        }
+
+        function playNextMessage() {
+            if (currentMessageIndex < demoScript.length && isPlaying && !isPaused) {
+                const message = demoScript[currentMessageIndex];
+                messageTimeout = setTimeout(() => {
+                    if (message.type === 'agent') {
+                        showTypingIndicator();
+                        typingTimeout = setTimeout(() => {
+                            removeTypingIndicator();
+                            addMessage(message);
+                            currentMessageIndex++;
+                            if (currentMessageIndex < demoScript.length) {
+                                playNextMessage();
+                            } else {
+                                demoComplete();
+                            }
+                        }, message.typingTime || 2000);
+                    } else {
+                        addMessage(message);
+                        currentMessageIndex++;
+                        if (currentMessageIndex < demoScript.length) {
+                            playNextMessage();
+                        } else {
+                            demoComplete();
+                        }
+                    }
+                }, message.delay || 1000);
+            }
+        }
+
+        function demoComplete() {
+            isPlaying = false;
+            document.getElementById('playButton').disabled = false;
+            document.getElementById('pauseButton').disabled = true;
+            document.getElementById('demoStatus').textContent = 'Demo complete';
+        }
+
+        function addMessage(message) {
+            const chatMessages = document.getElementById('chatMessages');
+            const messageDiv = document.createElement('div');
+            messageDiv.className = 'message';
+            const time = new Date().toLocaleString('en-US', { hour: 'numeric', minute: '2-digit', hour12: true });
+            
+            if (message.type === 'user') {
+                messageDiv.innerHTML = `
+                    <div class="message-header">
+                        <div class="message-avatar-user">FA</div>
+                        <span class="message-author" style="font-weight: 600;">Financial Advisor</span>
+                        <span class="message-time" style="font-size: 12px; color: #a19f9d;">${time}</span>
+                    </div>
+                    <div class="message-content">${message.content}</div>
+                `;
+            } else if (message.type === 'agent') {
+                let html = `
+                    <div class="message-header">
+                        <div class="message-avatar-agent">FI</div>
+                        <span class="message-author" style="font-weight: 600;">Financial Insights</span>
+                        <span class="message-time" style="font-size: 12px; color: #a19f9d;">${time}</span>
+                    </div>
+                    <div class="message-content">${message.content}</div>
+                `;
+                
+                if (message.agentData) {
+                    for (const [category, data] of Object.entries(message.agentData)) {
+                        html += `
+                            <div class="agent-card">
+                                <div class="agent-card-header">
+                                    <span style="font-size: 20px;">${getIconForCategory(category)}</span>
+                                    <span style="font-weight: 600;">${category}</span>
+                                </div>
+                                <div class="agent-card-content">
+                                    <ul class="detail-list">
+                        `;
+                        for (const [key, value] of Object.entries(data)) {
+                            html += `
+                                <li class="detail-item">
+                                    <span class="detail-label">${key}:</span>
+                                    <span class="detail-value">${value}</span>
+                                </li>
+                            `;
+                        }
+                        html += `
+                                    </ul>
+                                </div>
+                            </div>
+                        `;
+                    }
+                }
+                
+                messageDiv.innerHTML = html;
+            }
+            
+            chatMessages.appendChild(messageDiv);
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+        }
+
+        function getIconForCategory(category) {
+            const icons = {
+                'Portfolio Overview': '💼',
+                'Asset Allocation': '📊',
+                'Performance Metrics': '📈',
+                'Retirement Readiness': '🎯',
+                'Risk Analysis': '⚠️',
+                'Recommended Adjustments': '🔧',
+                'Glide Path Strategy': '✈️',
+                'Income Planning': '💰',
+                'Scenario Analysis': '🔮',
+                'Stress Test Results': '🏋️',
+                'Retirement Impact': '🏖️',
+                'Protective Strategies': '🛡️',
+                'Meeting Agenda': '📅',
+                'Key Talking Points': '💬',
+                'Executive Summary': '📋',
+                'Materials Prepared': '✅'
+            };
+            return icons[category] || '📌';
+        }
+
+        function showTypingIndicator() {
+            const chatMessages = document.getElementById('chatMessages');
+            const indicator = document.createElement('div');
+            indicator.id = 'typingIndicator';
+            indicator.className = 'typing-indicator';
+            indicator.innerHTML = `
+                <div class="typing-dot"></div>
+                <div class="typing-dot"></div>
+                <div class="typing-dot"></div>
+            `;
+            chatMessages.appendChild(indicator);
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+        }
+
+        function removeTypingIndicator() {
+            const indicator = document.getElementById('typingIndicator');
+            if (indicator) {
+                indicator.remove();
+            }
+        }
+    </script>
+</body>
+</html>

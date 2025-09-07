@@ -1,0 +1,735 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sales Chat Agent - M365 Copilot Demo</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+        }
+
+        .sidebar {
+            width: 280px;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 2rem;
+            box-shadow: 0 0 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 2rem;
+            padding-bottom: 1.5rem;
+            border-bottom: 1px solid #e0e0e0;
+        }
+
+        .logo-icon {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            font-size: 20px;
+        }
+
+        .logo-text {
+            font-size: 18px;
+            font-weight: 600;
+            color: #2d3748;
+        }
+
+        .nav-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px;
+            margin: 8px 0;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            color: #4a5568;
+        }
+
+        .nav-item:hover {
+            background: #f7fafc;
+            color: #667eea;
+        }
+
+        .nav-item.active {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+
+        .main-content {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .header {
+            background: white;
+            border-radius: 16px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .header h1 {
+            color: #2d3748;
+            margin-bottom: 0.5rem;
+            font-size: 28px;
+        }
+
+        .header p {
+            color: #718096;
+            font-size: 16px;
+        }
+
+        .chat-container {
+            background: white;
+            border-radius: 16px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            display: flex;
+            flex-direction: column;
+            height: 600px;
+        }
+
+        .chat-header {
+            padding: 1.5rem;
+            border-bottom: 1px solid #e2e8f0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .status-indicator {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: #48bb78;
+            font-size: 14px;
+        }
+
+        .status-dot {
+            width: 8px;
+            height: 8px;
+            background: #48bb78;
+            border-radius: 50%;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+
+        .chat-messages {
+            flex: 1;
+            overflow-y: auto;
+            padding: 2rem;
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        .message {
+            display: flex;
+            gap: 12px;
+            animation: slideIn 0.3s ease;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .message.user {
+            flex-direction: row-reverse;
+        }
+
+        .message-avatar {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            color: white;
+            font-size: 14px;
+            flex-shrink: 0;
+        }
+
+        .message.agent .message-avatar {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+
+        .message.user .message-avatar {
+            background: #4a5568;
+        }
+
+        .message-content {
+            max-width: 70%;
+            padding: 12px 16px;
+            border-radius: 12px;
+            background: #f7fafc;
+        }
+
+        .message.user .message-content {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+
+        .typing-indicator {
+            display: flex;
+            gap: 4px;
+            padding: 12px 16px;
+        }
+
+        .typing-dot {
+            width: 8px;
+            height: 8px;
+            background: #a0aec0;
+            border-radius: 50%;
+            animation: typing 1.4s infinite;
+        }
+
+        .typing-dot:nth-child(2) {
+            animation-delay: 0.2s;
+        }
+
+        .typing-dot:nth-child(3) {
+            animation-delay: 0.4s;
+        }
+
+        @keyframes typing {
+            0%, 60%, 100% {
+                transform: translateY(0);
+            }
+            30% {
+                transform: translateY(-10px);
+            }
+        }
+
+        .agent-card {
+            background: white;
+            border: 1px solid #e2e8f0;
+            border-radius: 12px;
+            padding: 16px;
+            margin-top: 12px;
+        }
+
+        .agent-card-header {
+            font-weight: 600;
+            color: #2d3748;
+            margin-bottom: 12px;
+            padding-bottom: 8px;
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        .agent-card-content {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .data-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 8px;
+            background: #f7fafc;
+            border-radius: 6px;
+        }
+
+        .data-label {
+            font-weight: 500;
+            color: #4a5568;
+        }
+
+        .data-value {
+            color: #2d3748;
+            font-weight: 600;
+        }
+
+        .recommendation-item {
+            padding: 12px;
+            background: #f0fff4;
+            border-left: 3px solid #48bb78;
+            border-radius: 6px;
+            margin: 8px 0;
+        }
+
+        .chat-input {
+            padding: 1.5rem;
+            border-top: 1px solid #e2e8f0;
+            display: flex;
+            gap: 12px;
+        }
+
+        .input-field {
+            flex: 1;
+            padding: 12px;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            font-size: 14px;
+            font-family: 'Segoe UI', sans-serif;
+        }
+
+        .input-field:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+
+        .send-button {
+            padding: 12px 24px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: transform 0.2s ease;
+        }
+
+        .send-button:hover {
+            transform: translateY(-2px);
+        }
+
+        .demo-controls {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            display: flex;
+            gap: 10px;
+            background: white;
+            padding: 12px;
+            border-radius: 30px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        .control-btn {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            border: none;
+            background: #f7fafc;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+        }
+
+        .control-btn:hover {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+
+        .control-btn.active {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+
+        .price-tag {
+            display: inline-block;
+            background: #48bb78;
+            color: white;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-weight: 600;
+            margin-left: 8px;
+        }
+
+        .stock-badge {
+            display: inline-block;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .stock-badge.in-stock {
+            background: #c6f6d5;
+            color: #22543d;
+        }
+
+        .stock-badge.low-stock {
+            background: #fed7d7;
+            color: #742a2a;
+        }
+    </style>
+</head>
+<body>
+    <div class="sidebar">
+        <div class="logo">
+            <div class="logo-icon">SC</div>
+            <div class="logo-text">Sales Chat Agent</div>
+        </div>
+        <div class="nav-item active">
+            <span>💬</span>
+            <span>Chat Interface</span>
+        </div>
+        <div class="nav-item">
+            <span>📦</span>
+            <span>Product Catalog</span>
+        </div>
+        <div class="nav-item">
+            <span>👥</span>
+            <span>CRM Integration</span>
+        </div>
+        <div class="nav-item">
+            <span>💰</span>
+            <span>Pricing Tools</span>
+        </div>
+        <div class="nav-item">
+            <span>📊</span>
+            <span>Analytics</span>
+        </div>
+    </div>
+
+    <div class="main-content">
+        <div class="header">
+            <h1>Sales Chat Assistant</h1>
+            <p>Your AI-powered sales companion for CRM insights, inventory management, and pricing opportunities</p>
+        </div>
+
+        <div class="chat-container">
+            <div class="chat-header">
+                <div>
+                    <strong>Sales Copilot</strong>
+                    <div class="status-indicator">
+                        <div class="status-dot"></div>
+                        <span>Online</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="chat-messages" id="chatMessages">
+                <!-- Messages will be inserted here -->
+            </div>
+
+            <div class="chat-input">
+                <input type="text" class="input-field" placeholder="Ask about products, customers, or pricing..." disabled>
+                <button class="send-button" disabled>Send</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="demo-controls">
+        <button class="control-btn" id="playBtn" title="Play">▶️</button>
+        <button class="control-btn" id="pauseBtn" title="Pause">⏸️</button>
+        <button class="control-btn" id="resetBtn" title="Reset">🔄</button>
+        <button class="control-btn" id="skipBtn" title="Skip">⏭️</button>
+    </div>
+
+    <script>
+        const demoScript = [
+            {
+                type: "user",
+                content: "Hi, I need information about our Premium Laptop inventory and pricing options",
+                typingTime: 1500,
+                delay: 1000
+            },
+            {
+                type: "agent",
+                content: "I'll help you with the Premium Laptop information. Let me check our current inventory and generate pricing opportunities for you.",
+                typingTime: 2000,
+                delay: 1500,
+                agentData: {
+                    "Product Information": {
+                        "Product ID": "PROD-001",
+                        "Name": "Premium Laptop",
+                        "Price": "$1,299.99",
+                        "Current Stock": "45 units",
+                        "Category": "Electronics",
+                        "Status": "In Stock"
+                    }
+                }
+            },
+            {
+                type: "user",
+                content: "Great! Can you also check if customer Sarah Johnson is eligible for any special pricing?",
+                typingTime: 1800,
+                delay: 1000
+            },
+            {
+                type: "agent",
+                content: "Let me look up Sarah Johnson's customer profile and identify applicable pricing opportunities.",
+                typingTime: 2000,
+                delay: 1500,
+                agentData: {
+                    "Customer Profile": {
+                        "Name": "Sarah Johnson",
+                        "Tier": "Gold Member",
+                        "Lifetime Value": "$15,230",
+                        "Last Purchase": "Oct 15, 2024"
+                    },
+                    "Pricing Opportunities": {
+                        "Bundle Discount": "15% off when bundled with accessories",
+                        "Loyalty Discount": "10% Gold member exclusive",
+                        "Volume Discount": "5% off on 3+ items"
+                    }
+                }
+            },
+            {
+                type: "user",
+                content: "What accessories would you recommend to bundle with the laptop?",
+                typingTime: 1500,
+                delay: 1000
+            },
+            {
+                type: "agent",
+                content: "Based on the Premium Laptop purchase, here are my recommended accessories for bundling:",
+                typingTime: 2000,
+                delay: 1500,
+                agentData: {
+                    "Recommended Bundle": {
+                        "Wireless Mouse": "$49.99 (150 in stock)",
+                        "USB-C Hub": "$79.99 (89 in stock)",
+                        "Bundle Savings": "$19.50 (15% discount)",
+                        "Total Bundle Price": "$1,410.47"
+                    },
+                    "Cross-sell Opportunity": {
+                        "4K Monitor": "$599.99",
+                        "Mechanical Keyboard": "$149.99",
+                        "Complete Workstation": "Save $112.50 on full setup"
+                    }
+                }
+            },
+            {
+                type: "user",
+                content: "Perfect! Can you check our low stock items so I know what needs reordering?",
+                typingTime: 1600,
+                delay: 1000
+            },
+            {
+                type: "agent",
+                content: "I've completed the inventory check. Here's the current stock status with items below our 30-unit threshold:",
+                typingTime: 2000,
+                delay: 1500,
+                agentData: {
+                    "Inventory Alert": {
+                        "Low Stock Items": {
+                            "4K Monitor": "23 units remaining",
+                            "Action": "Consider reordering soon"
+                        },
+                        "Healthy Stock": {
+                            "Premium Laptop": "45 units",
+                            "Wireless Mouse": "150 units",
+                            "Mechanical Keyboard": "67 units",
+                            "USB-C Hub": "89 units"
+                        },
+                        "Recommendation": "Place order for 4K Monitors within next 5 days"
+                    }
+                }
+            }
+        ];
+
+        let currentMessageIndex = 0;
+        let isPlaying = false;
+        let isPaused = false;
+        let currentTimeout;
+
+        const chatMessages = document.getElementById('chatMessages');
+        const playBtn = document.getElementById('playBtn');
+        const pauseBtn = document.getElementById('pauseBtn');
+        const resetBtn = document.getElementById('resetBtn');
+        const skipBtn = document.getElementById('skipBtn');
+
+        function addMessage(message) {
+            const messageDiv = document.createElement('div');
+            messageDiv.className = `message ${message.type}`;
+            
+            const avatar = document.createElement('div');
+            avatar.className = 'message-avatar';
+            avatar.textContent = message.type === 'user' ? 'U' : 'AI';
+            
+            const content = document.createElement('div');
+            content.className = 'message-content';
+            
+            if (message.type === 'agent' && message.agentData) {
+                content.innerHTML = `<div>${message.content}</div>`;
+                
+                const card = document.createElement('div');
+                card.className = 'agent-card';
+                
+                for (const [category, data] of Object.entries(message.agentData)) {
+                    const section = document.createElement('div');
+                    section.innerHTML = `<div class="agent-card-header">${category}</div>`;
+                    
+                    const contentDiv = document.createElement('div');
+                    contentDiv.className = 'agent-card-content';
+                    
+                    for (const [key, value] of Object.entries(data)) {
+                        if (typeof value === 'object') {
+                            const subSection = document.createElement('div');
+                            subSection.style.marginTop = '8px';
+                            subSection.innerHTML = `<strong>${key}:</strong>`;
+                            for (const [subKey, subValue] of Object.entries(value)) {
+                                const row = document.createElement('div');
+                                row.className = 'data-row';
+                                row.innerHTML = `
+                                    <span class="data-label">${subKey}:</span>
+                                    <span class="data-value">${subValue}</span>
+                                `;
+                                subSection.appendChild(row);
+                            }
+                            contentDiv.appendChild(subSection);
+                        } else {
+                            const row = document.createElement('div');
+                            row.className = 'data-row';
+                            row.innerHTML = `
+                                <span class="data-label">${key}:</span>
+                                <span class="data-value">${value}</span>
+                            `;
+                            contentDiv.appendChild(row);
+                        }
+                    }
+                    
+                    section.appendChild(contentDiv);
+                    card.appendChild(section);
+                }
+                
+                content.appendChild(card);
+            } else {
+                content.textContent = message.content;
+            }
+            
+            messageDiv.appendChild(avatar);
+            messageDiv.appendChild(content);
+            
+            chatMessages.appendChild(messageDiv);
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+        }
+
+        function showTypingIndicator() {
+            const typingDiv = document.createElement('div');
+            typingDiv.className = 'message agent';
+            typingDiv.id = 'typingIndicator';
+            
+            const avatar = document.createElement('div');
+            avatar.className = 'message-avatar';
+            avatar.textContent = 'AI';
+            
+            const typing = document.createElement('div');
+            typing.className = 'typing-indicator message-content';
+            typing.innerHTML = '<div class="typing-dot"></div><div class="typing-dot"></div><div class="typing-dot"></div>';
+            
+            typingDiv.appendChild(avatar);
+            typingDiv.appendChild(typing);
+            chatMessages.appendChild(typingDiv);
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+        }
+
+        function removeTypingIndicator() {
+            const indicator = document.getElementById('typingIndicator');
+            if (indicator) {
+                indicator.remove();
+            }
+        }
+
+        function playNextMessage() {
+            if (!isPlaying || currentMessageIndex >= demoScript.length) {
+                isPlaying = false;
+                playBtn.classList.remove('active');
+                return;
+            }
+
+            const message = demoScript[currentMessageIndex];
+            
+            if (message.type === 'agent') {
+                showTypingIndicator();
+                currentTimeout = setTimeout(() => {
+                    removeTypingIndicator();
+                    addMessage(message);
+                    currentMessageIndex++;
+                    currentTimeout = setTimeout(playNextMessage, message.delay);
+                }, message.typingTime);
+            } else {
+                addMessage(message);
+                currentMessageIndex++;
+                currentTimeout = setTimeout(playNextMessage, message.delay);
+            }
+        }
+
+        playBtn.addEventListener('click', () => {
+            if (!isPlaying) {
+                isPlaying = true;
+                isPaused = false;
+                playBtn.classList.add('active');
+                pauseBtn.classList.remove('active');
+                playNextMessage();
+            }
+        });
+
+        pauseBtn.addEventListener('click', () => {
+            if (isPlaying) {
+                isPlaying = false;
+                isPaused = true;
+                playBtn.classList.remove('active');
+                pauseBtn.classList.add('active');
+                clearTimeout(currentTimeout);
+                removeTypingIndicator();
+            }
+        });
+
+        resetBtn.addEventListener('click', () => {
+            isPlaying = false;
+            isPaused = false;
+            currentMessageIndex = 0;
+            chatMessages.innerHTML = '';
+            playBtn.classList.remove('active');
+            pauseBtn.classList.remove('active');
+            clearTimeout(currentTimeout);
+        });
+
+        skipBtn.addEventListener('click', () => {
+            if (isPlaying && currentMessageIndex < demoScript.length) {
+                clearTimeout(currentTimeout);
+                removeTypingIndicator();
+                const message = demoScript[currentMessageIndex];
+                addMessage(message);
+                currentMessageIndex++;
+                if (currentMessageIndex < demoScript.length) {
+                    playNextMessage();
+                } else {
+                    isPlaying = false;
+                    playBtn.classList.remove('active');
+                }
+            }
+        });
+
+        // Auto-start demo after page load
+        window.addEventListener('load', () => {
+            setTimeout(() => {
+                playBtn.click();
+            }, 1000);
+        });
+    </script>
+</body>
+</html>

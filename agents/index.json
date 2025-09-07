@@ -5,6 +5,7 @@
     "context_memory_agent.py",
     "fixed_beehiiv_agent.py",
     "powerpoint_agent.py",
+    "m365_demo_updater_agent.py",
     "basic_agent.py",
     "adaptive_card_agent.py",
     "duckduckgo_search_agent.py",

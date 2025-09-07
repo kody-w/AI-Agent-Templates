@@ -1,0 +1,458 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fraud Detection Alert Agent - M365 Copilot</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, system-ui, sans-serif; background: #faf9f8; height: 100vh; display: flex; overflow: hidden; color: #323130; }
+        .sidebar { width: 260px; background: #ffffff; display: flex; flex-direction: column; border-right: 1px solid #edebe9; }
+        .sidebar-header { padding: 12px 16px; display: flex; align-items: center; gap: 10px; border-bottom: 1px solid #edebe9; height: 48px; }
+        .copilot-icon { width: 24px; height: 24px; background: linear-gradient(135deg, #dc2626 0%, #f97316 100%); border-radius: 4px; display: flex; align-items: center; justify-content: center; position: relative; }
+        .copilot-icon::before { content: "🛡️"; font-size: 14px; filter: brightness(0) invert(1); }
+        .sidebar-title { font-size: 14px; font-weight: 600; color: #323130; }
+        .nav-section { flex: 1; overflow-y: auto; padding: 4px 0; }
+        .nav-item { padding: 8px 16px; display: flex; align-items: center; gap: 12px; cursor: pointer; font-size: 14px; color: #323130; transition: background 0.1s; position: relative; user-select: none; }
+        .nav-item:hover { background: #f3f2f1; }
+        .nav-item.active { background: #f3f2f1; }
+        .nav-item.active::before { content: ""; position: absolute; left: 0; top: 8px; bottom: 8px; width: 2px; background: #dc2626; border-radius: 1px; }
+        .main-content { flex: 1; display: flex; flex-direction: column; background: #faf9f8; }
+        .content-header { height: 48px; padding: 0 20px; display: flex; align-items: center; justify-content: space-between; background: #ffffff; border-bottom: 1px solid #edebe9; }
+        .demo-controls { padding: 16px 20px; background: #f3f2f1; display: flex; align-items: center; gap: 16px; border-bottom: 1px solid #edebe9; }
+        .demo-button { padding: 8px 16px; background: #dc2626; color: white; border: none; border-radius: 4px; cursor: pointer; font-size: 14px; font-weight: 600; transition: background 0.2s; }
+        .demo-button:hover { background: #b91c1c; }
+        .demo-button:disabled { background: #a19f9d; cursor: not-allowed; }
+        .demo-button.secondary { background: #605e5c; }
+        .chat-container { flex: 1; display: flex; flex-direction: column; overflow: hidden; }
+        .chat-messages { flex: 1; overflow-y: auto; padding: 20px; }
+        .message { max-width: 900px; margin: 0 auto 24px; animation: fadeIn 0.5s ease-in; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        .message-header { display: flex; align-items: center; gap: 12px; margin-bottom: 8px; }
+        .message-avatar-user { width: 28px; height: 28px; border-radius: 50%; background: #5b5fc7; color: white; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 600; }
+        .message-avatar-agent { width: 28px; height: 28px; border-radius: 6px; background: linear-gradient(135deg, #dc2626 0%, #f97316 100%); color: white; display: flex; align-items: center; justify-content: center; font-size: 14px; font-weight: 600; }
+        .message-content { margin-left: 40px; font-size: 14px; line-height: 1.6; color: #323130; }
+        .agent-card { margin-left: 40px; margin-top: 16px; background: white; border: 1px solid #edebe9; border-radius: 8px; overflow: hidden; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05); }
+        .agent-card-header { padding: 16px; display: flex; align-items: center; gap: 12px; border-bottom: 1px solid #edebe9; background: #faf9f8; }
+        .agent-card-content { padding: 16px; }
+        .detail-list { list-style: none; }
+        .detail-item { padding: 8px 0; font-size: 14px; color: #323130; display: flex; gap: 8px; }
+        .detail-label { font-weight: 600; min-width: 140px; color: #605e5c; }
+        .typing-indicator { margin-left: 40px; display: flex; gap: 4px; padding: 8px 0; }
+        .typing-dot { width: 8px; height: 8px; background: #605e5c; border-radius: 50%; animation: typing 1.4s infinite; }
+        .typing-dot:nth-child(2) { animation-delay: 0.2s; }
+        .typing-dot:nth-child(3) { animation-delay: 0.4s; }
+        @keyframes typing { 0%, 60%, 100% { transform: translateY(0); opacity: 0.5; } 30% { transform: translateY(-10px); opacity: 1; } }
+        .alert-box { margin: 12px 0; padding: 12px; background: #fee2e2; border-left: 4px solid #dc2626; border-radius: 4px; }
+        .risk-high { color: #dc2626; font-weight: 600; }
+        .risk-medium { color: #f97316; font-weight: 600; }
+        .risk-low { color: #10b981; font-weight: 600; }
+    </style>
+</head>
+<body>
+    <div class="sidebar">
+        <div class="sidebar-header">
+            <div class="copilot-icon"></div>
+            <span class="sidebar-title">Fraud Detection</span>
+        </div>
+        <div class="nav-section">
+            <div class="nav-item active"><span>🚨</span><span>Real-time Monitoring</span></div>
+            <div class="nav-item"><span>📊</span><span>Risk Analysis</span></div>
+            <div class="nav-item"><span>🔍</span><span>Pattern Detection</span></div>
+            <div class="nav-item"><span>📈</span><span>Fraud Trends</span></div>
+            <div class="nav-item"><span>⚡</span><span>Alert Management</span></div>
+        </div>
+    </div>
+    <div class="main-content">
+        <div class="content-header">
+            <div class="header-title">Fraud Detection & Alert System</div>
+        </div>
+        <div class="demo-controls">
+            <button class="demo-button" onclick="startDemo()" id="playButton">▶ Play Demo</button>
+            <button class="demo-button secondary" onclick="pauseDemo()" id="pauseButton" disabled>⏸ Pause</button>
+            <button class="demo-button secondary" onclick="resetDemo()">↺ Reset</button>
+            <button class="demo-button secondary" onclick="skipMessage()">⏭ Skip</button>
+            <span style="margin-left: auto; font-size: 14px; color: #605e5c;" id="demoStatus">Ready to start</span>
+        </div>
+        <div class="chat-container">
+            <div class="chat-messages" id="chatMessages"></div>
+        </div>
+    </div>
+    <script>
+        let currentMessageIndex = 0;
+        let isPlaying = false;
+        let isPaused = false;
+        let messageTimeout;
+        let typingTimeout;
+
+        const demoScript = [
+            {
+                "type": "user",
+                "content": "Alert! Multiple suspicious transactions detected on account ending in 4782. Can you analyze the pattern and risk level?",
+                "typingTime": 1500,
+                "delay": 1000
+            },
+            {
+                "type": "agent",
+                "content": "I'm immediately analyzing the suspicious transaction pattern for account ****4782. Let me assess the risk level and provide recommendations.",
+                "typingTime": 2000,
+                "delay": 1500,
+                "agentData": {
+                    "Fraud Alert Summary": {
+                        "Account": "****4782 (Premium Card)",
+                        "Risk Score": "92/100 - CRITICAL",
+                        "Pattern Type": "Card-Not-Present Fraud",
+                        "Detection Time": "< 500ms from transaction",
+                        "Confidence Level": "98.5%"
+                    },
+                    "Suspicious Transactions": {
+                        "Transaction 1": "$3,847 - Online Electronics (Singapore)",
+                        "Transaction 2": "$2,156 - Luxury Goods (Hong Kong)",
+                        "Transaction 3": "$4,999 - Jewelry Store (Dubai)",
+                        "Transaction 4": "$1,823 - Digital Gift Cards (Multiple)",
+                        "Total Amount": "$12,825 in last 47 minutes"
+                    },
+                    "Risk Indicators": {
+                        "Velocity": "5x normal spending rate",
+                        "Geography": "Transactions from 3 countries in 1 hour",
+                        "Merchant Risk": "2 high-risk merchant categories",
+                        "Device": "New device, VPN detected",
+                        "Behavior": "Deviation from 24-month pattern"
+                    },
+                    "Immediate Actions Taken": {
+                        "Card Status": "Temporarily frozen",
+                        "Customer Contact": "SMS and call initiated",
+                        "Case Created": "FRAUD-2024-78234",
+                        "Law Enforcement": "SAR filing prepared",
+                        "Merchant Alert": "Chargeback prevention sent"
+                    }
+                }
+            },
+            {
+                "type": "user",
+                "content": "Good catch! What's the likelihood this is actual fraud vs. false positive? And what's our exposure if we don't act?",
+                "typingTime": 1600,
+                "delay": 1200
+            },
+            {
+                "type": "agent",
+                "content": "Based on our ML models and historical patterns, I can provide detailed fraud probability analysis and potential exposure assessment.",
+                "typingTime": 2000,
+                "delay": 1500,
+                "agentData": {
+                    "Fraud Probability Analysis": {
+                        "True Fraud": "94.2% probability",
+                        "False Positive": "5.8% probability",
+                        "Model Confidence": "Very High (trained on 10M+ cases)",
+                        "Similar Cases": "87% confirmed as fraud"
+                    },
+                    "Supporting Evidence": {
+                        "Customer Behavior": [
+                            "Last legitimate purchase: 3 days ago ($47 grocery)",
+                            "Never purchased from these merchants",
+                            "No travel notification on file",
+                            "Card typically used locally only"
+                        ],
+                        "Technical Indicators": [
+                            "IP address: Tor exit node",
+                            "Device fingerprint: Never seen before",
+                            "Transaction timing: 3AM local time",
+                            "BIN attack pattern detected"
+                        ]
+                    },
+                    "Financial Exposure": {
+                        "Current Loss": "$12,825 if undetected",
+                        "Projected 24hr": "$45,000-60,000 potential",
+                        "Chargeback Liability": "$12,825 + $385 fees",
+                        "Reputation Risk": "High - Premium customer segment",
+                        "Regulatory Risk": "$50K potential fine if unreported"
+                    },
+                    "Recommendation": {
+                        "Action": "BLOCK - Confirm fraud classification",
+                        "Customer Impact": "Minimal - instant card replacement",
+                        "Recovery": "$11,200 recoverable via swift action",
+                        "Prevention": "Update rules for similar patterns"
+                    }
+                }
+            },
+            {
+                "type": "user",
+                "content": "Execute the block and initiate customer outreach. Also, are we seeing similar patterns across other accounts?",
+                "typingTime": 1500,
+                "delay": 1000
+            },
+            {
+                "type": "agent",
+                "content": "Block executed successfully. I'm now scanning for similar patterns across our entire portfolio and coordinating customer outreach.",
+                "typingTime": 1800,
+                "delay": 1500,
+                "agentData": {
+                    "Action Confirmation": {
+                        "Card Block": "Completed at 14:32:15 UTC",
+                        "Customer Outreach": "Call connected, authenticating",
+                        "Replacement Card": "Expedited shipping approved",
+                        "Merchant Notification": "All 4 merchants alerted",
+                        "Case Status": "Escalated to Fraud Team Lead"
+                    },
+                    "Portfolio-Wide Analysis": {
+                        "Accounts Scanned": "2.3M active cards",
+                        "Similar Patterns Found": "17 accounts flagged",
+                        "Risk Distribution": [
+                            "3 accounts - Critical risk (blocked)",
+                            "5 accounts - High risk (monitoring enhanced)",
+                            "9 accounts - Medium risk (velocity checks added)"
+                        ],
+                        "Common Thread": "All targeted premium/platinum cards"
+                    },
+                    "Emerging Threat Intelligence": {
+                        "Attack Vector": "Likely data breach at Hotel Chain X",
+                        "Actor Profile": "Southeast Asia fraud ring",
+                        "Method": "Card testing → rapid exploitation",
+                        "Industry Alert": "Notifying card networks",
+                        "Prevention Update": "New rules deployed in 5 mins"
+                    },
+                    "Business Impact": {
+                        "Losses Prevented": "$187,000 across 17 accounts",
+                        "False Positive Rate": "0.3% (excellent)",
+                        "Customer Satisfaction": "Net Promoter +15 points",
+                        "Processing Time": "47ms average detection",
+                        "Compliance": "100% within regulatory requirements"
+                    }
+                }
+            },
+            {
+                "type": "user",
+                "content": "Excellent work. Can you generate a report for the risk committee and update our fraud models with these patterns?",
+                "typingTime": 1400,
+                "delay": 1200
+            },
+            {
+                "type": "agent",
+                "content": "I'll generate the risk committee report and update our fraud detection models with the new pattern intelligence.",
+                "typingTime": 1800,
+                "delay": 1500,
+                "agentData": {
+                    "Risk Committee Report": {
+                        "Executive Summary": "Prevented major fraud attack - $187K saved",
+                        "Incident Timeline": "Detection to resolution: 8 minutes",
+                        "Model Performance": "98.5% accuracy, 47ms response",
+                        "Customer Impact": "17 accounts protected, 0 losses",
+                        "Regulatory Status": "SAR filed, regulators notified"
+                    },
+                    "Model Enhancement": {
+                        "New Features Added": [
+                            "Cross-border velocity patterns",
+                            "Luxury merchant combination flags",
+                            "Time zone anomaly scoring",
+                            "Device fingerprint clustering"
+                        ],
+                        "Training Data": "+17 confirmed fraud cases added",
+                        "Accuracy Improvement": "+2.3% detection rate",
+                        "False Positive Reduction": "-0.8% expected",
+                        "Deployment": "Staged rollout over 24 hours"
+                    },
+                    "Strategic Recommendations": {
+                        "Immediate": [
+                            "Enhanced monitoring for Hotel Chain X customers",
+                            "Mandatory 2FA for transactions >$2000",
+                            "Geographic velocity limits for premium cards"
+                        ],
+                        "Short-term": [
+                            "Partner with Hotel Chain X on breach response",
+                            "Upgrade device fingerprinting technology",
+                            "Implement dynamic risk scoring"
+                        ],
+                        "Long-term": [
+                            "Invest in next-gen behavioral biometrics",
+                            "Develop industry fraud-sharing consortium",
+                            "AI-powered predictive fraud prevention"
+                        ]
+                    },
+                    "Success Metrics": {
+                        "Fraud Losses": "↓ 34% month-over-month",
+                        "Detection Speed": "↑ 67% faster than Q3",
+                        "Customer Trust": "↑ 23% satisfaction scores",
+                        "ROI": "127:1 on fraud platform investment"
+                    }
+                }
+            }
+        ];
+
+        function startDemo() {
+            if (!isPlaying || isPaused) {
+                isPlaying = true;
+                isPaused = false;
+                document.getElementById('playButton').disabled = true;
+                document.getElementById('pauseButton').disabled = false;
+                document.getElementById('demoStatus').textContent = 'Playing demo...';
+                if (currentMessageIndex === 0) {
+                    document.getElementById('chatMessages').innerHTML = '';
+                }
+                playNextMessage();
+            }
+        }
+
+        function pauseDemo() {
+            if (isPlaying) {
+                isPaused = true;
+                isPlaying = false;
+                clearTimeout(messageTimeout);
+                clearTimeout(typingTimeout);
+                document.getElementById('playButton').disabled = false;
+                document.getElementById('pauseButton').disabled = true;
+                document.getElementById('demoStatus').textContent = 'Demo paused';
+                removeTypingIndicator();
+            }
+        }
+
+        function resetDemo() {
+            clearTimeout(messageTimeout);
+            clearTimeout(typingTimeout);
+            currentMessageIndex = 0;
+            isPlaying = false;
+            isPaused = false;
+            document.getElementById('chatMessages').innerHTML = '';
+            document.getElementById('playButton').disabled = false;
+            document.getElementById('pauseButton').disabled = true;
+            document.getElementById('demoStatus').textContent = 'Ready to start';
+            removeTypingIndicator();
+        }
+
+        function skipMessage() {
+            if (currentMessageIndex < demoScript.length) {
+                clearTimeout(messageTimeout);
+                clearTimeout(typingTimeout);
+                removeTypingIndicator();
+                const message = demoScript[currentMessageIndex];
+                addMessage(message);
+                currentMessageIndex++;
+                if (isPlaying && currentMessageIndex < demoScript.length) {
+                    playNextMessage();
+                } else if (currentMessageIndex >= demoScript.length) {
+                    demoComplete();
+                }
+            }
+        }
+
+        function playNextMessage() {
+            if (currentMessageIndex < demoScript.length && isPlaying && !isPaused) {
+                const message = demoScript[currentMessageIndex];
+                messageTimeout = setTimeout(() => {
+                    if (message.type === 'agent') {
+                        showTypingIndicator();
+                        typingTimeout = setTimeout(() => {
+                            removeTypingIndicator();
+                            addMessage(message);
+                            currentMessageIndex++;
+                            if (currentMessageIndex < demoScript.length) {
+                                playNextMessage();
+                            } else {
+                                demoComplete();
+                            }
+                        }, message.typingTime || 2000);
+                    } else {
+                        addMessage(message);
+                        currentMessageIndex++;
+                        if (currentMessageIndex < demoScript.length) {
+                            playNextMessage();
+                        } else {
+                            demoComplete();
+                        }
+                    }
+                }, message.delay || 1000);
+            }
+        }
+
+        function demoComplete() {
+            isPlaying = false;
+            document.getElementById('playButton').disabled = false;
+            document.getElementById('pauseButton').disabled = true;
+            document.getElementById('demoStatus').textContent = 'Demo complete';
+        }
+
+        function addMessage(message) {
+            const chatMessages = document.getElementById('chatMessages');
+            const messageDiv = document.createElement('div');
+            messageDiv.className = 'message';
+            const time = new Date().toLocaleString('en-US', { hour: 'numeric', minute: '2-digit', hour12: true });
+            
+            if (message.type === 'user') {
+                messageDiv.innerHTML = `
+                    <div class="message-header">
+                        <div class="message-avatar-user">U</div>
+                        <span class="message-author" style="font-weight: 600;">You</span>
+                        <span class="message-time" style="font-size: 12px; color: #a19f9d;">${time}</span>
+                    </div>
+                    <div class="message-content">${message.content}</div>
+                `;
+            } else if (message.type === 'agent') {
+                let html = `
+                    <div class="message-header">
+                        <div class="message-avatar-agent">FD</div>
+                        <span class="message-author" style="font-weight: 600;">Fraud Detection Agent</span>
+                        <span class="message-time" style="font-size: 12px; color: #a19f9d;">${time}</span>
+                    </div>
+                    <div class="message-content">${message.content}</div>
+                `;
+                
+                if (message.agentData) {
+                    html += '<div class="agent-card">';
+                    html += '<div class="agent-card-header"><span style="font-weight: 600;">Fraud Analysis Report</span></div>';
+                    html += '<div class="agent-card-content">';
+                    
+                    for (const [category, data] of Object.entries(message.agentData)) {
+                        html += `<div style="margin-bottom: 16px;"><div style="font-weight: 600; color: #dc2626; margin-bottom: 8px;">${category}</div>`;
+                        
+                        if (typeof data === 'object' && !Array.isArray(data)) {
+                            html += '<ul class="detail-list">';
+                            for (const [key, value] of Object.entries(data)) {
+                                if (Array.isArray(value)) {
+                                    html += `<li class="detail-item"><span class="detail-label">${key}:</span><span>`;
+                                    value.forEach(item => {
+                                        html += `<div class="alert-box">${item}</div>`;
+                                    });
+                                    html += '</span></li>';
+                                } else {
+                                    let displayValue = value;
+                                    if (value.includes('CRITICAL')) {
+                                        displayValue = `<span class="risk-high">${value}</span>`;
+                                    } else if (value.includes('High')) {
+                                        displayValue = `<span class="risk-medium">${value}</span>`;
+                                    }
+                                    html += `<li class="detail-item"><span class="detail-label">${key}:</span><span>${displayValue}</span></li>`;
+                                }
+                            }
+                            html += '</ul>';
+                        }
+                        html += '</div>';
+                    }
+                    
+                    html += '</div></div>';
+                }
+                
+                messageDiv.innerHTML = html;
+            }
+            
+            chatMessages.appendChild(messageDiv);
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+        }
+
+        function showTypingIndicator() {
+            const chatMessages = document.getElementById('chatMessages');
+            const typingDiv = document.createElement('div');
+            typingDiv.className = 'typing-indicator';
+            typingDiv.id = 'typingIndicator';
+            typingDiv.innerHTML = '<div class="typing-dot"></div><div class="typing-dot"></div><div class="typing-dot"></div>';
+            chatMessages.appendChild(typingDiv);
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+        }
+
+        function removeTypingIndicator() {
+            const typingIndicator = document.getElementById('typingIndicator');
+            if (typingIndicator) {
+                typingIndicator.remove();
+            }
+        }
+    </script>
+</body>
+</html>

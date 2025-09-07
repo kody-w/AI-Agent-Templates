@@ -1,0 +1,60 @@
+{
+  "name": "Procurement Agent",
+  "description": "Streamlines procurement processes with Microsoft Teams integration for vendor management, purchase orders, and approval workflows",
+  "version": "1.0.0",
+  "category": "B2E General Purpose",
+  "type": "B2E",
+  "business_impact": {
+    "efficiency_gain": "50% reduction in procurement cycle time",
+    "cost_savings": "8-12% reduction in procurement costs through vendor optimization",
+    "compliance": "100% audit trail and approval compliance"
+  },
+  "features": [
+    "Vendor management and comparison",
+    "Automated purchase order creation",
+    "Multi-level approval workflows",
+    "Real-time Teams notifications",
+    "Spending analytics and insights",
+    "RFQ generation and quote comparison",
+    "Vendor performance tracking"
+  ],
+  "technology_stack": {
+    "primary": ["Python", "Azure Functions"],
+    "integrations": ["Microsoft Teams", "SharePoint", "Power Automate"],
+    "deployment": ["Azure", "Copilot Studio"]
+  },
+  "parameters": {
+    "action": {
+      "type": "string",
+      "description": "The procurement action to perform",
+      "enum": ["get_vendor_list", "create_purchase_order", "check_approval_status", "compare_vendors", "get_spending_analytics", "request_quote"],
+      "required": false,
+      "default": "get_vendor_list"
+    },
+    "vendor_id": {
+      "type": "string",
+      "description": "Vendor identifier",
+      "required": false
+    },
+    "items": {
+      "type": "array",
+      "description": "List of items for purchase order or quote",
+      "required": false
+    },
+    "category": {
+      "type": "string",
+      "description": "Vendor or product category",
+      "required": false
+    }
+  },
+  "output_schema": {
+    "status": "success or error",
+    "message": "Human-readable message",
+    "data": {
+      "description": "Action-specific response data"
+    },
+    "errors": "Array of error messages if applicable"
+  },
+  "demo_available": true,
+  "demo_url": "demos/procurement_agent_demo.html"
+}

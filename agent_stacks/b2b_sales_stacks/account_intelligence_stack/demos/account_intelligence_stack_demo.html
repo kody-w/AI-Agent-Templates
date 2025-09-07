@@ -1,0 +1,457 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Account Intelligence Agent - M365 Copilot</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, system-ui, sans-serif; background: #faf9f8; height: 100vh; display: flex; overflow: hidden; color: #323130; }
+        .sidebar { width: 260px; background: #ffffff; display: flex; flex-direction: column; border-right: 1px solid #edebe9; }
+        .sidebar-header { padding: 12px 16px; display: flex; align-items: center; gap: 10px; border-bottom: 1px solid #edebe9; height: 48px; }
+        .copilot-icon { width: 24px; height: 24px; background: linear-gradient(135deg, #ff6b6b 0%, #4ecdc4 100%); border-radius: 4px; display: flex; align-items: center; justify-content: center; position: relative; }
+        .copilot-icon::before { content: "🎯"; font-size: 14px; filter: brightness(0) invert(1); }
+        .sidebar-title { font-size: 14px; font-weight: 600; color: #323130; }
+        .nav-section { flex: 1; overflow-y: auto; padding: 4px 0; }
+        .nav-item { padding: 8px 16px; display: flex; align-items: center; gap: 12px; cursor: pointer; font-size: 14px; color: #323130; transition: background 0.1s; position: relative; user-select: none; }
+        .nav-item:hover { background: #f3f2f1; }
+        .nav-item.active { background: #f3f2f1; }
+        .nav-item.active::before { content: ""; position: absolute; left: 0; top: 8px; bottom: 8px; width: 2px; background: #ff6b6b; border-radius: 1px; }
+        .main-content { flex: 1; display: flex; flex-direction: column; background: #faf9f8; }
+        .content-header { height: 48px; padding: 0 20px; display: flex; align-items: center; justify-content: space-between; background: #ffffff; border-bottom: 1px solid #edebe9; }
+        .demo-controls { padding: 16px 20px; background: #f3f2f1; display: flex; align-items: center; gap: 16px; border-bottom: 1px solid #edebe9; }
+        .demo-button { padding: 8px 16px; background: #ff6b6b; color: white; border: none; border-radius: 4px; cursor: pointer; font-size: 14px; font-weight: 600; transition: background 0.2s; }
+        .demo-button:hover { background: #ff5252; }
+        .demo-button:disabled { background: #a19f9d; cursor: not-allowed; }
+        .demo-button.secondary { background: #605e5c; }
+        .chat-container { flex: 1; display: flex; flex-direction: column; overflow: hidden; }
+        .chat-messages { flex: 1; overflow-y: auto; padding: 20px; }
+        .message { max-width: 900px; margin: 0 auto 24px; animation: fadeIn 0.5s ease-in; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        .message-header { display: flex; align-items: center; gap: 12px; margin-bottom: 8px; }
+        .message-avatar-user { width: 28px; height: 28px; border-radius: 50%; background: #5b5fc7; color: white; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 600; }
+        .message-avatar-agent { width: 28px; height: 28px; border-radius: 6px; background: linear-gradient(135deg, #ff6b6b 0%, #4ecdc4 100%); color: white; display: flex; align-items: center; justify-content: center; font-size: 14px; font-weight: 600; }
+        .message-content { margin-left: 40px; font-size: 14px; line-height: 1.6; color: #323130; }
+        .agent-card { margin-left: 40px; margin-top: 16px; background: white; border: 1px solid #edebe9; border-radius: 8px; overflow: hidden; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05); }
+        .agent-card-header { padding: 16px; display: flex; align-items: center; gap: 12px; border-bottom: 1px solid #edebe9; background: #faf9f8; }
+        .agent-card-content { padding: 16px; }
+        .detail-list { list-style: none; }
+        .detail-item { padding: 8px 0; font-size: 14px; color: #323130; display: flex; gap: 8px; }
+        .detail-label { font-weight: 600; min-width: 140px; color: #605e5c; }
+        .typing-indicator { margin-left: 40px; display: flex; gap: 4px; padding: 8px 0; }
+        .typing-dot { width: 8px; height: 8px; background: #605e5c; border-radius: 50%; animation: typing 1.4s infinite; }
+        .typing-dot:nth-child(2) { animation-delay: 0.2s; }
+        .typing-dot:nth-child(3) { animation-delay: 0.4s; }
+        @keyframes typing { 0%, 60%, 100% { transform: translateY(0); opacity: 0.5; } 30% { transform: translateY(-10px); opacity: 1; } }
+        .org-chart { margin: 12px 0; padding: 12px; background: #f8f9fa; border-radius: 4px; }
+        .stakeholder-item { margin: 8px 0; padding: 12px; background: #fff3cd; border-left: 4px solid #ff6b6b; border-radius: 4px; }
+    </style>
+</head>
+<body>
+    <div class="sidebar">
+        <div class="sidebar-header">
+            <div class="copilot-icon"></div>
+            <span class="sidebar-title">Account Intelligence</span>
+        </div>
+        <div class="nav-section">
+            <div class="nav-item active"><span>🏢</span><span>Organization Mapping</span></div>
+            <div class="nav-item"><span>📰</span><span>Company News & Insights</span></div>
+            <div class="nav-item"><span>👥</span><span>Stakeholder Analysis</span></div>
+            <div class="nav-item"><span>💼</span><span>Opportunity Tracking</span></div>
+            <div class="nav-item"><span>📊</span><span>Account Scoring</span></div>
+        </div>
+    </div>
+    <div class="main-content">
+        <div class="content-header">
+            <div class="header-title">Account Intelligence Assistant</div>
+        </div>
+        <div class="demo-controls">
+            <button class="demo-button" onclick="startDemo()" id="playButton">▶ Play Demo</button>
+            <button class="demo-button secondary" onclick="pauseDemo()" id="pauseButton" disabled>⏸ Pause</button>
+            <button class="demo-button secondary" onclick="resetDemo()">↺ Reset</button>
+            <button class="demo-button secondary" onclick="skipMessage()">⏭ Skip</button>
+            <span style="margin-left: auto; font-size: 14px; color: #605e5c;" id="demoStatus">Ready to start</span>
+        </div>
+        <div class="chat-container">
+            <div class="chat-messages" id="chatMessages"></div>
+        </div>
+    </div>
+    <script>
+        let currentMessageIndex = 0;
+        let isPlaying = false;
+        let isPaused = false;
+        let messageTimeout;
+        let typingTimeout;
+
+        const demoScript = [
+            {
+                "type": "user",
+                "content": "I'm preparing for a meeting with Contoso Corporation next week. Can you give me the latest intelligence on their organization and key stakeholders?",
+                "typingTime": 1500,
+                "delay": 1000
+            },
+            {
+                "type": "agent",
+                "content": "I'll gather comprehensive intelligence on Contoso Corporation, including their org chart, recent news, and stakeholder analysis.",
+                "typingTime": 2000,
+                "delay": 1500,
+                "agentData": {
+                    "Organization Overview": {
+                        "Company": "Contoso Corporation",
+                        "Industry": "Manufacturing & Technology",
+                        "Revenue": "$2.3B (2023)",
+                        "Employees": "12,000+",
+                        "Stock": "Up 15% YTD",
+                        "Recent Activity": "Q3 earnings beat expectations"
+                    },
+                    "Key Decision Makers": {
+                        "CEO": "Patricia Miller (2 years, ex-Microsoft)",
+                        "CFO": "Robert Chen (6 months, focus on cost optimization)",
+                        "CTO": "Sarah Johnson (3 years, driving digital transformation)",
+                        "VP Sales": "Michael Torres (New hire from competitor)",
+                        "Procurement Head": "Lisa Anderson (Budget holder)"
+                    },
+                    "Recent News & Triggers": {
+                        "M&A Activity": "Acquired CloudTech Solutions for $150M",
+                        "Strategic Initiative": "Announced $500M digital transformation",
+                        "Leadership Change": "New VP Sales from your competitor",
+                        "Expansion": "Opening 3 new facilities in Q1 2025",
+                        "Technology Stack": "Migrating from Oracle to Microsoft"
+                    },
+                    "Opportunity Insights": {
+                        "Budget Cycle": "FY starts January, planning now",
+                        "Pain Points": "Legacy system integration challenges",
+                        "Priorities": "Cloud migration, AI adoption, cost reduction",
+                        "Competition": "Currently using 3 of your competitor's products",
+                        "Relationship": "8/10 strength, CFO is key influencer"
+                    }
+                }
+            },
+            {
+                "type": "user",
+                "content": "Great insights! Can you drill deeper into Sarah Johnson, the CTO? What are her priorities and how can we best engage with her?",
+                "typingTime": 1600,
+                "delay": 1200
+            },
+            {
+                "type": "agent",
+                "content": "I've compiled detailed intelligence on Sarah Johnson, including her background, priorities, and engagement recommendations.",
+                "typingTime": 2000,
+                "delay": 1500,
+                "agentData": {
+                    "Executive Profile": {
+                        "Name": "Sarah Johnson",
+                        "Title": "Chief Technology Officer",
+                        "Tenure": "3 years at Contoso",
+                        "Background": "Ex-Amazon AWS, MIT Computer Science",
+                        "LinkedIn": "5,000+ connections, active poster",
+                        "Speaking": "Keynote at TechSummit 2024"
+                    },
+                    "Professional Interests": {
+                        "Technology Focus": "AI/ML, Cloud Infrastructure, IoT",
+                        "Recent Posts": "The Future of Manufacturing AI",
+                        "Certifications": "AWS Solutions Architect, Azure Expert",
+                        "Publications": "3 whitepapers on digital transformation",
+                        "Committees": "Board member at Tech Innovation Council"
+                    },
+                    "Current Initiatives": {
+                        "Project Phoenix": "$200M cloud migration (Q1-Q3 2025)",
+                        "AI Integration": "Implementing predictive maintenance",
+                        "Data Platform": "Building unified data lake",
+                        "Vendor Consolidation": "Reducing from 15 to 5 vendors",
+                        "Team Expansion": "Hiring 50 engineers in 2025"
+                    },
+                    "Engagement Strategy": {
+                        "Communication Style": "Data-driven, prefers executive briefings",
+                        "Best Meeting Times": "Tuesday/Thursday mornings",
+                        "Key Interests": "ROI metrics, innovation, scalability",
+                        "Decision Process": "Consensus builder, involves team",
+                        "Hot Buttons": "Security, compliance, vendor lock-in"
+                    },
+                    "Relationship Mapping": {
+                        "Reports To": "CEO Patricia Miller",
+                        "Key Allies": "CFO Robert Chen (cost savings focus)",
+                        "Direct Reports": "12 directors, 150+ engineers",
+                        "External Network": "Close to Microsoft, AWS executives",
+                        "Your Advocates": "2 former colleagues now at Contoso"
+                    }
+                }
+            },
+            {
+                "type": "user",
+                "content": "This is helpful. What competitive intelligence do you have? Who else is pursuing this account and what's our position?",
+                "typingTime": 1500,
+                "delay": 1000
+            },
+            {
+                "type": "agent",
+                "content": "I've analyzed the competitive landscape for the Contoso opportunity, including competitor positions and your strategic advantages.",
+                "typingTime": 1800,
+                "delay": 1500,
+                "agentData": {
+                    "Competitive Landscape": {
+                        "Primary Competitor": "TechCorp - Incumbent for 5 years",
+                        "Secondary Threat": "GlobalSoft - Aggressive pricing",
+                        "Dark Horse": "StartupAI - Innovation play",
+                        "Your Position": "Challenger with strong executive relationships"
+                    },
+                    "Competitor Intelligence": {
+                        "TechCorp Weaknesses": [
+                            "Recent service outages affecting Contoso",
+                            "20% price increase proposed for renewal",
+                            "Key account manager left last month",
+                            "Product roadmap misaligned with Contoso needs"
+                        ],
+                        "GlobalSoft Tactics": [
+                            "30% discount offered",
+                            "Free POC running in procurement dept",
+                            "CEO-level relationship building",
+                            "Bundling with existing contracts"
+                        ]
+                    },
+                    "Win Strategy": {
+                        "Your Advantages": [
+                            "Superior AI/ML capabilities align with CTO vision",
+                            "Reference customer in same industry",
+                            "Migration path from TechCorp proven",
+                            "Executive sponsor relationship with CEO"
+                        ],
+                        "Action Items": [
+                            "Schedule CTO briefing on AI roadmap",
+                            "Arrange reference call with similar customer",
+                            "Propose risk-free POC for Project Phoenix",
+                            "Leverage Microsoft partnership announcement"
+                        ]
+                    },
+                    "Deal Intelligence": {
+                        "Budget": "$5-8M annually available",
+                        "Timeline": "Decision by end of Q4 2024",
+                        "Decision Criteria": "Innovation 40%, Cost 30%, Support 30%",
+                        "Procurement Process": "RFP expected next week",
+                        "Win Probability": "65% (up from 45% last quarter)"
+                    }
+                }
+            },
+            {
+                "type": "user",
+                "content": "Based on all this intelligence, what specific actions should I take to advance this opportunity?",
+                "typingTime": 1400,
+                "delay": 1200
+            },
+            {
+                "type": "agent",
+                "content": "Here's your prioritized action plan based on the account intelligence to maximize your win probability.",
+                "typingTime": 1800,
+                "delay": 1500,
+                "agentData": {
+                    "Immediate Actions (This Week)": {
+                        "1. Executive Briefing": "Schedule with CTO Sarah on AI roadmap",
+                        "2. Reference Setup": "Connect Fabrikam CTO with Sarah",
+                        "3. RFP Preparation": "Align response with Project Phoenix goals",
+                        "4. Competitive Counter": "Address TechCorp migration concerns",
+                        "5. Champion Building": "Coffee with your 2 internal advocates"
+                    },
+                    "Stakeholder Engagement Plan": {
+                        "CTO Sarah Johnson": "Technical deep-dive on Tuesday AM",
+                        "CFO Robert Chen": "ROI analysis and cost savings model",
+                        "CEO Patricia Miller": "Strategic partnership discussion",
+                        "VP Sales Michael": "Integration with sales tools demo",
+                        "Procurement Lisa": "Contract flexibility options"
+                    },
+                    "Content & Messaging": {
+                        "Value Proposition": "40% faster than TechCorp with AI",
+                        "Risk Mitigation": "Phased migration with success guarantee",
+                        "Differentiators": "Only vendor with manufacturing AI",
+                        "Social Proof": "3 similar customers, 200% ROI",
+                        "Urgency Creator": "Q4 pricing expires Dec 31"
+                    },
+                    "Next Steps Timeline": {
+                        "Week 1": "Executive meetings and RFP response",
+                        "Week 2": "POC kickoff and technical validation",
+                        "Week 3": "Business case presentation to board",
+                        "Week 4": "Contract negotiation and close",
+                        "Follow-up": "Implementation planning session"
+                    },
+                    "Success Metrics": {
+                        "Engagement": "All 5 stakeholders met",
+                        "Technical": "POC achieving 95% requirements",
+                        "Commercial": "Within 10% of budget target",
+                        "Relationship": "Champion score increased to 9/10",
+                        "Close Date": "Signature by December 15"
+                    }
+                }
+            }
+        ];
+
+        function startDemo() {
+            if (!isPlaying || isPaused) {
+                isPlaying = true;
+                isPaused = false;
+                document.getElementById('playButton').disabled = true;
+                document.getElementById('pauseButton').disabled = false;
+                document.getElementById('demoStatus').textContent = 'Playing demo...';
+                if (currentMessageIndex === 0) {
+                    document.getElementById('chatMessages').innerHTML = '';
+                }
+                playNextMessage();
+            }
+        }
+
+        function pauseDemo() {
+            if (isPlaying) {
+                isPaused = true;
+                isPlaying = false;
+                clearTimeout(messageTimeout);
+                clearTimeout(typingTimeout);
+                document.getElementById('playButton').disabled = false;
+                document.getElementById('pauseButton').disabled = true;
+                document.getElementById('demoStatus').textContent = 'Demo paused';
+                removeTypingIndicator();
+            }
+        }
+
+        function resetDemo() {
+            clearTimeout(messageTimeout);
+            clearTimeout(typingTimeout);
+            currentMessageIndex = 0;
+            isPlaying = false;
+            isPaused = false;
+            document.getElementById('chatMessages').innerHTML = '';
+            document.getElementById('playButton').disabled = false;
+            document.getElementById('pauseButton').disabled = true;
+            document.getElementById('demoStatus').textContent = 'Ready to start';
+            removeTypingIndicator();
+        }
+
+        function skipMessage() {
+            if (currentMessageIndex < demoScript.length) {
+                clearTimeout(messageTimeout);
+                clearTimeout(typingTimeout);
+                removeTypingIndicator();
+                const message = demoScript[currentMessageIndex];
+                addMessage(message);
+                currentMessageIndex++;
+                if (isPlaying && currentMessageIndex < demoScript.length) {
+                    playNextMessage();
+                } else if (currentMessageIndex >= demoScript.length) {
+                    demoComplete();
+                }
+            }
+        }
+
+        function playNextMessage() {
+            if (currentMessageIndex < demoScript.length && isPlaying && !isPaused) {
+                const message = demoScript[currentMessageIndex];
+                messageTimeout = setTimeout(() => {
+                    if (message.type === 'agent') {
+                        showTypingIndicator();
+                        typingTimeout = setTimeout(() => {
+                            removeTypingIndicator();
+                            addMessage(message);
+                            currentMessageIndex++;
+                            if (currentMessageIndex < demoScript.length) {
+                                playNextMessage();
+                            } else {
+                                demoComplete();
+                            }
+                        }, message.typingTime || 2000);
+                    } else {
+                        addMessage(message);
+                        currentMessageIndex++;
+                        if (currentMessageIndex < demoScript.length) {
+                            playNextMessage();
+                        } else {
+                            demoComplete();
+                        }
+                    }
+                }, message.delay || 1000);
+            }
+        }
+
+        function demoComplete() {
+            isPlaying = false;
+            document.getElementById('playButton').disabled = false;
+            document.getElementById('pauseButton').disabled = true;
+            document.getElementById('demoStatus').textContent = 'Demo complete';
+        }
+
+        function addMessage(message) {
+            const chatMessages = document.getElementById('chatMessages');
+            const messageDiv = document.createElement('div');
+            messageDiv.className = 'message';
+            const time = new Date().toLocaleString('en-US', { hour: 'numeric', minute: '2-digit', hour12: true });
+            
+            if (message.type === 'user') {
+                messageDiv.innerHTML = `
+                    <div class="message-header">
+                        <div class="message-avatar-user">U</div>
+                        <span class="message-author" style="font-weight: 600;">You</span>
+                        <span class="message-time" style="font-size: 12px; color: #a19f9d;">${time}</span>
+                    </div>
+                    <div class="message-content">${message.content}</div>
+                `;
+            } else if (message.type === 'agent') {
+                let html = `
+                    <div class="message-header">
+                        <div class="message-avatar-agent">AI</div>
+                        <span class="message-author" style="font-weight: 600;">Account Intelligence</span>
+                        <span class="message-time" style="font-size: 12px; color: #a19f9d;">${time}</span>
+                    </div>
+                    <div class="message-content">${message.content}</div>
+                `;
+                
+                if (message.agentData) {
+                    html += '<div class="agent-card">';
+                    html += '<div class="agent-card-header"><span style="font-weight: 600;">Intelligence Report</span></div>';
+                    html += '<div class="agent-card-content">';
+                    
+                    for (const [category, data] of Object.entries(message.agentData)) {
+                        html += `<div style="margin-bottom: 16px;"><div style="font-weight: 600; color: #ff6b6b; margin-bottom: 8px;">${category}</div>`;
+                        
+                        if (typeof data === 'object' && !Array.isArray(data)) {
+                            html += '<ul class="detail-list">';
+                            for (const [key, value] of Object.entries(data)) {
+                                if (Array.isArray(value)) {
+                                    html += `<li class="detail-item"><span class="detail-label">${key}:</span><span>`;
+                                    value.forEach(item => {
+                                        html += `<div class="stakeholder-item">${item}</div>`;
+                                    });
+                                    html += '</span></li>';
+                                } else {
+                                    html += `<li class="detail-item"><span class="detail-label">${key}:</span><span>${value}</span></li>`;
+                                }
+                            }
+                            html += '</ul>';
+                        }
+                        html += '</div>';
+                    }
+                    
+                    html += '</div></div>';
+                }
+                
+                messageDiv.innerHTML = html;
+            }
+            
+            chatMessages.appendChild(messageDiv);
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+        }
+
+        function showTypingIndicator() {
+            const chatMessages = document.getElementById('chatMessages');
+            const typingDiv = document.createElement('div');
+            typingDiv.className = 'typing-indicator';
+            typingDiv.id = 'typingIndicator';
+            typingDiv.innerHTML = '<div class="typing-dot"></div><div class="typing-dot"></div><div class="typing-dot"></div>';
+            chatMessages.appendChild(typingDiv);
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+        }
+
+        function removeTypingIndicator() {
+            const typingIndicator = document.getElementById('typingIndicator');
+            if (typingIndicator) {
+                typingIndicator.remove();
+            }
+        }
+    </script>
+</body>
+</html>

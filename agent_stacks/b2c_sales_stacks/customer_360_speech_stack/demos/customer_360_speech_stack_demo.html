@@ -1,0 +1,457 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Customer 360 Speech Agent - M365 Copilot</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, system-ui, sans-serif; background: #faf9f8; height: 100vh; display: flex; overflow: hidden; color: #323130; }
+        .sidebar { width: 260px; background: #ffffff; display: flex; flex-direction: column; border-right: 1px solid #edebe9; }
+        .sidebar-header { padding: 12px 16px; display: flex; align-items: center; gap: 10px; border-bottom: 1px solid #edebe9; height: 48px; }
+        .copilot-icon { width: 24px; height: 24px; background: linear-gradient(135deg, #8b5cf6 0%, #ec4899 100%); border-radius: 4px; display: flex; align-items: center; justify-content: center; position: relative; }
+        .copilot-icon::before { content: "🎙️"; font-size: 14px; filter: brightness(0) invert(1); }
+        .sidebar-title { font-size: 14px; font-weight: 600; color: #323130; }
+        .nav-section { flex: 1; overflow-y: auto; padding: 4px 0; }
+        .nav-item { padding: 8px 16px; display: flex; align-items: center; gap: 12px; cursor: pointer; font-size: 14px; color: #323130; transition: background 0.1s; position: relative; user-select: none; }
+        .nav-item:hover { background: #f3f2f1; }
+        .nav-item.active { background: #f3f2f1; }
+        .nav-item.active::before { content: ""; position: absolute; left: 0; top: 8px; bottom: 8px; width: 2px; background: #8b5cf6; border-radius: 1px; }
+        .main-content { flex: 1; display: flex; flex-direction: column; background: #faf9f8; }
+        .content-header { height: 48px; padding: 0 20px; display: flex; align-items: center; justify-content: space-between; background: #ffffff; border-bottom: 1px solid #edebe9; }
+        .demo-controls { padding: 16px 20px; background: #f3f2f1; display: flex; align-items: center; gap: 16px; border-bottom: 1px solid #edebe9; }
+        .demo-button { padding: 8px 16px; background: #8b5cf6; color: white; border: none; border-radius: 4px; cursor: pointer; font-size: 14px; font-weight: 600; transition: background 0.2s; }
+        .demo-button:hover { background: #7c3aed; }
+        .demo-button:disabled { background: #a19f9d; cursor: not-allowed; }
+        .demo-button.secondary { background: #605e5c; }
+        .chat-container { flex: 1; display: flex; flex-direction: column; overflow: hidden; }
+        .chat-messages { flex: 1; overflow-y: auto; padding: 20px; }
+        .message { max-width: 900px; margin: 0 auto 24px; animation: fadeIn 0.5s ease-in; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        .message-header { display: flex; align-items: center; gap: 12px; margin-bottom: 8px; }
+        .message-avatar-user { width: 28px; height: 28px; border-radius: 50%; background: #5b5fc7; color: white; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 600; }
+        .message-avatar-agent { width: 28px; height: 28px; border-radius: 6px; background: linear-gradient(135deg, #8b5cf6 0%, #ec4899 100%); color: white; display: flex; align-items: center; justify-content: center; font-size: 14px; font-weight: 600; }
+        .message-content { margin-left: 40px; font-size: 14px; line-height: 1.6; color: #323130; }
+        .agent-card { margin-left: 40px; margin-top: 16px; background: white; border: 1px solid #edebe9; border-radius: 8px; overflow: hidden; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05); }
+        .agent-card-header { padding: 16px; display: flex; align-items: center; gap: 12px; border-bottom: 1px solid #edebe9; background: #faf9f8; }
+        .agent-card-content { padding: 16px; }
+        .detail-list { list-style: none; }
+        .detail-item { padding: 8px 0; font-size: 14px; color: #323130; display: flex; gap: 8px; }
+        .detail-label { font-weight: 600; min-width: 140px; color: #605e5c; }
+        .typing-indicator { margin-left: 40px; display: flex; gap: 4px; padding: 8px 0; }
+        .typing-dot { width: 8px; height: 8px; background: #605e5c; border-radius: 50%; animation: typing 1.4s infinite; }
+        .typing-dot:nth-child(2) { animation-delay: 0.2s; }
+        .typing-dot:nth-child(3) { animation-delay: 0.4s; }
+        @keyframes typing { 0%, 60%, 100% { transform: translateY(0); opacity: 0.5; } 30% { transform: translateY(-10px); opacity: 1; } }
+        .data-table { width: 100%; border-collapse: collapse; font-size: 14px; margin-top: 12px; }
+        .data-table th { background: #faf9f8; padding: 12px 16px; text-align: left; font-weight: 600; color: #323130; border-bottom: 1px solid #edebe9; }
+        .data-table td { padding: 12px 16px; color: #605e5c; border-bottom: 1px solid #edebe9; }
+        .data-table tr:hover td { background: #faf9f8; }
+        .badge { display: inline-block; padding: 2px 8px; border-radius: 12px; font-size: 11px; font-weight: 600; }
+        .badge.success { background: #d4edda; color: #155724; }
+        .badge.warning { background: #fff3cd; color: #856404; }
+        .badge.info { background: #d1ecf1; color: #0c5460; }
+        .badge.premium { background: #f4e4ff; color: #6b46c1; }
+        .voice-indicator { display: inline-flex; align-items: center; gap: 4px; padding: 4px 8px; background: #e7f3ff; border-radius: 16px; font-size: 12px; color: #0078d4; }
+        .pulse { width: 8px; height: 8px; background: #dc2626; border-radius: 50%; animation: pulse 1.5s infinite; }
+        @keyframes pulse { 0%, 100% { opacity: 1; transform: scale(1); } 50% { opacity: 0.5; transform: scale(1.2); } }
+    </style>
+</head>
+<body>
+    <div class="sidebar">
+        <div class="sidebar-header">
+            <div class="copilot-icon"></div>
+            <span class="sidebar-title">Customer 360 Speech</span>
+        </div>
+        <div class="nav-section">
+            <div class="nav-item active"><span>🎙️</span><span>Voice Recognition</span></div>
+            <div class="nav-item"><span>👤</span><span>Customer Profile</span></div>
+            <div class="nav-item"><span>📊</span><span>Account Analytics</span></div>
+            <div class="nav-item"><span>🛍️</span><span>Purchase History</span></div>
+            <div class="nav-item"><span>💬</span><span>Interaction Log</span></div>
+        </div>
+    </div>
+    <div class="main-content">
+        <div class="content-header">
+            <div class="header-title">Customer 360 Speech Agent - Voice-Enabled CRM Intelligence</div>
+        </div>
+        <div class="demo-controls">
+            <button class="demo-button" onclick="startDemo()" id="playButton">▶ Play Demo</button>
+            <button class="demo-button secondary" onclick="pauseDemo()" id="pauseButton" disabled>⏸ Pause</button>
+            <button class="demo-button secondary" onclick="resetDemo()">↺ Reset</button>
+            <button class="demo-button secondary" onclick="skipMessage()">⏭ Skip</button>
+            <span style="margin-left: auto; font-size: 14px; color: #605e5c;" id="demoStatus">Ready to start</span>
+        </div>
+        <div class="chat-container">
+            <div class="chat-messages" id="chatMessages"></div>
+        </div>
+    </div>
+    <script>
+        let currentMessageIndex = 0;
+        let isPlaying = false;
+        let isPaused = false;
+        let messageTimeout;
+        let typingTimeout;
+
+        const demoScript = [
+            {
+                "type": "user",
+                "content": "<span class='voice-indicator'><span class='pulse'></span>Voice Input Detected</span><br>\"Hey, I need the complete profile for Jennifer Williams. She called earlier about upgrading her service.\"",
+                "typingTime": 1500,
+                "delay": 1000
+            },
+            {
+                "type": "agent",
+                "content": "Voice recognized. Retrieving comprehensive 360° profile for Jennifer Williams including account details, interaction history, and personalized insights.",
+                "typingTime": 2000,
+                "delay": 1500,
+                "agentData": {
+                    "Customer Profile": {
+                        "Name": "Jennifer Williams",
+                        "Customer ID": "CUST-001",
+                        "Segment": "<span class='badge premium'>Premium Member</span>",
+                        "Account Status": "<span class='badge success'>Active</span>",
+                        "Member Since": "March 2019",
+                        "Lifetime Value": "$45,670"
+                    },
+                    "Contact Preferences": {
+                        "Primary Phone": "+1-555-0123",
+                        "Email": "j.williams@email.com",
+                        "Preferred Channel": "🎙️ Voice Calls",
+                        "Best Time": "Evenings (6-9 PM)",
+                        "Language": "English",
+                        "Communication Style": "Direct, values expertise"
+                    },
+                    "Recent Activity": {
+                        "Last Interaction": "Nov 1, 2024 - Support Call (15 min)",
+                        "Satisfaction Score": "⭐⭐⭐⭐⭐ (5/5)",
+                        "Last Purchase": "Oct 15, 2024 - Smart Home Bundle",
+                        "Open Cases": "None",
+                        "Upcoming Renewals": "Premium Subscription - Dec 22, 2024"
+                    }
+                }
+            },
+            {
+                "type": "user",
+                "content": "<span class='voice-indicator'><span class='pulse'></span>Voice Input Detected</span><br>\"What's her purchase history and spending pattern? Also check if she's eligible for any upgrades.\"",
+                "typingTime": 1600,
+                "delay": 1000
+            },
+            {
+                "type": "agent",
+                "content": "Analyzing Jennifer's purchase history and spending patterns. I'm also checking upgrade eligibility based on her account status and loyalty tier.",
+                "typingTime": 2100,
+                "delay": 1500,
+                "agentData": {
+                    "Purchase History": {
+                        "Total Purchases": "27 transactions",
+                        "Average Order Value": "$1,691",
+                        "Purchase Frequency": "Every 2.3 months",
+                        "Preferred Categories": "Smart Home (45%), Premium Services (30%), Protection Plans (25%)"
+                    },
+                    "Recent Transactions": {
+                        "Oct 15, 2024": "Smart Home Bundle - $2,499",
+                        "Aug 22, 2024": "Premium Subscription - $299",
+                        "Jun 10, 2024": "Device Protection Plan - $199",
+                        "Apr 5, 2024": "Security System Upgrade - $1,299",
+                        "Feb 18, 2024": "Entertainment Package - $499"
+                    },
+                    "Spending Analysis": {
+                        "YTD Spending": "$4,795 (↑32% vs last year)",
+                        "Seasonal Pattern": "Higher spending in Q4 (holidays)",
+                        "Payment Method": "Auto-pay enabled, never missed",
+                        "Credit Available": "$5,000 pre-approved",
+                        "Loyalty Points": "12,450 points available"
+                    },
+                    "Upgrade Opportunities": {
+                        "Eligible For": "<span class='badge success'>Premium Plus Tier</span>",
+                        "Benefits": "20% discount, Priority support, Free installations",
+                        "Projected Savings": "$960/year",
+                        "Recommended Bundle": "Ultimate Smart Home + Entertainment",
+                        "Special Offer": "3 months free with annual commitment"
+                    }
+                }
+            },
+            {
+                "type": "user",
+                "content": "<span class='voice-indicator'><span class='pulse'></span>Voice Input Detected</span><br>\"Generate talking points for the upgrade conversation and check if there are any similar customers who upgraded recently.\"",
+                "typingTime": 1700,
+                "delay": 1000
+            },
+            {
+                "type": "agent",
+                "content": "Creating personalized talking points based on Jennifer's profile and analyzing similar customer upgrade patterns for successful conversion strategies.",
+                "typingTime": 2000,
+                "delay": 1500,
+                "agentData": {
+                    "Personalized Talking Points": {
+                        "Opening": "Reference her 5-star support experience last week",
+                        "Value Prop 1": "Premium Plus saves $960/year based on her spending",
+                        "Value Prop 2": "Priority support aligns with evening availability",
+                        "Value Prop 3": "Smart Home Bundle expansion - she loves this category",
+                        "Objection Handler": "Month-to-month option available if hesitant on annual",
+                        "Closing": "Loyalty bonus: Extra 500 points for upgrading today"
+                    },
+                    "Voice Script Suggestions": {
+                        "Greeting": "Hi Jennifer! I see you had a great experience with our support team last week...",
+                        "Transition": "Based on your Smart Home Bundle purchase last month...",
+                        "Benefits": "You'd get 24/7 priority support perfect for your evening schedule...",
+                        "Urgency": "This exclusive offer is available for the next 48 hours...",
+                        "Close": "Can I go ahead and activate Premium Plus with your 3 free months?"
+                    },
+                    "Similar Customer Success": {
+                        "Profile Match": "Found 127 similar Premium customers",
+                        "Upgrade Rate": "73% converted to Premium Plus",
+                        "Key Factor": "Smart Home Bundle owners 2.3x more likely to upgrade",
+                        "Avg Time to Decision": "8 minutes on voice call",
+                        "Best Practices": "Emphasize installation support and evening availability"
+                    },
+                    "Next Best Actions": {
+                        "Primary": "Offer Premium Plus with 3-month trial",
+                        "Alternative": "Smart Security add-on (87% attach rate)",
+                        "Follow-up": "Schedule installation if she upgrades",
+                        "Post-call": "Send personalized offer email within 1 hour"
+                    }
+                }
+            },
+            {
+                "type": "user",
+                "content": "<span class='voice-indicator'><span class='pulse'></span>Voice Input Detected</span><br>\"Set up a callback for tonight at 7 PM and prepare a custom quote with the Premium Plus upgrade.\"",
+                "typingTime": 1500,
+                "delay": 1000
+            },
+            {
+                "type": "agent",
+                "content": "Scheduling callback and generating personalized Premium Plus quote for Jennifer Williams. I'll also notify the sales team and prepare all necessary documentation.",
+                "typingTime": 2100,
+                "delay": 1500,
+                "agentData": {
+                    "Callback Scheduled": {
+                        "Date/Time": "Tonight - November 27, 7:00 PM EST",
+                        "Customer Time Zone": "Confirmed EST",
+                        "Duration Reserved": "30 minutes",
+                        "Agent Assigned": "Sarah Mitchell (Premium Specialist)",
+                        "Backup Agent": "Tom Rodriguez",
+                        "Calendar": "✓ Added to CRM and agent calendar"
+                    },
+                    "Custom Quote Generated": {
+                        "Quote ID": "Q-2024-JW-112701",
+                        "Current Plan": "Premium - $149/month",
+                        "Upgrade to": "Premium Plus - $199/month",
+                        "Promotional Offer": "First 3 months FREE",
+                        "Annual Savings": "$960 with bundled services",
+                        "Valid Until": "November 30, 2024"
+                    },
+                    "Quote Details": {
+                        "Monthly After Promo": "$199 (was $249)",
+                        "Included Services": "All Premium + Priority Support + Free Installations",
+                        "Smart Home Credits": "$500 annual credit",
+                        "Loyalty Discount": "20% lifetime discount locked in",
+                        "Payment Options": "Monthly, Annual (save 10%), or Bi-annual"
+                    },
+                    "Preparation Complete": {
+                        "CRM Updated": "✓ All notes and context added",
+                        "Documents Ready": "✓ Quote, contract, terms prepared",
+                        "Email Draft": "✓ Follow-up email queued",
+                        "SMS Reminder": "✓ Scheduled for 6:30 PM",
+                        "Voice Notes": "✓ Key talking points added to agent screen"
+                    }
+                }
+            }
+        ];
+
+        function startDemo() {
+            if (!isPlaying || isPaused) {
+                isPlaying = true;
+                isPaused = false;
+                document.getElementById('playButton').disabled = true;
+                document.getElementById('pauseButton').disabled = false;
+                document.getElementById('demoStatus').textContent = 'Playing demo...';
+                if (currentMessageIndex === 0) {
+                    document.getElementById('chatMessages').innerHTML = '';
+                }
+                playNextMessage();
+            }
+        }
+
+        function pauseDemo() {
+            if (isPlaying) {
+                isPaused = true;
+                isPlaying = false;
+                clearTimeout(messageTimeout);
+                clearTimeout(typingTimeout);
+                document.getElementById('playButton').disabled = false;
+                document.getElementById('pauseButton').disabled = true;
+                document.getElementById('demoStatus').textContent = 'Demo paused';
+                removeTypingIndicator();
+            }
+        }
+
+        function resetDemo() {
+            clearTimeout(messageTimeout);
+            clearTimeout(typingTimeout);
+            currentMessageIndex = 0;
+            isPlaying = false;
+            isPaused = false;
+            document.getElementById('chatMessages').innerHTML = '';
+            document.getElementById('playButton').disabled = false;
+            document.getElementById('pauseButton').disabled = true;
+            document.getElementById('demoStatus').textContent = 'Ready to start';
+            removeTypingIndicator();
+        }
+
+        function skipMessage() {
+            if (currentMessageIndex < demoScript.length) {
+                clearTimeout(messageTimeout);
+                clearTimeout(typingTimeout);
+                removeTypingIndicator();
+                const message = demoScript[currentMessageIndex];
+                addMessage(message);
+                currentMessageIndex++;
+                if (isPlaying && currentMessageIndex < demoScript.length) {
+                    playNextMessage();
+                } else if (currentMessageIndex >= demoScript.length) {
+                    demoComplete();
+                }
+            }
+        }
+
+        function playNextMessage() {
+            if (currentMessageIndex < demoScript.length && isPlaying && !isPaused) {
+                const message = demoScript[currentMessageIndex];
+                messageTimeout = setTimeout(() => {
+                    if (message.type === 'agent') {
+                        showTypingIndicator();
+                        typingTimeout = setTimeout(() => {
+                            removeTypingIndicator();
+                            addMessage(message);
+                            currentMessageIndex++;
+                            if (currentMessageIndex < demoScript.length) {
+                                playNextMessage();
+                            } else {
+                                demoComplete();
+                            }
+                        }, message.typingTime || 2000);
+                    } else {
+                        addMessage(message);
+                        currentMessageIndex++;
+                        if (currentMessageIndex < demoScript.length) {
+                            playNextMessage();
+                        } else {
+                            demoComplete();
+                        }
+                    }
+                }, message.delay || 1000);
+            }
+        }
+
+        function demoComplete() {
+            isPlaying = false;
+            document.getElementById('playButton').disabled = false;
+            document.getElementById('pauseButton').disabled = true;
+            document.getElementById('demoStatus').textContent = 'Demo complete';
+        }
+
+        function addMessage(message) {
+            const chatMessages = document.getElementById('chatMessages');
+            const messageDiv = document.createElement('div');
+            messageDiv.className = 'message';
+            const time = new Date().toLocaleString('en-US', { hour: 'numeric', minute: '2-digit', hour12: true });
+            
+            if (message.type === 'user') {
+                messageDiv.innerHTML = `
+                    <div class="message-header">
+                        <div class="message-avatar-user">SR</div>
+                        <span class="message-author" style="font-weight: 600;">Sales Rep</span>
+                        <span class="message-time" style="font-size: 12px; color: #a19f9d;">${time}</span>
+                    </div>
+                    <div class="message-content">${message.content}</div>
+                `;
+            } else if (message.type === 'agent') {
+                let html = `
+                    <div class="message-header">
+                        <div class="message-avatar-agent">360</div>
+                        <span class="message-author" style="font-weight: 600;">Customer 360 Speech</span>
+                        <span class="message-time" style="font-size: 12px; color: #a19f9d;">${time}</span>
+                    </div>
+                    <div class="message-content">${message.content}</div>
+                `;
+                
+                if (message.agentData) {
+                    for (const [category, data] of Object.entries(message.agentData)) {
+                        html += `
+                            <div class="agent-card">
+                                <div class="agent-card-header">
+                                    <span style="font-size: 20px;">${getIconForCategory(category)}</span>
+                                    <span style="font-weight: 600;">${category}</span>
+                                </div>
+                                <div class="agent-card-content">
+                                    <ul class="detail-list">
+                        `;
+                        for (const [key, value] of Object.entries(data)) {
+                            html += `
+                                <li class="detail-item">
+                                    <span class="detail-label">${key}:</span>
+                                    <span class="detail-value">${value}</span>
+                                </li>
+                            `;
+                        }
+                        html += `
+                                    </ul>
+                                </div>
+                            </div>
+                        `;
+                    }
+                }
+                
+                messageDiv.innerHTML = html;
+            }
+            
+            chatMessages.appendChild(messageDiv);
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+        }
+
+        function getIconForCategory(category) {
+            const icons = {
+                'Customer Profile': '👤',
+                'Contact Preferences': '📞',
+                'Recent Activity': '📊',
+                'Purchase History': '🛍️',
+                'Recent Transactions': '💳',
+                'Spending Analysis': '📈',
+                'Upgrade Opportunities': '⬆️',
+                'Personalized Talking Points': '💬',
+                'Voice Script Suggestions': '📝',
+                'Similar Customer Success': '🎯',
+                'Next Best Actions': '➡️',
+                'Callback Scheduled': '📅',
+                'Custom Quote Generated': '💰',
+                'Quote Details': '📋',
+                'Preparation Complete': '✅'
+            };
+            return icons[category] || '📌';
+        }
+
+        function showTypingIndicator() {
+            const chatMessages = document.getElementById('chatMessages');
+            const indicator = document.createElement('div');
+            indicator.id = 'typingIndicator';
+            indicator.className = 'typing-indicator';
+            indicator.innerHTML = `
+                <div class="typing-dot"></div>
+                <div class="typing-dot"></div>
+                <div class="typing-dot"></div>
+            `;
+            chatMessages.appendChild(indicator);
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+        }
+
+        function removeTypingIndicator() {
+            const indicator = document.getElementById('typingIndicator');
+            if (indicator) {
+                indicator.remove();
+            }
+        }
+    </script>
+</body>
+</html>

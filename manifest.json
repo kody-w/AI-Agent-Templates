@@ -1,6 +1,6 @@
 {
   "version": "1.0.0",
-  "generated": "2025-08-28T19:45:13.313275Z",
+  "generated": "2025-09-07T23:58:05.795268Z",
   "repository": "kody-w/AI-Agent-Templates",
   "branch": "main",
   "agents": [
@@ -92,6 +92,24 @@
         "Slide automation",
         "Template support",
         "Export options"
+      ]
+    },
+    {
+      "id": "m365_demo_updater_agent",
+      "name": "M365 Demo Updater Agent",
+      "filename": "m365_demo_updater_agent.py",
+      "path": "agents/m365_demo_updater_agent.py",
+      "url": "https://raw.githubusercontent.com/kody-w/AI-Agent-Templates/main/agents/m365_demo_updater_agent.py",
+      "size": 37320,
+      "size_formatted": "36.4KB",
+      "type": "singular",
+      "icon": "\ud83c\udfaf",
+      "description": "Demo data generation and seeding",
+      "features": [
+        "Data generation",
+        "Test scenarios",
+        "Bulk operations",
+        "Realistic samples"
       ]
     },
     {
@@ -890,6 +908,155 @@
       }
     },
     {
+      "id": "sales_chat_stack",
+      "name": "Sales Chat Stack",
+      "path": "agent_stacks/b2c_sales_stacks/sales_chat_stack",
+      "industry": "B2C Sales",
+      "agents": [
+        {
+          "id": "sales_chat_stack_sales_chat_agent",
+          "name": "Sales Chat Agent",
+          "filename": "sales_chat_agent.py",
+          "path": "agent_stacks/b2c_sales_stacks/sales_chat_stack/agents/sales_chat_agent.py",
+          "url": "https://raw.githubusercontent.com/kody-w/AI-Agent-Templates/main/agent_stacks/b2c_sales_stacks/sales_chat_stack/agents/sales_chat_agent.py",
+          "size": 12602,
+          "size_formatted": "12.3KB",
+          "type": "stack",
+          "stack_name": "Sales Chat Stack",
+          "stack_path": "b2c_sales_stacks/sales_chat_stack",
+          "industry": "B2C Sales",
+          "icon": "\ud83e\udd16",
+          "description": "AI agent for task automation and workflow optimization",
+          "features": [
+            "AI-powered automation",
+            "Easy integration",
+            "Scalable architecture",
+            "Production ready"
+          ]
+        }
+      ],
+      "metadata": {
+        "name": "Sales Chat Agent",
+        "description": "Improves sales team access to CRM information, product inventory, and pricing opportunities through an intelligent chat interface",
+        "version": "1.0.0",
+        "category": "B2C Sales",
+        "type": "B2C",
+        "business_impact": {
+          "efficiency_gain": "40% reduction in time spent searching for product and customer information",
+          "revenue_impact": "15% increase in conversion rates through real-time pricing opportunities",
+          "customer_satisfaction": "25% improvement in response time to customer inquiries"
+        },
+        "features": [
+          "Real-time product information and inventory lookup",
+          "CRM integration for customer profile access",
+          "Dynamic pricing opportunity generation",
+          "Personalized product recommendations",
+          "Cross-sell and upsell suggestions",
+          "Customer engagement recommendations based on purchase history"
+        ],
+        "technology_stack": {
+          "primary": [
+            "Python",
+            "Azure OpenAI"
+          ],
+          "integrations": [
+            "Dynamics 365",
+            "Microsoft Teams",
+            "SharePoint"
+          ],
+          "deployment": [
+            "Azure Functions",
+            "Copilot Studio"
+          ]
+        },
+        "parameters": {
+          "action": {
+            "type": "string",
+            "description": "The action to perform",
+            "enum": [
+              "get_product_info",
+              "check_inventory",
+              "get_customer_info",
+              "generate_pricing_opportunity",
+              "get_recommendations"
+            ],
+            "required": false,
+            "default": "get_product_info"
+          },
+          "product_id": {
+            "type": "string",
+            "description": "Product identifier for lookups",
+            "required": false
+          },
+          "customer_id": {
+            "type": "string",
+            "description": "Customer identifier for CRM lookups",
+            "required": false
+          },
+          "category": {
+            "type": "string",
+            "description": "Product category filter",
+            "required": false
+          },
+          "threshold": {
+            "type": "integer",
+            "description": "Stock threshold for inventory alerts",
+            "required": false,
+            "default": 30
+          }
+        },
+        "output_schema": {
+          "status": "success or error",
+          "message": "Human-readable message",
+          "data": {
+            "description": "Action-specific response data"
+          },
+          "errors": "Array of error messages if applicable"
+        },
+        "demo_available": true,
+        "demo_url": "demos/sales_chat_demo.html",
+        "demo": {
+          "available": true,
+          "url": "agent_stacks/b2c_sales_stacks/sales_chat_stack/demos/sales_chat_stack_demo.html"
+        }
+      }
+    },
+    {
+      "id": "customer_360_speech_stack",
+      "name": "Customer 360 Speech Stack",
+      "path": "agent_stacks/b2c_sales_stacks/customer_360_speech_stack",
+      "industry": "B2C Sales",
+      "agents": [
+        {
+          "id": "customer_360_speech_stack_customer_360_speech_agent",
+          "name": "Customer 360 Speech Agent",
+          "filename": "customer_360_speech_agent.py",
+          "path": "agent_stacks/b2c_sales_stacks/customer_360_speech_stack/agents/customer_360_speech_agent.py",
+          "url": "https://raw.githubusercontent.com/kody-w/AI-Agent-Templates/main/agent_stacks/b2c_sales_stacks/customer_360_speech_stack/agents/customer_360_speech_agent.py",
+          "size": 21705,
+          "size_formatted": "21.2KB",
+          "type": "stack",
+          "stack_name": "Customer 360 Speech Stack",
+          "stack_path": "b2c_sales_stacks/customer_360_speech_stack",
+          "industry": "B2C Sales",
+          "icon": "\ud83e\udd16",
+          "description": "AI agent for task automation and workflow optimization",
+          "features": [
+            "AI-powered automation",
+            "Easy integration",
+            "Scalable architecture",
+            "Production ready"
+          ]
+        }
+      ],
+      "metadata": {
+        "demo": {
+          "available": true,
+          "url": "agent_stacks/b2c_sales_stacks/customer_360_speech_stack/demos/customer_360_speech_stack_demo.html"
+        }
+      }
+    },
+    {
       "id": "customer_loyalty_rewards_stack",
       "name": "Customer Loyalty Rewards Stack",
       "path": "agent_stacks/b2c_sales_stacks/customer_loyalty_rewards_stack",
@@ -1568,6 +1735,14 @@
           "Risk mitigation"
         ]
       }
+    },
+    {
+      "id": "customer_service_agent_stack",
+      "name": "Customer Service Agent Stack",
+      "path": "agent_stacks/customer_service_stacks/customer_service_agent_stack",
+      "industry": "Customer Service Stacks",
+      "agents": [],
+      "metadata": null
     },
     {
       "id": "client_health_score_stack",
@@ -2420,6 +2595,41 @@
       }
     },
     {
+      "id": "ask_hr_stack",
+      "name": "Ask Hr Stack",
+      "path": "agent_stacks/human_resources_stacks/ask_hr_stack",
+      "industry": "Human Resources Stacks",
+      "agents": [
+        {
+          "id": "ask_hr_stack_ask_hr_agent",
+          "name": "Ask Hr Agent",
+          "filename": "ask_hr_agent.py",
+          "path": "agent_stacks/human_resources_stacks/ask_hr_stack/agents/ask_hr_agent.py",
+          "url": "https://raw.githubusercontent.com/kody-w/AI-Agent-Templates/main/agent_stacks/human_resources_stacks/ask_hr_stack/agents/ask_hr_agent.py",
+          "size": 15435,
+          "size_formatted": "15.1KB",
+          "type": "stack",
+          "stack_name": "Ask Hr Stack",
+          "stack_path": "human_resources_stacks/ask_hr_stack",
+          "industry": "Human Resources Stacks",
+          "icon": "\ud83e\udd16",
+          "description": "AI agent for task automation and workflow optimization",
+          "features": [
+            "AI-powered automation",
+            "Easy integration",
+            "Scalable architecture",
+            "Production ready"
+          ]
+        }
+      ],
+      "metadata": {
+        "demo": {
+          "available": true,
+          "url": "agent_stacks/human_resources_stacks/ask_hr_stack/demos/ask_hr_stack_demo.html"
+        }
+      }
+    },
+    {
       "id": "supplier_risk_monitoring_stack",
       "name": "Supplier Risk Monitoring Stack",
       "path": "agent_stacks/manufacturing_stacks/supplier_risk_monitoring_stack",
@@ -2495,7 +2705,7 @@
         ],
         "demo": {
           "available": true,
-          "url": "agent_stacks/manufacturing_stacks/supplier_risk_monitoring_stack/demos/supplier_risk_monitoring_demo.html"
+          "url": "agent_stacks/manufacturing_stacks/supplier_risk_monitoring_stack/demos/supplier_risk_monitoring_stack_demo.html"
         },
         "useCases": [
           "Supplier performance tracking",
@@ -3267,6 +3477,41 @@
           "Knowledge base search",
           "Solution recommendation"
         ]
+      }
+    },
+    {
+      "id": "it_helpdesk_stack",
+      "name": "It Helpdesk Stack",
+      "path": "agent_stacks/it_management_stacks/it_helpdesk_stack",
+      "industry": "It Management Stacks",
+      "agents": [
+        {
+          "id": "it_helpdesk_stack_it_helpdesk_agent",
+          "name": "It Helpdesk Agent",
+          "filename": "it_helpdesk_agent.py",
+          "path": "agent_stacks/it_management_stacks/it_helpdesk_stack/agents/it_helpdesk_agent.py",
+          "url": "https://raw.githubusercontent.com/kody-w/AI-Agent-Templates/main/agent_stacks/it_management_stacks/it_helpdesk_stack/agents/it_helpdesk_agent.py",
+          "size": 19158,
+          "size_formatted": "18.7KB",
+          "type": "stack",
+          "stack_name": "It Helpdesk Stack",
+          "stack_path": "it_management_stacks/it_helpdesk_stack",
+          "industry": "It Management Stacks",
+          "icon": "\ud83e\udd16",
+          "description": "AI agent for task automation and workflow optimization",
+          "features": [
+            "AI-powered automation",
+            "Easy integration",
+            "Scalable architecture",
+            "Production ready"
+          ]
+        }
+      ],
+      "metadata": {
+        "demo": {
+          "available": true,
+          "url": "agent_stacks/it_management_stacks/it_helpdesk_stack/demos/it_helpdesk_stack_demo.html"
+        }
       }
     },
     {
@@ -5000,6 +5245,636 @@
       }
     },
     {
+      "id": "financial_insights_stack",
+      "name": "Financial Insights Stack",
+      "path": "agent_stacks/financial_services_stacks/financial_insights_stack",
+      "industry": "Financial Services",
+      "agents": [],
+      "metadata": {
+        "demo": {
+          "available": true,
+          "url": "agent_stacks/financial_services_stacks/financial_insights_stack/demos/financial_insights_stack_demo.html"
+        }
+      }
+    },
+    {
+      "id": "sales_coach_stack",
+      "name": "Sales Coach Stack",
+      "path": "agent_stacks/general_stacks/sales_coach_stack",
+      "industry": "Cross-Industry",
+      "agents": [
+        {
+          "id": "sales_coach_stack_sales_coach_agent",
+          "name": "Sales Coach Agent",
+          "filename": "sales_coach_agent.py",
+          "path": "agent_stacks/general_stacks/sales_coach_stack/agents/sales_coach_agent.py",
+          "url": "https://raw.githubusercontent.com/kody-w/AI-Agent-Templates/main/agent_stacks/general_stacks/sales_coach_stack/agents/sales_coach_agent.py",
+          "size": 31900,
+          "size_formatted": "31.2KB",
+          "type": "stack",
+          "stack_name": "Sales Coach Stack",
+          "stack_path": "general_stacks/sales_coach_stack",
+          "industry": "Cross-Industry",
+          "icon": "\ud83e\udd16",
+          "description": "AI agent for task automation and workflow optimization",
+          "features": [
+            "AI-powered automation",
+            "Easy integration",
+            "Scalable architecture",
+            "Production ready"
+          ]
+        }
+      ],
+      "metadata": {
+        "id": "sales_coach_stack",
+        "name": "Sales Coach Stack",
+        "version": "1.0.0",
+        "author": "Microsoft AI Solutions Team",
+        "description": "AI-powered sales training and coaching. Provides personalized feedback, role-play scenarios, and performance improvement.",
+        "longDescription": "AI-powered sales training and coaching. Provides personalized feedback, role-play scenarios, and performance improvement. This solution provides enterprise-grade automation and intelligence to optimize operations and enhance decision-making.",
+        "category": "sales-enablement",
+        "complexity": "intermediate",
+        "estimatedSetupTime": "1-2 hours",
+        "maintenanceEffort": "low",
+        "features": [
+          "AI-powered automation",
+          "Real-time processing",
+          "Intelligent recommendations",
+          "API integration",
+          "Custom workflows",
+          "Analytics dashboard",
+          "Multi-language support",
+          "Enterprise security"
+        ],
+        "benefits": [
+          "50% reduction in manual tasks",
+          "Improved accuracy and consistency",
+          "24/7 availability",
+          "Scalable solution",
+          "Cost savings",
+          "Better decision making"
+        ],
+        "technicalRequirements": {
+          "platforms": [
+            "Windows",
+            "macOS",
+            "Linux",
+            "Cloud"
+          ],
+          "dependencies": [
+            "Python 3.8+",
+            "Azure Services",
+            "REST APIs"
+          ],
+          "apiKeys": [
+            "AZURE_API_KEY",
+            "SERVICE_ENDPOINT"
+          ]
+        },
+        "tags": [
+          "automation",
+          "ai",
+          "enterprise",
+          "sales_enablement"
+        ],
+        "demo": {
+          "available": true,
+          "url": "agent_stacks/general_stacks/sales_coach_stack/demos/sales_coach_stack_demo.html"
+        }
+      }
+    },
+    {
+      "id": "procurement_support_stack",
+      "name": "Procurement Support Stack",
+      "path": "agent_stacks/general_stacks/procurement_support_stack",
+      "industry": "Cross-Industry",
+      "agents": [
+        {
+          "id": "procurement_support_stack_procurement_support_agent",
+          "name": "Procurement Support Agent",
+          "filename": "procurement_support_agent.py",
+          "path": "agent_stacks/general_stacks/procurement_support_stack/agents/procurement_support_agent.py",
+          "url": "https://raw.githubusercontent.com/kody-w/AI-Agent-Templates/main/agent_stacks/general_stacks/procurement_support_stack/agents/procurement_support_agent.py",
+          "size": 14632,
+          "size_formatted": "14.3KB",
+          "type": "stack",
+          "stack_name": "Procurement Support Stack",
+          "stack_path": "general_stacks/procurement_support_stack",
+          "industry": "Cross-Industry",
+          "icon": "\ud83e\udd16",
+          "description": "AI agent for task automation and workflow optimization",
+          "features": [
+            "AI-powered automation",
+            "Easy integration",
+            "Scalable architecture",
+            "Production ready"
+          ]
+        }
+      ],
+      "metadata": {
+        "id": "procurement_support_stack",
+        "name": "Procurement Support Stack",
+        "version": "1.0.0",
+        "author": "Microsoft AI Solutions Team",
+        "description": "Streamline procurement with automated vendor selection, PO creation, and spend analysis.",
+        "longDescription": "Streamline procurement with automated vendor selection, PO creation, and spend analysis. This solution provides enterprise-grade automation and intelligence to optimize operations and enhance decision-making.",
+        "category": "procurement",
+        "complexity": "intermediate",
+        "estimatedSetupTime": "1-2 hours",
+        "maintenanceEffort": "low",
+        "features": [
+          "AI-powered automation",
+          "Real-time processing",
+          "Intelligent recommendations",
+          "API integration",
+          "Custom workflows",
+          "Analytics dashboard",
+          "Multi-language support",
+          "Enterprise security"
+        ],
+        "benefits": [
+          "50% reduction in manual tasks",
+          "Improved accuracy and consistency",
+          "24/7 availability",
+          "Scalable solution",
+          "Cost savings",
+          "Better decision making"
+        ],
+        "technicalRequirements": {
+          "platforms": [
+            "Windows",
+            "macOS",
+            "Linux",
+            "Cloud"
+          ],
+          "dependencies": [
+            "Python 3.8+",
+            "Azure Services",
+            "REST APIs"
+          ],
+          "apiKeys": [
+            "AZURE_API_KEY",
+            "SERVICE_ENDPOINT"
+          ]
+        },
+        "tags": [
+          "automation",
+          "ai",
+          "enterprise",
+          "procurement"
+        ],
+        "demo": {
+          "available": true,
+          "url": "agent_stacks/general_stacks/procurement_support_stack/demos/procurement_support_stack_demo.html"
+        }
+      }
+    },
+    {
+      "id": "customer_360_stack",
+      "name": "Customer 360 Stack",
+      "path": "agent_stacks/general_stacks/customer_360_stack",
+      "industry": "Cross-Industry",
+      "agents": [
+        {
+          "id": "customer_360_stack_customer_360_agent",
+          "name": "Customer 360 Agent",
+          "filename": "customer_360_agent.py",
+          "path": "agent_stacks/general_stacks/customer_360_stack/agents/customer_360_agent.py",
+          "url": "https://raw.githubusercontent.com/kody-w/AI-Agent-Templates/main/agent_stacks/general_stacks/customer_360_stack/agents/customer_360_agent.py",
+          "size": 12066,
+          "size_formatted": "11.8KB",
+          "type": "stack",
+          "stack_name": "Customer 360 Stack",
+          "stack_path": "general_stacks/customer_360_stack",
+          "industry": "Cross-Industry",
+          "icon": "\ud83e\udd16",
+          "description": "AI agent for task automation and workflow optimization",
+          "features": [
+            "AI-powered automation",
+            "Easy integration",
+            "Scalable architecture",
+            "Production ready"
+          ]
+        }
+      ],
+      "metadata": {
+        "id": "customer_360_stack",
+        "name": "Customer 360 Stack",
+        "version": "1.0.0",
+        "author": "Microsoft AI Customer Intelligence Team",
+        "description": "Comprehensive customer data aggregation and insights platform. Unify customer data from all touchpoints to create actionable 360-degree customer profiles.",
+        "longDescription": "The Customer 360 Stack provides a unified view of customer data by aggregating information from CRM, support systems, sales platforms, marketing tools, and social media. It delivers real-time insights, predictive analytics, and personalized recommendations to enhance customer experience and drive business growth.",
+        "category": "customer-intelligence",
+        "complexity": "intermediate",
+        "estimatedSetupTime": "2 hours",
+        "maintenanceEffort": "moderate",
+        "features": [
+          "Unified customer profile aggregation",
+          "Real-time data synchronization",
+          "Predictive analytics and churn scoring",
+          "Customer lifetime value calculation",
+          "Behavioral segmentation",
+          "Cross-channel interaction tracking",
+          "AI-powered recommendations",
+          "Historical trend analysis",
+          "Custom segment creation",
+          "Data quality monitoring"
+        ],
+        "benefits": [
+          "360-degree customer visibility",
+          "25% increase in customer retention",
+          "40% improvement in personalization",
+          "30% reduction in data silos",
+          "50% faster customer insight generation",
+          "35% increase in cross-sell opportunities"
+        ],
+        "useCases": [
+          {
+            "title": "Personalized Marketing",
+            "description": "Create highly targeted campaigns based on comprehensive customer profiles and behavioral patterns."
+          },
+          {
+            "title": "Proactive Customer Service",
+            "description": "Anticipate customer needs and issues before they arise using predictive analytics."
+          },
+          {
+            "title": "Sales Intelligence",
+            "description": "Equip sales teams with complete customer context for more effective conversations."
+          },
+          {
+            "title": "Churn Prevention",
+            "description": "Identify at-risk customers early and implement targeted retention strategies."
+          }
+        ],
+        "technicalRequirements": {
+          "platforms": [
+            "Windows",
+            "macOS",
+            "Linux",
+            "Cloud"
+          ],
+          "dependencies": [
+            "Python 3.8+",
+            "Azure Synapse Analytics",
+            "Microsoft Dynamics 365",
+            "Azure Cognitive Services"
+          ],
+          "apiKeys": [
+            "DYNAMICS_365_CLIENT_ID",
+            "DYNAMICS_365_CLIENT_SECRET",
+            "AZURE_STORAGE_CONNECTION_STRING",
+            "AZURE_COGNITIVE_SERVICES_KEY"
+          ]
+        },
+        "components": [
+          {
+            "name": "customer_360_agent.py",
+            "description": "Core agent for aggregating and analyzing customer data from multiple sources",
+            "role": "Data Aggregation and Analysis"
+          }
+        ],
+        "architecture": {
+          "pattern": "Microservices with Event Streaming",
+          "communication": "REST API and Event Hub",
+          "dataFlow": "Source Systems \u2192 Data Lake \u2192 Processing \u2192 Analytics \u2192 API",
+          "scalability": "Horizontal auto-scaling with Azure Functions"
+        },
+        "deployment": {
+          "environments": [
+            "Development",
+            "Staging",
+            "Production"
+          ],
+          "containerized": true,
+          "dockerImage": "mcr.microsoft.com/ai-agents/customer-360:latest",
+          "cloudProviders": [
+            "Azure",
+            "AWS",
+            "GCP"
+          ],
+          "cicd": "Azure DevOps with automated testing"
+        },
+        "security": {
+          "authentication": "Azure AD B2C",
+          "encryption": "AES-256 at rest, TLS 1.3 in transit",
+          "compliance": [
+            "GDPR",
+            "CCPA",
+            "SOC 2",
+            "ISO 27001"
+          ],
+          "auditLogging": true,
+          "dataPrivacy": "PII masking and consent management"
+        },
+        "performance": {
+          "responseTime": "< 500ms for profile retrieval",
+          "throughput": "10,000 profiles/minute",
+          "dataFreshness": "Near real-time (< 5 minutes)",
+          "availability": "99.95% uptime SLA"
+        },
+        "support": {
+          "documentation": "https://github.com/kody-w/AI-Agent-Templates/wiki/customer-360",
+          "community": "https://github.com/kody-w/AI-Agent-Templates/discussions",
+          "email": "support@example.com"
+        },
+        "tags": [
+          "customer-360",
+          "cdp",
+          "customer-intelligence",
+          "analytics",
+          "personalization",
+          "data-aggregation",
+          "predictive-analytics"
+        ],
+        "demo": {
+          "available": true,
+          "url": "agent_stacks/general_stacks/customer_360_stack/demos/customer_360_demo.html"
+        }
+      }
+    },
+    {
+      "id": "cross_selling_opportunities_stack",
+      "name": "Cross Selling Opportunities Stack",
+      "path": "agent_stacks/general_stacks/cross_selling_opportunities_stack",
+      "industry": "Cross-Industry",
+      "agents": [
+        {
+          "id": "cross_selling_opportunities_stack_cross_selling_agent",
+          "name": "Cross Selling Agent",
+          "filename": "cross_selling_agent.py",
+          "path": "agent_stacks/general_stacks/cross_selling_opportunities_stack/agents/cross_selling_agent.py",
+          "url": "https://raw.githubusercontent.com/kody-w/AI-Agent-Templates/main/agent_stacks/general_stacks/cross_selling_opportunities_stack/agents/cross_selling_agent.py",
+          "size": 5867,
+          "size_formatted": "5.7KB",
+          "type": "stack",
+          "stack_name": "Cross Selling Opportunities Stack",
+          "stack_path": "general_stacks/cross_selling_opportunities_stack",
+          "industry": "Cross-Industry",
+          "icon": "\ud83e\udd16",
+          "description": "AI agent for task automation and workflow optimization",
+          "features": [
+            "AI-powered automation",
+            "Easy integration",
+            "Scalable architecture",
+            "Production ready"
+          ]
+        }
+      ],
+      "metadata": {
+        "id": "cross_selling_opportunities_stack",
+        "name": "Cross-Selling Opportunities Stack",
+        "version": "1.0.0",
+        "author": "Microsoft AI Solutions Team",
+        "description": "Identify upsell and cross-sell opportunities based on customer behavior and purchase patterns.",
+        "longDescription": "Identify upsell and cross-sell opportunities based on customer behavior and purchase patterns. This solution provides enterprise-grade automation and intelligence to optimize operations and enhance decision-making.",
+        "category": "revenue-optimization",
+        "complexity": "intermediate",
+        "estimatedSetupTime": "1-2 hours",
+        "maintenanceEffort": "low",
+        "features": [
+          "AI-powered automation",
+          "Real-time processing",
+          "Intelligent recommendations",
+          "API integration",
+          "Custom workflows",
+          "Analytics dashboard",
+          "Multi-language support",
+          "Enterprise security"
+        ],
+        "benefits": [
+          "50% reduction in manual tasks",
+          "Improved accuracy and consistency",
+          "24/7 availability",
+          "Scalable solution",
+          "Cost savings",
+          "Better decision making"
+        ],
+        "technicalRequirements": {
+          "platforms": [
+            "Windows",
+            "macOS",
+            "Linux",
+            "Cloud"
+          ],
+          "dependencies": [
+            "Python 3.8+",
+            "Azure Services",
+            "REST APIs"
+          ],
+          "apiKeys": [
+            "AZURE_API_KEY",
+            "SERVICE_ENDPOINT"
+          ]
+        },
+        "tags": [
+          "automation",
+          "ai",
+          "enterprise",
+          "revenue_optimization"
+        ],
+        "demo": {
+          "available": true,
+          "url": "agent_stacks/general_stacks/cross_selling_opportunities_stack/demos/cross_selling_opportunities_stack_demo.html"
+        }
+      }
+    },
+    {
+      "id": "procurement_agent_stack",
+      "name": "Procurement Agent Stack",
+      "path": "agent_stacks/general_stacks/procurement_agent_stack",
+      "industry": "Cross-Industry",
+      "agents": [
+        {
+          "id": "procurement_agent_stack_procurement_agent",
+          "name": "Procurement Agent",
+          "filename": "procurement_agent.py",
+          "path": "agent_stacks/general_stacks/procurement_agent_stack/agents/procurement_agent.py",
+          "url": "https://raw.githubusercontent.com/kody-w/AI-Agent-Templates/main/agent_stacks/general_stacks/procurement_agent_stack/agents/procurement_agent.py",
+          "size": 15268,
+          "size_formatted": "14.9KB",
+          "type": "stack",
+          "stack_name": "Procurement Agent Stack",
+          "stack_path": "general_stacks/procurement_agent_stack",
+          "industry": "Cross-Industry",
+          "icon": "\ud83e\udd16",
+          "description": "AI agent for task automation and workflow optimization",
+          "features": [
+            "AI-powered automation",
+            "Easy integration",
+            "Scalable architecture",
+            "Production ready"
+          ]
+        }
+      ],
+      "metadata": {
+        "name": "Procurement Agent",
+        "description": "Streamlines procurement processes with Microsoft Teams integration for vendor management, purchase orders, and approval workflows",
+        "version": "1.0.0",
+        "category": "B2E General Purpose",
+        "type": "B2E",
+        "business_impact": {
+          "efficiency_gain": "50% reduction in procurement cycle time",
+          "cost_savings": "8-12% reduction in procurement costs through vendor optimization",
+          "compliance": "100% audit trail and approval compliance"
+        },
+        "features": [
+          "Vendor management and comparison",
+          "Automated purchase order creation",
+          "Multi-level approval workflows",
+          "Real-time Teams notifications",
+          "Spending analytics and insights",
+          "RFQ generation and quote comparison",
+          "Vendor performance tracking"
+        ],
+        "technology_stack": {
+          "primary": [
+            "Python",
+            "Azure Functions"
+          ],
+          "integrations": [
+            "Microsoft Teams",
+            "SharePoint",
+            "Power Automate"
+          ],
+          "deployment": [
+            "Azure",
+            "Copilot Studio"
+          ]
+        },
+        "parameters": {
+          "action": {
+            "type": "string",
+            "description": "The procurement action to perform",
+            "enum": [
+              "get_vendor_list",
+              "create_purchase_order",
+              "check_approval_status",
+              "compare_vendors",
+              "get_spending_analytics",
+              "request_quote"
+            ],
+            "required": false,
+            "default": "get_vendor_list"
+          },
+          "vendor_id": {
+            "type": "string",
+            "description": "Vendor identifier",
+            "required": false
+          },
+          "items": {
+            "type": "array",
+            "description": "List of items for purchase order or quote",
+            "required": false
+          },
+          "category": {
+            "type": "string",
+            "description": "Vendor or product category",
+            "required": false
+          }
+        },
+        "output_schema": {
+          "status": "success or error",
+          "message": "Human-readable message",
+          "data": {
+            "description": "Action-specific response data"
+          },
+          "errors": "Array of error messages if applicable"
+        },
+        "demo_available": true,
+        "demo_url": "demos/procurement_agent_demo.html",
+        "demo": {
+          "available": true,
+          "url": "agent_stacks/general_stacks/procurement_agent_stack/demos/procurement_agent_stack_demo.html"
+        }
+      }
+    },
+    {
+      "id": "find_accurate_models_stack",
+      "name": "Find Accurate Models Stack",
+      "path": "agent_stacks/general_stacks/find_accurate_models_stack",
+      "industry": "Cross-Industry",
+      "agents": [
+        {
+          "id": "find_accurate_models_stack_find_accurate_models_agent",
+          "name": "Find Accurate Models Agent",
+          "filename": "find_accurate_models_agent.py",
+          "path": "agent_stacks/general_stacks/find_accurate_models_stack/agents/find_accurate_models_agent.py",
+          "url": "https://raw.githubusercontent.com/kody-w/AI-Agent-Templates/main/agent_stacks/general_stacks/find_accurate_models_stack/agents/find_accurate_models_agent.py",
+          "size": 6308,
+          "size_formatted": "6.2KB",
+          "type": "stack",
+          "stack_name": "Find Accurate Models Stack",
+          "stack_path": "general_stacks/find_accurate_models_stack",
+          "industry": "Cross-Industry",
+          "icon": "\ud83e\udd16",
+          "description": "AI agent for task automation and workflow optimization",
+          "features": [
+            "AI-powered automation",
+            "Easy integration",
+            "Scalable architecture",
+            "Production ready"
+          ]
+        }
+      ],
+      "metadata": {
+        "id": "find_accurate_models_stack",
+        "name": "Find Accurate Models Stack",
+        "version": "1.0.0",
+        "author": "Microsoft AI Solutions Team",
+        "description": "Locate and recommend the most accurate AI models and configurations for specific use cases.",
+        "longDescription": "Locate and recommend the most accurate AI models and configurations for specific use cases. This solution provides enterprise-grade automation and intelligence to optimize operations and enhance decision-making.",
+        "category": "ai-optimization",
+        "complexity": "intermediate",
+        "estimatedSetupTime": "1-2 hours",
+        "maintenanceEffort": "low",
+        "features": [
+          "AI-powered automation",
+          "Real-time processing",
+          "Intelligent recommendations",
+          "API integration",
+          "Custom workflows",
+          "Analytics dashboard",
+          "Multi-language support",
+          "Enterprise security"
+        ],
+        "benefits": [
+          "50% reduction in manual tasks",
+          "Improved accuracy and consistency",
+          "24/7 availability",
+          "Scalable solution",
+          "Cost savings",
+          "Better decision making"
+        ],
+        "technicalRequirements": {
+          "platforms": [
+            "Windows",
+            "macOS",
+            "Linux",
+            "Cloud"
+          ],
+          "dependencies": [
+            "Python 3.8+",
+            "Azure Services",
+            "REST APIs"
+          ],
+          "apiKeys": [
+            "AZURE_API_KEY",
+            "SERVICE_ENDPOINT"
+          ]
+        },
+        "tags": [
+          "automation",
+          "ai",
+          "enterprise",
+          "ai_optimization"
+        ],
+        "demo": {
+          "available": true,
+          "url": "agent_stacks/general_stacks/find_accurate_models_stack/demos/find_accurate_models_stack_demo.html"
+        }
+      }
+    },
+    {
       "id": "crm_bulk_data_creator_stack",
       "name": "Crm Bulk Data Creator Stack",
       "path": "agent_stacks/general_stacks/crm_bulk_data_creator_stack",
@@ -5199,6 +6074,178 @@
           "testing",
           "training"
         ]
+      }
+    },
+    {
+      "id": "triage_bot_stack",
+      "name": "Triage Bot Stack",
+      "path": "agent_stacks/general_stacks/triage_bot_stack",
+      "industry": "Cross-Industry",
+      "agents": [
+        {
+          "id": "triage_bot_stack_triage_bot_agent",
+          "name": "Triage Bot Agent",
+          "filename": "triage_bot_agent.py",
+          "path": "agent_stacks/general_stacks/triage_bot_stack/agents/triage_bot_agent.py",
+          "url": "https://raw.githubusercontent.com/kody-w/AI-Agent-Templates/main/agent_stacks/general_stacks/triage_bot_stack/agents/triage_bot_agent.py",
+          "size": 8287,
+          "size_formatted": "8.1KB",
+          "type": "stack",
+          "stack_name": "Triage Bot Stack",
+          "stack_path": "general_stacks/triage_bot_stack",
+          "industry": "Cross-Industry",
+          "icon": "\ud83e\udd16",
+          "description": "AI agent for task automation and workflow optimization",
+          "features": [
+            "AI-powered automation",
+            "Easy integration",
+            "Scalable architecture",
+            "Production ready"
+          ]
+        }
+      ],
+      "metadata": {
+        "id": "triage_bot_stack",
+        "name": "Triage Bot Stack",
+        "version": "1.0.0",
+        "author": "Microsoft AI Solutions Team",
+        "description": "Intelligent request prioritization and routing based on urgency, impact, and available resources.",
+        "longDescription": "Intelligent request prioritization and routing based on urgency, impact, and available resources. This solution provides enterprise-grade automation and intelligence to optimize operations and enhance decision-making.",
+        "category": "workflow-automation",
+        "complexity": "intermediate",
+        "estimatedSetupTime": "1-2 hours",
+        "maintenanceEffort": "low",
+        "features": [
+          "AI-powered automation",
+          "Real-time processing",
+          "Intelligent recommendations",
+          "API integration",
+          "Custom workflows",
+          "Analytics dashboard",
+          "Multi-language support",
+          "Enterprise security"
+        ],
+        "benefits": [
+          "50% reduction in manual tasks",
+          "Improved accuracy and consistency",
+          "24/7 availability",
+          "Scalable solution",
+          "Cost savings",
+          "Better decision making"
+        ],
+        "technicalRequirements": {
+          "platforms": [
+            "Windows",
+            "macOS",
+            "Linux",
+            "Cloud"
+          ],
+          "dependencies": [
+            "Python 3.8+",
+            "Azure Services",
+            "REST APIs"
+          ],
+          "apiKeys": [
+            "AZURE_API_KEY",
+            "SERVICE_ENDPOINT"
+          ]
+        },
+        "tags": [
+          "automation",
+          "ai",
+          "enterprise",
+          "workflow_automation"
+        ],
+        "demo": {
+          "available": true,
+          "url": "agent_stacks/general_stacks/triage_bot_stack/demos/triage_bot_stack_demo.html"
+        }
+      }
+    },
+    {
+      "id": "it_ticket_management_stack",
+      "name": "It Ticket Management Stack",
+      "path": "agent_stacks/general_stacks/it_ticket_management_stack",
+      "industry": "Cross-Industry",
+      "agents": [
+        {
+          "id": "it_ticket_management_stack_it_ticket_management_agent",
+          "name": "It Ticket Management Agent",
+          "filename": "it_ticket_management_agent.py",
+          "path": "agent_stacks/general_stacks/it_ticket_management_stack/agents/it_ticket_management_agent.py",
+          "url": "https://raw.githubusercontent.com/kody-w/AI-Agent-Templates/main/agent_stacks/general_stacks/it_ticket_management_stack/agents/it_ticket_management_agent.py",
+          "size": 9123,
+          "size_formatted": "8.9KB",
+          "type": "stack",
+          "stack_name": "It Ticket Management Stack",
+          "stack_path": "general_stacks/it_ticket_management_stack",
+          "industry": "Cross-Industry",
+          "icon": "\ud83d\udcad",
+          "description": "AI agent for task automation and workflow optimization",
+          "features": [
+            "AI-powered automation",
+            "Easy integration",
+            "Scalable architecture",
+            "Production ready"
+          ]
+        }
+      ],
+      "metadata": {
+        "id": "it_ticket_management_stack",
+        "name": "IT Ticket Management Stack",
+        "version": "1.0.0",
+        "author": "Microsoft AI Solutions Team",
+        "description": "Automate IT support ticket routing, prioritization, and resolution with intelligent triage.",
+        "longDescription": "Automate IT support ticket routing, prioritization, and resolution with intelligent triage. This solution provides enterprise-grade automation and intelligence to optimize operations and enhance decision-making.",
+        "category": "it-operations",
+        "complexity": "intermediate",
+        "estimatedSetupTime": "1-2 hours",
+        "maintenanceEffort": "low",
+        "features": [
+          "AI-powered automation",
+          "Real-time processing",
+          "Intelligent recommendations",
+          "API integration",
+          "Custom workflows",
+          "Analytics dashboard",
+          "Multi-language support",
+          "Enterprise security"
+        ],
+        "benefits": [
+          "50% reduction in manual tasks",
+          "Improved accuracy and consistency",
+          "24/7 availability",
+          "Scalable solution",
+          "Cost savings",
+          "Better decision making"
+        ],
+        "technicalRequirements": {
+          "platforms": [
+            "Windows",
+            "macOS",
+            "Linux",
+            "Cloud"
+          ],
+          "dependencies": [
+            "Python 3.8+",
+            "Azure Services",
+            "REST APIs"
+          ],
+          "apiKeys": [
+            "AZURE_API_KEY",
+            "SERVICE_ENDPOINT"
+          ]
+        },
+        "tags": [
+          "automation",
+          "ai",
+          "enterprise",
+          "it_operations"
+        ],
+        "demo": {
+          "available": true,
+          "url": "agent_stacks/general_stacks/it_ticket_management_stack/demos/it_ticket_management_stack_demo.html"
+        }
       }
     },
     {
@@ -5506,7 +6553,7 @@
         ],
         "demo": {
           "available": true,
-          "url": "agent_stacks/general_stacks/voice_to_crm_stack/demos/voice_to_crm_showcase.html"
+          "url": "agent_stacks/general_stacks/voice_to_crm_stack/demos/voice_to_crm_m365_demo.html"
         },
         "relatedStacks": [
           "crm_bulk_data_creator_stack",
@@ -5720,6 +6767,184 @@
       }
     },
     {
+      "id": "ai_customer_assistant_stack",
+      "name": "Ai Customer Assistant Stack",
+      "path": "agent_stacks/general_stacks/ai_customer_assistant_stack",
+      "industry": "Cross-Industry",
+      "agents": [
+        {
+          "id": "ai_customer_assistant_stack_ai_customer_assistant_agent",
+          "name": "Ai Customer Assistant Agent",
+          "filename": "ai_customer_assistant_agent.py",
+          "path": "agent_stacks/general_stacks/ai_customer_assistant_stack/agents/ai_customer_assistant_agent.py",
+          "url": "https://raw.githubusercontent.com/kody-w/AI-Agent-Templates/main/agent_stacks/general_stacks/ai_customer_assistant_stack/agents/ai_customer_assistant_agent.py",
+          "size": 8088,
+          "size_formatted": "7.9KB",
+          "type": "stack",
+          "stack_name": "Ai Customer Assistant Stack",
+          "stack_path": "general_stacks/ai_customer_assistant_stack",
+          "industry": "Cross-Industry",
+          "icon": "\ud83e\udd16",
+          "description": "AI agent for task automation and workflow optimization",
+          "features": [
+            "AI-powered automation",
+            "Easy integration",
+            "Scalable architecture",
+            "Production ready"
+          ]
+        }
+      ],
+      "metadata": {
+        "id": "ai_customer_assistant_stack",
+        "name": "AI Customer Assistant Stack",
+        "version": "1.0.0",
+        "author": "Microsoft AI Solutions Team",
+        "description": "Intelligent customer service automation. Handle inquiries, resolve issues, and provide 24/7 support.",
+        "longDescription": "Intelligent customer service automation. Handle inquiries, resolve issues, and provide 24/7 support. This solution provides enterprise-grade automation and intelligence to optimize operations and enhance decision-making.",
+        "category": "customer-service",
+        "complexity": "intermediate",
+        "estimatedSetupTime": "1-2 hours",
+        "maintenanceEffort": "low",
+        "features": [
+          "AI-powered automation",
+          "Real-time processing",
+          "Intelligent recommendations",
+          "API integration",
+          "Custom workflows",
+          "Analytics dashboard",
+          "Multi-language support",
+          "Enterprise security"
+        ],
+        "benefits": [
+          "50% reduction in manual tasks",
+          "Improved accuracy and consistency",
+          "24/7 availability",
+          "Scalable solution",
+          "Cost savings",
+          "Better decision making"
+        ],
+        "technicalRequirements": {
+          "platforms": [
+            "Windows",
+            "macOS",
+            "Linux",
+            "Cloud"
+          ],
+          "dependencies": [
+            "Python 3.8+",
+            "Azure Services",
+            "REST APIs"
+          ],
+          "apiKeys": [
+            "AZURE_API_KEY",
+            "SERVICE_ENDPOINT"
+          ]
+        },
+        "tags": [
+          "automation",
+          "ai",
+          "enterprise",
+          "customer_service"
+        ],
+        "demo": {
+          "available": true,
+          "url": "agent_stacks/general_stacks/ai_customer_assistant_stack/demos/ai_customer_assistant_stack_demo.html"
+        }
+      }
+    },
+    {
+      "id": "speech_to_crm_stack",
+      "name": "Speech To Crm Stack",
+      "path": "agent_stacks/general_stacks/speech_to_crm_stack",
+      "industry": "Cross-Industry",
+      "agents": [
+        {
+          "id": "speech_to_crm_stack_speech_to_crm_agent",
+          "name": "Speech To Crm Agent",
+          "filename": "speech_to_crm_agent.py",
+          "path": "agent_stacks/general_stacks/speech_to_crm_stack/agents/speech_to_crm_agent.py",
+          "url": "https://raw.githubusercontent.com/kody-w/AI-Agent-Templates/main/agent_stacks/general_stacks/speech_to_crm_stack/agents/speech_to_crm_agent.py",
+          "size": 15859,
+          "size_formatted": "15.5KB",
+          "type": "stack",
+          "stack_name": "Speech To Crm Stack",
+          "stack_path": "general_stacks/speech_to_crm_stack",
+          "industry": "Cross-Industry",
+          "icon": "\ud83d\udcbc",
+          "description": "CRM integration and data management",
+          "features": [
+            "CRM integration",
+            "Data synchronization",
+            "Record management",
+            "Pipeline automation"
+          ]
+        }
+      ],
+      "metadata": {
+        "id": "speech_to_crm_stack",
+        "name": "Speech to CRM Stack",
+        "version": "1.0.0",
+        "author": "Microsoft AI Voice Intelligence Team",
+        "description": "Convert voice conversations into structured CRM data. Automatically transcribe, analyze, and update CRM records from calls, meetings, and voice notes.",
+        "longDescription": "The Speech to CRM Stack transforms voice interactions into actionable CRM data through advanced speech recognition and NLP. It automatically creates contacts, updates opportunities, logs activities, and extracts key insights from phone calls, meetings, and voice memos.",
+        "category": "voice-automation",
+        "complexity": "intermediate",
+        "estimatedSetupTime": "1 hour",
+        "maintenanceEffort": "low",
+        "features": [
+          "Real-time speech transcription",
+          "Automatic CRM record creation",
+          "Entity and intent extraction",
+          "Multi-speaker identification",
+          "Sentiment analysis",
+          "Action item detection",
+          "Meeting summary generation",
+          "Multi-language support",
+          "Custom vocabulary training",
+          "Integration with major CRM platforms"
+        ],
+        "benefits": [
+          "100% call logging accuracy",
+          "75% reduction in manual data entry",
+          "Never miss important details",
+          "30% increase in CRM data quality",
+          "Instant meeting follow-ups",
+          "Better pipeline visibility"
+        ],
+        "technicalRequirements": {
+          "platforms": [
+            "Windows",
+            "macOS",
+            "Linux",
+            "Cloud"
+          ],
+          "dependencies": [
+            "Python 3.8+",
+            "Azure Cognitive Services",
+            "Microsoft Dynamics 365 or Salesforce",
+            "Azure Functions"
+          ],
+          "apiKeys": [
+            "AZURE_SPEECH_KEY",
+            "CRM_API_KEY",
+            "AZURE_COGNITIVE_KEY"
+          ]
+        },
+        "tags": [
+          "speech-to-text",
+          "crm",
+          "voice",
+          "automation",
+          "nlp",
+          "sales"
+        ],
+        "demo": {
+          "available": true,
+          "url": "agent_stacks/general_stacks/speech_to_crm_stack/demos/speech_to_crm_demo.html"
+        }
+      }
+    },
+    {
       "id": "email_drafting_stack",
       "name": "Email Drafting Stack",
       "path": "agent_stacks/general_stacks/email_drafting_stack",
@@ -5870,6 +7095,264 @@
           "productivity",
           "nlp"
         ]
+      }
+    },
+    {
+      "id": "identify_discounts_stack",
+      "name": "Identify Discounts Stack",
+      "path": "agent_stacks/general_stacks/identify_discounts_stack",
+      "industry": "Cross-Industry",
+      "agents": [
+        {
+          "id": "identify_discounts_stack_identify_discounts_agent",
+          "name": "Identify Discounts Agent",
+          "filename": "identify_discounts_agent.py",
+          "path": "agent_stacks/general_stacks/identify_discounts_stack/agents/identify_discounts_agent.py",
+          "url": "https://raw.githubusercontent.com/kody-w/AI-Agent-Templates/main/agent_stacks/general_stacks/identify_discounts_stack/agents/identify_discounts_agent.py",
+          "size": 6350,
+          "size_formatted": "6.2KB",
+          "type": "stack",
+          "stack_name": "Identify Discounts Stack",
+          "stack_path": "general_stacks/identify_discounts_stack",
+          "industry": "Cross-Industry",
+          "icon": "\ud83e\udd16",
+          "description": "AI agent for task automation and workflow optimization",
+          "features": [
+            "AI-powered automation",
+            "Easy integration",
+            "Scalable architecture",
+            "Production ready"
+          ]
+        }
+      ],
+      "metadata": {
+        "id": "identify_discounts_stack",
+        "name": "Identify Discounts Stack",
+        "version": "1.0.0",
+        "author": "Microsoft AI Solutions Team",
+        "description": "Automatically identify and apply available discounts, promotions, and special pricing to maximize savings.",
+        "longDescription": "Automatically identify and apply available discounts, promotions, and special pricing to maximize savings. This solution provides enterprise-grade automation and intelligence to optimize operations and enhance decision-making.",
+        "category": "pricing-optimization",
+        "complexity": "intermediate",
+        "estimatedSetupTime": "1-2 hours",
+        "maintenanceEffort": "low",
+        "features": [
+          "AI-powered automation",
+          "Real-time processing",
+          "Intelligent recommendations",
+          "API integration",
+          "Custom workflows",
+          "Analytics dashboard",
+          "Multi-language support",
+          "Enterprise security"
+        ],
+        "benefits": [
+          "50% reduction in manual tasks",
+          "Improved accuracy and consistency",
+          "24/7 availability",
+          "Scalable solution",
+          "Cost savings",
+          "Better decision making"
+        ],
+        "technicalRequirements": {
+          "platforms": [
+            "Windows",
+            "macOS",
+            "Linux",
+            "Cloud"
+          ],
+          "dependencies": [
+            "Python 3.8+",
+            "Azure Services",
+            "REST APIs"
+          ],
+          "apiKeys": [
+            "AZURE_API_KEY",
+            "SERVICE_ENDPOINT"
+          ]
+        },
+        "tags": [
+          "automation",
+          "ai",
+          "enterprise",
+          "pricing_optimization"
+        ],
+        "demo": {
+          "available": true,
+          "url": "agent_stacks/general_stacks/identify_discounts_stack/demos/identify_discounts_stack_demo.html"
+        }
+      }
+    },
+    {
+      "id": "product_reference_stack",
+      "name": "Product Reference Stack",
+      "path": "agent_stacks/general_stacks/product_reference_stack",
+      "industry": "Cross-Industry",
+      "agents": [
+        {
+          "id": "product_reference_stack_product_reference_agent",
+          "name": "Product Reference Agent",
+          "filename": "product_reference_agent.py",
+          "path": "agent_stacks/general_stacks/product_reference_stack/agents/product_reference_agent.py",
+          "url": "https://raw.githubusercontent.com/kody-w/AI-Agent-Templates/main/agent_stacks/general_stacks/product_reference_stack/agents/product_reference_agent.py",
+          "size": 12688,
+          "size_formatted": "12.4KB",
+          "type": "stack",
+          "stack_name": "Product Reference Stack",
+          "stack_path": "general_stacks/product_reference_stack",
+          "industry": "Cross-Industry",
+          "icon": "\ud83e\udd16",
+          "description": "AI agent for task automation and workflow optimization",
+          "features": [
+            "AI-powered automation",
+            "Easy integration",
+            "Scalable architecture",
+            "Production ready"
+          ]
+        }
+      ],
+      "metadata": {
+        "id": "product_reference_stack",
+        "name": "Product Reference Stack",
+        "version": "1.0.0",
+        "author": "Microsoft AI Solutions Team",
+        "description": "Comprehensive product information and recommendation system. Access detailed specs, comparisons, and intelligent search.",
+        "longDescription": "Comprehensive product information and recommendation system. Access detailed specs, comparisons, and intelligent search. This solution provides enterprise-grade automation and intelligence to optimize operations and enhance decision-making.",
+        "category": "product-intelligence",
+        "complexity": "intermediate",
+        "estimatedSetupTime": "1-2 hours",
+        "maintenanceEffort": "low",
+        "features": [
+          "AI-powered automation",
+          "Real-time processing",
+          "Intelligent recommendations",
+          "API integration",
+          "Custom workflows",
+          "Analytics dashboard",
+          "Multi-language support",
+          "Enterprise security"
+        ],
+        "benefits": [
+          "50% reduction in manual tasks",
+          "Improved accuracy and consistency",
+          "24/7 availability",
+          "Scalable solution",
+          "Cost savings",
+          "Better decision making"
+        ],
+        "technicalRequirements": {
+          "platforms": [
+            "Windows",
+            "macOS",
+            "Linux",
+            "Cloud"
+          ],
+          "dependencies": [
+            "Python 3.8+",
+            "Azure Services",
+            "REST APIs"
+          ],
+          "apiKeys": [
+            "AZURE_API_KEY",
+            "SERVICE_ENDPOINT"
+          ]
+        },
+        "tags": [
+          "automation",
+          "ai",
+          "enterprise",
+          "product_intelligence"
+        ],
+        "demo": {
+          "available": true,
+          "url": "agent_stacks/general_stacks/product_reference_stack/demos/product_reference_stack_demo.html"
+        }
+      }
+    },
+    {
+      "id": "ask_hr_stack",
+      "name": "Ask Hr Stack",
+      "path": "agent_stacks/general_stacks/ask_hr_stack",
+      "industry": "Cross-Industry",
+      "agents": [
+        {
+          "id": "ask_hr_stack_ask_hr_agent",
+          "name": "Ask Hr Agent",
+          "filename": "ask_hr_agent.py",
+          "path": "agent_stacks/general_stacks/ask_hr_stack/agents/ask_hr_agent.py",
+          "url": "https://raw.githubusercontent.com/kody-w/AI-Agent-Templates/main/agent_stacks/general_stacks/ask_hr_stack/agents/ask_hr_agent.py",
+          "size": 10583,
+          "size_formatted": "10.3KB",
+          "type": "stack",
+          "stack_name": "Ask Hr Stack",
+          "stack_path": "general_stacks/ask_hr_stack",
+          "industry": "Cross-Industry",
+          "icon": "\ud83e\udd16",
+          "description": "AI agent for task automation and workflow optimization",
+          "features": [
+            "AI-powered automation",
+            "Easy integration",
+            "Scalable architecture",
+            "Production ready"
+          ]
+        }
+      ],
+      "metadata": {
+        "id": "ask_hr_stack",
+        "name": "Ask HR Stack",
+        "version": "1.0.0",
+        "author": "Microsoft AI Solutions Team",
+        "description": "AI-powered HR assistant for employee questions about policies, benefits, and workplace matters.",
+        "longDescription": "AI-powered HR assistant for employee questions about policies, benefits, and workplace matters. This solution provides enterprise-grade automation and intelligence to optimize operations and enhance decision-making.",
+        "category": "hr-automation",
+        "complexity": "intermediate",
+        "estimatedSetupTime": "1-2 hours",
+        "maintenanceEffort": "low",
+        "features": [
+          "AI-powered automation",
+          "Real-time processing",
+          "Intelligent recommendations",
+          "API integration",
+          "Custom workflows",
+          "Analytics dashboard",
+          "Multi-language support",
+          "Enterprise security"
+        ],
+        "benefits": [
+          "50% reduction in manual tasks",
+          "Improved accuracy and consistency",
+          "24/7 availability",
+          "Scalable solution",
+          "Cost savings",
+          "Better decision making"
+        ],
+        "technicalRequirements": {
+          "platforms": [
+            "Windows",
+            "macOS",
+            "Linux",
+            "Cloud"
+          ],
+          "dependencies": [
+            "Python 3.8+",
+            "Azure Services",
+            "REST APIs"
+          ],
+          "apiKeys": [
+            "AZURE_API_KEY",
+            "SERVICE_ENDPOINT"
+          ]
+        },
+        "tags": [
+          "automation",
+          "ai",
+          "enterprise",
+          "hr_automation"
+        ],
+        "demo": {
+          "available": true,
+          "url": "agent_stacks/general_stacks/ask_hr_stack/demos/ask_hr_stack_demo.html"
+        }
       }
     },
     {

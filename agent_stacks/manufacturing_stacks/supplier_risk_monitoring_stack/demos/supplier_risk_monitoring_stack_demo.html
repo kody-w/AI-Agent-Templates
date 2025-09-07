@@ -1,0 +1,500 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Supplier Risk Monitoring Agent - M365 Copilot</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, system-ui, sans-serif; background: #faf9f8; height: 100vh; display: flex; overflow: hidden; color: #323130; }
+        .sidebar { width: 260px; background: #ffffff; display: flex; flex-direction: column; border-right: 1px solid #edebe9; }
+        .sidebar-header { padding: 12px 16px; display: flex; align-items: center; gap: 10px; border-bottom: 1px solid #edebe9; height: 48px; }
+        .copilot-icon { width: 24px; height: 24px; background: linear-gradient(135deg, #2563eb 0%, #7c3aed 100%); border-radius: 4px; display: flex; align-items: center; justify-content: center; position: relative; }
+        .copilot-icon::before { content: "⚡"; font-size: 14px; filter: brightness(0) invert(1); }
+        .sidebar-title { font-size: 14px; font-weight: 600; color: #323130; }
+        .nav-section { flex: 1; overflow-y: auto; padding: 4px 0; }
+        .nav-item { padding: 8px 16px; display: flex; align-items: center; gap: 12px; cursor: pointer; font-size: 14px; color: #323130; transition: background 0.1s; position: relative; user-select: none; }
+        .nav-item:hover { background: #f3f2f1; }
+        .nav-item.active { background: #f3f2f1; }
+        .nav-item.active::before { content: ""; position: absolute; left: 0; top: 8px; bottom: 8px; width: 2px; background: #2563eb; border-radius: 1px; }
+        .main-content { flex: 1; display: flex; flex-direction: column; background: #faf9f8; }
+        .content-header { height: 48px; padding: 0 20px; display: flex; align-items: center; justify-content: space-between; background: #ffffff; border-bottom: 1px solid #edebe9; }
+        .demo-controls { padding: 16px 20px; background: #f3f2f1; display: flex; align-items: center; gap: 16px; border-bottom: 1px solid #edebe9; }
+        .demo-button { padding: 8px 16px; background: #2563eb; color: white; border: none; border-radius: 4px; cursor: pointer; font-size: 14px; font-weight: 600; transition: background 0.2s; }
+        .demo-button:hover { background: #1d4ed8; }
+        .demo-button:disabled { background: #a19f9d; cursor: not-allowed; }
+        .demo-button.secondary { background: #605e5c; }
+        .chat-container { flex: 1; display: flex; flex-direction: column; overflow: hidden; }
+        .chat-messages { flex: 1; overflow-y: auto; padding: 20px; }
+        .message { max-width: 900px; margin: 0 auto 24px; animation: fadeIn 0.5s ease-in; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        .message-header { display: flex; align-items: center; gap: 12px; margin-bottom: 8px; }
+        .message-avatar-user { width: 28px; height: 28px; border-radius: 50%; background: #5b5fc7; color: white; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 600; }
+        .message-avatar-agent { width: 28px; height: 28px; border-radius: 6px; background: linear-gradient(135deg, #2563eb 0%, #7c3aed 100%); color: white; display: flex; align-items: center; justify-content: center; font-size: 14px; font-weight: 600; }
+        .message-content { margin-left: 40px; font-size: 14px; line-height: 1.6; color: #323130; }
+        .agent-card { margin-left: 40px; margin-top: 16px; background: white; border: 1px solid #edebe9; border-radius: 8px; overflow: hidden; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05); }
+        .agent-card-header { padding: 16px; display: flex; align-items: center; gap: 12px; border-bottom: 1px solid #edebe9; background: #faf9f8; }
+        .agent-card-content { padding: 16px; }
+        .detail-list { list-style: none; }
+        .detail-item { padding: 8px 0; font-size: 14px; color: #323130; display: flex; gap: 8px; }
+        .detail-label { font-weight: 600; min-width: 140px; color: #605e5c; }
+        .typing-indicator { margin-left: 40px; display: flex; gap: 4px; padding: 8px 0; }
+        .typing-dot { width: 8px; height: 8px; background: #605e5c; border-radius: 50%; animation: typing 1.4s infinite; }
+        .typing-dot:nth-child(2) { animation-delay: 0.2s; }
+        .typing-dot:nth-child(3) { animation-delay: 0.4s; }
+        @keyframes typing { 0%, 60%, 100% { transform: translateY(0); opacity: 0.5; } 30% { transform: translateY(-10px); opacity: 1; } }
+        .risk-indicator { padding: 4px 8px; border-radius: 4px; font-weight: 600; display: inline-block; }
+        .risk-critical { background: #fee2e2; color: #dc2626; }
+        .risk-high { background: #fed7aa; color: #ea580c; }
+        .risk-medium { background: #fef3c7; color: #d97706; }
+        .risk-low { background: #d1fae5; color: #059669; }
+    </style>
+</head>
+<body>
+    <div class="sidebar">
+        <div class="sidebar-header">
+            <div class="copilot-icon"></div>
+            <span class="sidebar-title">Supplier Risk Monitor</span>
+        </div>
+        <div class="nav-section">
+            <div class="nav-item active"><span>📊</span><span>Risk Dashboard</span></div>
+            <div class="nav-item"><span>🏭</span><span>Supplier Network</span></div>
+            <div class="nav-item"><span>⚠️</span><span>Disruption Alerts</span></div>
+            <div class="nav-item"><span>📈</span><span>Performance Metrics</span></div>
+            <div class="nav-item"><span>🌍</span><span>Geopolitical Risks</span></div>
+        </div>
+    </div>
+    <div class="main-content">
+        <div class="content-header">
+            <div class="header-title">Supplier Risk Monitoring System</div>
+        </div>
+        <div class="demo-controls">
+            <button class="demo-button" onclick="startDemo()" id="playButton">▶ Play Demo</button>
+            <button class="demo-button secondary" onclick="pauseDemo()" id="pauseButton" disabled>⏸ Pause</button>
+            <button class="demo-button secondary" onclick="resetDemo()">↺ Reset</button>
+            <button class="demo-button secondary" onclick="skipMessage()">⏭ Skip</button>
+            <span style="margin-left: auto; font-size: 14px; color: #605e5c;" id="demoStatus">Ready to start</span>
+        </div>
+        <div class="chat-container">
+            <div class="chat-messages" id="chatMessages"></div>
+        </div>
+    </div>
+    <script>
+        let currentMessageIndex = 0;
+        let isPlaying = false;
+        let isPaused = false;
+        let messageTimeout;
+        let typingTimeout;
+
+        const demoScript = [
+            {
+                "type": "user",
+                "content": "I'm seeing news about port strikes in Asia. How will this impact our supply chain and which suppliers are at risk?",
+                "typingTime": 1500,
+                "delay": 1000
+            },
+            {
+                "type": "agent",
+                "content": "I'm analyzing the port strike situation and assessing the impact on your supply chain network. Let me provide a comprehensive risk assessment.",
+                "typingTime": 2000,
+                "delay": 1500,
+                "agentData": {
+                    "Disruption Alert": {
+                        "Event": "Port worker strikes - Shanghai, Singapore, Hong Kong",
+                        "Severity": "CRITICAL - Operations halted",
+                        "Duration": "Expected 5-7 days minimum",
+                        "Impact Start": "Immediate - Already affecting shipments",
+                        "Affected Volume": "32% of your inbound materials"
+                    },
+                    "Impacted Suppliers": {
+                        "Tier 1 Critical": [
+                            "TechParts Asia (semiconductors) - 14 days inventory",
+                            "Precision Motors Ltd (components) - 8 days inventory",
+                            "GlobalMetals Corp (raw materials) - 21 days inventory"
+                        ],
+                        "Tier 2 At-Risk": [
+                            "Eastern Electronics - Alternative route available",
+                            "Pacific Plastics - Air freight option possible",
+                            "Component Solutions - Buffer stock sufficient"
+                        ]
+                    },
+                    "Production Impact Analysis": {
+                        "Assembly Line A": "Critical shortage in 10 days",
+                        "Assembly Line B": "Operating normally - 30 days buffer",
+                        "Assembly Line C": "Risk elevated - monitor closely",
+                        "Revenue at Risk": "$4.2M per week after day 10",
+                        "Customer Orders": "127 orders potentially affected"
+                    },
+                    "Mitigation Actions": {
+                        "Immediate": [
+                            "Activate alternate supplier agreements",
+                            "Expedite air freight for critical components",
+                            "Reallocate inventory from Line B to Line A"
+                        ],
+                        "Short-term": [
+                            "Negotiate priority loading when ports reopen",
+                            "Increase safety stock levels by 25%",
+                            "Diversify shipping routes through Vietnam"
+                        ]
+                    }
+                }
+            },
+            {
+                "type": "user",
+                "content": "Activate the contingency plans for TechParts Asia. Also, what's the financial exposure if this extends beyond 7 days?",
+                "typingTime": 1600,
+                "delay": 1200
+            },
+            {
+                "type": "agent",
+                "content": "Contingency plan activated for TechParts Asia. I'm calculating the extended financial exposure and coordinating alternative sourcing.",
+                "typingTime": 2000,
+                "delay": 1500,
+                "agentData": {
+                    "Contingency Activation": {
+                        "Primary Supplier": "TechParts Asia",
+                        "Backup Supplier": "EuroTech Components (Germany)",
+                        "Lead Time": "72 hours via air freight",
+                        "Cost Premium": "+18% over standard pricing",
+                        "Quantity Available": "80% of requirements",
+                        "PO Generated": "#PO-2024-Emergency-4782"
+                    },
+                    "Financial Exposure (7+ Days)": {
+                        "Day 7-14": {
+                            "Production Loss": "$4.2M",
+                            "Expedite Costs": "$780K",
+                            "Contract Penalties": "$1.1M",
+                            "Total Impact": "$6.08M"
+                        },
+                        "Day 14-21": {
+                            "Production Loss": "$8.7M cumulative",
+                            "Customer Churn Risk": "$2.3M",
+                            "Market Share Impact": "2-3% potential loss",
+                            "Total Impact": "$14.2M cumulative"
+                        }
+                    },
+                    "Supply Chain Adjustments": {
+                        "Inventory Reallocation": "500 units from warehouse B",
+                        "Production Schedule": "Priority shift to available materials",
+                        "Customer Communication": "Proactive outreach to top 20 accounts",
+                        "Alternative Sources": "3 new suppliers qualified for future"
+                    },
+                    "Risk Mitigation Results": {
+                        "Coverage Achieved": "73% of critical components secured",
+                        "Delivery Timeline": "5-day delay reduced to 2 days",
+                        "Cost Impact": "$780K additional vs $4.2M loss avoided",
+                        "Customer Retention": "95% orders maintained with new dates"
+                    }
+                }
+            },
+            {
+                "type": "user",
+                "content": "Good work. Can you also assess our overall supplier concentration risk and recommend diversification strategies?",
+                "typingTime": 1500,
+                "delay": 1000
+            },
+            {
+                "type": "agent",
+                "content": "I'll analyze your supplier concentration risk across all categories and provide strategic diversification recommendations.",
+                "typingTime": 1800,
+                "delay": 1500,
+                "agentData": {
+                    "Concentration Risk Analysis": {
+                        "High Risk Categories": {
+                            "Semiconductors": "85% from 2 suppliers (Asia)",
+                            "Rare Earth Metals": "92% single source (China)",
+                            "Specialized Plastics": "78% from 1 region (SEA)",
+                            "Custom Components": "70% single supplier dependency"
+                        },
+                        "Geographic Concentration": {
+                            "Asia Pacific": "67% of supply base",
+                            "China Specifically": "41% of critical components",
+                            "Single Port Dependence": "38% through Shanghai",
+                            "Currency Risk": "USD 42M exposed to CNY fluctuation"
+                        }
+                    },
+                    "Diversification Strategy": {
+                        "Immediate Actions": [
+                            "Qualify 2 suppliers in Mexico for semiconductors",
+                            "Establish European source for 30% of plastics",
+                            "Create dual-sourcing for top 20 components"
+                        ],
+                        "90-Day Plan": [
+                            "Reduce China concentration to <30%",
+                            "Implement n+1 supplier strategy",
+                            "Establish regional inventory hubs",
+                            "Contract with backup logistics providers"
+                        ],
+                        "Strategic Initiatives": [
+                            "Near-shoring program for critical components",
+                            "Vertical integration for key materials",
+                            "Supplier development in emerging markets",
+                            "Blockchain visibility for Tier 2/3 suppliers"
+                        ]
+                    },
+                    "Implementation Roadmap": {
+                        "Phase 1 (Q4 2024)": "Qualify alternative suppliers",
+                        "Phase 2 (Q1 2025)": "Transition 25% of volume",
+                        "Phase 3 (Q2 2025)": "Regional hub operational",
+                        "Target State": "No supplier >40%, No region >50%",
+                        "Investment Required": "$3.2M over 18 months"
+                    },
+                    "Expected Benefits": {
+                        "Risk Reduction": "60% lower disruption probability",
+                        "Cost Optimization": "5-7% reduction through competition",
+                        "Lead Time": "Average 15% improvement",
+                        "Flexibility": "2x faster response to demand changes",
+                        "ROI": "2.8x return on diversification investment"
+                    }
+                }
+            },
+            {
+                "type": "user",
+                "content": "Excellent analysis. Set up monitoring for all these new initiatives and create a supplier scorecard dashboard.",
+                "typingTime": 1400,
+                "delay": 1200
+            },
+            {
+                "type": "agent",
+                "content": "I'm configuring comprehensive monitoring and creating your real-time supplier scorecard dashboard with key risk indicators.",
+                "typingTime": 1800,
+                "delay": 1500,
+                "agentData": {
+                    "Monitoring Configuration": {
+                        "Real-time Alerts": [
+                            "Geopolitical events in supplier regions",
+                            "Financial health deterioration (credit scores)",
+                            "Quality metrics deviation >2 sigma",
+                            "Delivery performance <95%",
+                            "Price volatility >10%"
+                        ],
+                        "Data Sources": [
+                            "Reuters supply chain feed",
+                            "D&B financial monitoring",
+                            "IoT sensors at supplier facilities",
+                            "Shipping tracker APIs",
+                            "Weather and natural disaster feeds"
+                        ]
+                    },
+                    "Supplier Scorecard Metrics": {
+                        "Performance KPIs": {
+                            "On-Time Delivery": "Target >98%",
+                            "Quality Rating": "PPM <50",
+                            "Cost Competitiveness": "Within 5% of market",
+                            "Innovation Score": "2+ improvements/year",
+                            "Responsiveness": "<24hr critical response"
+                        },
+                        "Risk Indicators": {
+                            "Financial Health": "Z-score, D/E ratio, cash flow",
+                            "Operational Risk": "Capacity utilization, labor issues",
+                            "Compliance": "Certifications, audit scores",
+                            "ESG Rating": "Carbon footprint, labor practices",
+                            "Cyber Security": "ISO 27001, breach history"
+                        }
+                    },
+                    "Dashboard Features": {
+                        "Executive View": "Top 10 risks, mitigation status",
+                        "Operational View": "Real-time shipment tracking",
+                        "Financial View": "Cost trends, exposure analysis",
+                        "Predictive Analytics": "ML-based disruption forecast",
+                        "Mobile Alerts": "Push notifications for critical events"
+                    },
+                    "Automation Enabled": {
+                        "Auto-switching": "Backup supplier activation",
+                        "Smart Ordering": "Dynamic safety stock adjustment",
+                        "Risk Scoring": "Continuous AI evaluation",
+                        "Report Generation": "Weekly executive summaries",
+                        "Stakeholder Updates": "Automated communications"
+                    }
+                }
+            }
+        ];
+
+        function startDemo() {
+            if (!isPlaying || isPaused) {
+                isPlaying = true;
+                isPaused = false;
+                document.getElementById('playButton').disabled = true;
+                document.getElementById('pauseButton').disabled = false;
+                document.getElementById('demoStatus').textContent = 'Playing demo...';
+                if (currentMessageIndex === 0) {
+                    document.getElementById('chatMessages').innerHTML = '';
+                }
+                playNextMessage();
+            }
+        }
+
+        function pauseDemo() {
+            if (isPlaying) {
+                isPaused = true;
+                isPlaying = false;
+                clearTimeout(messageTimeout);
+                clearTimeout(typingTimeout);
+                document.getElementById('playButton').disabled = false;
+                document.getElementById('pauseButton').disabled = true;
+                document.getElementById('demoStatus').textContent = 'Demo paused';
+                removeTypingIndicator();
+            }
+        }
+
+        function resetDemo() {
+            clearTimeout(messageTimeout);
+            clearTimeout(typingTimeout);
+            currentMessageIndex = 0;
+            isPlaying = false;
+            isPaused = false;
+            document.getElementById('chatMessages').innerHTML = '';
+            document.getElementById('playButton').disabled = false;
+            document.getElementById('pauseButton').disabled = true;
+            document.getElementById('demoStatus').textContent = 'Ready to start';
+            removeTypingIndicator();
+        }
+
+        function skipMessage() {
+            if (currentMessageIndex < demoScript.length) {
+                clearTimeout(messageTimeout);
+                clearTimeout(typingTimeout);
+                removeTypingIndicator();
+                const message = demoScript[currentMessageIndex];
+                addMessage(message);
+                currentMessageIndex++;
+                if (isPlaying && currentMessageIndex < demoScript.length) {
+                    playNextMessage();
+                } else if (currentMessageIndex >= demoScript.length) {
+                    demoComplete();
+                }
+            }
+        }
+
+        function playNextMessage() {
+            if (currentMessageIndex < demoScript.length && isPlaying && !isPaused) {
+                const message = demoScript[currentMessageIndex];
+                messageTimeout = setTimeout(() => {
+                    if (message.type === 'agent') {
+                        showTypingIndicator();
+                        typingTimeout = setTimeout(() => {
+                            removeTypingIndicator();
+                            addMessage(message);
+                            currentMessageIndex++;
+                            if (currentMessageIndex < demoScript.length) {
+                                playNextMessage();
+                            } else {
+                                demoComplete();
+                            }
+                        }, message.typingTime || 2000);
+                    } else {
+                        addMessage(message);
+                        currentMessageIndex++;
+                        if (currentMessageIndex < demoScript.length) {
+                            playNextMessage();
+                        } else {
+                            demoComplete();
+                        }
+                    }
+                }, message.delay || 1000);
+            }
+        }
+
+        function demoComplete() {
+            isPlaying = false;
+            document.getElementById('playButton').disabled = false;
+            document.getElementById('pauseButton').disabled = true;
+            document.getElementById('demoStatus').textContent = 'Demo complete';
+        }
+
+        function addMessage(message) {
+            const chatMessages = document.getElementById('chatMessages');
+            const messageDiv = document.createElement('div');
+            messageDiv.className = 'message';
+            const time = new Date().toLocaleString('en-US', { hour: 'numeric', minute: '2-digit', hour12: true });
+            
+            if (message.type === 'user') {
+                messageDiv.innerHTML = `
+                    <div class="message-header">
+                        <div class="message-avatar-user">U</div>
+                        <span class="message-author" style="font-weight: 600;">You</span>
+                        <span class="message-time" style="font-size: 12px; color: #a19f9d;">${time}</span>
+                    </div>
+                    <div class="message-content">${message.content}</div>
+                `;
+            } else if (message.type === 'agent') {
+                let html = `
+                    <div class="message-header">
+                        <div class="message-avatar-agent">SR</div>
+                        <span class="message-author" style="font-weight: 600;">Supplier Risk Monitor</span>
+                        <span class="message-time" style="font-size: 12px; color: #a19f9d;">${time}</span>
+                    </div>
+                    <div class="message-content">${message.content}</div>
+                `;
+                
+                if (message.agentData) {
+                    html += '<div class="agent-card">';
+                    html += '<div class="agent-card-header"><span style="font-weight: 600;">Risk Analysis Report</span></div>';
+                    html += '<div class="agent-card-content">';
+                    
+                    for (const [category, data] of Object.entries(message.agentData)) {
+                        html += `<div style="margin-bottom: 16px;"><div style="font-weight: 600; color: #2563eb; margin-bottom: 8px;">${category}</div>`;
+                        
+                        if (typeof data === 'object' && !Array.isArray(data)) {
+                            html += '<ul class="detail-list">';
+                            for (const [key, value] of Object.entries(data)) {
+                                if (Array.isArray(value)) {
+                                    html += `<li class="detail-item"><span class="detail-label">${key}:</span><span>`;
+                                    value.forEach(item => {
+                                        let riskClass = '';
+                                        if (item.includes('CRITICAL') || item.includes('Critical')) riskClass = 'risk-critical';
+                                        else if (item.includes('High')) riskClass = 'risk-high';
+                                        else if (item.includes('Medium')) riskClass = 'risk-medium';
+                                        html += `<div style="margin: 4px 0; padding: 8px; background: #f9fafb; border-radius: 4px;">${item}</div>`;
+                                    });
+                                    html += '</span></li>';
+                                } else if (typeof value === 'object') {
+                                    html += `<li class="detail-item"><span class="detail-label">${key}:</span><span>`;
+                                    for (const [subKey, subValue] of Object.entries(value)) {
+                                        html += `<div style="margin: 2px 0;">${subKey}: ${subValue}</div>`;
+                                    }
+                                    html += '</span></li>';
+                                } else {
+                                    let displayValue = value;
+                                    if (value.includes('CRITICAL')) {
+                                        displayValue = `<span class="risk-indicator risk-critical">${value}</span>`;
+                                    } else if (value.includes('HIGH')) {
+                                        displayValue = `<span class="risk-indicator risk-high">${value}</span>`;
+                                    }
+                                    html += `<li class="detail-item"><span class="detail-label">${key}:</span><span>${displayValue}</span></li>`;
+                                }
+                            }
+                            html += '</ul>';
+                        }
+                        html += '</div>';
+                    }
+                    
+                    html += '</div></div>';
+                }
+                
+                messageDiv.innerHTML = html;
+            }
+            
+            chatMessages.appendChild(messageDiv);
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+        }
+
+        function showTypingIndicator() {
+            const chatMessages = document.getElementById('chatMessages');
+            const typingDiv = document.createElement('div');
+            typingDiv.className = 'typing-indicator';
+            typingDiv.id = 'typingIndicator';
+            typingDiv.innerHTML = '<div class="typing-dot"></div><div class="typing-dot"></div><div class="typing-dot"></div>';
+            chatMessages.appendChild(typingDiv);
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+        }
+
+        function removeTypingIndicator() {
+            const typingIndicator = document.getElementById('typingIndicator');
+            if (typingIndicator) {
+                typingIndicator.remove();
+            }
+        }
+    </script>
+</body>
+</html>

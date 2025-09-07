@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IT Helpdesk Agent - M365 Copilot</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, system-ui, sans-serif; background: #faf9f8; height: 100vh; display: flex; overflow: hidden; color: #323130; }
+        .sidebar { width: 260px; background: #ffffff; display: flex; flex-direction: column; border-right: 1px solid #edebe9; }
+        .sidebar-header { padding: 12px 16px; display: flex; align-items: center; gap: 10px; border-bottom: 1px solid #edebe9; height: 48px; }
+        .copilot-icon { width: 24px; height: 24px; background: linear-gradient(135deg, #0078d4 0%, #40e0d0 100%); border-radius: 4px; display: flex; align-items: center; justify-content: center; position: relative; }
+        .copilot-icon::before { content: "🛠"; font-size: 14px; filter: brightness(0) invert(1); }
+        .sidebar-title { font-size: 14px; font-weight: 600; color: #323130; }
+        .nav-section { flex: 1; overflow-y: auto; padding: 4px 0; }
+        .nav-item { padding: 8px 16px; display: flex; align-items: center; gap: 12px; cursor: pointer; font-size: 14px; color: #323130; transition: background 0.1s; position: relative; user-select: none; }
+        .nav-item:hover { background: #f3f2f1; }
+        .nav-item.active { background: #f3f2f1; }
+        .nav-item.active::before { content: ""; position: absolute; left: 0; top: 8px; bottom: 8px; width: 2px; background: #0078d4; border-radius: 1px; }
+        .main-content { flex: 1; display: flex; flex-direction: column; background: #faf9f8; }
+        .content-header { height: 48px; padding: 0 20px; display: flex; align-items: center; justify-content: space-between; background: #ffffff; border-bottom: 1px solid #edebe9; }
+        .demo-controls { padding: 16px 20px; background: #f3f2f1; display: flex; align-items: center; gap: 16px; border-bottom: 1px solid #edebe9; }
+        .demo-button { padding: 8px 16px; background: #0078d4; color: white; border: none; border-radius: 4px; cursor: pointer; font-size: 14px; font-weight: 600; transition: background 0.2s; }
+        .demo-button:hover { background: #106ebe; }
+        .demo-button:disabled { background: #a19f9d; cursor: not-allowed; }
+        .demo-button.secondary { background: #605e5c; }
+        .chat-container { flex: 1; display: flex; flex-direction: column; overflow: hidden; }
+        .chat-messages { flex: 1; overflow-y: auto; padding: 20px; }
+        .message { max-width: 900px; margin: 0 auto 24px; animation: fadeIn 0.5s ease-in; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        .message-header { display: flex; align-items: center; gap: 12px; margin-bottom: 8px; }
+        .message-avatar-user { width: 28px; height: 28px; border-radius: 50%; background: #5b5fc7; color: white; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 600; }
+        .message-avatar-agent { width: 28px; height: 28px; border-radius: 6px; background: linear-gradient(135deg, #0078d4 0%, #40e0d0 100%); color: white; display: flex; align-items: center; justify-content: center; font-size: 14px; font-weight: 600; }
+        .message-content { margin-left: 40px; font-size: 14px; line-height: 1.6; color: #323130; }
+        .agent-card { margin-left: 40px; margin-top: 16px; background: white; border: 1px solid #edebe9; border-radius: 8px; overflow: hidden; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05); }
+        .agent-card-header { padding: 16px; display: flex; align-items: center; gap: 12px; border-bottom: 1px solid #edebe9; background: #faf9f8; }
+        .agent-card-content { padding: 16px; }
+        .detail-list { list-style: none; }
+        .detail-item { padding: 8px 0; font-size: 14px; color: #323130; display: flex; gap: 8px; }
+        .detail-label { font-weight: 600; min-width: 140px; color: #605e5c; }
+        .typing-indicator { margin-left: 40px; display: flex; gap: 4px; padding: 8px 0; }
+        .typing-dot { width: 8px; height: 8px; background: #605e5c; border-radius: 50%; animation: typing 1.4s infinite; }
+        .typing-dot:nth-child(2) { animation-delay: 0.2s; }
+        .typing-dot:nth-child(3) { animation-delay: 0.4s; }
+        @keyframes typing { 0%, 60%, 100% { transform: translateY(0); opacity: 0.5; } 30% { transform: translateY(-10px); opacity: 1; } }
+        .solution-steps { margin-top: 12px; padding-left: 20px; }
+        .solution-step { margin: 8px 0; padding: 8px 12px; background: #f8f8f8; border-left: 3px solid #0078d4; border-radius: 4px; }
+    </style>
+</head>
+<body>
+    <div class="sidebar">
+        <div class="sidebar-header">
+            <div class="copilot-icon"></div>
+            <span class="sidebar-title">IT Helpdesk Agent</span>
+        </div>
+        <div class="nav-section">
+            <div class="nav-item active"><span>💻</span><span>Self-Service Solutions</span></div>
+            <div class="nav-item"><span>🔐</span><span>Password & Access</span></div>
+            <div class="nav-item"><span>🖨️</span><span>Hardware Support</span></div>
+            <div class="nav-item"><span>📱</span><span>Software Issues</span></div>
+            <div class="nav-item"><span>🎫</span><span>Ticket Management</span></div>
+        </div>
+    </div>
+    <div class="main-content">
+        <div class="content-header">
+            <div class="header-title">IT Helpdesk Assistant</div>
+        </div>
+        <div class="demo-controls">
+            <button class="demo-button" onclick="startDemo()" id="playButton">▶ Play Demo</button>
+            <button class="demo-button secondary" onclick="pauseDemo()" id="pauseButton" disabled>⏸ Pause</button>
+            <button class="demo-button secondary" onclick="resetDemo()">↺ Reset</button>
+            <button class="demo-button secondary" onclick="skipMessage()">⏭ Skip</button>
+            <span style="margin-left: auto; font-size: 14px; color: #605e5c;" id="demoStatus">Ready to start</span>
+        </div>
+        <div class="chat-container">
+            <div class="chat-messages" id="chatMessages"></div>
+        </div>
+    </div>
+    <script>
+        let currentMessageIndex = 0;
+        let isPlaying = false;
+        let isPaused = false;
+        let messageTimeout;
+        let typingTimeout;
+
+        const demoScript = [
+            {
+                "type": "user",
+                "content": "I can't connect to the VPN from my home office. It was working yesterday but now it just times out.",
+                "typingTime": 1500,
+                "delay": 1000
+            },
+            {
+                "type": "agent",
+                "content": "I can help you resolve your VPN connection issue. Let me diagnose the problem and provide you with a self-service solution.",
+                "typingTime": 2000,
+                "delay": 1500,
+                "agentData": {
+                    "Issue Diagnosis": {
+                        "Category": "Network Connectivity",
+                        "Issue Type": "VPN Connection Failure",
+                        "Severity": "Medium",
+                        "Common Causes": "Credentials expired, network changes, or VPN client update needed"
+                    },
+                    "Self-Service Solution": {
+                        "Estimated Time": "5-10 minutes",
+                        "Success Rate": "92%",
+                        "Steps": [
+                            "1. Restart your computer and router",
+                            "2. Open VPN client and clear saved credentials",
+                            "3. Enter server: vpn.company.com",
+                            "4. Use your network credentials (domain\\username)",
+                            "5. Select 'Company Network' profile",
+                            "6. If still failing, try alternate server: vpn2.company.com"
+                        ]
+                    },
+                    "Alternative Options": {
+                        "Web Portal": "Access apps via https://portal.company.com",
+                        "Mobile Hotspot": "Try connecting through mobile data",
+                        "IT Support": "Create ticket if self-service fails"
+                    }
+                }
+            },
+            {
+                "type": "user",
+                "content": "Thanks! That worked. Now I'm having trouble with my Outlook - emails aren't syncing and I'm missing important messages from this morning.",
+                "typingTime": 1800,
+                "delay": 1200
+            },
+            {
+                "type": "agent",
+                "content": "I'll help you fix the Outlook sync issue immediately. This is a common problem with a quick solution.",
+                "typingTime": 2000,
+                "delay": 1500,
+                "agentData": {
+                    "Email Troubleshooting": {
+                        "Issue": "Outlook sync failure",
+                        "Impact": "Missing recent emails",
+                        "Priority": "High - Business Critical",
+                        "Last Successful Sync": "8 hours ago"
+                    },
+                    "Quick Fix Steps": {
+                        "Step 1": "File → Office Account → Update Options → Update Now",
+                        "Step 2": "File → Account Settings → Repair",
+                        "Step 3": "Clear Outlook cache: %localappdata%\\Microsoft\\Outlook",
+                        "Step 4": "Send/Receive → Send/Receive Groups → Define Send/Receive Groups",
+                        "Step 5": "Set automatic sync to every 1 minute temporarily"
+                    },
+                    "Verification": {
+                        "Test Email": "Send test email to yourself",
+                        "Sync Status": "Check bottom-right status bar",
+                        "Missing Emails": "Check Webmail at outlook.office365.com",
+                        "Recovery": "Emails will sync within 5 minutes"
+                    }
+                }
+            },
+            {
+                "type": "user",
+                "content": "Perfect! Emails are coming through now. One more thing - I need to install Microsoft Project for a new assignment but I don't see it in my apps.",
+                "typingTime": 1600,
+                "delay": 1000
+            },
+            {
+                "type": "agent",
+                "content": "I'll guide you through the software installation process using our self-service Software Center.",
+                "typingTime": 1800,
+                "delay": 1500,
+                "agentData": {
+                    "Software Request": {
+                        "Application": "Microsoft Project Professional 2021",
+                        "License Status": "Available - 12 licenses remaining",
+                        "Approval": "Auto-approved for your role",
+                        "Installation Size": "2.8 GB"
+                    },
+                    "Installation Guide": {
+                        "Step 1": "Open Software Center from Start Menu",
+                        "Step 2": "Search for 'Microsoft Project'",
+                        "Step 3": "Click 'Install' button",
+                        "Step 4": "Installation time: ~15 minutes",
+                        "Step 5": "Restart required after installation"
+                    },
+                    "Post-Installation": {
+                        "Activation": "Automatic with corporate license",
+                        "Training": "LinkedIn Learning course available",
+                        "Templates": "Access via Teams > Project Templates channel",
+                        "Support": "Project CoE team: project-help@company.com"
+                    }
+                }
+            },
+            {
+                "type": "user",
+                "content": "Great! While that's installing, can you create a ticket for me about getting a second monitor? My manager approved it last week.",
+                "typingTime": 1500,
+                "delay": 1200
+            },
+            {
+                "type": "agent",
+                "content": "I'll create a hardware request ticket for your second monitor with the approval information.",
+                "typingTime": 1800,
+                "delay": 1500,
+                "agentData": {
+                    "Ticket Created": {
+                        "Ticket ID": "INC-2024-1047",
+                        "Type": "Hardware Request",
+                        "Item": "Dell 27\" 4K Monitor - P2723DE",
+                        "Status": "Submitted - Pending Procurement"
+                    },
+                    "Request Details": {
+                        "Requester": "Current User",
+                        "Manager Approval": "Pre-approved (noted in ticket)",
+                        "Business Justification": "Dual monitor setup for productivity",
+                        "Cost Center": "Automatically assigned from your profile"
+                    },
+                    "Next Steps": {
+                        "Procurement Review": "Within 1 business day",
+                        "Order Placement": "2-3 business days after approval",
+                        "Delivery": "5-7 business days to your office",
+                        "Setup Assistance": "IT will configure when delivered"
+                    },
+                    "Tracking": {
+                        "Email Updates": "Automated status updates",
+                        "Self-Service Portal": "Track at servicedesk.company.com",
+                        "Expected Resolution": "Within 10 business days",
+                        "Contact": "hardware-requests@company.com"
+                    }
+                }
+            }
+        ];
+
+        function startDemo() {
+            if (!isPlaying || isPaused) {
+                isPlaying = true;
+                isPaused = false;
+                document.getElementById('playButton').disabled = true;
+                document.getElementById('pauseButton').disabled = false;
+                document.getElementById('demoStatus').textContent = 'Playing demo...';
+                if (currentMessageIndex === 0) {
+                    document.getElementById('chatMessages').innerHTML = '';
+                }
+                playNextMessage();
+            }
+        }
+
+        function pauseDemo() {
+            if (isPlaying) {
+                isPaused = true;
+                isPlaying = false;
+                clearTimeout(messageTimeout);
+                clearTimeout(typingTimeout);
+                document.getElementById('playButton').disabled = false;
+                document.getElementById('pauseButton').disabled = true;
+                document.getElementById('demoStatus').textContent = 'Demo paused';
+                removeTypingIndicator();
+            }
+        }
+
+        function resetDemo() {
+            clearTimeout(messageTimeout);
+            clearTimeout(typingTimeout);
+            currentMessageIndex = 0;
+            isPlaying = false;
+            isPaused = false;
+            document.getElementById('chatMessages').innerHTML = '';
+            document.getElementById('playButton').disabled = false;
+            document.getElementById('pauseButton').disabled = true;
+            document.getElementById('demoStatus').textContent = 'Ready to start';
+            removeTypingIndicator();
+        }
+
+        function skipMessage() {
+            if (currentMessageIndex < demoScript.length) {
+                clearTimeout(messageTimeout);
+                clearTimeout(typingTimeout);
+                removeTypingIndicator();
+                const message = demoScript[currentMessageIndex];
+                addMessage(message);
+                currentMessageIndex++;
+                if (isPlaying && currentMessageIndex < demoScript.length) {
+                    playNextMessage();
+                } else if (currentMessageIndex >= demoScript.length) {
+                    demoComplete();
+                }
+            }
+        }
+
+        function playNextMessage() {
+            if (currentMessageIndex < demoScript.length && isPlaying && !isPaused) {
+                const message = demoScript[currentMessageIndex];
+                messageTimeout = setTimeout(() => {
+                    if (message.type === 'agent') {
+                        showTypingIndicator();
+                        typingTimeout = setTimeout(() => {
+                            removeTypingIndicator();
+                            addMessage(message);
+                            currentMessageIndex++;
+                            if (currentMessageIndex < demoScript.length) {
+                                playNextMessage();
+                            } else {
+                                demoComplete();
+                            }
+                        }, message.typingTime || 2000);
+                    } else {
+                        addMessage(message);
+                        currentMessageIndex++;
+                        if (currentMessageIndex < demoScript.length) {
+                            playNextMessage();
+                        } else {
+                            demoComplete();
+                        }
+                    }
+                }, message.delay || 1000);
+            }
+        }
+
+        function demoComplete() {
+            isPlaying = false;
+            document.getElementById('playButton').disabled = false;
+            document.getElementById('pauseButton').disabled = true;
+            document.getElementById('demoStatus').textContent = 'Demo complete';
+        }
+
+        function addMessage(message) {
+            const chatMessages = document.getElementById('chatMessages');
+            const messageDiv = document.createElement('div');
+            messageDiv.className = 'message';
+            const time = new Date().toLocaleString('en-US', { hour: 'numeric', minute: '2-digit', hour12: true });
+            
+            if (message.type === 'user') {
+                messageDiv.innerHTML = `
+                    <div class="message-header">
+                        <div class="message-avatar-user">U</div>
+                        <span class="message-author" style="font-weight: 600;">You</span>
+                        <span class="message-time" style="font-size: 12px; color: #a19f9d;">${time}</span>
+                    </div>
+                    <div class="message-content">${message.content}</div>
+                `;
+            } else if (message.type === 'agent') {
+                let html = `
+                    <div class="message-header">
+                        <div class="message-avatar-agent">IT</div>
+                        <span class="message-author" style="font-weight: 600;">IT Helpdesk Agent</span>
+                        <span class="message-time" style="font-size: 12px; color: #a19f9d;">${time}</span>
+                    </div>
+                    <div class="message-content">${message.content}</div>
+                `;
+                
+                if (message.agentData) {
+                    html += '<div class="agent-card">';
+                    html += '<div class="agent-card-header"><span style="font-weight: 600;">Solution Details</span></div>';
+                    html += '<div class="agent-card-content">';
+                    
+                    for (const [category, data] of Object.entries(message.agentData)) {
+                        html += `<div style="margin-bottom: 16px;"><div style="font-weight: 600; color: #0078d4; margin-bottom: 8px;">${category}</div>`;
+                        
+                        if (category.includes('Steps') && Array.isArray(data.Steps)) {
+                            html += '<div class="solution-steps">';
+                            data.Steps.forEach(step => {
+                                html += `<div class="solution-step">${step}</div>`;
+                            });
+                            html += '</div>';
+                        } else if (typeof data === 'object') {
+                            html += '<ul class="detail-list">';
+                            for (const [key, value] of Object.entries(data)) {
+                                if (Array.isArray(value)) {
+                                    html += `<li class="detail-item"><span class="detail-label">${key}:</span><span>${value.join('<br>')}</span></li>`;
+                                } else {
+                                    html += `<li class="detail-item"><span class="detail-label">${key}:</span><span>${value}</span></li>`;
+                                }
+                            }
+                            html += '</ul>';
+                        }
+                        html += '</div>';
+                    }
+                    
+                    html += '</div></div>';
+                }
+                
+                messageDiv.innerHTML = html;
+            }
+            
+            chatMessages.appendChild(messageDiv);
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+        }
+
+        function showTypingIndicator() {
+            const chatMessages = document.getElementById('chatMessages');
+            const typingDiv = document.createElement('div');
+            typingDiv.className = 'typing-indicator';
+            typingDiv.id = 'typingIndicator';
+            typingDiv.innerHTML = '<div class="typing-dot"></div><div class="typing-dot"></div><div class="typing-dot"></div>';
+            chatMessages.appendChild(typingDiv);
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+        }
+
+        function removeTypingIndicator() {
+            const typingIndicator = document.getElementById('typingIndicator');
+            if (typingIndicator) {
+                typingIndicator.remove();
+            }
+        }
+    </script>
+</body>
+</html>
