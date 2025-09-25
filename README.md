@@ -1,3 +1,5 @@
+MAIN USER PAGE: https://kody-w.github.io/AI-Agent-Templates/
+
 # AI Agent Templates 🚀
 
 A comprehensive collection of AI agent templates and stacks for building intelligent automation solutions with Azure and Microsoft 365 integration.
