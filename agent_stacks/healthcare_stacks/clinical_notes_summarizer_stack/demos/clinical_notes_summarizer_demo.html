@@ -793,18 +793,15 @@
 
         // Demo script
         const demoScript = [
-        {
-                "type": "conversation",
-                "messages": [
-                        {
-                                "role": "user",
-                                "content": "Summarize patient John Smith, 67yo male with chest pain history, COPD, recent hip replacement. Takes 12 meds. Needs cataract surgery clearance.",
-                                "typingTime": 1500,
-                                "delay": 1000
-                        },
-                        {
-                                "role": "assistant",
-                                "content": "<strong>CLINICAL SUMMARY - JOHN SMITH</strong>
+            {
+                "type": "user",
+                "content": "Summarize patient John Smith, 67yo male with chest pain history, COPD, recent hip replacement. Takes 12 meds. Needs cataract surgery clearance.",
+                "typingTime": 1500,
+                "delay": 1000
+            },
+            {
+                "type": "agent",
+                "content": `<strong>CLINICAL SUMMARY - JOHN SMITH</strong>
 MRN: 2847291 | Age: 67 years
 
 <strong>CATARACT SURGERY CLEARANCE</strong>
@@ -839,24 +836,22 @@ MRN: 2847291 | Age: 67 years
 <strong>RECOMMENDATIONS</strong>
 1. Proceed with surgery
 2. Alert anesthesia re: tamsulosin
-3. Post-op respiratory monitoring x2 hours",
-                                "typingTime": 3000,
-                                "delay": 2000,
-                                "action": "step2",
-                                "showResult": true,
-                                "resultData": {
-                                        "Surgical Clearance": {
-                                                "Status": "Cleared with precautions",
-                                                "ASA Class": "III",
-                                                "Key Risks": "COPD, floppy iris syndrome",
-                                                "Med Changes": "Hold metformin, lisinopril",
-                                                "Anesthesia": "MAC preferred over general"
-                                        }
-                                }
-                        }
-                ]
-        }
-];
+3. Post-op respiratory monitoring x2 hours`,
+                "typingTime": 3000,
+                "delay": 2000,
+                "agentData": {
+                    "title": "Surgical Clearance",
+                    "status": "Complete",
+                    "details": {
+                        "Status": "Cleared with precautions",
+                        "ASA Class": "III",
+                        "Key Risks": "COPD, floppy iris syndrome",
+                        "Med Changes": "Hold metformin, lisinopril",
+                        "Anesthesia": "MAC preferred over general"
+                    }
+                }
+            }
+        ];
 
         let currentMessageIndex = 0;
 

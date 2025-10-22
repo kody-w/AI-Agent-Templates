@@ -798,16 +798,16 @@
             messages: [
                 {
                     role: 'user',
-                    content: 'Help me with this task',
-                    typingTime: 1500,
+                    content: 'Process security clearance for new contractor Marcus Thompson, position requires Secret clearance for DoD project',
+                    typingTime: 2000,
                     delay: 1000
                 },
                 {
                     role: 'assistant',
-                    content: `I\'ll help you with that. Let me process your request...`,
-                    typingTime: 2000,
+                    content: `I'll initiate the security clearance process for Marcus Thompson requiring Secret level clearance. Let me verify prerequisites and begin the e-QIP submission process.`,
+                    typingTime: 2500,
                     delay: 1500,
-                    action: 'step1'
+                    action: 'initiating_clearance'
                 }
             ]
         },
@@ -816,18 +816,68 @@
             messages: [
                 {
                     role: 'assistant',
-                    content: '✅ Task completed successfully!',
+                    content: '🔒 Security Clearance Processing Initiated - Marcus Thompson',
                     showResult: true,
                     resultData: {
-                        result: {
-                            status: 'Complete',
-                            timestamp: new Date().toISOString(),
-                            details: 'Task processed successfully'
+                        "Candidate Information": {
+                            "Name": "Marcus Thompson",
+                            "Position": "Systems Engineer - Contractor",
+                            "Clearance Required": "Secret (DoD)",
+                            "Sponsoring Agency": "Department of Defense",
+                            "Contract": "W52P1J-24-C-0018",
+                            "Start Date": "Pending Clearance"
+                        },
+                        "Clearance Status": {
+                            "Application ID": "SEC-2024-11-89432",
+                            "Current Phase": "Initial Processing",
+                            "e-QIP Status": "✅ Invitation Sent",
+                            "Fingerprints": "⏳ Scheduled 11/28/2024",
+                            "OF-306 Form": "✅ Received",
+                            "SF-86 Status": "⏳ Awaiting Submission",
+                            "Estimated Timeline": "90-120 days"
+                        },
+                        "Pre-Screening Results": {
+                            "Citizenship": "✅ U.S. Citizen Verified",
+                            "Criminal Check": "✅ No Records Found",
+                            "Credit Check": "✅ Acceptable (Score: 742)",
+                            "Employment Verification": "✅ References Confirmed",
+                            "Education": "✅ Degrees Verified",
+                            "Foreign Contacts": "Under Review"
+                        },
+                        "Onboarding Checklist": {
+                            "Security Forms": {
+                                "SF-86": "Pending (Due: 11/30/2024)",
+                                "SF-312": "Ready for Signature",
+                                "Form 4414": "Completed"
+                            },
+                            "IT Access": {
+                                "CAC Card": "Request Submitted",
+                                "Network Account": "Pre-staged",
+                                "Email": "Reserved: m.thompson.ctr@agency.mil",
+                                "Training Modules": "5 Required Courses Assigned"
+                            },
+                            "Facility Access": {
+                                "Building Pass": "Pending Clearance",
+                                "Parking": "Assigned Lot C-7",
+                                "Workspace": "Building 5, Room 3021"
+                            }
+                        },
+                        "Next Steps": {
+                            "For Candidate": [
+                                "Complete e-QIP within 7 days",
+                                "Attend fingerprinting appointment",
+                                "Submit foreign contact details"
+                            ],
+                            "For Security Office": [
+                                "Review foreign contact disclosure",
+                                "Schedule interim clearance review",
+                                "Coordinate with DoD CAF"
+                            ]
                         }
                     },
-                    typingTime: 2000,
-                    delay: 1500,
-                    action: 'step2'
+                    typingTime: 3000,
+                    delay: 2000,
+                    action: 'clearance_initiated'
                 }
             ]
         }

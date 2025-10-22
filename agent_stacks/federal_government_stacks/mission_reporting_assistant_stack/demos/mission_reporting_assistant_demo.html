@@ -798,16 +798,16 @@
             messages: [
                 {
                     role: 'user',
-                    content: 'Help me with this task',
-                    typingTime: 1500,
+                    content: 'Create quarterly mission performance report for USAID development program in East Africa region',
+                    typingTime: 2000,
                     delay: 1000
                 },
                 {
                     role: 'assistant',
-                    content: `I\'ll help you with that. Let me process your request...`,
-                    typingTime: 2000,
+                    content: `I'll compile the quarterly mission performance report for the USAID East Africa development program. Gathering data from multiple field offices and partner organizations...`,
+                    typingTime: 2500,
                     delay: 1500,
-                    action: 'step1'
+                    action: 'compiling_report'
                 }
             ]
         },
@@ -816,18 +816,81 @@
             messages: [
                 {
                     role: 'assistant',
-                    content: '✅ Task completed successfully!',
+                    content: '📈 USAID East Africa Mission Performance Report - Q4 FY2024',
                     showResult: true,
                     resultData: {
-                        result: {
-                            status: 'Complete',
-                            timestamp: new Date().toISOString(),
-                            details: 'Task processed successfully'
+                        "Mission Overview": {
+                            "Program": "Feed the Future East Africa",
+                            "Countries": "Kenya, Tanzania, Ethiopia, Rwanda",
+                            "Budget": "$125M (FY2024)",
+                            "Beneficiaries": "2.3M households",
+                            "Reporting Period": "July 1 - September 30, 2024"
+                        },
+                        "Key Performance Indicators": {
+                            "Food Security": {
+                                "Target": "500,000 households",
+                                "Achieved": "523,471 households (105%)",
+                                "Trend": "↑ 12% from Q3"
+                            },
+                            "Agricultural Productivity": {
+                                "Yield Increase": "34% average",
+                                "Farmers Trained": "89,234",
+                                "Technologies Adopted": "67% adoption rate"
+                            },
+                            "Market Access": {
+                                "Value of Sales": "$45.2M",
+                                "Market Linkages": "2,341 new connections",
+                                "Export Growth": "23% increase"
+                            },
+                            "Nutrition Outcomes": {
+                                "Children Reached": "234,567",
+                                "Stunting Reduction": "8.2% decrease",
+                                "Women Trained": "45,678 in nutrition"
+                            }
+                        },
+                        "Implementation Status": {
+                            "Active Projects": "47",
+                            "On Schedule": "41 (87%)",
+                            "At Risk": "4 (9%)",
+                            "Delayed": "2 (4%)",
+                            "Budget Execution": "78% committed, 62% disbursed"
+                        },
+                        "Success Stories": {
+                            "Kenya Dairy Cooperative": "Income increased 45% for 12,000 farmers",
+                            "Tanzania Irrigation": "8,000 hectares under improved irrigation",
+                            "Ethiopia Value Chain": "Connected 5,000 farmers to export markets",
+                            "Rwanda Digital Platform": "30,000 users accessing market prices"
+                        },
+                        "Challenges & Mitigation": {
+                            "Climate Shocks": {
+                                "Issue": "Drought affecting 3 regions",
+                                "Response": "Emergency seed distribution, drought-resistant varieties"
+                            },
+                            "Supply Chain": {
+                                "Issue": "Input delivery delays",
+                                "Response": "Local procurement, buffer stock strategy"
+                            },
+                            "Partner Capacity": {
+                                "Issue": "Limited technical expertise",
+                                "Response": "Intensive training program launched"
+                            }
+                        },
+                        "Recommendations": {
+                            "Strategic": [
+                                "Scale successful dairy model to Tanzania",
+                                "Increase climate adaptation investments",
+                                "Strengthen private sector partnerships"
+                            ],
+                            "Operational": [
+                                "Accelerate digital payment adoption",
+                                "Enhance M&E data systems",
+                                "Improve cross-border coordination"
+                            ]
                         }
                     },
-                    typingTime: 2000,
-                    delay: 1500,
-                    action: 'step2'
+                    typingTime: 3500,
+                    delay: 2000,
+                    action: 'report_generated'
                 }
             ]
         }

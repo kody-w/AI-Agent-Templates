@@ -798,16 +798,16 @@
             messages: [
                 {
                     role: 'user',
-                    content: 'Help me with this task',
-                    typingTime: 1500,
+                    content: 'Evaluate commercial property insurance application for Houston manufacturing facility, $25M coverage requested',
+                    typingTime: 2000,
                     delay: 1000
                 },
                 {
                     role: 'assistant',
-                    content: `I\'ll help you with that. Let me process your request...`,
-                    typingTime: 2000,
+                    content: `I'll evaluate the commercial property insurance application for the Houston manufacturing facility. Let me analyze the risk factors, property details, and calculate appropriate coverage terms.`,
+                    typingTime: 2500,
                     delay: 1500,
-                    action: 'step1'
+                    action: 'evaluating_risk'
                 }
             ]
         },
@@ -816,18 +816,116 @@
             messages: [
                 {
                     role: 'assistant',
-                    content: '✅ Task completed successfully!',
+                    content: '🏭 Commercial Property Underwriting Analysis',
                     showResult: true,
                     resultData: {
-                        result: {
-                            status: 'Complete',
-                            timestamp: new Date().toISOString(),
-                            details: 'Task processed successfully'
+                        "Property Information": {
+                            "Business Name": "Gulf Coast Manufacturing LLC",
+                            "Location": "12500 Industrial Blvd, Houston, TX 77015",
+                            "Property Type": "Heavy Manufacturing Facility",
+                            "Building Size": "125,000 sq ft",
+                            "Year Built": "2008",
+                            "Coverage Requested": "$25,000,000",
+                            "Policy Type": "All-Risk Commercial Property"
+                        },
+                        "Risk Assessment": {
+                            "Overall Risk Score": "72/100 (Medium-High)",
+                            "Location Risk": {
+                                "Flood Zone": "AE (High Risk)",
+                                "Hurricane Exposure": "Category 4 possible",
+                                "Distance to Fire Station": "2.3 miles",
+                                "Crime Index": "Moderate (145)"
+                            },
+                            "Property Risk": {
+                                "Construction": "Steel frame, concrete (Fire-resistant)",
+                                "Roof Condition": "Good (Replaced 2021)",
+                                "Fire Suppression": "Full sprinkler system",
+                                "Security": "24/7 monitoring, access control"
+                            },
+                            "Operations Risk": {
+                                "Industry": "Chemical Processing",
+                                "Hazardous Materials": "Class 3 & 4 chemicals",
+                                "Safety Record": "2 minor incidents in 5 years",
+                                "OSHA Compliance": "Current, last inspection 6/2024"
+                            }
+                        },
+                        "Loss History Analysis": {
+                            "Past 5 Years": {
+                                "Total Claims": "3",
+                                "Total Paid": "$487,000",
+                                "Largest Claim": "$350,000 (Hurricane Harvey)",
+                                "Frequency": "0.6 claims/year"
+                            },
+                            "Industry Comparison": "15% better than average",
+                            "Trend": "Improving (investments in mitigation)"
+                        },
+                        "Coverage Recommendation": {
+                            "Building Coverage": "$18,750,000",
+                            "Contents/Equipment": "$6,250,000",
+                            "Business Interruption": "$5,000,000",
+                            "Deductible": {
+                                "Standard": "$50,000",
+                                "Wind/Hail": "2% of building value",
+                                "Flood": "$100,000"
+                            }
+                        },
+                        "Premium Calculation": {
+                            "Base Premium": "$285,000",
+                            "Risk Adjustments": {
+                                "Hurricane Exposure": "+$75,000",
+                                "Flood Risk": "+$45,000",
+                                "Safety Credits": "-$35,000",
+                                "Claims History": "+$15,000"
+                            },
+                            "Total Annual Premium": "$385,000",
+                            "Rate per $100": "$1.54"
+                        },
+                        "Terms & Conditions": {
+                            "Special Conditions": [
+                                "Annual flood mitigation inspection required",
+                                "Quarterly hazmat handling audit",
+                                "Hurricane preparedness plan update"
+                            ],
+                            "Exclusions": [
+                                "Pollution liability (separate policy required)",
+                                "Cyber attacks",
+                                "Pandemic-related closures"
+                            ],
+                            "Warranties": [
+                                "Maintain current fire suppression system",
+                                "24-hour security monitoring",
+                                "OSHA compliance maintenance"
+                            ]
+                        },
+                        "Underwriting Decision": {
+                            "Recommendation": "✅ APPROVE WITH CONDITIONS",
+                            "Confidence Level": "85%",
+                            "Key Factors": {
+                                "Positive": "Strong safety record, recent improvements, stable financials",
+                                "Concerns": "Hurricane exposure, flood zone location"
+                            },
+                            "Alternative Options": [
+                                "Higher deductible for 12% premium reduction",
+                                "Exclude flood for 25% premium reduction",
+                                "Add parametric hurricane coverage"
+                            ]
+                        },
+                        "Next Steps": {
+                            "Immediate": [
+                                "Order engineering inspection",
+                                "Verify financial statements",
+                                "Confirm reinsurance capacity"
+                            ],
+                            "Before Binding": [
+                                "Review hurricane preparedness plan",
+                                "Inspect flood mitigation measures",
+                                "Obtain signed application"
+                            ]
                         }
                     },
-                    typingTime: 2000,
-                    delay: 1500,
-                    action: 'step2'
+                    typingTime: 3500,
+                    delay: 2000,
+                    action: 'underwriting_complete'
                 }
             ]
         }

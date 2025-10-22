@@ -794,51 +794,102 @@
         // Demo script
         const demoScript = [
         {
-            type: 'conversation',
-            messages: [
-                {
-                    role: 'user',
-                    content: 'We have $5M inventory, 30% slow-moving, warehouse 95% full. Need optimization plan.',
-                    typingTime: 1500,
-                    delay: 1000
-                },
-                {
-                    role: 'assistant',
-                    content: '**INVENTORY CRISIS ANALYSIS**
-
-**$1.5M Slow-Moving Breakdown:**
-• Obsolete: $450K - liquidate now
-• Seasonal: $300K - store/pre-sell
-• Excess safety: $375K - reduce
-
-**Immediate Actions:**
-• Flash sale: 50% off obsolete
-• Vendor returns: $200K
-• Expected recovery: $307K this week
-
-**Quarterly Impact:**
-• Free $1.2M working capital
-• Reduce warehouse to 75%
-• Save $675K annually',
-                    typingTime: 3000,
-                    delay: 2000,
-                    action: 'step1'
-                }
-            ]
+            type: 'user',
+            content: 'Show real-time inventory levels across all stores for our top-selling holiday items and identify potential stockout risks',
+            typingTime: 2000,
+            delay: 1000
         },
         {
-            type: 'result',
-            messages: [
-                {
-                    role: 'assistant',
-                    content: '✅ Analysis complete! Key insights and recommendations provided above.',
-                    showResult: true,
-                    resultData: { 'Cash Recovery': '$1.2M', 'Space Freed': '20%', 'Annual Savings': '$675K' },
-                    typingTime: 2000,
-                    delay: 1500,
-                    action: 'step2'
+            type: 'agent',
+            content: 'I\'ll display real-time inventory for top holiday items across all stores and identify stockout risks. Analyzing current levels and sales velocity.',
+            typingTime: 2500,
+            delay: 1500,
+            agentData: {
+                "Inventory Overview": {
+                    "Total SKUs Monitored": "847",
+                    "Top Holiday Items": "25",
+                    "Stores": "142 locations",
+                    "Current Fill Rate": "87.3%",
+                    "Stockout Risk": "HIGH - 8 items critical"
+                },
+                "Critical Items - Stockout Imminent": {
+                    "Nintendo Switch OLED": {
+                        "Current Stock": "234 units total",
+                        "Daily Sales Rate": "89 units",
+                        "Days of Supply": "2.6 days",
+                        "Affected Stores": "47 stores <3 units",
+                        "Next Shipment": "12/5 (1,200 units)",
+                        "Action": "Redistribute from low-velocity stores"
+                    },
+                    "AirPods Pro 2": {
+                        "Current Stock": "456 units",
+                        "Daily Sales Rate": "178 units",
+                        "Days of Supply": "2.5 days",
+                        "Affected Stores": "62 stores at risk",
+                        "Next Shipment": "12/3 (2,000 units)",
+                        "Action": "Limit to 2 per customer"
+                    },
+                    "PS5 Console": {
+                        "Current Stock": "89 units",
+                        "Daily Sales Rate": "67 units",
+                        "Days of Supply": "1.3 days",
+                        "Affected Stores": "95 stores already out",
+                        "Next Shipment": "12/7 (500 units)",
+                        "Action": "Online fulfillment only"
+                    }
+                },
+                "Regional Distribution": {
+                    "Northeast": {
+                        "Stock Health": "72% - Critical",
+                        "Key Issues": "PS5, Xbox out of stock",
+                        "Transfer Needed": "500 units from Southeast"
+                    },
+                    "West Coast": {
+                        "Stock Health": "91% - Good",
+                        "Surplus Items": "Toys, Electronics",
+                        "Available for Transfer": "1,200 units"
+                    },
+                    "Midwest": {
+                        "Stock Health": "83% - Fair",
+                        "Trending": "Rapid depletion in Chicago",
+                        "Action": "Emergency shipment needed"
+                    }
+                },
+                "Predictive Analytics": {
+                    "Black Friday Forecast": {
+                        "Expected Demand": "340% of normal",
+                        "Stock Coverage": "72% of projected demand",
+                        "Revenue at Risk": "$3.4M",
+                        "Customer Impact": "~15,000 disappointed customers"
+                    },
+                    "Recommended Orders": [
+                        "Gaming Consoles: Order 2,500 units NOW",
+                        "Apple Products: Expedite 5,000 units",
+                        "Smart TVs: Sufficient stock",
+                        "Toys: Reorder top 10 items"
+                    ]
+                },
+                "Optimization Actions": {
+                    "Immediate (Today)": [
+                        "Transfer 800 units from West to Northeast",
+                        "Implement purchase limits on critical items",
+                        "Update website with accurate availability",
+                        "Alert store managers of stockout risks"
+                    ],
+                    "This Week": [
+                        "Expedite shipments (pay air freight)",
+                        "Negotiate additional vendor allocations",
+                        "Set up customer wait lists",
+                        "Deploy inventory from DC reserves"
+                    ]
+                },
+                "Financial Impact": {
+                    "Lost Sales (Current Trajectory)": "$3.4M",
+                    "Expedite Costs": "$180K",
+                    "Transfer Costs": "$45K",
+                    "Net Benefit of Actions": "$2.8M saved"
                 }
-            ]
+            }
         }
     ];
 
@@ -1082,9 +1133,9 @@
             const chatMessages = document.getElementById('chatMessages');
             const messageDiv = document.createElement('div');
             messageDiv.className = 'message';
-            
-            const time = new Date().toLocaleString('en-US', { 
-                hour: 'numeric', 
+
+            const time = new Date().toLocaleString('en-US', {
+                hour: 'numeric',
                 minute: '2-digit'
             });
 
@@ -1107,35 +1158,82 @@
                     </div>
                     <div class="message-content">${content}</div>
                 `;
-                
+
                 if (agentData) {
-                    html += `
-                        <div class="agent-card">
-                            <div class="agent-card-header">
-                                <span class="agent-card-icon">📊</span>
-                                <span class="agent-card-title">${agentData.title}</span>
-                                ${agentData.status ? `<span class="agent-card-status">${agentData.status}</span>` : ''}
-                            </div>
-                            <div class="agent-card-content">
-                                <ul class="detail-list">
-                    `;
-                    
-                    for (const [key, value] of Object.entries(agentData.details)) {
+                    // Render each top-level category as a separate card
+                    for (const [categoryName, categoryData] of Object.entries(agentData)) {
                         html += `
-                            <li class="detail-item">
-                                <span class="detail-label">${key}:</span>
-                                <span class="detail-value">${value}</span>
-                            </li>
+                            <div class="agent-card">
+                                <div class="agent-card-header">
+                                    <span class="agent-card-icon">📊</span>
+                                    <span class="agent-card-title">${categoryName}</span>
+                                    <span class="agent-card-status">Complete</span>
+                                </div>
+                                <div class="agent-card-content">
+                                    <ul class="detail-list">
+                        `;
+
+                        // Handle nested data
+                        function renderData(data, indent = 0) {
+                            let result = '';
+                            if (typeof data === 'object' && data !== null && !Array.isArray(data)) {
+                                for (const [key, value] of Object.entries(data)) {
+                                    if (typeof value === 'object' && value !== null && !Array.isArray(value)) {
+                                        // Nested object - render as a subsection
+                                        result += `
+                                            <li class="detail-item" style="padding-left: ${indent * 12}px; font-weight: 600; border-top: 1px solid #edebe9; margin-top: 8px; padding-top: 12px;">
+                                                <span class="detail-label" style="min-width: 100%;">${key}</span>
+                                            </li>
+                                        `;
+                                        result += renderData(value, indent + 1);
+                                    } else if (Array.isArray(value)) {
+                                        // Array - render as list
+                                        result += `
+                                            <li class="detail-item" style="padding-left: ${indent * 12}px;">
+                                                <span class="detail-label">${key}:</span>
+                                                <span class="detail-value">${value.join(', ')}</span>
+                                            </li>
+                                        `;
+                                    } else {
+                                        // Simple value
+                                        result += `
+                                            <li class="detail-item" style="padding-left: ${indent * 12}px;">
+                                                <span class="detail-label">${key}:</span>
+                                                <span class="detail-value">${value}</span>
+                                            </li>
+                                        `;
+                                    }
+                                }
+                            } else if (Array.isArray(data)) {
+                                // Top-level array
+                                data.forEach(item => {
+                                    result += `
+                                        <li class="detail-item" style="padding-left: ${indent * 12}px;">
+                                            <span class="detail-value">• ${item}</span>
+                                        </li>
+                                    `;
+                                });
+                            } else {
+                                // Simple value at top level
+                                result += `
+                                    <li class="detail-item" style="padding-left: ${indent * 12}px;">
+                                        <span class="detail-value">${data}</span>
+                                    </li>
+                                `;
+                            }
+                            return result;
+                        }
+
+                        html += renderData(categoryData);
+
+                        html += `
+                                    </ul>
+                                </div>
+                            </div>
                         `;
                     }
-                    
-                    html += `
-                                </ul>
-                            </div>
-                        </div>
-                    `;
                 }
-                
+
                 messageDiv.innerHTML = html;
             }
 

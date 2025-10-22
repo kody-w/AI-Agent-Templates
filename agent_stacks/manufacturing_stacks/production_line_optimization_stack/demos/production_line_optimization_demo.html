@@ -794,70 +794,86 @@
         // Demo script
         const demoScript = [
         {
-                "type": "conversation",
-                "messages": [
-                        {
-                                "role": "user",
-                                "content": "Line 3 producing 850/hour, target 1000. Quality defects 3.2%. Diagnose and recommend improvements.",
-                                "typingTime": 1500,
-                                "delay": 1000
+            type: 'user',
+            content: 'Analyze production line 3 performance and optimize for the upcoming holiday demand surge expecting 40% volume increase',
+            typingTime: 2000,
+            delay: 1000
+        },
+        {
+            type: 'agent',
+            content: 'I\'ll analyze Production Line 3 performance and create an optimization plan for the 40% holiday demand surge. Examining current metrics and bottlenecks.',
+            typingTime: 2500,
+            delay: 1500,
+            agentData: {
+                "Current Performance": {
+                    "Line": "Production Line 3 - Consumer Electronics",
+                    "Current Output": "2,400 units/day",
+                    "OEE": "71% (World-class: 85%)",
+                    "Availability": "87%",
+                    "Performance": "82%",
+                    "Quality": "99.4%"
+                },
+                "Bottleneck Analysis": {
+                    "Primary Bottleneck": {
+                        "Station": "SMT Placement Station 3B",
+                        "Current Capacity": "2,450 units/day",
+                        "Constraint": "Component placement speed",
+                        "Impact": "Limiting overall line to 2,400 units"
+                    },
+                    "Secondary Issues": {
+                        "Testing Station": "92% utilized, near capacity",
+                        "Packaging": "Manual process, labor constrained",
+                        "Material Flow": "15 min delays between stations"
+                    }
+                },
+                "Optimization Plan": {
+                    "Immediate Actions": {
+                        "SMT Optimization": {
+                            "Action": "Reprogram placement sequence",
+                            "Gain": "+180 units/day",
+                            "Cost": "$5,000",
+                            "Timeline": "3 days"
                         },
-                        {
-                                "role": "assistant",
-                                "content": "<strong>PRODUCTION LINE ANALYSIS</strong>
-
-<strong>Performance Gap:</strong>
-• Current: 850 units/hour (85%)
-• Target: 1,000 units/hour
-• Lost revenue: $37,500/day
-
-<strong>🔴 BOTTLENECK: Station 4</strong>
-• Capacity: 850 (limiting factor)
-• Issues:
-  - Equipment downtime: 45 units/hr
-  - Changeovers: 35 units/hr
-  - Operator efficiency: 40 units/hr
-
-<strong>Defect Analysis (3.2%):</strong>
-• Dimensional variance: 1.4%
-• Surface defects: 0.8%
-• Tool wear beyond interval
-
-<strong>IMMEDIATE FIXES (Today):</strong>
-1. Replace cutting tools
-   • Impact: -0.8% defects
-   • Cost: $2,400
-2. Redeploy experienced operator
-   • Impact: +40 units/hr
-
-<strong>Week 1 Improvements:</strong>
-• SMED implementation: +35 units/hr
-• Vision system: -1.2% defects
-• Investment: $40,000
-
-<strong>Expected Results:</strong>
-• Week 1: 950 units/hour
-• Month 1: 1,050 units/hour
-• ROI: 5.5 days
-• Annual impact: +$13.7M",
-                                "typingTime": 3000,
-                                "delay": 2000,
-                                "action": "step2",
-                                "showResult": true,
-                                "resultData": {
-                                        "Line Optimization": {
-                                                "Current OEE": "68%",
-                                                "Target OEE": "85%",
-                                                "Bottleneck": "Station 4",
-                                                "Quick Wins": "+65 units/hr today",
-                                                "Investment": "$300K",
-                                                "Payback": "5.5 days"
-                                        }
-                                }
+                        "Shift Pattern": {
+                            "Action": "Add 4th shift overlap",
+                            "Gain": "+400 units/day",
+                            "Cost": "$18,000/week",
+                            "Timeline": "Immediate"
                         }
-                ]
+                    },
+                    "Week 1-2 Improvements": {
+                        "Parallel Testing": "Add 2nd test station (+200 units)",
+                        "Automation": "Deploy 2 packaging robots (+150 units)",
+                        "Maintenance": "Preventive maintenance blitz (+100 units)"
+                    }
+                },
+                "Holiday Surge Readiness": {
+                    "Target Output": "3,360 units/day (40% increase)",
+                    "Achievable Output": "3,430 units/day with optimizations",
+                    "Confidence Level": "94%",
+                    "Risk Factors": [
+                        "Component supply chain (mitigated)",
+                        "Labor availability (hiring 12 temps)",
+                        "Quality maintenance (added QC station)"
+                    ]
+                },
+                "Resource Requirements": {
+                    "Labor": "22 additional operators",
+                    "Materials": "$2.3M additional inventory",
+                    "Equipment": "2 robots, 1 test station",
+                    "Total Investment": "$485,000",
+                    "ROI": "2.8 months"
+                },
+                "Implementation Timeline": {
+                    "Week 1": "SMT optimization, hire operators",
+                    "Week 2": "Install test station, train staff",
+                    "Week 3": "Deploy robots, trial runs",
+                    "Week 4": "Full capacity testing",
+                    "Go-Live": "November 15 for Black Friday"
+                }
+            }
         }
-];
+    ];
 
         let currentMessageIndex = 0;
 

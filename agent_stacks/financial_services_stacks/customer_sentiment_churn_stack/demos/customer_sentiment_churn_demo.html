@@ -798,16 +798,16 @@
             messages: [
                 {
                     role: 'user',
-                    content: 'Help me with this task',
-                    typingTime: 1500,
+                    content: 'Analyze churn risk for our premium banking customers in the Northeast region showing declining engagement',
+                    typingTime: 2000,
                     delay: 1000
                 },
                 {
                     role: 'assistant',
-                    content: `I\'ll help you with that. Let me process your request...`,
-                    typingTime: 2000,
+                    content: `I'll analyze churn risk for premium banking customers in the Northeast region. Let me examine engagement patterns, transaction data, and customer interactions to identify at-risk accounts.`,
+                    typingTime: 2500,
                     delay: 1500,
-                    action: 'step1'
+                    action: 'analyzing_churn_risk'
                 }
             ]
         },
@@ -816,18 +816,120 @@
             messages: [
                 {
                     role: 'assistant',
-                    content: '✅ Task completed successfully!',
+                    content: '⚠️ Premium Banking Churn Risk Analysis - Northeast Region',
                     showResult: true,
                     resultData: {
-                        result: {
-                            status: 'Complete',
-                            timestamp: new Date().toISOString(),
-                            details: 'Task processed successfully'
+                        "Analysis Overview": {
+                            "Region": "Northeast (NY, NJ, CT, MA)",
+                            "Customer Segment": "Premium Banking ($100K+ AUM)",
+                            "Analyzed Accounts": "8,432",
+                            "High Risk Accounts": "487 (5.8%)",
+                            "Potential Revenue Loss": "$4.2M annually",
+                            "Analysis Period": "Last 90 days"
+                        },
+                        "Risk Distribution": {
+                            "Critical Risk (90-100%)": {
+                                "Accounts": "47",
+                                "Avg Balance": "$385K",
+                                "Churn Probability": "92%",
+                                "Revenue at Risk": "$780K"
+                            },
+                            "High Risk (70-89%)": {
+                                "Accounts": "156",
+                                "Avg Balance": "$245K",
+                                "Churn Probability": "78%",
+                                "Revenue at Risk": "$1.8M"
+                            },
+                            "Medium Risk (50-69%)": {
+                                "Accounts": "284",
+                                "Avg Balance": "$165K",
+                                "Churn Probability": "58%",
+                                "Revenue at Risk": "$1.6M"
+                            }
+                        },
+                        "Churn Indicators": {
+                            "Behavioral Signals": {
+                                "Digital Login Decline": "-67% over 60 days",
+                                "Transaction Frequency": "-45% month-over-month",
+                                "Product Usage": "Dropped 3+ services",
+                                "Channel Shift": "Branch to digital only"
+                            },
+                            "Financial Signals": {
+                                "Balance Reduction": "Average -$125K transferred out",
+                                "Direct Deposit": "23% canceled",
+                                "Investment Activity": "-89% trading volume",
+                                "Credit Line Usage": "Paid off, unused"
+                            },
+                            "Sentiment Indicators": {
+                                "Support Interactions": "+340% complaint rate",
+                                "NPS Score": "Dropped from 72 to 23",
+                                "Survey Feedback": "Negative on 4/5 metrics",
+                                "Social Mentions": "12 negative reviews"
+                            }
+                        },
+                        "Root Cause Analysis": {
+                            "Service Issues": {
+                                "Impact": "35% of at-risk",
+                                "Main Complaint": "Declined service quality post-merger",
+                                "Resolution Rate": "Only 45%"
+                            },
+                            "Competitive Pressure": {
+                                "Impact": "28% of at-risk",
+                                "Competitor": "Chase Private Client aggressive offers",
+                                "Lost Features": "Free wire transfers, dedicated banker"
+                            },
+                            "Fee Increases": {
+                                "Impact": "22% of at-risk",
+                                "Change": "+15% fee increase in Q3",
+                                "Perception": "No added value for higher costs"
+                            },
+                            "Digital Experience": {
+                                "Impact": "15% of at-risk",
+                                "Issues": "Mobile app ratings dropped to 2.1 stars",
+                                "Pain Points": "Complex navigation, missing features"
+                            }
+                        },
+                        "Retention Strategies": {
+                            "Critical Accounts (Immediate)": [
+                                "Executive outreach from Regional President",
+                                "Waive fees for 12 months ($500K retention budget)",
+                                "Assign dedicated private banker",
+                                "Custom product bundle with 50bp rate increase"
+                            ],
+                            "High Risk Accounts (This Week)": [
+                                "Personal call from branch manager",
+                                "Offer complimentary financial planning session",
+                                "Premium rewards upgrade (2x points)",
+                                "Fee reversal authority up to $500"
+                            ],
+                            "Preventive Measures": [
+                                "Implement early warning system",
+                                "Monthly relationship health checks",
+                                "Competitive rate matching program",
+                                "Enhanced digital experience rollout"
+                            ]
+                        },
+                        "Recommended Actions": {
+                            "Today": [
+                                "🔴 Call top 10 critical accounts by 5 PM",
+                                "Deploy retention team to NYC branches",
+                                "Activate win-back email campaign"
+                            ],
+                            "This Week": [
+                                "Schedule 47 critical account meetings",
+                                "Launch Northeast service recovery program",
+                                "Brief relationship managers on retention offers"
+                            ],
+                            "This Month": [
+                                "Roll out digital experience improvements",
+                                "Implement proactive monitoring dashboard",
+                                "Establish churn prevention task force"
+                            ]
                         }
                     },
-                    typingTime: 2000,
-                    delay: 1500,
-                    action: 'step2'
+                    typingTime: 3500,
+                    delay: 2000,
+                    action: 'churn_analysis_complete'
                 }
             ]
         }
