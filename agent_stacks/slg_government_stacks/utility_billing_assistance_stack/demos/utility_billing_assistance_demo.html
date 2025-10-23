@@ -1135,12 +1135,41 @@
                     `;
                     
                     for (const [key, value] of Object.entries(agentData.details)) {
-                        html += `
-                            <li class="detail-item">
-                                <span class="detail-label">${key}:</span>
-                                <span class="detail-value">${value}</span>
-                            </li>
-                        `;
+                        html += `<li class="detail-item"><span class="detail-label">${key}:</span>`;
+
+                        
+
+                        if (typeof value === 'object' && !Array.isArray(value) && value !== null) {
+
+                            // Handle nested objects
+
+                            html += '<div style="margin-left: 20px;">';
+
+                            for (const [subKey, subValue] of Object.entries(value)) {
+
+                                html += `<div style="margin: 4px 0;"><strong>${subKey}:</strong> ${subValue}</div>`;
+
+                            }
+
+                            html += '</div>';
+
+                        } else if (Array.isArray(value)) {
+
+                            // Handle arrays
+
+                            html += `<span class="detail-value">${value.join('<br>')}</span>`;
+
+                        } else {
+
+                            // Handle simple values
+
+                            html += `<span class="detail-value">${value}</span>`;
+
+                        }
+
+                        
+
+                        html += `</li>`;
                     }
                     
                     html += `

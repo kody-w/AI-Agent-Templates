@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Customer 360 Agent - M365 Copilot</title>
+    <title>M365 Copilot - Customer 360</title>
     <style>
         * {
             margin: 0;
@@ -42,20 +42,22 @@
         .copilot-icon {
             width: 24px;
             height: 24px;
-            background: linear-gradient(135deg, #0078d4 0%, #40e0d0 100%);
+            background: linear-gradient(135deg, #b4a0ff 0%, #ff7eb9 50%, #7ee7fc 100%);
             border-radius: 4px;
             display: flex;
             align-items: center;
             justify-content: center;
             position: relative;
-            font-size: 14px;
         }
 
         .copilot-icon::before {
-            content: "360°";
-            color: white;
-            font-weight: bold;
-            font-size: 10px;
+            content: '';
+            position: absolute;
+            width: 12px;
+            height: 12px;
+            background: white;
+            border-radius: 2px;
+            opacity: 0.9;
         }
 
         .sidebar-title {
@@ -83,6 +85,42 @@
             background: #f3f2f1;
         }
 
+        /* Search Box */
+        .search-container {
+            padding: 8px 16px;
+            border-bottom: 1px solid #edebe9;
+        }
+
+        .search-box {
+            position: relative;
+            width: 100%;
+        }
+
+        .search-icon {
+            position: absolute;
+            left: 8px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #605e5c;
+            font-size: 14px;
+        }
+
+        .search-input {
+            width: 100%;
+            padding: 6px 8px 6px 32px;
+            border: 1px solid #d2d0ce;
+            border-radius: 4px;
+            font-size: 14px;
+            background: #faf9f8;
+            outline: none;
+            transition: all 0.2s;
+        }
+
+        .search-input:focus {
+            border-color: #605e5c;
+            background: #ffffff;
+        }
+
         /* Navigation */
         .nav-section {
             flex: 1;
@@ -100,6 +138,7 @@
             color: #323130;
             transition: background 0.1s;
             position: relative;
+            user-select: none;
         }
 
         .nav-item:hover {
@@ -114,10 +153,11 @@
             content: '';
             position: absolute;
             left: 0;
-            top: 0;
-            bottom: 0;
-            width: 3px;
-            background: #0078d4;
+            top: 8px;
+            bottom: 8px;
+            width: 2px;
+            background: #742774;
+            border-radius: 1px;
         }
 
         .nav-icon {
@@ -126,6 +166,94 @@
             display: flex;
             align-items: center;
             justify-content: center;
+            flex-shrink: 0;
+        }
+
+        /* Demo Controls Section */
+        .demo-controls-section {
+            border-top: 1px solid #edebe9;
+            padding: 12px 16px;
+            background: #faf9f8;
+        }
+
+        .demo-controls-title {
+            font-size: 12px;
+            font-weight: 600;
+            color: #605e5c;
+            margin-bottom: 8px;
+        }
+
+        .demo-controls {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 8px;
+        }
+
+        .demo-btn {
+            padding: 6px 12px;
+            border: 1px solid #d2d0ce;
+            border-radius: 4px;
+            background: white;
+            font-size: 12px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 4px;
+            color: #323130;
+            transition: all 0.2s;
+        }
+
+        .demo-btn:hover:not(:disabled) {
+            background: #f3f2f1;
+            border-color: #605e5c;
+        }
+
+        .demo-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .demo-btn.primary {
+            background: #742774;
+            color: white;
+            border-color: #742774;
+        }
+
+        .demo-btn.primary:hover:not(:disabled) {
+            background: #5a1d5a;
+        }
+
+        /* Bottom section */
+        .sidebar-bottom {
+            border-top: 1px solid #edebe9;
+            padding: 8px 0;
+        }
+
+        .user-section {
+            padding: 8px 16px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            cursor: pointer;
+            transition: background 0.1s;
+        }
+
+        .user-section:hover {
+            background: #f3f2f1;
+        }
+
+        .user-avatar {
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            background: #742774;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            font-weight: 600;
         }
 
         /* Main Content */
@@ -137,47 +265,74 @@
         }
 
         /* Header */
-        .header {
-            background: white;
-            padding: 12px 24px;
-            border-bottom: 1px solid #edebe9;
+        .content-header {
+            height: 48px;
+            padding: 0 20px;
             display: flex;
             align-items: center;
-            gap: 16px;
-            height: 48px;
+            justify-content: space-between;
+            background: #ffffff;
+            border-bottom: 1px solid #edebe9;
         }
 
         .header-title {
-            font-size: 18px;
-            font-weight: 600;
-            color: #323130;
+            font-size: 14px;
+            color: #605e5c;
+        }
+
+        .header-actions {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .status-indicator {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 6px 12px;
+            background: #f3f2f1;
+            border-radius: 4px;
+            font-size: 12px;
+            color: #605e5c;
+        }
+
+        .status-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: #10b981;
+        }
+
+        .status-dot.processing {
+            background: #f59e0b;
+            animation: pulse 1s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
         }
 
         /* Chat Container */
         .chat-container {
             flex: 1;
-            padding: 24px;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+
+        /* Chat Messages */
+        .chat-messages {
+            flex: 1;
             overflow-y: auto;
-            max-width: 1200px;
-            width: 100%;
-            margin: 0 auto;
+            padding: 20px;
+            display: block;
         }
 
-        /* Messages */
         .message {
-            margin-bottom: 24px;
-            animation: fadeIn 0.3s ease-in;
-        }
-
-        @keyframes fadeIn {
-            from {
-                opacity: 0;
-                transform: translateY(10px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
+            max-width: 900px;
+            margin: 0 auto 24px;
         }
 
         .message-header {
@@ -187,149 +342,210 @@
             margin-bottom: 8px;
         }
 
-        .avatar {
-            width: 32px;
-            height: 32px;
+        .message-avatar-user {
+            width: 28px;
+            height: 28px;
             border-radius: 50%;
+            background: #0078d4;
+            color: white;
             display: flex;
             align-items: center;
             justify-content: center;
+            font-size: 12px;
             font-weight: 600;
-            color: white;
-            font-size: 14px;
         }
 
-        .user-avatar {
-            background: #0078d4;
-        }
-
-        .agent-avatar {
+        .message-avatar-agent {
+            width: 28px;
+            height: 28px;
+            border-radius: 6px;
             background: linear-gradient(135deg, #0078d4 0%, #40e0d0 100%);
-        }
-
-        .message-name {
-            font-weight: 600;
-            color: #323130;
-            font-size: 14px;
-        }
-
-        .message-content {
-            padding-left: 44px;
-            color: #323130;
-            line-height: 1.5;
-            font-size: 14px;
-        }
-
-        /* Agent Data Card */
-        .agent-data-card {
-            background: white;
-            border-radius: 8px;
-            padding: 16px;
-            margin-top: 12px;
-            border: 1px solid #edebe9;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
-        }
-
-        .data-section {
-            margin-bottom: 16px;
-        }
-
-        .data-section:last-child {
-            margin-bottom: 0;
-        }
-
-        .section-title {
-            font-weight: 600;
-            color: #323130;
-            margin-bottom: 8px;
-            font-size: 13px;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-        }
-
-        .data-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 12px;
-        }
-
-        .data-item {
+            color: white;
             display: flex;
-            flex-direction: column;
-            gap: 4px;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+            font-weight: 600;
         }
 
-        .data-label {
+        .message-author {
+            font-size: 14px;
+            font-weight: 600;
+            color: #323130;
+        }
+
+        .message-tag {
+            padding: 2px 8px;
+            background: #f3f2f1;
+            border-radius: 4px;
             font-size: 12px;
             color: #605e5c;
         }
 
-        .data-value {
+        .message-time {
+            font-size: 12px;
+            color: #a19f9d;
+        }
+
+        .message-content {
+            margin-left: 40px;
             font-size: 14px;
+            line-height: 1.6;
             color: #323130;
-            font-weight: 500;
         }
 
-        .metric-card {
-            background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);
-            padding: 12px;
-            border-radius: 6px;
-            border: 1px solid #bae6fd;
+        /* Agent Cards */
+        .agent-card {
+            margin-left: 40px;
+            margin-top: 16px;
+            background: white;
+            border: 1px solid #edebe9;
+            border-radius: 8px;
+            overflow: hidden;
         }
 
-        .metric-value {
-            font-size: 20px;
-            font-weight: bold;
-            color: #0369a1;
-        }
-
-        .metric-label {
-            font-size: 12px;
-            color: #0c4a6e;
-            margin-top: 4px;
-        }
-
-        /* Status badges */
-        .badge {
-            display: inline-block;
-            padding: 2px 8px;
-            border-radius: 12px;
-            font-size: 12px;
-            font-weight: 500;
-        }
-
-        .badge-high {
-            background: #fee2e2;
-            color: #dc2626;
-        }
-
-        .badge-medium {
-            background: #fef3c7;
-            color: #d97706;
-        }
-
-        .badge-low {
-            background: #d1fae5;
-            color: #059669;
-        }
-
-        /* Typing Indicator */
-        .typing-indicator {
+        .agent-card-header {
+            padding: 16px;
             display: flex;
             align-items: center;
+            gap: 12px;
+            border-bottom: 1px solid #edebe9;
+            background: linear-gradient(135deg, rgba(0, 120, 212, 0.05) 0%, rgba(64, 224, 208, 0.05) 100%);
+        }
+
+        .agent-card-icon {
+            font-size: 20px;
+        }
+
+        .agent-card-title {
+            font-size: 16px;
+            font-weight: 600;
+            color: #323130;
+        }
+
+        .agent-card-status {
+            margin-left: auto;
+            padding: 4px 12px;
+            background: #10b981;
+            color: white;
+            border-radius: 12px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .agent-card-content {
+            padding: 16px;
+        }
+
+        .detail-list {
+            list-style: none;
+        }
+
+        .detail-item {
+            padding: 8px 0;
+            font-size: 14px;
+            color: #323130;
+            display: flex;
+            gap: 8px;
+            border-bottom: 1px solid #f3f2f1;
+        }
+
+        .detail-item:last-child {
+            border-bottom: none;
+        }
+
+        .detail-label {
+            font-weight: 600;
+            min-width: 180px;
+            color: #605e5c;
+        }
+
+        .detail-value {
+            color: #323130;
+            flex: 1;
+        }
+
+        /* Input Container */
+        .input-container {
+            padding: 16px 20px;
+            background: white;
+            border-top: 1px solid #edebe9;
+        }
+
+        .input-wrapper {
+            max-width: 900px;
+            margin: 0 auto;
+            position: relative;
+        }
+
+        .input-field {
+            width: 100%;
+            padding: 12px 48px 12px 16px;
+            border: 1px solid #d2d0ce;
+            border-radius: 8px;
+            font-size: 14px;
+            font-family: inherit;
+            resize: none;
+            outline: none;
+            background: #faf9f8;
+            transition: all 0.2s;
+            min-height: 44px;
+            max-height: 120px;
+        }
+
+        .input-field:focus {
+            border-color: #742774;
+            background: white;
+        }
+
+        .input-actions {
+            position: absolute;
+            right: 8px;
+            bottom: 8px;
+            display: flex;
             gap: 4px;
-            padding: 8px 12px;
+        }
+
+        .input-button {
+            width: 28px;
+            height: 28px;
+            border: none;
+            background: none;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 4px;
+            color: #605e5c;
+            transition: all 0.1s;
+        }
+
+        .input-button:hover {
             background: #f3f2f1;
-            border-radius: 16px;
-            display: inline-flex;
-            margin-left: 44px;
+        }
+
+        .input-button.send {
+            color: #742774;
+        }
+
+        .input-button:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        /* Typing indicator */
+        .typing-indicator {
+            margin-left: 40px;
+            display: flex;
+            gap: 4px;
+            padding: 8px 0;
         }
 
         .typing-dot {
             width: 8px;
             height: 8px;
-            border-radius: 50%;
             background: #605e5c;
+            border-radius: 50%;
             animation: typing 1.4s infinite;
         }
 
@@ -342,121 +558,88 @@
         }
 
         @keyframes typing {
-            0%, 80%, 100% {
-                opacity: 0.3;
-                transform: scale(1);
+            0%, 60%, 100% {
+                transform: translateY(0);
+                opacity: 0.5;
             }
-            40% {
+            30% {
+                transform: translateY(-10px);
                 opacity: 1;
-                transform: scale(1.2);
             }
         }
 
-        /* Input Area */
-        .input-area {
-            background: white;
-            border-top: 1px solid #edebe9;
-            padding: 16px 24px;
-        }
-
-        .input-container {
-            max-width: 1200px;
-            margin: 0 auto;
-            display: flex;
-            gap: 12px;
-            align-items: center;
-        }
-
-        .input-field {
+        /* Welcome state - hidden when chat is active */
+        .welcome-screen {
             flex: 1;
-            padding: 10px 16px;
-            border: 1px solid #d1d1d1;
-            border-radius: 20px;
-            font-size: 14px;
-            outline: none;
-            font-family: inherit;
-        }
-
-        .input-field:focus {
-            border-color: #0078d4;
-        }
-
-        .send-button {
-            background: #0078d4;
-            color: white;
-            border: none;
-            padding: 10px 20px;
-            border-radius: 20px;
-            cursor: pointer;
-            font-size: 14px;
-            font-weight: 500;
-            transition: background 0.2s;
-        }
-
-        .send-button:hover:not(:disabled) {
-            background: #005a9e;
-        }
-
-        .send-button:disabled {
-            opacity: 0.5;
-            cursor: not-allowed;
-        }
-
-        /* Demo Controls */
-        .demo-controls {
-            background: #f3f2f1;
-            padding: 12px 24px;
             display: flex;
-            align-items: center;
-            gap: 16px;
-            border-top: 1px solid #edebe9;
-        }
-
-        .demo-button {
-            padding: 6px 16px;
-            border-radius: 4px;
-            border: 1px solid #d1d1d1;
-            background: white;
-            cursor: pointer;
-            font-size: 13px;
-            transition: all 0.2s;
-        }
-
-        .demo-button:hover:not(:disabled) {
-            background: #f3f2f1;
-        }
-
-        .demo-button:disabled {
-            opacity: 0.5;
-            cursor: not-allowed;
-        }
-
-        .demo-button.primary {
-            background: #0078d4;
-            color: white;
-            border: none;
-        }
-
-        .demo-button.primary:hover:not(:disabled) {
-            background: #005a9e;
-        }
-
-        .demo-status {
-            margin-left: auto;
-            font-size: 13px;
-            color: #605e5c;
-        }
-
-        /* Charts placeholder */
-        .chart-placeholder {
-            height: 200px;
-            background: linear-gradient(135deg, #f3f4f6 0%, #e5e7eb 100%);
-            border-radius: 8px;
-            display: flex;
+            flex-direction: column;
             align-items: center;
             justify-content: center;
-            color: #6b7280;
+            padding: 40px;
+            max-width: 1200px;
+            margin: 0 auto;
+            width: 100%;
+        }
+
+        .welcome-screen.hidden {
+            display: none;
+        }
+
+        .welcome-title {
+            font-size: 36px;
+            font-weight: 600;
+            color: #323130;
+            margin-bottom: 16px;
+            text-align: center;
+        }
+
+        .welcome-subtitle {
+            font-size: 16px;
+            color: #605e5c;
+            margin-bottom: 48px;
+            text-align: center;
+        }
+
+        .suggestion-cards {
+            display: flex;
+            gap: 20px;
+            width: 100%;
+            max-width: 900px;
+        }
+
+        .suggestion-card {
+            flex: 1;
+            background: white;
+            border: 1px solid #edebe9;
+            border-radius: 8px;
+            padding: 20px;
+            cursor: pointer;
+            transition: all 0.2s;
+            min-height: 120px;
+        }
+
+        .suggestion-card:hover {
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            transform: translateY(-2px);
+            border-color: #742774;
+        }
+
+        .card-icon {
+            font-size: 24px;
+            margin-bottom: 12px;
+        }
+
+        .card-title {
             font-size: 14px;
+            font-weight: 600;
+            color: #323130;
+            margin-bottom: 8px;
+        }
+
+        .card-description {
+            font-size: 13px;
+            color: #605e5c;
+            line-height: 1.4;
         }
     </style>
 </head>
@@ -465,64 +648,150 @@
     <div class="sidebar">
         <div class="sidebar-header">
             <div class="copilot-icon"></div>
-            <div class="sidebar-title">Customer 360</div>
-            <button class="sidebar-button">⚙️</button>
+            <span class="sidebar-title">M365 Copilot</span>
+            <button class="sidebar-button">☰</button>
         </div>
-        
+
+        <div class="search-container">
+            <div class="search-box">
+                <span class="search-icon">🔍</span>
+                <input type="text" class="search-input" placeholder="Search customers">
+            </div>
+        </div>
+
         <div class="nav-section">
             <div class="nav-item active">
-                <span class="nav-icon">👥</span>
-                <span>Customer Profile</span>
+                <div class="nav-icon">💬</div>
+                <span>Chat</span>
             </div>
             <div class="nav-item">
-                <span class="nav-icon">📊</span>
+                <div class="nav-icon">🤖</div>
+                <span>Agents</span>
+            </div>
+            <div class="nav-item">
+                <div class="nav-icon">👥</div>
+                <span>Customers</span>
+            </div>
+            <div class="nav-item">
+                <div class="nav-icon">📊</div>
                 <span>Analytics</span>
             </div>
             <div class="nav-item">
-                <span class="nav-icon">🎯</span>
-                <span>Segments</span>
+                <div class="nav-icon">➕</div>
+                <span>Create</span>
             </div>
             <div class="nav-item">
-                <span class="nav-icon">🔮</span>
-                <span>Predictions</span>
+                <div class="nav-icon">📱</div>
+                <span>Apps</span>
             </div>
             <div class="nav-item">
-                <span class="nav-icon">💬</span>
-                <span>Interactions</span>
+                <div class="nav-icon">⚙️</div>
+                <span>Admin</span>
             </div>
-            <div class="nav-item">
-                <span class="nav-icon">📈</span>
-                <span>Reports</span>
+        </div>
+
+        <!-- Demo Controls -->
+        <div class="demo-controls-section">
+            <div class="demo-controls-title">Demo Controls</div>
+            <div class="demo-controls">
+                <button class="demo-btn primary" onclick="startDemo()" id="startBtn">
+                    ▶️ Start
+                </button>
+                <button class="demo-btn" onclick="pauseDemo()" id="pauseBtn" disabled>
+                    ⏸️ Pause
+                </button>
+                <button class="demo-btn" onclick="resetDemo()" id="resetBtn">
+                    🔄 Reset
+                </button>
+                <button class="demo-btn" onclick="skipToNext()" id="skipBtn" disabled>
+                    ⏭️ Skip
+                </button>
+            </div>
+        </div>
+
+        <div class="sidebar-bottom">
+            <div class="user-section">
+                <div class="user-avatar">DU</div>
+                <span style="font-size: 14px;">Demo User</span>
             </div>
         </div>
     </div>
 
     <!-- Main Content -->
     <div class="main-content">
-        <div class="header">
+        <div class="content-header">
             <div class="header-title">Customer 360 Intelligence Agent</div>
+            <div class="header-actions">
+                <div class="status-indicator">
+                    <span class="status-dot" id="statusDot"></span>
+                    <span id="statusText">Ready</span>
+                </div>
+            </div>
         </div>
 
-        <div class="chat-container" id="chat-container">
-            <!-- Messages will be added here -->
-        </div>
+        <div class="chat-container">
+            <!-- Welcome Screen -->
+            <div class="welcome-screen" id="welcomeScreen">
+                <h1 class="welcome-title">👥 Customer 360</h1>
+                <p class="welcome-subtitle">Complete customer intelligence and insights</p>
 
-        <div class="demo-controls">
-            <button class="demo-button primary" id="playBtn">▶️ Play Demo</button>
-            <button class="demo-button" id="pauseBtn" disabled>⏸️ Pause</button>
-            <button class="demo-button" id="resetBtn">🔄 Reset</button>
-            <span class="demo-status" id="demoStatus">Ready to start</span>
-        </div>
+                <div class="suggestion-cards">
+                    <div class="suggestion-card" onclick="quickStart('view-profile')">
+                        <div class="card-icon">👤</div>
+                        <div class="card-title">View Customer Profile</div>
+                        <div class="card-description">Get comprehensive 360° customer view</div>
+                    </div>
+                    <div class="suggestion-card" onclick="quickStart('retention-strategy')">
+                        <div class="card-icon">🎯</div>
+                        <div class="card-title">Retention Strategy</div>
+                        <div class="card-description">Personalized retention recommendations</div>
+                    </div>
+                    <div class="suggestion-card" onclick="quickStart('engagement-analysis')">
+                        <div class="card-icon">📊</div>
+                        <div class="card-title">Engagement Analysis</div>
+                        <div class="card-description">Analyze trends and identify concerns</div>
+                    </div>
+                </div>
+            </div>
 
-        <div class="input-area">
+            <!-- Chat Messages -->
+            <div class="chat-messages" id="chatMessages" style="display: none;">
+                <!-- Messages will be dynamically added here -->
+            </div>
+
+            <!-- Input Container -->
             <div class="input-container">
-                <input type="text" class="input-field" placeholder="Ask about customer data..." disabled>
-                <button class="send-button" disabled>Send</button>
+                <div class="input-wrapper">
+                    <textarea
+                        class="input-field"
+                        id="messageInput"
+                        placeholder="Ask about customer data, insights, or recommendations..."
+                        rows="1"
+                        onkeypress="handleKeyPress(event)"
+                        oninput="autoResize(this)"
+                    ></textarea>
+                    <div class="input-actions">
+                        <button class="input-button">📎</button>
+                        <button class="input-button send" onclick="sendCurrentMessage()" id="sendButton">
+                            ➤
+                        </button>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
 
     <script>
+        // State
+        let demoState = {
+            isPlaying: false,
+            isPaused: false,
+            currentStep: 0,
+            messageTimer: null,
+            typingTimer: null
+        };
+
+        // Demo script - preserved from original
         const demoScript = [
             {
                 type: "user",
@@ -536,41 +805,25 @@
                 typingTime: 2500,
                 delay: 1500,
                 agentData: {
-                    "Customer Profile": {
-                        "Customer ID": "CUST-2024-0847",
-                        "Name": "Sarah Mitchell",
-                        "Email": "sarah.mitchell@techcorp.com",
-                        "Account Created": "March 15, 2021",
-                        "Location": "San Francisco, CA",
-                        "Segment": "VIP - Tech Enthusiast"
-                    },
-                    "Key Metrics": {
-                        "Lifetime Value": "$47,850",
-                        "Total Purchases": "34",
-                        "Engagement Score": "92/100",
-                        "Satisfaction Score": "4.8/5.0",
-                        "Churn Risk": "Low (12%)"
-                    },
-                    "Purchase Behavior": {
-                        "Last Purchase": "5 days ago",
-                        "Average Order Value": "$1,407",
-                        "Purchase Frequency": "Monthly",
-                        "Favorite Categories": "Electronics, Smart Home, Wearables",
-                        "Payment Method": "Corporate Account"
-                    },
-                    "Support History": {
-                        "Total Tickets": "7",
-                        "Open Issues": "0",
-                        "Avg Resolution Time": "4 hours",
-                        "Preferred Channel": "Chat",
-                        "Last Interaction": "2 weeks ago"
-                    },
-                    "Predictive Insights": {
-                        "Next Purchase": "Within 7 days (85% confidence)",
-                        "Likely Products": "Smart Display, Security Camera",
-                        "Upsell Opportunity": "Premium Support Plan ($299/year)",
-                        "Cross-sell Potential": "Home Automation Bundle",
-                        "Referral Likelihood": "High"
+                    title: 'Customer 360 Profile',
+                    status: 'Complete',
+                    details: {
+                        'Customer ID': 'CUST-2024-0847',
+                        'Name': 'Sarah Mitchell',
+                        'Email': 'sarah.mitchell@techcorp.com',
+                        'Account Created': 'March 15, 2021',
+                        'Location': 'San Francisco, CA',
+                        'Segment': 'VIP - Tech Enthusiast',
+                        'Lifetime Value': '$47,850',
+                        'Total Purchases': '34',
+                        'Engagement Score': '92/100',
+                        'Satisfaction Score': '4.8/5.0',
+                        'Churn Risk': 'Low (12%)',
+                        'Last Purchase': '5 days ago',
+                        'Average Order Value': '$1,407',
+                        'Purchase Frequency': 'Monthly',
+                        'Next Purchase': 'Within 7 days (85% confidence)',
+                        'Upsell Opportunity': 'Premium Support Plan ($299/year)'
                     }
                 }
             },
@@ -586,35 +839,20 @@
                 typingTime: 2000,
                 delay: 1500,
                 agentData: {
-                    "Immediate Actions": {
-                        "VIP Experience": "Assign dedicated account manager",
-                        "Early Access": "Beta program for new smart home products",
-                        "Loyalty Reward": "500 bonus points ($50 value) for anniversary",
-                        "Personal Touch": "CEO thank you note for being top 1% customer"
-                    },
-                    "Engagement Strategies": {
-                        "Content": "Weekly tech innovation newsletter",
-                        "Events": "Exclusive virtual product launches",
-                        "Community": "VIP customer advisory board invitation",
-                        "Education": "Advanced smart home workshops"
-                    },
-                    "Personalized Offers": {
-                        "Bundle Discount": "25% off Home Automation Bundle",
-                        "Free Upgrade": "Complimentary premium support (3 months)",
-                        "Referral Incentive": "$100 credit per successful referral",
-                        "Anniversary Special": "Double points on March 15"
-                    },
-                    "Proactive Support": {
-                        "Check-in Call": "Schedule quarterly business review",
-                        "Usage Analysis": "Smart home optimization consultation",
-                        "Training": "Free team training on purchased products",
-                        "Priority Access": "24/7 dedicated support hotline"
-                    },
-                    "Expected Impact": {
-                        "Retention Increase": "+15% probability",
-                        "LTV Growth": "+$12,000 projected",
-                        "Referral Rate": "3x baseline",
-                        "Satisfaction Score": "Target 5.0/5.0"
+                    title: 'Retention Strategy Recommendations',
+                    status: 'Personalized',
+                    details: {
+                        'VIP Experience': 'Assign dedicated account manager',
+                        'Early Access': 'Beta program for new smart home products',
+                        'Loyalty Reward': '500 bonus points ($50 value) for anniversary',
+                        'Personal Touch': 'CEO thank you note for being top 1% customer',
+                        'Content Strategy': 'Weekly tech innovation newsletter',
+                        'Event Invitation': 'Exclusive virtual product launches',
+                        'Bundle Discount': '25% off Home Automation Bundle',
+                        'Free Upgrade': 'Complimentary premium support (3 months)',
+                        'Referral Incentive': '$100 credit per successful referral',
+                        'Anniversary Special': 'Double points on March 15',
+                        'Expected Impact': '+15% retention probability, +$12,000 LTV'
                     }
                 }
             },
@@ -630,302 +868,318 @@
                 typingTime: 2200,
                 delay: 1500,
                 agentData: {
-                    "Engagement Timeline": {
-                        "Q1 2024": "High - 15 interactions, 8 purchases",
-                        "Q4 2023": "Very High - 22 interactions, 12 purchases",
-                        "Q3 2023": "Moderate - 10 interactions, 6 purchases",
-                        "Q2 2023": "High - 18 interactions, 8 purchases"
-                    },
-                    "Concerning Trends": {
-                        "Email Engagement": "↓ 35% decline in open rates (last 60 days)",
-                        "Website Visits": "↓ 50% reduction in session frequency",
-                        "Support Tickets": "↑ 2x increase in product issues reported",
-                        "Response Time": "↑ Slower responses to outreach (3 days avg)",
-                        "Social Activity": "No brand mentions in 45 days (was weekly)"
-                    },
-                    "Positive Indicators": {
-                        "Purchase Value": "↑ 20% increase in average order",
-                        "Product Reviews": "Still submitting 5-star reviews",
-                        "Loyalty Points": "Actively redeeming rewards",
-                        "Referrals": "2 successful referrals last month"
-                    },
-                    "Risk Assessment": {
-                        "Overall Risk": "Medium-Low",
-                        "Primary Concern": "Declining digital engagement",
-                        "Secondary Concern": "Increased support issues",
-                        "Competitor Activity": "LinkedIn shows interest in 2 competitors",
-                        "Intervention Priority": "High - VIP customer at risk"
-                    },
-                    "Recommended Actions": {
-                        "Immediate": "Personal outreach from account manager today",
-                        "This Week": "Resolve any outstanding product concerns",
-                        "Next 30 Days": "Re-engagement campaign with exclusive offer",
-                        "Ongoing": "Monthly check-ins and quarterly business reviews"
+                    title: 'Engagement Pattern Analysis',
+                    status: 'Attention Needed',
+                    details: {
+                        'Email Open Rate': '↓ 35% decline in last 60 days',
+                        'Website Visits': '↓ 50% reduction in session frequency',
+                        'Support Tickets': '↑ 2x increase in product issues reported',
+                        'Response Time': '↑ Slower responses to outreach (3 days avg)',
+                        'Social Activity': 'No brand mentions in 45 days (was weekly)',
+                        'Purchase Value': '↑ 20% increase in average order',
+                        'Product Reviews': 'Still submitting 5-star reviews',
+                        'Loyalty Points': 'Actively redeeming rewards',
+                        'Referrals': '2 successful referrals last month',
+                        'Overall Risk': 'Medium-Low',
+                        'Primary Concern': 'Declining digital engagement',
+                        'Recommended Action': 'Personal outreach from account manager today'
                     }
                 }
             }
         ];
 
-        let currentIndex = 0;
-        let isPlaying = false;
-        let isPaused = false;
-        let typingTimeout;
-        let messageTimeout;
+        let currentMessageIndex = 0;
 
-        const chatContainer = document.getElementById('chat-container');
-        const playBtn = document.getElementById('playBtn');
-        const pauseBtn = document.getElementById('pauseBtn');
-        const resetBtn = document.getElementById('resetBtn');
-        const demoStatus = document.getElementById('demoStatus');
+        // Initialize
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('Customer 360 Agent initialized');
+        });
 
-        function createMessage(type, content, agentData = null) {
-            const messageDiv = document.createElement('div');
-            messageDiv.className = 'message';
-            
-            const headerDiv = document.createElement('div');
-            headerDiv.className = 'message-header';
-            
-            const avatar = document.createElement('div');
-            avatar.className = type === 'user' ? 'avatar user-avatar' : 'avatar agent-avatar';
-            avatar.textContent = type === 'user' ? 'U' : 'AI';
-            
-            const name = document.createElement('div');
-            name.className = 'message-name';
-            name.textContent = type === 'user' ? 'You' : 'Customer 360 Agent';
-            
-            headerDiv.appendChild(avatar);
-            headerDiv.appendChild(name);
-            
-            const contentDiv = document.createElement('div');
-            contentDiv.className = 'message-content';
-            contentDiv.innerHTML = content;
-            
-            messageDiv.appendChild(headerDiv);
-            messageDiv.appendChild(contentDiv);
-            
-            if (agentData) {
-                const dataCard = createDataCard(agentData);
-                contentDiv.appendChild(dataCard);
+        // Auto resize textarea
+        function autoResize(textarea) {
+            textarea.style.height = 'auto';
+            textarea.style.height = Math.min(textarea.scrollHeight, 120) + 'px';
+        }
+
+        // Handle key press
+        function handleKeyPress(event) {
+            if (event.key === 'Enter' && !event.shiftKey) {
+                event.preventDefault();
+                sendCurrentMessage();
             }
-            
-            return messageDiv;
         }
 
-        function createDataCard(data) {
-            const card = document.createElement('div');
-            card.className = 'agent-data-card';
-            
-            for (const [sectionName, sectionData] of Object.entries(data)) {
-                const section = document.createElement('div');
-                section.className = 'data-section';
-                
-                const title = document.createElement('div');
-                title.className = 'section-title';
-                title.textContent = sectionName;
-                section.appendChild(title);
-                
-                const grid = document.createElement('div');
-                grid.className = 'data-grid';
-                
-                for (const [key, value] of Object.entries(sectionData)) {
-                    const item = document.createElement('div');
-                    item.className = 'data-item';
-                    
-                    // Special formatting for certain values
-                    if (sectionName === 'Key Metrics') {
-                        item.className = 'data-item metric-card';
-                        const metricValue = document.createElement('div');
-                        metricValue.className = 'metric-value';
-                        metricValue.textContent = value;
-                        
-                        const metricLabel = document.createElement('div');
-                        metricLabel.className = 'metric-label';
-                        metricLabel.textContent = key;
-                        
-                        item.appendChild(metricValue);
-                        item.appendChild(metricLabel);
-                    } else {
-                        const label = document.createElement('div');
-                        label.className = 'data-label';
-                        label.textContent = key;
-                        
-                        const val = document.createElement('div');
-                        val.className = 'data-value';
-                        
-                        // Add badges for certain values
-                        if (value.includes('Low') || value.includes('High') || value.includes('Medium')) {
-                            const badge = document.createElement('span');
-                            badge.className = `badge badge-${value.toLowerCase().includes('low') ? 'low' : value.toLowerCase().includes('high') ? 'high' : 'medium'}`;
-                            badge.textContent = value;
-                            val.appendChild(badge);
-                        } else if (value.startsWith('↑') || value.startsWith('↓')) {
-                            val.innerHTML = `<span style="color: ${value.startsWith('↑') ? '#059669' : '#dc2626'}">${value}</span>`;
-                        } else {
-                            val.textContent = value;
-                        }
-                        
-                        item.appendChild(label);
-                        item.appendChild(val);
-                    }
-                    
-                    grid.appendChild(item);
-                }
-                
-                section.appendChild(grid);
-                card.appendChild(section);
+        // Quick start from cards
+        function quickStart(type) {
+            let message = '';
+            switch(type) {
+                case 'view-profile':
+                    message = 'Show me a complete 360 view of customer CUST-2024-0847 including all available data sources and predictions.';
+                    break;
+                case 'retention-strategy':
+                    message = 'What retention strategies would you recommend for our VIP customers?';
+                    break;
+                case 'engagement-analysis':
+                    message = 'Analyze customer engagement patterns and identify any concerning trends.';
+                    break;
             }
-            
-            return card;
+
+            document.getElementById('messageInput').value = message;
+            sendCurrentMessage();
         }
 
-        function createTypingIndicator() {
-            const div = document.createElement('div');
-            div.className = 'message';
-            div.id = 'typing-indicator';
-            div.innerHTML = `
-                <div class="message-header">
-                    <div class="avatar agent-avatar">AI</div>
-                    <div class="message-name">Customer 360 Agent</div>
-                </div>
-                <div class="typing-indicator">
-                    <div class="typing-dot"></div>
-                    <div class="typing-dot"></div>
-                    <div class="typing-dot"></div>
-                </div>
-            `;
-            return div;
+        // Send current message
+        function sendCurrentMessage() {
+            const input = document.getElementById('messageInput');
+            const message = input.value.trim();
+            if (message) {
+                // Hide welcome screen and show chat
+                document.getElementById('welcomeScreen').classList.add('hidden');
+                document.getElementById('chatMessages').style.display = 'block';
+
+                // Add user message
+                addMessage('user', message);
+
+                input.value = '';
+                autoResize(input);
+
+                // Simulate agent response
+                setTimeout(() => {
+                    showTypingIndicator();
+                    setTimeout(() => {
+                        hideTypingIndicator();
+                        addMessage('agent', 'I\'ll analyze the customer data and provide comprehensive insights. Please use the demo controls to see a full demonstration of the Customer 360 capabilities.');
+                    }, 1500);
+                }, 500);
+            }
         }
 
-        function typeMessage(message, callback) {
-            const isUser = message.type === 'user';
-            const tempDiv = document.createElement('div');
-            tempDiv.className = 'message';
-            
-            const headerDiv = document.createElement('div');
-            headerDiv.className = 'message-header';
-            
-            const avatar = document.createElement('div');
-            avatar.className = isUser ? 'avatar user-avatar' : 'avatar agent-avatar';
-            avatar.textContent = isUser ? 'U' : 'AI';
-            
-            const name = document.createElement('div');
-            name.className = 'message-name';
-            name.textContent = isUser ? 'You' : 'Customer 360 Agent';
-            
-            headerDiv.appendChild(avatar);
-            headerDiv.appendChild(name);
-            tempDiv.appendChild(headerDiv);
-            
-            const contentDiv = document.createElement('div');
-            contentDiv.className = 'message-content';
-            tempDiv.appendChild(contentDiv);
-            
-            chatContainer.appendChild(tempDiv);
-            
-            let charIndex = 0;
-            const typeChar = () => {
-                if (!isPlaying || isPaused) return;
-                
-                if (charIndex < message.content.length) {
-                    contentDiv.textContent += message.content[charIndex];
-                    charIndex++;
-                    chatContainer.scrollTop = chatContainer.scrollHeight;
-                    typingTimeout = setTimeout(typeChar, message.typingTime / message.content.length);
+        // Demo controls
+        function startDemo() {
+            if (demoState.isPlaying && !demoState.isPaused) return;
+
+            demoState.isPlaying = true;
+            demoState.isPaused = false;
+
+            document.getElementById('startBtn').disabled = true;
+            document.getElementById('pauseBtn').disabled = false;
+            document.getElementById('skipBtn').disabled = false;
+
+            updateStatus('processing', 'Running Demo...');
+
+            // Hide welcome and show chat
+            document.getElementById('welcomeScreen').classList.add('hidden');
+            document.getElementById('chatMessages').style.display = 'block';
+
+            if (currentMessageIndex === 0) {
+                document.getElementById('chatMessages').innerHTML = '';
+            }
+
+            playNextMessage();
+        }
+
+        function pauseDemo() {
+            demoState.isPaused = true;
+            document.getElementById('startBtn').disabled = false;
+            document.getElementById('pauseBtn').disabled = true;
+
+            clearTimeout(demoState.messageTimer);
+            clearTimeout(demoState.typingTimer);
+
+            updateStatus('idle', 'Paused');
+        }
+
+        function resetDemo() {
+            clearTimeout(demoState.messageTimer);
+            clearTimeout(demoState.typingTimer);
+
+            demoState.isPlaying = false;
+            demoState.isPaused = false;
+            currentMessageIndex = 0;
+
+            document.getElementById('startBtn').disabled = false;
+            document.getElementById('pauseBtn').disabled = true;
+            document.getElementById('skipBtn').disabled = true;
+
+            updateStatus('idle', 'Ready');
+
+            // Show welcome screen
+            document.getElementById('welcomeScreen').classList.remove('hidden');
+            document.getElementById('chatMessages').style.display = 'none';
+            document.getElementById('chatMessages').innerHTML = '';
+        }
+
+        function skipToNext() {
+            clearTimeout(demoState.messageTimer);
+            clearTimeout(demoState.typingTimer);
+            hideTypingIndicator();
+
+            if (currentMessageIndex < demoScript.length) {
+                const message = demoScript[currentMessageIndex];
+                addDemoMessage(message);
+                currentMessageIndex++;
+
+                if (currentMessageIndex < demoScript.length) {
+                    demoState.messageTimer = setTimeout(() => {
+                        playNextMessage();
+                    }, 1000);
                 } else {
-                    if (message.agentData) {
-                        const dataCard = createDataCard(message.agentData);
-                        contentDiv.appendChild(dataCard);
-                        chatContainer.scrollTop = chatContainer.scrollHeight;
-                    }
-                    callback();
+                    completeDemo();
                 }
-            };
-            
-            typeChar();
+            }
         }
 
         function playNextMessage() {
-            if (!isPlaying || currentIndex >= demoScript.length) {
-                if (currentIndex >= demoScript.length) {
-                    demoStatus.textContent = 'Demo completed';
-                    playBtn.disabled = false;
-                    pauseBtn.disabled = true;
-                    isPlaying = false;
-                }
+            if (!demoState.isPlaying || demoState.isPaused) return;
+
+            if (currentMessageIndex >= demoScript.length) {
+                completeDemo();
                 return;
             }
 
-            if (isPaused) return;
+            const message = demoScript[currentMessageIndex];
 
-            const message = demoScript[currentIndex];
-            demoStatus.textContent = `Playing message ${currentIndex + 1} of ${demoScript.length}`;
-            
             if (message.type === 'agent') {
-                const typingIndicator = createTypingIndicator();
-                chatContainer.appendChild(typingIndicator);
-                chatContainer.scrollTop = chatContainer.scrollHeight;
-                
-                messageTimeout = setTimeout(() => {
-                    if (!isPlaying || isPaused) return;
-                    typingIndicator.remove();
-                    
-                    typeMessage(message, () => {
-                        currentIndex++;
-                        if (currentIndex < demoScript.length) {
-                            messageTimeout = setTimeout(playNextMessage, demoScript[currentIndex].delay || 1000);
-                        } else {
-                            playNextMessage();
-                        }
-                    });
-                }, message.delay || 1500);
-            } else {
-                typeMessage(message, () => {
-                    currentIndex++;
-                    if (currentIndex < demoScript.length) {
-                        messageTimeout = setTimeout(playNextMessage, demoScript[currentIndex].delay || 1000);
-                    } else {
+                showTypingIndicator();
+                demoState.typingTimer = setTimeout(() => {
+                    hideTypingIndicator();
+                    addDemoMessage(message);
+                    currentMessageIndex++;
+
+                    const delay = message.delay || 2000;
+                    demoState.messageTimer = setTimeout(() => {
                         playNextMessage();
-                    }
-                });
+                    }, delay);
+                }, message.typingTime || 2000);
+            } else {
+                addDemoMessage(message);
+                currentMessageIndex++;
+
+                const delay = message.delay || 1500;
+                demoState.messageTimer = setTimeout(() => {
+                    playNextMessage();
+                }, delay);
             }
         }
 
-        playBtn.addEventListener('click', () => {
-            isPlaying = true;
-            isPaused = false;
-            playBtn.disabled = true;
-            pauseBtn.disabled = false;
-            resetBtn.disabled = false;
-            
-            if (currentIndex === 0) {
-                chatContainer.innerHTML = '';
+        function addDemoMessage(message) {
+            if (message.type === 'user') {
+                addMessage('user', message.content);
+            } else if (message.type === 'agent') {
+                addMessage('agent', message.content, message.agentData);
             }
-            
-            playNextMessage();
-        });
+        }
 
-        pauseBtn.addEventListener('click', () => {
-            isPaused = !isPaused;
-            pauseBtn.textContent = isPaused ? '▶️ Resume' : '⏸️ Pause';
-            demoStatus.textContent = isPaused ? 'Paused' : `Playing message ${currentIndex + 1} of ${demoScript.length}`;
-            
-            if (!isPaused) {
-                playNextMessage();
+        function addMessage(type, content, agentData) {
+            const chatMessages = document.getElementById('chatMessages');
+            const messageDiv = document.createElement('div');
+            messageDiv.className = 'message';
+
+            const time = new Date().toLocaleString('en-US', {
+                hour: 'numeric',
+                minute: '2-digit'
+            });
+
+            if (type === 'user') {
+                messageDiv.innerHTML = `
+                    <div class="message-header">
+                        <div class="message-avatar-user">U</div>
+                        <span class="message-author">You</span>
+                        <span class="message-time">${time}</span>
+                    </div>
+                    <div class="message-content">${content}</div>
+                `;
+            } else {
+                let html = `
+                    <div class="message-header">
+                        <div class="message-avatar-agent">360°</div>
+                        <span class="message-author">Customer 360 Agent</span>
+                        <span class="message-tag">Agent</span>
+                        <span class="message-time">${time}</span>
+                    </div>
+                    <div class="message-content">${content}</div>
+                `;
+
+                if (agentData) {
+                    html += `
+                        <div class="agent-card">
+                            <div class="agent-card-header">
+                                <span class="agent-card-icon">👥</span>
+                                <span class="agent-card-title">${agentData.title}</span>
+                                ${agentData.status ? `<span class="agent-card-status">${agentData.status}</span>` : ''}
+                            </div>
+                            <div class="agent-card-content">
+                                <ul class="detail-list">
+                    `;
+
+                    for (const [key, value] of Object.entries(agentData.details)) {
+                        let displayValue = value;
+                        // Add color for trends
+                        if (value.startsWith('↑')) {
+                            displayValue = `<span style="color: #dc2626">${value}</span>`;
+                        } else if (value.startsWith('↓')) {
+                            displayValue = `<span style="color: #dc2626">${value}</span>`;
+                        }
+
+                        html += `
+                            <li class="detail-item">
+                                <span class="detail-label">${key}:</span>
+                                <span class="detail-value">${displayValue}</span>
+                            </li>
+                        `;
+                    }
+
+                    html += `
+                                </ul>
+                            </div>
+                        </div>
+                    `;
+                }
+
+                messageDiv.innerHTML = html;
             }
-        });
 
-        resetBtn.addEventListener('click', () => {
-            isPlaying = false;
-            isPaused = false;
-            currentIndex = 0;
-            clearTimeout(typingTimeout);
-            clearTimeout(messageTimeout);
-            chatContainer.innerHTML = '';
-            playBtn.disabled = false;
-            pauseBtn.disabled = true;
-            pauseBtn.textContent = '⏸️ Pause';
-            demoStatus.textContent = 'Ready to start';
-        });
+            chatMessages.appendChild(messageDiv);
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+        }
+
+        function showTypingIndicator() {
+            const chatMessages = document.getElementById('chatMessages');
+            const indicator = document.createElement('div');
+            indicator.id = 'typingIndicator';
+            indicator.className = 'typing-indicator';
+            indicator.innerHTML = `
+                <div class="typing-dot"></div>
+                <div class="typing-dot"></div>
+                <div class="typing-dot"></div>
+            `;
+            chatMessages.appendChild(indicator);
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+        }
+
+        function hideTypingIndicator() {
+            const indicator = document.getElementById('typingIndicator');
+            if (indicator) {
+                indicator.remove();
+            }
+        }
+
+        function updateStatus(status, text) {
+            const statusDot = document.getElementById('statusDot');
+            const statusText = document.getElementById('statusText');
+
+            statusDot.className = `status-dot ${status}`;
+            statusText.textContent = text;
+        }
+
+        function completeDemo() {
+            demoState.isPlaying = false;
+            document.getElementById('startBtn').disabled = false;
+            document.getElementById('pauseBtn').disabled = true;
+            document.getElementById('skipBtn').disabled = true;
+
+            updateStatus('idle', 'Demo Complete');
+        }
     </script>
 </body>
 </html>

@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Voice to CRM Multi-Agent Demo - Microsoft AI Accelerate</title>
+    <title>M365 Copilot - Voice to CRM Multi-Agent Demo - Microsoft AI Accelerate</title>
     <style>
         * {
             margin: 0;
@@ -11,850 +11,787 @@
             box-sizing: border-box;
         }
 
-        :root {
-            --primary: #742774;
-            --primary-dark: #4f1c4f;
-            --secondary: #00a651;
-            --secondary-dark: #008441;
-            --accent: #40e0d0;
-            --success: #10b981;
-            --danger: #ef4444;
-            --warning: #f59e0b;
-            --dark: #1f2937;
-            --gray: #6b7280;
-            --light: #f3f4f6;
-            --lighter: #f9fafb;
-            --border: #e5e7eb;
-            --text-primary: #111827;
-            --text-secondary: #4b5563;
-            --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
-            --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1);
-            --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1);
-            --shadow-xl: 0 20px 25px -5px rgb(0 0 0 / 0.1);
-        }
-
         body {
-            font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, 'Helvetica Neue', sans-serif;
+            font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
             background: #faf9f8;
-            min-height: 100vh;
-            padding: 20px;
-            color: var(--text-primary);
-        }
-
-        .main-container {
-            max-width: 1600px;
-            margin: 0 auto;
-            background: white;
-            border-radius: 24px;
-            box-shadow: var(--shadow-xl);
-            overflow: hidden;
-        }
-
-        .header {
-            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
-            color: white;
-            padding: 2.5rem;
-            text-align: center;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .header::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E") repeat;
-        }
-
-        .header-content {
-            position: relative;
-            z-index: 1;
-        }
-
-        .header h1 {
-            font-size: 2.5rem;
-            font-weight: 600;
-            margin-bottom: 0.5rem;
-            text-shadow: 0 2px 4px rgba(0,0,0,0.1);
-        }
-
-        .header p {
-            font-size: 1.15rem;
-            opacity: 0.95;
-            max-width: 700px;
-            margin: 0 auto;
-        }
-
-        .mode-selector {
-            background: var(--lighter);
-            padding: 1.5rem;
-            border-bottom: 1px solid var(--border);
+            height: 100vh;
             display: flex;
-            justify-content: center;
-            align-items: center;
-            gap: 2rem;
-            flex-wrap: wrap;
+            overflow: hidden;
+            color: #323130;
         }
 
-        .config-panel {
-            background: var(--lighter);
-            padding: 1.5rem;
-            border-bottom: 2px solid var(--border);
-            display: none;
-        }
-
-        .config-panel.active {
-            display: block;
-        }
-
-        .config-content {
-            max-width: 1200px;
-            margin: 0 auto;
-            display: grid;
-            gap: 1rem;
-        }
-
-        .input-row {
-            display: grid;
-            grid-template-columns: 1fr 1fr auto;
-            gap: 1rem;
-            align-items: end;
-        }
-
-        .input-group {
+        /* Sidebar */
+        .sidebar {
+            width: 260px;
+            background: #ffffff;
             display: flex;
             flex-direction: column;
-            gap: 0.5rem;
+            border-right: 1px solid #edebe9;
         }
 
-        .input-group label {
-            font-size: 0.875rem;
-            font-weight: 600;
-            color: var(--text-secondary);
-        }
-
-        .input-group input {
-            padding: 0.75rem;
-            border: 2px solid var(--border);
-            border-radius: 8px;
-            font-size: 1rem;
-            transition: all 0.3s ease;
-            background: white;
-        }
-
-        .input-group input:focus {
-            outline: none;
-            border-color: var(--primary);
-            box-shadow: 0 0 0 3px rgba(116, 39, 116, 0.1);
-        }
-
-        .connection-status {
-            padding: 0.75rem 1rem;
-            border-radius: 8px;
+        /* Sidebar Header */
+        .sidebar-header {
+            padding: 12px 16px;
             display: flex;
             align-items: center;
-            gap: 0.5rem;
-            font-size: 0.875rem;
-            background: var(--light);
-            color: var(--text-secondary);
+            gap: 10px;
+            border-bottom: 1px solid #edebe9;
+            height: 48px;
+        }
+
+        .copilot-icon {
+            width: 24px;
+            height: 24px;
+            background: linear-gradient(135deg, #b4a0ff 0%, #ff7eb9 50%, #7ee7fc 100%);
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
             justify-content: center;
-            margin-top: 1rem;
+            position: relative;
         }
 
-        .connection-status.connected {
-            background: #d1fae5;
-            color: #065f46;
-        }
-
-        .connection-status.error {
-            background: #fee2e2;
-            color: #991b1b;
-        }
-
-        .mode-toggle {
+        .copilot-icon::before {
+            content: '';
+            position: absolute;
+            width: 12px;
+            height: 12px;
             background: white;
-            border-radius: 12px;
-            padding: 4px;
-            display: flex;
-            gap: 4px;
-            box-shadow: var(--shadow-sm);
-            border: 1px solid var(--border);
+            border-radius: 2px;
+            opacity: 0.9;
         }
 
-        .mode-btn {
-            padding: 0.75rem 1.5rem;
-            border: none;
-            border-radius: 8px;
-            font-size: 1rem;
+        .sidebar-title {
+            font-size: 14px;
             font-weight: 600;
+            color: #323130;
+        }
+
+        .sidebar-button {
+            margin-left: auto;
+            background: none;
+            border: none;
+            padding: 4px;
             cursor: pointer;
-            transition: all 0.3s ease;
-            background: transparent;
-            color: var(--text-secondary);
+            color: #605e5c;
             display: flex;
             align-items: center;
-            gap: 0.5rem;
+            justify-content: center;
+            border-radius: 4px;
+            width: 32px;
+            height: 32px;
         }
 
-        .mode-btn.active {
-            background: var(--primary);
-            color: white;
-            box-shadow: var(--shadow-md);
+        .sidebar-button:hover {
+            background: #f3f2f1;
         }
 
-        .mode-btn:hover:not(.active) {
-            background: var(--light);
+        /* Search Box */
+        .search-container {
+            padding: 8px 16px;
+            border-bottom: 1px solid #edebe9;
         }
 
-        .content-area {
-            display: grid;
-            grid-template-columns: 350px 1fr;
-            height: 600px;
+        .search-box {
+            position: relative;
+            width: 100%;
         }
 
-        .sidebar {
-            background: var(--lighter);
-            border-right: 1px solid var(--border);
-            padding: 1.5rem;
+        .search-icon {
+            position: absolute;
+            left: 8px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #605e5c;
+            font-size: 14px;
+        }
+
+        .search-input {
+            width: 100%;
+            padding: 6px 8px 6px 32px;
+            border: 1px solid #d2d0ce;
+            border-radius: 4px;
+            font-size: 14px;
+            background: #faf9f8;
+            outline: none;
+            transition: all 0.2s;
+        }
+
+        .search-input:focus {
+            border-color: #605e5c;
+            background: #ffffff;
+        }
+
+        /* Navigation */
+        .nav-section {
+            flex: 1;
             overflow-y: auto;
+            padding: 4px 0;
         }
 
-        .control-section {
-            margin-bottom: 2rem;
+        .nav-item {
+            padding: 8px 16px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            cursor: pointer;
+            font-size: 14px;
+            color: #323130;
+            transition: background 0.1s;
+            position: relative;
+            user-select: none;
         }
 
-        .control-section h3 {
-            font-size: 1.1rem;
+        .nav-item:hover {
+            background: #f3f2f1;
+        }
+
+        .nav-item.active {
+            background: #f3f2f1;
+        }
+
+        .nav-item.active::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 8px;
+            bottom: 8px;
+            width: 2px;
+            background: #742774;
+            border-radius: 1px;
+        }
+
+        .nav-icon {
+            width: 20px;
+            height: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+
+        /* Demo Controls Section */
+        .demo-controls-section {
+            border-top: 1px solid #edebe9;
+            padding: 12px 16px;
+            background: #faf9f8;
+        }
+
+        .demo-controls-title {
+            font-size: 12px;
             font-weight: 600;
-            margin-bottom: 1rem;
-            color: var(--text-primary);
+            color: #605e5c;
+            margin-bottom: 8px;
         }
 
         .demo-controls {
-            display: flex;
-            flex-direction: column;
-            gap: 0.75rem;
-        }
-
-        .control-row {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 0.75rem;
+            gap: 8px;
         }
 
-        .btn {
-            padding: 0.75rem 1.5rem;
-            border: none;
-            border-radius: 8px;
-            font-size: 1rem;
-            font-weight: 600;
+        .demo-btn {
+            padding: 6px 12px;
+            border: 1px solid #d2d0ce;
+            border-radius: 4px;
+            background: white;
+            font-size: 12px;
             cursor: pointer;
-            transition: all 0.3s ease;
-            display: inline-flex;
+            display: flex;
             align-items: center;
             justify-content: center;
-            gap: 0.5rem;
-            white-space: nowrap;
+            gap: 4px;
+            color: #323130;
+            transition: all 0.2s;
         }
 
-        .btn-primary {
-            background: var(--primary);
-            color: white;
+        .demo-btn:hover:not(:disabled) {
+            background: #f3f2f1;
+            border-color: #605e5c;
         }
 
-        .btn-primary:hover {
-            background: var(--primary-dark);
-        }
-
-        .btn-success {
-            background: var(--success);
-            color: white;
-        }
-
-        .btn-success:hover {
-            background: #059669;
-        }
-
-        .btn-secondary {
-            background: var(--gray);
-            color: white;
-        }
-
-        .btn-secondary:hover {
-            background: #4b5563;
-        }
-
-        .btn:disabled {
+        .demo-btn:disabled {
             opacity: 0.5;
             cursor: not-allowed;
         }
 
-        .speed-control {
+        .demo-btn.primary {
+            background: #742774;
+            color: white;
+            border-color: #742774;
+        }
+
+        .demo-btn.primary:hover:not(:disabled) {
+            background: #5a1d5a;
+        }
+
+        /* Bottom section */
+        .sidebar-bottom {
+            border-top: 1px solid #edebe9;
+            padding: 8px 0;
+        }
+
+        .user-section {
+            padding: 8px 16px;
             display: flex;
             align-items: center;
-            gap: 1rem;
-            margin-top: 1rem;
-            padding-top: 1rem;
-            border-top: 1px solid var(--border);
-        }
-
-        .speed-label {
-            font-size: 0.875rem;
-            font-weight: 600;
-            color: var(--text-secondary);
-        }
-
-        .speed-slider {
-            flex: 1;
-            -webkit-appearance: none;
-            appearance: none;
-            height: 6px;
-            border-radius: 3px;
-            background: var(--border);
-            outline: none;
-        }
-
-        .speed-slider::-webkit-slider-thumb {
-            -webkit-appearance: none;
-            appearance: none;
-            width: 18px;
-            height: 18px;
-            border-radius: 50%;
-            background: var(--primary);
+            gap: 12px;
             cursor: pointer;
+            transition: background 0.1s;
         }
 
-        .progress-section {
-            margin-bottom: 2rem;
+        .user-section:hover {
+            background: #f3f2f1;
         }
 
-        .progress-bar {
-            height: 8px;
-            background: var(--border);
-            border-radius: 4px;
-            overflow: hidden;
-            margin-bottom: 1rem;
-        }
-
-        .progress-fill {
-            height: 100%;
-            background: linear-gradient(90deg, var(--primary) 0%, var(--secondary) 100%);
-            border-radius: 4px;
-            width: 0%;
-            transition: width 0.5s ease;
-        }
-
-        .step-indicators {
-            display: flex;
-            justify-content: space-between;
-            gap: 0.5rem;
-        }
-
-        .step-indicator {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 0.5rem;
-            flex: 1;
-        }
-
-        .step-circle {
-            width: 40px;
-            height: 40px;
+        .user-avatar {
+            width: 28px;
+            height: 28px;
             border-radius: 50%;
-            background: white;
-            border: 3px solid var(--border);
+            background: #742774;
+            color: white;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-weight: bold;
-            color: var(--text-secondary);
-            transition: all 0.3s ease;
+            font-size: 12px;
+            font-weight: 600;
         }
 
-        .step-indicator.active .step-circle {
-            background: var(--primary);
-            border-color: var(--primary);
-            color: white;
-            transform: scale(1.1);
-        }
-
-        .step-indicator.completed .step-circle {
-            background: var(--success);
-            border-color: var(--success);
-            color: white;
-        }
-
-        .step-label {
-            font-size: 0.75rem;
-            color: var(--text-secondary);
-            text-align: center;
-        }
-
-        .voice-controls {
-            background: white;
-            border-radius: 12px;
-            padding: 1.5rem;
-            box-shadow: var(--shadow-sm);
-            margin-bottom: 1.5rem;
-        }
-
-        .voice-button {
-            width: 100%;
-            height: 80px;
-            border-radius: 50px;
-            border: 3px solid var(--secondary);
-            background: linear-gradient(135deg, var(--secondary) 0%, var(--secondary-dark) 100%);
-            color: white;
-            font-size: 1.2rem;
-            font-weight: bold;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 1rem;
-        }
-
-        .voice-button:hover {
-            transform: scale(1.05);
-            box-shadow: 0 5px 20px rgba(0, 166, 81, 0.4);
-        }
-
-        .voice-button.recording {
-            background: linear-gradient(135deg, var(--danger) 0%, #dc2626 100%);
-            border-color: var(--danger);
-            animation: pulse 1.5s infinite;
-        }
-
-        @keyframes pulse {
-            0% { box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.4); }
-            70% { box-shadow: 0 0 0 20px rgba(239, 68, 68, 0); }
-            100% { box-shadow: 0 0 0 0 rgba(239, 68, 68, 0); }
-        }
-
-        .chat-container {
-            background: white;
-            overflow: hidden;
+        /* Main Content */
+        .main-content {
+            flex: 1;
             display: flex;
             flex-direction: column;
+            background: #faf9f8;
         }
 
-        .chat-header {
-            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
-            color: white;
-            padding: 1rem 1.5rem;
+        /* Header */
+        .content-header {
+            height: 48px;
+            padding: 0 20px;
             display: flex;
-            justify-content: space-between;
             align-items: center;
+            justify-content: space-between;
+            background: #ffffff;
+            border-bottom: 1px solid #edebe9;
         }
 
-        .chat-title {
-            font-size: 1.1rem;
-            font-weight: 600;
+        .header-title {
+            font-size: 14px;
+            color: #605e5c;
+        }
+
+        .header-actions {
+            display: flex;
+            align-items: center;
+            gap: 12px;
         }
 
         .status-indicator {
             display: flex;
             align-items: center;
-            gap: 0.5rem;
+            gap: 8px;
+            padding: 6px 12px;
+            background: #f3f2f1;
+            border-radius: 4px;
+            font-size: 12px;
+            color: #605e5c;
         }
 
         .status-dot {
-            width: 10px;
-            height: 10px;
+            width: 8px;
+            height: 8px;
             border-radius: 50%;
             background: #10b981;
-            animation: none;
         }
 
         .status-dot.processing {
             background: #f59e0b;
-            animation: statusPulse 1s infinite;
+            animation: pulse 1s infinite;
         }
 
-        @keyframes statusPulse {
+        @keyframes pulse {
             0%, 100% { opacity: 1; }
             50% { opacity: 0.5; }
         }
 
+        /* Chat Container */
+        .chat-container {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+
+        /* Chat Messages */
         .chat-messages {
             flex: 1;
             overflow-y: auto;
-            padding: 1.5rem;
-            background: var(--lighter);
+            padding: 20px;
+            display: block;
         }
 
         .message {
-            display: flex;
-            gap: 1rem;
-            margin-bottom: 1.5rem;
-            animation: messageSlide 0.3s ease;
-        }
-
-        @keyframes messageSlide {
-            from {
-                opacity: 0;
-                transform: translateY(10px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        .message-avatar {
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.25rem;
-            flex-shrink: 0;
-        }
-
-        .message.user .message-avatar {
-            background: linear-gradient(135deg, var(--secondary) 0%, var(--secondary-dark) 100%);
-        }
-
-        .message.assistant .message-avatar {
-            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
-        }
-
-        .message-content {
-            flex: 1;
+            max-width: 900px;
+            margin: 0 auto 24px;
         }
 
         .message-header {
             display: flex;
             align-items: center;
-            gap: 0.5rem;
-            margin-bottom: 0.5rem;
+            gap: 12px;
+            margin-bottom: 8px;
         }
 
-        .message-sender {
+        .message-avatar-user {
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            background: #0078d4;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
             font-weight: 600;
-            color: var(--text-primary);
+        }
+
+        .message-avatar-agent {
+            width: 28px;
+            height: 28px;
+            border-radius: 6px;
+            background: linear-gradient(135deg, #742774 0%, #00a651 100%);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        .message-author {
+            font-size: 14px;
+            font-weight: 600;
+            color: #323130;
+        }
+
+        .message-tag {
+            padding: 2px 8px;
+            background: #f3f2f1;
+            border-radius: 4px;
+            font-size: 12px;
+            color: #605e5c;
         }
 
         .message-time {
-            font-size: 0.75rem;
-            color: var(--text-secondary);
+            font-size: 12px;
+            color: #a19f9d;
         }
 
-        .message-text {
-            background: white;
-            padding: 1rem;
-            border-radius: 12px;
-            box-shadow: var(--shadow-sm);
+        .message-content {
+            margin-left: 40px;
+            font-size: 14px;
             line-height: 1.6;
-            border: 1px solid var(--border);
+            color: #323130;
         }
 
-        .message.user .message-text {
-            background: linear-gradient(135deg, var(--secondary) 0%, var(--secondary-dark) 100%);
-            color: white;
-            border: none;
-        }
-
-        .voice-transcript {
-            background: #f0fdf4;
-            border: 2px solid var(--secondary);
+        /* Agent Cards */
+        .agent-card {
+            margin-left: 40px;
+            margin-top: 16px;
+            background: white;
+            border: 1px solid #edebe9;
             border-radius: 8px;
-            padding: 0.75rem;
-            margin-bottom: 0.75rem;
-            font-style: italic;
-            color: #065f46;
+            overflow: hidden;
         }
 
-        .crm-card {
-            background: white;
-            border: 2px solid var(--primary);
-            border-radius: 12px;
-            padding: 1rem;
-            margin-top: 1rem;
-        }
-
-        .crm-header {
+        .agent-card-header {
+            padding: 16px;
             display: flex;
-            justify-content: space-between;
             align-items: center;
-            margin-bottom: 1rem;
-            padding-bottom: 0.75rem;
-            border-bottom: 1px solid var(--border);
+            gap: 12px;
+            border-bottom: 1px solid #edebe9;
+            background: linear-gradient(135deg, rgba(116, 39, 116, 0.05) 0%, rgba(0, 166, 81, 0.05) 100%);
         }
 
-        .crm-title {
+        .agent-card-icon {
+            font-size: 20px;
+        }
+
+        .agent-card-title {
+            font-size: 16px;
             font-weight: 600;
-            color: var(--primary);
-            font-size: 1.1rem;
+            color: #323130;
         }
 
-        .crm-status {
-            padding: 0.25rem 0.75rem;
-            background: var(--success);
+        .agent-card-status {
+            margin-left: auto;
+            padding: 4px 12px;
+            background: #10b981;
             color: white;
             border-radius: 12px;
-            font-size: 0.75rem;
+            font-size: 12px;
             font-weight: 600;
         }
 
-        .crm-fields {
-            display: grid;
-            gap: 0.75rem;
+        .agent-card-content {
+            padding: 16px;
         }
 
-        .crm-field {
-            display: grid;
-            grid-template-columns: 120px 1fr;
-            gap: 0.5rem;
-            padding: 0.5rem;
-            background: var(--lighter);
-            border-radius: 6px;
+        .detail-list {
+            list-style: none;
         }
 
-        .crm-label {
-            font-weight: 600;
-            color: var(--text-secondary);
-            font-size: 0.875rem;
-        }
-
-        .crm-value {
-            color: var(--text-primary);
-        }
-
-        .entity-badges {
+        .detail-item {
+            padding: 8px 0;
+            font-size: 14px;
+            color: #323130;
             display: flex;
-            flex-wrap: wrap;
-            gap: 0.5rem;
-            margin-top: 1rem;
+            gap: 8px;
+            border-bottom: 1px solid #f3f2f1;
         }
 
-        .entity-badge {
-            padding: 0.5rem 1rem;
-            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
-            color: white;
-            border-radius: 20px;
-            font-size: 0.875rem;
+        .detail-item:last-child {
+            border-bottom: none;
+        }
+
+        .detail-label {
             font-weight: 600;
-            box-shadow: var(--shadow-sm);
+            min-width: 180px;
+            color: #605e5c;
         }
 
-        .typing-indicator {
-            display: none;
-            padding: 0.75rem 1rem;
+        .detail-value {
+            color: #323130;
+            flex: 1;
+        }
+
+        /* Input Container */
+        .input-container {
+            padding: 16px 20px;
             background: white;
-            border-radius: 12px;
-            box-shadow: var(--shadow-sm);
-            border: 1px solid var(--border);
-            width: fit-content;
+            border-top: 1px solid #edebe9;
         }
 
-        .typing-indicator.active {
-            display: inline-block;
+        .input-wrapper {
+            max-width: 900px;
+            margin: 0 auto;
+            position: relative;
         }
 
-        .typing-dots {
+        .input-field {
+            width: 100%;
+            padding: 12px 48px 12px 16px;
+            border: 1px solid #d2d0ce;
+            border-radius: 8px;
+            font-size: 14px;
+            font-family: inherit;
+            resize: none;
+            outline: none;
+            background: #faf9f8;
+            transition: all 0.2s;
+            min-height: 44px;
+            max-height: 120px;
+        }
+
+        .input-field:focus {
+            border-color: #742774;
+            background: white;
+        }
+
+        .input-actions {
+            position: absolute;
+            right: 8px;
+            bottom: 8px;
             display: flex;
             gap: 4px;
+        }
+
+        .input-button {
+            width: 28px;
+            height: 28px;
+            border: none;
+            background: none;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 4px;
+            color: #605e5c;
+            transition: all 0.1s;
+        }
+
+        .input-button:hover {
+            background: #f3f2f1;
+        }
+
+        .input-button.send {
+            color: #742774;
+        }
+
+        .input-button:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        /* Typing indicator */
+        .typing-indicator {
+            margin-left: 40px;
+            display: flex;
+            gap: 4px;
+            padding: 8px 0;
         }
 
         .typing-dot {
             width: 8px;
             height: 8px;
+            background: #605e5c;
             border-radius: 50%;
-            background: var(--gray);
-            animation: typingPulse 1.4s infinite ease-in-out;
+            animation: typing 1.4s infinite;
         }
 
-        .typing-dot:nth-child(1) { animation-delay: -0.32s; }
-        .typing-dot:nth-child(2) { animation-delay: -0.16s; }
+        .typing-dot:nth-child(2) {
+            animation-delay: 0.2s;
+        }
 
-        @keyframes typingPulse {
-            0%, 80%, 100% {
+        .typing-dot:nth-child(3) {
+            animation-delay: 0.4s;
+        }
+
+        @keyframes typing {
+            0%, 60%, 100% {
+                transform: translateY(0);
                 opacity: 0.5;
-                transform: scale(1);
             }
-            40% {
+            30% {
+                transform: translateY(-10px);
                 opacity: 1;
-                transform: scale(1.2);
             }
         }
 
-        @media (max-width: 1024px) {
-            .content-area {
-                grid-template-columns: 1fr;
-                height: auto;
-            }
-
-            .sidebar {
-                border-right: none;
-                border-bottom: 1px solid var(--border);
-            }
+        /* Welcome state - hidden when chat is active */
+        .welcome-screen {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 40px;
+            max-width: 1200px;
+            margin: 0 auto;
+            width: 100%;
         }
 
-        @media (max-width: 640px) {
-            .header h1 {
-                font-size: 1.75rem;
-            }
+        .welcome-screen.hidden {
+            display: none;
+        }
 
-            .mode-selector {
-                padding: 1rem;
-            }
+        .welcome-title {
+            font-size: 36px;
+            font-weight: 600;
+            color: #323130;
+            margin-bottom: 16px;
+            text-align: center;
+        }
 
-            .chat-messages {
-                padding: 1rem;
-            }
+        .welcome-subtitle {
+            font-size: 16px;
+            color: #605e5c;
+            margin-bottom: 48px;
+            text-align: center;
+        }
+
+        .suggestion-cards {
+            display: flex;
+            gap: 20px;
+            width: 100%;
+            max-width: 900px;
+        }
+
+        .suggestion-card {
+            flex: 1;
+            background: white;
+            border: 1px solid #edebe9;
+            border-radius: 8px;
+            padding: 20px;
+            cursor: pointer;
+            transition: all 0.2s;
+            min-height: 120px;
+        }
+
+        .suggestion-card:hover {
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            transform: translateY(-2px);
+            border-color: #742774;
+        }
+
+        .card-icon {
+            font-size: 24px;
+            margin-bottom: 12px;
+        }
+
+        .card-title {
+            font-size: 14px;
+            font-weight: 600;
+            color: #323130;
+            margin-bottom: 8px;
+        }
+
+        .card-description {
+            font-size: 13px;
+            color: #605e5c;
+            line-height: 1.4;
         }
     </style>
 </head>
 <body>
-    <div class="main-container">
-        <div class="header">
-            <div class="header-content">
-                <h1>🎤 Voice to CRM Multi-Agent System</h1>
-                <p>Transform voice commands into CRM records instantly with AI-powered speech recognition and natural language processing</p>
+    <!-- Sidebar -->
+    <div class="sidebar">
+        <div class="sidebar-header">
+            <div class="copilot-icon"></div>
+            <span class="sidebar-title">M365 Copilot</span>
+            <button class="sidebar-button">☰</button>
+        </div>
+
+        <div class="search-container">
+            <div class="search-box">
+                <span class="search-icon">🔍</span>
+                <input type="text" class="search-input" placeholder="Search">
             </div>
         </div>
 
-        <div class="mode-selector">
-            <div class="mode-toggle">
-                <button class="mode-btn active" onclick="switchMode('demo')" id="demoModeBtn">
-                    <span>🎬</span>
-                    <span>Demo Mode</span>
+        <div class="nav-section">
+            <div class="nav-item active">
+                <div class="nav-icon">💬</div>
+                <span>Chat</span>
+            </div>
+            <div class="nav-item">
+                <div class="nav-icon">🤖</div>
+                <span>Agents</span>
+            </div>
+            <div class="nav-item">
+                <div class="nav-icon">💬</div>
+                <span>Conversations</span>
+            </div>
+            <div class="nav-item">
+                <div class="nav-icon">📄</div>
+                <span>Pages</span>
+            </div>
+            <div class="nav-item">
+                <div class="nav-icon">➕</div>
+                <span>Create</span>
+            </div>
+            <div class="nav-item">
+                <div class="nav-icon">📱</div>
+                <span>Apps</span>
+            </div>
+            <div class="nav-item">
+                <div class="nav-icon">⚙️</div>
+                <span>Admin</span>
+            </div>
+        </div>
+
+        <!-- Demo Controls -->
+        <div class="demo-controls-section">
+            <div class="demo-controls-title">Demo Controls</div>
+            <div class="demo-controls">
+                <button class="demo-btn primary" onclick="startDemo()" id="startBtn">
+                    ▶️ Start
                 </button>
-                <button class="mode-btn" onclick="switchMode('live')" id="liveModeBtn">
-                    <span>🔴</span>
-                    <span>Live Mode</span>
+                <button class="demo-btn" onclick="pauseDemo()" id="pauseBtn" disabled>
+                    ⏸️ Pause
+                </button>
+                <button class="demo-btn" onclick="resetDemo()" id="resetBtn">
+                    🔄 Reset
+                </button>
+                <button class="demo-btn" onclick="skipToNext()" id="skipBtn" disabled>
+                    ⏭️ Skip
                 </button>
             </div>
         </div>
 
-        <div class="config-panel" id="liveConfig">
-            <div class="config-content">
-                <div class="input-row">
-                    <div class="input-group">
-                        <label>Azure Function Key</label>
-                        <input type="password" id="apiKey" placeholder="Enter your function key">
-                    </div>
-                    <div class="input-group">
-                        <label>Function App URL</label>
-                        <input type="text" id="apiEndpoint" placeholder="https://your-app.azurewebsites.net/api/voice-to-crm">
-                    </div>
-                    <button class="btn btn-primary" onclick="testConnection()">
-                        Test Connection
-                    </button>
-                </div>
-                <div class="connection-status" id="connectionStatus">
-                    <span class="status-dot idle"></span>
-                    <span>Not Connected</span>
+        <div class="sidebar-bottom">
+            <div class="user-section">
+                <div class="user-avatar">DU</div>
+                <span style="font-size: 14px;">Demo User</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="main-content">
+        <div class="content-header">
+            <div class="header-title">Voice to CRM Multi-Agent Demo - Microsoft AI Accelerate Agent</div>
+            <div class="header-actions">
+                <div class="status-indicator">
+                    <span class="status-dot" id="statusDot"></span>
+                    <span id="statusText">Ready</span>
                 </div>
             </div>
         </div>
 
-        <div class="content-area">
-            <div class="sidebar">
-                <div class="control-section">
-                    <h3>🎮 Demo Controls</h3>
-                    <div class="demo-controls">
-                        <div class="control-row" id="controlRow1">
-                            <button class="btn btn-success" onclick="startDemo()" id="startBtn">
-                                ▶️ Start Demo
-                            </button>
-                            <button class="btn btn-secondary" onclick="pauseDemo()" id="pauseBtn" disabled>
-                                ⏸️ Pause
-                            </button>
-                        </div>
-                        <div class="control-row" id="controlRow2">
-                            <button class="btn btn-secondary" onclick="resetDemo()" id="resetBtn">
-                                🔄 Reset
-                            </button>
-                            <button class="btn btn-secondary" onclick="skipToNext()" id="skipBtn" disabled>
-                                ⏭️ Skip
-                            </button>
-                        </div>
-                    </div>
-                    <div class="speed-control">
-                        <span class="speed-label">Speed:</span>
-                        <input type="range" class="speed-slider" id="speedSlider" min="0.5" max="3" step="0.5" value="1">
-                        <span class="speed-label" id="speedLabel">1x</span>
-                    </div>
-                </div>
+        <div class="chat-container">
+            <!-- Welcome Screen -->
+            <div class="welcome-screen" id="welcomeScreen">
+                <h1 class="welcome-title">🎙️ Voice to CRM Multi-Agent Demo - Microsoft AI Accelerate</h1>
+                <p class="welcome-subtitle">How can I help you today?</p>
 
-                <div class="progress-section">
-                    <h3>📊 Demo Progress</h3>
-                    <div class="progress-bar">
-                        <div class="progress-fill" id="progressBar"></div>
+                <div class="suggestion-cards">
+                    <div class="suggestion-card" onclick="quickStart('voice-transcribe')">
+                        <div class="card-icon">🎙️</div>
+                        <div class="card-title">Voice Transcription</div>
+                        <div class="card-description">Convert speech to CRM entries</div>
                     </div>
-                    <div class="step-indicators">
-                        <div class="step-indicator" id="step1">
-                            <div class="step-circle">🎤</div>
-                            <div class="step-label">Voice Input</div>
-                        </div>
-                        <div class="step-indicator" id="step2">
-                            <div class="step-circle">🧠</div>
-                            <div class="step-label">Process</div>
-                        </div>
-                        <div class="step-indicator" id="step3">
-                            <div class="step-circle">💾</div>
-                            <div class="step-label">CRM Save</div>
-                        </div>
+                    <div class="suggestion-card" onclick="quickStart('update-crm')">
+                        <div class="card-icon">📊</div>
+                        <div class="card-title">Update Records</div>
+                        <div class="card-description">Sync data with CRM system</div>
                     </div>
-                </div>
-
-                <div class="voice-controls">
-                    <h3>🎙️ Voice Simulation</h3>
-                    <button class="voice-button" id="voiceBtn" onclick="simulateVoiceInput()" disabled>
-                        <span id="voiceBtnIcon">🎤</span>
-                        <span id="voiceBtnText">Click to Simulate Voice</span>
-                    </button>
+                    <div class="suggestion-card" onclick="quickStart('process-notes')">
+                        <div class="card-icon">📝</div>
+                        <div class="card-title">Meeting Notes</div>
+                        <div class="card-description">Process call recordings</div>
+                    </div>
                 </div>
             </div>
 
-            <div class="chat-container">
-                <div class="chat-header">
-                    <div class="chat-title">Voice to CRM Conversation</div>
-                    <div class="status-indicator">
-                        <span class="status-dot" id="statusDot"></span>
-                        <span id="statusText">Ready</span>
-                    </div>
-                </div>
+            <!-- Chat Messages -->
+            <div class="chat-messages" id="chatMessages" style="display: none;">
+                <!-- Messages will be dynamically added here -->
+            </div>
 
-                <div class="chat-messages" id="chatMessages">
-                    <!-- Messages will be inserted here -->
+            <!-- Input Container -->
+            <div class="input-container">
+                <div class="input-wrapper">
+                    <textarea
+                        class="input-field"
+                        id="messageInput"
+                        placeholder="Ask about voice to crm multi-agent demo - microsoft ai accelerate capabilities..."
+                        rows="1"
+                        onkeypress="handleKeyPress(event)"
+                        oninput="autoResize(this)"
+                    ></textarea>
+                    <div class="input-actions">
+                        <button class="input-button">📎</button>
+                        <button class="input-button send" onclick="sendCurrentMessage()" id="sendButton">
+                            ➤
+                        </button>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
 
     <script>
-        // Global state
-        let currentMode = 'demo';
+        // State
         let demoState = {
             isPlaying: false,
             isPaused: false,
-            currentMessageIndex: 0,
             currentStep: 0,
-            speed: 1,
-            typingTimer: null,
-            messageTimer: null
+            messageTimer: null,
+            typingTimer: null
         };
 
-        let liveState = {
-            isConnected: false,
-            apiKey: '',
-            endpoint: '',
-            isRecording: false,
-            mediaRecorder: null,
-            audioChunks: [],
-            stream: null
-        };
-
-        // Demo script with voice transcripts and CRM actions
+        // Demo script
         const demoScript = [
             {
                 type: 'voice',
@@ -1078,469 +1015,96 @@ Creating ticket in ServiceNow...`,
             }
         ];
 
-        let currentScriptIndex = 0;
         let currentMessageIndex = 0;
 
-        // Initialize on page load
-        window.addEventListener('DOMContentLoaded', () => {
-            setupEventListeners();
-            addInitialMessage();
+        // Initialize
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('Voice to CRM Multi-Agent Demo - Microsoft AI Accelerate Agent initialized');
         });
 
-        function setupEventListeners() {
-            const speedSlider = document.getElementById('speedSlider');
-            speedSlider.addEventListener('input', (e) => {
-                demoState.speed = parseFloat(e.target.value);
-                document.getElementById('speedLabel').textContent = `${demoState.speed}x`;
-            });
+        // Auto resize textarea
+        function autoResize(textarea) {
+            textarea.style.height = 'auto';
+            textarea.style.height = Math.min(textarea.scrollHeight, 120) + 'px';
         }
 
-        function addInitialMessage() {
-            const messagesContainer = document.getElementById('chatMessages');
-            messagesContainer.innerHTML = `
-                <div class="message assistant">
-                    <div class="message-avatar">🤖</div>
-                    <div class="message-content">
-                        <div class="message-header">
-                            <span class="message-sender">Voice to CRM Assistant</span>
-                            <span class="message-time">${getCurrentTime()}</span>
-                        </div>
-                        <div class="message-text">
-                            Welcome to the Voice to CRM Multi-Agent Demo! 
-                            
-                            This system demonstrates how voice commands can instantly create and update CRM records across multiple platforms including:
-                            
-                            • Dynamics 365
-                            • ServiceNow  
-                            • SharePoint
-                            • Email Systems
-                            
-                            Click "Start Demo" to see the system in action, or switch to "Live Mode" to connect to your own CRM instance.
-                        </div>
-                    </div>
-                </div>
-            `;
-        }
-
-        function switchMode(mode) {
-            currentMode = mode;
-            document.getElementById('demoModeBtn').classList.toggle('active', mode === 'demo');
-            document.getElementById('liveModeBtn').classList.toggle('active', mode === 'live');
-            document.getElementById('liveConfig').classList.toggle('active', mode === 'live');
-            
-            // Get UI elements
-            const startBtn = document.getElementById('startBtn');
-            const pauseBtn = document.getElementById('pauseBtn');
-            const skipBtn = document.getElementById('skipBtn');
-            const resetBtn = document.getElementById('resetBtn');
-            const speedControl = document.querySelector('.speed-control');
-            const voiceButton = document.getElementById('voiceBtn');
-            const voiceBtnText = document.getElementById('voiceBtnText');
-            
-            if (mode === 'demo') {
-                // Demo mode - show all demo controls
-                if (startBtn) startBtn.style.display = 'inline-flex';
-                if (pauseBtn) pauseBtn.style.display = 'inline-flex';
-                if (skipBtn) skipBtn.style.display = 'inline-flex';
-                if (resetBtn) resetBtn.style.display = 'inline-flex';
-                if (speedControl) speedControl.style.display = 'flex';
-                
-                // Reset the demo state
-                resetDemo();
-                
-                // Set voice button for demo mode
-                voiceButton.disabled = true;
-                voiceButton.onclick = simulateVoiceInput;
-                voiceBtnText.textContent = 'Click to Simulate Voice';
-            } else {
-                // Live mode - hide demo-specific controls
-                if (startBtn) startBtn.style.display = 'none';
-                if (pauseBtn) pauseBtn.style.display = 'none';
-                if (skipBtn) skipBtn.style.display = 'none';
-                if (speedControl) speedControl.style.display = 'none';
-                // Keep reset button visible in live mode too
-                
-                // Set voice button for live mode
-                voiceButton.onclick = handleLiveVoiceInput;
-                voiceBtnText.textContent = 'Click to Record Voice';
-                
-                // Load saved config if exists
-                const savedConfig = localStorage.getItem('voiceToCRMConfig');
-                if (savedConfig) {
-                    const config = JSON.parse(savedConfig);
-                    document.getElementById('apiKey').value = config.apiKey || '';
-                    document.getElementById('apiEndpoint').value = config.endpoint || '';
-                }
-                
-                // Enable voice button only if connected
-                voiceButton.disabled = !liveState.isConnected;
-                
-                // Clear any demo state
-                clearTimeout(demoState.messageTimer);
-                clearTimeout(demoState.typingTimer);
-                demoState.isPlaying = false;
-                demoState.isPaused = false;
-                
-                // Reset the UI
-                updateStatus('idle', liveState.isConnected ? 'Connected' : 'Not Connected');
-                addInitialMessage();
+        // Handle key press
+        function handleKeyPress(event) {
+            if (event.key === 'Enter' && !event.shiftKey) {
+                event.preventDefault();
+                sendCurrentMessage();
             }
         }
 
-        // Live Mode Functions
-        async function testConnection() {
-            const apiKey = document.getElementById('apiKey').value;
-            const endpoint = document.getElementById('apiEndpoint').value;
-            
-            if (!apiKey || !endpoint) {
-                updateConnectionStatus('error', 'Please enter both API Key and Endpoint');
-                return;
+        // Quick start from cards
+        function quickStart(type) {
+            let message = '';
+            switch(type) {
+                case 'voice-transcribe':
+                    message = 'Help me with voice transcription';
+                    break;
+                case 'update-crm':
+                    message = 'Help me with update records';
+                    break;
+                case 'process-notes':
+                    message = 'Help me with meeting notes';
+                    break;
+                default:
+                    message = 'Help me get started';
+                    break;
             }
-            
-            updateConnectionStatus('processing', 'Testing connection...');
-            
-            try {
-                // Test with a health check or simple echo
-                const response = await fetch(endpoint, {
-                    method: 'POST',
-                    headers: {
-                        'x-functions-key': apiKey,
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify({
-                        action: 'health',
-                        test: true
-                    })
-                });
-                
-                if (response.ok) {
-                    liveState.isConnected = true;
-                    liveState.apiKey = apiKey;
-                    liveState.endpoint = endpoint;
-                    
-                    // Save config
-                    localStorage.setItem('voiceToCRMConfig', JSON.stringify({
-                        apiKey: apiKey,
-                        endpoint: endpoint
-                    }));
-                    
-                    const data = await response.json();
-                    const message = data.message || 'Connected Successfully';
-                    updateConnectionStatus('connected', message);
-                    document.getElementById('voiceBtn').disabled = false;
-                } else {
-                    const errorText = await response.text();
-                    throw new Error(`Connection failed: ${response.status} - ${errorText}`);
-                }
-            } catch (error) {
-                updateConnectionStatus('error', `Connection Failed: ${error.message}`);
-                liveState.isConnected = false;
+
+            document.getElementById('messageInput').value = message;
+            sendCurrentMessage();
+        }
+
+        // Send current message
+        function sendCurrentMessage() {
+            const input = document.getElementById('messageInput');
+            const message = input.value.trim();
+            if (message) {
+                // Hide welcome screen and show chat
+                document.getElementById('welcomeScreen').classList.add('hidden');
+                document.getElementById('chatMessages').style.display = 'block';
+
+                // Add user message
+                addMessage('user', message);
+
+                input.value = '';
+                autoResize(input);
+
+                // Simulate agent response
+                setTimeout(() => {
+                    showTypingIndicator();
+                    setTimeout(() => {
+                        hideTypingIndicator();
+                        addMessage('agent', 'I\'ll help you with that. Please use the demo controls to see a full demonstration of my capabilities.');
+                    }, 1500);
+                }, 500);
             }
         }
 
-        function updateConnectionStatus(status, message) {
-            const statusElement = document.getElementById('connectionStatus');
-            statusElement.className = `connection-status ${status}`;
-            statusElement.innerHTML = `
-                <span class="status-dot ${status}"></span>
-                <span>${message}</span>
-            `;
-        }
-
-        async function handleLiveVoiceInput() {
-            const voiceBtn = document.getElementById('voiceBtn');
-            const voiceBtnIcon = document.getElementById('voiceBtnIcon');
-            const voiceBtnText = document.getElementById('voiceBtnText');
-            
-            if (!liveState.isConnected) {
-                alert('Please connect to your Azure Function first');
-                return;
-            }
-            
-            if (!liveState.isRecording) {
-                // Start recording
-                try {
-                    liveState.stream = await navigator.mediaDevices.getUserMedia({ audio: true });
-                    liveState.mediaRecorder = new MediaRecorder(liveState.stream);
-                    liveState.audioChunks = [];
-                    
-                    liveState.mediaRecorder.ondataavailable = (event) => {
-                        liveState.audioChunks.push(event.data);
-                    };
-                    
-                    liveState.mediaRecorder.onstop = async () => {
-                        const audioBlob = new Blob(liveState.audioChunks, { type: 'audio/wav' });
-                        await processAudioWithAPI(audioBlob);
-                    };
-                    
-                    liveState.mediaRecorder.start();
-                    liveState.isRecording = true;
-                    
-                    voiceBtn.classList.add('recording');
-                    voiceBtnIcon.textContent = '🔴';
-                    voiceBtnText.textContent = 'Recording... Click to Stop';
-                    
-                    updateStatus('processing', 'Recording...');
-                    
-                } catch (error) {
-                    alert('Microphone access denied. Please allow microphone access to use voice input.');
-                    console.error('Error accessing microphone:', error);
-                }
-            } else {
-                // Stop recording
-                liveState.mediaRecorder.stop();
-                liveState.stream.getTracks().forEach(track => track.stop());
-                liveState.isRecording = false;
-                
-                voiceBtn.classList.remove('recording');
-                voiceBtnIcon.textContent = '🎤';
-                voiceBtnText.textContent = 'Processing...';
-                
-                updateStatus('processing', 'Processing voice input...');
-            }
-        }
-
-        async function processAudioWithAPI(audioBlob) {
-            const voiceBtnText = document.getElementById('voiceBtnText');
-            
-            try {
-                // Convert audio to base64
-                const reader = new FileReader();
-                reader.readAsDataURL(audioBlob);
-                reader.onloadend = async () => {
-                    try {
-                        const base64Audio = reader.result.split(',')[1];
-                        
-                        // Step 1: Speech to Text
-                        addLiveMessage('user', '🎤 Processing voice input...');
-                        updateStatus('processing', 'Converting speech to text...');
-                        
-                        const speechResponse = await fetch(`${liveState.endpoint}`, {
-                            method: 'POST',
-                            headers: {
-                                'x-functions-key': liveState.apiKey,
-                                'Content-Type': 'application/json'
-                            },
-                            body: JSON.stringify({
-                                action: 'speech-to-text',
-                                audio: base64Audio,
-                                format: 'wav'
-                            })
-                        });
-                        
-                        if (!speechResponse.ok) {
-                            const errorText = await speechResponse.text();
-                            throw new Error(`Speech to text failed: ${errorText}`);
-                        }
-                        
-                        const speechData = await speechResponse.json();
-                        const transcript = speechData.text || speechData.transcript || speechData.result;
-                        
-                        // Show transcript
-                        addLiveMessage('user', '🎤 Voice Input Detected', transcript);
-                        updateStep('step1');
-                        
-                        // Step 2: Process CRM command
-                        updateStatus('processing', 'Processing CRM command...');
-                        
-                        const crmResponse = await fetch(`${liveState.endpoint}`, {
-                            method: 'POST',
-                            headers: {
-                                'x-functions-key': liveState.apiKey,
-                                'Content-Type': 'application/json'
-                            },
-                            body: JSON.stringify({
-                                action: 'process-crm',
-                                conversation: [
-                                    {
-                                        role: 'user',
-                                        content: transcript
-                                    }
-                                ],
-                                extractEntities: true,
-                                createRecords: true,
-                                platform: 'dynamics365'
-                            })
-                        });
-                        
-                        if (!crmResponse.ok) {
-                            const errorText = await crmResponse.text();
-                            throw new Error(`CRM processing failed: ${errorText}`);
-                        }
-                        
-                        const crmData = await crmResponse.json();
-                        
-                        // Show processing results
-                        if (crmData.entities) {
-                            addLiveMessage('assistant', formatNLPResults(crmData));
-                            updateStep('step2');
-                        }
-                        
-                        // Show CRM results
-                        if (crmData.records || crmData.result) {
-                            const records = crmData.records || crmData.result;
-                            addLiveMessage('assistant', '✅ CRM Records Created Successfully!', null, records);
-                            updateStep('step3');
-                        } else if (crmData.message) {
-                            addLiveMessage('assistant', crmData.message);
-                        }
-                        
-                        // Complete
-                        updateStatus('idle', 'Ready');
-                        voiceBtnText.textContent = 'Click to Record Voice';
-                        
-                        // Mark step as complete after delay
-                        setTimeout(() => {
-                            document.getElementById('step3').classList.remove('active');
-                            document.getElementById('step3').classList.add('completed');
-                            
-                            // Reset steps after a few seconds
-                            setTimeout(() => {
-                                document.querySelectorAll('.step-indicator').forEach(step => {
-                                    step.classList.remove('active', 'completed');
-                                });
-                            }, 3000);
-                        }, 2000);
-                        
-                    } catch (error) {
-                        console.error('API Error:', error);
-                        addLiveMessage('assistant', `❌ Error: ${error.message}`);
-                        updateStatus('idle', 'Error occurred');
-                        voiceBtnText.textContent = 'Click to Record Voice';
-                        
-                        // Reset steps on error
-                        document.querySelectorAll('.step-indicator').forEach(step => {
-                            step.classList.remove('active', 'completed');
-                        });
-                    }
-                };
-            } catch (error) {
-                console.error('Processing error:', error);
-                voiceBtnText.textContent = 'Click to Record Voice';
-                updateStatus('idle', 'Error occurred');
-            }
-        }
-
-        function addLiveMessage(role, content, transcript = null, crmData = null) {
-            const messagesContainer = document.getElementById('chatMessages');
-            const messageDiv = document.createElement('div');
-            messageDiv.className = `message ${role}`;
-            
-            let contentHTML = `
-                <div class="message-avatar">${role === 'user' ? '👤' : '🤖'}</div>
-                <div class="message-content">
-                    <div class="message-header">
-                        <span class="message-sender">${role === 'user' ? 'You (Voice)' : 'CRM Assistant'}</span>
-                        <span class="message-time">${getCurrentTime()}</span>
-                    </div>
-            `;
-            
-            if (transcript) {
-                contentHTML += `
-                    <div class="voice-transcript">
-                        🎤 "${transcript}"
-                    </div>
-                `;
-            }
-            
-            contentHTML += `<div class="message-text">${content}</div>`;
-            
-            if (crmData) {
-                contentHTML += formatCRMResponse(crmData);
-            }
-            
-            contentHTML += '</div>';
-            messageDiv.innerHTML = contentHTML;
-            
-            messagesContainer.appendChild(messageDiv);
-            messagesContainer.scrollTop = messagesContainer.scrollHeight;
-        }
-
-        function formatNLPResults(nlpData) {
-            let html = `
-                <strong>🧠 Natural Language Processing Complete</strong><br><br>
-                <strong>Entities Detected:</strong><br>
-            `;
-            
-            if (nlpData.entities) {
-                for (const [type, values] of Object.entries(nlpData.entities)) {
-                    html += `• ${type}: ${Array.isArray(values) ? values.join(', ') : values}<br>`;
-                }
-            }
-            
-            if (nlpData.intent) {
-                html += `<br><strong>Intent:</strong> ${nlpData.intent}`;
-            }
-            
-            if (nlpData.confidence) {
-                html += `<br><strong>Confidence:</strong> ${(nlpData.confidence * 100).toFixed(1)}%`;
-            }
-            
-            return html;
-        }
-
-        function formatCRMResponse(crmData) {
-            let html = '';
-            
-            if (crmData.records) {
-                for (const record of crmData.records) {
-                    html += `
-                        <div class="crm-card">
-                            <div class="crm-header">
-                                <div class="crm-title">${record.type || 'Record'}</div>
-                                <div class="crm-status">${record.status || 'Created'}</div>
-                            </div>
-                            <div class="crm-fields">
-                    `;
-                    
-                    for (const [field, value] of Object.entries(record.data || record)) {
-                        if (field !== 'type' && field !== 'status' && field !== 'id') {
-                            html += `
-                                <div class="crm-field">
-                                    <div class="crm-label">${field}:</div>
-                                    <div class="crm-value">${value}</div>
-                                </div>
-                            `;
-                        }
-                    }
-                    
-                    if (record.id) {
-                        html += `
-                            <div class="entity-badges">
-                                <div class="entity-badge">ID: ${record.id}</div>
-                            </div>
-                        `;
-                    }
-                    
-                    html += `
-                            </div>
-                        </div>
-                    `;
-                }
-            }
-            
-            return html;
-        }
-
+        // Demo controls
         function startDemo() {
             if (demoState.isPlaying && !demoState.isPaused) return;
-            
+
             demoState.isPlaying = true;
             demoState.isPaused = false;
-            
+
             document.getElementById('startBtn').disabled = true;
             document.getElementById('pauseBtn').disabled = false;
             document.getElementById('skipBtn').disabled = false;
-            document.getElementById('voiceBtn').disabled = false;
-            
+
             updateStatus('processing', 'Running Demo...');
-            
-            if (currentScriptIndex === 0 && currentMessageIndex === 0) {
-                // Clear initial message if starting fresh
-                const messagesContainer = document.getElementById('chatMessages');
-                messagesContainer.innerHTML = '';
+
+            // Hide welcome and show chat
+            document.getElementById('welcomeScreen').classList.add('hidden');
+            document.getElementById('chatMessages').style.display = 'block';
+
+            if (currentMessageIndex === 0) {
+                document.getElementById('chatMessages').innerHTML = '';
             }
-            
+
             playNextMessage();
         }
 
@@ -1548,269 +1112,174 @@ Creating ticket in ServiceNow...`,
             demoState.isPaused = true;
             document.getElementById('startBtn').disabled = false;
             document.getElementById('pauseBtn').disabled = true;
-            
+
             clearTimeout(demoState.messageTimer);
             clearTimeout(demoState.typingTimer);
-            
+
             updateStatus('idle', 'Paused');
         }
 
         function resetDemo() {
-            // Clear all timers
             clearTimeout(demoState.messageTimer);
             clearTimeout(demoState.typingTimer);
-            
-            // Reset demo state
+
             demoState.isPlaying = false;
             demoState.isPaused = false;
-            demoState.currentStep = 0;
-            currentScriptIndex = 0;
             currentMessageIndex = 0;
-            
-            // Reset button states based on current mode
-            const startBtn = document.getElementById('startBtn');
-            const pauseBtn = document.getElementById('pauseBtn');
-            const skipBtn = document.getElementById('skipBtn');
-            const voiceBtn = document.getElementById('voiceBtn');
-            const voiceBtnText = document.getElementById('voiceBtnText');
-            const voiceBtnIcon = document.getElementById('voiceBtnIcon');
-            
-            if (currentMode === 'demo') {
-                // Show demo controls
-                startBtn.style.display = 'inline-flex';
-                pauseBtn.style.display = 'inline-flex';
-                skipBtn.style.display = 'inline-flex';
-                document.querySelector('.speed-control').style.display = 'flex';
-                
-                // Reset button states for demo mode
-                startBtn.disabled = false;
-                pauseBtn.disabled = true;
-                skipBtn.disabled = true;
-                voiceBtn.disabled = true;
-                voiceBtn.onclick = simulateVoiceInput;
-            } else {
-                // Live mode - ensure voice button is properly set
-                voiceBtn.disabled = !liveState.isConnected;
-                voiceBtn.onclick = handleLiveVoiceInput;
-            }
-            
-            // Reset voice button appearance
-            voiceBtn.classList.remove('recording');
-            voiceBtnIcon.textContent = '🎤';
-            voiceBtnText.textContent = 'Click to Simulate Voice';
-            
-            // Reset progress bar
-            document.getElementById('progressBar').style.width = '0%';
-            
-            // Reset step indicators
-            document.querySelectorAll('.step-indicator').forEach(step => {
-                step.classList.remove('active', 'completed');
-            });
-            
-            // Clear typing indicator if present
-            const typingIndicator = document.getElementById('typingIndicator');
-            if (typingIndicator) {
-                typingIndicator.remove();
-            }
-            
-            // Reset status
+
+            document.getElementById('startBtn').disabled = false;
+            document.getElementById('pauseBtn').disabled = true;
+            document.getElementById('skipBtn').disabled = true;
+
             updateStatus('idle', 'Ready');
-            
-            // Clear and reset messages
-            addInitialMessage();
+
+            // Show welcome screen
+            document.getElementById('welcomeScreen').classList.remove('hidden');
+            document.getElementById('chatMessages').style.display = 'none';
+            document.getElementById('chatMessages').innerHTML = '';
         }
 
         function skipToNext() {
             clearTimeout(demoState.messageTimer);
             clearTimeout(demoState.typingTimer);
-            
-            currentMessageIndex++;
-            if (currentMessageIndex >= demoScript[currentScriptIndex].messages.length) {
-                currentScriptIndex++;
-                currentMessageIndex = 0;
-            }
-            
-            if (currentScriptIndex < demoScript.length) {
-                playNextMessage();
+            hideTypingIndicator();
+
+            if (currentMessageIndex < demoScript.length) {
+                const message = demoScript[currentMessageIndex];
+                addDemoMessage(message);
+                currentMessageIndex++;
+
+                if (currentMessageIndex < demoScript.length) {
+                    demoState.messageTimer = setTimeout(() => {
+                        playNextMessage();
+                    }, 1000);
+                } else {
+                    completeDemo();
+                }
             }
         }
 
         function playNextMessage() {
             if (!demoState.isPlaying || demoState.isPaused) return;
-            
-            if (currentScriptIndex >= demoScript.length) {
+
+            if (currentMessageIndex >= demoScript.length) {
                 completeDemo();
                 return;
             }
-            
-            const currentSection = demoScript[currentScriptIndex];
-            const currentMessage = currentSection.messages[currentMessageIndex];
-            
-            if (!currentMessage) {
-                currentScriptIndex++;
-                currentMessageIndex = 0;
-                if (currentScriptIndex < demoScript.length) {
-                    playNextMessage();
-                } else {
-                    completeDemo();
-                }
-                return;
-            }
-            
-            // Handle voice button animation for voice sections
-            if (currentSection.type === 'voice' && currentMessageIndex === 0) {
-                simulateVoiceRecording();
-            }
-            
-            // Add typing indicator
-            showTypingIndicator();
-            
-            demoState.typingTimer = setTimeout(() => {
-                hideTypingIndicator();
-                addMessage(currentMessage, currentSection);
-                
-                // Update progress
-                updateProgress();
-                
-                // Handle step actions
-                if (currentMessage.action) {
-                    updateStep(currentMessage.action);
-                }
-                
+
+            const message = demoScript[currentMessageIndex];
+
+            if (message.type === 'agent') {
+                showTypingIndicator();
+                demoState.typingTimer = setTimeout(() => {
+                    hideTypingIndicator();
+                    addDemoMessage(message);
+                    currentMessageIndex++;
+
+                    const delay = message.delay || 2000;
+                    demoState.messageTimer = setTimeout(() => {
+                        playNextMessage();
+                    }, delay);
+                }, message.typingTime || 2000);
+            } else {
+                addDemoMessage(message);
                 currentMessageIndex++;
-                if (currentMessageIndex >= currentSection.messages.length) {
-                    currentScriptIndex++;
-                    currentMessageIndex = 0;
-                }
-                
-                // Schedule next message
-                const delay = (currentMessage.delay || 2000) / demoState.speed;
+
+                const delay = message.delay || 1500;
                 demoState.messageTimer = setTimeout(() => {
                     playNextMessage();
                 }, delay);
-                
-            }, (currentMessage.typingTime || 2000) / demoState.speed);
+            }
         }
 
-        function addMessage(message, section) {
-            const messagesContainer = document.getElementById('chatMessages');
+        function addDemoMessage(message) {
+            if (message.type === 'user') {
+                addMessage('user', message.content);
+            } else if (message.type === 'agent') {
+                addMessage('agent', message.content, message.agentData);
+            }
+        }
+
+        function addMessage(type, content, agentData) {
+            const chatMessages = document.getElementById('chatMessages');
             const messageDiv = document.createElement('div');
-            messageDiv.className = `message ${message.role}`;
-            
-            let contentHTML = `
-                <div class="message-avatar">${message.role === 'user' ? '👤' : '🤖'}</div>
-                <div class="message-content">
-                    <div class="message-header">
-                        <span class="message-sender">${message.role === 'user' ? 'You (Voice)' : 'CRM Assistant'}</span>
-                        <span class="message-time">${getCurrentTime()}</span>
-                    </div>
-            `;
-            
-            // Add voice transcript if needed
-            if (message.showTranscript && section.transcript) {
-                contentHTML += `
-                    <div class="voice-transcript">
-                        🎤 "${section.transcript}"
-                    </div>
-                `;
-            }
-            
-            contentHTML += `<div class="message-text">${message.content}</div>`;
-            
-            // Add CRM card if needed
-            if (message.showCRM && message.crmData) {
-                contentHTML += createCRMCard(message.crmData);
-            }
-            
-            contentHTML += '</div>';
-            messageDiv.innerHTML = contentHTML;
-            
-            messagesContainer.appendChild(messageDiv);
-            messagesContainer.scrollTop = messagesContainer.scrollHeight;
-        }
+            messageDiv.className = 'message';
 
-        function createCRMCard(data) {
-            let html = '';
-            
-            for (const [key, value] of Object.entries(data)) {
-                html += `
-                    <div class="crm-card">
-                        <div class="crm-header">
-                            <div class="crm-title">${key.charAt(0).toUpperCase() + key.slice(1)}</div>
-                            <div class="crm-status">Created</div>
-                        </div>
-                        <div class="crm-fields">
+            const time = new Date().toLocaleString('en-US', {
+                hour: 'numeric',
+                minute: '2-digit'
+            });
+
+            if (type === 'user') {
+                messageDiv.innerHTML = `
+                    <div class="message-header">
+                        <div class="message-avatar-user">U</div>
+                        <span class="message-author">You</span>
+                        <span class="message-time">${time}</span>
+                    </div>
+                    <div class="message-content">${content}</div>
                 `;
-                
-                for (const [field, fieldValue] of Object.entries(value)) {
-                    if (field !== 'id') {
-                        html += `
-                            <div class="crm-field">
-                                <div class="crm-label">${field.charAt(0).toUpperCase() + field.slice(1)}:</div>
-                                <div class="crm-value">${fieldValue}</div>
-                            </div>
-                        `;
-                    }
-                }
-                
-                if (value.id) {
+            } else {
+                let html = `
+                    <div class="message-header">
+                        <div class="message-avatar-agent">🎙️</div>
+                        <span class="message-author">Voice to CRM Multi-Agent Demo - Microsoft AI Accelerate</span>
+                        <span class="message-tag">Agent</span>
+                        <span class="message-time">${time}</span>
+                    </div>
+                    <div class="message-content">${content}</div>
+                `;
+
+                if (agentData) {
                     html += `
-                        <div class="entity-badges">
-                            <div class="entity-badge">ID: ${value.id}</div>
+                        <div class="agent-card">
+                            <div class="agent-card-header">
+                                <span class="agent-card-icon">🎙️</span>
+                                <span class="agent-card-title">${agentData.title || 'Results'}</span>
+                                ${agentData.status ? `<span class="agent-card-status">${agentData.status}</span>` : ''}
+                            </div>
+                            <div class="agent-card-content">
+                                <ul class="detail-list">
+                    `;
+
+                    const details = agentData.details || agentData;
+                    for (const [key, value] of Object.entries(details)) {
+                        if (key !== 'title' && key !== 'status') {
+                            html += `
+                            <li class="detail-item">
+                                <span class="detail-label">${key}:</span>
+                                <span class="detail-value">${value}</span>
+                            </li>
+                        `;
+                        }
+                    }
+
+                    html += `
+                                </ul>
+                            </div>
                         </div>
                     `;
                 }
-                
-                html += `
-                        </div>
-                    </div>
-                `;
+
+                messageDiv.innerHTML = html;
             }
-            
-            return html;
-        }
 
-        function simulateVoiceRecording() {
-            const voiceBtn = document.getElementById('voiceBtn');
-            const voiceBtnIcon = document.getElementById('voiceBtnIcon');
-            const voiceBtnText = document.getElementById('voiceBtnText');
-            
-            voiceBtn.classList.add('recording');
-            voiceBtnIcon.textContent = '🔴';
-            voiceBtnText.textContent = 'Recording...';
-            
-            setTimeout(() => {
-                voiceBtn.classList.remove('recording');
-                voiceBtnIcon.textContent = '🎤';
-                voiceBtnText.textContent = 'Processing...';
-                
-                setTimeout(() => {
-                    voiceBtnText.textContent = 'Click to Simulate Voice';
-                }, 1000);
-            }, 3000 / demoState.speed);
-        }
-
-        function simulateVoiceInput() {
-            if (!demoState.isPlaying) return;
-            
-            // This would trigger the next voice section in a real implementation
-            skipToNext();
+            chatMessages.appendChild(messageDiv);
+            chatMessages.scrollTop = chatMessages.scrollHeight;
         }
 
         function showTypingIndicator() {
-            const messagesContainer = document.getElementById('chatMessages');
+            const chatMessages = document.getElementById('chatMessages');
             const indicator = document.createElement('div');
-            indicator.className = 'typing-indicator active';
             indicator.id = 'typingIndicator';
+            indicator.className = 'typing-indicator';
             indicator.innerHTML = `
-                <div class="typing-dots">
-                    <div class="typing-dot"></div>
-                    <div class="typing-dot"></div>
-                    <div class="typing-dot"></div>
-                </div>
+                <div class="typing-dot"></div>
+                <div class="typing-dot"></div>
+                <div class="typing-dot"></div>
             `;
-            messagesContainer.appendChild(indicator);
-            messagesContainer.scrollTop = messagesContainer.scrollHeight;
+            chatMessages.appendChild(indicator);
+            chatMessages.scrollTop = chatMessages.scrollHeight;
         }
 
         function hideTypingIndicator() {
@@ -1820,33 +1289,10 @@ Creating ticket in ServiceNow...`,
             }
         }
 
-        function updateProgress() {
-            const totalMessages = demoScript.reduce((sum, section) => sum + section.messages.length, 0);
-            const currentProgress = (currentScriptIndex * 10 + currentMessageIndex) / totalMessages * 100;
-            document.getElementById('progressBar').style.width = `${currentProgress}%`;
-        }
-
-        function updateStep(action) {
-            if (action === 'step1') {
-                document.getElementById('step1').classList.add('active');
-                demoState.currentStep = 1;
-            } else if (action === 'step2') {
-                document.getElementById('step1').classList.remove('active');
-                document.getElementById('step1').classList.add('completed');
-                document.getElementById('step2').classList.add('active');
-                demoState.currentStep = 2;
-            } else if (action === 'step3') {
-                document.getElementById('step2').classList.remove('active');
-                document.getElementById('step2').classList.add('completed');
-                document.getElementById('step3').classList.add('active');
-                demoState.currentStep = 3;
-            }
-        }
-
         function updateStatus(status, text) {
             const statusDot = document.getElementById('statusDot');
             const statusText = document.getElementById('statusText');
-            
+
             statusDot.className = `status-dot ${status}`;
             statusText.textContent = text;
         }
@@ -1856,19 +1302,8 @@ Creating ticket in ServiceNow...`,
             document.getElementById('startBtn').disabled = false;
             document.getElementById('pauseBtn').disabled = true;
             document.getElementById('skipBtn').disabled = true;
-            document.getElementById('voiceBtn').disabled = true;
-            
-            document.getElementById('step3').classList.remove('active');
-            document.getElementById('step3').classList.add('completed');
-            
-            document.getElementById('progressBar').style.width = '100%';
-            
-            updateStatus('idle', 'Demo Complete');
-        }
 
-        function getCurrentTime() {
-            const now = new Date();
-            return now.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' });
+            updateStatus('idle', 'Demo Complete');
         }
     </script>
 </body>

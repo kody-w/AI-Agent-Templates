@@ -1,0 +1,629 @@
+/**
+ * Microsoft 365 Copilot - Exact Styling Extraction
+ * Extracted from: https://copilot.cloud.microsoft/ (Light Mode)
+ * Date: October 2025
+ *
+ * This CSS file contains EXACT values extracted from the live M365 Copilot interface.
+ * Use these values to create pixel-perfect demo HTML files.
+ */
+
+/* ============================================================================
+   CSS CUSTOM PROPERTIES (Design Tokens)
+   ============================================================================ */
+
+:root {
+  /* Typography */
+  --fontFamilyBase: "Segoe UI", "Segoe UI Web (West European)", Segoe,
+                    -apple-system, BlinkMacSystemFont, Roboto,
+                    "Helvetica Neue", Tahoma, Helvetica, Arial, sans-serif;
+
+  /* Colors - Light Mode */
+  --colorNeutralBackground1: #FFFFFF;
+  --colorNeutralBackground2: #F5F5F5;
+  --colorNeutralBackgroundAlpha: rgba(255, 255, 255, 0.9);
+
+  --colorNeutralStroke1: #E0E0E0;
+  --colorNeutralStroke2: #CCCCCC;
+  --colorNeutralStroke3: rgba(0, 0, 0, 0.05);
+
+  --colorBrandForeground1: #0D62AA;
+  --colorBrandBackground: #0078D4;
+
+  --colorNeutralForeground1: #242424;
+  --colorNeutralForeground2: #605E5C;
+  --colorNeutralForegroundOnBrand: #FFFFFF;
+
+  --colorStrokeFocus2: #0078D4;
+
+  /* Shadows */
+  --colorNeutralShadowAmbient: rgba(0, 0, 0, 0.12);
+  --colorNeutralShadowAmbientLighter: rgba(0, 0, 0, 0.08);
+  --colorNeutralShadowKey: rgba(0, 0, 0, 0.14);
+
+  --shadow2: 0 1px 2px rgba(0, 0, 0, 0.1);
+  --shadow4: 0 2px 4px rgba(0, 0, 0, 0.14), 0 0 2px rgba(0, 0, 0, 0.12);
+  --shadow8: 0 8px 16px 0 rgba(0, 0, 0, 0.1);
+  --shadow16: 0px -4px 20px var(--colorNeutralBackgroundAlpha),
+              0px 10px 10px var(--colorNeutralShadowAmbientLighter),
+              0px 16px 48px var(--colorNeutralShadowAmbient);
+
+  /* Borders */
+  --strokeWidthThin: 1px;
+  --strokeWidthThick: 2px;
+  --borderRadiusSmall: 4px;
+  --borderRadiusMedium: 8px;
+  --borderRadiusCircle: 50%;
+
+  /* Spacing */
+  --spacingHorizontalXS: 4px;
+  --spacingHorizontalS: 8px;
+  --spacingHorizontalM: 12px;
+  --spacingHorizontalL: 16px;
+  --spacingHorizontalXL: 20px;
+
+  --spacingVerticalXS: 4px;
+  --spacingVerticalS: 8px;
+  --spacingVerticalM: 12px;
+  --spacingVerticalL: 16px;
+  --spacingVerticalXL: 20px;
+
+  /* Sizing */
+  --sizeIconSmall: 16px;
+  --sizeIconMedium: 20px;
+  --sizeIconLarge: 24px;
+
+  --sizeControlHeightSmall: 32px;
+  --sizeControlHeightMedium: 48px;
+  --sizeControlHeightLarge: 56px;
+}
+
+/* ============================================================================
+   BASE / RESET
+   ============================================================================ */
+
+body {
+  background-color: rgb(255, 255, 255);
+  background-color: var(--colorNeutralBackground1);
+  font-family: var(--fontFamilyBase);
+  font-size: 16px;
+  line-height: 1.5;
+  color: var(--colorNeutralForeground1);
+  margin: 0;
+  padding: 0;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+/* ============================================================================
+   TYPOGRAPHY
+   ============================================================================ */
+
+.copilot-text-body {
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 1.5;
+}
+
+.copilot-text-small {
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 1.4;
+}
+
+.copilot-text-large {
+  font-size: 20px;
+  font-weight: 400;
+  line-height: 1.5;
+}
+
+.copilot-text-semibold {
+  font-weight: 600;
+}
+
+/* ============================================================================
+   LAYOUT CONTAINERS
+   ============================================================================ */
+
+.copilot-container {
+  display: flex;
+  height: 100vh;
+  width: 100vw;
+  overflow: hidden;
+}
+
+/* ============================================================================
+   SIDEBAR / NAVIGATION DRAWER
+   ============================================================================ */
+
+.copilot-sidebar {
+  background-color: var(--colorNeutralBackground2);
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  overflow-y: auto;
+  overflow-x: hidden;
+  box-shadow: var(--shadow4);
+  z-index: 100;
+}
+
+.copilot-sidebar-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--spacingVerticalM) var(--spacingHorizontalM);
+  min-height: 56px;
+}
+
+.copilot-sidebar-logo {
+  display: flex;
+  align-items: center;
+  gap: var(--spacingHorizontalS);
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.copilot-sidebar-body {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacingVerticalXS);
+  padding: var(--spacingVerticalM) var(--spacingHorizontalS);
+  overflow-y: auto;
+}
+
+/* ============================================================================
+   NAVIGATION ITEMS
+   ============================================================================ */
+
+.copilot-nav-item {
+  display: flex;
+  align-items: center;
+  gap: var(--spacingHorizontalM);
+  height: 48px;
+  padding: 0 var(--spacingHorizontalM);
+  border: none;
+  background-color: transparent;
+  border-radius: var(--borderRadiusSmall);
+  font-family: var(--fontFamilyBase);
+  font-size: 16px;
+  font-weight: 400;
+  color: var(--colorNeutralForeground1);
+  cursor: pointer;
+  text-align: left;
+  width: 100%;
+  transition: background-color 0.2s cubic-bezier(0.1, 0.9, 0.2, 1);
+}
+
+.copilot-nav-item:hover {
+  background-color: rgba(0, 0, 0, 0.03);
+}
+
+.copilot-nav-item:active {
+  background-color: rgba(0, 0, 0, 0.05);
+}
+
+.copilot-nav-item[aria-current="true"],
+.copilot-nav-item[aria-selected="true"] {
+  background-color: rgba(0, 120, 212, 0.1);
+  color: var(--colorBrandForeground1);
+  font-weight: 600;
+}
+
+.copilot-nav-item-icon {
+  width: 20px;
+  height: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.copilot-nav-item-icon svg {
+  width: 20px;
+  height: 20px;
+  fill: currentColor;
+}
+
+/* ============================================================================
+   BUTTONS
+   ============================================================================ */
+
+.copilot-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--spacingHorizontalS);
+  height: 48px;
+  padding: 0 var(--spacingHorizontalM);
+  border: none;
+  border-radius: var(--borderRadiusSmall);
+  font-family: var(--fontFamilyBase);
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s cubic-bezier(0.1, 0.9, 0.2, 1);
+  outline-offset: -1px;
+}
+
+.copilot-button-primary {
+  background-color: var(--colorBrandForeground1);
+  color: var(--colorNeutralForegroundOnBrand);
+  box-shadow: var(--shadow2);
+}
+
+.copilot-button-primary:hover {
+  box-shadow: var(--shadow4);
+}
+
+.copilot-button-primary:active {
+  transform: scale(0.98);
+}
+
+.copilot-button-primary:focus-visible {
+  outline: var(--strokeWidthThick) solid var(--colorStrokeFocus2);
+  box-shadow: none;
+}
+
+.copilot-button-secondary {
+  background-color: transparent;
+  color: var(--colorNeutralForeground1);
+  border: var(--strokeWidthThin) solid var(--colorNeutralStroke1);
+}
+
+.copilot-button-secondary:hover {
+  background-color: rgba(0, 0, 0, 0.03);
+}
+
+.copilot-button-icon {
+  width: 48px;
+  height: 48px;
+  min-width: 48px;
+  padding: 0;
+  border-radius: var(--borderRadiusSmall);
+  background-color: transparent;
+  border: none;
+  color: var(--colorNeutralForeground1);
+}
+
+.copilot-button-icon:hover {
+  background-color: rgba(0, 0, 0, 0.03);
+}
+
+.copilot-button-icon-circular {
+  width: 31px;
+  height: 31px;
+  min-width: 31px;
+  padding: 0;
+  border-radius: 50%;
+  background-color: transparent;
+  border: 1px solid var(--colorNeutralStroke1);
+  color: var(--colorBrandForeground1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.copilot-button-icon-circular:hover {
+  background-color: rgba(0, 0, 0, 0.03);
+}
+
+/* ============================================================================
+   CHAT INTERFACE
+   ============================================================================ */
+
+.copilot-chat-container {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  background-color: var(--colorNeutralBackground1);
+}
+
+.copilot-chat-feed {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacingVerticalL);
+  padding: var(--spacingVerticalL) var(--spacingHorizontalL);
+  overflow-y: auto;
+}
+
+.copilot-chat-message {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacingVerticalS);
+}
+
+.copilot-chat-message-user {
+  align-self: flex-end;
+  max-width: 70%;
+}
+
+.copilot-chat-message-assistant {
+  align-self: flex-start;
+  max-width: 85%;
+}
+
+.copilot-chat-message-bubble {
+  padding: var(--spacingVerticalM) var(--spacingHorizontalL);
+  border-radius: var(--borderRadiusMedium);
+  background-color: var(--colorNeutralBackground2);
+  box-shadow: var(--shadow2);
+}
+
+.copilot-chat-message-user .copilot-chat-message-bubble {
+  background-color: var(--colorBrandForeground1);
+  color: var(--colorNeutralForegroundOnBrand);
+}
+
+.copilot-chat-message-timestamp {
+  font-size: 12px;
+  color: var(--colorNeutralForeground2);
+  padding: 0 var(--spacingHorizontalS);
+}
+
+/* ============================================================================
+   INPUT / TEXTAREA
+   ============================================================================ */
+
+.copilot-input-container {
+  padding: var(--spacingVerticalL) var(--spacingHorizontalL);
+  background-color: var(--colorNeutralBackground1);
+  border-top: var(--strokeWidthThin) solid var(--colorNeutralStroke1);
+}
+
+.copilot-input {
+  width: 100%;
+  min-height: 48px;
+  padding: var(--spacingVerticalM) var(--spacingHorizontalL);
+  border: var(--strokeWidthThin) solid var(--colorNeutralStroke1);
+  border-radius: var(--borderRadiusMedium);
+  font-family: var(--fontFamilyBase);
+  font-size: 16px;
+  color: var(--colorNeutralForeground1);
+  background-color: var(--colorNeutralBackground1);
+  resize: vertical;
+  outline: none;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.copilot-input:focus {
+  border-color: var(--colorBrandForeground1);
+  box-shadow: 0 0 0 var(--strokeWidthThin) var(--colorStrokeFocus2);
+}
+
+.copilot-input::placeholder {
+  color: var(--colorNeutralForeground2);
+}
+
+/* ============================================================================
+   CARDS
+   ============================================================================ */
+
+.copilot-card {
+  background-color: var(--colorNeutralBackground1);
+  border: var(--strokeWidthThin) solid var(--colorNeutralStroke1);
+  border-radius: var(--borderRadiusMedium);
+  padding: var(--spacingVerticalL) var(--spacingHorizontalL);
+  box-shadow: var(--shadow4);
+}
+
+.copilot-card-elevated {
+  box-shadow: var(--shadow8);
+}
+
+.copilot-card:hover {
+  box-shadow: var(--shadow8);
+  transition: box-shadow 0.2s cubic-bezier(0.1, 0.9, 0.2, 1);
+}
+
+/* ============================================================================
+   ICONS
+   ============================================================================ */
+
+.copilot-icon {
+  width: 20px;
+  height: 20px;
+  fill: currentColor;
+}
+
+.copilot-icon-small {
+  width: 16px;
+  height: 16px;
+}
+
+.copilot-icon-large {
+  width: 24px;
+  height: 24px;
+}
+
+/* ============================================================================
+   AVATARS
+   ============================================================================ */
+
+.copilot-avatar {
+  width: 32px;
+  height: 32px;
+  border-radius: var(--borderRadiusCircle);
+  overflow: hidden;
+  flex-shrink: 0;
+}
+
+.copilot-avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.copilot-avatar-small {
+  width: 24px;
+  height: 24px;
+}
+
+.copilot-avatar-large {
+  width: 48px;
+  height: 48px;
+}
+
+/* ============================================================================
+   UTILITY CLASSES
+   ============================================================================ */
+
+.copilot-flex {
+  display: flex;
+}
+
+.copilot-flex-column {
+  flex-direction: column;
+}
+
+.copilot-flex-row {
+  flex-direction: row;
+}
+
+.copilot-flex-center {
+  align-items: center;
+  justify-content: center;
+}
+
+.copilot-gap-xs {
+  gap: var(--spacingHorizontalXS);
+}
+
+.copilot-gap-s {
+  gap: var(--spacingHorizontalS);
+}
+
+.copilot-gap-m {
+  gap: var(--spacingHorizontalM);
+}
+
+.copilot-gap-l {
+  gap: var(--spacingHorizontalL);
+}
+
+.copilot-w-full {
+  width: 100%;
+}
+
+.copilot-h-full {
+  height: 100%;
+}
+
+/* ============================================================================
+   ANIMATIONS & TRANSITIONS
+   ============================================================================ */
+
+.copilot-fade-in {
+  animation: copilotFadeIn 0.3s cubic-bezier(0.1, 0.9, 0.2, 1);
+}
+
+@keyframes copilotFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.copilot-transition-fast {
+  transition: all 0.1s cubic-bezier(0.1, 0.9, 0.2, 1);
+}
+
+.copilot-transition-normal {
+  transition: all 0.2s cubic-bezier(0.1, 0.9, 0.2, 1);
+}
+
+.copilot-transition-slow {
+  transition: all 0.3s cubic-bezier(0.1, 0.9, 0.2, 1);
+}
+
+/* ============================================================================
+   ACCESSIBILITY
+   ============================================================================ */
+
+.copilot-sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
+}
+
+.copilot-focus-visible:focus-visible {
+  outline: var(--strokeWidthThick) solid var(--colorStrokeFocus2);
+  outline-offset: 2px;
+}
+
+/* Remove focus outline for mouse users, keep for keyboard users */
+:focus:not(:focus-visible) {
+  outline: none;
+}
+
+/* ============================================================================
+   SCROLLBAR CUSTOMIZATION (Optional - for authentic feel)
+   ============================================================================ */
+
+.copilot-scrollbar::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+.copilot-scrollbar::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.copilot-scrollbar::-webkit-scrollbar-thumb {
+  background-color: rgba(0, 0, 0, 0.1);
+  border-radius: 4px;
+}
+
+.copilot-scrollbar::-webkit-scrollbar-thumb:hover {
+  background-color: rgba(0, 0, 0, 0.15);
+}
+
+/* ============================================================================
+   DARK MODE SUPPORT (CSS Variables Override)
+   ============================================================================ */
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --colorNeutralBackground1: #1F1F1F;
+    --colorNeutralBackground2: #2D2D2D;
+    --colorNeutralBackgroundAlpha: rgba(31, 31, 31, 0.9);
+
+    --colorNeutralStroke1: #3D3D3D;
+    --colorNeutralStroke2: #4D4D4D;
+    --colorNeutralStroke3: rgba(255, 255, 255, 0.05);
+
+    --colorBrandForeground1: #4A9EFF;
+    --colorBrandBackground: #0078D4;
+
+    --colorNeutralForeground1: #FFFFFF;
+    --colorNeutralForeground2: #D0D0D0;
+    --colorNeutralForegroundOnBrand: #FFFFFF;
+
+    --colorStrokeFocus2: #4A9EFF;
+
+    --colorNeutralShadowAmbient: rgba(0, 0, 0, 0.3);
+    --colorNeutralShadowAmbientLighter: rgba(0, 0, 0, 0.2);
+    --colorNeutralShadowKey: rgba(0, 0, 0, 0.4);
+  }
+
+  body {
+    background-color: var(--colorNeutralBackground1);
+  }
+}

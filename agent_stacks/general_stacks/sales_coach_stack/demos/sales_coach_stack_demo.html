@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sales Coach Agent - M365 Copilot</title>
+    <title>M365 Copilot - Sales Coach</title>
     <style>
         * {
             margin: 0;
@@ -42,7 +42,7 @@
         .copilot-icon {
             width: 24px;
             height: 24px;
-            background: linear-gradient(135deg, #ff6b6b 0%, #4ecdc4 100%);
+            background: linear-gradient(135deg, #b4a0ff 0%, #ff7eb9 50%, #7ee7fc 100%);
             border-radius: 4px;
             display: flex;
             align-items: center;
@@ -51,9 +51,13 @@
         }
 
         .copilot-icon::before {
-            content: "🎯";
-            font-size: 14px;
-            filter: brightness(0) invert(1);
+            content: '';
+            position: absolute;
+            width: 12px;
+            height: 12px;
+            background: white;
+            border-radius: 2px;
+            opacity: 0.9;
         }
 
         .sidebar-title {
@@ -79,6 +83,42 @@
 
         .sidebar-button:hover {
             background: #f3f2f1;
+        }
+
+        /* Search Box */
+        .search-container {
+            padding: 8px 16px;
+            border-bottom: 1px solid #edebe9;
+        }
+
+        .search-box {
+            position: relative;
+            width: 100%;
+        }
+
+        .search-icon {
+            position: absolute;
+            left: 8px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #605e5c;
+            font-size: 14px;
+        }
+
+        .search-input {
+            width: 100%;
+            padding: 6px 8px 6px 32px;
+            border: 1px solid #d2d0ce;
+            border-radius: 4px;
+            font-size: 14px;
+            background: #faf9f8;
+            outline: none;
+            transition: all 0.2s;
+        }
+
+        .search-input:focus {
+            border-color: #605e5c;
+            background: #ffffff;
         }
 
         /* Navigation */
@@ -110,14 +150,110 @@
         }
 
         .nav-item.active::before {
-            content: "";
+            content: '';
             position: absolute;
             left: 0;
             top: 8px;
             bottom: 8px;
             width: 2px;
-            background: #ff6b6b;
+            background: #742774;
             border-radius: 1px;
+        }
+
+        .nav-icon {
+            width: 20px;
+            height: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+
+        /* Demo Controls Section */
+        .demo-controls-section {
+            border-top: 1px solid #edebe9;
+            padding: 12px 16px;
+            background: #faf9f8;
+        }
+
+        .demo-controls-title {
+            font-size: 12px;
+            font-weight: 600;
+            color: #605e5c;
+            margin-bottom: 8px;
+        }
+
+        .demo-controls {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 8px;
+        }
+
+        .demo-btn {
+            padding: 6px 12px;
+            border: 1px solid #d2d0ce;
+            border-radius: 4px;
+            background: white;
+            font-size: 12px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 4px;
+            color: #323130;
+            transition: all 0.2s;
+        }
+
+        .demo-btn:hover:not(:disabled) {
+            background: #f3f2f1;
+            border-color: #605e5c;
+        }
+
+        .demo-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .demo-btn.primary {
+            background: #742774;
+            color: white;
+            border-color: #742774;
+        }
+
+        .demo-btn.primary:hover:not(:disabled) {
+            background: #5a1d5a;
+        }
+
+        /* Bottom section */
+        .sidebar-bottom {
+            border-top: 1px solid #edebe9;
+            padding: 8px 0;
+        }
+
+        .user-section {
+            padding: 8px 16px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            cursor: pointer;
+            transition: background 0.1s;
+        }
+
+        .user-section:hover {
+            background: #f3f2f1;
+        }
+
+        .user-avatar {
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            background: #742774;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            font-weight: 600;
         }
 
         /* Main Content */
@@ -150,49 +286,32 @@
             gap: 12px;
         }
 
-        /* Demo Controls */
-        .demo-controls {
-            padding: 16px 20px;
-            background: #f3f2f1;
+        .status-indicator {
             display: flex;
             align-items: center;
-            gap: 16px;
-            border-bottom: 1px solid #edebe9;
-        }
-
-        .demo-button {
-            padding: 8px 16px;
-            background: #ff6b6b;
-            color: white;
-            border: none;
+            gap: 8px;
+            padding: 6px 12px;
+            background: #f3f2f1;
             border-radius: 4px;
-            cursor: pointer;
-            font-size: 14px;
-            font-weight: 600;
-            transition: background 0.2s;
-        }
-
-        .demo-button:hover {
-            background: #ff5252;
-        }
-
-        .demo-button:disabled {
-            background: #a19f9d;
-            cursor: not-allowed;
-        }
-
-        .demo-button.secondary {
-            background: #605e5c;
-        }
-
-        .demo-button.secondary:hover {
-            background: #323130;
-        }
-
-        .demo-status {
-            margin-left: auto;
-            font-size: 14px;
+            font-size: 12px;
             color: #605e5c;
+        }
+
+        .status-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: #10b981;
+        }
+
+        .status-dot.processing {
+            background: #f59e0b;
+            animation: pulse 1s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
         }
 
         /* Chat Container */
@@ -208,23 +327,12 @@
             flex: 1;
             overflow-y: auto;
             padding: 20px;
+            display: block;
         }
 
         .message {
             max-width: 900px;
             margin: 0 auto 24px;
-            animation: fadeIn 0.5s ease-in;
-        }
-
-        @keyframes fadeIn {
-            from {
-                opacity: 0;
-                transform: translateY(10px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
         }
 
         .message-header {
@@ -238,7 +346,7 @@
             width: 28px;
             height: 28px;
             border-radius: 50%;
-            background: #5b5fc7;
+            background: #0078d4;
             color: white;
             display: flex;
             align-items: center;
@@ -251,7 +359,7 @@
             width: 28px;
             height: 28px;
             border-radius: 6px;
-            background: #ff6b6b;
+            background: linear-gradient(135deg, #742774 0%, #00a651 100%);
             color: white;
             display: flex;
             align-items: center;
@@ -264,6 +372,14 @@
             font-size: 14px;
             font-weight: 600;
             color: #323130;
+        }
+
+        .message-tag {
+            padding: 2px 8px;
+            background: #f3f2f1;
+            border-radius: 4px;
+            font-size: 12px;
+            color: #605e5c;
         }
 
         .message-time {
@@ -286,7 +402,6 @@
             border: 1px solid #edebe9;
             border-radius: 8px;
             overflow: hidden;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
         }
 
         .agent-card-header {
@@ -295,7 +410,7 @@
             align-items: center;
             gap: 12px;
             border-bottom: 1px solid #edebe9;
-            background: #faf9f8;
+            background: linear-gradient(135deg, rgba(116, 39, 116, 0.05) 0%, rgba(0, 166, 81, 0.05) 100%);
         }
 
         .agent-card-icon {
@@ -306,6 +421,16 @@
             font-size: 16px;
             font-weight: 600;
             color: #323130;
+        }
+
+        .agent-card-status {
+            margin-left: auto;
+            padding: 4px 12px;
+            background: #10b981;
+            color: white;
+            border-radius: 12px;
+            font-size: 12px;
+            font-weight: 600;
         }
 
         .agent-card-content {
@@ -322,80 +447,93 @@
             color: #323130;
             display: flex;
             gap: 8px;
+            border-bottom: 1px solid #f3f2f1;
+        }
+
+        .detail-item:last-child {
+            border-bottom: none;
         }
 
         .detail-label {
             font-weight: 600;
-            min-width: 140px;
+            min-width: 180px;
             color: #605e5c;
         }
 
         .detail-value {
             color: #323130;
+            flex: 1;
         }
 
-        .score-badge {
-            display: inline-block;
-            padding: 4px 12px;
-            border-radius: 16px;
-            font-size: 12px;
-            font-weight: 600;
-            margin-left: 8px;
+        /* Input Container */
+        .input-container {
+            padding: 16px 20px;
+            background: white;
+            border-top: 1px solid #edebe9;
         }
 
-        .score-high {
-            background: #e7f3e7;
-            color: #107c10;
+        .input-wrapper {
+            max-width: 900px;
+            margin: 0 auto;
+            position: relative;
         }
 
-        .score-medium {
-            background: #fff4ce;
-            color: #ffb900;
-        }
-
-        .score-low {
-            background: #fde7e9;
-            color: #d83b01;
-        }
-
-        .improvement-item {
-            padding: 8px;
-            background: #faf9f8;
-            border-left: 3px solid #ff6b6b;
-            margin: 8px 0;
-        }
-
-        .strength-item {
-            padding: 8px;
-            background: #e7f3e7;
-            border-left: 3px solid #107c10;
-            margin: 8px 0;
-        }
-
-        /* Data Table */
-        .data-table {
+        .input-field {
             width: 100%;
-            border-collapse: collapse;
+            padding: 12px 48px 12px 16px;
+            border: 1px solid #d2d0ce;
+            border-radius: 8px;
             font-size: 14px;
-            margin-top: 12px;
-        }
-
-        .data-table th {
+            font-family: inherit;
+            resize: none;
+            outline: none;
             background: #faf9f8;
-            padding: 12px 16px;
-            text-align: left;
-            font-weight: 600;
-            color: #323130;
-            border-bottom: 2px solid #edebe9;
+            transition: all 0.2s;
+            min-height: 44px;
+            max-height: 120px;
         }
 
-        .data-table td {
-            padding: 12px 16px;
+        .input-field:focus {
+            border-color: #742774;
+            background: white;
+        }
+
+        .input-actions {
+            position: absolute;
+            right: 8px;
+            bottom: 8px;
+            display: flex;
+            gap: 4px;
+        }
+
+        .input-button {
+            width: 28px;
+            height: 28px;
+            border: none;
+            background: none;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 4px;
             color: #605e5c;
-            border-bottom: 1px solid #edebe9;
+            transition: all 0.1s;
         }
 
-        /* Loading */
+        .input-button:hover {
+            background: #f3f2f1;
+        }
+
+        .input-button.send {
+            color: #742774;
+        }
+
+        .input-button:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        /* Typing indicator */
         .typing-indicator {
             margin-left: 40px;
             display: flex;
@@ -430,25 +568,78 @@
             }
         }
 
-        .role-play-scenario {
-            background: #f0f8ff;
-            border: 1px solid #0078d4;
-            border-radius: 8px;
-            padding: 16px;
-            margin-top: 12px;
+        /* Welcome state - hidden when chat is active */
+        .welcome-screen {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 40px;
+            max-width: 1200px;
+            margin: 0 auto;
+            width: 100%;
         }
 
-        .scenario-title {
+        .welcome-screen.hidden {
+            display: none;
+        }
+
+        .welcome-title {
+            font-size: 36px;
             font-weight: 600;
-            color: #0078d4;
+            color: #323130;
+            margin-bottom: 16px;
+            text-align: center;
+        }
+
+        .welcome-subtitle {
+            font-size: 16px;
+            color: #605e5c;
+            margin-bottom: 48px;
+            text-align: center;
+        }
+
+        .suggestion-cards {
+            display: flex;
+            gap: 20px;
+            width: 100%;
+            max-width: 900px;
+        }
+
+        .suggestion-card {
+            flex: 1;
+            background: white;
+            border: 1px solid #edebe9;
+            border-radius: 8px;
+            padding: 20px;
+            cursor: pointer;
+            transition: all 0.2s;
+            min-height: 120px;
+        }
+
+        .suggestion-card:hover {
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            transform: translateY(-2px);
+            border-color: #742774;
+        }
+
+        .card-icon {
+            font-size: 24px;
+            margin-bottom: 12px;
+        }
+
+        .card-title {
+            font-size: 14px;
+            font-weight: 600;
+            color: #323130;
             margin-bottom: 8px;
         }
 
-        .objection-response {
-            background: #fff9e6;
-            border-left: 3px solid #ffb900;
-            padding: 12px;
-            margin: 8px 0;
+        .card-description {
+            font-size: 13px;
+            color: #605e5c;
+            line-height: 1.4;
         }
     </style>
 </head>
@@ -457,30 +648,71 @@
     <div class="sidebar">
         <div class="sidebar-header">
             <div class="copilot-icon"></div>
-            <span class="sidebar-title">Sales Coach</span>
+            <span class="sidebar-title">M365 Copilot</span>
             <button class="sidebar-button">☰</button>
+        </div>
+
+        <div class="search-container">
+            <div class="search-box">
+                <span class="search-icon">🔍</span>
+                <input type="text" class="search-input" placeholder="Search">
+            </div>
         </div>
 
         <div class="nav-section">
             <div class="nav-item active">
-                <span>📞</span>
-                <span>Call Review</span>
+                <div class="nav-icon">💬</div>
+                <span>Chat</span>
             </div>
             <div class="nav-item">
-                <span>🎭</span>
-                <span>Role Play</span>
+                <div class="nav-icon">🤖</div>
+                <span>Agents</span>
             </div>
             <div class="nav-item">
-                <span>💬</span>
-                <span>Objection Handling</span>
+                <div class="nav-icon">💬</div>
+                <span>Conversations</span>
             </div>
             <div class="nav-item">
-                <span>🎯</span>
-                <span>Pitch Practice</span>
+                <div class="nav-icon">📄</div>
+                <span>Pages</span>
             </div>
             <div class="nav-item">
-                <span>📊</span>
-                <span>Performance Review</span>
+                <div class="nav-icon">➕</div>
+                <span>Create</span>
+            </div>
+            <div class="nav-item">
+                <div class="nav-icon">📱</div>
+                <span>Apps</span>
+            </div>
+            <div class="nav-item">
+                <div class="nav-icon">⚙️</div>
+                <span>Admin</span>
+            </div>
+        </div>
+
+        <!-- Demo Controls -->
+        <div class="demo-controls-section">
+            <div class="demo-controls-title">Demo Controls</div>
+            <div class="demo-controls">
+                <button class="demo-btn primary" onclick="startDemo()" id="startBtn">
+                    ▶️ Start
+                </button>
+                <button class="demo-btn" onclick="pauseDemo()" id="pauseBtn" disabled>
+                    ⏸️ Pause
+                </button>
+                <button class="demo-btn" onclick="resetDemo()" id="resetBtn">
+                    🔄 Reset
+                </button>
+                <button class="demo-btn" onclick="skipToNext()" id="skipBtn" disabled>
+                    ⏭️ Skip
+                </button>
+            </div>
+        </div>
+
+        <div class="sidebar-bottom">
+            <div class="user-section">
+                <div class="user-avatar">DU</div>
+                <span style="font-size: 14px;">Demo User</span>
             </div>
         </div>
     </div>
@@ -488,35 +720,78 @@
     <!-- Main Content -->
     <div class="main-content">
         <div class="content-header">
-            <div class="header-title">AI Sales Coaching Assistant</div>
+            <div class="header-title">Sales Coach Agent</div>
             <div class="header-actions">
-                <button class="demo-button" style="font-size: 12px;">Live Demo</button>
+                <div class="status-indicator">
+                    <span class="status-dot" id="statusDot"></span>
+                    <span id="statusText">Ready</span>
+                </div>
             </div>
         </div>
 
-        <!-- Demo Controls -->
-        <div class="demo-controls">
-            <button class="demo-button" onclick="startDemo()" id="playButton">▶ Play Demo</button>
-            <button class="demo-button secondary" onclick="pauseDemo()" id="pauseButton" disabled>⏸ Pause</button>
-            <button class="demo-button secondary" onclick="resetDemo()">↺ Reset</button>
-            <button class="demo-button secondary" onclick="skipMessage()">⏭ Skip</button>
-            <span class="demo-status" id="demoStatus">Ready to start</span>
-        </div>
-
         <div class="chat-container">
-            <div class="chat-messages" id="chatMessages">
-                <!-- Messages will be added dynamically -->
+            <!-- Welcome Screen -->
+            <div class="welcome-screen" id="welcomeScreen">
+                <h1 class="welcome-title">${getIconForCategory(category)} Sales Coach</h1>
+                <p class="welcome-subtitle">How can I help you today?</p>
+
+                <div class="suggestion-cards">
+                    <div class="suggestion-card" onclick="quickStart('sales-analysis')">
+                        <div class="card-icon">📈</div>
+                        <div class="card-title">Sales Analysis</div>
+                        <div class="card-description">Review performance metrics</div>
+                    </div>
+                    <div class="suggestion-card" onclick="quickStart('coaching-tips')">
+                        <div class="card-icon">🎯</div>
+                        <div class="card-title">Coaching Tips</div>
+                        <div class="card-description">Get personalized guidance</div>
+                    </div>
+                    <div class="suggestion-card" onclick="quickStart('best-practices')">
+                        <div class="card-icon">🏆</div>
+                        <div class="card-title">Best Practices</div>
+                        <div class="card-description">Learn from top performers</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Chat Messages -->
+            <div class="chat-messages" id="chatMessages" style="display: none;">
+                <!-- Messages will be dynamically added here -->
+            </div>
+
+            <!-- Input Container -->
+            <div class="input-container">
+                <div class="input-wrapper">
+                    <textarea
+                        class="input-field"
+                        id="messageInput"
+                        placeholder="Ask about sales strategies, metrics, or coaching..."
+                        rows="1"
+                        onkeypress="handleKeyPress(event)"
+                        oninput="autoResize(this)"
+                    ></textarea>
+                    <div class="input-actions">
+                        <button class="input-button">📎</button>
+                        <button class="input-button send" onclick="sendCurrentMessage()" id="sendButton">
+                            ➤
+                        </button>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
 
     <script>
-        let currentMessageIndex = 0;
-        let isPlaying = false;
-        let isPaused = false;
-        let messageTimeout;
-        let typingTimeout;
+        // State
+        let demoState = {
+            isPlaying: false,
+            isPaused: false,
+            currentStep: 0,
+            messageTimer: null,
+            typingTimer: null
+        };
 
+        // Demo script
         const demoScript = [
             {
                 "type": "user",
@@ -878,248 +1153,341 @@
             }
         ];
 
-        function startDemo() {
-            if (!isPlaying || isPaused) {
-                isPlaying = true;
-                isPaused = false;
-                document.getElementById('playButton').disabled = true;
-                document.getElementById('pauseButton').disabled = false;
-                document.getElementById('demoStatus').textContent = 'Playing demo...';
-                
-                if (currentMessageIndex === 0) {
-                    document.getElementById('chatMessages').innerHTML = '';
-                }
-                
-                playNextMessage();
+        let currentMessageIndex = 0;
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('Sales Coach Agent initialized');
+        });
+
+        // Auto resize textarea
+        function autoResize(textarea) {
+            textarea.style.height = 'auto';
+            textarea.style.height = Math.min(textarea.scrollHeight, 120) + 'px';
+        }
+
+        // Handle key press
+        function handleKeyPress(event) {
+            if (event.key === 'Enter' && !event.shiftKey) {
+                event.preventDefault();
+                sendCurrentMessage();
             }
+        }
+
+        // Quick start from cards
+        function quickStart(type) {
+            let message = '';
+            switch(type) {
+                case 'sales-analysis':
+                    message = 'Help me with sales analysis';
+                    break;
+                case 'coaching-tips':
+                    message = 'Help me with coaching tips';
+                    break;
+                case 'best-practices':
+                    message = 'Help me with best practices';
+                    break;
+                default:
+                    message = 'Help me get started';
+                    break;
+            }
+
+            document.getElementById('messageInput').value = message;
+            sendCurrentMessage();
+        }
+
+        // Send current message
+        function sendCurrentMessage() {
+            const input = document.getElementById('messageInput');
+            const message = input.value.trim();
+            if (message) {
+                // Hide welcome screen and show chat
+                document.getElementById('welcomeScreen').classList.add('hidden');
+                document.getElementById('chatMessages').style.display = 'block';
+
+                // Add user message
+                addMessage('user', message);
+
+                input.value = '';
+                autoResize(input);
+
+                // Simulate agent response
+                setTimeout(() => {
+                    showTypingIndicator();
+                    setTimeout(() => {
+                        hideTypingIndicator();
+                        addMessage('agent', 'I\'ll help you with that. Please use the demo controls to see a full demonstration of my capabilities.');
+                    }, 1500);
+                }, 500);
+            }
+        }
+
+        // Demo controls
+        function startDemo() {
+            if (demoState.isPlaying && !demoState.isPaused) return;
+
+            demoState.isPlaying = true;
+            demoState.isPaused = false;
+
+            document.getElementById('startBtn').disabled = true;
+            document.getElementById('pauseBtn').disabled = false;
+            document.getElementById('skipBtn').disabled = false;
+
+            updateStatus('processing', 'Running Demo...');
+
+            // Hide welcome and show chat
+            document.getElementById('welcomeScreen').classList.add('hidden');
+            document.getElementById('chatMessages').style.display = 'block';
+
+            if (currentMessageIndex === 0) {
+                document.getElementById('chatMessages').innerHTML = '';
+            }
+
+            playNextMessage();
         }
 
         function pauseDemo() {
-            if (isPlaying) {
-                isPaused = true;
-                isPlaying = false;
-                clearTimeout(messageTimeout);
-                clearTimeout(typingTimeout);
-                document.getElementById('playButton').disabled = false;
-                document.getElementById('pauseButton').disabled = true;
-                document.getElementById('demoStatus').textContent = 'Demo paused';
-                removeTypingIndicator();
-            }
+            demoState.isPaused = true;
+            document.getElementById('startBtn').disabled = false;
+            document.getElementById('pauseBtn').disabled = true;
+
+            clearTimeout(demoState.messageTimer);
+            clearTimeout(demoState.typingTimer);
+
+            updateStatus('idle', 'Paused');
         }
 
         function resetDemo() {
-            clearTimeout(messageTimeout);
-            clearTimeout(typingTimeout);
+            clearTimeout(demoState.messageTimer);
+            clearTimeout(demoState.typingTimer);
+
+            demoState.isPlaying = false;
+            demoState.isPaused = false;
             currentMessageIndex = 0;
-            isPlaying = false;
-            isPaused = false;
+
+            document.getElementById('startBtn').disabled = false;
+            document.getElementById('pauseBtn').disabled = true;
+            document.getElementById('skipBtn').disabled = true;
+
+            updateStatus('idle', 'Ready');
+
+            // Show welcome screen
+            document.getElementById('welcomeScreen').classList.remove('hidden');
+            document.getElementById('chatMessages').style.display = 'none';
             document.getElementById('chatMessages').innerHTML = '';
-            document.getElementById('playButton').disabled = false;
-            document.getElementById('pauseButton').disabled = true;
-            document.getElementById('demoStatus').textContent = 'Ready to start';
-            removeTypingIndicator();
         }
 
-        function skipMessage() {
+        function skipToNext() {
+            clearTimeout(demoState.messageTimer);
+            clearTimeout(demoState.typingTimer);
+            hideTypingIndicator();
+
             if (currentMessageIndex < demoScript.length) {
-                clearTimeout(messageTimeout);
-                clearTimeout(typingTimeout);
-                removeTypingIndicator();
-                
                 const message = demoScript[currentMessageIndex];
-                addMessage(message);
+                addDemoMessage(message);
                 currentMessageIndex++;
-                
-                if (isPlaying && currentMessageIndex < demoScript.length) {
-                    playNextMessage();
-                } else if (currentMessageIndex >= demoScript.length) {
-                    demoComplete();
+
+                if (currentMessageIndex < demoScript.length) {
+                    demoState.messageTimer = setTimeout(() => {
+                        playNextMessage();
+                    }, 1000);
+                } else {
+                    completeDemo();
                 }
             }
         }
 
         function playNextMessage() {
-            if (currentMessageIndex < demoScript.length && isPlaying && !isPaused) {
-                const message = demoScript[currentMessageIndex];
-                
-                messageTimeout = setTimeout(() => {
-                    if (message.type === 'agent') {
-                        showTypingIndicator();
-                        typingTimeout = setTimeout(() => {
-                            removeTypingIndicator();
-                            addMessage(message);
-                            currentMessageIndex++;
-                            
-                            if (currentMessageIndex < demoScript.length) {
-                                playNextMessage();
-                            } else {
-                                demoComplete();
-                            }
-                        }, message.typingTime || 2000);
-                    } else {
-                        addMessage(message);
-                        currentMessageIndex++;
-                        
-                        if (currentMessageIndex < demoScript.length) {
-                            playNextMessage();
-                        } else {
-                            demoComplete();
-                        }
-                    }
-                }, message.delay || 1000);
+            if (!demoState.isPlaying || demoState.isPaused) return;
+
+            if (currentMessageIndex >= demoScript.length) {
+                completeDemo();
+                return;
+            }
+
+            const message = demoScript[currentMessageIndex];
+
+            if (message.type === 'agent') {
+                showTypingIndicator();
+                demoState.typingTimer = setTimeout(() => {
+                    hideTypingIndicator();
+                    addDemoMessage(message);
+                    currentMessageIndex++;
+
+                    const delay = message.delay || 2000;
+                    demoState.messageTimer = setTimeout(() => {
+                        playNextMessage();
+                    }, delay);
+                }, message.typingTime || 2000);
+            } else {
+                addDemoMessage(message);
+                currentMessageIndex++;
+
+                const delay = message.delay || 1500;
+                demoState.messageTimer = setTimeout(() => {
+                    playNextMessage();
+                }, delay);
             }
         }
 
-        function demoComplete() {
-            isPlaying = false;
-            document.getElementById('playButton').disabled = false;
-            document.getElementById('pauseButton').disabled = true;
-            document.getElementById('demoStatus').textContent = 'Demo complete';
+        function addDemoMessage(message) {
+            if (message.type === 'user') {
+                addMessage('user', message.content);
+            } else if (message.type === 'agent') {
+                addMessage('agent', message.content, message.agentData);
+            }
         }
 
-        function addMessage(message) {
+        function addMessage(type, content, agentData) {
             const chatMessages = document.getElementById('chatMessages');
             const messageDiv = document.createElement('div');
             messageDiv.className = 'message';
-            
+
             const time = new Date().toLocaleString('en-US', {
                 hour: 'numeric',
-                minute: '2-digit',
-                hour12: true
+                minute: '2-digit'
             });
-            
-            if (message.type === 'user') {
+
+            if (type === 'user') {
                 messageDiv.innerHTML = `
                     <div class="message-header">
-                        <div class="message-avatar-user">JD</div>
+                        <div class="message-avatar-user">U</div>
                         <span class="message-author">You</span>
                         <span class="message-time">${time}</span>
                     </div>
-                    <div class="message-content">${message.content}</div>
+                    <div class="message-content">${content}</div>
                 `;
-            } else if (message.type === 'agent') {
+            } else {
                 let html = `
                     <div class="message-header">
-                        <div class="message-avatar-agent">SC</div>
-                        <span class="message-author">Sales Coach AI</span>
+                        <div class="message-avatar-agent">${getIconForCategory(category)}</div>
+                        <span class="message-author">Sales Coach</span>
+                        <span class="message-tag">Agent</span>
                         <span class="message-time">${time}</span>
                     </div>
-                    <div class="message-content">${message.content}</div>
+                    <div class="message-content">${content}</div>
                 `;
-                
-                if (message.agentData) {
-                    html += renderAgentData(message.agentData);
-                }
-                
-                messageDiv.innerHTML = html;
-            }
-            
-            chatMessages.appendChild(messageDiv);
-            chatMessages.scrollTop = chatMessages.scrollHeight;
-        }
 
-        function renderAgentData(data) {
-            let html = '';
-            
-            for (const [category, details] of Object.entries(data)) {
-                html += `
-                    <div class="agent-card">
-                        <div class="agent-card-header">
-                            <span class="agent-card-icon">${getIconForCategory(category)}</span>
-                            <span class="agent-card-title">${category}</span>
-                        </div>
-                        <div class="agent-card-content">
-                `;
-                
-                if (Array.isArray(details)) {
-                    details.forEach(item => {
-                        html += `<div style="margin: 8px 0;">${item}</div>`;
-                    });
-                } else if (typeof details === 'object') {
-                    html += '<ul class="detail-list">';
+                if (agentData) {
+                    html += `
+                        <div class="agent-card">
+                            <div class="agent-card-header">
+                                <span class="agent-card-icon">${getIconForCategory(category)}</span>
+                                <span class="agent-card-title">${agentData.title || 'Results'}</span>
+                                ${agentData.status ? `<span class="agent-card-status">${agentData.status}</span>` : ''}
+                            </div>
+                            <div class="agent-card-content">
+                                <ul class="detail-list">
+                    `;
+
+                    const details = agentData.details || agentData;
                     for (const [key, value] of Object.entries(details)) {
-                        if (typeof value === 'object' && !Array.isArray(value)) {
-                            html += `
-                                <li class="detail-item">
-                                    <span class="detail-label">${key}:</span>
-                                    <div style="margin-left: 20px;">
-                            `;
-                            for (const [subKey, subValue] of Object.entries(value)) {
-                                if (Array.isArray(subValue)) {
-                                    html += `
-                                        <div class="detail-item">
-                                            <span class="detail-label">${subKey}:</span>
-                                            <div>${subValue.join('<br>')}</div>
-                                        </div>
-                                    `;
-                                } else {
-                                    html += `
-                                        <div class="detail-item">
-                                            <span class="detail-label">${subKey}:</span>
-                                            <span class="detail-value">${subValue}</span>
-                                        </div>
-                                    `;
+                        if (key !== 'title' && key !== 'status') {
+                            html += `<li class="detail-item"><span class="detail-label">${key}:</span>`;
+                            
+                            if (typeof value === 'object' && !Array.isArray(value) && value !== null) {
+                                // Handle nested objects
+                                html += '<div style="margin-left: 20px;">';
+                                for (const [subKey, subValue] of Object.entries(value)) {
+                                    html += `<div style="margin: 4px 0;"><strong>${subKey}:</strong> ${subValue}</div>`;
                                 }
+                                html += '</div>';
+                            } else if (Array.isArray(value)) {
+                                // Handle arrays
+                                html += `<span class="detail-value">${value.join('<br>')}</span>`;
+                            } else {
+                                // Handle simple values
+                                html += `<span class="detail-value">${value}</span>`;
                             }
-                            html += '</div></li>';
-                        } else if (Array.isArray(value)) {
-                            html += `
-                                <li class="detail-item">
-                                    <span class="detail-label">${key}:</span>
-                                    <div>${value.join('<br>')}</div>
-                                </li>
-                            `;
-                        } else {
-                            html += `
-                                <li class="detail-item">
-                                    <span class="detail-label">${key}:</span>
-                                    <span class="detail-value">${value}</span>
-                                </li>
-                            `;
+                            
+                            html += `</li>`;
                         }
                     }
-                    html += '</ul>';
-                }
-                
-                html += `
-                        </div>
-                    </div>
-                `;
-            }
-            
-            return html;
-        }
 
-        function getIconForCategory(category) {
-            const icons = {
-                'Call Analysis': '📊',
-                'Strengths Identified': '💪',
-                'Areas for Improvement': '📈',
-                'Key Moments': '🎯',
-                'Common Competitive Objections': '⚔️',
-                'Practice Tips': '💡',
-                'Role-Play Scenario': '🎭',
-                'Executive Pitch Structure': '👔',
-                'Anticipated Executive Questions': '❓',
-                'Quarterly Performance Metrics': '📊',
-                'Strengths Analysis': '⭐',
-                'Development Areas': '🎯',
-                '90-Day Development Plan': '📅',
-                'Career Progression Path': '🚀',
-                'Negotiation Preparation Checklist': '📋',
-                'Advanced Negotiation Tactics': '♟️',
-                'Handling Tough Tactics': '🛡️',
-                'Negotiation Success Formula': '🏆',
-                'Post-Negotiation': '✅'
-            };
-            return icons[category] || '📌';
+                    for (const [key, value] of Object.entries(details)) {
+
+
+                        if (key !== 'title' && key !== 'status') {
+
+
+                            html += `<li class="detail-item"><span class="detail-label">${key}:</span>`;
+
+
+                            
+
+
+                            if (typeof value === 'object' && !Array.isArray(value) && value !== null) {
+
+
+                                // Handle nested objects
+
+
+                                html += '<div style="margin-left: 20px;">';
+
+
+                                for (const [subKey, subValue] of Object.entries(value)) {
+
+
+                                    html += `<div style="margin: 4px 0;"><strong>${subKey}:</strong> ${subValue}</div>`;
+
+
+                                }
+
+
+                                html += '</div>';
+
+
+                            } else if (Array.isArray(value)) {
+
+
+                                // Handle arrays
+
+
+                                html += `<span class="detail-value">${value.join('<br>')}</span>`;
+
+
+                            } else {
+
+
+                                // Handle simple values
+
+
+                                html += `<span class="detail-value">${value}</span>`;
+
+
+                            }
+
+
+                            
+
+
+                            html += `</li>`;
+
+
+                        }
+
+
+                    }
+
+                    html += `
+                                </ul>
+                            </div>
+                        </div>
+                    `;
+                }
+
+                messageDiv.innerHTML = html;
+            }
+
+            chatMessages.appendChild(messageDiv);
+            chatMessages.scrollTop = chatMessages.scrollHeight;
         }
 
         function showTypingIndicator() {
             const chatMessages = document.getElementById('chatMessages');
             const indicator = document.createElement('div');
-            indicator.className = 'typing-indicator';
             indicator.id = 'typingIndicator';
+            indicator.className = 'typing-indicator';
             indicator.innerHTML = `
                 <div class="typing-dot"></div>
                 <div class="typing-dot"></div>
@@ -1129,11 +1497,28 @@
             chatMessages.scrollTop = chatMessages.scrollHeight;
         }
 
-        function removeTypingIndicator() {
+        function hideTypingIndicator() {
             const indicator = document.getElementById('typingIndicator');
             if (indicator) {
                 indicator.remove();
             }
+        }
+
+        function updateStatus(status, text) {
+            const statusDot = document.getElementById('statusDot');
+            const statusText = document.getElementById('statusText');
+
+            statusDot.className = `status-dot ${status}`;
+            statusText.textContent = text;
+        }
+
+        function completeDemo() {
+            demoState.isPlaying = false;
+            document.getElementById('startBtn').disabled = false;
+            document.getElementById('pauseBtn').disabled = true;
+            document.getElementById('skipBtn').disabled = true;
+
+            updateStatus('idle', 'Demo Complete');
         }
     </script>
 </body>

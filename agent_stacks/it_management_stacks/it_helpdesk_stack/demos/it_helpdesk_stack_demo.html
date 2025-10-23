@@ -3,86 +3,795 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>IT Helpdesk Agent - M365 Copilot</title>
+    <title>M365 Copilot - IT Helpdesk</title>
     <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, system-ui, sans-serif; background: #faf9f8; height: 100vh; display: flex; overflow: hidden; color: #323130; }
-        .sidebar { width: 260px; background: #ffffff; display: flex; flex-direction: column; border-right: 1px solid #edebe9; }
-        .sidebar-header { padding: 12px 16px; display: flex; align-items: center; gap: 10px; border-bottom: 1px solid #edebe9; height: 48px; }
-        .copilot-icon { width: 24px; height: 24px; background: linear-gradient(135deg, #0078d4 0%, #40e0d0 100%); border-radius: 4px; display: flex; align-items: center; justify-content: center; position: relative; }
-        .copilot-icon::before { content: "🛠"; font-size: 14px; filter: brightness(0) invert(1); }
-        .sidebar-title { font-size: 14px; font-weight: 600; color: #323130; }
-        .nav-section { flex: 1; overflow-y: auto; padding: 4px 0; }
-        .nav-item { padding: 8px 16px; display: flex; align-items: center; gap: 12px; cursor: pointer; font-size: 14px; color: #323130; transition: background 0.1s; position: relative; user-select: none; }
-        .nav-item:hover { background: #f3f2f1; }
-        .nav-item.active { background: #f3f2f1; }
-        .nav-item.active::before { content: ""; position: absolute; left: 0; top: 8px; bottom: 8px; width: 2px; background: #0078d4; border-radius: 1px; }
-        .main-content { flex: 1; display: flex; flex-direction: column; background: #faf9f8; }
-        .content-header { height: 48px; padding: 0 20px; display: flex; align-items: center; justify-content: space-between; background: #ffffff; border-bottom: 1px solid #edebe9; }
-        .demo-controls { padding: 16px 20px; background: #f3f2f1; display: flex; align-items: center; gap: 16px; border-bottom: 1px solid #edebe9; }
-        .demo-button { padding: 8px 16px; background: #0078d4; color: white; border: none; border-radius: 4px; cursor: pointer; font-size: 14px; font-weight: 600; transition: background 0.2s; }
-        .demo-button:hover { background: #106ebe; }
-        .demo-button:disabled { background: #a19f9d; cursor: not-allowed; }
-        .demo-button.secondary { background: #605e5c; }
-        .chat-container { flex: 1; display: flex; flex-direction: column; overflow: hidden; }
-        .chat-messages { flex: 1; overflow-y: auto; padding: 20px; }
-        .message { max-width: 900px; margin: 0 auto 24px; animation: fadeIn 0.5s ease-in; }
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
-        .message-header { display: flex; align-items: center; gap: 12px; margin-bottom: 8px; }
-        .message-avatar-user { width: 28px; height: 28px; border-radius: 50%; background: #5b5fc7; color: white; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 600; }
-        .message-avatar-agent { width: 28px; height: 28px; border-radius: 6px; background: linear-gradient(135deg, #0078d4 0%, #40e0d0 100%); color: white; display: flex; align-items: center; justify-content: center; font-size: 14px; font-weight: 600; }
-        .message-content { margin-left: 40px; font-size: 14px; line-height: 1.6; color: #323130; }
-        .agent-card { margin-left: 40px; margin-top: 16px; background: white; border: 1px solid #edebe9; border-radius: 8px; overflow: hidden; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05); }
-        .agent-card-header { padding: 16px; display: flex; align-items: center; gap: 12px; border-bottom: 1px solid #edebe9; background: #faf9f8; }
-        .agent-card-content { padding: 16px; }
-        .detail-list { list-style: none; }
-        .detail-item { padding: 8px 0; font-size: 14px; color: #323130; display: flex; gap: 8px; }
-        .detail-label { font-weight: 600; min-width: 140px; color: #605e5c; }
-        .typing-indicator { margin-left: 40px; display: flex; gap: 4px; padding: 8px 0; }
-        .typing-dot { width: 8px; height: 8px; background: #605e5c; border-radius: 50%; animation: typing 1.4s infinite; }
-        .typing-dot:nth-child(2) { animation-delay: 0.2s; }
-        .typing-dot:nth-child(3) { animation-delay: 0.4s; }
-        @keyframes typing { 0%, 60%, 100% { transform: translateY(0); opacity: 0.5; } 30% { transform: translateY(-10px); opacity: 1; } }
-        .solution-steps { margin-top: 12px; padding-left: 20px; }
-        .solution-step { margin: 8px 0; padding: 8px 12px; background: #f8f8f8; border-left: 3px solid #0078d4; border-radius: 4px; }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+            background: #faf9f8;
+            height: 100vh;
+            display: flex;
+            overflow: hidden;
+            color: #323130;
+        }
+
+        /* Sidebar */
+        .sidebar {
+            width: 260px;
+            background: #ffffff;
+            display: flex;
+            flex-direction: column;
+            border-right: 1px solid #edebe9;
+        }
+
+        /* Sidebar Header */
+        .sidebar-header {
+            padding: 12px 16px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            border-bottom: 1px solid #edebe9;
+            height: 48px;
+        }
+
+        .copilot-icon {
+            width: 24px;
+            height: 24px;
+            background: linear-gradient(135deg, #b4a0ff 0%, #ff7eb9 50%, #7ee7fc 100%);
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+
+        .copilot-icon::before {
+            content: '';
+            position: absolute;
+            width: 12px;
+            height: 12px;
+            background: white;
+            border-radius: 2px;
+            opacity: 0.9;
+        }
+
+        .sidebar-title {
+            font-size: 14px;
+            font-weight: 600;
+            color: #323130;
+        }
+
+        .sidebar-button {
+            margin-left: auto;
+            background: none;
+            border: none;
+            padding: 4px;
+            cursor: pointer;
+            color: #605e5c;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 4px;
+            width: 32px;
+            height: 32px;
+        }
+
+        .sidebar-button:hover {
+            background: #f3f2f1;
+        }
+
+        /* Search Box */
+        .search-container {
+            padding: 8px 16px;
+            border-bottom: 1px solid #edebe9;
+        }
+
+        .search-box {
+            position: relative;
+            width: 100%;
+        }
+
+        .search-icon {
+            position: absolute;
+            left: 8px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #605e5c;
+            font-size: 14px;
+        }
+
+        .search-input {
+            width: 100%;
+            padding: 6px 8px 6px 32px;
+            border: 1px solid #d2d0ce;
+            border-radius: 4px;
+            font-size: 14px;
+            background: #faf9f8;
+            outline: none;
+            transition: all 0.2s;
+        }
+
+        .search-input:focus {
+            border-color: #605e5c;
+            background: #ffffff;
+        }
+
+        /* Navigation */
+        .nav-section {
+            flex: 1;
+            overflow-y: auto;
+            padding: 4px 0;
+        }
+
+        .nav-item {
+            padding: 8px 16px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            cursor: pointer;
+            font-size: 14px;
+            color: #323130;
+            transition: background 0.1s;
+            position: relative;
+            user-select: none;
+        }
+
+        .nav-item:hover {
+            background: #f3f2f1;
+        }
+
+        .nav-item.active {
+            background: #f3f2f1;
+        }
+
+        .nav-item.active::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 8px;
+            bottom: 8px;
+            width: 2px;
+            background: #742774;
+            border-radius: 1px;
+        }
+
+        .nav-icon {
+            width: 20px;
+            height: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+
+        /* Demo Controls Section */
+        .demo-controls-section {
+            border-top: 1px solid #edebe9;
+            padding: 12px 16px;
+            background: #faf9f8;
+        }
+
+        .demo-controls-title {
+            font-size: 12px;
+            font-weight: 600;
+            color: #605e5c;
+            margin-bottom: 8px;
+        }
+
+        .demo-controls {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 8px;
+        }
+
+        .demo-btn {
+            padding: 6px 12px;
+            border: 1px solid #d2d0ce;
+            border-radius: 4px;
+            background: white;
+            font-size: 12px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 4px;
+            color: #323130;
+            transition: all 0.2s;
+        }
+
+        .demo-btn:hover:not(:disabled) {
+            background: #f3f2f1;
+            border-color: #605e5c;
+        }
+
+        .demo-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .demo-btn.primary {
+            background: #742774;
+            color: white;
+            border-color: #742774;
+        }
+
+        .demo-btn.primary:hover:not(:disabled) {
+            background: #5a1d5a;
+        }
+
+        /* Bottom section */
+        .sidebar-bottom {
+            border-top: 1px solid #edebe9;
+            padding: 8px 0;
+        }
+
+        .user-section {
+            padding: 8px 16px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            cursor: pointer;
+            transition: background 0.1s;
+        }
+
+        .user-section:hover {
+            background: #f3f2f1;
+        }
+
+        .user-avatar {
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            background: #742774;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        /* Main Content */
+        .main-content {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            background: #faf9f8;
+        }
+
+        /* Header */
+        .content-header {
+            height: 48px;
+            padding: 0 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: #ffffff;
+            border-bottom: 1px solid #edebe9;
+        }
+
+        .header-title {
+            font-size: 14px;
+            color: #605e5c;
+        }
+
+        .header-actions {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .status-indicator {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 6px 12px;
+            background: #f3f2f1;
+            border-radius: 4px;
+            font-size: 12px;
+            color: #605e5c;
+        }
+
+        .status-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: #10b981;
+        }
+
+        .status-dot.processing {
+            background: #f59e0b;
+            animation: pulse 1s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+
+        /* Chat Container */
+        .chat-container {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+
+        /* Chat Messages */
+        .chat-messages {
+            flex: 1;
+            overflow-y: auto;
+            padding: 20px;
+            display: block;
+        }
+
+        .message {
+            max-width: 900px;
+            margin: 0 auto 24px;
+        }
+
+        .message-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 8px;
+        }
+
+        .message-avatar-user {
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            background: #0078d4;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .message-avatar-agent {
+            width: 28px;
+            height: 28px;
+            border-radius: 6px;
+            background: linear-gradient(135deg, #742774 0%, #00a651 100%);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        .message-author {
+            font-size: 14px;
+            font-weight: 600;
+            color: #323130;
+        }
+
+        .message-tag {
+            padding: 2px 8px;
+            background: #f3f2f1;
+            border-radius: 4px;
+            font-size: 12px;
+            color: #605e5c;
+        }
+
+        .message-time {
+            font-size: 12px;
+            color: #a19f9d;
+        }
+
+        .message-content {
+            margin-left: 40px;
+            font-size: 14px;
+            line-height: 1.6;
+            color: #323130;
+        }
+
+        /* Agent Cards */
+        .agent-card {
+            margin-left: 40px;
+            margin-top: 16px;
+            background: white;
+            border: 1px solid #edebe9;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        .agent-card-header {
+            padding: 16px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            border-bottom: 1px solid #edebe9;
+            background: linear-gradient(135deg, rgba(116, 39, 116, 0.05) 0%, rgba(0, 166, 81, 0.05) 100%);
+        }
+
+        .agent-card-icon {
+            font-size: 20px;
+        }
+
+        .agent-card-title {
+            font-size: 16px;
+            font-weight: 600;
+            color: #323130;
+        }
+
+        .agent-card-status {
+            margin-left: auto;
+            padding: 4px 12px;
+            background: #10b981;
+            color: white;
+            border-radius: 12px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .agent-card-content {
+            padding: 16px;
+        }
+
+        .detail-list {
+            list-style: none;
+        }
+
+        .detail-item {
+            padding: 8px 0;
+            font-size: 14px;
+            color: #323130;
+            display: flex;
+            gap: 8px;
+            border-bottom: 1px solid #f3f2f1;
+        }
+
+        .detail-item:last-child {
+            border-bottom: none;
+        }
+
+        .detail-label {
+            font-weight: 600;
+            min-width: 180px;
+            color: #605e5c;
+        }
+
+        .detail-value {
+            color: #323130;
+            flex: 1;
+        }
+
+        /* Input Container */
+        .input-container {
+            padding: 16px 20px;
+            background: white;
+            border-top: 1px solid #edebe9;
+        }
+
+        .input-wrapper {
+            max-width: 900px;
+            margin: 0 auto;
+            position: relative;
+        }
+
+        .input-field {
+            width: 100%;
+            padding: 12px 48px 12px 16px;
+            border: 1px solid #d2d0ce;
+            border-radius: 8px;
+            font-size: 14px;
+            font-family: inherit;
+            resize: none;
+            outline: none;
+            background: #faf9f8;
+            transition: all 0.2s;
+            min-height: 44px;
+            max-height: 120px;
+        }
+
+        .input-field:focus {
+            border-color: #742774;
+            background: white;
+        }
+
+        .input-actions {
+            position: absolute;
+            right: 8px;
+            bottom: 8px;
+            display: flex;
+            gap: 4px;
+        }
+
+        .input-button {
+            width: 28px;
+            height: 28px;
+            border: none;
+            background: none;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 4px;
+            color: #605e5c;
+            transition: all 0.1s;
+        }
+
+        .input-button:hover {
+            background: #f3f2f1;
+        }
+
+        .input-button.send {
+            color: #742774;
+        }
+
+        .input-button:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        /* Typing indicator */
+        .typing-indicator {
+            margin-left: 40px;
+            display: flex;
+            gap: 4px;
+            padding: 8px 0;
+        }
+
+        .typing-dot {
+            width: 8px;
+            height: 8px;
+            background: #605e5c;
+            border-radius: 50%;
+            animation: typing 1.4s infinite;
+        }
+
+        .typing-dot:nth-child(2) {
+            animation-delay: 0.2s;
+        }
+
+        .typing-dot:nth-child(3) {
+            animation-delay: 0.4s;
+        }
+
+        @keyframes typing {
+            0%, 60%, 100% {
+                transform: translateY(0);
+                opacity: 0.5;
+            }
+            30% {
+                transform: translateY(-10px);
+                opacity: 1;
+            }
+        }
+
+        /* Welcome state - hidden when chat is active */
+        .welcome-screen {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 40px;
+            max-width: 1200px;
+            margin: 0 auto;
+            width: 100%;
+        }
+
+        .welcome-screen.hidden {
+            display: none;
+        }
+
+        .welcome-title {
+            font-size: 36px;
+            font-weight: 600;
+            color: #323130;
+            margin-bottom: 16px;
+            text-align: center;
+        }
+
+        .welcome-subtitle {
+            font-size: 16px;
+            color: #605e5c;
+            margin-bottom: 48px;
+            text-align: center;
+        }
+
+        .suggestion-cards {
+            display: flex;
+            gap: 20px;
+            width: 100%;
+            max-width: 900px;
+        }
+
+        .suggestion-card {
+            flex: 1;
+            background: white;
+            border: 1px solid #edebe9;
+            border-radius: 8px;
+            padding: 20px;
+            cursor: pointer;
+            transition: all 0.2s;
+            min-height: 120px;
+        }
+
+        .suggestion-card:hover {
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            transform: translateY(-2px);
+            border-color: #742774;
+        }
+
+        .card-icon {
+            font-size: 24px;
+            margin-bottom: 12px;
+        }
+
+        .card-title {
+            font-size: 14px;
+            font-weight: 600;
+            color: #323130;
+            margin-bottom: 8px;
+        }
+
+        .card-description {
+            font-size: 13px;
+            color: #605e5c;
+            line-height: 1.4;
+        }
     </style>
 </head>
 <body>
+    <!-- Sidebar -->
     <div class="sidebar">
         <div class="sidebar-header">
             <div class="copilot-icon"></div>
-            <span class="sidebar-title">IT Helpdesk Agent</span>
+            <span class="sidebar-title">M365 Copilot</span>
+            <button class="sidebar-button">☰</button>
         </div>
+
+        <div class="search-container">
+            <div class="search-box">
+                <span class="search-icon">🔍</span>
+                <input type="text" class="search-input" placeholder="Search">
+            </div>
+        </div>
+
         <div class="nav-section">
-            <div class="nav-item active"><span>💻</span><span>Self-Service Solutions</span></div>
-            <div class="nav-item"><span>🔐</span><span>Password & Access</span></div>
-            <div class="nav-item"><span>🖨️</span><span>Hardware Support</span></div>
-            <div class="nav-item"><span>📱</span><span>Software Issues</span></div>
-            <div class="nav-item"><span>🎫</span><span>Ticket Management</span></div>
+            <div class="nav-item active">
+                <div class="nav-icon">💬</div>
+                <span>Chat</span>
+            </div>
+            <div class="nav-item">
+                <div class="nav-icon">🤖</div>
+                <span>Agents</span>
+            </div>
+            <div class="nav-item">
+                <div class="nav-icon">💬</div>
+                <span>Conversations</span>
+            </div>
+            <div class="nav-item">
+                <div class="nav-icon">📄</div>
+                <span>Pages</span>
+            </div>
+            <div class="nav-item">
+                <div class="nav-icon">➕</div>
+                <span>Create</span>
+            </div>
+            <div class="nav-item">
+                <div class="nav-icon">📱</div>
+                <span>Apps</span>
+            </div>
+            <div class="nav-item">
+                <div class="nav-icon">⚙️</div>
+                <span>Admin</span>
+            </div>
+        </div>
+
+        <!-- Demo Controls -->
+        <div class="demo-controls-section">
+            <div class="demo-controls-title">Demo Controls</div>
+            <div class="demo-controls">
+                <button class="demo-btn primary" onclick="startDemo()" id="startBtn">
+                    ▶️ Start
+                </button>
+                <button class="demo-btn" onclick="pauseDemo()" id="pauseBtn" disabled>
+                    ⏸️ Pause
+                </button>
+                <button class="demo-btn" onclick="resetDemo()" id="resetBtn">
+                    🔄 Reset
+                </button>
+                <button class="demo-btn" onclick="skipToNext()" id="skipBtn" disabled>
+                    ⏭️ Skip
+                </button>
+            </div>
+        </div>
+
+        <div class="sidebar-bottom">
+            <div class="user-section">
+                <div class="user-avatar">DU</div>
+                <span style="font-size: 14px;">Demo User</span>
+            </div>
         </div>
     </div>
+
+    <!-- Main Content -->
     <div class="main-content">
         <div class="content-header">
-            <div class="header-title">IT Helpdesk Assistant</div>
+            <div class="header-title">IT Helpdesk Agent</div>
+            <div class="header-actions">
+                <div class="status-indicator">
+                    <span class="status-dot" id="statusDot"></span>
+                    <span id="statusText">Ready</span>
+                </div>
+            </div>
         </div>
-        <div class="demo-controls">
-            <button class="demo-button" onclick="startDemo()" id="playButton">▶ Play Demo</button>
-            <button class="demo-button secondary" onclick="pauseDemo()" id="pauseButton" disabled>⏸ Pause</button>
-            <button class="demo-button secondary" onclick="resetDemo()">↺ Reset</button>
-            <button class="demo-button secondary" onclick="skipMessage()">⏭ Skip</button>
-            <span style="margin-left: auto; font-size: 14px; color: #605e5c;" id="demoStatus">Ready to start</span>
-        </div>
+
         <div class="chat-container">
-            <div class="chat-messages" id="chatMessages"></div>
+            <!-- Welcome Screen -->
+            <div class="welcome-screen" id="welcomeScreen">
+                <h1 class="welcome-title">💻 IT Helpdesk</h1>
+                <p class="welcome-subtitle">How can I help you today?</p>
+
+                <div class="suggestion-cards">
+                    <div class="suggestion-card" onclick="quickStart('create-ticket')">
+                        <div class="card-icon">🎫</div>
+                        <div class="card-title">Create Ticket</div>
+                        <div class="card-description">Report an IT issue</div>
+                    </div>
+                    <div class="suggestion-card" onclick="quickStart('check-status')">
+                        <div class="card-icon">📊</div>
+                        <div class="card-title">Check Status</div>
+                        <div class="card-description">View ticket updates</div>
+                    </div>
+                    <div class="suggestion-card" onclick="quickStart('self-service')">
+                        <div class="card-icon">💡</div>
+                        <div class="card-title">Self-Service</div>
+                        <div class="card-description">Browse solutions and guides</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Chat Messages -->
+            <div class="chat-messages" id="chatMessages" style="display: none;">
+                <!-- Messages will be dynamically added here -->
+            </div>
+
+            <!-- Input Container -->
+            <div class="input-container">
+                <div class="input-wrapper">
+                    <textarea
+                        class="input-field"
+                        id="messageInput"
+                        placeholder="Report an issue or ask for IT help..."
+                        rows="1"
+                        onkeypress="handleKeyPress(event)"
+                        oninput="autoResize(this)"
+                    ></textarea>
+                    <div class="input-actions">
+                        <button class="input-button">📎</button>
+                        <button class="input-button send" onclick="sendCurrentMessage()" id="sendButton">
+                            ➤
+                        </button>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
-    <script>
-        let currentMessageIndex = 0;
-        let isPlaying = false;
-        let isPaused = false;
-        let messageTimeout;
-        let typingTimeout;
 
+    <script>
+        // State
+        let demoState = {
+            isPlaying: false,
+            isPaused: false,
+            currentStep: 0,
+            messageTimer: null,
+            typingTimer: null
+        };
+
+        // Demo script
         const demoScript = [
             {
                 "type": "user",
@@ -227,176 +936,372 @@
             }
         ];
 
-        function startDemo() {
-            if (!isPlaying || isPaused) {
-                isPlaying = true;
-                isPaused = false;
-                document.getElementById('playButton').disabled = true;
-                document.getElementById('pauseButton').disabled = false;
-                document.getElementById('demoStatus').textContent = 'Playing demo...';
-                if (currentMessageIndex === 0) {
-                    document.getElementById('chatMessages').innerHTML = '';
-                }
-                playNextMessage();
+        let currentMessageIndex = 0;
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('IT Helpdesk Agent initialized');
+        });
+
+        // Auto resize textarea
+        function autoResize(textarea) {
+            textarea.style.height = 'auto';
+            textarea.style.height = Math.min(textarea.scrollHeight, 120) + 'px';
+        }
+
+        // Handle key press
+        function handleKeyPress(event) {
+            if (event.key === 'Enter' && !event.shiftKey) {
+                event.preventDefault();
+                sendCurrentMessage();
             }
+        }
+
+        // Quick start from cards
+        function quickStart(type) {
+            let message = '';
+            switch(type) {
+                case 'create-ticket':
+                    message = 'Help me with create ticket';
+                    break;
+                case 'check-status':
+                    message = 'Help me with check status';
+                    break;
+                case 'self-service':
+                    message = 'Help me with self-service';
+                    break;
+                default:
+                    message = 'Help me get started';
+                    break;
+            }
+
+            document.getElementById('messageInput').value = message;
+            sendCurrentMessage();
+        }
+
+        // Send current message
+        function sendCurrentMessage() {
+            const input = document.getElementById('messageInput');
+            const message = input.value.trim();
+            if (message) {
+                // Hide welcome screen and show chat
+                document.getElementById('welcomeScreen').classList.add('hidden');
+                document.getElementById('chatMessages').style.display = 'block';
+
+                // Add user message
+                addMessage('user', message);
+
+                input.value = '';
+                autoResize(input);
+
+                // Simulate agent response
+                setTimeout(() => {
+                    showTypingIndicator();
+                    setTimeout(() => {
+                        hideTypingIndicator();
+                        addMessage('agent', 'I\'ll help you with that. Please use the demo controls to see a full demonstration of my capabilities.');
+                    }, 1500);
+                }, 500);
+            }
+        }
+
+        // Demo controls
+        function startDemo() {
+            if (demoState.isPlaying && !demoState.isPaused) return;
+
+            demoState.isPlaying = true;
+            demoState.isPaused = false;
+
+            document.getElementById('startBtn').disabled = true;
+            document.getElementById('pauseBtn').disabled = false;
+            document.getElementById('skipBtn').disabled = false;
+
+            updateStatus('processing', 'Running Demo...');
+
+            // Hide welcome and show chat
+            document.getElementById('welcomeScreen').classList.add('hidden');
+            document.getElementById('chatMessages').style.display = 'block';
+
+            if (currentMessageIndex === 0) {
+                document.getElementById('chatMessages').innerHTML = '';
+            }
+
+            playNextMessage();
         }
 
         function pauseDemo() {
-            if (isPlaying) {
-                isPaused = true;
-                isPlaying = false;
-                clearTimeout(messageTimeout);
-                clearTimeout(typingTimeout);
-                document.getElementById('playButton').disabled = false;
-                document.getElementById('pauseButton').disabled = true;
-                document.getElementById('demoStatus').textContent = 'Demo paused';
-                removeTypingIndicator();
-            }
+            demoState.isPaused = true;
+            document.getElementById('startBtn').disabled = false;
+            document.getElementById('pauseBtn').disabled = true;
+
+            clearTimeout(demoState.messageTimer);
+            clearTimeout(demoState.typingTimer);
+
+            updateStatus('idle', 'Paused');
         }
 
         function resetDemo() {
-            clearTimeout(messageTimeout);
-            clearTimeout(typingTimeout);
+            clearTimeout(demoState.messageTimer);
+            clearTimeout(demoState.typingTimer);
+
+            demoState.isPlaying = false;
+            demoState.isPaused = false;
             currentMessageIndex = 0;
-            isPlaying = false;
-            isPaused = false;
+
+            document.getElementById('startBtn').disabled = false;
+            document.getElementById('pauseBtn').disabled = true;
+            document.getElementById('skipBtn').disabled = true;
+
+            updateStatus('idle', 'Ready');
+
+            // Show welcome screen
+            document.getElementById('welcomeScreen').classList.remove('hidden');
+            document.getElementById('chatMessages').style.display = 'none';
             document.getElementById('chatMessages').innerHTML = '';
-            document.getElementById('playButton').disabled = false;
-            document.getElementById('pauseButton').disabled = true;
-            document.getElementById('demoStatus').textContent = 'Ready to start';
-            removeTypingIndicator();
         }
 
-        function skipMessage() {
+        function skipToNext() {
+            clearTimeout(demoState.messageTimer);
+            clearTimeout(demoState.typingTimer);
+            hideTypingIndicator();
+
             if (currentMessageIndex < demoScript.length) {
-                clearTimeout(messageTimeout);
-                clearTimeout(typingTimeout);
-                removeTypingIndicator();
                 const message = demoScript[currentMessageIndex];
-                addMessage(message);
+                addDemoMessage(message);
                 currentMessageIndex++;
-                if (isPlaying && currentMessageIndex < demoScript.length) {
-                    playNextMessage();
-                } else if (currentMessageIndex >= demoScript.length) {
-                    demoComplete();
+
+                if (currentMessageIndex < demoScript.length) {
+                    demoState.messageTimer = setTimeout(() => {
+                        playNextMessage();
+                    }, 1000);
+                } else {
+                    completeDemo();
                 }
             }
         }
 
         function playNextMessage() {
-            if (currentMessageIndex < demoScript.length && isPlaying && !isPaused) {
-                const message = demoScript[currentMessageIndex];
-                messageTimeout = setTimeout(() => {
-                    if (message.type === 'agent') {
-                        showTypingIndicator();
-                        typingTimeout = setTimeout(() => {
-                            removeTypingIndicator();
-                            addMessage(message);
-                            currentMessageIndex++;
-                            if (currentMessageIndex < demoScript.length) {
-                                playNextMessage();
-                            } else {
-                                demoComplete();
-                            }
-                        }, message.typingTime || 2000);
-                    } else {
-                        addMessage(message);
-                        currentMessageIndex++;
-                        if (currentMessageIndex < demoScript.length) {
-                            playNextMessage();
-                        } else {
-                            demoComplete();
-                        }
-                    }
-                }, message.delay || 1000);
+            if (!demoState.isPlaying || demoState.isPaused) return;
+
+            if (currentMessageIndex >= demoScript.length) {
+                completeDemo();
+                return;
+            }
+
+            const message = demoScript[currentMessageIndex];
+
+            if (message.type === 'agent') {
+                showTypingIndicator();
+                demoState.typingTimer = setTimeout(() => {
+                    hideTypingIndicator();
+                    addDemoMessage(message);
+                    currentMessageIndex++;
+
+                    const delay = message.delay || 2000;
+                    demoState.messageTimer = setTimeout(() => {
+                        playNextMessage();
+                    }, delay);
+                }, message.typingTime || 2000);
+            } else {
+                addDemoMessage(message);
+                currentMessageIndex++;
+
+                const delay = message.delay || 1500;
+                demoState.messageTimer = setTimeout(() => {
+                    playNextMessage();
+                }, delay);
             }
         }
 
-        function demoComplete() {
-            isPlaying = false;
-            document.getElementById('playButton').disabled = false;
-            document.getElementById('pauseButton').disabled = true;
-            document.getElementById('demoStatus').textContent = 'Demo complete';
+        function addDemoMessage(message) {
+            if (message.type === 'user') {
+                addMessage('user', message.content);
+            } else if (message.type === 'agent') {
+                addMessage('agent', message.content, message.agentData);
+            }
         }
 
-        function addMessage(message) {
+        function addMessage(type, content, agentData) {
             const chatMessages = document.getElementById('chatMessages');
             const messageDiv = document.createElement('div');
             messageDiv.className = 'message';
-            const time = new Date().toLocaleString('en-US', { hour: 'numeric', minute: '2-digit', hour12: true });
-            
-            if (message.type === 'user') {
+
+            const time = new Date().toLocaleString('en-US', {
+                hour: 'numeric',
+                minute: '2-digit'
+            });
+
+            if (type === 'user') {
                 messageDiv.innerHTML = `
                     <div class="message-header">
                         <div class="message-avatar-user">U</div>
-                        <span class="message-author" style="font-weight: 600;">You</span>
-                        <span class="message-time" style="font-size: 12px; color: #a19f9d;">${time}</span>
+                        <span class="message-author">You</span>
+                        <span class="message-time">${time}</span>
                     </div>
-                    <div class="message-content">${message.content}</div>
+                    <div class="message-content">${content}</div>
                 `;
-            } else if (message.type === 'agent') {
+            } else {
                 let html = `
                     <div class="message-header">
-                        <div class="message-avatar-agent">IT</div>
-                        <span class="message-author" style="font-weight: 600;">IT Helpdesk Agent</span>
-                        <span class="message-time" style="font-size: 12px; color: #a19f9d;">${time}</span>
+                        <div class="message-avatar-agent">💻</div>
+                        <span class="message-author">IT Helpdesk</span>
+                        <span class="message-tag">Agent</span>
+                        <span class="message-time">${time}</span>
                     </div>
-                    <div class="message-content">${message.content}</div>
+                    <div class="message-content">${content}</div>
                 `;
-                
-                if (message.agentData) {
-                    html += '<div class="agent-card">';
-                    html += '<div class="agent-card-header"><span style="font-weight: 600;">Solution Details</span></div>';
-                    html += '<div class="agent-card-content">';
-                    
-                    for (const [category, data] of Object.entries(message.agentData)) {
-                        html += `<div style="margin-bottom: 16px;"><div style="font-weight: 600; color: #0078d4; margin-bottom: 8px;">${category}</div>`;
-                        
-                        if (category.includes('Steps') && Array.isArray(data.Steps)) {
-                            html += '<div class="solution-steps">';
-                            data.Steps.forEach(step => {
-                                html += `<div class="solution-step">${step}</div>`;
-                            });
-                            html += '</div>';
-                        } else if (typeof data === 'object') {
-                            html += '<ul class="detail-list">';
-                            for (const [key, value] of Object.entries(data)) {
-                                if (Array.isArray(value)) {
-                                    html += `<li class="detail-item"><span class="detail-label">${key}:</span><span>${value.join('<br>')}</span></li>`;
-                                } else {
-                                    html += `<li class="detail-item"><span class="detail-label">${key}:</span><span>${value}</span></li>`;
+
+                if (agentData) {
+                    html += `
+                        <div class="agent-card">
+                            <div class="agent-card-header">
+                                <span class="agent-card-icon">💻</span>
+                                <span class="agent-card-title">${agentData.title || 'Results'}</span>
+                                ${agentData.status ? `<span class="agent-card-status">${agentData.status}</span>` : ''}
+                            </div>
+                            <div class="agent-card-content">
+                                <ul class="detail-list">
+                    `;
+
+                    const details = agentData.details || agentData;
+                    for (const [key, value] of Object.entries(details)) {
+                        if (key !== 'title' && key !== 'status') {
+                            html += `<li class="detail-item"><span class="detail-label">${key}:</span>`;
+                            
+                            if (typeof value === 'object' && !Array.isArray(value) && value !== null) {
+                                // Handle nested objects
+                                html += '<div style="margin-left: 20px;">';
+                                for (const [subKey, subValue] of Object.entries(value)) {
+                                    html += `<div style="margin: 4px 0;"><strong>${subKey}:</strong> ${subValue}</div>`;
                                 }
+                                html += '</div>';
+                            } else if (Array.isArray(value)) {
+                                // Handle arrays
+                                html += `<span class="detail-value">${value.join('<br>')}</span>`;
+                            } else {
+                                // Handle simple values
+                                html += `<span class="detail-value">${value}</span>`;
                             }
-                            html += '</ul>';
+                            
+                            html += `</li>`;
                         }
-                        html += '</div>';
                     }
-                    
-                    html += '</div></div>';
+
+                    for (const [key, value] of Object.entries(details)) {
+
+
+                        if (key !== 'title' && key !== 'status') {
+
+
+                            html += `<li class="detail-item"><span class="detail-label">${key}:</span>`;
+
+
+                            
+
+
+                            if (typeof value === 'object' && !Array.isArray(value) && value !== null) {
+
+
+                                // Handle nested objects
+
+
+                                html += '<div style="margin-left: 20px;">';
+
+
+                                for (const [subKey, subValue] of Object.entries(value)) {
+
+
+                                    html += `<div style="margin: 4px 0;"><strong>${subKey}:</strong> ${subValue}</div>`;
+
+
+                                }
+
+
+                                html += '</div>';
+
+
+                            } else if (Array.isArray(value)) {
+
+
+                                // Handle arrays
+
+
+                                html += `<span class="detail-value">${value.join('<br>')}</span>`;
+
+
+                            } else {
+
+
+                                // Handle simple values
+
+
+                                html += `<span class="detail-value">${value}</span>`;
+
+
+                            }
+
+
+                            
+
+
+                            html += `</li>`;
+
+
+                        }
+
+
+                    }
+
+                    html += `
+                                </ul>
+                            </div>
+                        </div>
+                    `;
                 }
-                
+
                 messageDiv.innerHTML = html;
             }
-            
+
             chatMessages.appendChild(messageDiv);
             chatMessages.scrollTop = chatMessages.scrollHeight;
         }
 
         function showTypingIndicator() {
             const chatMessages = document.getElementById('chatMessages');
-            const typingDiv = document.createElement('div');
-            typingDiv.className = 'typing-indicator';
-            typingDiv.id = 'typingIndicator';
-            typingDiv.innerHTML = '<div class="typing-dot"></div><div class="typing-dot"></div><div class="typing-dot"></div>';
-            chatMessages.appendChild(typingDiv);
+            const indicator = document.createElement('div');
+            indicator.id = 'typingIndicator';
+            indicator.className = 'typing-indicator';
+            indicator.innerHTML = `
+                <div class="typing-dot"></div>
+                <div class="typing-dot"></div>
+                <div class="typing-dot"></div>
+            `;
+            chatMessages.appendChild(indicator);
             chatMessages.scrollTop = chatMessages.scrollHeight;
         }
 
-        function removeTypingIndicator() {
-            const typingIndicator = document.getElementById('typingIndicator');
-            if (typingIndicator) {
-                typingIndicator.remove();
+        function hideTypingIndicator() {
+            const indicator = document.getElementById('typingIndicator');
+            if (indicator) {
+                indicator.remove();
             }
+        }
+
+        function updateStatus(status, text) {
+            const statusDot = document.getElementById('statusDot');
+            const statusText = document.getElementById('statusText');
+
+            statusDot.className = `status-dot ${status}`;
+            statusText.textContent = text;
+        }
+
+        function completeDemo() {
+            demoState.isPlaying = false;
+            document.getElementById('startBtn').disabled = false;
+            document.getElementById('pauseBtn').disabled = true;
+            document.getElementById('skipBtn').disabled = true;
+
+            updateStatus('idle', 'Demo Complete');
         }
     </script>
 </body>
