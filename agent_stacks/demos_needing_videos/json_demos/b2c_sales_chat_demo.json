@@ -1,0 +1,143 @@
+{
+  "demo_name": "Sales_Chat_Assistant_1Min_Demo",
+  "description": "1-minute demo: AI-powered sales chat assistant with product discovery, real-time recommendations, and conversion optimization",
+  "version": "2.0.0",
+  "trigger_phrases": [
+    "Help me assist this customer who's chatting about finding the right laptop for their needs.",
+    "sales chat assistance",
+    "product recommendation chat"
+  ],
+  "metadata": {
+    "category": "sales_enablement",
+    "industry": "b2c_retail",
+    "max_response_length": "250_words",
+    "total_steps": 6,
+    "estimated_duration_seconds": 60,
+    "target_audience": "online_sales_teams"
+  },
+  "persona": {
+    "name": "Taylor Morgan",
+    "title": "E-Commerce Sales Manager",
+    "company": "TechZone Electronics",
+    "context": "Managing 50 chat agents handling 3,000 daily conversations, seeking to increase conversion and average order value"
+  },
+  "agents_utilized": [
+    {
+      "agent_name": "ChatIntentAgent",
+      "description": "Analyzes chat messages to understand customer intent and needs",
+      "inputs": ["chat_messages", "session_context"],
+      "outputs": ["intent_classification", "extracted_requirements", "urgency_level"],
+      "data_sources": ["Chat Platform", "NLP Engine", "Intent Models"],
+      "used_in_steps": [1]
+    },
+    {
+      "agent_name": "CustomerContextAgent",
+      "description": "Enriches chat with customer history and preferences",
+      "inputs": ["customer_id", "session_id"],
+      "outputs": ["customer_profile", "browsing_history", "past_purchases", "preferences"],
+      "data_sources": ["CDP", "Website Analytics", "CRM"],
+      "used_in_steps": [1, 2]
+    },
+    {
+      "agent_name": "ProductMatchingAgent",
+      "description": "Matches customer requirements to optimal products",
+      "inputs": ["requirements", "preferences", "budget"],
+      "outputs": ["product_matches", "match_scores", "feature_comparisons"],
+      "data_sources": ["Product Catalog", "Inventory", "Review Aggregator"],
+      "used_in_steps": [2, 3]
+    },
+    {
+      "agent_name": "ComparisonGuideAgent",
+      "description": "Creates easy-to-understand product comparisons",
+      "inputs": ["product_list", "customer_priorities"],
+      "outputs": ["comparison_table", "pros_cons", "recommendation_rationale"],
+      "data_sources": ["Product Data", "Expert Reviews", "Customer Reviews"],
+      "used_in_steps": [3]
+    },
+    {
+      "agent_name": "ObjectionHandlerAgent",
+      "description": "Addresses customer concerns and objections effectively",
+      "inputs": ["objection_type", "product_context", "customer_profile"],
+      "outputs": ["response_suggestions", "supporting_evidence", "alternative_offers"],
+      "data_sources": ["FAQ Database", "Objection Playbook", "Competitor Analysis"],
+      "used_in_steps": [4]
+    },
+    {
+      "agent_name": "ConversionOptimizerAgent",
+      "description": "Optimizes for conversion with offers and incentives",
+      "inputs": ["cart_status", "customer_segment", "session_duration"],
+      "outputs": ["conversion_tactics", "personalized_offers", "urgency_elements"],
+      "data_sources": ["Promotion Engine", "A/B Test Results", "Conversion Analytics"],
+      "used_in_steps": [5]
+    },
+    {
+      "agent_name": "ChatSummaryAgent",
+      "description": "Generates chat summaries and follow-up actions",
+      "inputs": ["chat_transcript", "outcomes"],
+      "outputs": ["chat_summary", "crm_update", "follow_up_tasks"],
+      "data_sources": ["Chat Platform", "CRM", "Task Management"],
+      "used_in_steps": [6]
+    }
+  ],
+  "conversation_flow": [
+    {
+      "step_number": 1,
+      "user_message": "Help me assist this customer who's chatting about finding the right laptop for their needs.",
+      "agent_response": "I've analyzed the chat and identified the customer's needs. Here's the context for Alex Martinez.\n\n**Chat Analysis:**\n\n| Element | Finding |\n|---------|--------|\n| Intent | Laptop purchase for work |\n| Stage | Early research |\n| Urgency | Medium (needs within 2 weeks) |\n| Expertise level | Moderate (knows basics) |\n\n**Customer Context:**\n\n| Profile | Details |\n|---------|--------|\n| Customer | Alex Martinez |\n| Status | Returning customer |\n| Past purchases | Tablet (2022), accessories |\n| Browsing today | 3 laptops viewed, 12 min on site |\n\n**Extracted Requirements:**\n- Use case: Remote work + occasional video editing\n- Budget mentioned: \"around $1,200\"\n- Must-haves: Good display, reliable performance\n- Mentioned concern: \"Don't want it to slow down\"\n\n**Products They've Viewed:**\n1. TechPro X15 ($1,099) - 2 min\n2. PowerBook Pro ($1,349) - 6 min (most interest)\n3. BudgetLap 500 ($799) - 4 min\n\n**Initial Insight:** Interested in PowerBook Pro but may need budget justification.\n\nSource: [Chat Platform + CDP + Browsing Analytics]\nAgents: ChatIntentAgent, CustomerContextAgent\n\nGet personalized product recommendations?",
+      "wait_timeout_seconds": 15,
+      "description": "Chat analysis and customer context"
+    },
+    {
+      "step_number": 2,
+      "user_message": "Yes, what products should I recommend based on their needs?",
+      "agent_response": "Product matching complete. Three options ranked by fit for Alex's requirements.\n\n**Top Recommendations:**\n\n| Rank | Product | Price | Match Score |\n|------|---------|-------|-------------|\n| 1 | PowerBook Pro 15 | $1,349 | 94% |\n| 2 | TechPro X15 Plus | $1,199 | 88% |\n| 3 | CreatorBook 14 | $1,279 | 85% |\n\n**Why PowerBook Pro (Top Match):**\n\n| Requirement | How It Delivers |\n|-------------|----------------|\n| Remote work | 12-hour battery, fast wake |\n| Video editing | Dedicated GPU, 16GB RAM |\n| Good display | 4K OLED, color-accurate |\n| Won't slow down | M-series chip, 5-year performance |\n\n**Budget Context:**\n- $149 over stated budget\n- But: Includes software bundle worth $200\n- Net value: Actually $51 under budget\n\n**Why They Spent 6 Min on This Page:**\n- Viewed all specs\n- Expanded video editing section\n- Checked reviews (4.7 stars)\n- Didn't click \"Add to Cart\" yet\n\n**Suggested Response:**\n\"I noticed you were looking at the PowerBook Pro - great choice for video editing! It's actually the best value when you factor in the included software. Want me to break down how it compares?\"\n\nSource: [Product Catalog + Requirement Matching]\nAgents: ProductMatchingAgent, CustomerContextAgent\n\nGenerate comparison guide?",
+      "wait_timeout_seconds": 15,
+      "description": "Personalized product recommendations"
+    },
+    {
+      "step_number": 3,
+      "user_message": "Yes, create a comparison I can share in the chat",
+      "agent_response": "Comparison table ready to share. Optimized for Alex's specific priorities.\n\n**Chat-Ready Comparison:**\n\n\"Here's how the top options compare for your needs:\n\n| Feature | PowerBook Pro | TechPro X15 | CreatorBook |\n|---------|--------------|-------------|-------------|\n| Price | $1,349 | $1,199 | $1,279 |\n| Video editing | Excellent | Good | Very good |\n| Battery life | 12 hours | 8 hours | 10 hours |\n| Display quality | 4K OLED | FHD IPS | 2.5K IPS |\n| RAM | 16GB | 16GB | 16GB |\n| Future-proof | 5+ years | 3-4 years | 4+ years |\"\n\n**Personalized Insights to Add:**\n\n| Their Priority | Winner | Why |\n|----------------|--------|-----|\n| Video editing | PowerBook | Dedicated GPU + color accuracy |\n| Won't slow down | PowerBook | Best long-term performance |\n| Display | PowerBook | 4K OLED is best in class |\n| Value | TechPro | Lowest upfront cost |\n\n**Suggested Follow-Up:**\n\"For video editing, the PowerBook's dedicated graphics card will save you hours on render times. The TechPro would work, but you might notice lag on longer projects.\"\n\nSource: [Product Data + Expert Reviews + Customer Reviews]\nAgents: ComparisonGuideAgent, ProductMatchingAgent\n\nPrepare objection handling?",
+      "wait_timeout_seconds": 15,
+      "description": "Product comparison for chat"
+    },
+    {
+      "step_number": 4,
+      "user_message": "Yes, they just said the PowerBook is more than they wanted to spend",
+      "agent_response": "Budget objection detected. Here are response strategies for Alex's concern.\n\n**Objection Analysis:**\n- Type: Price/budget concern\n- Real issue: Needs justification for extra $149\n- Opportunity: Value demonstration\n\n**Recommended Responses:**\n\n**Response 1 - Value Reframe:**\n\"I totally understand! Here's the thing - the PowerBook includes $200 worth of creative software that you'd need anyway for video editing. So you're actually paying $1,149 for the laptop itself, which is under your budget.\"\n\n**Response 2 - Cost Per Use:**\n\"If you keep it for 5 years (and it's built to last that long), that's less than $23/month. For a tool you'll use daily for work, that's incredible value.\"\n\n**Response 3 - Alternative Offer:**\n\n| Option | Details |\n|--------|--------|\n| Payment plan | $56/month for 24 months, 0% interest |\n| Student/educator | Extra 10% off if applicable |\n| Trade-in | Up to $300 for old device |\n| Bundle deal | Free case + mouse ($89 value) |\n\n**If Still Hesitant:**\n- Offer TechPro X15 as solid alternative\n- Emphasize 30-day return policy\n- \"Try it for video editing - return if it's not worth it\"\n\nSource: [Objection Playbook + Promotions]\nAgents: ObjectionHandlerAgent, ConversionOptimizerAgent\n\nGet conversion tactics?",
+      "wait_timeout_seconds": 15,
+      "description": "Objection handling strategies"
+    },
+    {
+      "step_number": 5,
+      "user_message": "They're interested in the payment plan - help me close this sale",
+      "agent_response": "Great buying signal! Here's the conversion package to close the sale.\n\n**Conversion Tactics for Alex:**\n\n**Immediate Offer to Present:**\n\n| Element | Details |\n|---------|--------|\n| Product | PowerBook Pro 15 |\n| Price | $1,349 |\n| Payment plan | $56/month x 24 (0% APR) |\n| Free bonus | Laptop sleeve + wireless mouse |\n| Shipping | Free 2-day |\n\n**Urgency Elements (Use 1-2):**\n- \"The 0% financing is a limited promotion\"\n- \"Free accessories bundle ends this week\"\n- \"2 left in stock at this price\"\n\n**Closing Script:**\n\"Perfect! With the payment plan, it's just $56/month with 0% interest. I can also add a free laptop sleeve and wireless mouse - that's $89 in extras. Want me to set that up for you right now? I can have it delivered in 2 days.\"\n\n**If They Say Yes:**\n1. Send secure checkout link in chat\n2. Stay on chat during checkout\n3. Confirm order completion\n4. Send confirmation + tracking\n\n**If They Need Time:**\n- Save cart to their account\n- Send email summary with direct link\n- Set 24-hour follow-up reminder\n\nSource: [Conversion Optimization + Promotions]\nAgents: ConversionOptimizerAgent, ObjectionHandlerAgent\n\nThey added to cart! Wrap up the sale?",
+      "wait_timeout_seconds": 15,
+      "description": "Conversion optimization and closing"
+    },
+    {
+      "step_number": 6,
+      "user_message": "Yes, they completed the purchase! Summarize this chat session",
+      "agent_response": "Congratulations on the sale! Here's the complete chat session summary.\n\n**Chat Session Summary:**\n\n| Outcome | Details |\n|---------|--------|\n| Result | Sale completed |\n| Product | PowerBook Pro 15 |\n| Order value | $1,349 |\n| Payment | $56/month x 24 |\n| Bonuses included | Sleeve + mouse ($89) |\n\n**Conversion Path:**\n\n| Stage | Tactic | Result |\n|-------|--------|--------|\n| Discovery | Need analysis | Requirements captured |\n| Consideration | Comparison table | PowerBook selected |\n| Objection | Value reframe | Budget overcome |\n| Decision | Payment plan offer | Converted |\n\n**Session Metrics:**\n\n| Metric | Value |\n|--------|-------|\n| Chat duration | 14 minutes |\n| Messages exchanged | 18 |\n| Time to conversion | Single session |\n| Upsell from viewed | +$250 (vs TechPro) |\n\n**CRM Updated:**\n- Order logged to Alex's profile\n- Preference noted: Payment plans\n- Follow-up: Satisfaction check (Day 7)\n- Opportunity: Accessories in 30 days\n\n**Next Best Actions:**\n- Send personalized thank you email\n- Queue accessory recommendations (Day 30)\n- Request review (Day 14)\n\nSource: [All Chat Systems]\nAgents: ChatSummaryAgent (orchestrating all agents)\n\nYour AI-assisted chat converted a browsing customer to a $1,349 sale in 14 minutes with personalized recommendations and strategic objection handling.",
+      "wait_timeout_seconds": 20,
+      "description": "Complete session summary"
+    }
+  ],
+  "design_principles": {
+    "max_response_length": "150-250 words",
+    "max_lines": "25-30 lines",
+    "max_table_rows": "4-5 rows",
+    "max_bullets": "4-6 bullets",
+    "sections": "2-3 maximum",
+    "visual_elements": "1 status indicator OR 1 table per response",
+    "source_attribution": "Compact format at end",
+    "evergreen_language": "Relative timeframes only",
+    "call_to_action": "Clear next question to continue"
+  },
+  "business_value": {
+    "problem": "3,000 daily chat conversations with inconsistent conversion, missed upsell opportunities, agents lacking product knowledge",
+    "solution": "AI-powered sales chat assistant with intent analysis, personalized recommendations, and real-time conversion optimization",
+    "roi": "$1,349 sale from browser, single-session conversion, +$250 upsell from originally viewed product",
+    "performance": "14-minute conversion, instant product matching, automated objection handling, seamless CRM integration"
+  }
+}

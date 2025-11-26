@@ -1,0 +1,143 @@
+{
+  "demo_name": "Customer_Loyalty_Rewards_1Min_Demo",
+  "description": "1-minute demo: AI-powered loyalty program optimization with personalized rewards, engagement scoring, and churn prevention",
+  "version": "2.0.0",
+  "trigger_phrases": [
+    "Help me identify loyalty members who are at risk of churning and create personalized win-back offers.",
+    "optimize loyalty rewards",
+    "at-risk loyalty members"
+  ],
+  "metadata": {
+    "category": "loyalty_management",
+    "industry": "b2c_retail",
+    "max_response_length": "250_words",
+    "total_steps": 6,
+    "estimated_duration_seconds": 60,
+    "target_audience": "loyalty_program_managers"
+  },
+  "persona": {
+    "name": "Rachel Kim",
+    "title": "Loyalty Program Director",
+    "company": "Urban Style Boutique",
+    "context": "Managing 450K member loyalty program, concerned about declining engagement and point expiration impact"
+  },
+  "agents_utilized": [
+    {
+      "agent_name": "LoyaltyAnalyticsAgent",
+      "description": "Analyzes loyalty program health and member engagement patterns",
+      "inputs": ["program_id", "date_range"],
+      "outputs": ["program_health_score", "engagement_metrics", "point_liability", "tier_distribution"],
+      "data_sources": ["Loyalty Platform", "CDP", "Transaction System"],
+      "used_in_steps": [1]
+    },
+    {
+      "agent_name": "ChurnPredictionAgent",
+      "description": "Predicts member churn risk using behavioral signals",
+      "inputs": ["member_data", "activity_history"],
+      "outputs": ["churn_scores", "risk_segments", "warning_signals"],
+      "data_sources": ["Behavioral Analytics", "Purchase History", "Engagement Data"],
+      "used_in_steps": [1, 2]
+    },
+    {
+      "agent_name": "MemberProfileAgent",
+      "description": "Creates detailed profiles of at-risk members with preferences",
+      "inputs": ["member_ids"],
+      "outputs": ["member_profiles", "preferences", "purchase_patterns", "engagement_history"],
+      "data_sources": ["CDP", "Preference Center", "Interaction History"],
+      "used_in_steps": [2]
+    },
+    {
+      "agent_name": "PersonalizedRewardAgent",
+      "description": "Generates individualized reward offers based on member value and preferences",
+      "inputs": ["member_profiles", "reward_catalog", "budget_constraints"],
+      "outputs": ["personalized_rewards", "offer_recommendations", "redemption_predictions"],
+      "data_sources": ["Reward Catalog", "Personalization Engine", "Margin Rules"],
+      "used_in_steps": [3]
+    },
+    {
+      "agent_name": "CampaignDeploymentAgent",
+      "description": "Deploys targeted win-back campaigns across channels",
+      "inputs": ["offers", "member_segments", "channel_preferences"],
+      "outputs": ["campaign_deployment", "send_schedule", "channel_mix"],
+      "data_sources": ["Marketing Automation", "Email/SMS Platform"],
+      "used_in_steps": [3, 4]
+    },
+    {
+      "agent_name": "ProgramOptimizationAgent",
+      "description": "Identifies structural improvements to loyalty program",
+      "inputs": ["program_data", "industry_benchmarks"],
+      "outputs": ["optimization_recommendations", "roi_projections", "implementation_roadmap"],
+      "data_sources": ["Program Analytics", "Industry Best Practices"],
+      "used_in_steps": [5]
+    },
+    {
+      "agent_name": "LoyaltySummaryAgent",
+      "description": "Generates comprehensive loyalty program reports",
+      "inputs": ["all_program_data"],
+      "outputs": ["executive_summary", "financial_impact", "action_plan"],
+      "data_sources": ["All Loyalty Systems"],
+      "used_in_steps": [6]
+    }
+  ],
+  "conversation_flow": [
+    {
+      "step_number": 1,
+      "user_message": "Help me identify loyalty members who are at risk of churning and create personalized win-back offers.",
+      "agent_response": "Analyzed 450K members - 34,000 at risk with $2.1M in unredeemed points.\n\n| Segment | Members | Churn Risk |\n|---------|---------|------------|\n| Engaged | 124K | 5% |\n| Active | 198K | 12% |\n| At-risk | 34K | 68% |\n| Dormant | 94K | 89% |\n\n**At-Risk Details:** 60+ days no purchase, 108M points ($2.1M), $840K expiring in 30 days\n\n**Patterns:** High balances + no redemption, sudden disengagement, browse-no-buy\n\nSee top individual opportunities?",
+      "wait_timeout_seconds": 15,
+      "description": "At-risk member identification"
+    },
+    {
+      "step_number": 2,
+      "user_message": "Yes, show me the top at-risk members and their profiles",
+      "agent_response": "Top at-risk members ($48K annual value):\n\n| Member | Points | Last Purchase | Risk |\n|--------|--------|---------------|------|\n| Linda M. | 12,400 | 72 days | 94% |\n| Kevin R. | 8,900 | 65 days | 88% |\n| Sarah T. | 7,200 | 81 days | 86% |\n\n**Linda M. Profile:** Gold status, designer accessories, 8K points expiring in 21 days, waits for sales\n\n**Trigger Found:** Her favorite brand just went on sale - she doesn't know yet\n\nCreate personalized win-back offers?",
+      "wait_timeout_seconds": 15,
+      "description": "Individual at-risk member profiles"
+    },
+    {
+      "step_number": 3,
+      "user_message": "Yes, create personalized win-back offers for each segment",
+      "agent_response": "Personalized win-back campaigns created based on individual preferences and triggers.\n\n**Linda M. - Personalized Offer:**\n\n| Element | Personalization |\n|---------|----------------|\n| Message | \"Linda, your favorite Vera Bradley bags are 40% off\" |\n| Incentive | Double points on next purchase |\n| Urgency | \"8,000 points expire in 21 days\" |\n| Channel | Email + SMS (her preference) |\n\n**Segment-Level Campaigns:**\n\n**High-Value At-Risk (8,400 members):**\n- Offer: Exclusive early access + bonus points\n- Incentive: 3X points for 14 days\n- Message: \"We miss you - here's VIP early access\"\n\n**Point Expiry Warning (12,000 members):**\n- Offer: \"Use points before they expire\" + bonus\n- Incentive: 25% point bonus if redeemed this week\n- Message: \"Don't lose $X in rewards\"\n\n**Lapsed Browsers (13,600 members):**\n- Offer: Items they viewed + discount\n- Incentive: 20% off + free shipping\n- Message: \"Still thinking about [item]?\"\n\nSource: [Personalization Engine + Campaign Manager]\nAgents: PersonalizedRewardAgent, CampaignDeploymentAgent\n\nLaunch these campaigns?",
+      "wait_timeout_seconds": 15,
+      "description": "Personalized win-back offers"
+    },
+    {
+      "step_number": 4,
+      "user_message": "Yes, launch the campaigns and show me expected results",
+      "agent_response": "Campaigns launched across all channels. Here's the expected impact model.\n\n**Campaign Deployment:**\n\n| Campaign | Members | Channel | Status |\n|----------|---------|---------|--------|\n| High-value win-back | 8,400 | Email + SMS | Sent |\n| Point expiry alert | 12,000 | Email + Push | Sent |\n| Lapsed browser | 13,600 | Email + Retargeting | Active |\n\n**Expected Results (14-Day Window):**\n\n| Metric | Projection | Revenue Impact |\n|--------|------------|---------------|\n| Re-engagement rate | 24% (8,160 members) | - |\n| Purchase conversion | 18% (6,120 orders) | $489,600 |\n| Points redeemed | 32M points | $640K liability reduced |\n| Churn prevented | 12,000 members | $1.4M LTV protected |\n\n**Benchmark Performance:**\n- Industry avg win-back: 12%\n- Your historical: 18%\n- Target with personalization: 24%\n\n**ROI Projection:**\n- Campaign cost: $8,400\n- Revenue generated: $489,600\n- ROI: 58:1\n\nSource: [Campaign Analytics + Predictive Models]\nAgents: CampaignDeploymentAgent\n\nWant program optimization recommendations?",
+      "wait_timeout_seconds": 15,
+      "description": "Campaign launch and projections"
+    },
+    {
+      "step_number": 5,
+      "user_message": "Yes, how can we improve the overall loyalty program?",
+      "agent_response": "Program optimization analysis reveals 4 high-impact improvements.\n\n**Optimization Opportunities:**\n\n| Improvement | Impact | Effort | Priority |\n|-------------|--------|--------|----------|\n| Dynamic point expiry | +$340K/year | Medium | High |\n| Tier advancement alerts | +18% engagement | Low | High |\n| Personalized rewards | +24% redemption | Medium | High |\n| Partner rewards | +12% new members | High | Medium |\n\n**#1 Dynamic Point Expiry:**\n- Current: Fixed 12-month expiry\n- Proposed: Rolling expiry with activity extension\n- Benefit: Reduces \"use it or lose it\" frustration\n- Projected: 40% reduction in dormancy\n\n**#2 Tier Advancement Alerts:**\n- \"You're 200 points from Gold status!\"\n- Drives incremental purchases at tier boundaries\n- Projected: 18% increase in near-tier purchases\n\n**#3 Personalized Reward Catalog:**\n- Show rewards based on purchase history\n- Linda sees handbag discounts, Kevin sees tech\n- Projected: 24% increase in redemption rate\n\n**Quick Win:** Implement tier alerts this week - low effort, high impact.\n\nSource: [Program Analytics + Best Practices]\nAgents: ProgramOptimizationAgent\n\nGenerate complete summary?",
+      "wait_timeout_seconds": 15,
+      "description": "Program optimization recommendations"
+    },
+    {
+      "step_number": 6,
+      "user_message": "Yes, summarize everything we accomplished",
+      "agent_response": "Loyalty program optimization complete. Here's your action plan and expected impact.\n\n**Session Summary:**\n\n| Analysis | Result |\n|----------|--------|\n| Members analyzed | 450,000 |\n| At-risk identified | 34,000 (68% churn risk) |\n| Points at risk | $2.1M (108M points) |\n| Campaigns launched | 3 personalized segments |\n| Members targeted | 34,000 |\n\n**Campaigns Active:**\n- High-value win-back: 8,400 members\n- Point expiry alerts: 12,000 members  \n- Lapsed browser recovery: 13,600 members\n\n**Expected 14-Day Results:**\n\n| Outcome | Projection |\n|---------|------------|\n| Re-engagement rate | 24% (vs 12% industry) |\n| Revenue generated | $489,600 |\n| Points liability reduced | $640,000 |\n| LTV protected | $1.4M |\n| Campaign ROI | 58:1 |\n\n**Program Improvements Identified:**\n- Dynamic point expiry (+$340K/year)\n- Tier advancement alerts (+18% engagement)\n- Personalized rewards (+24% redemption)\n\n**Next Steps:**\n- Monitor campaign performance daily\n- Implement tier alerts this week\n- Plan personalized rewards pilot\n\nSource: [All Loyalty Systems]\nAgents: LoyaltySummaryAgent (orchestrating all agents)\n\nYour loyalty program intervention targets $2.1M in at-risk value with personalized win-back campaigns projected to generate $489K and protect $1.4M in customer lifetime value.",
+      "wait_timeout_seconds": 20,
+      "description": "Complete session summary"
+    }
+  ],
+  "design_principles": {
+    "max_response_length": "150-250 words",
+    "max_lines": "25-30 lines",
+    "max_table_rows": "4-5 rows",
+    "max_bullets": "4-6 bullets",
+    "sections": "2-3 maximum",
+    "visual_elements": "1 status indicator OR 1 table per response",
+    "source_attribution": "Compact format at end",
+    "evergreen_language": "Relative timeframes only",
+    "call_to_action": "Clear next question to continue"
+  },
+  "business_value": {
+    "problem": "34,000 at-risk loyalty members with $2.1M in unredeemed points, declining program engagement",
+    "solution": "AI-powered loyalty optimization with churn prediction, personalized win-back campaigns, and program improvements",
+    "roi": "58:1 campaign ROI, $489K revenue generated, $1.4M LTV protected, 24% re-engagement rate",
+    "performance": "450K members analyzed, 34K at-risk identified, 3 personalized campaigns launched instantly"
+  }
+}

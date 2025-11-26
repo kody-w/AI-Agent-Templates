@@ -1,0 +1,143 @@
+{
+  "demo_name": "Returns_Exchange_1Min_Demo",
+  "description": "1-minute demo: AI-powered returns and exchange management with fraud detection, instant resolution, and customer retention",
+  "version": "2.0.0",
+  "trigger_phrases": [
+    "Process this return request and recommend the best resolution to keep this customer happy.",
+    "handle customer return",
+    "process exchange request"
+  ],
+  "metadata": {
+    "category": "customer_service",
+    "industry": "b2c_retail",
+    "max_response_length": "250_words",
+    "total_steps": 6,
+    "estimated_duration_seconds": 60,
+    "target_audience": "customer_service_teams"
+  },
+  "persona": {
+    "name": "Carlos Rodriguez",
+    "title": "Returns Operations Manager",
+    "company": "MegaMart Retail",
+    "context": "Processing 12,000 returns monthly, balancing customer satisfaction with fraud prevention and cost control"
+  },
+  "agents_utilized": [
+    {
+      "agent_name": "ReturnRequestAgent",
+      "description": "Processes return requests and validates eligibility",
+      "inputs": ["order_id", "return_reason", "item_condition"],
+      "outputs": ["eligibility_status", "policy_check", "return_window_status"],
+      "data_sources": ["Order Management", "Return Policy Engine", "Product Database"],
+      "used_in_steps": [1]
+    },
+    {
+      "agent_name": "CustomerValueAgent",
+      "description": "Assesses customer lifetime value and return history",
+      "inputs": ["customer_id"],
+      "outputs": ["ltv_score", "return_history", "loyalty_status", "satisfaction_risk"],
+      "data_sources": ["CRM", "Transaction History", "Loyalty Program"],
+      "used_in_steps": [1, 2]
+    },
+    {
+      "agent_name": "FraudDetectionAgent",
+      "description": "Analyzes return patterns for potential fraud indicators",
+      "inputs": ["customer_id", "return_request", "historical_patterns"],
+      "outputs": ["fraud_score", "risk_flags", "pattern_analysis", "recommendation"],
+      "data_sources": ["Fraud Database", "Return Pattern Analytics", "Industry Fraud Network"],
+      "used_in_steps": [2]
+    },
+    {
+      "agent_name": "ResolutionRecommendationAgent",
+      "description": "Recommends optimal resolution based on multiple factors",
+      "inputs": ["return_details", "customer_value", "fraud_score", "inventory_status"],
+      "outputs": ["recommended_resolution", "alternative_options", "customer_offer"],
+      "data_sources": ["Resolution Rules", "Inventory", "Promotion Engine"],
+      "used_in_steps": [3]
+    },
+    {
+      "agent_name": "InventoryRoutingAgent",
+      "description": "Determines optimal disposition for returned items",
+      "inputs": ["item_details", "condition", "location"],
+      "outputs": ["disposition_recommendation", "refurbishment_need", "restocking_location"],
+      "data_sources": ["Inventory System", "Warehouse Network", "Refurbishment Center"],
+      "used_in_steps": [4]
+    },
+    {
+      "agent_name": "RetentionOfferAgent",
+      "description": "Creates personalized retention offers for at-risk customers",
+      "inputs": ["customer_profile", "return_context", "available_offers"],
+      "outputs": ["retention_offer", "alternative_products", "loyalty_incentive"],
+      "data_sources": ["Offer Engine", "Product Recommendations", "Loyalty System"],
+      "used_in_steps": [4, 5]
+    },
+    {
+      "agent_name": "ReturnsSummaryAgent",
+      "description": "Generates return processing summary and analytics",
+      "inputs": ["return_data", "resolution_details"],
+      "outputs": ["processing_summary", "financial_impact", "customer_status"],
+      "data_sources": ["Returns System", "Financial Analytics"],
+      "used_in_steps": [6]
+    }
+  ],
+  "conversation_flow": [
+    {
+      "step_number": 1,
+      "user_message": "Process this return request and recommend the best resolution to keep this customer happy.",
+      "agent_response": "I've analyzed the return request and customer profile. High-value customer with straightforward return.\n\n**Return Request Details:**\n\n| Field | Information |\n|-------|-------------|\n| Order # | ORD-892341 |\n| Item | Premium Wireless Headphones |\n| Purchase price | $249.99 |\n| Purchase date | 18 days ago |\n| Return window | 30 days (eligible) |\n| Reason stated | \"Sound quality not as expected\" |\n\n**Customer Profile - Michael Chen:**\n\n| Metric | Value | Status |\n|--------|-------|--------|\n| Customer since | 2019 | 5 years |\n| Lifetime value | $8,400 | High value |\n| Loyalty tier | Gold | Top 15% |\n| Return rate | 4% | Below average |\n| Last return | 14 months ago | Infrequent |\n\n**Policy Check:**\n- Within 30-day window\n- Original packaging: Yes\n- Receipt available: Yes\n- Item condition: Like new\n\n**Initial Assessment:** Low-risk return from high-value customer. Prioritize retention.\n\nSource: [Order System + CRM + Loyalty]\nAgents: ReturnRequestAgent, CustomerValueAgent\n\nRun fraud analysis and see resolution options?",
+      "wait_timeout_seconds": 15,
+      "description": "Return request and customer analysis"
+    },
+    {
+      "step_number": 2,
+      "user_message": "Yes, check for fraud risk and show me his return history",
+      "agent_response": "Fraud analysis complete. Very low risk - legitimate return from loyal customer.\n\n**Fraud Risk Assessment:**\n\n| Indicator | Finding | Score |\n|-----------|---------|-------|\n| Return frequency | 4% (below avg 12%) | Low |\n| Pattern matching | No fraud patterns | Low |\n| Value vs history | Consistent | Low |\n| Reason validity | Common complaint | Low |\n| **Overall risk** | | **Very Low (8/100)** |\n\n**Return History (5 Years):**\n\n| Date | Item | Value | Reason | Resolution |\n|------|------|-------|--------|------------|\n| 14 months ago | Bluetooth speaker | $89 | Defective | Exchange |\n| 2 years ago | Smart watch | $199 | Wrong size | Exchange |\n| 3 years ago | Tablet case | $45 | Changed mind | Refund |\n\n**Pattern Analysis:**\n- Only 3 returns in 5 years\n- Prefers exchanges over refunds\n- Never abused return policy\n- All returns within policy window\n- Zero fraud indicators\n\n**Recommendation:** Fast-track approval, no additional verification needed.\n\nSource: [Fraud Analytics + Return History]\nAgents: FraudDetectionAgent, CustomerValueAgent\n\nSee recommended resolution options?",
+      "wait_timeout_seconds": 15,
+      "description": "Fraud analysis and return history"
+    },
+    {
+      "step_number": 3,
+      "user_message": "Yes, what's the best resolution to offer him?",
+      "agent_response": "Resolution options analyzed. Exchange with upgrade incentive offers best retention outcome.\n\n**Recommended Resolution:**\n\n**Option A: Exchange + Upgrade (Recommended)**\n\n| Element | Details |\n|---------|--------|\n| Action | Exchange for premium model |\n| Product | Audiophile Pro Headphones |\n| Regular price | $349.99 |\n| His price | $299.99 (15% loyalty discount) |\n| Upgrade cost | +$50 |\n| Why recommend | Better sound quality, addresses complaint |\n\n**Option B: Full Refund**\n\n| Element | Details |\n|---------|--------|\n| Amount | $249.99 |\n| Method | Original payment (2-3 days) |\n| Risk | May lose customer to competitor |\n\n**Option C: Store Credit + Bonus**\n\n| Element | Details |\n|---------|--------|\n| Credit amount | $249.99 |\n| Bonus | +10% ($25 extra) |\n| Total | $274.99 store credit |\n| Validity | 12 months |\n\n**AI Recommendation:** Option A - Exchange with upgrade\n- Addresses his specific complaint (sound quality)\n- Small upgrade cost shows value\n- Keeps sale, builds loyalty\n- 78% of similar customers accept this offer\n\nSource: [Resolution Engine + Recommendation AI]\nAgents: ResolutionRecommendationAgent, CustomerValueAgent\n\nProcess the recommended resolution?",
+      "wait_timeout_seconds": 15,
+      "description": "Resolution options with recommendation"
+    },
+    {
+      "step_number": 4,
+      "user_message": "Yes, process the exchange and show me what to do with the returned item",
+      "agent_response": "Exchange processed. Here's the item disposition and retention offer.\n\n**Exchange Completed:**\n\n| Action | Status |\n|--------|--------|\n| Return processed | Complete |\n| New order created | ORD-892567 |\n| Upgrade price | $50 charged |\n| Shipping | Free 2-day (Gold member) |\n| Tracking | Sent to customer |\n\n**Returned Item Disposition:**\n\n| Decision | Recommendation |\n|----------|----------------|\n| Condition | Like new, fully functional |\n| Restock | Yes, as open-box |\n| Pricing | $199.99 (20% markdown) |\n| Location | Route to outlet store |\n| Expected sale | 7-10 days |\n\n**Revenue Recovery:**\n- Original sale: $249.99\n- Open-box resale: $199.99 (est)\n- Recovery rate: 80%\n\n**Retention Offer Generated:**\n\n| Offer | Details |\n|-------|--------|\n| Thank you credit | $20 off next purchase |\n| Expiry | 30 days |\n| Trigger | Auto-email tomorrow |\n| Expected response | 34% redemption rate |\n\n**Quality Flag:** Sound quality complaint logged for product team review.\n\nSource: [Inventory Routing + Offer Engine]\nAgents: InventoryRoutingAgent, RetentionOfferAgent\n\nSend personalized follow-up?",
+      "wait_timeout_seconds": 15,
+      "description": "Exchange processing and item disposition"
+    },
+    {
+      "step_number": 5,
+      "user_message": "Yes, create the follow-up message and any loyalty gestures",
+      "agent_response": "Personalized follow-up created with loyalty gestures for Michael.\n\n**Follow-Up Message (Auto-Scheduled):**\n\n**Subject:** Your Audiophile Pro Headphones Are On The Way\n\n\"Hi Michael,\n\nThank you for being a Gold member for 5 years. Your Audiophile Pro Headphones are shipping today with free 2-day delivery.\n\nWe upgraded you to our premium model because you deserve the best sound quality. We think you'll love the difference.\n\nAs a thank you: Here's $20 off your next purchase.\n\nQuestions? Your dedicated Gold member line: 1-800-XXX-XXXX\n\n- The MegaMart Team\"\n\n**Loyalty Gestures Applied:**\n\n| Gesture | Value | Status |\n|---------|-------|--------|\n| Free expedited shipping | $12.99 | Applied |\n| $20 thank you credit | $20 | Queued |\n| Extended warranty | $29.99 | Auto-enrolled |\n| Priority support access | Ongoing | Active |\n\n**Post-Purchase Sequence:**\n\n| Day | Action |\n|-----|--------|\n| +2 | Delivery confirmation |\n| +5 | Satisfaction check-in |\n| +14 | Review request |\n| +30 | Related accessories offer |\n\nSource: [CRM + Loyalty System + Marketing Automation]\nAgents: RetentionOfferAgent, CustomerValueAgent\n\nGenerate session summary?",
+      "wait_timeout_seconds": 15,
+      "description": "Personalized follow-up and loyalty gestures"
+    },
+    {
+      "step_number": 6,
+      "user_message": "Yes, summarize everything we did",
+      "agent_response": "Return and exchange session complete. Here's the full impact summary.\n\n**Session Summary:**\n\n| Accomplishment | Result |\n|----------------|--------|\n| Return processed | Within policy, approved |\n| Fraud check | Very low risk (8/100) |\n| Resolution | Exchange + upgrade |\n| Customer retained | Yes, with upgrade |\n| Item disposition | Open-box resale (80% recovery) |\n\n**Financial Impact:**\n\n| Metric | Amount |\n|--------|--------|\n| Original sale | $249.99 |\n| Upgrade revenue | +$50.00 |\n| New sale total | $299.99 |\n| Open-box recovery | $199.99 (projected) |\n| Net revenue | $449.98 (vs $0 refund) |\n\n**Customer Outcome:**\n\n| Before | After |\n|--------|-------|\n| Dissatisfied | Upgraded product |\n| At-risk | Retained with gestures |\n| $8,400 LTV | Protected + growing |\n\n**Retention Value:**\n- Customer saved from competitor\n- 5-year relationship preserved\n- $20 credit drives next purchase\n- Gold status reinforced\n\n**Operational Efficiency:**\n- Processing time: 4 minutes\n- No manager approval needed\n- Automated follow-ups scheduled\n- Inventory automatically routed\n\nSource: [All Returns Systems]\nAgents: ReturnsSummaryAgent (orchestrating all agents)\n\nYour AI-powered returns process converted a potential $249 loss into $449 total revenue while retaining a $8,400 LTV customer.",
+      "wait_timeout_seconds": 20,
+      "description": "Complete session summary"
+    }
+  ],
+  "design_principles": {
+    "max_response_length": "150-250 words",
+    "max_lines": "25-30 lines",
+    "max_table_rows": "4-5 rows",
+    "max_bullets": "4-6 bullets",
+    "sections": "2-3 maximum",
+    "visual_elements": "1 status indicator OR 1 table per response",
+    "source_attribution": "Compact format at end",
+    "evergreen_language": "Relative timeframes only",
+    "call_to_action": "Clear next question to continue"
+  },
+  "business_value": {
+    "problem": "12,000 monthly returns with fraud risk, customer retention challenges, inefficient item disposition, manual approval bottlenecks",
+    "solution": "AI-powered returns management with fraud detection, smart resolution recommendations, and automated retention offers",
+    "roi": "80% item recovery rate, customer retention with upgrade path, $449 revenue vs $0 refund outcome",
+    "performance": "4-minute processing, automated fraud scoring, smart disposition routing, personalized retention offers"
+  }
+}

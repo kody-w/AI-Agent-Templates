@@ -1,0 +1,143 @@
+{
+  "demo_name": "Omnichannel_Engagement_1Min_Demo",
+  "description": "1-minute demo: AI-powered omnichannel customer engagement with unified conversation history, channel orchestration, and seamless handoffs",
+  "version": "2.0.0",
+  "trigger_phrases": [
+    "Show me the customer's journey across all channels and help me pick up where they left off.",
+    "omnichannel customer view",
+    "unified conversation history"
+  ],
+  "metadata": {
+    "category": "customer_engagement",
+    "industry": "b2c_retail",
+    "max_response_length": "250_words",
+    "total_steps": 6,
+    "estimated_duration_seconds": 60,
+    "target_audience": "customer_experience_teams"
+  },
+  "persona": {
+    "name": "David Park",
+    "title": "Omnichannel Experience Director",
+    "company": "TrendSetters Fashion",
+    "context": "Managing customer engagement across 8 channels, struggling with fragmented conversations and customer repetition"
+  },
+  "agents_utilized": [
+    {
+      "agent_name": "ChannelUnificationAgent",
+      "description": "Aggregates customer interactions from all communication channels",
+      "inputs": ["customer_id", "date_range"],
+      "outputs": ["unified_timeline", "channel_breakdown", "conversation_threads"],
+      "data_sources": ["Email", "Chat", "SMS", "Social", "Phone", "In-Store", "Mobile App", "Website"],
+      "used_in_steps": [1]
+    },
+    {
+      "agent_name": "JourneyMappingAgent",
+      "description": "Visualizes customer journey with touchpoint analysis",
+      "inputs": ["interaction_history", "purchase_data"],
+      "outputs": ["journey_map", "friction_points", "conversion_moments", "drop_off_analysis"],
+      "data_sources": ["CDP", "Analytics Platform", "Transaction System"],
+      "used_in_steps": [1, 2]
+    },
+    {
+      "agent_name": "ConversationContextAgent",
+      "description": "Maintains conversation state across channel switches",
+      "inputs": ["customer_id", "current_channel"],
+      "outputs": ["conversation_summary", "pending_issues", "last_context", "handoff_notes"],
+      "data_sources": ["Conversation History DB", "CRM Notes", "Support Tickets"],
+      "used_in_steps": [2, 3]
+    },
+    {
+      "agent_name": "ChannelOrchestrationAgent",
+      "description": "Recommends optimal channel for next engagement",
+      "inputs": ["customer_preferences", "message_type", "urgency"],
+      "outputs": ["channel_recommendation", "timing_optimization", "personalization_elements"],
+      "data_sources": ["Preference Engine", "Engagement Analytics", "Channel Performance Data"],
+      "used_in_steps": [3, 4]
+    },
+    {
+      "agent_name": "ProactiveEngagementAgent",
+      "description": "Identifies opportunities for proactive outreach",
+      "inputs": ["customer_profile", "journey_stage", "behavior_signals"],
+      "outputs": ["engagement_opportunities", "trigger_events", "recommended_actions"],
+      "data_sources": ["Behavioral Analytics", "Predictive Models", "Marketing Calendar"],
+      "used_in_steps": [4]
+    },
+    {
+      "agent_name": "HandoffCoordinationAgent",
+      "description": "Manages seamless transitions between channels and agents",
+      "inputs": ["current_context", "destination_channel", "agent_availability"],
+      "outputs": ["handoff_package", "context_transfer", "warm_introduction"],
+      "data_sources": ["Agent Routing", "Workforce Management", "Context Store"],
+      "used_in_steps": [5]
+    },
+    {
+      "agent_name": "OmnichannelAnalyticsAgent",
+      "description": "Measures cross-channel engagement effectiveness",
+      "inputs": ["customer_interactions", "conversion_data"],
+      "outputs": ["channel_attribution", "journey_analytics", "improvement_opportunities"],
+      "data_sources": ["Analytics Platform", "Attribution Models", "Revenue Data"],
+      "used_in_steps": [6]
+    }
+  ],
+  "conversation_flow": [
+    {
+      "step_number": 1,
+      "user_message": "Show me the customer's journey across all channels and help me pick up where they left off.",
+      "agent_response": "I've unified Sarah Mitchell's interactions across 8 channels. She's been trying to complete a purchase for 3 days.\n\n**Cross-Channel Journey Summary:**\n\n| Day | Channel | Action | Outcome |\n|-----|---------|--------|--------|\n| 3 days ago | Website | Browsed winter coats | Added to cart |\n| 3 days ago | Mobile app | Started checkout | Abandoned (payment issue) |\n| 2 days ago | Chat | Asked about sizing | Partial answer, disconnected |\n| Yesterday | Email | Received cart reminder | Opened, no action |\n| Today | Phone | Called support | Currently holding |\n\n**Channel Activity (30 Days):**\n\n| Channel | Interactions | Preference Score |\n|---------|--------------|------------------|\n| Mobile app | 12 | Primary |\n| Website | 8 | Secondary |\n| Email | 6 | Opens but low clicks |\n| Chat | 3 | Frustrated experience |\n\n**Current Status:**\n- Cart value: $289\n- Cart age: 3 days\n- Issue: Payment declined, sizing question unanswered\n- Mood: Likely frustrated (3 attempts)\n\nSource: [All Channels + CDP + Transaction System]\nAgents: ChannelUnificationAgent, JourneyMappingAgent\n\nSee the full conversation context?",
+      "wait_timeout_seconds": 15,
+      "description": "Unified cross-channel journey view"
+    },
+    {
+      "step_number": 2,
+      "user_message": "Yes, show me what she's been asking about and where we dropped the ball",
+      "agent_response": "Full conversation context retrieved. Two unresolved issues identified from chat disconnect.\n\n**Conversation Thread Summary:**\n\n**Chat Session (2 Days Ago):**\n- Question 1: \"Does the Alpine Parka run true to size?\"\n- Agent response: \"Let me check...\" (connection lost)\n- Question 2: (never answered) \"Do you have it in navy?\"\n- Duration: 4 minutes, then timeout\n\n**Unresolved Issues:**\n\n| Issue | Status | Impact |\n|-------|--------|--------|\n| Sizing guidance | Unanswered | Blocking purchase |\n| Color availability | Unanswered | Blocking purchase |\n| Payment decline | Unresolved | Card issue |\n\n**Context for Current Call:**\n- She's calling about the same coat\n- Already spent 18 minutes total trying to buy\n- Likely to mention chat disconnect\n- Payment might still fail (card issue)\n\n**Recommended Opening:**\n\"Hi Sarah, I see you've been trying to order the Alpine Parka. I apologize for the chat disconnect - let me answer your sizing question right now and help you complete this order.\"\n\n**Product Info Ready:**\n- Alpine Parka: Runs one size small\n- Navy: In stock, sizes S-XL\n\nSource: [Chat Logs + Cart Data + Inventory]\nAgents: ConversationContextAgent, JourneyMappingAgent\n\nGet the optimal channel strategy for her?",
+      "wait_timeout_seconds": 15,
+      "description": "Conversation context and gap analysis"
+    },
+    {
+      "step_number": 3,
+      "user_message": "Yes, how should we engage with her going forward?",
+      "agent_response": "Channel preference analysis complete. She prefers mobile but we've been pushing email.\n\n**Sarah's Channel Preferences:**\n\n| Channel | Engagement Rate | Best For |\n|---------|-----------------|----------|\n| Mobile push | 82% open rate | Urgent updates |\n| SMS | 76% response | Order status |\n| Email | 34% open rate | Avoid for urgency |\n| Chat | Frustrated history | Avoid short-term |\n\n**Recommended Channel Strategy:**\n\n**For This Issue (Order Completion):**\n- Primary: Phone (current) → resolve now\n- Follow-up: SMS confirmation\n- Avoid: Email (she ignores cart reminders)\n\n**Future Engagement:**\n\n| Scenario | Channel | Timing |\n|----------|---------|--------|\n| Order updates | SMS | Real-time |\n| Promotions | Mobile push | 10 AM (peak app usage) |\n| Re-engagement | In-app message | When browsing |\n| Service issues | Phone callback | Avoid chat |\n\n**Personalization Signals:**\n- Prefers visual content\n- Responds to urgency (\"limited stock\")\n- Values size/fit guidance\n- Peak engagement: Evening (7-9 PM)\n\nSource: [Engagement Analytics + Preference Engine]\nAgents: ChannelOrchestrationAgent, ConversationContextAgent\n\nShow proactive engagement opportunities?",
+      "wait_timeout_seconds": 15,
+      "description": "Optimal channel strategy"
+    },
+    {
+      "step_number": 4,
+      "user_message": "Yes, what proactive outreach should we do?",
+      "agent_response": "Proactive engagement opportunities identified based on her behavior patterns.\n\n**Immediate Opportunities:**\n\n| Trigger | Action | Channel | Expected Response |\n|---------|--------|---------|------------------|\n| Order complete | Size guide for coat | SMS | High (personalized) |\n| Delivery day | Styling tips | Mobile push | 82% engagement |\n| 7 days post | Review request | In-app | Likely positive |\n\n**Upcoming Triggers:**\n\n| Signal | Opportunity | Timing |\n|--------|-------------|--------|\n| Winter accessories browsed | Bundle offer | 3 days post-purchase |\n| Her birthday | Loyalty bonus | In 6 weeks |\n| Spring preview | Early access | 8 weeks |\n\n**Win-Back if She Doesn't Convert Today:**\n- Hour 1: SMS - \"Your coat is still waiting\"\n- Hour 4: Mobile push - \"Low stock alert\"\n- Day 2: SMS - 10% off code\n- Day 5: Personal call from stylist\n\n**Avoid:**\n- Email-only campaigns (34% open rate)\n- Chat offers (negative association)\n- Generic messaging (she responds to personalization)\n\nSource: [Behavioral Analytics + Predictive Models]\nAgents: ProactiveEngagementAgent, ChannelOrchestrationAgent\n\nPrepare for seamless handoff if needed?",
+      "wait_timeout_seconds": 15,
+      "description": "Proactive engagement opportunities"
+    },
+    {
+      "step_number": 5,
+      "user_message": "Yes, and prepare context if this needs to be handed off",
+      "agent_response": "Handoff package prepared with full context for any channel or team transfer.\n\n**Handoff Package Created:**\n\n| Element | Status |\n|---------|--------|\n| Customer summary | Complete |\n| Issue history | Documented |\n| Resolution progress | Tracked |\n| Preferences loaded | Ready |\n\n**Quick Context (Any Agent):**\n- Customer: Sarah Mitchell (Gold member)\n- Issue: Trying to buy Alpine Parka x 3 days\n- Blockers: Sizing (resolved), payment (in progress)\n- Mood: Previously frustrated, now engaged\n- LTV: $2,400 annual\n\n**If Transfer to:**\n\n| Team | Context Included |\n|------|------------------|\n| Payments | Card decline history, alternative methods |\n| Styling | Size preferences, past purchases |\n| Store pickup | Nearest location, inventory check |\n| Loyalty | Points balance, tier benefits |\n\n**Warm Introduction Script:**\n\"I'm connecting you with [Name] from our [Team]. I've shared your complete history so you won't need to repeat anything. They're ready to help with [specific issue].\"\n\n**Context Auto-Transfers:**\n- CRM note created\n- Cart link preserved\n- Conversation summary attached\n\nSource: [Context Store + Agent Routing]\nAgents: HandoffCoordinationAgent, ConversationContextAgent\n\nSee session impact summary?",
+      "wait_timeout_seconds": 15,
+      "description": "Seamless handoff preparation"
+    },
+    {
+      "step_number": 6,
+      "user_message": "Yes, summarize the omnichannel session",
+      "agent_response": "Omnichannel engagement session complete. Here's the unified view and impact.\n\n**Session Summary:**\n\n| Accomplishment | Result |\n|----------------|--------|\n| Channels unified | 8 touchpoints mapped |\n| Journey visualized | 3-day purchase attempt |\n| Gaps identified | 2 unresolved issues found |\n| Context preserved | Zero customer repetition |\n| Channel strategy | Personalized to preferences |\n\n**Customer Impact:**\n\n| Before Omnichannel | After |\n|--------------------|-------|\n| Repeated story 3x | Context pre-loaded |\n| Wrong channels used | Mobile-first strategy |\n| Disconnected experience | Seamless continuity |\n| 18 min effort wasted | Resolved in one call |\n\n**Engagement Optimization:**\n- Email campaigns → Mobile push (2.4x better)\n- Generic messaging → Personalized timing\n- Reactive support → Proactive triggers set\n\n**Business Impact:**\n\n| Metric | Improvement |\n|--------|-------------|\n| Channel efficiency | +82% right-channel |\n| Customer effort | -67% reduction |\n| Conversion rate | +34% (context-aware) |\n| Repeat contacts | -45% (first contact resolution) |\n\nSource: [All Omnichannel Systems]\nAgents: OmnichannelAnalyticsAgent (orchestrating all agents)\n\nYour omnichannel view unified 8 channels, identified 2 service gaps, and enabled first-contact resolution with personalized channel strategy.",
+      "wait_timeout_seconds": 20,
+      "description": "Complete omnichannel session summary"
+    }
+  ],
+  "design_principles": {
+    "max_response_length": "150-250 words",
+    "max_lines": "25-30 lines",
+    "max_table_rows": "4-5 rows",
+    "max_bullets": "4-6 bullets",
+    "sections": "2-3 maximum",
+    "visual_elements": "1 status indicator OR 1 table per response",
+    "source_attribution": "Compact format at end",
+    "evergreen_language": "Relative timeframes only",
+    "call_to_action": "Clear next question to continue"
+  },
+  "business_value": {
+    "problem": "Fragmented customer conversations across 8 channels, customers repeating themselves, wrong channel selection, missed engagement opportunities",
+    "solution": "AI-powered omnichannel unification with journey mapping, context preservation, and intelligent channel orchestration",
+    "roi": "67% reduction in customer effort, 34% improvement in conversion, 45% fewer repeat contacts",
+    "performance": "8 channels unified in single view, seamless handoffs with full context, personalized channel strategy per customer"
+  }
+}

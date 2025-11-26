@@ -1,0 +1,143 @@
+{
+  "demo_name": "Claims_Processing_1Min_Demo",
+  "description": "1-minute demo: AI-powered claims processing with automated triage, fraud detection, and accelerated adjudication",
+  "version": "2.0.0",
+  "trigger_phrases": [
+    "Process the incoming claims queue and identify which ones need immediate attention vs auto-adjudication.",
+    "triage insurance claims",
+    "accelerate claims processing"
+  ],
+  "metadata": {
+    "category": "claims_management",
+    "industry": "financial_services_insurance",
+    "max_response_length": "250_words",
+    "total_steps": 6,
+    "estimated_duration_seconds": 60,
+    "target_audience": "claims_managers"
+  },
+  "persona": {
+    "name": "Patricia Morrison",
+    "title": "Claims Operations Director",
+    "company": "SecureLife Insurance",
+    "context": "Managing 2,400 daily claims with 12-day average processing time, regulatory pressure to reduce cycle time"
+  },
+  "agents_utilized": [
+    {
+      "agent_name": "ClaimsIntakeAgent",
+      "description": "Ingests and normalizes claims from multiple submission channels",
+      "inputs": ["claims_queue", "submission_channel"],
+      "outputs": ["standardized_claims", "document_extraction", "initial_categorization"],
+      "data_sources": ["Claims Portal", "Email Intake", "Agent Submissions", "OCR Engine"],
+      "used_in_steps": [1]
+    },
+    {
+      "agent_name": "ClaimsTriageAgent",
+      "description": "Categorizes claims by complexity and routes appropriately",
+      "inputs": ["standardized_claims", "routing_rules"],
+      "outputs": ["complexity_scores", "routing_recommendations", "priority_flags"],
+      "data_sources": ["Claims Rules Engine", "Historical Patterns"],
+      "used_in_steps": [1]
+    },
+    {
+      "agent_name": "FraudDetectionAgent",
+      "description": "Analyzes claims for fraud indicators and suspicious patterns",
+      "inputs": ["claim_data", "claimant_history"],
+      "outputs": ["fraud_scores", "red_flags", "investigation_recommendations"],
+      "data_sources": ["Fraud Database", "SIU Records", "Industry Fraud Network"],
+      "used_in_steps": [2]
+    },
+    {
+      "agent_name": "AutoAdjudicationAgent",
+      "description": "Processes straightforward claims automatically within guidelines",
+      "inputs": ["eligible_claims", "policy_rules", "payment_limits"],
+      "outputs": ["adjudication_decisions", "payment_amounts", "denial_reasons"],
+      "data_sources": ["Policy Administration", "Coverage Rules", "Payment System"],
+      "used_in_steps": [3]
+    },
+    {
+      "agent_name": "ComplexClaimsAgent",
+      "description": "Prepares complex claims with analysis for adjuster review",
+      "inputs": ["complex_claims", "policy_details"],
+      "outputs": ["claim_summaries", "coverage_analysis", "recommended_actions", "missing_info"],
+      "data_sources": ["Policy System", "Medical Records", "Repair Estimates"],
+      "used_in_steps": [4]
+    },
+    {
+      "agent_name": "ClaimsMetricsAgent",
+      "description": "Tracks processing metrics and identifies improvement opportunities",
+      "inputs": ["processing_data", "benchmarks"],
+      "outputs": ["cycle_time_analysis", "bottleneck_identification", "optimization_recommendations"],
+      "data_sources": ["Claims Analytics", "Industry Benchmarks"],
+      "used_in_steps": [5]
+    },
+    {
+      "agent_name": "ClaimsSummaryAgent",
+      "description": "Generates operational reports and executive summaries",
+      "inputs": ["all_claims_data"],
+      "outputs": ["daily_summary", "queue_status", "financial_impact"],
+      "data_sources": ["All Claims Systems"],
+      "used_in_steps": [6]
+    }
+  ],
+  "conversation_flow": [
+    {
+      "step_number": 1,
+      "user_message": "Process the incoming claims queue and identify which ones need immediate attention vs auto-adjudication.",
+      "agent_response": "I've analyzed today's 2,847 incoming claims. 68% qualify for auto-adjudication, saving 4,200 adjuster hours.\n\n**Claims Queue Analysis:**\n\n| Category | Claims | % of Total | Recommended Action |\n|----------|--------|------------|-------------------|\n| Auto-adjudicate | 1,936 | 68% | Instant processing |\n| Standard review | 624 | 22% | Adjuster queue |\n| Complex/High-value | 198 | 7% | Senior adjuster |\n| Fraud investigation | 89 | 3% | SIU referral |\n\n**Priority Flags Detected:**\n- 34 claims with regulatory deadlines in 48 hours\n- 18 claims from VIP policyholders\n- 12 claims with litigation potential\n- 8 catastrophe-related claims (expedited handling)\n\n**Auto-Adjudication Eligible:**\n- Simple auto claims under $5,000\n- Routine medical with matching codes\n- Property claims with verified estimates\n- Average processing: 4 minutes vs 3 days\n\nSource: [Claims Intake + Rules Engine + Fraud Detection]\nAgents: ClaimsIntakeAgent, ClaimsTriageAgent\n\nWant to see the fraud detection results?",
+      "wait_timeout_seconds": 15,
+      "description": "Claims triage and categorization"
+    },
+    {
+      "step_number": 2,
+      "user_message": "Yes, show me the fraud detection results and high-risk claims",
+      "agent_response": "Fraud analysis identified 89 suspicious claims worth $2.4M. 12 are high-confidence fraud referrals.\n\n**Fraud Detection Summary:**\n\n| Risk Level | Claims | Total Value | Action |\n|------------|--------|-------------|--------|\n| High (80%+) | 12 | $890K | SIU immediate |\n| Medium (50-79%) | 34 | $1.1M | Enhanced review |\n| Low (25-49%) | 43 | $420K | Flag for adjuster |\n\n**Top High-Risk Claims:**\n\n| Claim # | Type | Value | Fraud Indicators |\n|---------|------|-------|------------------|\n| CLM-78234 | Auto | $47K | Staged accident pattern |\n| CLM-78156 | Medical | $124K | Provider billing anomaly |\n| CLM-78089 | Property | $89K | Recent policy change |\n\n**CLM-78234 Deep Analysis:**\n- Claimant filed 3 claims in 18 months\n- Accident location matches known staging area\n- Body shop on fraud watch list\n- Similar claims from same intersection\n\n**Estimated Fraud Savings:** $890K prevented if high-risk confirmed\n\nSource: [Fraud Database + SIU Records + Pattern Analysis]\nAgents: FraudDetectionAgent\n\nProceed with auto-adjudication for eligible claims?",
+      "wait_timeout_seconds": 15,
+      "description": "Fraud detection and risk analysis"
+    },
+    {
+      "step_number": 3,
+      "user_message": "Yes, auto-adjudicate the eligible claims and show me the results",
+      "agent_response": "Auto-adjudication complete. 1,936 claims processed in 18 minutes with $4.2M in payments approved.\n\n**Auto-Adjudication Results:**\n\n| Outcome | Claims | Total Value | Avg Time |\n|---------|--------|-------------|----------|\n| Approved | 1,724 | $4.2M | 3.8 min |\n| Denied | 142 | $380K | 2.1 min |\n| Needs info | 70 | $290K | 4.2 min |\n\n**Approval Breakdown:**\n- Auto physical damage: 892 claims ($1.8M)\n- Medical routine: 534 claims ($1.6M)\n- Property minor: 298 claims ($800K)\n\n**Denial Reasons:**\n- Coverage exclusion: 68 claims\n- Policy lapsed: 42 claims\n- Duplicate submission: 32 claims\n\n**Efficiency Gains:**\n- Traditional processing: 5,808 hours\n- AI processing: 18 minutes\n- Hours saved: 5,807 (99.7%)\n- Cost savings: $290,350 (at $50/hour)\n\n**Quality Metrics:**\n- Auto-decision accuracy: 99.2%\n- Within payment guidelines: 100%\n- Regulatory compliance: 100%\n\nSource: [Auto-Adjudication Engine + Payment System]\nAgents: AutoAdjudicationAgent\n\nPrepare complex claims for adjuster review?",
+      "wait_timeout_seconds": 15,
+      "description": "Auto-adjudication execution"
+    },
+    {
+      "step_number": 4,
+      "user_message": "Yes, prepare the complex claims with analysis for my adjusters",
+      "agent_response": "Complex claims prepared with AI analysis. Each claim has coverage summary and recommended action.\n\n**Complex Claims Prepared (198 claims):**\n\n| Priority | Claims | Total Value | Assigned To |\n|----------|--------|-------------|-------------|\n| Urgent (48hr) | 34 | $1.2M | Senior team |\n| High value | 52 | $3.8M | Specialists |\n| Standard complex | 112 | $2.4M | General pool |\n\n**Sample Prepared Claim - CLM-78445:**\n\n**Claim Summary:**\n- Type: Homeowner's water damage\n- Claimed: $127,000\n- Policy limit: $500,000\n- Deductible: $2,500\n\n**AI Analysis:**\n- Coverage confirmed for water damage\n- Contractor estimate within 8% of market rate\n- No prior water claims on property\n- Recommendation: Approve $124,500 (estimate minus deductible)\n\n**Missing Information:**\n- Final plumber invoice needed\n- Mold inspection report pending\n\n**Adjuster Workflow:**\n- Claims queued by specialization\n- Pre-populated decision forms\n- One-click approval/denial\n- Auto-generated correspondence\n\nSource: [Policy System + Coverage Analysis]\nAgents: ComplexClaimsAgent\n\nShow processing metrics and optimization opportunities?",
+      "wait_timeout_seconds": 15,
+      "description": "Complex claims preparation"
+    },
+    {
+      "step_number": 5,
+      "user_message": "Yes, show me the metrics and where we can improve further",
+      "agent_response": "Processing metrics show 58% improvement. Additional optimization can reduce cycle time to 4 days.\n\n**Today's Performance:**\n\n| Metric | Before AI | With AI | Improvement |\n|--------|-----------|---------|-------------|\n| Avg cycle time | 12 days | 5.2 days | -57% |\n| Auto-adjudication | 12% | 68% | +467% |\n| Cost per claim | $142 | $48 | -66% |\n| Customer satisfaction | 3.2/5 | 4.4/5 | +38% |\n\n**Optimization Opportunities:**\n\n| Improvement | Impact | Effort |\n|-------------|--------|--------|\n| Expand auto-adjudication rules | +8% auto rate | Medium |\n| Mobile photo AI assessment | -1 day cycle | Low |\n| Real-time status updates | +0.3 CSAT | Low |\n| Provider network integration | -2 days medical | High |\n\n**Quick Win - Mobile Photo AI:**\n- Current: Customer submits photos, adjuster reviews\n- Proposed: AI damage assessment from photos\n- Impact: Instant preliminary estimate\n- Implementation: 2 weeks\n\n**Bottleneck Identified:**\n- 34% of delays from missing documentation\n- Solution: Automated document requests with reminders\n\nSource: [Claims Analytics + Industry Benchmarks]\nAgents: ClaimsMetricsAgent\n\nGenerate complete summary?",
+      "wait_timeout_seconds": 15,
+      "description": "Metrics and optimization analysis"
+    },
+    {
+      "step_number": 6,
+      "user_message": "Yes, summarize everything we accomplished today",
+      "agent_response": "Claims processing transformation complete. Here's today's operational summary.\n\n**Session Summary:**\n\n| Accomplishment | Result |\n|----------------|--------|\n| Claims processed | 2,847 total |\n| Auto-adjudicated | 1,936 (68%) in 18 minutes |\n| Fraud identified | 89 claims, $2.4M protected |\n| Complex prepared | 198 claims with AI analysis |\n| Payments approved | $4.2M released |\n\n**Efficiency Gains:**\n\n| Metric | Value |\n|--------|-------|\n| Hours saved | 5,807 adjuster hours |\n| Cost savings | $290,350 today |\n| Cycle time reduction | 57% (12 to 5.2 days) |\n| Auto-decision accuracy | 99.2% |\n\n**Workflow Status:**\n- Auto-approved: 1,724 claims (payments processing)\n- Denied: 142 claims (letters generated)\n- SIU referral: 89 claims (investigation queued)\n- Adjuster queue: 822 claims (analysis attached)\n\n**Next Steps:**\n- Monitor SIU investigation outcomes\n- Implement mobile photo AI (2-week project)\n- Expand auto-adjudication rules (8% increase)\n\nSource: [All Claims Systems]\nAgents: ClaimsSummaryAgent (orchestrating all agents)\n\nYour AI-powered claims operation processed 2,847 claims with 68% auto-adjudication, saving 5,807 hours and $290K while maintaining 99.2% accuracy.",
+      "wait_timeout_seconds": 20,
+      "description": "Complete operational summary"
+    }
+  ],
+  "design_principles": {
+    "max_response_length": "150-250 words",
+    "max_lines": "25-30 lines",
+    "max_table_rows": "4-5 rows",
+    "max_bullets": "4-6 bullets",
+    "sections": "2-3 maximum",
+    "visual_elements": "1 status indicator OR 1 table per response",
+    "source_attribution": "Compact format at end",
+    "evergreen_language": "Relative timeframes only",
+    "call_to_action": "Clear next question to continue"
+  },
+  "business_value": {
+    "problem": "12-day average claims cycle time, 12% auto-adjudication rate, high processing costs",
+    "solution": "AI-powered claims triage with fraud detection, auto-adjudication, and adjuster workflow optimization",
+    "roi": "57% cycle time reduction, 5,807 hours saved daily, $290K daily cost savings, 99.2% accuracy",
+    "performance": "68% auto-adjudication rate, $2.4M fraud prevented, 18-minute processing for eligible claims"
+  }
+}

@@ -1,0 +1,143 @@
+{
+  "demo_name": "Financial_Advisor_Copilot_1Min_Demo",
+  "description": "1-minute demo: AI-powered financial advisor assistant with client preparation, portfolio analysis, and meeting recommendations",
+  "version": "2.0.0",
+  "trigger_phrases": [
+    "Prepare me for my next client meeting with a full portfolio review and talking points.",
+    "advisor meeting prep",
+    "client portfolio review"
+  ],
+  "metadata": {
+    "category": "wealth_management",
+    "industry": "financial_services_wealth",
+    "max_response_length": "250_words",
+    "total_steps": 6,
+    "estimated_duration_seconds": 60,
+    "target_audience": "financial_advisors"
+  },
+  "persona": {
+    "name": "William Chen",
+    "title": "Senior Financial Advisor",
+    "company": "Pinnacle Wealth Advisors",
+    "context": "Managing $280M AUM across 120 client households, preparing for quarterly review meetings"
+  },
+  "agents_utilized": [
+    {
+      "agent_name": "ClientPreparationAgent",
+      "description": "Aggregates all relevant client information for meeting preparation",
+      "inputs": ["client_id", "meeting_type"],
+      "outputs": ["client_summary", "recent_activity", "life_events", "outstanding_items"],
+      "data_sources": ["CRM", "Client Portal Activity", "Email History", "Task Management"],
+      "used_in_steps": [1]
+    },
+    {
+      "agent_name": "PortfolioAnalysisAgent",
+      "description": "Analyzes portfolio performance, allocation, and risk metrics",
+      "inputs": ["account_ids", "benchmark_preferences"],
+      "outputs": ["performance_summary", "allocation_analysis", "risk_metrics", "attribution"],
+      "data_sources": ["Portfolio Management System", "Market Data", "Performance Analytics"],
+      "used_in_steps": [1, 2]
+    },
+    {
+      "agent_name": "GoalTrackingAgent",
+      "description": "Tracks progress toward client financial goals",
+      "inputs": ["client_id", "goal_parameters"],
+      "outputs": ["goal_progress", "projection_scenarios", "required_adjustments"],
+      "data_sources": ["Financial Planning System", "Monte Carlo Engine"],
+      "used_in_steps": [2]
+    },
+    {
+      "agent_name": "MarketContextAgent",
+      "description": "Provides relevant market context for client discussions",
+      "inputs": ["portfolio_holdings", "client_interests"],
+      "outputs": ["market_summary", "holding_impacts", "talking_points"],
+      "data_sources": ["Market Data", "Research Reports", "News Analysis"],
+      "used_in_steps": [3]
+    },
+    {
+      "agent_name": "RecommendationAgent",
+      "description": "Generates personalized investment recommendations",
+      "inputs": ["portfolio_analysis", "goals", "risk_profile", "market_outlook"],
+      "outputs": ["recommendations", "rationale", "implementation_steps"],
+      "data_sources": ["Investment Policy", "Model Portfolios", "Compliance Rules"],
+      "used_in_steps": [4]
+    },
+    {
+      "agent_name": "MeetingMaterialsAgent",
+      "description": "Creates presentation-ready meeting materials",
+      "inputs": ["all_analysis_outputs", "meeting_type"],
+      "outputs": ["meeting_deck", "one_pager", "talking_points"],
+      "data_sources": ["Template Library", "Brand Assets"],
+      "used_in_steps": [5]
+    },
+    {
+      "agent_name": "AdvisorSummaryAgent",
+      "description": "Generates comprehensive advisor briefing",
+      "inputs": ["all_preparation_data"],
+      "outputs": ["executive_brief", "key_messages", "action_items"],
+      "data_sources": ["All Advisor Systems"],
+      "used_in_steps": [6]
+    }
+  ],
+  "conversation_flow": [
+    {
+      "step_number": 1,
+      "user_message": "Prepare me for my next client meeting with a full portfolio review and talking points.",
+      "agent_response": "I've prepared your meeting brief for the Richardson family. Strong performance with one rebalancing opportunity.\n\n**Meeting: Richardson Family**\n\n| Detail | Information |\n|--------|-------------|\n| Time | Tomorrow, 10:00 AM |\n| Type | Quarterly review |\n| Attendees | Thomas & Elizabeth Richardson |\n| AUM | $4.2M |\n| Relationship | 8 years |\n\n**Client Context:**\n\n| Recent Activity | Details |\n|-----------------|--------|\n| Last meeting | 3 months ago |\n| Life events | Daughter's wedding (next spring) |\n| Recent inquiry | Tax-loss harvesting question (email) |\n| Outstanding | Beneficiary update needed |\n\n**Portfolio Snapshot:**\n\n| Metric | Value | vs Benchmark |\n|--------|-------|-------------|\n| YTD return | +12.4% | +1.8% |\n| 1-year return | +18.2% | +2.1% |\n| Current allocation | 65/32/3 | Target: 60/35/5 |\n| Risk score | 62 | Moderate |\n\n**Key Talking Point:** They asked about tax-loss harvesting - I found $28K in harvestable losses.\n\nSource: [CRM + Portfolio System + Email]\nAgents: ClientPreparationAgent, PortfolioAnalysisAgent\n\nSee detailed portfolio analysis and goal progress?",
+      "wait_timeout_seconds": 15,
+      "description": "Client meeting preparation summary"
+    },
+    {
+      "step_number": 2,
+      "user_message": "Yes, show me the portfolio details and how they're tracking to their goals",
+      "agent_response": "Full portfolio analysis complete. On track for retirement but allocation drift needs attention.\n\n**Portfolio Performance:**\n\n| Account | Value | YTD | Allocation |\n|---------|-------|-----|------------|\n| Joint brokerage | $2.1M | +14.2% | 70/27/3 |\n| Thomas IRA | $1.4M | +11.8% | 62/35/3 |\n| Elizabeth IRA | $720K | +9.4% | 58/38/4 |\n| **Total** | **$4.22M** | **+12.4%** | **65/32/3** |\n\n**Allocation Analysis:**\n\n| Asset Class | Current | Target | Action |\n|-------------|---------|--------|--------|\n| Equities | 65% | 60% | Reduce 5% |\n| Fixed income | 32% | 35% | Increase 3% |\n| Alternatives | 3% | 5% | Increase 2% |\n\n**Goal Progress - Retirement (Age 67):**\n\n| Metric | Status |\n|--------|--------|\n| Target retirement income | $180K/year |\n| Required portfolio | $4.5M |\n| Current trajectory | $5.1M (on track) |\n| Success probability | 92% |\n| Years to retirement | 6 |\n\n**Daughter's Wedding (Next Spring):**\n- Planned gift: $50K\n- Funded: Yes (in cash reserves)\n- Tax consideration: Annual exclusion applies\n\nSource: [Portfolio System + Financial Planning]\nAgents: PortfolioAnalysisAgent, GoalTrackingAgent\n\nGet market context for the discussion?",
+      "wait_timeout_seconds": 15,
+      "description": "Portfolio and goal analysis"
+    },
+    {
+      "step_number": 3,
+      "user_message": "Yes, what market context should I discuss with them?",
+      "agent_response": "Market context prepared with relevant talking points for the Richardsons' portfolio.\n\n**Market Summary (Client-Ready):**\n\n| Topic | Key Point | Their Impact |\n|-------|-----------|-------------|\n| Equity markets | S&P up 18% YTD | Portfolio benefited (+$320K) |\n| Interest rates | Fed holding steady | Bonds stabilizing |\n| Tech sector | Strong AI momentum | Their tech holdings +24% |\n| International | Europe underperforming | Limited exposure (good) |\n\n**Their Holdings in Context:**\n\n| Holding | Weight | Recent | Talking Point |\n|---------|--------|--------|---------------|\n| Apple | 4.2% | +28% YTD | \"Tech allocation working well\" |\n| Vanguard Total Bond | 18% | +2.1% | \"Stability as rates stabilize\" |\n| NVIDIA | 2.8% | +180% | \"AI exposure paying off\" |\n\n**Questions They May Ask:**\n\n| Topic | Prepared Answer |\n|-------|----------------|\n| \"Should we take profits on tech?\" | \"Rebalancing will naturally reduce\" |\n| \"What about recession risk?\" | \"Portfolio diversified, bonds provide cushion\" |\n| \"Is AI a bubble?\" | \"Trimming through rebalance, not exiting\" |\n\n**Tax-Loss Harvesting (Their Question):**\n- International fund: $28K loss available\n- Swap to similar fund: Maintains exposure\n- Tax savings: ~$8,400 (at 30% rate)\n\nSource: [Market Data + Research + Holdings]\nAgents: MarketContextAgent, PortfolioAnalysisAgent\n\nGenerate specific recommendations?",
+      "wait_timeout_seconds": 15,
+      "description": "Market context and talking points"
+    },
+    {
+      "step_number": 4,
+      "user_message": "Yes, what specific actions should I recommend?",
+      "agent_response": "Personalized recommendations generated for the Richardson portfolio.\n\n**Recommended Actions:**\n\n**1. Rebalance to Target Allocation**\n\n| Trade | Amount | Rationale |\n|-------|--------|----------|\n| Sell: US equity funds | $210K | Reduce equity overweight |\n| Buy: Core bond fund | $126K | Increase fixed income |\n| Buy: Alternatives | $84K | Add real assets exposure |\n\n**2. Tax-Loss Harvest (Their Question)**\n\n| Action | Details |\n|--------|--------|\n| Sell | International Developed Fund |\n| Loss realized | $28,000 |\n| Tax savings | ~$8,400 |\n| Replace with | Similar international ETF |\n| Net effect | Same exposure, tax benefit |\n\n**3. Review Beneficiaries**\n- Thomas IRA: Still lists deceased parent\n- Action: Update to Elizabeth as primary\n- Timeline: Complete before year-end\n\n**4. Wedding Gift Strategy**\n- Recommend: Gift appreciated stock instead of cash\n- Stock: Apple shares ($50K, $12K gain)\n- Benefit: Avoid $3,600 capital gains tax\n\n**Implementation Timeline:**\n\n| Action | When | Urgency |\n|--------|------|--------|\n| Tax-loss harvest | This week | High (lock in loss) |\n| Rebalancing | This month | Medium |\n| Beneficiary update | By year-end | Medium |\n| Wedding gift | Spring | Planned |\n\nSource: [Investment Policy + Compliance + Tax Rules]\nAgents: RecommendationAgent, PortfolioAnalysisAgent\n\nCreate meeting materials?",
+      "wait_timeout_seconds": 15,
+      "description": "Personalized recommendations"
+    },
+    {
+      "step_number": 5,
+      "user_message": "Yes, create the presentation materials for the meeting",
+      "agent_response": "Meeting materials generated and ready for review.\n\n**Materials Created:**\n\n| Document | Status | Format |\n|----------|--------|--------|\n| Client presentation | Ready | PDF/Screen share |\n| One-page summary | Ready | Print |\n| Talking points | Ready | Advisor notes |\n| Trade authorization | Prepared | E-signature ready |\n\n**Presentation Outline (12 slides):**\n1. Relationship summary\n2. Portfolio performance\n3. Goal progress (retirement)\n4. Market context\n5. Allocation review\n6. Rebalancing recommendation\n7. Tax-loss harvesting opportunity\n8. Wedding gift strategy\n9. Beneficiary update\n10. Q&A topics\n11. Next steps\n12. Contact information\n\n**One-Page Summary Highlights:**\n\n| Section | Key Message |\n|---------|------------|\n| Performance | +12.4% YTD (beating benchmark) |\n| Goals | 92% retirement success probability |\n| Actions | 4 recommendations for approval |\n| Tax savings | $12,000 potential (harvest + gift) |\n\n**Advisor Talking Points:**\n- Open with wedding congratulations\n- Address their tax question early\n- Present rebalancing as routine maintenance\n- Close with beneficiary update action item\n\nSource: [Template Library + All Analysis]\nAgents: MeetingMaterialsAgent, RecommendationAgent\n\nGenerate executive brief?",
+      "wait_timeout_seconds": 15,
+      "description": "Meeting materials generation"
+    },
+    {
+      "step_number": 6,
+      "user_message": "Yes, give me the complete meeting brief",
+      "agent_response": "Complete meeting preparation delivered. Here's your executive brief.\n\n**Richardson Meeting Brief:**\n\n| Preparation | Status |\n|-------------|--------|\n| Client profile reviewed | Complete |\n| Portfolio analyzed | $4.22M, +12.4% YTD |\n| Goals assessed | 92% success probability |\n| Recommendations ready | 4 actions prepared |\n| Materials created | Presentation + one-pager |\n\n**Key Messages (In Order):**\n1. \"Strong year - you're ahead of plan\"\n2. \"Let's address your tax question\" (shows you listen)\n3. \"Routine rebalancing to manage risk\"\n4. \"Gift strategy for the wedding saves $3,600\"\n5. \"Quick housekeeping: beneficiary update\"\n\n**Meeting Agenda:**\n\n| Time | Topic |\n|------|-------|\n| 0-5 min | Personal catch-up, wedding |\n| 5-15 min | Performance review |\n| 15-25 min | Recommendations |\n| 25-30 min | Questions, next steps |\n\n**Action Items (For Approval):**\n\n| Item | Client Benefit |\n|------|----------------|\n| Rebalance | Risk management |\n| Tax-loss harvest | $8,400 tax savings |\n| Gift stock | $3,600 tax savings |\n| Update beneficiary | Peace of mind |\n\n**Total Tax Savings Presented:** $12,000\n\nSource: [All Advisor Systems]\nAgents: AdvisorSummaryAgent (orchestrating all agents)\n\nYour AI copilot prepared a complete meeting brief with portfolio analysis, personalized recommendations, and $12,000 in tax savings opportunities for the Richardsons.",
+      "wait_timeout_seconds": 20,
+      "description": "Complete meeting executive brief"
+    }
+  ],
+  "design_principles": {
+    "max_response_length": "150-250 words",
+    "max_lines": "25-30 lines",
+    "max_table_rows": "4-5 rows",
+    "max_bullets": "4-6 bullets",
+    "sections": "2-3 maximum",
+    "visual_elements": "1 status indicator OR 1 table per response",
+    "source_attribution": "Compact format at end",
+    "evergreen_language": "Relative timeframes only",
+    "call_to_action": "Clear next question to continue"
+  },
+  "business_value": {
+    "problem": "Hours spent on meeting preparation, scattered client information, generic recommendations, missed tax planning opportunities",
+    "solution": "AI-powered advisor copilot with automated preparation, portfolio analysis, and personalized recommendations",
+    "roi": "$12,000 tax savings identified for client, 90% reduction in prep time, higher quality client interactions",
+    "performance": "Complete meeting prep in minutes, comprehensive portfolio analysis, presentation-ready materials generated"
+  }
+}

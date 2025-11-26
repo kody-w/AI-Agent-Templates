@@ -1,0 +1,2103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>M365 Copilot - Account Intelligence</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+            background: #faf9f8;
+            height: 100vh;
+            display: flex;
+            overflow: hidden;
+            color: #323130;
+        }
+
+        /* Sidebar */
+        .sidebar {
+            width: 260px;
+            background: #ffffff;
+            display: flex;
+            flex-direction: column;
+            border-right: 1px solid #edebe9;
+        }
+
+        /* Sidebar Header */
+        .sidebar-header {
+            padding: 12px 16px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            border-bottom: 1px solid #edebe9;
+            height: 48px;
+        }
+
+        .copilot-icon {
+            width: 24px;
+            height: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .copilot-icon img {
+            width: 100%;
+            height: 100%;
+        }
+
+        .sidebar-title {
+            font-size: 14px;
+            font-weight: 600;
+            color: #323130;
+        }
+
+        .sidebar-button {
+            margin-left: auto;
+            background: none;
+            border: none;
+            padding: 4px;
+            cursor: pointer;
+            color: #605e5c;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 4px;
+            width: 32px;
+            height: 32px;
+        }
+
+        .sidebar-button:hover {
+            background: #f3f2f1;
+        }
+
+        /* Search Box */
+        .search-container {
+            padding: 8px 16px;
+            border-bottom: 1px solid #edebe9;
+        }
+
+        .search-box {
+            position: relative;
+            width: 100%;
+        }
+
+        .search-icon {
+            position: absolute;
+            left: 8px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #605e5c;
+            font-size: 14px;
+        }
+
+        .search-input {
+            width: 100%;
+            padding: 6px 8px 6px 32px;
+            border: 1px solid #d2d0ce;
+            border-radius: 4px;
+            font-size: 14px;
+            background: #faf9f8;
+            outline: none;
+            transition: all 0.2s;
+        }
+
+        .search-input:focus {
+            border-color: #605e5c;
+            background: #ffffff;
+        }
+
+        /* Navigation */
+        .nav-section {
+            flex: 1;
+            overflow-y: auto;
+            padding: 4px 0;
+        }
+
+        .nav-item {
+            padding: 8px 16px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            cursor: pointer;
+            font-size: 14px;
+            color: #323130;
+            transition: background 0.1s;
+            position: relative;
+            user-select: none;
+        }
+
+        .nav-item:hover {
+            background: #f3f2f1;
+        }
+
+        .nav-item.active {
+            background: #f3f2f1;
+        }
+
+        .nav-item.active::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 8px;
+            bottom: 8px;
+            width: 2px;
+            background: #742774;
+            border-radius: 1px;
+        }
+
+        .nav-icon {
+            width: 20px;
+            height: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+
+        /* Demo Controls Section */
+        .demo-controls-section {
+            border-top: 1px solid #edebe9;
+            padding: 12px 16px;
+            background: #faf9f8;
+        }
+
+        .demo-controls-title {
+            font-size: 12px;
+            font-weight: 600;
+            color: #605e5c;
+            margin-bottom: 8px;
+        }
+
+        .demo-controls {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 8px;
+        }
+
+        .demo-btn {
+            padding: 6px 12px;
+            border: 1px solid #d2d0ce;
+            border-radius: 4px;
+            background: white;
+            font-size: 12px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 4px;
+            color: #323130;
+            transition: all 0.2s;
+        }
+
+        .demo-btn:hover:not(:disabled) {
+            background: #f3f2f1;
+            border-color: #605e5c;
+        }
+
+        .demo-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .demo-btn.primary {
+            background: #742774;
+            color: white;
+            border-color: #742774;
+        }
+
+        .demo-btn.primary:hover:not(:disabled) {
+            background: #5a1d5a;
+        }
+
+        /* Bottom section */
+        .sidebar-bottom {
+            border-top: 1px solid #edebe9;
+            padding: 8px 0;
+        }
+
+        .user-section {
+            padding: 8px 16px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            cursor: pointer;
+            transition: background 0.1s;
+        }
+
+        .user-section:hover {
+            background: #f3f2f1;
+        }
+
+        .user-avatar {
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            background: #742774;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        /* Main Content */
+        .main-content {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            background: #faf9f8;
+        }
+
+        /* Header */
+        .content-header {
+            height: 48px;
+            padding: 0 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: #ffffff;
+            border-bottom: 1px solid #edebe9;
+        }
+
+        .header-title {
+            font-size: 14px;
+            color: #605e5c;
+        }
+
+        .header-actions {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .status-indicator {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 6px 12px;
+            background: #f3f2f1;
+            border-radius: 4px;
+            font-size: 12px;
+            color: #605e5c;
+        }
+
+        .status-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: #10b981;
+        }
+
+        .status-dot.processing {
+            background: #f59e0b;
+            animation: pulse 1s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+
+        /* Chat Container */
+        .chat-container {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+
+        /* Chat Messages */
+        .chat-messages {
+            flex: 1;
+            overflow-y: auto;
+            padding: 20px;
+            display: block;
+        }
+
+        .message {
+            max-width: 900px;
+            margin: 0 auto 24px;
+        }
+
+        .message-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 8px;
+        }
+
+        .message-avatar-user {
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            background: #0078d4;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .message-avatar-agent {
+            width: 28px;
+            height: 28px;
+            border-radius: 6px;
+            background: linear-gradient(135deg, #742774 0%, #00a651 100%);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        .message-author {
+            font-size: 14px;
+            font-weight: 600;
+            color: #323130;
+        }
+
+        .message-tag {
+            padding: 2px 8px;
+            background: #f3f2f1;
+            border-radius: 4px;
+            font-size: 12px;
+            color: #605e5c;
+        }
+
+        .message-time {
+            font-size: 12px;
+            color: #a19f9d;
+        }
+
+        .message-content {
+            margin-left: 40px;
+            font-size: 14px;
+            line-height: 1.6;
+            color: #323130;
+        }
+
+        /* Agent Cards */
+        .agent-card {
+            margin-left: 40px;
+            margin-top: 16px;
+            background: white;
+            border: 1px solid #edebe9;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        .agent-card-header {
+            padding: 16px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            border-bottom: 1px solid #edebe9;
+            background: linear-gradient(135deg, rgba(116, 39, 116, 0.05) 0%, rgba(0, 166, 81, 0.05) 100%);
+        }
+
+        .agent-card-icon {
+            font-size: 20px;
+        }
+
+        .agent-card-title {
+            font-size: 16px;
+            font-weight: 600;
+            color: #323130;
+        }
+
+        .agent-card-status {
+            margin-left: auto;
+            padding: 4px 12px;
+            background: #10b981;
+            color: white;
+            border-radius: 12px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .agent-card-content {
+            padding: 16px;
+        }
+
+        .detail-list {
+            list-style: none;
+        }
+
+        .detail-item {
+            padding: 8px 0;
+            font-size: 14px;
+            color: #323130;
+            display: flex;
+            gap: 8px;
+            border-bottom: 1px solid #f3f2f1;
+        }
+
+        .detail-item:last-child {
+            border-bottom: none;
+        }
+
+        .detail-label {
+            font-weight: 600;
+            min-width: 180px;
+            color: #605e5c;
+        }
+
+        .detail-value {
+            color: #323130;
+            flex: 1;
+        }
+
+        /* Input Container */
+        .input-container {
+            padding: 16px 20px;
+            background: white;
+            border-top: 1px solid #edebe9;
+        }
+
+        .input-wrapper {
+            max-width: 900px;
+            margin: 0 auto;
+            position: relative;
+        }
+
+        .input-field {
+            width: 100%;
+            padding: 12px 48px 12px 16px;
+            border: 1px solid #d2d0ce;
+            border-radius: 8px;
+            font-size: 14px;
+            font-family: inherit;
+            resize: none;
+            outline: none;
+            background: #faf9f8;
+            transition: all 0.2s;
+            min-height: 44px;
+            max-height: 120px;
+        }
+
+        .input-field:focus {
+            border-color: #742774;
+            background: white;
+        }
+
+        .input-actions {
+            position: absolute;
+            right: 8px;
+            bottom: 8px;
+            display: flex;
+            gap: 4px;
+        }
+
+        .input-button {
+            width: 28px;
+            height: 28px;
+            border: none;
+            background: none;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 4px;
+            color: #605e5c;
+            transition: all 0.1s;
+        }
+
+        .input-button:hover {
+            background: #f3f2f1;
+        }
+
+        .input-button.send {
+            color: #742774;
+        }
+
+        .input-button:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        /* Typing indicator */
+        .typing-indicator {
+            margin-left: 40px;
+            display: flex;
+            gap: 4px;
+            padding: 8px 0;
+        }
+
+        .typing-dot {
+            width: 8px;
+            height: 8px;
+            background: #605e5c;
+            border-radius: 50%;
+            animation: typing 1.4s infinite;
+        }
+
+        .typing-dot:nth-child(2) {
+            animation-delay: 0.2s;
+        }
+
+        .typing-dot:nth-child(3) {
+            animation-delay: 0.4s;
+        }
+
+        @keyframes typing {
+            0%, 60%, 100% {
+                transform: translateY(0);
+                opacity: 0.5;
+            }
+            30% {
+                transform: translateY(-10px);
+                opacity: 1;
+            }
+        }
+
+        /* Welcome state - hidden when chat is active */
+        .welcome-screen {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 40px;
+            max-width: 1200px;
+            margin: 0 auto;
+            width: 100%;
+        }
+
+        .welcome-screen.hidden {
+            display: none;
+        }
+
+        .welcome-title {
+            font-size: 36px;
+            font-weight: 600;
+            color: #323130;
+            margin-bottom: 16px;
+            text-align: center;
+        }
+
+        .welcome-subtitle {
+            font-size: 16px;
+            color: #605e5c;
+            margin-bottom: 48px;
+            text-align: center;
+        }
+
+        .suggestion-cards {
+            display: flex;
+            gap: 20px;
+            width: 100%;
+            max-width: 900px;
+        }
+
+        .suggestion-card {
+            flex: 1;
+            background: white;
+            border: 1px solid #edebe9;
+            border-radius: 8px;
+            padding: 20px;
+            cursor: pointer;
+            transition: all 0.2s;
+            min-height: 120px;
+        }
+
+        .suggestion-card:hover {
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            transform: translateY(-2px);
+            border-color: #742774;
+        }
+
+        .card-icon {
+            font-size: 24px;
+            margin-bottom: 12px;
+        }
+
+        .card-title {
+            font-size: 14px;
+            font-weight: 600;
+            color: #323130;
+            margin-bottom: 8px;
+        }
+
+        .card-description {
+            font-size: 13px;
+            color: #605e5c;
+            line-height: 1.4;
+        }
+    </style>
+</head>
+<body>
+    <!-- Sidebar -->
+    <div class="sidebar">
+        <div class="sidebar-header">
+            <div class="copilot-icon"><img src="https://res.public.onecdn.static.microsoft/midgard/versionless/officestartresources/copilot_20_light_and_dark.svg" alt="Copilot"></div>
+            <span class="sidebar-title">M365 Copilot</span>
+            <button class="sidebar-button">☰</button>
+        </div>
+
+        <div class="search-container">
+            <div class="search-box">
+                <span class="search-icon">🔍</span>
+                <input type="text" class="search-input" placeholder="Search">
+            </div>
+        </div>
+
+        <div class="nav-section">
+            <div class="nav-item active">
+                <div class="nav-icon">💬</div>
+                <span>Chat</span>
+            </div>
+            <div class="nav-item">
+                <div class="nav-icon">🤖</div>
+                <span>Agents</span>
+            </div>
+            <div class="nav-item">
+                <div class="nav-icon">💬</div>
+                <span>Conversations</span>
+            </div>
+            <div class="nav-item">
+                <div class="nav-icon">📄</div>
+                <span>Pages</span>
+            </div>
+            <div class="nav-item">
+                <div class="nav-icon">➕</div>
+                <span>Create</span>
+            </div>
+            <div class="nav-item">
+                <div class="nav-icon">📱</div>
+                <span>Apps</span>
+            </div>
+            <div class="nav-item">
+                <div class="nav-icon">⚙️</div>
+                <span>Admin</span>
+            </div>
+        </div>
+
+        <!-- Demo Controls -->
+        <div class="demo-controls-section">
+            <div class="demo-controls-title">Demo Controls</div>
+            <div class="demo-controls">
+                <button class="demo-btn primary" onclick="startDemo()" id="startBtn">
+                    ▶️ Start
+                </button>
+                <button class="demo-btn" onclick="pauseDemo()" id="pauseBtn" disabled>
+                    ⏸️ Pause
+                </button>
+                <button class="demo-btn" onclick="resetDemo()" id="resetBtn">
+                    🔄 Reset
+                </button>
+                <button class="demo-btn" onclick="skipToNext()" id="skipBtn" disabled>
+                    ⏭️ Skip
+                </button>
+            </div>
+        </div>
+
+        <div class="sidebar-bottom">
+            <div class="user-section">
+                <div class="user-avatar">DU</div>
+                <span style="font-size: 14px;">Demo User</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="main-content">
+        <div class="content-header">
+            <div class="header-title">Account Intelligence Agent</div>
+            <div class="header-actions">
+                <div class="status-indicator">
+                    <span class="status-dot" id="statusDot"></span>
+                    <span id="statusText">Ready</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="chat-container">
+            <!-- Welcome Screen -->
+            <div class="welcome-screen" id="welcomeScreen">
+                <h1 class="welcome-title">📈 Account Intelligence</h1>
+                <p class="welcome-subtitle">How can I help you today?</p>
+
+                <div class="suggestion-cards">
+                    <div class="suggestion-card" onclick="quickStart('start-chat')">
+                        <div class="card-icon">💬</div>
+                        <div class="card-title">Start Chat</div>
+                        <div class="card-description">Begin a conversation</div>
+                    </div>
+                    <div class="suggestion-card" onclick="quickStart('view-analytics')">
+                        <div class="card-icon">📊</div>
+                        <div class="card-title">View Analytics</div>
+                        <div class="card-description">See insights and metrics</div>
+                    </div>
+                    <div class="suggestion-card" onclick="quickStart('get-started')">
+                        <div class="card-icon">🎯</div>
+                        <div class="card-title">Get Started</div>
+                        <div class="card-description">Learn what I can do</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Chat Messages -->
+            <div class="chat-messages" id="chatMessages" style="display: none;">
+                <!-- Messages will be dynamically added here -->
+            </div>
+
+            <!-- Input Container -->
+            <div class="input-container">
+                <div class="input-wrapper">
+                    <textarea
+                        class="input-field"
+                        id="messageInput"
+                        placeholder="Ask about account intelligence capabilities..."
+                        rows="1"
+                        onkeypress="handleKeyPress(event)"
+                        oninput="autoResize(this)"
+                    ></textarea>
+                    <div class="input-actions">
+                        <button class="input-button">📎</button>
+                        <button class="input-button send" onclick="sendCurrentMessage()" id="sendButton">
+                            ➤
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // State
+        let demoState = {
+            isPlaying: false,
+            isPaused: false,
+            currentStep: 0,
+            messageTimer: null,
+            typingTimer: null
+        };
+
+        // Demo script - 10-Step Account Intelligence Journey
+        const demoScript = [
+            // Step 1: Initial Account Briefing - Show instant multi-source intelligence
+            {
+                "type": "user",
+                "content": "I just got assigned Contoso Corporation as a new account. Give me a complete briefing so I can hit the ground running.",
+                "typingTime": 1400,
+                "delay": 800
+            },
+            {
+                "type": "agent",
+                "content": "I've analyzed Contoso Corporation across 15+ data sources including CRM history, LinkedIn, news feeds, earnings calls, and your team's past interactions. Here's your complete account intelligence briefing:",
+                "typingTime": 2200,
+                "delay": 1000,
+                "agentData": {
+                    "Company Overview": {
+                        "Name": "Contoso Corporation",
+                        "Industry": "Manufacturing & Industrial Technology",
+                        "Size": "12,400 employees | $2.3B revenue (FY2023)",
+                        "HQ Location": "Seattle, WA + 23 facilities globally",
+                        "Stock Performance": "NASDAQ: CNTO | Up 22% YTD",
+                        "Credit Rating": "A- (Stable outlook)"
+                    },
+                    "CRM History": {
+                        "Relationship Length": "3.5 years | Customer since Q2 2021",
+                        "Current Products": "Using 2 of your solutions ($340K ARR)",
+                        "Contract Status": "Renewal in 87 days (Feb 15, 2025)",
+                        "Health Score": "72/100 - Yellow (usage declining 12%)",
+                        "Last Interaction": "Oct 18 - Support ticket escalation",
+                        "Account Owner": "Previously managed by Tom Chen (left company)"
+                    },
+                    "Recent Trigger Events": {
+                        "🔥 Leadership Change": "New CTO hired 6 weeks ago (Nov 1)",
+                        "💰 Funding": "$150M Series D raised (Oct 12)",
+                        "📰 Expansion": "Announced 3 new manufacturing facilities",
+                        "⚠️ Tech Stack": "Migrating from legacy Oracle systems",
+                        "🎯 Initiative": "$500M digital transformation program"
+                    },
+                    "Business Intelligence": {
+                        "Q3 Earnings": "Beat expectations by 8% | Growth accelerating",
+                        "Strategic Focus": "AI-powered automation & predictive analytics",
+                        "Market Position": "#3 in industrial IoT manufacturing",
+                        "Pain Points": "Integration challenges, data silos, manual processes",
+                        "Budget Cycle": "Fiscal year starts Jan 1 - planning active NOW"
+                    },
+                    "Opportunity Assessment": {
+                        "Expansion Potential": "$2.1M ARR (6.2x current spend)",
+                        "Risk Factors": "Competitor activity detected, usage declining",
+                        "Timing": "URGENT - New CTO evaluating all vendors",
+                        "Win Probability": "47% (needs immediate action)",
+                        "Priority Level": "🔴 HIGH - At-risk renewal + expansion opportunity"
+                    }
+                }
+            },
+
+            // Step 2: Stakeholder Deep Dive - Show relationship intelligence
+            {
+                "type": "user",
+                "content": "Who are the key stakeholders I need to build relationships with, and what's their influence on our deal?",
+                "typingTime": 1500,
+                "delay": 900
+            },
+            {
+                "type": "agent",
+                "content": "I've mapped the entire buying committee with influence scores, relationship status, and engagement history. Here's your stakeholder intelligence:",
+                "typingTime": 2100,
+                "delay": 1200,
+                "agentData": {
+                    "Primary Economic Buyer": {
+                        "Name": "Dr. Sarah Chen - CTO",
+                        "Influence": "95/100 - DECISION MAKER",
+                        "Tenure": "6 weeks (hired Nov 1 from Microsoft Azure)",
+                        "Background": "PhD Computer Science MIT | 15 years cloud/AI",
+                        "Mandate": "Modernize tech stack, reduce vendor sprawl",
+                        "Your Relationship": "❌ NONE - Zero contact yet",
+                        "Competitor Relationships": "⚠️ Close with AWS, Snowflake execs"
+                    },
+                    "Financial Influencer": {
+                        "Name": "Robert Martinez - CFO",
+                        "Influence": "85/100 - Budget Approver",
+                        "Tenure": "2 years | Previously at Fortune 500 PE firm",
+                        "Focus": "Cost optimization, ROI, contract consolidation",
+                        "Your Relationship": "🟡 WEAK - Met once at trade show 2023",
+                        "Hot Button": "Currently reviewing all SaaS spend >$100K",
+                        "Decision Style": "Metrics-driven, wants 18-month ROI proof"
+                    },
+                    "Technical Champion": {
+                        "Name": "James Liu - VP Engineering",
+                        "Influence": "70/100 - Technical Evaluator",
+                        "Tenure": "5 years | Strong influence with new CTO",
+                        "Your Relationship": "✅ STRONG - Power user, 3 references given",
+                        "Status": "Your internal advocate BUT politically cautious",
+                        "Recent Activity": "Being pressured to evaluate alternatives",
+                        "Action Needed": "Re-engage to maintain champion status"
+                    },
+                    "Procurement Gatekeeper": {
+                        "Name": "Michelle Park - Director of Procurement",
+                        "Influence": "60/100 - Process Controller",
+                        "Tenure": "8 years | By-the-book negotiator",
+                        "Your Relationship": "🟡 NEUTRAL - Standard interactions only",
+                        "Negotiation Style": "Aggressive on pricing, prefers multi-vendor RFPs",
+                        "Intel": "Just hired consultant to review all tech contracts",
+                        "Leverage Point": "Values partnership, not just lowest price"
+                    },
+                    "Dark Horse Influencer": {
+                        "Name": "David Kumar - VP Operations",
+                        "Influence": "55/100 - End User Representative",
+                        "Tenure": "12 years | Trusted voice of manufacturing teams",
+                        "Your Relationship": "❌ UNKNOWN - No contact history",
+                        "Department Pain": "His team struggles with current solution UX",
+                        "Opportunity": "Could be strong advocate if you solve his pain",
+                        "Connection": "James Liu's direct report"
+                    },
+                    "Buying Committee Dynamics": {
+                        "Decision Timeline": "45-60 days (before renewal deadline)",
+                        "Evaluation Process": "Technical POC + Business case + Procurement",
+                        "Consensus Required": "All 5 stakeholders must approve",
+                        "Current Sentiment": "🟡 Mixed - Champion supportive, CTO unknown",
+                        "Threat Level": "HIGH - Competitor has 3 stakeholder meetings booked"
+                    }
+                }
+            },
+
+            // Step 3: Competitive Battle Card - Show market intelligence
+            {
+                "type": "user",
+                "content": "What's the competitive situation? Who am I up against and how do we win?",
+                "typingTime": 1300,
+                "delay": 850
+            },
+            {
+                "type": "agent",
+                "content": "I've detected active competitive threats and created your battle card. Here's real-time intelligence on competitors and how to position against them:",
+                "typingTime": 2000,
+                "delay": 1100,
+                "agentData": {
+                    "⚠️ Active Threats Detected": {
+                        "Threat Level": "🔴 SEVERE - 2 competitors in active evaluation",
+                        "DataBricks": "CTO's former colleague pushing hard (HIGH RISK)",
+                        "Snowflake": "Aggressive pricing, POC running in finance dept",
+                        "Oracle": "Incumbent legacy provider being phased out",
+                        "Intelligence Source": "LinkedIn activity, G2 reviews, champion intel"
+                    },
+                    "Competitor #1: DataBricks": {
+                        "Threat Level": "🔴 CRITICAL - Inside track with CTO",
+                        "Recent Activity": "CTO's ex-Microsoft colleague is their AE",
+                        "Their Strategy": "Personal relationship + AI/ML capabilities",
+                        "Proposal Status": "Submitted 2 weeks ago ($1.8M, 3-year)",
+                        "Their Strengths": "Strong AI story, CTO familiarity, modern stack",
+                        "Their Weaknesses": [
+                            "No manufacturing vertical experience",
+                            "Weak integration with Contoso's legacy systems",
+                            "No local support team (12hr time zone gap)",
+                            "Recent customer churn in industrial sector (23%)"
+                        ],
+                        "Your Counter-Strategy": "Emphasize manufacturing expertise + integration + support"
+                    },
+                    "Competitor #2: Snowflake": {
+                        "Threat Level": "🟡 MODERATE - Financial appeal",
+                        "Recent Activity": "Running free POC in finance (60 days)",
+                        "Their Strategy": "Aggressive 40% discount + data warehousing play",
+                        "Proposal Status": "Pricing shared ($1.2M vs your $1.9M)",
+                        "Their Strengths": "Lower price, strong data warehouse reputation",
+                        "Their Weaknesses": [
+                            "Limited analytics capabilities vs your platform",
+                            "POC hasn't proven ROI yet (your intel: struggling)",
+                            "No AI/ML features CTO requires",
+                            "Weak services team (consultant-dependent)"
+                        ],
+                        "Your Counter-Strategy": "Total cost of ownership + time-to-value + AI capabilities"
+                    },
+                    "Your Competitive Advantages": {
+                        "✅ Manufacturing Expertise": "12 industrial customers, avg 210% ROI",
+                        "✅ Integration Proven": "Oracle migration toolkit (their exact need)",
+                        "✅ Existing Relationship": "3.5 year history + technical champion",
+                        "✅ AI Roadmap": "Aligns perfectly with CTO's strategic vision",
+                        "✅ Support Model": "24/7 US-based team vs offshore competitors"
+                    },
+                    "Win Strategy": {
+                        "Positioning": "Trusted partner for digital transformation (not just vendor)",
+                        "Proof Points": "Show 3 similar manufacturing customer case studies",
+                        "Pricing": "Match Snowflake on year 1, show 3-year TCO advantage",
+                        "Differentiation": "AI-powered insights competitors can't deliver",
+                        "Risk Mitigation": "Guarantee 90-day migration with success metrics",
+                        "Executive Play": "CEO-to-CEO strategic partnership conversation"
+                    },
+                    "Battle Card Summary": {
+                        "Your Position": "Challenger with strong technical foundation",
+                        "Win Probability": "47% → Can reach 75% with right strategy",
+                        "Key to Victory": "Neutralize DataBricks relationship + prove ROI > Snowflake",
+                        "Timeline": "Must act within 14 days to regain momentum",
+                        "Critical Action": "Get face-to-face with CTO Sarah Chen THIS WEEK"
+                    }
+                }
+            },
+
+            // Step 4: New CTO Deep Intelligence - Show persona research
+            {
+                "type": "user",
+                "content": "Tell me everything about the new CTO Sarah Chen. I need to nail my first meeting with her.",
+                "typingTime": 1400,
+                "delay": 900
+            },
+            {
+                "type": "agent",
+                "content": "I've created a comprehensive dossier on Dr. Sarah Chen by analyzing LinkedIn, publications, interviews, conference talks, and social media. Here's everything you need to win her over:",
+                "typingTime": 2300,
+                "delay": 1200,
+                "agentData": {
+                    "Executive Profile": {
+                        "Full Name": "Dr. Sarah Chen, Ph.D.",
+                        "Title": "Chief Technology Officer",
+                        "Start Date": "November 1, 2024 (6 weeks ago)",
+                        "Age": "42 | Education: MIT (PhD), Stanford (MS), Berkeley (BS)",
+                        "Location": "Relocated from Redmond, WA to Seattle",
+                        "Direct Reports": "4 VPs, 230+ engineering staff globally"
+                    },
+                    "Career Background": {
+                        "Microsoft Azure (8 years)": "GM of AI/ML Platform | Grew team to 400+",
+                        "Amazon AWS (4 years)": "Principal Engineer | S3 storage team",
+                        "Startup Experience": "Founded 'DataFlow AI' (acquired by MSFT 2016)",
+                        "Reputation": "Industry thought leader, 47 patents, frequent speaker",
+                        "Why She Left Microsoft": "Wanted operational CEO track, not just tech role"
+                    },
+                    "Her 100-Day Plan (From Interview)": {
+                        "Priority #1": "Audit entire tech stack & vendor relationships",
+                        "Priority #2": "Build unified data platform (eliminate silos)",
+                        "Priority #3": "Implement AI/ML across manufacturing operations",
+                        "Priority #4": "Reduce vendor count from 47 to <15",
+                        "Budget Allocated": "$180M over 18 months for transformation",
+                        "Success Metric": "30% operational efficiency gain by end of 2025"
+                    },
+                    "Communication & Decision Style": {
+                        "Personality": "Analytical, direct, impatient with fluff",
+                        "Meeting Preference": "Morning slots (7-9am), 30min max, data-heavy",
+                        "Presentation Style": "Hates PowerPoint | Wants live demos + metrics",
+                        "Decision Process": "Fast when convinced | Slow when uncertain",
+                        "Red Flags": "Vendor lock-in, unproven ROI, overpromising",
+                        "Green Flags": "Innovation, transparency, partnership mindset"
+                    },
+                    "Her Hot Buttons & Pain Points": {
+                        "🔥 Biggest Pain": "Current tech debt slowing down innovation",
+                        "😤 Frustrations": "Too many point solutions, integration hell",
+                        "🎯 Goals": "AI-first strategy, real-time analytics, automation",
+                        "⚠️ Concerns": "Vendor contracts that don't deliver promised ROI",
+                        "✅ What She Values": "Speed to value, measurable outcomes, honesty"
+                    },
+                    "Recent Public Activity": {
+                        "LinkedIn Posts": "6 in last month - all about manufacturing AI",
+                        "Last Post Theme": "Why industrial companies lag in AI adoption",
+                        "Conference Speaking": "Keynote at ManufacturingTech Summit (Feb 2025)",
+                        "Interview Quote": "'I'm here to make Contoso an AI-powered leader'",
+                        "Network": "4,800 LinkedIn connections | Active in tech communities",
+                        "Engagement": "Responds to thoughtful DMs, ignores sales pitches"
+                    },
+                    "Personal Interests & Connections": {
+                        "Hobbies": "Marathons (Boston qualifier), hiking, photography",
+                        "Causes": "Women in Tech advocate, STEM education board member",
+                        "Family": "Married, 2 kids (8, 11) | Work-life balance important",
+                        "Your Mutual Connections": "Sarah knows your VP Engineering (worked together at Amazon)",
+                        "Conversation Starters": "Recent Seattle marathon, AI ethics, hiking spots"
+                    },
+                    "Your Engagement Strategy": {
+                        "First Touch": "LinkedIn connection + thoughtful note (NOT sales pitch)",
+                        "Message Angle": "Mutual Amazon connection introduction",
+                        "Meeting Ask": "30min Tuesday 7:30am coffee | Her office building",
+                        "Meeting Format": "15min demo + 15min Q&A | Zero slides",
+                        "Proof to Bring": "3 manufacturing AI case studies with ROI data",
+                        "Leave-Behind": "Custom POC plan for Contoso's specific use case",
+                        "Follow-up": "Personalized video summary + next steps within 2 hours"
+                    },
+                    "🎯 Winning Her Over": {
+                        "DO": "Show manufacturing AI expertise, quantify ROI, be direct",
+                        "DON'T": "Generic pitch, buzzword bingo, waste her time",
+                        "Credibility Builder": "Reference your VP Eng relationship from Amazon days",
+                        "Differentiation": "You're only vendor with AI-powered manufacturing analytics",
+                        "Close Strategy": "30-day pilot with guaranteed KPIs | No risk to her"
+                    }
+                }
+            },
+
+            // Step 5: Budget & Timing Intelligence - Show buying signals
+            {
+                "type": "user",
+                "content": "What's the budget situation and timing? When can we actually close this deal?",
+                "typingTime": 1350,
+                "delay": 850
+            },
+            {
+                "type": "agent",
+                "content": "I've analyzed budget cycles, procurement patterns, and buying signals. Here's your deal timing and financial intelligence:",
+                "typingTime": 2100,
+                "delay": 1100,
+                "agentData": {
+                    "Budget Intelligence": {
+                        "FY2025 Budget": "$180M technology transformation (CTO-controlled)",
+                        "Your Category": "$12-15M allocated for 'Data & Analytics Platform'",
+                        "Current Spend": "$340K with you | $2.1M total category spend",
+                        "Budget Authority": "CTO approves <$5M | CFO+CEO for >$5M deals",
+                        "Unallocated Funds": "$4.2M still available in CTO's discretionary budget",
+                        "Procurement Status": "Q4 budget flush happening NOW (use it or lose it)"
+                    },
+                    "Deal Sizing & Structure": {
+                        "Renewal Only": "$340K (base case) - 0% growth",
+                        "Renewal + Expansion": "$2.1M ARR (target case) - Your goal",
+                        "Strategic Enterprise": "$3.5M ARR (best case) - Includes AI platform",
+                        "Contract Term": "They prefer 3-year for budget predictability",
+                        "Payment Terms": "Annual prepay standard (quarterly possible)",
+                        "Discount Expectations": "15-20% off list (based on past deals)"
+                    },
+                    "Buying Signals Detected": {
+                        "🟢 STRONG": "CTO's 100-day plan includes your solution category",
+                        "🟢 STRONG": "Budget already allocated and approved",
+                        "🟢 STRONG": "Urgency to complete vendor consolidation by Jan 1",
+                        "🟡 MODERATE": "CFO reviewing all renewals (could delay)",
+                        "🟡 MODERATE": "Procurement consultant involved (process risk)",
+                        "🔴 WEAK": "No formal RFP issued yet (competitors ahead)"
+                    },
+                    "Timeline Analysis": {
+                        "Today": "December 10, 2024",
+                        "Current Renewal Date": "February 15, 2025 (67 days)",
+                        "FY End": "December 31, 2024 (21 days) - Budget flush window",
+                        "Realistic Close Date": "January 20, 2025 (41 days)",
+                        "Best Case Close": "December 27, 2024 (17 days) - Year-end deal",
+                        "Worst Case": "February 10, 2025 (62 days) - Just before renewal",
+                        "Risk Date": "January 31, 2025 - If not closed, likely lost to competitor"
+                    },
+                    "Critical Path to Close": {
+                        "Week 1 (This Week)": [
+                            "Day 1-2: Secure CTO meeting via mutual connection",
+                            "Day 3: Executive briefing with CTO (30min)",
+                            "Day 4-5: Proposal draft + technical scoping call",
+                            "Day 6: Proposal submitted with 3 pricing options"
+                        ],
+                        "Week 2 (Dec 16-20)": [
+                            "Day 8: CFO ROI presentation",
+                            "Day 9-10: Technical POC kickoff",
+                            "Day 11: Procurement negotiation begins",
+                            "Day 12: Legal review initiated"
+                        ],
+                        "Week 3 (Dec 23-27)": [
+                            "🎄 Holiday slowdown - Limited availability",
+                            "Day 15: Executive alignment call (all stakeholders)",
+                            "Day 16: Final pricing negotiation",
+                            "Day 17: Verbal commitment target (before year-end)",
+                            "Day 19: Contract signature (year-end budget deal)"
+                        ],
+                        "Backup Timeline (If year-end miss)": [
+                            "Jan 6-10: Resume discussions post-holidays",
+                            "Jan 13-17: Technical validation completion",
+                            "Jan 20: Contract signature (realistic date)"
+                        ]
+                    },
+                    "Financial Levers": {
+                        "Year-End Urgency": "Offer 20% discount if signed by Dec 31",
+                        "Multi-Year Commitment": "3-year deal = 25% off vs annual",
+                        "Prepayment Incentive": "Annual prepay = 10% additional discount",
+                        "Success-Based": "Tier 1: $1.8M base | Tier 2: $2.5M with AI add-on",
+                        "Budget Hack": "Split $2.1M: $340K renewal (Feb) + $1.76M expansion (Jan)"
+                    },
+                    "Deal Risk Assessment": {
+                        "Risk Level": "🟡 MODERATE-HIGH (55% close probability)",
+                        "Biggest Risk": "DataBricks relationship with CTO",
+                        "Timeline Risk": "Holiday calendar compression",
+                        "Budget Risk": "LOW - Funds confirmed available",
+                        "Process Risk": "Procurement consultant may slow down",
+                        "Champion Risk": "James Liu staying neutral (needs activation)",
+                        "Mitigation": "Accelerate to verbal commitment by Dec 20"
+                    }
+                }
+            },
+
+            // Step 6: Meeting Preparation Brief - Show synthesis capability
+            {
+                "type": "user",
+                "content": "I have a meeting with Sarah Chen tomorrow at 8am. Generate my complete meeting preparation brief.",
+                "typingTime": 1450,
+                "delay": 900
+            },
+            {
+                "type": "agent",
+                "content": "I've synthesized all account intelligence into your executive meeting brief. Here's everything you need to nail your CTO meeting tomorrow:",
+                "typingTime": 2200,
+                "delay": 1150,
+                "agentData": {
+                    "📅 Meeting Details": {
+                        "Who": "Dr. Sarah Chen, Chief Technology Officer",
+                        "When": "Tomorrow, 8:00 AM - 8:30 AM (30 minutes)",
+                        "Where": "Contoso HQ, Building 3, Executive Floor",
+                        "Format": "In-person (she prefers face-to-face for first meetings)",
+                        "Attendees": "1:1 with CTO (she likes to evaluate vendors personally first)",
+                        "Her Energy Level": "High - morning person, peak performance time"
+                    },
+                    "🎯 Your Meeting Objectives": {
+                        "Primary Goal": "Establish credibility + get invited to technical deep-dive",
+                        "Secondary Goal": "Understand her AI vision + position your platform",
+                        "Tertiary Goal": "Secure champion advocate (James Liu) re-engagement",
+                        "Success Metric": "Leave with: POC agreement OR technical eval scheduled",
+                        "Relationship Goal": "Move from 'vendor' to 'strategic partner' perception"
+                    },
+                    "🗣️ Opening (Minutes 0-5)": {
+                        "Icebreaker": "'Sarah, thanks for the time. I know you're in week 6 of your 100-day plan - how's it going so far?'",
+                        "Credibility": "'I worked with our VP Eng who was your colleague at Amazon - Alex mentioned you're transforming manufacturing with AI'",
+                        "Permission": "'I have a 12-minute demo that shows how we helped 3 manufacturers do exactly that. Sound relevant?'",
+                        "Alternative Opener": "'Saw your LinkedIn post on manufacturing AI adoption - that's precisely what we solve. May I show you?'",
+                        "What NOT to say": "Avoid: 'Tell me about your business' (she'll think you didn't prepare)"
+                    },
+                    "💡 Core Message (Minutes 5-20)": {
+                        "Hook": "'We've helped 12 manufacturers reduce operational costs 30% with AI - in 90 days, not years'",
+                        "Proof Point #1": "'Fabrikam Manufacturing - $2.3B revenue like you - went from 47 systems to 1 unified platform'",
+                        "Proof Point #2": "'They achieved ROI in 4.2 months vs 18-month industry average'",
+                        "Proof Point #3": "'Their CTO said our AI models were 3x more accurate than DataBricks for manufacturing'",
+                        "Live Demo Focus": "Show real-time predictive maintenance AI (her #1 use case)",
+                        "Differentiation": "'Unlike Snowflake or DataBricks, we're built specifically for industrial IoT + manufacturing'",
+                        "Her Hot Button": "'Zero vendor lock-in - you own your data, open APIs, can leave anytime'"
+                    },
+                    "❓ Discovery Questions (Minutes 20-25)": {
+                        "Question 1": "'What's the #1 operational bottleneck you'd eliminate if you could wave a magic wand?'",
+                        "Question 2": "'You mentioned vendor consolidation from 47 to 15 - what's your criteria for the winners?'",
+                        "Question 3": "'Where is your team spending time on manual work that AI could eliminate?'",
+                        "Question 4": "'What would success look like for you 6 months from now?'",
+                        "Listen For": "Pain points, decision criteria, timeline pressure, budget constraints"
+                    },
+                    "🎁 The Ask (Minutes 25-30)": {
+                        "Proposal": "'I'd like to run a 30-day pilot with zero risk - we guarantee 3 measurable outcomes or you pay nothing'",
+                        "Specific Offer": "'Week 1: Data integration | Week 2-3: AI model training | Week 4: Production pilot with your ops team'",
+                        "Success Metrics": "'We'll prove: 20% efficiency gain, 90% prediction accuracy, and <30 day implementation time'",
+                        "Next Steps": "'Can we get your VP Engineering James on a call this Thursday to scope the technical details?'",
+                        "Urgency": "'If we start by Dec 20, you'll have results to show your board in January'",
+                        "Close": "'What questions do you have that would help you decide if a pilot makes sense?'"
+                    },
+                    "🛡️ Objection Handling": {
+                        "Already evaluating DataBricks": "'They're strong in general AI - we're specialized in manufacturing. Let me show you the difference in accuracy...'",
+                        "Snowflake is cheaper": "'Initial price yes, but total cost over 3 years? Our customers save 40% vs Snowflake when you factor in...'",
+                        "Too busy for evaluations": "'That's why our 30-day pilot is turn-key - we do 90% of the work, you just validate results'",
+                        "Need to talk to team first": "'Absolutely - I'd love to present to James and your engineering leaders. When works for you?'",
+                        "Budget concerns": "'I understand - we can structure this to fit your Q1 budget vs year-end, whichever works better'"
+                    },
+                    "📊 Materials to Bring": {
+                        "Demo Environment": "Pre-loaded with Contoso's industry data (manufacturing IoT)",
+                        "Case Studies": "3 printed one-pagers: Fabrikam, Northwind, Fourth Coffee",
+                        "ROI Calculator": "Tablet with interactive tool (plug in her numbers)",
+                        "Pilot Proposal": "1-page PDF with 30-day timeline + guaranteed outcomes",
+                        "Business Card": "With handwritten note: 'Amazon connection: Alex Zhang'",
+                        "Leave-Behind": "Custom video (2 min) summarizing your conversation - sent within 2 hrs"
+                    },
+                    "🚨 Red Flags to Watch": {
+                        "Watch Her Body Language": "If she checks watch/phone = you lost her attention",
+                        "If She's Skeptical": "She may test you with hard technical questions",
+                        "If She's Engaged": "She'll start brainstorming use cases with you",
+                        "Commitment Signal": "She introduces you to someone else = very positive",
+                        "Rejection Signal": "'Send me more info' with no next meeting = polite no"
+                    },
+                    "✅ Post-Meeting Actions": {
+                        "Within 2 Hours": "Personalized video recap + custom pilot proposal",
+                        "Within 4 Hours": "Connect on LinkedIn with thoughtful note",
+                        "Within 24 Hours": "Case study of exact use case she mentioned + intro to reference customer",
+                        "Within 48 Hours": "Technical scoping call scheduled with James Liu",
+                        "Follow-up Cadence": "Touch base every 3 days until pilot starts or deal closes"
+                    }
+                }
+            },
+
+            // Step 7: Personalized Messaging - Show AI-generated content
+            {
+                "type": "user",
+                "content": "Draft my LinkedIn connection request to Sarah and my follow-up email after tomorrow's meeting.",
+                "typingTime": 1350,
+                "delay": 800
+            },
+            {
+                "type": "agent",
+                "content": "I've generated personalized messages tailored to Sarah Chen's communication style, interests, and your strategic positioning. Ready to copy-paste:",
+                "typingTime": 2000,
+                "delay": 1000,
+                "agentData": {
+                    "LinkedIn Connection Request": {
+                        "Message": "Hi Sarah - Alex Zhang (my VP Eng, your former Amazon colleague) mentioned you're leading an impressive AI transformation at Contoso. I work with manufacturers implementing AI-powered operations and would love to exchange ideas. Looking forward to our coffee chat tomorrow morning. - [Your Name]",
+                        "Character Count": "287 / 300 (optimized for LinkedIn limit)",
+                        "Why This Works": "Personal connection, mutual respect, value-first (not sales-y), references tomorrow's meeting",
+                        "Send Timing": "Tonight at 6pm (she checks LinkedIn evenings per activity patterns)",
+                        "Acceptance Probability": "85% (based on her connection acceptance rate for thoughtful requests)"
+                    },
+                    "Pre-Meeting Text (Send 7:45am)": {
+                        "Message": "Good morning Sarah! Looking forward to our 8am. I'm in the lobby - heading up now. ☕",
+                        "Why This Works": "Professional, punctual, casual tone matches her style",
+                        "Pro Tip": "Bring her favorite coffee - Starbucks Americano, extra shot (per her Instagram)"
+                    },
+                    "Post-Meeting Email (Send within 2 hours)": {
+                        "Subject": "30-Day Pilot Proposal - Predictive Maintenance AI for Contoso",
+                        "Body": "Sarah,<br><br>Thank you for the candid conversation this morning. Three things stuck with me:<br><br>1️⃣ Your vision to eliminate the manual bottlenecks in quality control<br>2️⃣ The pressure to show measurable AI ROI by your board meeting in January<br>3️⃣ Your concern about vendor solutions that overpromise and underdeliver<br><br>I've put together a risk-free 30-day pilot that addresses all three:<br><br>📅 TIMELINE:<br>• Dec 16-20: Data integration (we do the heavy lifting)<br>• Dec 23-Jan 3: AI model training on your historical data<br>• Jan 6-10: Production pilot with your ops team<br>• Jan 13: Results presentation (ready for your board)<br><br>🎯 GUARANTEED OUTCOMES (or you pay $0):<br>✅ 20% reduction in quality control time<br>✅ 90%+ prediction accuracy for equipment failures<br>✅ Live dashboard deployed in <30 days<br><br>📊 I've attached:<br>• Pilot proposal (1-page PDF)<br>• Fabrikam case study (similar use case, 4.2mo ROI)<br>• Video walkthrough (2min - I recorded custom demo with your data)<br><br>Next step: 30-min technical scoping call with James Liu this Thursday?<br><br>Let me know what questions you have.<br><br>Best,<br>[Your Name]<br>[Title]<br>[Phone] | [Email]<br><br>P.S. - Saw you're keynoting ManufacturingTech Summit in Feb. I'll be there - would love to grab coffee if you have time.",
+                        "Why This Works": [
+                            "Summarizes her pain points (proves you listened)",
+                            "Addresses her objections preemptively",
+                            "Specific timeline with dates (not vague)",
+                            "Risk-reversal guarantee (removes her decision anxiety)",
+                            "Clear next step with low commitment ask",
+                            "P.S. builds personal relationship beyond the deal"
+                        ],
+                        "Attachments": "Pilot proposal PDF, case study PDF, custom video link"
+                    },
+                    "If She Doesn't Respond (48hr Follow-up)": {
+                        "Subject": "Quick question - Re: Pilot Proposal",
+                        "Body": "Sarah,<br><br>Following up on Tuesday's conversation and the pilot proposal I sent.<br><br>Quick question: Is the 30-day timeline aggressive, or would starting after the holidays (Jan 6) work better for your team?<br><br>Happy to adjust to your schedule.<br><br>Best,<br>[Your Name]",
+                        "Why This Works": "Simple yes/no question (easy to respond), shows flexibility, non-pushy tone"
+                    },
+                    "If She Says 'Not Right Now' (Nurture Sequence)": {
+                        "Week 1": "Share relevant manufacturing AI article with note: 'Thought of our conversation'",
+                        "Week 3": "Case study of new customer win in her industry",
+                        "Week 5": "Invite to exclusive webinar on manufacturing AI trends",
+                        "Month 2": "Check-in: 'How's the vendor consolidation going?'",
+                        "Strategy": "Stay top-of-mind without being annoying, provide value each touch"
+                    },
+                    "Champion Activation Email (To James Liu)": {
+                        "Subject": "Coffee next week? + Quick favor to ask",
+                        "Body": "Hey James,<br><br>Hope you're doing well! I know things have been busy with the new CTO onboarding.<br><br>I met with Sarah Chen yesterday and showed her the AI capabilities you've been using. She seemed really interested in the predictive maintenance use case.<br><br>Quick favor: Would you be open to joining a 30-min technical scoping call with Sarah and me this Thursday? Your perspective on how the platform works in production would be invaluable.<br><br>Also - I owe you coffee. Available next Tuesday or Wednesday?<br><br>Thanks,<br>[Your Name]",
+                        "Why This Works": "Acknowledges his political situation, gives him credit, low-commitment ask, personal touch"
+                    },
+                    "CFO Outreach Email (To Robert Martinez)": {
+                        "Subject": "ROI Analysis - Contoso Manufacturing AI Initiative",
+                        "Body": "Robert,<br><br>I'm working with Sarah Chen on a pilot for AI-powered manufacturing operations at Contoso.<br><br>Given your focus on measurable ROI, I put together a financial analysis specific to your business:<br><br>• 30% operational cost reduction = $4.2M annual savings<br>• Payback period: 4.2 months<br>• 3-year NPV: $11.7M (at your 12% discount rate)<br><br>I've attached the full model with assumptions - happy to walk through it if useful.<br><br>Would 15 minutes next week work to discuss the financial case?<br><br>Best regards,<br>[Your Name]<br><br>P.S. - I know you're reviewing all SaaS contracts >$100K. This analysis shows how we compare to the alternatives on total cost of ownership.",
+                        "Why This Works": "Speaks CFO language (numbers, ROI, NPV), acknowledges his initiative, specific ask"
+                    },
+                    "💡 Messaging Best Practices": {
+                        "Tone": "Professional but conversational (match her style)",
+                        "Length": "Keep emails under 200 words (she's busy)",
+                        "Formatting": "Use bullets, numbers, emojis for scannability",
+                        "Call-to-Action": "One clear next step (don't give too many options)",
+                        "Timing": "Send mornings 7-9am (when she checks email)",
+                        "Follow-up Cadence": "Every 3 days max (not daily - too pushy)"
+                    }
+                }
+            },
+
+            // Step 8: Risk Assessment & Deal Strategy - Show predictive analytics
+            {
+                "type": "user",
+                "content": "What are the risks to closing this deal, and what's my action plan to mitigate them?",
+                "typingTime": 1300,
+                "delay": 850
+            },
+            {
+                "type": "agent",
+                "content": "I've analyzed 47 risk factors across relationships, competition, process, and timing. Here's your risk assessment with mitigation strategies:",
+                "typingTime": 2100,
+                "delay": 1100,
+                "agentData": {
+                    "Deal Health Score": {
+                        "Overall Risk": "🟡 MODERATE-HIGH (62/100)",
+                        "Close Probability": "47% → Can improve to 75% with action plan",
+                        "Trending": "⬇️ Declining (was 52% last month due to CTO change)",
+                        "Risk Category": "At-risk expansion + renewal jeopardy",
+                        "Action Required": "🔴 URGENT - Immediate intervention needed"
+                    },
+                    "🔴 CRITICAL RISKS (Must Fix Now)": {
+                        "Risk #1: CTO Relationship Gap": {
+                            "Impact": "SEVERE - She controls budget + decision",
+                            "Probability": "95% (zero contact in 6 weeks)",
+                            "Consequence": "Deal dies or goes to competitor she knows",
+                            "Mitigation": "Leverage Alex Zhang intro + schedule meeting THIS WEEK",
+                            "Status": "🔴 UNMITIGATED - Your #1 priority",
+                            "Timeline": "Must meet her within 5 days or lose deal"
+                        },
+                        "Risk #2: DataBricks Inside Track": {
+                            "Impact": "SEVERE - Personal relationship with CTO",
+                            "Probability": "80% (their AE is her ex-colleague)",
+                            "Consequence": "They win on relationship despite higher price",
+                            "Mitigation": "Counter with technical superiority + manufacturing expertise + James Liu advocacy",
+                            "Status": "🟡 PARTIALLY MITIGATED - Need stronger positioning",
+                            "Timeline": "They're pushing for decision by Dec 20"
+                        },
+                        "Risk #3: Usage Declining 12%": {
+                            "Impact": "HIGH - Signals dissatisfaction or alternative evaluation",
+                            "Probability": "100% (confirmed in CRM data)",
+                            "Consequence": "Renewal at risk, expansion impossible",
+                            "Mitigation": "Customer success intervention + understand why + quick win to reverse trend",
+                            "Status": "🔴 UNMITIGATED - Need CS team engaged ASAP",
+                            "Timeline": "Address within 7 days before it becomes bigger issue"
+                        }
+                    },
+                    "🟡 MODERATE RISKS (Monitor Closely)": {
+                        "Risk #4: Champion Neutralized": {
+                            "Impact": "MODERATE - Lost internal advocate",
+                            "Probability": "70% (James Liu going silent)",
+                            "Consequence": "No one fighting for you internally",
+                            "Mitigation": "Re-engage James with career benefit angle (CTO visibility)",
+                            "Status": "🟡 MONITORING - Reactivation plan ready"
+                        },
+                        "Risk #5: Procurement Delay": {
+                            "Impact": "MODERATE - Timing risk",
+                            "Probability": "60% (new consultant involved)",
+                            "Consequence": "Miss year-end budget window, Q1 delay",
+                            "Mitigation": "Engage Michelle Park early, streamline process, executive pressure",
+                            "Status": "🟢 CONTROLLED - Procurement playbook ready"
+                        },
+                        "Risk #6: CFO Cost Scrutiny": {
+                            "Impact": "MODERATE - Price pressure",
+                            "Probability": "75% (all contracts under review)",
+                            "Consequence": "Aggressive negotiation, margin compression",
+                            "Mitigation": "ROI model showing 3-year TCO advantage over Snowflake",
+                            "Status": "🟡 PREPARING - Financial case in progress"
+                        }
+                    },
+                    "🟢 LOW RISKS (Standard Vigilance)": {
+                        "Risk #7: Technical Fit": "LOW - Your platform proven with James",
+                        "Risk #8: Budget Availability": "LOW - $12M allocated, confirmed",
+                        "Risk #9: Legal/Security": "LOW - Already approved vendor",
+                        "Risk #10: Implementation": "LOW - Track record established"
+                    },
+                    "Win/Loss Factors Analysis": {
+                        "Why You Could Win": [
+                            "✅ 3.5 year relationship + proven platform",
+                            "✅ Technical champion James Liu (if reactivated)",
+                            "✅ Manufacturing specialization (competitors lack)",
+                            "✅ Mutual Amazon connection with CTO",
+                            "✅ Budget confirmed available"
+                        ],
+                        "Why You Could Lose": [
+                            "❌ Zero CTO relationship (DataBricks has strong one)",
+                            "❌ Usage declining (unhealthy account signal)",
+                            "❌ Lost previous account owner (relationship gap)",
+                            "❌ Snowflake undercutting on price 40%",
+                            "❌ Time pressure (67 days to renewal)"
+                        ]
+                    },
+                    "🎯 Risk Mitigation Action Plan": {
+                        "THIS WEEK (Dec 10-14)": [
+                            "Mon: Alex Zhang intro email to CTO Sarah",
+                            "Tue: CTO meeting (8am) - establish relationship",
+                            "Wed: CS team audit usage decline + recovery plan",
+                            "Thu: James Liu reactivation lunch + get his buy-in",
+                            "Fri: CFO email with ROI analysis + meeting request"
+                        ],
+                        "NEXT WEEK (Dec 16-20)": [
+                            "Mon: Pilot proposal submission with 3 pricing tiers",
+                            "Tue: Technical scoping call (James + CTO's engineering team)",
+                            "Wed: Competitive battle card to CTO (neutralize DataBricks)",
+                            "Thu: Procurement process kickoff with Michelle",
+                            "Fri: Executive alignment call (CTO + CFO + you)"
+                        ],
+                        "WEEK 3 (Dec 23-27)": [
+                            "Holiday week - limited availability",
+                            "Tue: Check-in call with CTO (keep momentum)",
+                            "Thu: Year-end close push (if timing works)",
+                            "Fri: Verbal commitment target"
+                        ]
+                    },
+                    "Deal Strategy": {
+                        "Primary Strategy": "Neutralize relationship gap + prove technical superiority",
+                        "Positioning": "Transform from vendor to strategic AI transformation partner",
+                        "Competitive Jujitsu": "Use DataBricks relationship against them (unproven in manufacturing)",
+                        "Pricing Strategy": "Match Snowflake Year 1, show 3-year TCO advantage",
+                        "Executive Escalation": "CEO-to-CEO call if needed (nuclear option)",
+                        "Champion Play": "Make James Liu hero to new CTO (political motivation)"
+                    },
+                    "Success Probability Roadmap": {
+                        "Current State": "47% win probability",
+                        "After CTO Meeting": "→ 58% (relationship established)",
+                        "After Pilot Proposal": "→ 65% (concrete next step)",
+                        "After James Reactivation": "→ 72% (internal champion)",
+                        "After CFO Buy-in": "→ 78% (economic buyer aligned)",
+                        "After Verbal Commitment": "→ 90% (deal essentially won)",
+                        "Target": "75%+ by Dec 20 (verbal commitment)"
+                    }
+                }
+            },
+
+            // Step 9: Next Best Actions - Show strategic prioritization
+            {
+                "type": "user",
+                "content": "Give me my prioritized action plan for the next 48 hours. What should I do first, second, third?",
+                "typingTime": 1350,
+                "delay": 850
+            },
+            {
+                "type": "agent",
+                "content": "I've prioritized your actions based on impact, urgency, and dependencies. Here's your hour-by-hour battle plan for the next 48 hours:",
+                "typingTime": 2100,
+                "delay": 1100,
+                "agentData": {
+                    "🚨 NEXT 48 HOURS - HOUR BY HOUR PLAN": {
+                        "Priority Framework": "Impact x Urgency x Ease = Priority Score",
+                        "Focus": "Critical path to CTO meeting + deal acceleration",
+                        "Goal": "Secure CTO meeting + reactivate champion + block DataBricks"
+                    },
+                    "TODAY - NEXT 4 HOURS (Immediate Actions)": {
+                        "⏰ Next 30 Minutes (HIGHEST PRIORITY)": {
+                            "Action": "Call Alex Zhang (your VP Eng) for warm intro to CTO Sarah",
+                            "Why Now": "You need CTO meeting THIS WEEK - warm intro is fastest path",
+                            "Script": "'Alex - remember Sarah Chen from your Amazon days? She's now CTO at my top account. Can you intro me? I need 30min with her this week to save a $2M deal.'",
+                            "Expected Outcome": "Alex agrees to email intro within 2 hours",
+                            "Priority Score": "100/100 - Nothing is more important",
+                            "Time Investment": "15 minutes"
+                        },
+                        "⏰ Hour 1": {
+                            "Action": "Draft + send LinkedIn connection to Sarah Chen",
+                            "Why Now": "Prime her before Alex's intro email arrives",
+                            "Message": "Use the pre-drafted message from earlier (in inbox now)",
+                            "Expected Outcome": "She sees your name twice today (LinkedIn + Alex email)",
+                            "Priority Score": "95/100",
+                            "Time Investment": "10 minutes"
+                        },
+                        "⏰ Hour 2": {
+                            "Action": "Call James Liu (your technical champion) for coffee this week",
+                            "Why Now": "Need him reactivated before CTO meeting to give you insider intel",
+                            "Script": "'James - congrats on the new CTO. I hear she's impressive. Coffee this week? I'd love your advice on how to best support her AI vision.'",
+                            "Expected Outcome": "Coffee scheduled Thu or Fri + he gives you CTO intel",
+                            "Priority Score": "90/100",
+                            "Time Investment": "20 minutes"
+                        },
+                        "⏰ Hour 3-4": {
+                            "Action": "Prepare CTO meeting materials (demo, case studies, pilot proposal)",
+                            "Why Now": "Meeting likely scheduled for tomorrow or Thursday - be ready",
+                            "Deliverables": "30-min demo customized to Contoso, 3 case studies printed, 1-page pilot proposal",
+                            "Expected Outcome": "Materials ready to present on 2-hour notice",
+                            "Priority Score": "85/100",
+                            "Time Investment": "90 minutes"
+                        }
+                    },
+                    "TODAY - HOURS 5-8 (Secondary Actions)": {
+                        "⏰ Hour 5": {
+                            "Action": "Engage Customer Success team on usage decline issue",
+                            "Why": "CTO will ask about current customer satisfaction - need good answer",
+                            "Email CS Manager": "'URGENT: Contoso usage down 12%. Need recovery plan before I meet CTO tomorrow. What's causing this?'",
+                            "Expected Outcome": "CS investigates + provides talking points",
+                            "Priority Score": "80/100"
+                        },
+                        "⏰ Hour 6": {
+                            "Action": "Research + prepare competitive battle card (vs DataBricks)",
+                            "Why": "CTO will mention DataBricks - need compelling counter",
+                            "Tasks": "Find DataBricks manufacturing customer failures, compare features, pricing analysis",
+                            "Expected Outcome": "2-minute response ready when she brings them up",
+                            "Priority Score": "75/100"
+                        },
+                        "⏰ Hour 7-8": {
+                            "Action": "Draft CFO email with ROI analysis (send tomorrow)",
+                            "Why": "Multi-threading - don't rely only on CTO relationship",
+                            "Deliverables": "Email draft + ROI calculator + 3-year TCO model",
+                            "Expected Outcome": "Ready to send after CTO meeting (timing matters)",
+                            "Priority Score": "70/100"
+                        }
+                    },
+                    "TOMORROW - MORNING (Hours 9-12)": {
+                        "⏰ 7:00 AM": {
+                            "Action": "Final CTO meeting prep + role play",
+                            "Details": "Review Sarah's profile, practice demo, memorize key stats",
+                            "Prep": "Get good sleep tonight, morning workout, strong coffee",
+                            "Mindset": "You're a strategic advisor, not a vendor. Confidence."
+                        },
+                        "⏰ 8:00 AM": {
+                            "Action": "CTO MEETING with Sarah Chen 🎯",
+                            "Duration": "30 minutes (plan for 25, give her 5 min buffer)",
+                            "Objective": "Establish relationship + secure pilot agreement",
+                            "Success Metric": "Leave with next step scheduled (technical scoping call)",
+                            "Priority Score": "100/100 - THE MOST IMPORTANT 30 MIN OF YOUR QUARTER"
+                        },
+                        "⏰ 10:00 AM": {
+                            "Action": "Post-meeting actions (CRITICAL - do within 2 hours)",
+                            "Task 1": "Send follow-up email with pilot proposal (while convo is fresh)",
+                            "Task 2": "Record + send personalized video recap",
+                            "Task 3": "Update CRM with detailed notes + next steps",
+                            "Task 4": "Brief your manager on meeting outcome",
+                            "Why Timing Matters": "Speed = professionalism. Do this before lunch."
+                        },
+                        "⏰ 11:30 AM": {
+                            "Action": "Coffee with James Liu (if scheduled today)",
+                            "Objective": "Get his champion advocacy back + insider intel on CTO",
+                            "Give Him": "Credit for how platform works, visibility with CTO",
+                            "Ask": "Join technical scoping call with Sarah this week"
+                        }
+                    },
+                    "TOMORROW - AFTERNOON (Hours 13-16)": {
+                        "⏰ 1:00 PM": {
+                            "Action": "Send CFO email with ROI analysis",
+                            "Why Now": "After CTO meeting, you have more context for CFO pitch",
+                            "Objective": "Multi-thread to economic buyer",
+                            "Expected Outcome": "CFO meeting request for next week"
+                        },
+                        "⏰ 2:00 PM": {
+                            "Action": "Schedule technical scoping call (if not already scheduled)",
+                            "Attendees": "Sarah Chen, James Liu, your solutions engineer",
+                            "Target Date": "Thursday or Friday this week",
+                            "Agenda": "30-day pilot technical requirements + success metrics"
+                        },
+                        "⏰ 3:00 PM": {
+                            "Action": "Procurement outreach to Michelle Park",
+                            "Why": "Get ahead of process delays",
+                            "Message": "'Michelle - heads up that Sarah and I discussed a pilot. Wanted to loop you in early to streamline timing. 15min call this week?'",
+                            "Expected Outcome": "Procurement process understanding + timeline expectations"
+                        },
+                        "⏰ 4:00 PM": {
+                            "Action": "Deal strategy session with your manager",
+                            "Agenda": "Review CTO meeting outcome, adjust deal strategy, get exec support",
+                            "Ask For": "CEO-to-CEO escalation option if needed",
+                            "Update": "Forecast, timeline, risks, mitigation plan"
+                        }
+                    },
+                    "Success Metrics - 48 Hours": {
+                        "Must-Have Outcomes": [
+                            "✅ CTO meeting completed with positive outcome",
+                            "✅ Next step scheduled (pilot or technical call)",
+                            "✅ James Liu re-engaged as champion",
+                            "✅ Follow-up materials sent within 2 hours"
+                        ],
+                        "Nice-to-Have Outcomes": [
+                            "✅ CFO engaged and meeting scheduled",
+                            "✅ Procurement process mapped",
+                            "✅ Usage decline issue understood + recovery plan",
+                            "✅ Competitive positioning strengthened"
+                        ],
+                        "Deal Progress Target": "Move from 47% → 65% close probability"
+                    },
+                    "⚠️ Common Mistakes to Avoid": {
+                        "Don't": "Send generic follow-up - must be hyper-personalized",
+                        "Don't": "Wait >2 hours to follow up after CTO meeting",
+                        "Don't": "Rely only on CTO - multi-thread to CFO + Procurement",
+                        "Don't": "Forget to prep James Liu before technical call",
+                        "Don't": "Ignore usage decline issue - CTO will discover it"
+                    }
+                }
+            },
+
+            // Step 10: Deal Tracking & Success Metrics - Show ongoing monitoring
+            {
+                "type": "user",
+                "content": "How will I track progress on this deal and know if I'm on track to close by January?",
+                "typingTime": 1350,
+                "delay": 850
+            },
+            {
+                "type": "agent",
+                "content": "I've created your deal dashboard with real-time tracking metrics, milestones, and early warning indicators. Here's your success framework:",
+                "typingTime": 2200,
+                "delay": 1100,
+                "agentData": {
+                    "📊 Deal Dashboard - Live Metrics": {
+                        "Deal Name": "Contoso Corporation - Renewal + Expansion",
+                        "Current Stage": "Qualification (Stage 2 of 7)",
+                        "Target Close Date": "January 20, 2025 (41 days)",
+                        "Deal Value": "$2.1M ARR (6.2x expansion)",
+                        "Close Probability": "47% (Below target - needs action)",
+                        "Last Updated": "Dec 10, 2024 at 2:34 PM",
+                        "Health Status": "🟡 YELLOW - At Risk"
+                    },
+                    "🎯 Critical Success Milestones": {
+                        "✅ Week 1 (Dec 10-14)": {
+                            "Milestone": "CTO relationship established",
+                            "Target": "Meeting completed + pilot proposal submitted",
+                            "Status": "🔴 NOT STARTED - Meeting not scheduled yet",
+                            "Risk": "HIGH - Must complete by Friday or timeline slips",
+                            "Action": "Alex Zhang intro call TODAY"
+                        },
+                        "⏳ Week 2 (Dec 16-20)": {
+                            "Milestone": "Technical validation + stakeholder alignment",
+                            "Target": "Pilot scoping call + CFO meeting + Procurement engaged",
+                            "Status": "⚪ PENDING - Depends on Week 1 completion",
+                            "Risk": "MODERATE - Holiday calendar compression",
+                            "Success Criteria": "All 5 stakeholders engaged + pilot agreement"
+                        },
+                        "⏳ Week 3 (Dec 23-27)": {
+                            "Milestone": "Verbal commitment",
+                            "Target": "Executive alignment + contract negotiation started",
+                            "Status": "⚪ PENDING",
+                            "Risk": "HIGH - Holiday week (low availability)",
+                            "Backup Plan": "Extend to Jan 6 if holidays cause delay"
+                        },
+                        "⏳ Week 4-5 (Jan 6-17)": {
+                            "Milestone": "Contract finalization",
+                            "Target": "Legal review + pricing finalized + signatures",
+                            "Status": "⚪ PENDING",
+                            "Risk": "MODERATE - Procurement process delays",
+                            "Success Criteria": "Contracts signed by Jan 17"
+                        },
+                        "⏳ Week 6 (Jan 20)": {
+                            "Milestone": "DEAL CLOSED 🎉",
+                            "Target": "Signature + payment + kickoff scheduled",
+                            "Status": "⚪ PENDING",
+                            "Success Metric": "$2.1M ARR booked + Q1 quota credit"
+                        }
+                    },
+                    "📈 Leading Indicators (Early Warning System)": {
+                        "🟢 GREEN Signals (Keep Doing This)": [
+                            "CTO responds to emails within 24 hours",
+                            "James Liu actively participating in technical discussions",
+                            "CFO asks detailed ROI questions (shows real interest)",
+                            "Procurement provides standard contract template",
+                            "Sarah introduces you to other executives",
+                            "Usage metrics trending upward",
+                            "Champion score >8/10"
+                        ],
+                        "🟡 YELLOW Signals (Watch Closely)": [
+                            "⚠️ Email response time >48 hours (losing priority)",
+                            "⚠️ Meeting rescheduled more than once (lack of urgency)",
+                            "⚠️ CFO not engaged yet (economic buyer missing)",
+                            "⚠️ Procurement asking for 3 vendor bids (competitive eval)",
+                            "⚠️ Technical questions decreasing (evaluation stalling)",
+                            "⚠️ Champion going silent (political pressure)"
+                        ],
+                        "🔴 RED Signals (URGENT - Fix Immediately)": [
+                            "❌ CTO stops responding to outreach (ghosting)",
+                            "❌ James Liu says 'now's not good time' (politically blocked)",
+                            "❌ Competitor mentioned favorably >3 times (losing mindshare)",
+                            "❌ Budget freeze or 'let's wait til next quarter' (deal death)",
+                            "❌ Legal rejecting your contract terms (deal blocker)",
+                            "❌ No contact in 7+ days (deal gone cold)"
+                        ]
+                    },
+                    "🎯 Stakeholder Engagement Scorecard": {
+                        "CTO Sarah Chen": {
+                            "Engagement Level": "0/10 - ❌ NO CONTACT",
+                            "Last Touch": "Never (she just started 6 weeks ago)",
+                            "Next Touch": "Within 24 hours (Alex intro)",
+                            "Target Score": "8/10 by Dec 20",
+                            "Activities Needed": "1 meeting + 3 email exchanges + 1 demo"
+                        },
+                        "CFO Robert Martinez": {
+                            "Engagement Level": "2/10 - 🔴 VERY WEAK",
+                            "Last Touch": "Trade show 18 months ago",
+                            "Next Touch": "ROI email after CTO meeting",
+                            "Target Score": "7/10 by Dec 20",
+                            "Activities Needed": "1 ROI presentation + business case review"
+                        },
+                        "Champion James Liu": {
+                            "Engagement Level": "6/10 - 🟡 FADING",
+                            "Last Touch": "3 weeks ago (support ticket)",
+                            "Next Touch": "Coffee this week",
+                            "Target Score": "9/10 by Dec 20",
+                            "Activities Needed": "Reactivate + involve in CTO meetings"
+                        },
+                        "Procurement Michelle Park": {
+                            "Engagement Level": "3/10 - 🟡 BASIC",
+                            "Last Touch": "Standard contract negotiation last year",
+                            "Next Touch": "Process alignment call next week",
+                            "Target Score": "6/10 by Dec 20",
+                            "Activities Needed": "Process mapping + timeline agreement"
+                        },
+                        "VP Ops David Kumar": {
+                            "Engagement Level": "0/10 - ❌ UNKNOWN",
+                            "Last Touch": "Never",
+                            "Next Touch": "Introduction via James Liu",
+                            "Target Score": "5/10 by Jan 10",
+                            "Activities Needed": "Use case discovery + pain point validation"
+                        }
+                    },
+                    "💰 Revenue Milestones & Quota Impact": {
+                        "Current ARR": "$340K (base renewal)",
+                        "Target ARR": "$2.1M (expansion)",
+                        "Upside ARR": "$3.5M (if strategic enterprise tier)",
+                        "Your Quota": "$8M annual",
+                        "Deal % of Quota": "26% (make or break deal for your year)",
+                        "Commission Impact": "$63K at target ($2.1M x 3% commission)",
+                        "Bonus Impact": "This deal puts you at 112% of quota = President's Club"
+                    },
+                    "📅 Weekly Checkpoint Framework": {
+                        "Every Monday 9am": "Review deal dashboard + update close probability",
+                        "Every Wednesday": "Stakeholder touch (email, call, or meeting)",
+                        "Every Friday": "Week-in-review with manager + next week plan",
+                        "Daily During Close": "Update CRM notes + track all interactions",
+                        "Red Flag Check": "If no contact in 4 days = immediate outreach"
+                    },
+                    "🚨 Deal Risk Alerts (Auto-Monitored)": {
+                        "Time-Based Alerts": [
+                            "Day 7: No CTO meeting yet = CRITICAL",
+                            "Day 14: No pilot proposal submitted = HIGH RISK",
+                            "Day 21: No verbal commitment = AT RISK",
+                            "Day 30: No contract draft = LIKELY LOST"
+                        ],
+                        "Activity-Based Alerts": [
+                            "Email response time >72 hours = YELLOW",
+                            "Meeting cancelled 2x = RED",
+                            "Competitor mentioned 3x = RED",
+                            "Champion score drops below 6/10 = YELLOW"
+                        ]
+                    },
+                    "✅ Success Criteria Checklist": {
+                        "By Dec 14": [
+                            "☐ CTO meeting completed",
+                            "☐ Pilot proposal submitted",
+                            "☐ Champion James re-engaged",
+                            "☐ CFO outreach initiated"
+                        ],
+                        "By Dec 20": [
+                            "☐ All 5 stakeholders contacted",
+                            "☐ Technical validation started",
+                            "☐ Procurement process mapped",
+                            "☐ Competitive positioning established",
+                            "☐ Close probability >65%"
+                        ],
+                        "By Dec 27": [
+                            "☐ Verbal commitment secured",
+                            "☐ Contract negotiation started",
+                            "☐ Legal review initiated",
+                            "☐ Implementation plan drafted"
+                        ],
+                        "By Jan 20": [
+                            "☐ Contracts signed",
+                            "☐ Payment received",
+                            "☐ Kickoff meeting scheduled",
+                            "☐ $2.1M ARR booked",
+                            "☐ Champagne celebration 🍾"
+                        ]
+                    },
+                    "🎓 Post-Close Actions": {
+                        "Week 1 After Close": "Customer onboarding kickoff + success plan",
+                        "Week 2": "Executive business review scheduled (prove ROI)",
+                        "Month 3": "Usage audit + expansion conversation start",
+                        "Quarter 2": "Reference customer ask + case study creation",
+                        "Next Renewal": "Start renewal conversation 120 days early (don't repeat this stress!)"
+                    }
+                }
+            }
+        ];
+
+        let currentMessageIndex = 0;
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('Account Intelligence Agent initialized');
+        });
+
+        // Auto resize textarea
+        function autoResize(textarea) {
+            textarea.style.height = 'auto';
+            textarea.style.height = Math.min(textarea.scrollHeight, 120) + 'px';
+        }
+
+        // Handle key press
+        function handleKeyPress(event) {
+            if (event.key === 'Enter' && !event.shiftKey) {
+                event.preventDefault();
+                sendCurrentMessage();
+            }
+        }
+
+        // Quick start from cards
+        function quickStart(type) {
+            let message = '';
+            switch(type) {
+                case 'start-chat':
+                    message = 'Help me with start chat';
+                    break;
+                case 'view-analytics':
+                    message = 'Help me with view analytics';
+                    break;
+                case 'get-started':
+                    message = 'Help me with get started';
+                    break;
+                default:
+                    message = 'Help me get started';
+                    break;
+            }
+
+            document.getElementById('messageInput').value = message;
+            sendCurrentMessage();
+        }
+
+        // Send current message
+        function sendCurrentMessage() {
+            const input = document.getElementById('messageInput');
+            const message = input.value.trim();
+            if (message) {
+                // Hide welcome screen and show chat
+                document.getElementById('welcomeScreen').classList.add('hidden');
+                document.getElementById('chatMessages').style.display = 'block';
+
+                // Add user message
+                addMessage('user', message);
+
+                input.value = '';
+                autoResize(input);
+
+                // Simulate agent response
+                setTimeout(() => {
+                    showTypingIndicator();
+                    setTimeout(() => {
+                        hideTypingIndicator();
+                        addMessage('agent', 'I\'ll help you with that. Please use the demo controls to see a full demonstration of my capabilities.');
+                    }, 1500);
+                }, 500);
+            }
+        }
+
+        // Demo controls
+        function startDemo() {
+            if (demoState.isPlaying && !demoState.isPaused) return;
+
+            demoState.isPlaying = true;
+            demoState.isPaused = false;
+
+            document.getElementById('startBtn').disabled = true;
+            document.getElementById('pauseBtn').disabled = false;
+            document.getElementById('skipBtn').disabled = false;
+
+            updateStatus('processing', 'Running Demo...');
+
+            // Hide welcome and show chat
+            document.getElementById('welcomeScreen').classList.add('hidden');
+            document.getElementById('chatMessages').style.display = 'block';
+
+            if (currentMessageIndex === 0) {
+                document.getElementById('chatMessages').innerHTML = '';
+            }
+
+            playNextMessage();
+        }
+
+        function pauseDemo() {
+            demoState.isPaused = true;
+            document.getElementById('startBtn').disabled = false;
+            document.getElementById('pauseBtn').disabled = true;
+
+            clearTimeout(demoState.messageTimer);
+            clearTimeout(demoState.typingTimer);
+
+            updateStatus('idle', 'Paused');
+        }
+
+        function resetDemo() {
+            clearTimeout(demoState.messageTimer);
+            clearTimeout(demoState.typingTimer);
+
+            demoState.isPlaying = false;
+            demoState.isPaused = false;
+            currentMessageIndex = 0;
+
+            document.getElementById('startBtn').disabled = false;
+            document.getElementById('pauseBtn').disabled = true;
+            document.getElementById('skipBtn').disabled = true;
+
+            updateStatus('idle', 'Ready');
+
+            // Show welcome screen
+            document.getElementById('welcomeScreen').classList.remove('hidden');
+            document.getElementById('chatMessages').style.display = 'none';
+            document.getElementById('chatMessages').innerHTML = '';
+        }
+
+        function skipToNext() {
+            clearTimeout(demoState.messageTimer);
+            clearTimeout(demoState.typingTimer);
+            hideTypingIndicator();
+
+            if (currentMessageIndex < demoScript.length) {
+                const message = demoScript[currentMessageIndex];
+                addDemoMessage(message);
+                currentMessageIndex++;
+
+                if (currentMessageIndex < demoScript.length) {
+                    demoState.messageTimer = setTimeout(() => {
+                        playNextMessage();
+                    }, 1000);
+                } else {
+                    completeDemo();
+                }
+            }
+        }
+
+        function playNextMessage() {
+            if (!demoState.isPlaying || demoState.isPaused) return;
+
+            if (currentMessageIndex >= demoScript.length) {
+                completeDemo();
+                return;
+            }
+
+            const message = demoScript[currentMessageIndex];
+
+            if (message.type === 'agent') {
+                showTypingIndicator();
+                demoState.typingTimer = setTimeout(() => {
+                    hideTypingIndicator();
+                    addDemoMessage(message);
+                    currentMessageIndex++;
+
+                    const delay = message.delay || 2000;
+                    demoState.messageTimer = setTimeout(() => {
+                        playNextMessage();
+                    }, delay);
+                }, message.typingTime || 2000);
+            } else {
+                addDemoMessage(message);
+                currentMessageIndex++;
+
+                const delay = message.delay || 1500;
+                demoState.messageTimer = setTimeout(() => {
+                    playNextMessage();
+                }, delay);
+            }
+        }
+
+        function addDemoMessage(message) {
+            if (message.type === 'user') {
+                addMessage('user', message.content);
+            } else if (message.type === 'agent') {
+                addMessage('agent', message.content, message.agentData);
+            }
+        }
+
+        function addMessage(type, content, agentData) {
+            const chatMessages = document.getElementById('chatMessages');
+            const messageDiv = document.createElement('div');
+            messageDiv.className = 'message';
+
+            const time = new Date().toLocaleString('en-US', {
+                hour: 'numeric',
+                minute: '2-digit'
+            });
+
+            if (type === 'user') {
+                messageDiv.innerHTML = `
+                    <div class="message-header">
+                        <div class="message-avatar-user">U</div>
+                        <span class="message-author">You</span>
+                        <span class="message-time">${time}</span>
+                    </div>
+                    <div class="message-content">${content}</div>
+                `;
+            } else {
+                let html = `
+                    <div class="message-header">
+                        <div class="message-avatar-agent">📈</div>
+                        <span class="message-author">Account Intelligence</span>
+                        <span class="message-tag">Agent</span>
+                        <span class="message-time">${time}</span>
+                    </div>
+                    <div class="message-content">${content}</div>
+                `;
+
+                if (agentData) {
+                    html += `
+                        <div class="agent-card">
+                            <div class="agent-card-header">
+                                <span class="agent-card-icon">📈</span>
+                                <span class="agent-card-title">${agentData.title || 'Results'}</span>
+                                ${agentData.status ? `<span class="agent-card-status">${agentData.status}</span>` : ''}
+                            </div>
+                            <div class="agent-card-content">
+                                <ul class="detail-list">
+                    `;
+
+                    const details = agentData.details || agentData;
+                    for (const [key, value] of Object.entries(details)) {
+                        if (key !== 'title' && key !== 'status') {
+                            html += `<li class="detail-item"><span class="detail-label">${key}:</span>`;
+                            
+                            if (typeof value === 'object' && !Array.isArray(value) && value !== null) {
+                                // Handle nested objects
+                                html += '<div style="margin-left: 20px;">';
+                                for (const [subKey, subValue] of Object.entries(value)) {
+                                    html += `<div style="margin: 4px 0;"><strong>${subKey}:</strong> ${subValue}</div>`;
+                                }
+                                html += '</div>';
+                            } else if (Array.isArray(value)) {
+                                // Handle arrays
+                                html += `<span class="detail-value">${value.join('<br>')} </span>`;
+                            } else {
+                                // Handle simple values
+                                html += `<span class="detail-value">${value}</span>`;
+                            }
+                            
+                            html += `</li>`;
+                        }
+                    }
+
+                    html += `
+                                </ul>
+                            </div>
+                        </div>
+                    `;
+                }
+
+                messageDiv.innerHTML = html;
+            }
+
+            chatMessages.appendChild(messageDiv);
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+        }
+
+        function showTypingIndicator() {
+            const chatMessages = document.getElementById('chatMessages');
+            const indicator = document.createElement('div');
+            indicator.id = 'typingIndicator';
+            indicator.className = 'typing-indicator';
+            indicator.innerHTML = `
+                <div class="typing-dot"></div>
+                <div class="typing-dot"></div>
+                <div class="typing-dot"></div>
+            `;
+            chatMessages.appendChild(indicator);
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+        }
+
+        function hideTypingIndicator() {
+            const indicator = document.getElementById('typingIndicator');
+            if (indicator) {
+                indicator.remove();
+            }
+        }
+
+        function updateStatus(status, text) {
+            const statusDot = document.getElementById('statusDot');
+            const statusText = document.getElementById('statusText');
+
+            statusDot.className = `status-dot ${status}`;
+            statusText.textContent = text;
+        }
+
+        function completeDemo() {
+            demoState.isPlaying = false;
+            document.getElementById('startBtn').disabled = false;
+            document.getElementById('pauseBtn').disabled = true;
+            document.getElementById('skipBtn').disabled = true;
+
+            updateStatus('idle', 'Demo Complete');
+        }
+    </script>
+</body>
+</html>

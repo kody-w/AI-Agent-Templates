@@ -1,0 +1,143 @@
+{
+  "demo_name": "Customer_360_1Min_Demo",
+  "description": "1-minute demo: AI-powered unified customer view with profile aggregation, journey mapping, and actionable insights",
+  "version": "2.0.0",
+  "trigger_phrases": [
+    "Give me a complete 360-degree view of this customer with insights and recommended actions.",
+    "unified customer profile",
+    "customer 360 view"
+  ],
+  "metadata": {
+    "category": "customer_intelligence",
+    "industry": "cross_industry",
+    "max_response_length": "250_words",
+    "total_steps": 6,
+    "estimated_duration_seconds": 60,
+    "target_audience": "sales_and_service_teams"
+  },
+  "persona": {
+    "name": "Sarah Mitchell",
+    "title": "VP Customer Success",
+    "company": "Enterprise Software Co",
+    "context": "Managing 500+ enterprise accounts with data scattered across 12 systems, seeking unified customer intelligence"
+  },
+  "agents_utilized": [
+    {
+      "agent_name": "ProfileAggregationAgent",
+      "description": "Aggregates customer data from all source systems into unified profile",
+      "inputs": ["customer_id", "data_sources"],
+      "outputs": ["unified_profile", "data_quality_score", "last_updated"],
+      "data_sources": ["CRM", "Marketing Automation", "Support System", "Billing", "Product Usage"],
+      "used_in_steps": [1]
+    },
+    {
+      "agent_name": "JourneyTrackingAgent",
+      "description": "Maps customer journey across all touchpoints and interactions",
+      "inputs": ["customer_id", "date_range"],
+      "outputs": ["journey_timeline", "touchpoint_analysis", "engagement_patterns"],
+      "data_sources": ["Website Analytics", "Email Engagement", "Call Logs", "Meeting Records"],
+      "used_in_steps": [1, 2]
+    },
+    {
+      "agent_name": "HealthScoreAgent",
+      "description": "Calculates customer health score using multiple indicators",
+      "inputs": ["usage_data", "engagement_data", "support_history"],
+      "outputs": ["health_score", "trend_analysis", "risk_indicators"],
+      "data_sources": ["Product Telemetry", "NPS Surveys", "Support Tickets"],
+      "used_in_steps": [2]
+    },
+    {
+      "agent_name": "OpportunityInsightsAgent",
+      "description": "Identifies expansion and upsell opportunities",
+      "inputs": ["customer_profile", "product_catalog", "usage_patterns"],
+      "outputs": ["expansion_opportunities", "cross_sell_recommendations", "timing_signals"],
+      "data_sources": ["Product Usage", "Entitlements", "Industry Benchmarks"],
+      "used_in_steps": [3]
+    },
+    {
+      "agent_name": "RiskDetectionAgent",
+      "description": "Identifies churn risk and relationship threats",
+      "inputs": ["customer_data", "behavioral_signals"],
+      "outputs": ["risk_score", "warning_signals", "contributing_factors"],
+      "data_sources": ["Engagement Metrics", "Support History", "Renewal Data"],
+      "used_in_steps": [3, 4]
+    },
+    {
+      "agent_name": "ActionRecommendationAgent",
+      "description": "Generates recommended next best actions for customer",
+      "inputs": ["customer_360", "business_objectives"],
+      "outputs": ["recommended_actions", "priority_ranking", "success_metrics"],
+      "data_sources": ["Playbook Library", "Success Patterns", "Resource Calendar"],
+      "used_in_steps": [4, 5]
+    },
+    {
+      "agent_name": "Customer360SummaryAgent",
+      "description": "Generates comprehensive customer intelligence summary",
+      "inputs": ["all_customer_data"],
+      "outputs": ["executive_summary", "key_insights", "action_plan"],
+      "data_sources": ["All Customer Systems"],
+      "used_in_steps": [6]
+    }
+  ],
+  "conversation_flow": [
+    {
+      "step_number": 1,
+      "user_message": "Give me a complete 360-degree view of this customer with insights and recommended actions.",
+      "agent_response": "I've aggregated Acme Corporation's data from 12 systems. Strategic account with strong engagement but upcoming renewal risk.\n\n**Customer Profile: Acme Corporation**\n\n| Attribute | Value |\n|-----------|-------|\n| Account type | Enterprise |\n| Industry | Manufacturing |\n| Employees | 2,500 |\n| ARR | $485,000 |\n| Customer since | 2021 (3 years) |\n| CSM | Michael Chen |\n\n**Relationship Summary:**\n\n| Metric | Value | Trend |\n|--------|-------|-------|\n| Health score | 72/100 | ↓ Down 8 pts |\n| NPS (last survey) | 7 | Passive |\n| Product adoption | 68% | Stable |\n| Support tickets (90d) | 12 | ↑ Up 40% |\n| Renewal date | 90 days | Upcoming |\n\n**Key Contacts:**\n\n| Role | Name | Engagement |\n|------|------|------------|\n| Executive sponsor | Jennifer Walsh, CTO | Low (no contact 60d) |\n| Primary user | David Park, Dir Ops | High |\n| IT owner | Robert Kim | Medium |\n\n**Data Quality:** 94% complete across 12 sources\n\nSource: [CRM + Support + Product Usage + Billing]\nAgents: ProfileAggregationAgent, JourneyTrackingAgent\n\nSee journey details and health analysis?",
+      "wait_timeout_seconds": 15,
+      "description": "Unified customer profile"
+    },
+    {
+      "step_number": 2,
+      "user_message": "Yes, show me their journey and what's driving the health score drop",
+      "agent_response": "Journey analysis reveals declining executive engagement and increased support friction.\n\n**Recent Journey Timeline:**\n\n| Date | Touchpoint | Outcome |\n|------|------------|--------|\n| 2 days ago | Support ticket | Unresolved (escalated) |\n| 1 week ago | QBR scheduled | Postponed by customer |\n| 3 weeks ago | Feature request | Submitted (pending) |\n| 6 weeks ago | Executive meeting | Canceled |\n| 8 weeks ago | Training session | Completed (positive) |\n\n**Health Score Breakdown:**\n\n| Factor | Score | Weight | Impact |\n|--------|-------|--------|--------|\n| Product usage | 75/100 | 30% | Stable |\n| Support experience | 58/100 | 25% | ↓ Declining |\n| Engagement | 62/100 | 25% | ↓ Declining |\n| Value realization | 80/100 | 20% | Strong |\n\n**Key Health Drivers (Negative):**\n\n| Issue | Details |\n|-------|--------|\n| Executive engagement | No CTO contact in 60 days |\n| Support friction | 3 escalated tickets, 1 unresolved |\n| QBR postponement | Rescheduled twice |\n| Feature gap | Critical request pending 45 days |\n\n**Positive Signals:**\n- Daily active users: Consistent\n- Core feature adoption: Strong\n- Last training: Positive feedback\n\nSource: [Journey Analytics + Health Score Model]\nAgents: HealthScoreAgent, JourneyTrackingAgent\n\nShow opportunities and risks?",
+      "wait_timeout_seconds": 15,
+      "description": "Journey and health analysis"
+    },
+    {
+      "step_number": 3,
+      "user_message": "Yes, what are the opportunities and risks?",
+      "agent_response": "Opportunity and risk analysis complete. Expansion potential exists but renewal is at risk.\n\n**Expansion Opportunities:**\n\n| Opportunity | Potential | Likelihood | Timing |\n|-------------|-----------|------------|--------|\n| Advanced Analytics add-on | $85K ARR | 70% | Q1 |\n| Additional seats (200) | $48K ARR | 60% | Q2 |\n| Professional services | $35K | 50% | Now |\n\n**Why These Opportunities:**\n- Analytics: They're exporting data to BI tools (workaround)\n- Seats: 3 departments requested access\n- Services: Optimization request in last QBR\n\n**Risk Assessment:**\n\n| Risk | Severity | Probability | Driver |\n|------|----------|-------------|--------|\n| Renewal risk | High | 35% | Exec disengagement |\n| Churn indicators | Medium | 25% | Support friction |\n| Competitive threat | Medium | 20% | Vendor research detected |\n\n**Warning Signals Detected:**\n\n| Signal | Evidence |\n|--------|----------|\n| Competitor research | 3 visits to competitor website |\n| Executive silence | CTO unresponsive to 2 emails |\n| Reduced logins | Executive dashboard -40% |\n| Delayed payment | Last invoice paid 15 days late |\n\n**Net Assessment:**\n- Renewal at risk but recoverable\n- Quick action needed in next 2 weeks\n- Relationship salvageable with right approach\n\nSource: [Opportunity Engine + Risk Models]\nAgents: OpportunityInsightsAgent, RiskDetectionAgent\n\nGet recommended actions?",
+      "wait_timeout_seconds": 15,
+      "description": "Opportunities and risk assessment"
+    },
+    {
+      "step_number": 4,
+      "user_message": "Yes, what actions should we take?",
+      "agent_response": "Prioritized action plan to address risks and capture opportunities.\n\n**Immediate Actions (This Week):**\n\n| Priority | Action | Owner | Outcome |\n|----------|--------|-------|--------|\n| 1 | Resolve escalated ticket | Support | Remove friction |\n| 2 | Executive outreach call | CSM + VP | Re-engage CTO |\n| 3 | Feature request update | Product | Show progress |\n\n**Action 1: Support Escalation**\n- Ticket: Performance degradation in reporting\n- Status: Escalated 5 days ago\n- Action: Engineering priority review\n- Target: Resolution within 48 hours\n\n**Action 2: Executive Re-engagement**\n- Approach: VP-to-CTO call (not CSM first)\n- Agenda: \"Strategic check-in, no selling\"\n- Topics: Their industry challenges, product roadmap preview\n- Goal: Reschedule postponed QBR\n\n**Short-Term Actions (30 Days):**\n\n| Action | Purpose | Timeline |\n|--------|---------|----------|\n| Complete QBR | Demonstrate value | 2 weeks |\n| Analytics demo | Address workaround | 3 weeks |\n| Renewal discussion | Start early | 4 weeks |\n\n**Talk Track for CTO Call:**\n\"Jennifer, I wanted to personally check in. I noticed we've had some support challenges and I want to make sure we're delivering value as you approach renewal.\"\n\nSource: [Playbook Library + Calendar]\nAgents: ActionRecommendationAgent, RiskDetectionAgent\n\nSchedule these actions?",
+      "wait_timeout_seconds": 15,
+      "description": "Recommended action plan"
+    },
+    {
+      "step_number": 5,
+      "user_message": "Yes, schedule the actions and create the engagement plan",
+      "agent_response": "Actions scheduled and engagement plan created for Acme Corporation.\n\n**Actions Scheduled:**\n\n| Action | Scheduled | Owner | Status |\n|--------|-----------|-------|--------|\n| Support escalation review | Today | Engineering | Meeting set |\n| VP-CTO outreach call | Tomorrow 2 PM | VP Success | Calendar hold |\n| Feature update email | Tomorrow AM | Product | Draft ready |\n| QBR (proposed) | 2 weeks | CSM | Invite drafted |\n\n**Engagement Plan (90-Day Renewal Window):**\n\n| Week | Activity | Goal |\n|------|----------|------|\n| 1 | Support resolution + VP call | Stabilize relationship |\n| 2-3 | QBR + value review | Demonstrate ROI |\n| 4-5 | Analytics demo | Plant expansion seed |\n| 6-8 | Renewal conversation | Secure commitment |\n| 9-12 | Finalize + expand | Close deal |\n\n**Prepared Materials:**\n\n| Asset | Status |\n|-------|--------|\n| CTO briefing doc | Ready |\n| Value realization report | Generating |\n| QBR presentation | Template loaded |\n| Renewal proposal | Draft framework |\n\n**Alerts Configured:**\n- CTO email response → Notify CSM\n- Support ticket resolved → Notify CSM\n- Product usage change → Automatic tracking\n- Competitor site visit → Alert VP\n\nSource: [CRM + Calendar + Task Management]\nAgents: ActionRecommendationAgent, Customer360SummaryAgent\n\nGenerate executive summary?",
+      "wait_timeout_seconds": 15,
+      "description": "Action scheduling and engagement plan"
+    },
+    {
+      "step_number": 6,
+      "user_message": "Yes, give me the complete 360 summary",
+      "agent_response": "Customer 360 analysis complete. Here's your executive summary for Acme Corporation.\n\n**Executive Summary:**\n\n| Element | Status |\n|---------|--------|\n| Account | Acme Corporation |\n| ARR | $485,000 |\n| Health | 72/100 (↓ 8 pts) |\n| Renewal | 90 days (at risk) |\n| Opportunity | $168K expansion |\n\n**Key Insights:**\n\n| Insight | Implication |\n|---------|-------------|\n| Executive disengagement | Relationship at risk |\n| Support friction | Eroding satisfaction |\n| Product usage stable | Foundation is solid |\n| Expansion signals | Upsell opportunity exists |\n\n**Data Aggregated:**\n- Systems queried: 12\n- Touchpoints analyzed: 47\n- Contacts profiled: 8\n- Signals detected: 15\n\n**Action Plan Summary:**\n\n| Timeline | Focus |\n|----------|-------|\n| This week | Resolve support, VP outreach |\n| Month 1 | QBR, value demonstration |\n| Month 2 | Expansion discussion |\n| Month 3 | Renewal close |\n\n**Success Metrics:**\n- Health score target: 85+ (from 72)\n- Renewal probability: 90%+ (from 65%)\n- Expansion closed: $85K+ (Analytics)\n\n**Risk Summary:**\n- Current: Medium-High\n- Post-intervention: Low-Medium\n- Key lever: Executive re-engagement\n\nSource: [All 12 Customer Systems]\nAgents: Customer360SummaryAgent (orchestrating all agents)\n\nYour Customer 360 view aggregated data from 12 systems, identified a recoverable renewal risk, and created an action plan to protect $485K ARR and capture $168K in expansion.",
+      "wait_timeout_seconds": 20,
+      "description": "Complete 360 executive summary"
+    }
+  ],
+  "design_principles": {
+    "max_response_length": "150-250 words",
+    "max_lines": "25-30 lines",
+    "max_table_rows": "4-5 rows",
+    "max_bullets": "4-6 bullets",
+    "sections": "2-3 maximum",
+    "visual_elements": "1 status indicator OR 1 table per response",
+    "source_attribution": "Compact format at end",
+    "evergreen_language": "Relative timeframes only",
+    "call_to_action": "Clear next question to continue"
+  },
+  "business_value": {
+    "problem": "Customer data scattered across 12 systems, no unified view, missed risk signals, reactive account management",
+    "solution": "AI-powered Customer 360 with automated aggregation, health scoring, opportunity/risk detection, and action planning",
+    "roi": "$485K ARR protected, $168K expansion identified, 12 systems unified in single view",
+    "performance": "Real-time data aggregation, automated health scoring, proactive risk detection, AI-generated action plans"
+  }
+}

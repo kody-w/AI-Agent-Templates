@@ -1,0 +1,135 @@
+{
+  "demo_name": "Win_Loss_Analysis_1Min_Demo",
+  "description": "1-minute demo: AI-powered win/loss analysis with pattern recognition, competitive insights, and actionable recommendations",
+  "version": "2.0.0",
+  "trigger_phrases": [
+    "Analyze our Q3 win/loss data and tell me why we're losing to CompetitorX in the enterprise segment.",
+    "why are we losing deals",
+    "win loss patterns analysis"
+  ],
+  "metadata": {
+    "category": "sales_analytics",
+    "industry": "b2b_sales",
+    "max_response_length": "250_words",
+    "total_steps": 6,
+    "estimated_duration_seconds": 60,
+    "target_audience": "sales_leadership"
+  },
+  "persona": {
+    "name": "Robert Martinez",
+    "title": "VP of Sales",
+    "company": "CloudPlatform Solutions",
+    "context": "Q3 win rate dropped to 28% from 35%, losing enterprise deals to main competitor, board meeting next week"
+  },
+  "agents_utilized": [
+    {
+      "agent_name": "WinLossDataAgent",
+      "description": "Aggregates and normalizes win/loss data from all sources",
+      "inputs": ["date_range", "segment_filters", "competitor_filters"],
+      "outputs": ["win_loss_summary", "deal_details", "trend_data"],
+      "data_sources": ["Salesforce CRM", "Win/Loss Survey System"],
+      "used_in_steps": [1]
+    },
+    {
+      "agent_name": "PatternRecognitionAgent",
+      "description": "Identifies patterns and correlations in win/loss outcomes",
+      "inputs": ["win_loss_data", "deal_attributes"],
+      "outputs": ["loss_patterns", "win_patterns", "correlation_analysis"],
+      "data_sources": ["Deal Analytics", "Historical Data"],
+      "used_in_steps": [1, 2]
+    },
+    {
+      "agent_name": "RootCauseAnalysisAgent",
+      "description": "Deep-dives into loss reasons with evidence from multiple sources",
+      "inputs": ["loss_patterns", "qualitative_data"],
+      "outputs": ["root_causes", "evidence_summary", "addressability_score"],
+      "data_sources": ["Win/Loss Interviews", "Gong Calls", "Survey Responses"],
+      "used_in_steps": [2]
+    },
+    {
+      "agent_name": "CompetitiveStrategyAgent",
+      "description": "Develops counter-strategies for identified competitive gaps",
+      "inputs": ["root_causes", "competitive_intel", "our_capabilities"],
+      "outputs": ["counter_strategies", "quick_wins", "long_term_initiatives"],
+      "data_sources": ["Competitive Playbook", "Product Roadmap", "Sales Enablement"],
+      "used_in_steps": [3]
+    },
+    {
+      "agent_name": "RevenueImpactAgent",
+      "description": "Models financial impact of proposed interventions",
+      "inputs": ["strategies", "historical_conversion", "pipeline_data"],
+      "outputs": ["revenue_projections", "roi_analysis", "forecast_scenarios"],
+      "data_sources": ["Revenue Analytics", "Forecast Models"],
+      "used_in_steps": [4]
+    },
+    {
+      "agent_name": "ExecutivePresentationAgent",
+      "description": "Generates board-ready presentations and summaries",
+      "inputs": ["all_analysis_outputs"],
+      "outputs": ["executive_summary", "presentation_slides", "action_plan"],
+      "data_sources": ["All Analysis Systems"],
+      "used_in_steps": [5, 6]
+    }
+  ],
+  "conversation_flow": [
+    {
+      "step_number": 1,
+      "user_message": "Analyze our Q3 win/loss data and tell me why we're losing to CompetitorX in the enterprise segment.",
+      "agent_response": "Analyzed 127 Q3 opportunities - win rate dropped 7 pts, enterprise hit hardest.\n\n| Metric | Q3 | Q2 | Change |\n|--------|-----|-----|--------|\n| Win rate | 28% | 35% | -7 pts |\n| Enterprise win rate | 22% | 38% | -16 pts |\n\n**Loss by Competitor:** CompetitorX 47% (up 12%), CompetitorY 25%, No decision 17%\n\n**Pattern:** CompetitorX winning enterprise deals with security-conscious buyers\n\nSee root cause analysis?",
+      "wait_timeout_seconds": 15,
+      "description": "Win/loss overview and initial patterns"
+    },
+    {
+      "step_number": 2,
+      "user_message": "Yes, what are the main reasons we're losing to CompetitorX?",
+      "agent_response": "4 loss drivers identified - security is biggest gap:\n\n| Reason | Frequency | Addressable |\n|--------|-----------|-------------|\n| Security certs | 38% | 6 months |\n| Enterprise refs | 26% | 3 months |\n| Pricing | 21% | Immediate |\n| Features | 15% | Roadmap |\n\n**Key Insight:** \"We loved the product but couldn't get past security review\" (8 of 10 lost buyers)\n\n**Gap:** They have FedRAMP + 12 Fortune 500 logos; we have SOC 2 + 3 refs\n\nWant counter-strategies?",
+      "wait_timeout_seconds": 15,
+      "description": "Root cause analysis with evidence"
+    },
+    {
+      "step_number": 3,
+      "user_message": "Yes, give me strategies to counter CompetitorX",
+      "agent_response": "Counter-strategies by driver:\n\n**Immediate (This Quarter):**\n- Security: Lead with SOC 2 (underutilized), \"FedRAMP in progress\" bridge message\n- Pricing: Bundle security features free, 90-day pilot option\n- References: Activate 3 enterprise customers, create video testimonials\n\n**Longer-Term:**\n- FedRAMP certification (6 months)\n- ISO 27001 (4 months)\n\n**Talk Track:** \"Secure choice with modern UX. SOC 2 active, FedRAMP in progress.\"\n\nSee revenue impact?",
+      "wait_timeout_seconds": 15,
+      "description": "Counter-strategies and action plan"
+    },
+    {
+      "step_number": 4,
+      "user_message": "Yes, what's the revenue impact if we fix these issues?",
+      "agent_response": "$4.2M recoverable pipeline with interventions:\n\n| Action | Value | Timeline |\n|--------|-------|----------|\n| Security positioning | $1.8M | Immediate |\n| Reference program | $1.2M | 30 days |\n| Pricing flexibility | $0.8M | Immediate |\n\n**Q4 Impact:** $8.2M → $10.8M (+$2.6M, 28%→36% win rate)\n\n**Investment:** $180K | **ROI:** 23:1\n\nCreate board presentation?",
+      "wait_timeout_seconds": 15,
+      "description": "Revenue impact and forecast modeling"
+    },
+    {
+      "step_number": 5,
+      "user_message": "Yes, build the executive summary for my board presentation",
+      "agent_response": "Board presentation ready:\n\n**Challenge:** Win rate 28% (down 7), CompetitorX taking 47% of losses\n\n**Root Causes:** Security certs (38%), References (26%), Pricing (21%)\n\n**Plan:** Security messaging now → References in 30 days → FedRAMP in 6 months\n\n**Ask:** $180K for certification + reference program\n\n**Expected:** 32% Q4 win rate, $4.2M pipeline recovery, 23:1 ROI\n\nGenerate summary?",
+      "wait_timeout_seconds": 15,
+      "description": "Board presentation framework"
+    },
+    {
+      "step_number": 6,
+      "user_message": "Yes, summarize everything we learned and the path forward",
+      "agent_response": "Win/loss analysis complete!\n\n| Finding | Value |\n|---------|-------|\n| Q3 win rate | 28% (down 7 pts) |\n| Top competitor | CompetitorX (47%) |\n| Biggest gap | Security certs (38%) |\n| Recoverable | $4.2M pipeline |\n\n**This Week:** Update security materials, launch pricing program, activate 3 references\n\n**Outcome:** Win rate 28%→36% in 2 quarters, $4.2M recovery, 23:1 ROI\n\nClear, addressable gaps with path to recover $4.2M in lost pipeline.",
+      "wait_timeout_seconds": 20,
+      "description": "Complete summary and action plan"
+    }
+  ],
+  "design_principles": {
+    "max_response_length": "150-250 words",
+    "max_lines": "25-30 lines",
+    "max_table_rows": "4-5 rows",
+    "max_bullets": "4-6 bullets",
+    "sections": "2-3 maximum",
+    "visual_elements": "1 status indicator OR 1 table per response",
+    "source_attribution": "Compact format at end",
+    "evergreen_language": "Relative timeframes only",
+    "call_to_action": "Clear next question to continue"
+  },
+  "business_value": {
+    "problem": "Win rate dropped 7 points, losing enterprise deals to competitor, board meeting pressure",
+    "solution": "AI-powered win/loss analysis with pattern recognition, root cause identification, and recovery modeling",
+    "roi": "$4.2M recoverable pipeline, 23:1 ROI on $180K investment, win rate recovery path to 36%",
+    "performance": "127 deals analyzed, 4 root causes identified, counter-strategies developed, board presentation ready"
+  }
+}

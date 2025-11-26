@@ -1,0 +1,143 @@
+{
+  "demo_name": "Sales_Qualification_1Min_Demo",
+  "description": "1-minute demo: AI-powered lead qualification with BANT/MEDDIC analysis, scoring, and next-best-action recommendations",
+  "version": "2.0.0",
+  "trigger_phrases": [
+    "I have 45 new inbound leads from the conference. Help me qualify and prioritize them for follow-up.",
+    "qualify these leads",
+    "score and prioritize prospects"
+  ],
+  "metadata": {
+    "category": "lead_qualification",
+    "industry": "b2b_sales",
+    "max_response_length": "250_words",
+    "total_steps": 6,
+    "estimated_duration_seconds": 60,
+    "target_audience": "sales_development_reps"
+  },
+  "persona": {
+    "name": "Amanda Chen",
+    "title": "SDR Team Lead",
+    "company": "DataSync Technologies",
+    "context": "45 leads from trade show, need to qualify and route to AEs within 24 hours for follow-up"
+  },
+  "agents_utilized": [
+    {
+      "agent_name": "LeadEnrichmentAgent",
+      "description": "Enriches lead data with firmographic and technographic information",
+      "inputs": ["lead_list", "enrichment_fields"],
+      "outputs": ["enriched_leads", "company_data", "tech_stack", "funding_info"],
+      "data_sources": ["ZoomInfo", "Clearbit", "Crunchbase", "6sense"],
+      "used_in_steps": [1]
+    },
+    {
+      "agent_name": "ICPMatchingAgent",
+      "description": "Scores leads against ideal customer profile criteria",
+      "inputs": ["enriched_leads", "icp_definition"],
+      "outputs": ["icp_scores", "match_breakdown", "disqualification_flags"],
+      "data_sources": ["ICP Rules Engine", "Historical Win Data"],
+      "used_in_steps": [1]
+    },
+    {
+      "agent_name": "BANTScoringAgent",
+      "description": "Analyzes leads against Budget, Authority, Need, Timeline criteria",
+      "inputs": ["lead_data", "interaction_signals"],
+      "outputs": ["bant_scores", "qualification_matrix", "signal_analysis"],
+      "data_sources": ["Form Submissions", "Booth Interactions", "Intent Data"],
+      "used_in_steps": [2]
+    },
+    {
+      "agent_name": "PersonalizedOutreachAgent",
+      "description": "Generates customized outreach sequences based on lead context",
+      "inputs": ["lead_profiles", "messaging_templates", "personalization_data"],
+      "outputs": ["email_sequences", "talk_tracks", "linkedin_messages"],
+      "data_sources": ["Content Library", "Booth Notes", "LinkedIn"],
+      "used_in_steps": [3]
+    },
+    {
+      "agent_name": "LeadRoutingAgent",
+      "description": "Assigns leads to appropriate AEs based on territory and expertise",
+      "inputs": ["qualified_leads", "rep_profiles", "territory_rules"],
+      "outputs": ["assignments", "handoff_packages", "capacity_check"],
+      "data_sources": ["Territory Map", "Rep Skills Matrix", "Capacity Dashboard"],
+      "used_in_steps": [4]
+    },
+    {
+      "agent_name": "SLAMonitoringAgent",
+      "description": "Tracks response times and triggers escalations",
+      "inputs": ["lead_assignments", "sla_rules"],
+      "outputs": ["sla_tracking", "alerts", "escalation_triggers"],
+      "data_sources": ["SLA Engine", "Notification System"],
+      "used_in_steps": [5]
+    },
+    {
+      "agent_name": "QualificationReportAgent",
+      "description": "Generates summary reports and conversion tracking",
+      "inputs": ["all_qualification_data"],
+      "outputs": ["summary_report", "conversion_forecast", "action_plan"],
+      "data_sources": ["All Lead Systems"],
+      "used_in_steps": [6]
+    }
+  ],
+  "conversation_flow": [
+    {
+      "step_number": 1,
+      "user_message": "I have 45 new inbound leads from the conference. Help me qualify and prioritize them for follow-up.",
+      "agent_response": "Analyzed 45 leads with ICP scoring and BANT criteria.\n\n| Tier | Leads | Action |\n|------|-------|--------|\n| Hot (80+) | 8 | AE handoff |\n| Warm (60-79) | 15 | SDR call |\n| Nurture (<60) | 22 | Email sequence |\n\n**Top 3 Hot Leads:**\n- TechFlow Industries (94) - VP Eng, active eval\n- Meridian Corp (91) - CTO, budget approved\n- Apex Solutions (88) - Competitor displacement\n\nSource: [ZoomInfo + 6sense]\n\nWant BANT analysis on hot leads?",
+      "wait_timeout_seconds": 15,
+      "description": "Lead scoring and initial prioritization"
+    },
+    {
+      "step_number": 2,
+      "user_message": "Yes, show me the BANT breakdown for the top 5 hot leads",
+      "agent_response": "BANT analysis for top 5 hot leads:\n\n| Lead | Budget | Authority | Timeline | Score |\n|------|--------|-----------|----------|-------|\n| TechFlow | $200K | VP Eng | Q1 | 94 |\n| Meridian | $150K | CTO | 60 days | 91 |\n| Apex | $180K | Director | Q1 | 88 |\n\n**Key Signals:**\n- TechFlow: Demo booth visited twice\n- Meridian: CTO asked technical questions\n- Apex: Competitor contract ending\n\n**Risks:** Summit budget TBD, DataCorp needs decision maker\n\nCreate personalized outreach?",
+      "wait_timeout_seconds": 15,
+      "description": "Detailed BANT analysis"
+    },
+    {
+      "step_number": 3,
+      "user_message": "Yes, create personalized outreach sequences for each hot lead",
+      "agent_response": "Personalized outreach created for all 8 hot leads:\n\n**TechFlow:** \"Connecting 12 data sources in weeks\" - 15-min deep dive CTA\n\n**Meridian:** \"60-day migration playbook attached\" - Stack discussion CTA\n\n**Apex:** \"40% of [Competitor] customers switched\" - Comparison call CTA\n\n**Sequence:** Email today → LinkedIn day 2 → Value content day 3 → Phone day 4\n\nAssign leads to AEs?",
+      "wait_timeout_seconds": 15,
+      "description": "Personalized outreach sequences"
+    },
+    {
+      "step_number": 4,
+      "user_message": "Yes, assign to AEs based on territory and expertise",
+      "agent_response": "Leads assigned by territory and expertise:\n\n| AE | Leads | Value | Specialty |\n|----|-------|-------|----------|\n| Mike Rodriguez | 3 | $470K | Enterprise |\n| Sarah Kim | 2 | $330K | Healthcare |\n| James Chen | 2 | $280K | Manufacturing |\n\nAll AEs under 80% capacity. Handoff packages include BANT summary, booth notes, and email drafts.\n\nSet up SLA tracking?",
+      "wait_timeout_seconds": 15,
+      "description": "AE assignment with matching logic"
+    },
+    {
+      "step_number": 5,
+      "user_message": "Yes, set up tracking and make sure we hit our follow-up SLAs",
+      "agent_response": "SLA tracking activated:\n\n| Tier | Response SLA | Escalation |\n|------|-------------|------------|\n| Hot | 4 hours | Manager alert |\n| Warm | 24 hours | Team alert |\n| Nurture | 48 hours | Auto-sequence |\n\n**Automated:** Slack alerts at 2hr remaining, manager notification if missed, auto-stage updates on meeting booked.\n\n**Targets:** 100% hot contact rate, 40% meeting conversion, $800K pipeline\n\nGenerate summary?",
+      "wait_timeout_seconds": 15,
+      "description": "SLA tracking and automation setup"
+    },
+    {
+      "step_number": 6,
+      "user_message": "Yes, summarize everything and give me the action plan",
+      "agent_response": "Lead qualification complete!\n\n| Result | Value |\n|--------|-------|\n| Leads analyzed | 45 |\n| Hot leads | 8 ($800K) |\n| Outreach created | All hot leads |\n| AEs assigned | 4 reps |\n| SLA tracking | Active |\n\n**Total Pipeline:** $1.25M (Hot $800K + Warm $450K)\n\n**Next:** 8 hot leads get AE outreach within 4 hours, 15 warm get SDR calls, 22 nurture enter email sequences.\n\nYour conference leads are qualified and assigned with 4-hour SLA tracking.",
+      "wait_timeout_seconds": 20,
+      "description": "Complete summary and action plan"
+    }
+  ],
+  "design_principles": {
+    "max_response_length": "150-250 words",
+    "max_lines": "25-30 lines",
+    "max_table_rows": "4-5 rows",
+    "max_bullets": "4-6 bullets",
+    "sections": "2-3 maximum",
+    "visual_elements": "1 status indicator OR 1 table per response",
+    "source_attribution": "Compact format at end",
+    "evergreen_language": "Relative timeframes only",
+    "call_to_action": "Clear next question to continue"
+  },
+  "business_value": {
+    "problem": "45 conference leads need qualification and routing within 24 hours, manual process takes days",
+    "solution": "AI-powered BANT qualification with data enrichment, personalized outreach, and SLA tracking",
+    "roi": "$1.25M qualified pipeline identified, 8 hot leads worth $800K+, 4-hour SLA enforcement",
+    "performance": "45 leads qualified in minutes vs hours, personalized outreach for all hot leads, automated tracking"
+  }
+}

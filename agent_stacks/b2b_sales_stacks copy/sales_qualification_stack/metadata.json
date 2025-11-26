@@ -1,0 +1,58 @@
+{
+  "id": "sales_qualification_stack",
+  "name": "Sales Qualification Agent Stack",
+  "version": "1.0.0",
+  "description": "Assesses leads and prioritizes by fit and intent",
+  "category": "b2b_sales",
+  "complexity": "intermediate",
+  "features": [
+    "Lead scoring",
+    "Qualification automation",
+    "Priority ranking"
+  ],
+  "benefits": [
+    "Improves conversion rates",
+    "Focuses sales efforts",
+    "Reduces sales cycle"
+  ],
+  "technicalRequirements": {
+    "platforms": [
+      "Windows",
+      "macOS",
+      "Linux"
+    ],
+    "dependencies": [
+      "Python 3.8+",
+      "requests",
+      "json"
+    ],
+    "apiKeys": [
+      "D365_SALES_API_KEY",
+      "SALESFORCE_API_KEY"
+    ],
+    "integrations": [
+      "D365 Sales",
+      "Salesforce",
+      "LinkedIn Sales Navigator",
+      "6sense"
+    ]
+  },
+  "components": [
+    {
+      "name": "sales_qualification_agent.py",
+      "description": "Assesses leads and prioritizes by fit and intent",
+      "role": "Primary processing engine"
+    }
+  ],
+  "demo": {
+    "available": true,
+    "url": "agents_lab/b2b_sales_stack/sales_qualification_stack/demos/sales_qualification_demo.html",
+    "title": "Sales Qualification Agent Interactive Demo",
+    "description": "Interactive demonstration of Sales Qualification Agent capabilities"
+  },
+  "useCases": [
+    "Lead scoring",
+    "Qualification automation",
+    "Priority ranking"
+  ]
+}

@@ -1,0 +1,143 @@
+{
+  "demo_name": "Loan_Origination_Assistant_1Min_Demo",
+  "description": "1-minute demo: AI-powered loan origination with automated document processing, eligibility assessment, and accelerated underwriting",
+  "version": "2.0.0",
+  "trigger_phrases": [
+    "Process this mortgage application and give me an eligibility assessment with documentation status.",
+    "accelerate loan processing",
+    "automated mortgage origination"
+  ],
+  "metadata": {
+    "category": "lending",
+    "industry": "financial_services_banking",
+    "max_response_length": "250_words",
+    "total_steps": 6,
+    "estimated_duration_seconds": 60,
+    "target_audience": "loan_officers"
+  },
+  "persona": {
+    "name": "Jennifer Walsh",
+    "title": "Mortgage Operations Manager",
+    "company": "Community First Bank",
+    "context": "Processing 400 mortgage applications monthly with 45-day average close time, seeking to reduce to 30 days"
+  },
+  "agents_utilized": [
+    {
+      "agent_name": "ApplicationIntakeAgent",
+      "description": "Ingests and validates loan application data from all channels",
+      "inputs": ["application_source", "applicant_data"],
+      "outputs": ["standardized_application", "completeness_score", "validation_flags"],
+      "data_sources": ["Online Applications", "LOS", "Document Portal"],
+      "used_in_steps": [1]
+    },
+    {
+      "agent_name": "DocumentProcessingAgent",
+      "description": "Extracts and validates data from uploaded documents using AI",
+      "inputs": ["document_files", "document_types"],
+      "outputs": ["extracted_data", "validation_status", "discrepancy_flags"],
+      "data_sources": ["Document Repository", "OCR Engine", "Validation Rules"],
+      "used_in_steps": [1, 2]
+    },
+    {
+      "agent_name": "EligibilityAssessmentAgent",
+      "description": "Evaluates borrower eligibility across loan programs",
+      "inputs": ["applicant_data", "property_info", "loan_programs"],
+      "outputs": ["eligibility_results", "program_recommendations", "condition_list"],
+      "data_sources": ["Underwriting Guidelines", "Program Rules", "Investor Requirements"],
+      "used_in_steps": [2]
+    },
+    {
+      "agent_name": "CreditAnalysisAgent",
+      "description": "Performs comprehensive credit and financial analysis",
+      "inputs": ["credit_report", "income_docs", "asset_docs"],
+      "outputs": ["credit_summary", "dti_ratios", "reserve_analysis", "risk_factors"],
+      "data_sources": ["Credit Bureaus", "AUS Systems", "Financial Calculators"],
+      "used_in_steps": [3]
+    },
+    {
+      "agent_name": "PropertyValuationAgent",
+      "description": "Assesses property value and validates collateral",
+      "inputs": ["property_address", "purchase_price"],
+      "outputs": ["avm_value", "comparable_sales", "ltv_calculation", "property_flags"],
+      "data_sources": ["AVM Services", "MLS Data", "Property Records"],
+      "used_in_steps": [3]
+    },
+    {
+      "agent_name": "ConditionTrackingAgent",
+      "description": "Manages underwriting conditions and documentation requirements",
+      "inputs": ["application_status", "condition_list"],
+      "outputs": ["condition_status", "outstanding_items", "clear_to_close_checklist"],
+      "data_sources": ["LOS", "Document Management", "Underwriting Queue"],
+      "used_in_steps": [4, 5]
+    },
+    {
+      "agent_name": "OriginationSummaryAgent",
+      "description": "Generates loan processing summaries and timeline projections",
+      "inputs": ["all_loan_data"],
+      "outputs": ["processing_summary", "timeline_projection", "next_steps"],
+      "data_sources": ["All Origination Systems"],
+      "used_in_steps": [6]
+    }
+  ],
+  "conversation_flow": [
+    {
+      "step_number": 1,
+      "user_message": "Process this mortgage application and give me an eligibility assessment with documentation status.",
+      "agent_response": "I've processed the Martinez application. Strong profile, 92% documentation complete.\n\n**Application Summary:**\n\n| Field | Details |\n|-------|--------|\n| Borrowers | Michael & Sarah Martinez |\n| Loan purpose | Purchase |\n| Property | 1234 Oak Lane, Suburban Heights |\n| Purchase price | $485,000 |\n| Loan amount | $388,000 |\n| Down payment | $97,000 (20%) |\n\n**Document Status:**\n\n| Category | Status | Items |\n|----------|--------|-------|\n| Income | 90% complete | Missing 1 paystub |\n| Assets | 100% complete | All verified |\n| Property | 85% complete | Awaiting appraisal |\n| Identity | 100% complete | Verified |\n\n**Initial Eligibility Check:**\n\n| Criteria | Result | Status |\n|----------|--------|--------|\n| Credit score | 742/756 | Excellent |\n| DTI (estimated) | 32% | Within limits |\n| LTV | 80% | Conventional eligible |\n| Employment | Stable (5+ years) | Strong |\n\n**Missing Items:**\n- Michael's most recent paystub (requested)\n- Appraisal (ordered, due in 5 days)\n\nSource: [LOS + Document Portal + Credit Bureau]\nAgents: ApplicationIntakeAgent, DocumentProcessingAgent\n\nRun detailed eligibility and program matching?",
+      "wait_timeout_seconds": 15,
+      "description": "Application intake and document status"
+    },
+    {
+      "step_number": 2,
+      "user_message": "Yes, which loan programs are they eligible for?",
+      "agent_response": "Program eligibility complete. Qualified for 4 programs, Conventional 30-year is optimal.\n\n**Program Eligibility Matrix:**\n\n| Program | Eligible | Rate | Monthly Payment |\n|---------|----------|------|----------------|\n| Conventional 30-yr | Yes | 6.875% | $2,548 |\n| Conventional 15-yr | Yes | 6.25% | $3,324 |\n| FHA 30-yr | Yes | 6.5% | $2,642 + MIP |\n| Jumbo | No | N/A | Loan too small |\n\n**Recommended: Conventional 30-Year**\n\n| Advantage | Details |\n|-----------|--------|\n| No PMI | 20% down payment |\n| Best rate | Excellent credit qualifies |\n| Lower payment | vs 15-year option |\n| No MIP | vs FHA (saves $320/mo) |\n\n**Loan Terms Calculated:**\n\n| Component | Amount |\n|-----------|--------|\n| Principal & Interest | $2,548 |\n| Property taxes | $485 |\n| Insurance | $165 |\n| **Total PITI** | **$3,198** |\n\n**Eligibility Conditions:**\n1. Verify income with missing paystub\n2. Complete appraisal (ordered)\n3. Clear title commitment\n4. Final credit refresh before close\n\nSource: [Underwriting Guidelines + Rate Engine]\nAgents: EligibilityAssessmentAgent, DocumentProcessingAgent\n\nSee credit and property analysis?",
+      "wait_timeout_seconds": 15,
+      "description": "Loan program eligibility assessment"
+    },
+    {
+      "step_number": 3,
+      "user_message": "Yes, show me the credit and property analysis",
+      "agent_response": "Credit and property analysis complete. Both look strong with no red flags.\n\n**Credit Analysis:**\n\n| Borrower | Score | Payment History | Utilization |\n|----------|-------|-----------------|-------------|\n| Michael | 742 | 100% on-time | 18% |\n| Sarah | 756 | 100% on-time | 12% |\n\n**Debt-to-Income Ratios:**\n\n| Ratio | Calculated | Limit | Status |\n|-------|------------|-------|--------|\n| Front-end | 26% | 28% | Pass |\n| Back-end | 32% | 45% | Pass |\n| Residual income | $4,200 | $2,500 | Exceeds |\n\n**Asset Verification:**\n- Checking: $24,000 ✓\n- Savings: $82,000 ✓\n- 401(k): $145,000 ✓\n- Reserves: 8 months (excellent)\n\n**Property Valuation:**\n\n| Metric | Value |\n|--------|-------|\n| Purchase price | $485,000 |\n| AVM estimate | $492,000 |\n| Comparable range | $475K - $510K |\n| LTV at purchase | 80% |\n| Appraisal risk | Low |\n\n**Property Notes:**\n- Single family, 3BR/2BA\n- Built 2018, excellent condition\n- Clear title (preliminary)\n- No flood zone concerns\n\nSource: [Credit Bureau + AVM + Property Records]\nAgents: CreditAnalysisAgent, PropertyValuationAgent\n\nGenerate condition checklist?",
+      "wait_timeout_seconds": 15,
+      "description": "Credit and property analysis"
+    },
+    {
+      "step_number": 4,
+      "user_message": "Yes, what conditions need to be cleared?",
+      "agent_response": "Condition checklist generated. 4 items remaining before clear-to-close.\n\n**Prior-to-Docs Conditions:**\n\n| Condition | Status | Owner | Due |\n|-----------|--------|-------|-----|\n| Recent paystub | Pending | Borrower | 2 days |\n| Appraisal | Ordered | Vendor | 5 days |\n| Title commitment | In progress | Title co. | 3 days |\n| VOE (verbal) | Scheduled | LO | 1 day |\n\n**Prior-to-Funding Conditions:**\n\n| Condition | Status | When |\n|-----------|--------|------|\n| Final credit check | Pending | At closing |\n| Proof of insurance | Pending | Before close |\n| Wire instructions | Pending | Before close |\n| Signed closing docs | Pending | At closing |\n\n**Condition Details:**\n\n**Paystub (Missing Item):**\n- Needed: Most recent dated within 30 days\n- Request sent: Yesterday\n- Borrower response: \"Uploading tonight\"\n\n**Appraisal:**\n- Ordered: 2 days ago\n- Appraiser: Assigned\n- Expected: 5 business days\n- Rush available: +$150 (3 days)\n\n**Automated Tracking:**\n- Borrower portal shows pending items\n- Auto-reminders: Daily until complete\n- Status alerts: You'll be notified on receipt\n\nSource: [LOS + Document Management]\nAgents: ConditionTrackingAgent, DocumentProcessingAgent\n\nSee timeline and next steps?",
+      "wait_timeout_seconds": 15,
+      "description": "Condition tracking and management"
+    },
+    {
+      "step_number": 5,
+      "user_message": "Yes, what's the projected timeline to close?",
+      "agent_response": "Timeline analysis complete. On track for 28-day close (beating 30-day target).\n\n**Projected Timeline:**\n\n| Milestone | Target Date | Status |\n|-----------|-------------|--------|\n| Application complete | Day 3 (today) | Pending paystub |\n| Appraisal received | Day 8 | Ordered |\n| Conditions cleared | Day 12 | On track |\n| Clear to close | Day 18 | Projected |\n| Closing | Day 28 | Scheduled |\n\n**Critical Path Items:**\n\n| Item | Impact if Delayed |\n|------|-------------------|\n| Paystub | +1 day per day late |\n| Appraisal | +3-5 days if issues |\n| Title | +2 days if liens found |\n\n**Acceleration Opportunities:**\n\n| Action | Savings | Cost |\n|--------|---------|------|\n| Rush appraisal | 2 days | +$150 |\n| Same-day VOE | 1 day | Included |\n| E-closing | 0.5 days | Included |\n\n**Next Steps (Today):**\n1. Follow up on paystub (borrower uploading tonight)\n2. Complete verbal VOE with employer\n3. Confirm appraisal inspection date\n\n**Next Steps (This Week):**\n- Review appraisal when received\n- Clear title commitment\n- Submit to underwriting\n\nSource: [LOS + Timeline Analytics]\nAgents: ConditionTrackingAgent, OriginationSummaryAgent\n\nGenerate complete loan summary?",
+      "wait_timeout_seconds": 15,
+      "description": "Timeline projection and next steps"
+    },
+    {
+      "step_number": 6,
+      "user_message": "Yes, give me the complete loan processing summary",
+      "agent_response": "Loan processing summary complete. Strong application on track for fast close.\n\n**Martinez Loan Summary:**\n\n| Element | Status |\n|---------|--------|\n| Application | 92% complete |\n| Eligibility | Approved - Conventional |\n| Credit | Excellent (742/756) |\n| Property | AVM supports value |\n| Conditions | 4 of 8 cleared |\n\n**Loan Details:**\n\n| Specification | Value |\n|---------------|-------|\n| Loan amount | $388,000 |\n| Rate | 6.875% (locked) |\n| Term | 30-year fixed |\n| Monthly PITI | $3,198 |\n| Down payment | $97,000 (20%) |\n| Closing costs | ~$8,200 |\n\n**Quality Indicators:**\n\n| Factor | Assessment |\n|--------|------------|\n| Credit risk | Low |\n| Collateral risk | Low |\n| Income stability | Strong |\n| Reserve adequacy | Excellent |\n\n**Timeline:**\n- Projected close: 28 days\n- Target close: 30 days\n- Status: Ahead of schedule\n\n**Outstanding Items:**\n1. Paystub (tonight)\n2. Appraisal (5 days)\n3. Title (3 days)\n4. VOE (tomorrow)\n\nSource: [All Origination Systems]\nAgents: OriginationSummaryAgent (orchestrating all agents)\n\nYour AI-powered origination processed the Martinez application in minutes, confirmed eligibility for 4 programs, and projects a 28-day close - 17 days faster than your current average.",
+      "wait_timeout_seconds": 20,
+      "description": "Complete loan processing summary"
+    }
+  ],
+  "design_principles": {
+    "max_response_length": "150-250 words",
+    "max_lines": "25-30 lines",
+    "max_table_rows": "4-5 rows",
+    "max_bullets": "4-6 bullets",
+    "sections": "2-3 maximum",
+    "visual_elements": "1 status indicator OR 1 table per response",
+    "source_attribution": "Compact format at end",
+    "evergreen_language": "Relative timeframes only",
+    "call_to_action": "Clear next question to continue"
+  },
+  "business_value": {
+    "problem": "45-day average close time, manual document processing, fragmented condition tracking, delayed eligibility decisions",
+    "solution": "AI-powered loan origination with automated document processing, instant eligibility assessment, and intelligent condition tracking",
+    "roi": "Reduce close time from 45 to 28 days (38% improvement), automated document validation, accelerated underwriting",
+    "performance": "Application processed in minutes, 4 program eligibility checks, real-time condition tracking, accurate timeline projection"
+  }
+}

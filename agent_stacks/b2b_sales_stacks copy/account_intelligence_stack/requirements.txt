@@ -1,0 +1,26 @@
+# Azure Functions dependencies
+azure-functions==1.18.0
+
+# Data processing
+requests==2.31.0
+python-dateutil==2.8.2
+
+# Azure SDK
+azure-identity==1.15.0
+azure-keyvault-secrets==4.7.0
+
+# Microsoft Graph
+msgraph-core==1.0.0
+msal==1.26.0
+
+# Azure OpenAI
+openai==1.12.0
+
+# Azure AI Search
+azure-search-documents==11.4.0
+
+# Dynamics 365
+dynamics-client==0.3.0
+
+# Utilities
+typing-extensions==4.9.0

@@ -1,0 +1,143 @@
+{
+  "demo_name": "Regulatory_Compliance_1Min_Demo",
+  "description": "1-minute demo: AI-powered regulatory compliance monitoring with automated surveillance, reporting, and risk assessment",
+  "version": "2.0.0",
+  "trigger_phrases": [
+    "Run our daily compliance surveillance and flag any regulatory risks that need immediate attention.",
+    "compliance monitoring",
+    "regulatory risk assessment"
+  ],
+  "metadata": {
+    "category": "compliance",
+    "industry": "financial_services",
+    "max_response_length": "250_words",
+    "total_steps": 6,
+    "estimated_duration_seconds": 60,
+    "target_audience": "compliance_officers"
+  },
+  "persona": {
+    "name": "Margaret Thompson",
+    "title": "Chief Compliance Officer",
+    "company": "Atlantic Capital Management",
+    "context": "Overseeing compliance for $8B AUM with 5 regulators, preparing for SEC exam next quarter"
+  },
+  "agents_utilized": [
+    {
+      "agent_name": "SurveillanceAgent",
+      "description": "Monitors trading activity for potential compliance violations",
+      "inputs": ["trade_data", "surveillance_rules"],
+      "outputs": ["alerts", "pattern_analysis", "risk_scores"],
+      "data_sources": ["Order Management", "Trade Blotter", "Market Data"],
+      "used_in_steps": [1]
+    },
+    {
+      "agent_name": "RegulatoryAlertAgent",
+      "description": "Tracks regulatory updates and assesses impact on firm",
+      "inputs": ["regulatory_feeds", "firm_activities"],
+      "outputs": ["new_requirements", "impact_assessment", "action_items"],
+      "data_sources": ["SEC", "FINRA", "State Regulators", "Legal Updates"],
+      "used_in_steps": [1, 2]
+    },
+    {
+      "agent_name": "PolicyComplianceAgent",
+      "description": "Validates activities against internal policies and procedures",
+      "inputs": ["activity_data", "policy_library"],
+      "outputs": ["policy_violations", "exception_reports", "attestation_status"],
+      "data_sources": ["Policy Management System", "Employee Activity"],
+      "used_in_steps": [2, 3]
+    },
+    {
+      "agent_name": "DocumentationAgent",
+      "description": "Ensures required documentation is complete and accessible",
+      "inputs": ["document_requirements", "file_inventory"],
+      "outputs": ["documentation_gaps", "retention_compliance", "audit_readiness"],
+      "data_sources": ["Document Management", "Retention Schedules"],
+      "used_in_steps": [3]
+    },
+    {
+      "agent_name": "ReportingAgent",
+      "description": "Generates required regulatory filings and reports",
+      "inputs": ["reporting_requirements", "source_data"],
+      "outputs": ["draft_reports", "filing_status", "deadline_tracking"],
+      "data_sources": ["Regulatory Calendar", "Firm Data Systems"],
+      "used_in_steps": [4]
+    },
+    {
+      "agent_name": "ExamReadinessAgent",
+      "description": "Assesses exam preparedness and identifies gaps",
+      "inputs": ["exam_scope", "prior_findings"],
+      "outputs": ["readiness_score", "gap_analysis", "remediation_plan"],
+      "data_sources": ["Prior Exams", "Industry Enforcement", "Best Practices"],
+      "used_in_steps": [5]
+    },
+    {
+      "agent_name": "ComplianceSummaryAgent",
+      "description": "Generates executive compliance dashboards and reports",
+      "inputs": ["all_compliance_data"],
+      "outputs": ["executive_dashboard", "trend_analysis", "action_items"],
+      "data_sources": ["All Compliance Systems"],
+      "used_in_steps": [6]
+    }
+  ],
+  "conversation_flow": [
+    {
+      "step_number": 1,
+      "user_message": "Run our daily compliance surveillance and flag any regulatory risks that need immediate attention.",
+      "agent_response": "I've completed today's surveillance. 3 items require immediate attention out of 2,400 transactions reviewed.\n\n**Daily Surveillance Summary:**\n\n| Category | Reviewed | Alerts | Status |\n|----------|----------|--------|--------|\n| Trading activity | 2,400 | 12 | 3 critical |\n| Communications | 8,200 | 4 | 0 critical |\n| Personal trading | 180 | 2 | 1 critical |\n| Gift/entertainment | 24 | 0 | Clear |\n\n**Critical Alerts:**\n\n| Alert | Issue | Risk Level |\n|-------|-------|------------|\n| TR-4521 | Large block trade - best execution review | High |\n| PT-0892 | PM personal trade - potential front-running pattern | Critical |\n| TR-4534 | Cross-trade executed - documentation gap | Medium |\n\n**Alert PT-0892 Details:**\n- Employee: Senior PM (J. Harrison)\n- Pattern: Bought same security 48 hrs before fund\n- Holdings period: Personal position 3 days before fund buy\n- Previous warnings: None on file\n\n**Regulatory Update Alert:**\n- SEC issued new marketing rule guidance yesterday\n- Impact: Affects our testimonial practices\n- Action needed: Policy update within 30 days\n\nSource: [Trade Surveillance + Communications Monitoring]\nAgents: SurveillanceAgent, RegulatoryAlertAgent\n\nInvestigate the critical personal trading alert?",
+      "wait_timeout_seconds": 15,
+      "description": "Daily surveillance overview"
+    },
+    {
+      "step_number": 2,
+      "user_message": "Yes, show me the details on the personal trading alert",
+      "agent_response": "Full investigation prepared on the potential front-running pattern.\n\n**Personal Trading Alert - PT-0892:**\n\n| Field | Details |\n|-------|--------|\n| Employee | James Harrison, Senior PM |\n| Date | Personal trade 3 days ago |\n| Security | XYZ Corp (Ticker: XYZ) |\n| Personal purchase | 2,000 shares @ $45.20 |\n| Fund purchase | 85,000 shares @ $47.80 (today) |\n\n**Timeline Analysis:**\n\n| Date | Event | Actor |\n|------|-------|-------|\n| Day -3 | Personal buy: 2,000 XYZ | J. Harrison |\n| Day -2 | Research report updated | Analyst team |\n| Day -1 | IC meeting - XYZ approved | Investment committee |\n| Day 0 | Fund buy: 85,000 XYZ | Trading desk |\n\n**Policy Review:**\n\n| Policy | Status |\n|--------|--------|\n| Pre-clearance | Not obtained |\n| Holding period | Violated (30-day rule) |\n| Restricted list | XYZ was not restricted |\n| Blackout period | Within IC meeting window |\n\n**Evidence Package:**\n- Trade confirmations attached\n- IC meeting minutes available\n- Email search: 4 relevant communications found\n- Pre-clearance system: No request on file\n\n**Recommended Action:** Escalate to CCO review, preserve evidence.\n\nSource: [Personal Trading System + Policy Engine]\nAgents: PolicyComplianceAgent, SurveillanceAgent\n\nSee documentation status and recommended response?",
+      "wait_timeout_seconds": 15,
+      "description": "Personal trading alert investigation"
+    },
+    {
+      "step_number": 3,
+      "user_message": "Yes, what documentation do we need and what's our response?",
+      "agent_response": "Documentation package prepared with recommended response protocol.\n\n**Required Documentation - PT-0892:**\n\n| Document | Status | Location |\n|----------|--------|----------|\n| Personal trade confirms | Collected | Case file |\n| Fund trade confirms | Collected | Case file |\n| Pre-clearance logs | Verified - no request | System export |\n| IC meeting minutes | Attached | SharePoint |\n| Email communications | Preserved | Legal hold |\n| Employee statement | Pending | To be obtained |\n\n**Evidence Preservation:**\n- Legal hold placed on all Harrison communications\n- Trading access: Recommend temporary restriction\n- IT notified: No data deletion permitted\n\n**Recommended Response Protocol:**\n\n| Step | Action | Timeline |\n|------|--------|----------|\n| 1 | Notify General Counsel | Immediate |\n| 2 | Restrict trading access | Today |\n| 3 | Obtain employee statement | Within 48 hrs |\n| 4 | Complete investigation | 5 business days |\n| 5 | Determine sanction | Per findings |\n| 6 | Regulatory disclosure | If required |\n\n**Disclosure Considerations:**\n- Form ADV: May require update if material\n- FINRA reporting: Potential if extends to customer harm\n- Internal: Board notification recommended\n\n**Draft Investigation Memo:** Created and ready for review.\n\nSource: [Document Management + Policy Library]\nAgents: DocumentationAgent, PolicyComplianceAgent\n\nReview regulatory reporting status and upcoming filings?",
+      "wait_timeout_seconds": 15,
+      "description": "Documentation and response protocol"
+    },
+    {
+      "step_number": 4,
+      "user_message": "Yes, what's our regulatory reporting status?",
+      "agent_response": "Regulatory reporting status reviewed. All current filings on track, 2 upcoming deadlines.\n\n**Filing Status Dashboard:**\n\n| Report | Due Date | Status | Owner |\n|--------|----------|--------|-------|\n| Form PF | 15 days | In progress (80%) | Operations |\n| Form ADV Annual | 45 days | Not started | Compliance |\n| 13F Holdings | 30 days | Draft ready | Operations |\n| Form D (new fund) | 60 days | Template ready | Legal |\n\n**Upcoming Deadlines:**\n\n| Priority | Filing | Due | Action Needed |\n|----------|--------|-----|---------------|\n| High | Form PF | 15 days | Complete Qs 8-12 |\n| Medium | 13F | 30 days | Final review |\n| Medium | Form ADV | 45 days | Begin update |\n\n**Form PF Progress:**\n\n| Section | Status |\n|---------|--------|\n| Basic info (Q1-7) | Complete |\n| Risk metrics (Q8-12) | In progress |\n| Counterparty data | Pending data pull |\n| Stress testing | Complete |\n\n**Required for Form PF:**\n- Counterparty exposure report (request sent)\n- Final NAV confirmation (pending)\n- Risk manager sign-off (scheduled)\n\n**Regulatory Calendar:** No new filings added this week.\n\nSource: [Regulatory Calendar + Filing Systems]\nAgents: ReportingAgent, RegulatoryAlertAgent\n\nCheck SEC exam readiness?",
+      "wait_timeout_seconds": 15,
+      "description": "Regulatory reporting status"
+    },
+    {
+      "step_number": 5,
+      "user_message": "Yes, how prepared are we for the SEC exam next quarter?",
+      "agent_response": "SEC exam readiness assessment complete. Overall score: 78% - improvement areas identified.\n\n**Exam Readiness Score:**\n\n| Area | Score | Status |\n|------|-------|--------|\n| Documentation | 85% | Good |\n| Policies & procedures | 82% | Good |\n| Trading compliance | 72% | Needs attention |\n| Marketing materials | 68% | Needs attention |\n| Cybersecurity | 88% | Good |\n| **Overall** | **78%** | **Acceptable** |\n\n**Focus Areas (Based on Recent SEC Priorities):**\n\n| Topic | Our Status | SEC Focus Level |\n|-------|------------|----------------|\n| Private fund fees | Documented | High |\n| Marketing rule | Gaps found | High |\n| Valuation practices | Strong | Medium |\n| Conflicts of interest | Adequate | High |\n| Cybersecurity | Strong | High |\n\n**Gap Analysis - Marketing Rule:**\n- Issue: 12 testimonials lack required disclosures\n- Website: 3 performance presentations need updates\n- Social media: Review pending\n- Timeline to fix: 2-3 weeks\n\n**Prior Exam Findings Status:**\n\n| Finding (2021) | Current Status |\n|----------------|---------------|\n| Trade allocation docs | Remediated |\n| Compliance calendar | Remediated |\n| Personal trading oversight | In progress |\n\n**Exam Prep Checklist:** 34 of 42 items complete.\n\nSource: [Exam Prep + Industry Enforcement]\nAgents: ExamReadinessAgent, PolicyComplianceAgent\n\nGenerate complete compliance summary?",
+      "wait_timeout_seconds": 15,
+      "description": "SEC exam readiness assessment"
+    },
+    {
+      "step_number": 6,
+      "user_message": "Yes, give me the executive compliance summary",
+      "agent_response": "Daily compliance summary complete. Here's your executive dashboard.\n\n**Compliance Executive Summary:**\n\n| Metric | Today | Trend |\n|--------|-------|-------|\n| Items reviewed | 10,804 | Normal |\n| Total alerts | 18 | Down 12% |\n| Critical alerts | 3 | Requires action |\n| Regulatory updates | 1 | Policy impact |\n\n**Immediate Actions Required:**\n\n| Priority | Item | Owner | Due |\n|----------|------|-------|-----|\n| Critical | Personal trading investigation | CCO | Today |\n| High | Form PF completion | Ops | 15 days |\n| High | Marketing rule update | Legal | 30 days |\n| Medium | Block trade review | Trading | This week |\n\n**Risk Dashboard:**\n\n| Risk Area | Level | Change |\n|-----------|-------|--------|\n| Regulatory | Medium | Stable |\n| Trading | Elevated | Up (personal trade) |\n| Operational | Low | Stable |\n| Reputational | Medium | Up (investigation) |\n\n**SEC Exam Prep:**\n- Readiness: 78%\n- Time to exam: ~90 days\n- Key gaps: Marketing rule, personal trading\n- On track: Yes, if gaps addressed\n\n**Week Ahead:**\n- Complete personal trading investigation\n- Finalize Form PF filing\n- Begin marketing materials review\n- Schedule exam prep mock review\n\nSource: [All Compliance Systems]\nAgents: ComplianceSummaryAgent (orchestrating all agents)\n\nYour AI-powered compliance surveillance reviewed 10,804 items, identified 3 critical issues requiring attention, and confirmed 78% SEC exam readiness with clear remediation path.",
+      "wait_timeout_seconds": 20,
+      "description": "Executive compliance summary"
+    }
+  ],
+  "design_principles": {
+    "max_response_length": "150-250 words",
+    "max_lines": "25-30 lines",
+    "max_table_rows": "4-5 rows",
+    "max_bullets": "4-6 bullets",
+    "sections": "2-3 maximum",
+    "visual_elements": "1 status indicator OR 1 table per response",
+    "source_attribution": "Compact format at end",
+    "evergreen_language": "Relative timeframes only",
+    "call_to_action": "Clear next question to continue"
+  },
+  "business_value": {
+    "problem": "Manual surveillance of thousands of transactions, regulatory complexity across 5 regulators, exam preparation burden, documentation gaps",
+    "solution": "AI-powered compliance monitoring with automated surveillance, regulatory tracking, and exam readiness assessment",
+    "roi": "10,804 items reviewed daily, critical issues identified in real-time, 78% exam readiness visibility",
+    "performance": "Real-time surveillance alerts, automated evidence preservation, regulatory filing tracking, gap analysis"
+  }
+}

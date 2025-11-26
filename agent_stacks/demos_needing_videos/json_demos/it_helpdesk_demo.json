@@ -1,0 +1,143 @@
+{
+  "demo_name": "IT_Helpdesk_1Min_Demo",
+  "description": "1-minute demo: AI-powered IT helpdesk with automated troubleshooting, knowledge retrieval, and ticket resolution",
+  "version": "2.0.0",
+  "trigger_phrases": [
+    "Help me fix my laptop issue - it's running really slow and I have a meeting in 30 minutes.",
+    "IT support request",
+    "computer troubleshooting"
+  ],
+  "metadata": {
+    "category": "it_support",
+    "industry": "cross_industry",
+    "max_response_length": "250_words",
+    "total_steps": 6,
+    "estimated_duration_seconds": 60,
+    "target_audience": "employees"
+  },
+  "persona": {
+    "name": "Tom Richardson",
+    "title": "IT Service Desk Manager",
+    "company": "Enterprise Solutions Inc",
+    "context": "Managing IT support for 8,000 employees with 15 technicians, seeking to improve first-call resolution and reduce ticket volume"
+  },
+  "agents_utilized": [
+    {
+      "agent_name": "UserContextAgent",
+      "description": "Retrieves user profile, device inventory, and IT history",
+      "inputs": ["user_id"],
+      "outputs": ["user_profile", "assigned_devices", "recent_tickets", "software_inventory"],
+      "data_sources": ["Active Directory", "Asset Management", "ITSM System"],
+      "used_in_steps": [1]
+    },
+    {
+      "agent_name": "IssueDiagnosisAgent",
+      "description": "Analyzes symptoms and diagnoses likely causes",
+      "inputs": ["issue_description", "device_info"],
+      "outputs": ["diagnosis", "probable_causes", "severity_assessment"],
+      "data_sources": ["Diagnostic Models", "Known Issues Database", "Telemetry"],
+      "used_in_steps": [1, 2]
+    },
+    {
+      "agent_name": "KnowledgeSearchAgent",
+      "description": "Searches IT knowledge base for solutions and workarounds",
+      "inputs": ["issue_type", "device_type"],
+      "outputs": ["relevant_articles", "step_by_step_guides", "workarounds"],
+      "data_sources": ["IT Knowledge Base", "Vendor Documentation", "Community Solutions"],
+      "used_in_steps": [2, 3]
+    },
+    {
+      "agent_name": "RemediationAgent",
+      "description": "Executes automated fixes and provides guided troubleshooting",
+      "inputs": ["diagnosis", "remediation_options"],
+      "outputs": ["remediation_steps", "automation_results", "verification_checks"],
+      "data_sources": ["Automation Scripts", "Remote Management Tools"],
+      "used_in_steps": [3, 4]
+    },
+    {
+      "agent_name": "EscalationRoutingAgent",
+      "description": "Routes complex issues to appropriate support tiers",
+      "inputs": ["issue_details", "attempted_resolutions"],
+      "outputs": ["escalation_path", "technician_assignment", "priority_level"],
+      "data_sources": ["Support Team Directory", "Skills Matrix", "Queue Management"],
+      "used_in_steps": [4, 5]
+    },
+    {
+      "agent_name": "TicketManagementAgent",
+      "description": "Creates, updates, and manages support tickets",
+      "inputs": ["issue_data", "resolution_details"],
+      "outputs": ["ticket_record", "status_updates", "closure_notes"],
+      "data_sources": ["ITSM System", "SLA Tracking"],
+      "used_in_steps": [5, 6]
+    },
+    {
+      "agent_name": "ITSupportSummaryAgent",
+      "description": "Generates session summaries and satisfaction tracking",
+      "inputs": ["session_data"],
+      "outputs": ["resolution_summary", "user_feedback", "improvement_insights"],
+      "data_sources": ["All IT Systems"],
+      "used_in_steps": [6]
+    }
+  ],
+  "conversation_flow": [
+    {
+      "step_number": 1,
+      "user_message": "Help me fix my laptop issue - it's running really slow and I have a meeting in 30 minutes.",
+      "agent_response": "Hi Michael! I see your urgency - let's get this fixed quickly. I've pulled up your device information.\n\n**Your Device Profile:**\n\n| Detail | Value |\n|--------|-------|\n| Device | Dell Latitude 5520 |\n| OS | Windows 11 Pro |\n| Age | 2.5 years |\n| Last restart | 8 days ago |\n| Disk space | 12% free (low) |\n\n**Quick Diagnostics Running:**\n\n| Check | Status | Finding |\n|-------|--------|--------|\n| Memory usage | Warning | 94% utilized |\n| Disk space | Critical | Only 12% free |\n| Running processes | Warning | 127 active |\n| Last restart | Warning | 8 days ago |\n| Updates pending | Info | 3 updates ready |\n\n**Likely Causes (Ranked):**\n1. **Low disk space** (12% free = performance impact)\n2. **Too many apps open** (94% memory)\n3. **Needs restart** (8 days uptime)\n4. **Background processes** (127 running)\n\n**Urgency Noted:** 30 minutes to meeting - focusing on quick fixes.\n\nSource: [Asset Management + Remote Diagnostics]\nAgents: UserContextAgent, IssueDiagnosisAgent\n\nStart quick remediation?",
+      "wait_timeout_seconds": 15,
+      "description": "Device diagnostics and issue identification"
+    },
+    {
+      "step_number": 2,
+      "user_message": "Yes, fix it fast please!",
+      "agent_response": "Running quick fixes now. I'll handle what I can remotely.\n\n**Immediate Actions (Automated):**\n\n| Action | Status | Impact |\n|--------|--------|--------|\n| Clear temp files | Running... | Free 4.2 GB |\n| End background processes | Running... | Free 18% memory |\n| Clear browser cache | Running... | Free 1.8 GB |\n| Disable startup apps | Ready | Faster next boot |\n\n**Disk Space Recovery:**\n\n| Item | Size | Safe to Clear |\n|------|------|---------------|\n| Temp files | 4.2 GB | Yes (clearing) |\n| Browser cache | 1.8 GB | Yes (clearing) |\n| Windows Update cleanup | 2.1 GB | Yes (can run) |\n| Recycle bin | 890 MB | Yes (can empty) |\n| **Total recoverable** | **9.0 GB** | |\n\n**Progress:**\n- Temp files: ✓ Cleared (4.2 GB freed)\n- Cache: ✓ Cleared (1.8 GB freed)\n- Background apps: ✓ 12 processes ended\n- Memory freed: 22%\n\n**Current Status:**\n- Disk space: 12% → 24% free\n- Memory: 94% → 72% utilized\n\n**Still Recommended:** Restart after your meeting for full optimization.\n\nSource: [Remote Management + Automation Scripts]\nAgents: RemediationAgent, KnowledgeSearchAgent\n\nTest if it's faster now?",
+      "wait_timeout_seconds": 15,
+      "description": "Automated quick fixes"
+    },
+    {
+      "step_number": 3,
+      "user_message": "It's a little better but still sluggish. What else can we do quickly?",
+      "agent_response": "Let's try a few more quick optimizations before your meeting.\n\n**Additional Quick Fixes:**\n\n| Action | Time | Expected Impact |\n|--------|------|----------------|\n| Close unused browser tabs | 30 sec | Significant |\n| Restart Teams | 30 sec | Often helps |\n| Disable visual effects | 1 min | Moderate |\n| Check for runaway process | 30 sec | Could be big |\n\n**Process Check:**\n\n| Process | CPU | Memory | Status |\n|---------|-----|--------|--------|\n| Chrome (14 tabs) | 18% | 2.4 GB | High usage |\n| Teams | 12% | 1.1 GB | Normal |\n| Outlook | 8% | 680 MB | Normal |\n| OneDrive sync | 15% | 420 MB | Syncing |\n\n**Recommendation: Close Chrome tabs**\n- You have 14 tabs open\n- Chrome using 2.4 GB memory\n- Keep only tabs needed for meeting\n\n**Quick Actions I Can Do:**\n1. Pause OneDrive sync (frees CPU + network)\n2. Close other browser windows\n3. Enable performance mode\n\n**After Meeting:**\n- Full restart (fixes most issues)\n- Run Windows Update\n- Consider SSD upgrade (device is 2.5 years old)\n\nSource: [Remote Diagnostics + KB Article #IT-2341]\nAgents: RemediationAgent, KnowledgeSearchAgent\n\nPause OneDrive and enable performance mode?",
+      "wait_timeout_seconds": 15,
+      "description": "Additional troubleshooting"
+    },
+    {
+      "step_number": 4,
+      "user_message": "Yes, do that. And can you schedule someone to look at it after my meeting?",
+      "agent_response": "Done! Performance mode enabled and technician scheduled.\n\n**Actions Completed:**\n\n| Action | Status | Effect |\n|--------|--------|--------|\n| OneDrive paused | ✓ Complete | 15% CPU freed |\n| Performance mode | ✓ Enabled | Visual effects reduced |\n| Browser tabs | Reminder sent | Close extras |\n\n**Current Performance:**\n\n| Before | After All Fixes |\n|--------|----------------|\n| Disk: 12% free | Disk: 24% free |\n| Memory: 94% | Memory: 65% |\n| CPU: High | CPU: Moderate |\n| Responsiveness: Slow | Responsiveness: Improved |\n\n**Technician Visit Scheduled:**\n\n| Detail | Value |\n|--------|-------|\n| Technician | Sarah Martinez |\n| Time | Today, 3:00 PM |\n| Location | Your desk (Building A, Floor 3) |\n| Ticket # | INC-2024-45892 |\n| Purpose | Full diagnostic + optimization |\n\n**Technician Will Check:**\n- Hardware diagnostics\n- SSD health assessment\n- Potential upgrade recommendation\n- Full system optimization\n- Windows updates installation\n\n**Your Meeting:** You should be good to go now!\n\nSource: [ITSM + Technician Scheduling]\nAgents: EscalationRoutingAgent, TicketManagementAgent\n\nAnything else before your meeting?",
+      "wait_timeout_seconds": 15,
+      "description": "Final fixes and technician scheduling"
+    },
+    {
+      "step_number": 5,
+      "user_message": "No, I think I'm good. Can you send me a summary?",
+      "agent_response": "Summary sent to your email. Here's a copy for reference.\n\n**Support Session Summary:**\n\n**Issue:** Laptop running slowly before important meeting\n\n**Actions Taken (Remote):**\n\n| Fix | Result |\n|-----|--------|\n| Cleared temp files | 4.2 GB freed |\n| Cleared browser cache | 1.8 GB freed |\n| Ended background processes | 12 closed |\n| Paused OneDrive sync | 15% CPU freed |\n| Enabled performance mode | Visual effects reduced |\n\n**Improvement Achieved:**\n\n| Metric | Before | After |\n|--------|--------|-------|\n| Disk space | 12% | 24% |\n| Memory usage | 94% | 65% |\n| Responsiveness | Slow | Improved |\n\n**Follow-Up Scheduled:**\n\n| Appointment | Details |\n|-------------|--------|\n| Date/time | Today, 3:00 PM |\n| Technician | Sarah Martinez |\n| Location | Your desk |\n| Ticket | INC-2024-45892 |\n\n**Reminders:**\n- Restart laptop after your meeting\n- Close Chrome tabs you don't need\n- OneDrive will auto-resume in 4 hours\n\n**Email Sent:** michael.chen@company.com\n\nSource: [Session Log + ITSM]\nAgents: TicketManagementAgent, ITSupportSummaryAgent\n\nGood luck with your meeting!",
+      "wait_timeout_seconds": 15,
+      "description": "Summary and documentation"
+    },
+    {
+      "step_number": 6,
+      "user_message": "Thanks!",
+      "agent_response": "You're welcome, Michael! Here's your complete session recap.\n\n**Session Complete:**\n\n| Metric | Value |\n|--------|-------|\n| Issue reported | Slow laptop |\n| Time to first fix | 2 minutes |\n| Total session time | 6 minutes |\n| Resolution | Temporary fix + scheduled full service |\n| Urgency met | Yes (ready for meeting) |\n\n**What We Accomplished:**\n\n| Outcome | Status |\n|---------|--------|\n| Quick performance boost | Achieved |\n| Disk space freed | 6 GB |\n| Memory freed | 29% |\n| Technician scheduled | Today 3 PM |\n| Documentation | Complete |\n\n**Your Ticket:** INC-2024-45892\n\n**Rating Request:**\nAfter your meeting, you'll receive a quick 2-question survey.\n\n**Self-Service Tips for Future:**\n- Restart weekly (prevents buildup)\n- Keep 20%+ disk space free\n- Close unused apps and tabs\n- Check for updates regularly\n\n**IT Helpdesk Stats Today:**\n- Your issue: Resolved in 6 min\n- Average resolution: 12 min\n- Self-service success: 73%\n\nSource: [All IT Systems]\nAgents: ITSupportSummaryAgent (orchestrating all agents)\n\nYour AI IT support resolved your urgent issue in 6 minutes with remote fixes, freeing 6 GB of disk space and 29% memory - and scheduled a technician for a full tune-up after your meeting.",
+      "wait_timeout_seconds": 20,
+      "description": "Session closure and feedback"
+    }
+  ],
+  "design_principles": {
+    "max_response_length": "150-250 words",
+    "max_lines": "25-30 lines",
+    "max_table_rows": "4-5 rows",
+    "max_bullets": "4-6 bullets",
+    "sections": "2-3 maximum",
+    "visual_elements": "1 status indicator OR 1 table per response",
+    "source_attribution": "Compact format at end",
+    "evergreen_language": "Relative timeframes only",
+    "call_to_action": "Clear next question to continue"
+  },
+  "business_value": {
+    "problem": "8,000 employees with IT issues, limited technician capacity, long wait times, repetitive Tier 1 issues",
+    "solution": "AI-powered IT helpdesk with automated diagnostics, remote remediation, and intelligent escalation",
+    "roi": "6-minute resolution (vs 12 min average), 73% self-service success, reduced technician escalations",
+    "performance": "Instant device diagnostics, automated remote fixes, seamless technician scheduling, complete documentation"
+  }
+}

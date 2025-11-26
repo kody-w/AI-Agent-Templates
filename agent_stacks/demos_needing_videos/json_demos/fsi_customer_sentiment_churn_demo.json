@@ -1,0 +1,143 @@
+{
+  "demo_name": "Customer_Sentiment_Churn_1Min_Demo",
+  "description": "1-minute demo: AI-powered customer sentiment analysis with churn prediction, early warning detection, and proactive retention strategies",
+  "version": "2.0.0",
+  "trigger_phrases": [
+    "Analyze customer sentiment across our banking portfolio and identify accounts at highest churn risk.",
+    "predict customer churn",
+    "sentiment-based retention"
+  ],
+  "metadata": {
+    "category": "customer_retention",
+    "industry": "financial_services_banking",
+    "max_response_length": "250_words",
+    "total_steps": 6,
+    "estimated_duration_seconds": 60,
+    "target_audience": "relationship_managers"
+  },
+  "persona": {
+    "name": "Victoria Chen",
+    "title": "VP Customer Experience",
+    "company": "Pacific Coast Bank",
+    "context": "Managing retention for 180K customer portfolio, annual churn rate of 12%, each lost customer costs $3,200 to replace"
+  },
+  "agents_utilized": [
+    {
+      "agent_name": "SentimentAggregationAgent",
+      "description": "Aggregates sentiment signals from all customer touchpoints",
+      "inputs": ["customer_segment", "date_range"],
+      "outputs": ["sentiment_scores", "channel_breakdown", "trend_analysis"],
+      "data_sources": ["Call Transcripts", "Survey Responses", "Email Analysis", "Chat Logs", "Social Media"],
+      "used_in_steps": [1]
+    },
+    {
+      "agent_name": "ChurnPredictionAgent",
+      "description": "Predicts churn probability using ML models on behavioral and sentiment data",
+      "inputs": ["customer_data", "sentiment_signals", "transaction_patterns"],
+      "outputs": ["churn_scores", "risk_segments", "prediction_confidence"],
+      "data_sources": ["Predictive Models", "Behavioral Analytics", "Account Activity"],
+      "used_in_steps": [1, 2]
+    },
+    {
+      "agent_name": "EarlyWarningAgent",
+      "description": "Identifies early warning signals before customers show explicit churn intent",
+      "inputs": ["customer_id", "behavioral_data"],
+      "outputs": ["warning_signals", "trigger_events", "urgency_level"],
+      "data_sources": ["Activity Monitoring", "Engagement Metrics", "Competitor Activity"],
+      "used_in_steps": [2]
+    },
+    {
+      "agent_name": "CustomerProfileAgent",
+      "description": "Creates comprehensive profiles of at-risk customers",
+      "inputs": ["customer_ids"],
+      "outputs": ["customer_profiles", "relationship_value", "product_holdings", "interaction_history"],
+      "data_sources": ["CRM", "Core Banking", "Product Systems"],
+      "used_in_steps": [3]
+    },
+    {
+      "agent_name": "RetentionStrategyAgent",
+      "description": "Recommends personalized retention strategies based on customer value and risk",
+      "inputs": ["customer_profile", "churn_risk", "available_offers"],
+      "outputs": ["retention_strategies", "offer_recommendations", "outreach_scripts"],
+      "data_sources": ["Retention Playbook", "Offer Catalog", "Success Analytics"],
+      "used_in_steps": [4]
+    },
+    {
+      "agent_name": "OutreachOrchestrationAgent",
+      "description": "Orchestrates proactive outreach campaigns for at-risk customers",
+      "inputs": ["customer_list", "strategies", "channel_preferences"],
+      "outputs": ["campaign_deployment", "assignment_routing", "tracking_setup"],
+      "data_sources": ["Campaign Management", "RM Workload", "Channel Systems"],
+      "used_in_steps": [5]
+    },
+    {
+      "agent_name": "RetentionAnalyticsAgent",
+      "description": "Tracks retention program effectiveness and ROI",
+      "inputs": ["campaign_data", "outcome_tracking"],
+      "outputs": ["retention_metrics", "roi_analysis", "program_recommendations"],
+      "data_sources": ["Outcome Database", "Financial Analytics"],
+      "used_in_steps": [6]
+    }
+  ],
+  "conversation_flow": [
+    {
+      "step_number": 1,
+      "user_message": "Analyze customer sentiment across our banking portfolio and identify accounts at highest churn risk.",
+      "agent_response": "I've analyzed sentiment across 180K customers. 2,400 are high churn risk representing $8.2M in annual revenue.\n\n**Portfolio Sentiment Overview:**\n\n| Sentiment | Customers | % of Total | Churn Risk |\n|-----------|-----------|------------|------------|\n| Promoters | 72,000 | 40% | 3% |\n| Passives | 81,000 | 45% | 8% |\n| Detractors | 27,000 | 15% | 34% |\n\n**High Churn Risk Segment:**\n\n| Risk Level | Customers | Annual Revenue | Avg Relationship |\n|------------|-----------|----------------|------------------|\n| Critical (>80%) | 840 | $2.8M | $3,340/customer |\n| High (60-80%) | 1,560 | $5.4M | $3,460/customer |\n| Moderate (40-60%) | 4,200 | $12.1M | $2,880/customer |\n\n**Top Sentiment Drivers (Negative):**\n1. Digital banking experience (mentioned 2,400 times)\n2. Fee transparency (1,800 mentions)\n3. Wait times (1,200 mentions)\n4. Loan process complexity (890 mentions)\n\n**Trend Alert:** Negative sentiment up 18% this month vs last.\n\nSource: [All Touchpoints + Churn Models]\nAgents: SentimentAggregationAgent, ChurnPredictionAgent\n\nSee the early warning signals?",
+      "wait_timeout_seconds": 15,
+      "description": "Portfolio sentiment and churn analysis"
+    },
+    {
+      "step_number": 2,
+      "user_message": "Yes, what are the early warning signals we should watch for?",
+      "agent_response": "Early warning analysis reveals 5 key predictive signals. Many at-risk customers show these 30-60 days before leaving.\n\n**Predictive Warning Signals:**\n\n| Signal | Customers Showing | Churn Correlation |\n|--------|------------------|-------------------|\n| Reduced login frequency | 3,400 | 72% churn rate |\n| Competitor app download | 1,200 | 68% churn rate |\n| Direct deposit changes | 890 | 78% churn rate |\n| Balance decline >30% | 2,100 | 54% churn rate |\n| Negative survey response | 1,800 | 61% churn rate |\n\n**Critical Signal Combinations:**\n\n| Pattern | Risk Level | Immediate Action |\n|---------|------------|------------------|\n| Competitor app + balance decline | 89% churn | Urgent outreach |\n| Deposit change + reduced logins | 82% churn | RM call today |\n| 2+ service complaints | 67% churn | Proactive resolution |\n\n**Real-Time Alerts Triggered:**\n- 47 customers showed competitor app download today\n- 23 customers initiated external transfers >$10K\n- 12 customers changed direct deposit routing\n\n**High-Value at Immediate Risk:**\n- Robert Martinez: $890K deposits, competitor app detected\n- Sarah Thompson: $450K, direct deposit changed yesterday\n- James Lee: $340K, 3 complaints in 2 weeks\n\nSource: [Behavioral Analytics + Activity Monitoring]\nAgents: EarlyWarningAgent, ChurnPredictionAgent\n\nProfile the highest-value at-risk customers?",
+      "wait_timeout_seconds": 15,
+      "description": "Early warning signal detection"
+    },
+    {
+      "step_number": 3,
+      "user_message": "Yes, show me profiles of our highest-value at-risk customers",
+      "agent_response": "Detailed profiles prepared for top 5 highest-value at-risk customers.\n\n**Robert Martinez - Priority 1:**\n\n| Profile | Details |\n|---------|--------|\n| Relationship value | $890K deposits, $12K annual revenue |\n| Customer since | 2015 (9 years) |\n| Risk score | 84% (Critical) |\n| Warning signals | Competitor app (Chase), reduced logins |\n\n**Sentiment History:**\n- Last survey: Detractor (score: 4/10)\n- Comment: \"Your app is years behind competitors\"\n- Recent call: Asked about wire transfer fees\n\n**Top 5 At-Risk Profiles:**\n\n| Customer | Deposits | Revenue | Risk | Trigger |\n|----------|----------|---------|------|--------|\n| R. Martinez | $890K | $12K | 84% | Competitor app |\n| S. Thompson | $450K | $8K | 78% | Deposit change |\n| J. Lee | $340K | $6K | 72% | 3 complaints |\n| M. Williams | $280K | $5K | 68% | Balance decline |\n| A. Garcia | $220K | $4K | 65% | Negative survey |\n\n**Combined Risk:**\n- Total deposits at risk: $2.18M\n- Annual revenue at risk: $35K\n- Replacement cost if lost: $16K (5 customers)\n\nSource: [CRM + Core Banking + Sentiment Data]\nAgents: CustomerProfileAgent, ChurnPredictionAgent\n\nGenerate personalized retention strategies?",
+      "wait_timeout_seconds": 15,
+      "description": "High-value customer profiles"
+    },
+    {
+      "step_number": 4,
+      "user_message": "Yes, what retention strategies should we use for each?",
+      "agent_response": "Personalized retention strategies created based on each customer's specific triggers.\n\n**Robert Martinez Strategy:**\n\n| Element | Recommendation |\n|---------|----------------|\n| Approach | VP-level personal call |\n| Key message | \"We heard your app feedback\" |\n| Offer | Private beta access to new mobile app |\n| Incentive | Waive fees for 12 months ($480 value) |\n| Urgency | Contact within 24 hours |\n\n**Retention Strategies by Customer:**\n\n| Customer | Strategy | Offer | Success Probability |\n|----------|----------|-------|--------------------|\n| R. Martinez | Tech preview + fee waiver | $480/yr value | 72% |\n| S. Thompson | Rate match + relationship review | Premium rate | 68% |\n| J. Lee | Service recovery + escalation | Dedicated RM | 65% |\n| M. Williams | Financial review + product bundle | Rate bonus | 58% |\n| A. Garcia | Survey follow-up + fee credit | $200 credit | 62% |\n\n**Talk Track for Robert:**\n\"Mr. Martinez, I'm calling personally because valued clients like you deserve our best. I saw your feedback about our mobile app - I have something I'd like to show you. We're launching a completely redesigned app and I'd like you to be among the first to try it.\"\n\n**Total Retention Investment:** $2,400\n**Revenue Protected:** $35K/year\n**ROI:** 14.6x\n\nSource: [Retention Playbook + Offer Catalog]\nAgents: RetentionStrategyAgent, CustomerProfileAgent\n\nLaunch the retention outreach?",
+      "wait_timeout_seconds": 15,
+      "description": "Personalized retention strategies"
+    },
+    {
+      "step_number": 5,
+      "user_message": "Yes, assign the outreach and set up tracking",
+      "agent_response": "Retention outreach deployed. All 5 high-priority customers assigned with tracking.\n\n**Outreach Assignments:**\n\n| Customer | Assigned To | Channel | Due | Status |\n|----------|-------------|---------|-----|--------|\n| R. Martinez | VP Chen (you) | Phone | Today | Scheduled 2 PM |\n| S. Thompson | Sr. RM Johnson | Video call | Tomorrow | Invited |\n| J. Lee | Sr. RM Williams | In-person | Tomorrow | Confirmed |\n| M. Williams | RM Anderson | Phone | Wed | Queued |\n| A. Garcia | RM Taylor | Phone | Wed | Queued |\n\n**Automated Preparation:**\n- Customer briefs sent to each RM\n- Talk tracks loaded in CRM\n- Offers pre-approved for one-call resolution\n- Calendar holds created\n\n**Tracking Dashboard Active:**\n\n| Metric | Tracking |\n|--------|----------|\n| Contact attempts | Real-time |\n| Conversation outcomes | RM updates |\n| Offer acceptance | Immediate |\n| Account activity | 30-day monitoring |\n| Churn status | 90-day tracking |\n\n**Escalation Triggers:**\n- No contact in 48 hours → Alert manager\n- Customer declines offer → Escalate to VP\n- Any balance withdrawal → Immediate notification\n\nSource: [Campaign Management + RM Workload]\nAgents: OutreachOrchestrationAgent, RetentionStrategyAgent\n\nSee the full retention program summary?",
+      "wait_timeout_seconds": 15,
+      "description": "Outreach deployment and tracking"
+    },
+    {
+      "step_number": 6,
+      "user_message": "Yes, give me the complete summary and expected impact",
+      "agent_response": "Sentiment-based retention program complete. Here's the full impact summary.\n\n**Session Summary:**\n\n| Analysis | Result |\n|----------|--------|\n| Portfolio analyzed | 180,000 customers |\n| Sentiment signals processed | 42,000 touchpoints |\n| High churn risk identified | 2,400 customers |\n| Priority interventions | 5 highest-value |\n| Outreach deployed | 5 personalized campaigns |\n\n**High-Priority Retention:**\n\n| Metric | Value |\n|--------|-------|\n| Customers contacted | 5 |\n| Deposits at risk | $2.18M |\n| Revenue at risk | $35K/year |\n| Retention investment | $2,400 |\n| Expected save rate | 65% (3-4 customers) |\n\n**Projected ROI:**\n\n| Outcome | Conservative | Optimistic |\n|---------|-------------|------------|\n| Customers saved | 3 | 4 |\n| Revenue protected | $22K | $29K |\n| ROI on investment | 9.2x | 12.1x |\n\n**Broader Program Impact:**\n- If applied to all 2,400 high-risk: $8.2M revenue protected\n- Churn rate reduction: 12% → 9% (projected)\n- Annual savings: $960K in replacement costs\n\n**Next Steps:**\n- Your call with Robert Martinez: Today 2 PM\n- Review dashboard daily for outcomes\n- Expand program to 840 critical-risk customers\n\nSource: [All Retention Systems]\nAgents: RetentionAnalyticsAgent (orchestrating all agents)\n\nYour AI-powered sentiment analysis identified 2,400 at-risk customers and deployed personalized retention for 5 highest-value accounts protecting $2.18M in deposits.",
+      "wait_timeout_seconds": 20,
+      "description": "Complete retention program summary"
+    }
+  ],
+  "design_principles": {
+    "max_response_length": "150-250 words",
+    "max_lines": "25-30 lines",
+    "max_table_rows": "4-5 rows",
+    "max_bullets": "4-6 bullets",
+    "sections": "2-3 maximum",
+    "visual_elements": "1 status indicator OR 1 table per response",
+    "source_attribution": "Compact format at end",
+    "evergreen_language": "Relative timeframes only",
+    "call_to_action": "Clear next question to continue"
+  },
+  "business_value": {
+    "problem": "12% annual churn rate, $3,200 replacement cost per customer, reactive retention approach, missed early warning signals",
+    "solution": "AI-powered sentiment analysis with predictive churn modeling, early warning detection, and personalized retention strategies",
+    "roi": "14.6x ROI on retention investment, 65% expected save rate, $8.2M annual revenue at risk identified",
+    "performance": "180K customers analyzed, 42K sentiment touchpoints processed, 5 personalized interventions deployed in minutes"
+  }
+}

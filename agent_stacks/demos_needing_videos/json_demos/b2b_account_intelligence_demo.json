@@ -1,0 +1,143 @@
+{
+  "demo_name": "Account_Intelligence_1Min_Demo",
+  "description": "1-minute demo: AI-powered account intelligence with stakeholder mapping, engagement tracking, and strategic insights",
+  "version": "2.0.0",
+  "trigger_phrases": [
+    "I need a complete intelligence briefing on Acme Corporation before my executive meeting tomorrow.",
+    "analyze account health",
+    "prepare account briefing"
+  ],
+  "metadata": {
+    "category": "account_intelligence",
+    "industry": "b2b_sales",
+    "max_response_length": "250_words",
+    "total_steps": 6,
+    "estimated_duration_seconds": 60,
+    "target_audience": "enterprise_account_executives"
+  },
+  "persona": {
+    "name": "Michael Torres",
+    "title": "Enterprise Account Executive",
+    "company": "TechVenture Solutions",
+    "context": "Managing $2.4M opportunity with Acme Corporation, executive meeting scheduled for tomorrow"
+  },
+  "agents_utilized": [
+    {
+      "agent_name": "AccountProfileAgent",
+      "description": "Retrieves comprehensive account data from CRM and enrichment sources",
+      "inputs": ["account_id", "account_name"],
+      "outputs": ["company_profile", "firmographics", "current_spend", "opportunity_value"],
+      "data_sources": ["Salesforce CRM", "ZoomInfo", "D&B"],
+      "used_in_steps": [1]
+    },
+    {
+      "agent_name": "AccountHealthScoreAgent",
+      "description": "Calculates account health based on engagement, adoption, and sentiment signals",
+      "inputs": ["account_id", "interaction_history", "product_usage"],
+      "outputs": ["health_score", "engagement_metrics", "risk_indicators", "trend_analysis"],
+      "data_sources": ["Product Analytics", "Support Tickets", "Email Engagement"],
+      "used_in_steps": [1]
+    },
+    {
+      "agent_name": "StakeholderMappingAgent",
+      "description": "Maps organizational hierarchy and buying committee relationships",
+      "inputs": ["account_id", "contact_list"],
+      "outputs": ["org_chart", "buying_committee", "influence_scores", "relationship_gaps"],
+      "data_sources": ["LinkedIn Sales Navigator", "CRM Contacts", "Meeting History"],
+      "used_in_steps": [2]
+    },
+    {
+      "agent_name": "CompetitiveIntelligenceAgent",
+      "description": "Analyzes competitive landscape and positioning for the account",
+      "inputs": ["account_id", "industry", "known_competitors"],
+      "outputs": ["competitor_presence", "win_loss_history", "positioning_recommendations"],
+      "data_sources": ["Competitive Intel DB", "Win/Loss Records", "News Feeds"],
+      "used_in_steps": [3]
+    },
+    {
+      "agent_name": "ValueMessagingAgent",
+      "description": "Generates personalized talking points based on stakeholder priorities",
+      "inputs": ["stakeholder_profiles", "pain_points", "competitive_position"],
+      "outputs": ["talking_points", "objection_handlers", "value_propositions"],
+      "data_sources": ["Sales Playbook", "Customer Success Stories", "Product Capabilities"],
+      "used_in_steps": [4]
+    },
+    {
+      "agent_name": "DealRiskAssessmentAgent",
+      "description": "Identifies deal risks and recommends mitigation strategies",
+      "inputs": ["opportunity_id", "deal_stage", "engagement_data"],
+      "outputs": ["risk_factors", "risk_scores", "mitigation_actions", "win_probability"],
+      "data_sources": ["Deal Analytics", "Historical Patterns", "Activity Logs"],
+      "used_in_steps": [5]
+    },
+    {
+      "agent_name": "BriefingDocumentAgent",
+      "description": "Compiles all intelligence into executive-ready briefing format",
+      "inputs": ["all_agent_outputs"],
+      "outputs": ["executive_summary", "briefing_document", "action_checklist"],
+      "data_sources": ["All Connected Systems"],
+      "used_in_steps": [6]
+    }
+  ],
+  "conversation_flow": [
+    {
+      "step_number": 1,
+      "user_message": "I need a complete intelligence briefing on Acme Corporation before my executive meeting tomorrow.",
+      "agent_response": "Intelligence briefing for Acme Corporation:\n\n| Attribute | Details |\n|-----------|--------|\n| Revenue | $2.8B |\n| Current spend | $1.2M/year |\n| Opportunity | $2.4M expansion |\n| Health Score | 78/100 |\n\n**Key Signals:**\n- New CTO hired 6 weeks ago (opportunity)\n- CEO mentioned digital transformation\n- 67% feature adoption, 4.2/5 CSAT\n\nSource: [CRM + LinkedIn]\n\nWant to see the stakeholder map?",
+      "wait_timeout_seconds": 15,
+      "description": "Account overview and health assessment"
+    },
+    {
+      "step_number": 2,
+      "user_message": "Yes, show me the key stakeholders and their influence",
+      "agent_response": "8 stakeholders mapped. Champion strong, need CFO alignment.\n\n| Name | Role | Status |\n|------|------|--------|\n| Sarah Chen | CTO (New) | Need intro |\n| James Miller | VP Ops | Champion |\n| Lisa Park | CFO | Needs ROI |\n| David Wong | IT Director | Positive |\n\n**Gaps:** CTO controls tech budget (no relationship), CFO wants business case\n\n**Action:** Get CTO intro through James before meeting\n\nWant competitive positioning?",
+      "wait_timeout_seconds": 15,
+      "description": "Stakeholder mapping and relationship analysis"
+    },
+    {
+      "step_number": 3,
+      "user_message": "Yes, what's the competitive landscape for this account?",
+      "agent_response": "Two competitors active. You lead on fit, they're aggressive on price.\n\n| Factor | You | CompetitorA |\n|--------|-----|-------------|\n| Product fit | 94% | 78% |\n| Implementation | 8 weeks | 14 weeks |\n| Pricing | Market | -15% discount |\n\n**Your Advantages:** ERP integration (3-week head start), champion relationship, manufacturing references\n\n**Risk:** CompetitorA's discount may appeal to CFO\n\nPrepare counter-positioning?",
+      "wait_timeout_seconds": 15,
+      "description": "Competitive landscape analysis"
+    },
+    {
+      "step_number": 4,
+      "user_message": "Yes, give me the key talking points and value messaging",
+      "agent_response": "Tailored talking points by stakeholder:\n\n**CTO Sarah:** API-first SAP integration, 3 CTO references available\n\n**CFO Lisa:** $4.2M savings over 3 years, 8-week vs 14-week implementation, 90-day risk-free pilot\n\n**Champion James:** Positions ops team as transformation leaders\n\n**Objections:**\n- Price: TCO is 23% lower with implementation/support\n- Risk: 47 similar deployments, 94% success rate\n\nWant deal risk assessment?",
+      "wait_timeout_seconds": 15,
+      "description": "Tailored talking points and messaging"
+    },
+    {
+      "step_number": 5,
+      "user_message": "Yes, what are the deal risks and how do we mitigate them?",
+      "agent_response": "4 risks identified, 2 need action before tomorrow:\n\n| Risk | Severity | Mitigation |\n|------|----------|------------|\n| No CTO relationship | High | Champion intro today |\n| Competitor pricing | High | TCO analysis ready |\n| Budget timing | Medium | Q1 confirmed |\n\n**Before Meeting:**\n1. Call James for CTO intro\n2. Send CFO ROI calculator\n\n**Win probability:** 68% | Close target: 21 days\n\nGenerate briefing document?",
+      "wait_timeout_seconds": 15,
+      "description": "Risk assessment and mitigation plan"
+    },
+    {
+      "step_number": 6,
+      "user_message": "Yes, create the executive briefing summary",
+      "agent_response": "Briefing complete for Acme Corporation.\n\n| Summary | Status |\n|---------|--------|\n| Deal value | $2.4M |\n| Win probability | 68% |\n| Stakeholders | 8 mapped |\n| Risks | 4 (2 critical) |\n\n**Pre-Meeting Checklist:**\n- Call James for CTO intro\n- Send CFO ROI calculator\n- Review competitor counter-strategy\n\nYou're prepared with full account intelligence, stakeholder insights, and competitive positioning.",
+      "wait_timeout_seconds": 20,
+      "description": "Complete executive briefing summary"
+    }
+  ],
+  "design_principles": {
+    "max_response_length": "150-250 words",
+    "max_lines": "25-30 lines",
+    "max_table_rows": "4-5 rows",
+    "max_bullets": "4-6 bullets",
+    "sections": "2-3 maximum",
+    "visual_elements": "1 status indicator OR 1 table per response",
+    "source_attribution": "Compact format at end",
+    "evergreen_language": "Relative timeframes only",
+    "call_to_action": "Clear next question to continue"
+  },
+  "business_value": {
+    "problem": "$2.4M opportunity at risk, executive meeting tomorrow, incomplete stakeholder knowledge",
+    "solution": "AI-powered account intelligence with stakeholder mapping, competitive analysis, and risk assessment",
+    "roi": "68% win probability (up from 52%), comprehensive preparation in 12 minutes vs hours of research",
+    "performance": "360-degree account view, 4 risks identified with mitigation, tailored executive messaging"
+  }
+}

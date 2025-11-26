@@ -1,0 +1,612 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Account Intelligence Stack - Local Test Interface</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .header {
+            background: white;
+            border-radius: 12px;
+            padding: 30px;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .header h1 {
+            color: #2d3748;
+            font-size: 32px;
+            margin-bottom: 10px;
+        }
+
+        .header p {
+            color: #718096;
+            font-size: 16px;
+        }
+
+        .status-badge {
+            display: inline-block;
+            background: #48bb78;
+            color: white;
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 14px;
+            font-weight: 600;
+            margin-left: 10px;
+        }
+
+        .main-content {
+            display: grid;
+            grid-template-columns: 350px 1fr;
+            gap: 20px;
+        }
+
+        .sidebar {
+            background: white;
+            border-radius: 12px;
+            padding: 20px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            height: fit-content;
+        }
+
+        .sidebar h2 {
+            color: #2d3748;
+            font-size: 20px;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #e2e8f0;
+        }
+
+        .operation-button {
+            width: 100%;
+            background: #667eea;
+            color: white;
+            border: none;
+            padding: 15px 20px;
+            border-radius: 8px;
+            font-size: 15px;
+            font-weight: 600;
+            cursor: pointer;
+            margin-bottom: 10px;
+            text-align: left;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .operation-button:hover {
+            background: #5a67d8;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(102, 126, 234, 0.3);
+        }
+
+        .operation-button:active {
+            transform: translateY(0);
+        }
+
+        .operation-button.loading {
+            background: #cbd5e0;
+            cursor: wait;
+        }
+
+        .operation-icon {
+            font-size: 20px;
+            margin-right: 10px;
+        }
+
+        .results-panel {
+            background: white;
+            border-radius: 12px;
+            padding: 30px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            min-height: 600px;
+        }
+
+        .results-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid #e2e8f0;
+        }
+
+        .results-header h2 {
+            color: #2d3748;
+            font-size: 24px;
+        }
+
+        .clear-button {
+            background: #fc8181;
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 6px;
+            font-size: 14px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .clear-button:hover {
+            background: #f56565;
+        }
+
+        .results-content {
+            color: #2d3748;
+            line-height: 1.8;
+        }
+
+        .placeholder {
+            text-align: center;
+            color: #a0aec0;
+            padding: 60px 20px;
+        }
+
+        .placeholder-icon {
+            font-size: 64px;
+            margin-bottom: 20px;
+            opacity: 0.3;
+        }
+
+        .loading-spinner {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 3px solid rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            border-top-color: white;
+            animation: spin 1s ease-in-out infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        .json-container {
+            background: #1a202c;
+            color: #e2e8f0;
+            padding: 20px;
+            border-radius: 8px;
+            overflow-x: auto;
+            font-family: 'Monaco', 'Consolas', monospace;
+            font-size: 13px;
+            line-height: 1.6;
+            max-height: 600px;
+            overflow-y: auto;
+        }
+
+        .json-key {
+            color: #63b3ed;
+        }
+
+        .json-string {
+            color: #68d391;
+        }
+
+        .json-number {
+            color: #f6ad55;
+        }
+
+        .json-boolean {
+            color: #fc8181;
+        }
+
+        .error-message {
+            background: #fed7d7;
+            color: #c53030;
+            padding: 15px;
+            border-radius: 8px;
+            border-left: 4px solid #f56565;
+            margin-bottom: 20px;
+        }
+
+        .success-message {
+            background: #c6f6d5;
+            color: #22543d;
+            padding: 15px;
+            border-radius: 8px;
+            border-left: 4px solid #48bb78;
+            margin-bottom: 20px;
+        }
+
+        .info-box {
+            background: #bee3f8;
+            color: #2c5282;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            border-left: 4px solid #4299e1;
+        }
+
+        .metadata {
+            display: flex;
+            gap: 20px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+
+        .metadata-item {
+            background: #f7fafc;
+            padding: 10px 15px;
+            border-radius: 6px;
+            font-size: 14px;
+        }
+
+        .metadata-label {
+            color: #718096;
+            font-weight: 600;
+            margin-right: 5px;
+        }
+
+        .metadata-value {
+            color: #2d3748;
+        }
+
+        .server-status {
+            margin-bottom: 20px;
+            padding: 15px;
+            border-radius: 8px;
+            font-size: 14px;
+        }
+
+        .server-status.online {
+            background: #c6f6d5;
+            color: #22543d;
+            border-left: 4px solid #48bb78;
+        }
+
+        .server-status.offline {
+            background: #fed7d7;
+            color: #c53030;
+            border-left: 4px solid #f56565;
+        }
+
+        .quick-start {
+            background: #fef5e7;
+            border: 2px dashed #f39c12;
+            border-radius: 8px;
+            padding: 20px;
+            margin-top: 20px;
+        }
+
+        .quick-start h3 {
+            color: #e67e22;
+            margin-bottom: 10px;
+        }
+
+        .quick-start code {
+            background: #2d3748;
+            color: #68d391;
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-family: monospace;
+        }
+
+        .account-info {
+            background: #ebf8ff;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+
+        .account-info h3 {
+            color: #2c5282;
+            margin-bottom: 10px;
+            font-size: 16px;
+        }
+
+        .account-info p {
+            color: #4a5568;
+            font-size: 14px;
+            line-height: 1.6;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <div class="header">
+            <h1>
+                🤖 Account Intelligence Stack
+                <span class="status-badge">MOCK MODE</span>
+            </h1>
+            <p>Local testing interface with realistic mock data - No API credentials required</p>
+        </div>
+
+        <!-- Main Content -->
+        <div class="main-content">
+            <!-- Sidebar with Operations -->
+            <div class="sidebar">
+                <div id="serverStatus" class="server-status offline">
+                    ⚠️ Server offline - Start with: <code style="background: #2d3748; color: #68d391; padding: 2px 6px; border-radius: 3px;">python local_server.py</code>
+                </div>
+
+                <div class="account-info">
+                    <h3>📊 Test Account</h3>
+                    <p><strong>Contoso Corporation</strong><br>
+                    $2.3B Manufacturer<br>
+                    $2.1M Deal at Risk<br>
+                    5 Stakeholders</p>
+                </div>
+
+                <h2>🎯 Operations</h2>
+
+                <button class="operation-button" onclick="runOperation('account_briefing')">
+                    <span><span class="operation-icon">📋</span> Account Briefing</span>
+                    <span id="spinner-account_briefing"></span>
+                </button>
+
+                <button class="operation-button" onclick="runOperation('stakeholder_analysis')">
+                    <span><span class="operation-icon">👥</span> Stakeholder Analysis</span>
+                    <span id="spinner-stakeholder_analysis"></span>
+                </button>
+
+                <button class="operation-button" onclick="runOperation('competitive_intelligence')">
+                    <span><span class="operation-icon">⚔️</span> Competitive Intelligence</span>
+                    <span id="spinner-competitive_intelligence"></span>
+                </button>
+
+                <button class="operation-button" onclick="runOperation('meeting_prep')">
+                    <span><span class="operation-icon">📅</span> Meeting Prep</span>
+                    <span id="spinner-meeting_prep"></span>
+                </button>
+
+                <button class="operation-button" onclick="runOperation('generate_messaging')">
+                    <span><span class="operation-icon">✉️</span> Generate Message</span>
+                    <span id="spinner-generate_messaging"></span>
+                </button>
+
+                <button class="operation-button" onclick="runOperation('risk_assessment')">
+                    <span><span class="operation-icon">⚠️</span> Risk Assessment</span>
+                    <span id="spinner-risk_assessment"></span>
+                </button>
+
+                <button class="operation-button" onclick="runOperation('action_plan')">
+                    <span><span class="operation-icon">🎯</span> Action Plan</span>
+                    <span id="spinner-action_plan"></span>
+                </button>
+
+                <button class="operation-button" onclick="runOperation('deal_dashboard')">
+                    <span><span class="operation-icon">📊</span> Deal Dashboard</span>
+                    <span id="spinner-deal_dashboard"></span>
+                </button>
+
+                <div class="quick-start">
+                    <h3>🚀 Quick Start</h3>
+                    <p style="font-size: 13px; color: #666; margin-top: 10px;">
+                        1. Open terminal<br>
+                        2. Run: <code>python local_server.py</code><br>
+                        3. Click any operation above
+                    </p>
+                </div>
+            </div>
+
+            <!-- Results Panel -->
+            <div class="results-panel">
+                <div class="results-header">
+                    <h2>Results</h2>
+                    <button class="clear-button" onclick="clearResults()">Clear</button>
+                </div>
+
+                <div id="resultsContent" class="results-content">
+                    <div class="placeholder">
+                        <div class="placeholder-icon">🎯</div>
+                        <h3>Ready to Test</h3>
+                        <p>Click any operation on the left to see the Account Intelligence Stack in action</p>
+                        <p style="margin-top: 10px; font-size: 14px;">Using realistic mock data for Contoso Corporation</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const SERVER_URL = 'http://localhost:5001';
+
+        // Check server status on load
+        window.addEventListener('load', checkServerStatus);
+
+        async function checkServerStatus() {
+            try {
+                const response = await fetch(`${SERVER_URL}/health`, {
+                    method: 'GET',
+                    mode: 'cors'
+                });
+
+                if (response.ok) {
+                    document.getElementById('serverStatus').className = 'server-status online';
+                    document.getElementById('serverStatus').innerHTML = '✅ Server online - Ready to test!';
+                } else {
+                    showOfflineStatus();
+                }
+            } catch (error) {
+                showOfflineStatus();
+            }
+        }
+
+        function showOfflineStatus() {
+            document.getElementById('serverStatus').className = 'server-status offline';
+            document.getElementById('serverStatus').innerHTML = '⚠️ Server offline - Start with: <code style="background: #2d3748; color: #68d391; padding: 2px 6px; border-radius: 3px;">python local_server.py</code>';
+        }
+
+        async function runOperation(operation) {
+            const resultsDiv = document.getElementById('resultsContent');
+            const button = event.target.closest('.operation-button');
+            const spinner = document.getElementById(`spinner-${operation}`);
+
+            // Show loading state
+            button.classList.add('loading');
+            spinner.innerHTML = '<div class="loading-spinner"></div>';
+
+            resultsDiv.innerHTML = `
+                <div class="info-box">
+                    <strong>⏳ Running operation:</strong> ${operation}
+                </div>
+                <p>Querying Account Intelligence Stack...</p>
+            `;
+
+            // Prepare request payload
+            const payload = {
+                operation: operation,
+                account_id: 'CONTOSO001',
+                contact_id: 'CONT001',
+                opportunity_id: 'OPP001',
+                context: {
+                    meeting_type: 'executive_briefing',
+                    message_type: 'linkedin_connection',
+                    timeframe: '48_hours'
+                }
+            };
+
+            try {
+                const response = await fetch(`${SERVER_URL}/intelligence`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(payload)
+                });
+
+                const data = await response.json();
+
+                if (data.status === 'success') {
+                    displaySuccess(operation, data);
+                } else {
+                    displayError('Operation failed', data);
+                }
+
+            } catch (error) {
+                displayError('Connection Error', {
+                    error: error.message,
+                    details: 'Make sure the local server is running (python local_server.py)'
+                });
+            } finally {
+                // Remove loading state
+                button.classList.remove('loading');
+                spinner.innerHTML = '';
+            }
+        }
+
+        function displaySuccess(operation, data) {
+            const resultsDiv = document.getElementById('resultsContent');
+
+            const metadata = `
+                <div class="metadata">
+                    <div class="metadata-item">
+                        <span class="metadata-label">Operation:</span>
+                        <span class="metadata-value">${data.operation || operation}</span>
+                    </div>
+                    <div class="metadata-item">
+                        <span class="metadata-label">Status:</span>
+                        <span class="metadata-value">✅ Success</span>
+                    </div>
+                    <div class="metadata-item">
+                        <span class="metadata-label">Mode:</span>
+                        <span class="metadata-value">MOCK</span>
+                    </div>
+                    ${data.confidence ? `
+                    <div class="metadata-item">
+                        <span class="metadata-label">Confidence:</span>
+                        <span class="metadata-value">${Math.round(data.confidence * 100)}%</span>
+                    </div>
+                    ` : ''}
+                </div>
+            `;
+
+            const sourcesHtml = data.sources ? `
+                <div class="info-box">
+                    <strong>📊 Data Sources:</strong> ${data.sources.join(', ')}
+                </div>
+            ` : '';
+
+            resultsDiv.innerHTML = `
+                <div class="success-message">
+                    ✅ <strong>Operation completed successfully!</strong>
+                </div>
+                ${metadata}
+                ${sourcesHtml}
+                <h3 style="margin: 20px 0 10px 0; color: #2d3748;">Raw JSON Response:</h3>
+                <div class="json-container">${syntaxHighlight(data)}</div>
+            `;
+        }
+
+        function displayError(title, error) {
+            const resultsDiv = document.getElementById('resultsContent');
+
+            resultsDiv.innerHTML = `
+                <div class="error-message">
+                    <strong>❌ ${title}</strong>
+                    <p style="margin-top: 10px;">${error.error || error.message || 'Unknown error'}</p>
+                    ${error.details ? `<p style="margin-top: 5px; font-size: 13px;">${error.details}</p>` : ''}
+                </div>
+                <div class="info-box">
+                    <strong>💡 Troubleshooting:</strong>
+                    <ul style="margin-top: 10px; margin-left: 20px;">
+                        <li>Make sure the local server is running: <code style="background: #2d3748; color: #68d391; padding: 2px 6px; border-radius: 3px;">python local_server.py</code></li>
+                        <li>Check that you're in the correct directory</li>
+                        <li>Verify port 5001 is not in use</li>
+                    </ul>
+                </div>
+            `;
+        }
+
+        function clearResults() {
+            const resultsDiv = document.getElementById('resultsContent');
+            resultsDiv.innerHTML = `
+                <div class="placeholder">
+                    <div class="placeholder-icon">🎯</div>
+                    <h3>Ready to Test</h3>
+                    <p>Click any operation on the left to see the Account Intelligence Stack in action</p>
+                    <p style="margin-top: 10px; font-size: 14px;">Using realistic mock data for Contoso Corporation</p>
+                </div>
+            `;
+        }
+
+        function syntaxHighlight(json) {
+            if (typeof json !== 'string') {
+                json = JSON.stringify(json, null, 2);
+            }
+
+            json = json.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+
+            return json.replace(/("(\\u[a-zA-Z0-9]{4}|\\[^u]|[^\\"])*"(\s*:)?|\b(true|false|null)\b|-?\d+(?:\.\d*)?(?:[eE][+\-]?\d+)?)/g, function (match) {
+                let cls = 'json-number';
+                if (/^"/.test(match)) {
+                    if (/:$/.test(match)) {
+                        cls = 'json-key';
+                    } else {
+                        cls = 'json-string';
+                    }
+                } else if (/true|false/.test(match)) {
+                    cls = 'json-boolean';
+                } else if (/null/.test(match)) {
+                    cls = 'json-null';
+                }
+                return '<span class="' + cls + '">' + match + '</span>';
+            });
+        }
+
+        // Auto-check server status every 5 seconds
+        setInterval(checkServerStatus, 5000);
+    </script>
+</body>
+</html>

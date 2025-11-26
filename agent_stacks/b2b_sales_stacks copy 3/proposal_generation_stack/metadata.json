@@ -1,0 +1,58 @@
+{
+  "id": "proposal_generation_stack",
+  "name": "Proposal Generation Agent Stack",
+  "version": "1.0.0",
+  "description": "Creates tailored proposals from prior successful deals",
+  "category": "b2b_sales",
+  "complexity": "intermediate",
+  "features": [
+    "Proposal creation",
+    "Content customization",
+    "Pricing optimization"
+  ],
+  "benefits": [
+    "Reduces proposal time",
+    "Improves win rates",
+    "Ensures consistency"
+  ],
+  "technicalRequirements": {
+    "platforms": [
+      "Windows",
+      "macOS",
+      "Linux"
+    ],
+    "dependencies": [
+      "Python 3.8+",
+      "requests",
+      "json"
+    ],
+    "apiKeys": [
+      "SHAREPOINT_API_KEY",
+      "WORD_API_KEY"
+    ],
+    "integrations": [
+      "SharePoint",
+      "Word",
+      "D365",
+      "Salesforce"
+    ]
+  },
+  "components": [
+    {
+      "name": "proposal_generation_agent.py",
+      "description": "Creates tailored proposals from prior successful deals",
+      "role": "Primary processing engine"
+    }
+  ],
+  "demo": {
+    "available": true,
+    "url": "agents_lab/b2b_sales_stack/proposal_generation_stack/demos/proposal_generation_demo.html",
+    "title": "Proposal Generation Agent Interactive Demo",
+    "description": "Interactive demonstration of Proposal Generation Agent capabilities"
+  },
+  "useCases": [
+    "Proposal creation",
+    "Content customization",
+    "Pricing optimization"
+  ]
+}

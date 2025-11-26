@@ -1,0 +1,143 @@
+{
+  "demo_name": "Deal_Progression_1Min_Demo",
+  "description": "1-minute demo: AI-powered deal progression tracking with stage velocity analysis, next-best-actions, and pipeline acceleration",
+  "version": "2.0.0",
+  "trigger_phrases": [
+    "Show me which deals are stalled in my pipeline and what actions will move them forward.",
+    "analyze deal velocity",
+    "identify stalled opportunities"
+  ],
+  "metadata": {
+    "category": "deal_management",
+    "industry": "b2b_sales",
+    "max_response_length": "250_words",
+    "total_steps": 6,
+    "estimated_duration_seconds": 60,
+    "target_audience": "sales_managers"
+  },
+  "persona": {
+    "name": "Jennifer Walsh",
+    "title": "Regional Sales Director",
+    "company": "CloudScale Solutions",
+    "context": "Managing $18M pipeline across 12 reps, Q4 close pressure, need to identify at-risk deals"
+  },
+  "agents_utilized": [
+    {
+      "agent_name": "PipelineAnalyticsAgent",
+      "description": "Analyzes full pipeline health with deal-level metrics and trends",
+      "inputs": ["pipeline_id", "date_range", "filters"],
+      "outputs": ["pipeline_summary", "deal_status_breakdown", "value_at_risk"],
+      "data_sources": ["Salesforce CRM", "Pipeline Analytics"],
+      "used_in_steps": [1]
+    },
+    {
+      "agent_name": "StalledDealDetectionAgent",
+      "description": "Identifies deals stuck in stage beyond normal velocity thresholds",
+      "inputs": ["opportunity_list", "stage_benchmarks"],
+      "outputs": ["stalled_deals", "days_in_stage", "stall_reasons"],
+      "data_sources": ["CRM", "Activity Logs", "Email Analytics"],
+      "used_in_steps": [1, 2]
+    },
+    {
+      "agent_name": "DealDiagnosticsAgent",
+      "description": "Deep-dives into individual deals to identify root cause of stalls",
+      "inputs": ["opportunity_id"],
+      "outputs": ["blocker_analysis", "stakeholder_status", "last_contact", "recommended_actions"],
+      "data_sources": ["CRM", "Meeting Notes", "Email Threads", "Call Transcripts"],
+      "used_in_steps": [2]
+    },
+    {
+      "agent_name": "NextBestActionAgent",
+      "description": "Generates specific action plans to move deals forward",
+      "inputs": ["deal_diagnostics", "sales_playbook"],
+      "outputs": ["action_plan", "task_list", "talk_tracks", "resource_needs"],
+      "data_sources": ["Sales Playbook", "Win Patterns", "Best Practices DB"],
+      "used_in_steps": [3]
+    },
+    {
+      "agent_name": "PipelineAccelerationAgent",
+      "description": "Identifies opportunities to pull deals forward across the pipeline",
+      "inputs": ["pipeline_data", "acceleration_levers"],
+      "outputs": ["acceleration_opportunities", "quick_wins", "forecast_impact"],
+      "data_sources": ["Historical Close Data", "Conversion Analytics"],
+      "used_in_steps": [4]
+    },
+    {
+      "agent_name": "TaskAssignmentAgent",
+      "description": "Assigns actions to reps based on capacity and expertise",
+      "inputs": ["action_plans", "rep_profiles", "capacity_data"],
+      "outputs": ["assignments", "deadlines", "accountability_metrics"],
+      "data_sources": ["Team Directory", "Capacity Dashboard", "Skills Matrix"],
+      "used_in_steps": [5]
+    },
+    {
+      "agent_name": "PipelineReportAgent",
+      "description": "Generates executive summaries and tracking dashboards",
+      "inputs": ["all_analysis_outputs"],
+      "outputs": ["executive_summary", "tracking_dashboard", "alert_configuration"],
+      "data_sources": ["All Pipeline Systems"],
+      "used_in_steps": [6]
+    }
+  ],
+  "conversation_flow": [
+    {
+      "step_number": 1,
+      "user_message": "Show me which deals are stalled in my pipeline and what actions will move them forward.",
+      "agent_response": "Analyzed $18M pipeline - 12 deals stalled ($4.2M at risk).\n\n| Status | Deals | Value |\n|--------|-------|-------|\n| On Track | 28 | $9.8M |\n| At Risk | 7 | $4.0M |\n| Stalled | 12 | $4.2M |\n\n**Top Stalled:** TechCorp ($890K, 34 days), Global Mfg ($720K, 28 days), Apex Financial ($580K, 25 days)\n\n**Root Causes:** 5 missing exec sponsor, 4 competitor eval, 3 budget pending\n\nWant details on top stalled deals?",
+      "wait_timeout_seconds": 15,
+      "description": "Pipeline analysis with stalled deal identification"
+    },
+    {
+      "step_number": 2,
+      "user_message": "Yes, give me the details on TechCorp and Global Manufacturing",
+      "agent_response": "Deep analysis on both deals:\n\n**TechCorp ($890K):** Champion went silent 18 days ago, new CFO reviewing all purchases\n→ Re-engage via different stakeholder, prepare CFO business case\n\n**Global Mfg ($720K):** Champion active but legal review blocking contract\n→ Offer pre-approved template, escalate with legal concession\n\nBoth significantly over your 45-day avg close time.\n\nGenerate action plans?",
+      "wait_timeout_seconds": 15,
+      "description": "Deep dive on priority stalled deals"
+    },
+    {
+      "step_number": 3,
+      "user_message": "Yes, create action plans with specific next steps",
+      "agent_response": "Action plans created:\n\n**TechCorp:** Research CFO → Call VP IT for intro → Send CFO ROI analysis → VP-to-CFO outreach\n\n**Global Mfg:** Call champion → Send pre-approved template → Offer 30-day out clause → Legal-to-legal call\n\n**Assigned:** Sarah Kim (TechCorp exec alignment), Legal fast-track (Global)\n\n**Target:** Both back on track within 10 days\n\nSee full pipeline acceleration plan?",
+      "wait_timeout_seconds": 15,
+      "description": "Specific action plans with tasks and owners"
+    },
+    {
+      "step_number": 4,
+      "user_message": "Yes, show me how to accelerate the entire pipeline",
+      "agent_response": "$6.8M can be accelerated with targeted actions:\n\n| Action | Value | Days Saved |\n|--------|-------|------------|\n| Exec alignment | $3.2M | 12 days |\n| Contract fast-track | $1.8M | 8 days |\n| Proof-of-value | $1.8M | 15 days |\n\n**Quick Wins This Week:** DataFlow $340K (awaiting sig), Summit $280K (Friday approval), Tech Dynamics $190K (in DocuSign)\n\n**Forecast Impact:** +$2.4M to Q4 commit\n\nAssign tasks to team?",
+      "wait_timeout_seconds": 15,
+      "description": "Full pipeline acceleration strategy"
+    },
+    {
+      "step_number": 5,
+      "user_message": "Yes, assign tasks and set up tracking",
+      "agent_response": "Tasks assigned with tracking enabled:\n\n| Rep | Tasks | Deadline |\n|-----|-------|----------|\n| Mike Chen | 6 | This week |\n| Lisa Torres | 4 | 5 days |\n| James Park | 8 | 7 days |\n\n**Tracking:** Daily Slack alerts, stage change notifications, 7-day stall warning (vs 21)\n\n**Targets:** Reduce stall time to 10 days, move $4.2M back to active, +$2.4M Q4 commit\n\nGenerate summary?",
+      "wait_timeout_seconds": 15,
+      "description": "Task assignments and tracking setup"
+    },
+    {
+      "step_number": 6,
+      "user_message": "Yes, summarize everything we accomplished",
+      "agent_response": "Pipeline acceleration complete!\n\n| Result | Value |\n|--------|-------|\n| Pipeline analyzed | $18M (47 deals) |\n| Stalled identified | 12 deals ($4.2M) |\n| Tasks assigned | 21 actions |\n| Quick wins | $810K this week |\n\n**Outcomes:** Stall time 21→10 days, +$2.4M Q4 commit, pipeline health 60%→78%\n\nYour $4.2M in stalled deals now have action plans with automated tracking and 7-day early warning.",
+      "wait_timeout_seconds": 20,
+      "description": "Complete session summary"
+    }
+  ],
+  "design_principles": {
+    "max_response_length": "150-250 words",
+    "max_lines": "25-30 lines",
+    "max_table_rows": "4-5 rows",
+    "max_bullets": "4-6 bullets",
+    "sections": "2-3 maximum",
+    "visual_elements": "1 status indicator OR 1 table per response",
+    "source_attribution": "Compact format at end",
+    "evergreen_language": "Relative timeframes only",
+    "call_to_action": "Clear next question to continue"
+  },
+  "business_value": {
+    "problem": "$4.2M in stalled pipeline, 12 deals stuck averaging 21 days, Q4 close pressure",
+    "solution": "AI-powered deal progression with root cause analysis, action plans, and automated tracking",
+    "roi": "$2.4M added to Q4 commit, reduce stall time from 21 to 10 days, 78% pipeline health",
+    "performance": "21 specific actions assigned, automated early warning, weekly accountability cadence"
+  }
+}

@@ -1,0 +1,143 @@
+{
+  "demo_name": "Voice_to_CRM_1Min_Demo",
+  "description": "1-minute demo: AI-powered voice transcription to CRM with automatic data extraction, record updates, and follow-up creation",
+  "version": "2.0.0",
+  "trigger_phrases": [
+    "Transcribe my sales call notes and update the CRM with the key information.",
+    "voice to CRM update",
+    "transcribe meeting notes"
+  ],
+  "metadata": {
+    "category": "sales_productivity",
+    "industry": "cross_industry",
+    "max_response_length": "250_words",
+    "total_steps": 6,
+    "estimated_duration_seconds": 60,
+    "target_audience": "sales_representatives"
+  },
+  "persona": {
+    "name": "Marcus Williams",
+    "title": "Account Executive",
+    "company": "Enterprise Tech Solutions",
+    "context": "Managing 40 active opportunities, spending 2 hours daily on CRM updates, seeking to automate admin work"
+  },
+  "agents_utilized": [
+    {
+      "agent_name": "VoiceTranscriptionAgent",
+      "description": "Transcribes voice recordings to text with speaker identification",
+      "inputs": ["audio_file", "participant_info"],
+      "outputs": ["transcript", "speaker_labels", "timestamps"],
+      "data_sources": ["Azure Speech Services", "Audio Processing"],
+      "used_in_steps": [1]
+    },
+    {
+      "agent_name": "EntityExtractionAgent",
+      "description": "Extracts key business entities from conversation text",
+      "inputs": ["transcript"],
+      "outputs": ["entities", "relationships", "key_facts"],
+      "data_sources": ["NLP Engine", "Entity Recognition Models"],
+      "used_in_steps": [1, 2]
+    },
+    {
+      "agent_name": "CRMMatchingAgent",
+      "description": "Matches extracted entities to CRM records",
+      "inputs": ["entities", "crm_context"],
+      "outputs": ["matched_records", "suggested_updates", "new_records_needed"],
+      "data_sources": ["Salesforce CRM", "Contact Database"],
+      "used_in_steps": [2]
+    },
+    {
+      "agent_name": "DealIntelligenceAgent",
+      "description": "Extracts deal-relevant information and signals",
+      "inputs": ["transcript", "deal_context"],
+      "outputs": ["deal_updates", "buying_signals", "objections", "next_steps"],
+      "data_sources": ["CRM Opportunity", "Deal Stage Models"],
+      "used_in_steps": [3]
+    },
+    {
+      "agent_name": "TaskGenerationAgent",
+      "description": "Creates follow-up tasks and action items from conversations",
+      "inputs": ["extracted_actions", "participant_info"],
+      "outputs": ["tasks", "reminders", "calendar_items"],
+      "data_sources": ["Task Management", "Calendar Integration"],
+      "used_in_steps": [4]
+    },
+    {
+      "agent_name": "CRMUpdateAgent",
+      "description": "Applies updates to CRM records with validation",
+      "inputs": ["update_package", "target_records"],
+      "outputs": ["update_confirmation", "change_log", "audit_trail"],
+      "data_sources": ["Salesforce API", "Data Validation Rules"],
+      "used_in_steps": [5]
+    },
+    {
+      "agent_name": "VoiceSummaryAgent",
+      "description": "Generates comprehensive session summaries",
+      "inputs": ["all_processing_data"],
+      "outputs": ["session_summary", "updates_applied", "time_saved"],
+      "data_sources": ["All Voice Processing Systems"],
+      "used_in_steps": [6]
+    }
+  ],
+  "conversation_flow": [
+    {
+      "step_number": 1,
+      "user_message": "Transcribe my sales call notes and update the CRM with the key information.",
+      "agent_response": "I've transcribed your 32-minute call and extracted the key information.\n\n**Transcription Complete:**\n\n| Detail | Value |\n|--------|-------|\n| Call duration | 32 minutes |\n| Participants | You, Jennifer Walsh (CTO), David Park (VP Ops) |\n| Company | TechForward Industries |\n| Transcript accuracy | 97% |\n\n**Key Entities Extracted:**\n\n| Entity Type | Extracted |\n|-------------|----------|\n| Company | TechForward Industries |\n| Contacts | Jennifer Walsh (CTO), David Park (VP Ops) |\n| Budget | $150K-180K discussed |\n| Timeline | \"Decision by end of quarter\" |\n| Competitors | \"Also looking at Competitor X\" |\n\n**Key Topics Discussed:**\n1. Current system integration challenges\n2. Security requirements (SOC 2 required)\n3. Implementation timeline concerns\n4. Budget approval process\n\n**Buying Signals Detected:**\n- \"We need to make a decision soon\"\n- \"This looks like it could work\"\n- Asked about implementation support\n\n**Concerns Raised:**\n- \"How long does implementation take?\"\n- \"Need IT signoff on security\"\n\nSource: [Voice Transcription + Entity Extraction]\nAgents: VoiceTranscriptionAgent, EntityExtractionAgent\n\nMatch to CRM records and show updates?",
+      "wait_timeout_seconds": 15,
+      "description": "Voice transcription and extraction"
+    },
+    {
+      "step_number": 2,
+      "user_message": "Yes, match to CRM and show me what will be updated",
+      "agent_response": "CRM matching complete. Records found with updates ready to apply.\n\n**CRM Records Matched:**\n\n| Record Type | Name | Status |\n|-------------|------|--------|\n| Account | TechForward Industries | Existing |\n| Contact | Jennifer Walsh | Existing |\n| Contact | David Park | New (add) |\n| Opportunity | TechForward - Enterprise | Existing |\n\n**Opportunity Updates:**\n\n| Field | Current | Extracted | Action |\n|-------|---------|-----------|--------|\n| Amount | $100,000 | $150,000-$180,000 | Update to $165K |\n| Close Date | Dec 15 | \"End of quarter\" | Confirm (matches) |\n| Stage | Discovery | Demo Given | Update |\n| Competitors | (blank) | Competitor X | Add |\n| Next Step | (blank) | Security review | Add |\n\n**New Contact to Add - David Park:**\n\n| Field | Value |\n|-------|-------|\n| Name | David Park |\n| Title | VP Operations |\n| Role | Technical Evaluator |\n| Email | (not captured - to research) |\n\n**Account Updates:**\n- Existing: No changes needed\n- All company info matches\n\n**Confidence Level:** 94% (high entity match quality)\n\nSource: [CRM + Entity Matching]\nAgents: CRMMatchingAgent, EntityExtractionAgent\n\nExtract deal intelligence and action items?",
+      "wait_timeout_seconds": 15,
+      "description": "CRM record matching"
+    },
+    {
+      "step_number": 3,
+      "user_message": "Yes, what deal intelligence did you capture?",
+      "agent_response": "Deal intelligence extracted with buying signals, objections, and competitive insights.\n\n**Deal Intelligence Summary:**\n\n**Buying Signals (Positive):**\n\n| Signal | Quote | Strength |\n|--------|-------|----------|\n| Timeline urgency | \"Need to decide this quarter\" | Strong |\n| Feature interest | \"The integration looks exactly right\" | Strong |\n| Implementation ask | \"How quickly can you deploy?\" | Medium |\n| Budget discussion | Willingly discussed $150-180K | Medium |\n\n**Objections/Concerns:**\n\n| Concern | Quote | Required Action |\n|---------|-------|----------------|\n| Security | \"IT needs SOC 2 cert\" | Send compliance docs |\n| Timeline | \"6 weeks feels tight\" | Propose phased rollout |\n| Approval | \"CFO signs off on this level\" | Request CFO meeting |\n\n**Competitive Intelligence:**\n\n| Insight | Detail |\n|---------|--------|\n| Competitor | Competitor X (also evaluating) |\n| Status | \"Saw their demo last week\" |\n| Concern | \"They're cheaper but less capable\" |\n| Opportunity | Differentiate on integration |\n\n**Deal Stage Recommendation:**\n- Current: Discovery\n- Recommended: Proposal/Price Quote\n- Rationale: Budget discussed, decision timeline set\n\n**Win Probability:** 45% → 60% (based on signals)\n\nSource: [Deal Intelligence Models]\nAgents: DealIntelligenceAgent, EntityExtractionAgent\n\nGenerate action items and tasks?",
+      "wait_timeout_seconds": 15,
+      "description": "Deal intelligence extraction"
+    },
+    {
+      "step_number": 4,
+      "user_message": "Yes, create the follow-up tasks",
+      "agent_response": "Action items extracted and tasks generated for your follow-up.\n\n**Explicit Commitments Made:**\n\n| You Promised | To Whom | Quote |\n|--------------|---------|-------|\n| SOC 2 certification | Jennifer | \"I'll send that today\" |\n| Implementation timeline | David | \"Get you a detailed plan\" |\n| Pricing proposal | Jennifer | \"Have it by Friday\" |\n| Reference customer | David | \"Connect you with similar company\" |\n\n**Tasks Created:**\n\n| Task | Due | Priority | Assigned |\n|------|-----|----------|----------|\n| Send SOC 2 documentation | Today | High | You |\n| Create implementation timeline | Tomorrow | High | You |\n| Prepare pricing proposal | Friday | High | You |\n| Request reference intro | Tomorrow | Medium | You |\n| Schedule CFO meeting | Next week | High | You |\n\n**Calendar Items:**\n\n| Event | Proposed Date | Attendees |\n|-------|---------------|----------|\n| Proposal review call | Next Tuesday | Jennifer, David |\n| CFO introduction | TBD | CFO (to identify) |\n\n**Email Draft Ready:**\n- Follow-up email with SOC 2 docs\n- Implementation timeline request to Solutions team\n- Reference customer request to CS team\n\n**Reminder Set:** Proposal due Friday (3 days)\n\nSource: [Task Generation + Calendar]\nAgents: TaskGenerationAgent, DealIntelligenceAgent\n\nApply all CRM updates?",
+      "wait_timeout_seconds": 15,
+      "description": "Task and follow-up creation"
+    },
+    {
+      "step_number": 5,
+      "user_message": "Yes, update the CRM with everything",
+      "agent_response": "All CRM updates applied successfully.\n\n**Updates Applied:**\n\n**Opportunity - TechForward Enterprise:**\n\n| Field | Before | After | Status |\n|-------|--------|-------|--------|\n| Amount | $100,000 | $165,000 | Updated |\n| Stage | Discovery | Proposal | Updated |\n| Close Date | Dec 15 | Dec 31 | Confirmed |\n| Competitors | (blank) | Competitor X | Added |\n| Next Steps | (blank) | Security review, proposal | Added |\n\n**Contacts:**\n\n| Contact | Action | Status |\n|---------|--------|--------|\n| Jennifer Walsh | Role updated | Complete |\n| David Park | Created new | Complete |\n\n**Call Log Created:**\n- Date/time: Today, 32 minutes\n- Type: Demo/Discovery\n- Attendees: Jennifer Walsh, David Park\n- Summary: Auto-generated from transcript\n- Key points: Budget, timeline, competition\n\n**Tasks in Salesforce:**\n- 5 tasks created with due dates\n- Linked to opportunity record\n- Reminders set\n\n**Activity History:**\n- Full transcript attached to account\n- Searchable for future reference\n\n**Audit Trail:** All changes logged with source attribution.\n\nSource: [CRM API + Data Validation]\nAgents: CRMUpdateAgent, TaskGenerationAgent\n\nGenerate session summary?",
+      "wait_timeout_seconds": 15,
+      "description": "CRM update execution"
+    },
+    {
+      "step_number": 6,
+      "user_message": "Yes, summarize what we accomplished",
+      "agent_response": "Voice-to-CRM session complete. Here's your time savings summary.\n\n**Session Summary:**\n\n| Activity | Completed |\n|----------|----------|\n| Call transcribed | 32 minutes of audio |\n| Entities extracted | 12 key data points |\n| CRM records matched | 4 (1 new contact created) |\n| Deal intelligence | Signals, objections, competitive |\n| Updates applied | 8 field updates |\n| Tasks created | 5 follow-up items |\n\n**CRM Updates Summary:**\n\n| Record | Changes |\n|--------|--------|\n| Opportunity | Amount, stage, competitors, next steps |\n| Contact (new) | David Park - VP Operations |\n| Call log | Full activity record |\n| Tasks | 5 items with due dates |\n\n**Deal Impact:**\n\n| Metric | Before | After |\n|--------|--------|-------|\n| Deal amount | $100K | $165K |\n| Stage | Discovery | Proposal |\n| Win probability | 45% | 60% |\n| Decision makers | 1 | 2 |\n\n**Time Saved:**\n\n| Traditional | With AI | Savings |\n|-------------|---------|--------|\n| Manual CRM update | 25 min | 2 min | 23 min |\n| Task creation | 10 min | 0 min | 10 min |\n| Note taking | 15 min | 0 min | 15 min |\n| **Total** | **50 min** | **2 min** | **48 min** |\n\nSource: [All Voice Processing Systems]\nAgents: VoiceSummaryAgent (orchestrating all agents)\n\nYour Voice-to-CRM session transcribed a 32-minute call, extracted 12 data points, updated 8 CRM fields, created 5 tasks, and saved you 48 minutes of admin work.",
+      "wait_timeout_seconds": 20,
+      "description": "Complete session summary"
+    }
+  ],
+  "design_principles": {
+    "max_response_length": "150-250 words",
+    "max_lines": "25-30 lines",
+    "max_table_rows": "4-5 rows",
+    "max_bullets": "4-6 bullets",
+    "sections": "2-3 maximum",
+    "visual_elements": "1 status indicator OR 1 table per response",
+    "source_attribution": "Compact format at end",
+    "evergreen_language": "Relative timeframes only",
+    "call_to_action": "Clear next question to continue"
+  },
+  "business_value": {
+    "problem": "2 hours daily on CRM updates, missed data capture, inconsistent records, admin burden on sales reps",
+    "solution": "AI-powered voice-to-CRM with automatic transcription, entity extraction, and intelligent record updates",
+    "roi": "48 minutes saved per call, 97% transcription accuracy, automatic deal intelligence capture",
+    "performance": "Real-time transcription, entity extraction, CRM matching, task creation, all in one workflow"
+  }
+}

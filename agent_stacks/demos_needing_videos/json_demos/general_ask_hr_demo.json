@@ -1,0 +1,143 @@
+{
+  "demo_name": "Ask_HR_1Min_Demo",
+  "description": "1-minute demo: AI-powered HR assistant with policy lookup, benefits guidance, and employee self-service",
+  "version": "2.0.0",
+  "trigger_phrases": [
+    "Help me understand my benefits options and how to request time off.",
+    "HR policy question",
+    "benefits information"
+  ],
+  "metadata": {
+    "category": "hr_services",
+    "industry": "cross_industry",
+    "max_response_length": "250_words",
+    "total_steps": 6,
+    "estimated_duration_seconds": 60,
+    "target_audience": "employees"
+  },
+  "persona": {
+    "name": "Emily Rodriguez",
+    "title": "HR Operations Director",
+    "company": "GlobalTech Corporation",
+    "context": "Supporting 5,000 employees with HR team of 12, seeking to reduce Tier 1 inquiry volume by 60%"
+  },
+  "agents_utilized": [
+    {
+      "agent_name": "EmployeeContextAgent",
+      "description": "Retrieves employee profile and personalized context",
+      "inputs": ["employee_id"],
+      "outputs": ["employee_profile", "employment_status", "benefits_enrollment", "time_off_balances"],
+      "data_sources": ["HRIS", "Benefits Platform", "Time Tracking"],
+      "used_in_steps": [1]
+    },
+    {
+      "agent_name": "PolicyRetrievalAgent",
+      "description": "Searches and retrieves relevant HR policies",
+      "inputs": ["query", "policy_category"],
+      "outputs": ["relevant_policies", "key_excerpts", "effective_dates"],
+      "data_sources": ["Policy Database", "Employee Handbook", "Compliance Documents"],
+      "used_in_steps": [1, 2]
+    },
+    {
+      "agent_name": "BenefitsAdvisorAgent",
+      "description": "Provides personalized benefits guidance and comparisons",
+      "inputs": ["employee_profile", "benefits_question"],
+      "outputs": ["benefits_explanation", "recommendations", "cost_comparisons"],
+      "data_sources": ["Benefits Platform", "Plan Documents", "Enrollment System"],
+      "used_in_steps": [2, 3]
+    },
+    {
+      "agent_name": "TimeOffAgent",
+      "description": "Manages time-off inquiries, balances, and requests",
+      "inputs": ["employee_id", "request_type"],
+      "outputs": ["balances", "request_status", "approval_routing"],
+      "data_sources": ["Time Tracking", "Manager Info", "Calendar Integration"],
+      "used_in_steps": [3, 4]
+    },
+    {
+      "agent_name": "FormAssistantAgent",
+      "description": "Guides employees through HR form completion",
+      "inputs": ["form_type", "employee_data"],
+      "outputs": ["pre_filled_form", "instructions", "submission_routing"],
+      "data_sources": ["Form Library", "HRIS", "Workflow System"],
+      "used_in_steps": [4, 5]
+    },
+    {
+      "agent_name": "EscalationAgent",
+      "description": "Routes complex inquiries to appropriate HR specialists",
+      "inputs": ["inquiry_type", "complexity_assessment"],
+      "outputs": ["escalation_path", "specialist_assignment", "ticket_creation"],
+      "data_sources": ["HR Team Directory", "Case Management"],
+      "used_in_steps": [5]
+    },
+    {
+      "agent_name": "HRSummaryAgent",
+      "description": "Generates session summaries and next steps",
+      "inputs": ["session_data"],
+      "outputs": ["session_summary", "action_items", "reference_materials"],
+      "data_sources": ["All HR Systems"],
+      "used_in_steps": [6]
+    }
+  ],
+  "conversation_flow": [
+    {
+      "step_number": 1,
+      "user_message": "Help me understand my benefits options and how to request time off.",
+      "agent_response": "Hi Sarah! I've pulled up your employee profile. Here's your personalized information.\n\n**Your Employee Profile:**\n\n| Detail | Value |\n|--------|-------|\n| Name | Sarah Chen |\n| Department | Engineering |\n| Start date | March 2022 |\n| Employment type | Full-time |\n| Benefits tier | Employee + Family |\n\n**Your Current Benefits:**\n\n| Benefit | Your Selection | Cost (Monthly) |\n|---------|----------------|----------------|\n| Medical | PPO Gold | $485 (shared) |\n| Dental | Premium | $42 |\n| Vision | Standard | $12 |\n| 401(k) | 8% contribution | 4% match |\n| Life insurance | 2x salary | $0 (company paid) |\n\n**Your Time-Off Balances:**\n\n| Type | Available | Used | Pending |\n|------|-----------|------|--------|\n| PTO | 14 days | 6 days | 0 |\n| Sick leave | 8 days | 2 days | 0 |\n| Personal days | 2 days | 0 days | 0 |\n\n**Open Enrollment Reminder:** Starts in 45 days. You can make changes then.\n\nSource: [HRIS + Benefits Platform]\nAgents: EmployeeContextAgent, PolicyRetrievalAgent\n\nWhat would you like to know more about - benefits or time off?",
+      "wait_timeout_seconds": 15,
+      "description": "Employee profile and overview"
+    },
+    {
+      "step_number": 2,
+      "user_message": "Tell me about my medical benefits - I'm thinking about adding my parents as dependents",
+      "agent_response": "Great question! Here's information about dependent coverage and your options.\n\n**Your Current Medical Plan: PPO Gold**\n\n| Feature | Your Plan |\n|---------|----------|\n| Network | Nationwide PPO |\n| Deductible | $500 individual / $1,000 family |\n| Out-of-pocket max | $3,000 / $6,000 |\n| Copay (primary care) | $25 |\n| Copay (specialist) | $45 |\n\n**Parent Coverage Options:**\n\n**Important:** Under our plan, parents are **not eligible** as dependents unless they meet specific criteria.\n\n| Eligible Dependents | Status |\n|---------------------|--------|\n| Spouse/domestic partner | Eligible |\n| Children under 26 | Eligible |\n| Parents | Not typically eligible* |\n\n*Exception: Parents may qualify if they are your legal tax dependents (must provide >50% of their support).\n\n**Alternative Options for Parents:**\n\n| Option | Details |\n|--------|--------|\n| Medicare | If parents are 65+ |\n| Healthcare.gov | Individual marketplace |\n| COBRA | If recently employed |\n\n**Policy Reference:** Employee Handbook, Section 4.2 - Dependent Eligibility\n\nSource: [Benefits Platform + Policy Database]\nAgents: BenefitsAdvisorAgent, PolicyRetrievalAgent\n\nWould you like information about your time-off request?",
+      "wait_timeout_seconds": 15,
+      "description": "Benefits guidance and dependent rules"
+    },
+    {
+      "step_number": 3,
+      "user_message": "Yes, I want to take 5 days off next month for a family trip",
+      "agent_response": "Let me check your balances and help you submit the request.\n\n**Your Time-Off Status:**\n\n| Type | Available | After Request |\n|------|-----------|---------------|\n| PTO | 14 days | 9 days |\n| Approval needed | Yes | Manager: David Kim |\n\n**Request Details:**\n\n| Field | Your Request |\n|-------|-------------|\n| Dates | Next month (you choose specific dates) |\n| Days requested | 5 days |\n| Type | PTO |\n| Balance after | 9 days remaining |\n\n**Policy Highlights:**\n- Requests >3 days need 2 weeks advance notice\n- Manager approval required\n- Blackout dates: None in next 30 days\n- Your team: No conflicting requests found\n\n**Request Checklist:**\n\n| Requirement | Status |\n|-------------|--------|\n| Sufficient balance | ✓ 14 days available |\n| Advance notice | ✓ If submitted today |\n| Team coverage | ✓ No conflicts detected |\n| Blackout check | ✓ None applicable |\n\n**Approval Typically Takes:** 1-2 business days\n\nSource: [Time Tracking + Calendar]\nAgents: TimeOffAgent, PolicyRetrievalAgent\n\nWant me to start your time-off request?",
+      "wait_timeout_seconds": 15,
+      "description": "Time-off balance and policy check"
+    },
+    {
+      "step_number": 4,
+      "user_message": "Yes, help me submit the request for December 18-24",
+      "agent_response": "I've prepared your time-off request. Please review before submitting.\n\n**Time-Off Request - Pre-filled:**\n\n| Field | Value |\n|-------|-------|\n| Employee | Sarah Chen |\n| Request type | PTO |\n| Start date | December 18 |\n| End date | December 24 |\n| Total days | 5 business days |\n| Return date | December 26 |\n\n**Coverage Notes (Optional):**\n- Add notes for your manager about project coverage\n- Example: \"Sprint deliverables completed before departure\"\n\n**Approval Workflow:**\n\n| Step | Approver | Notification |\n|------|----------|-------------|\n| 1 | David Kim (Manager) | Immediate email |\n| 2 | Auto-approved if no response | 48 hours |\n\n**Holiday Note:**\n- December 25 is a company holiday (not counted)\n- Your request is for 5 working days around the holiday\n\n**Balance Impact:**\n- Current PTO: 14 days\n- After approval: 9 days\n- Accrual (monthly): +1.25 days\n\n**Ready to Submit?**\n- I can submit this request now\n- David Kim will receive an email notification\n- You'll get confirmation once approved\n\nSource: [Time Tracking + Workflow System]\nAgents: FormAssistantAgent, TimeOffAgent\n\nSubmit this request?",
+      "wait_timeout_seconds": 15,
+      "description": "Time-off request preparation"
+    },
+    {
+      "step_number": 5,
+      "user_message": "Yes, submit it. Also, is there anything else I should know?",
+      "agent_response": "Request submitted! Here's your confirmation and some helpful reminders.\n\n**Request Confirmation:**\n\n| Status | Details |\n|--------|--------|\n| Request ID | PTO-2024-8934 |\n| Status | Pending approval |\n| Submitted | Just now |\n| Approver notified | David Kim (email sent) |\n| Expected response | Within 48 hours |\n\n**Upcoming Items for You:**\n\n| Item | Date | Action |\n|------|------|--------|\n| Open enrollment | 45 days | Review benefit options |\n| 401(k) increase eligible | January 1 | Consider increasing % |\n| Performance review | February | Self-assessment due |\n| PTO accrual reset | January 1 | Check carryover limit |\n\n**PTO Carryover Reminder:**\n- Maximum carryover: 5 days\n- Your projected year-end: 10 days\n- Recommendation: Use 5 more days before December 31\n\n**Helpful Resources:**\n\n| Resource | Access |\n|----------|--------|\n| Benefits portal | benefits.company.com |\n| PTO calendar | timeoff.company.com |\n| HR contact | hr@company.com |\n| This chat | Available 24/7 |\n\n**Need a Human?**\nFor complex questions, I can connect you to an HR specialist.\n\nSource: [All HR Systems]\nAgents: FormAssistantAgent, EscalationAgent\n\nAnything else I can help with?",
+      "wait_timeout_seconds": 15,
+      "description": "Request submission and reminders"
+    },
+    {
+      "step_number": 6,
+      "user_message": "No, that's everything. Thanks!",
+      "agent_response": "You're welcome, Sarah! Here's a summary of what we accomplished.\n\n**Session Summary:**\n\n| Topic | Outcome |\n|-------|--------|\n| Benefits review | Explained your current coverage |\n| Parent coverage | Clarified eligibility rules |\n| Time-off request | Submitted for Dec 18-24 |\n| Reminders | Open enrollment, PTO carryover |\n\n**Actions Completed:**\n\n| Action | Status |\n|--------|--------|\n| PTO request submitted | Request #PTO-2024-8934 |\n| Manager notified | David Kim (email sent) |\n| Calendar hold | Created for Dec 18-24 |\n\n**Your Next Steps:**\n\n| Step | Timeline |\n|------|----------|\n| Await PTO approval | 1-2 business days |\n| Review open enrollment | In 45 days |\n| Use remaining PTO | Before Dec 31 (5 days) |\n\n**Quick Reference Saved:**\n- Dependent eligibility policy\n- PTO carryover rules\n- Open enrollment dates\n\n**Feedback Welcome:**\nWas this helpful? Quick rating helps us improve.\n\n**Session Time:** 4 minutes\n**Questions Answered:** 4\n**Requests Processed:** 1\n\nSource: [All HR Systems]\nAgents: HRSummaryAgent (orchestrating all agents)\n\nYour Ask HR session answered 4 questions, submitted your time-off request, and saved you a call to HR. Have a great trip in December!",
+      "wait_timeout_seconds": 20,
+      "description": "Session summary"
+    }
+  ],
+  "design_principles": {
+    "max_response_length": "150-250 words",
+    "max_lines": "25-30 lines",
+    "max_table_rows": "4-5 rows",
+    "max_bullets": "4-6 bullets",
+    "sections": "2-3 maximum",
+    "visual_elements": "1 status indicator OR 1 table per response",
+    "source_attribution": "Compact format at end",
+    "evergreen_language": "Relative timeframes only",
+    "call_to_action": "Clear next question to continue"
+  },
+  "business_value": {
+    "problem": "5,000 employees with HR questions, limited HR team capacity, long response times for Tier 1 inquiries",
+    "solution": "AI-powered HR assistant with personalized context, policy retrieval, and self-service transactions",
+    "roi": "60% reduction in Tier 1 inquiries, 4-minute average resolution, 24/7 availability",
+    "performance": "Instant policy lookup, personalized benefits guidance, automated request submission"
+  }
+}

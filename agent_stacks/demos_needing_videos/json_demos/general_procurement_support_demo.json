@@ -1,0 +1,143 @@
+{
+  "demo_name": "Procurement_Support_1Min_Demo",
+  "description": "1-minute demo: AI-powered procurement assistance with vendor analysis, contract insights, and purchase optimization",
+  "version": "2.0.0",
+  "trigger_phrases": [
+    "Help me evaluate these vendor proposals and recommend the best option for our procurement needs.",
+    "vendor comparison analysis",
+    "procurement optimization"
+  ],
+  "metadata": {
+    "category": "procurement",
+    "industry": "cross_industry",
+    "max_response_length": "250_words",
+    "total_steps": 6,
+    "estimated_duration_seconds": 60,
+    "target_audience": "procurement_teams"
+  },
+  "persona": {
+    "name": "Patricia Hernandez",
+    "title": "Procurement Director",
+    "company": "Global Manufacturing Inc",
+    "context": "Managing $180M annual spend across 400 vendors, seeking to optimize costs and reduce procurement cycle time"
+  },
+  "agents_utilized": [
+    {
+      "agent_name": "ProposalAnalysisAgent",
+      "description": "Extracts and compares key terms from vendor proposals",
+      "inputs": ["proposal_documents", "evaluation_criteria"],
+      "outputs": ["proposal_summary", "term_comparison", "compliance_check"],
+      "data_sources": ["Document OCR", "Proposal Portal", "Requirement Specs"],
+      "used_in_steps": [1]
+    },
+    {
+      "agent_name": "VendorIntelligenceAgent",
+      "description": "Provides comprehensive vendor profiles and performance history",
+      "inputs": ["vendor_ids"],
+      "outputs": ["vendor_profiles", "performance_scores", "risk_assessment", "market_position"],
+      "data_sources": ["Vendor Database", "D&B", "Performance History", "Market Research"],
+      "used_in_steps": [1, 2]
+    },
+    {
+      "agent_name": "PricingAnalysisAgent",
+      "description": "Analyzes pricing against benchmarks and identifies savings opportunities",
+      "inputs": ["pricing_data", "market_benchmarks"],
+      "outputs": ["price_comparison", "benchmark_analysis", "savings_potential"],
+      "data_sources": ["Pricing Database", "Industry Benchmarks", "Historical Contracts"],
+      "used_in_steps": [2, 3]
+    },
+    {
+      "agent_name": "RiskAssessmentAgent",
+      "description": "Evaluates supplier risks including financial, operational, and compliance",
+      "inputs": ["vendor_data", "risk_criteria"],
+      "outputs": ["risk_scores", "risk_factors", "mitigation_recommendations"],
+      "data_sources": ["Financial Reports", "Compliance Database", "News Monitoring"],
+      "used_in_steps": [3]
+    },
+    {
+      "agent_name": "NegotiationSupportAgent",
+      "description": "Generates negotiation strategies and target terms",
+      "inputs": ["proposal_analysis", "company_leverage", "market_conditions"],
+      "outputs": ["negotiation_strategy", "target_terms", "walk_away_points"],
+      "data_sources": ["Contract History", "Market Intelligence", "Best Practices"],
+      "used_in_steps": [4]
+    },
+    {
+      "agent_name": "ContractReviewAgent",
+      "description": "Reviews contract terms and identifies issues",
+      "inputs": ["contract_documents", "company_standards"],
+      "outputs": ["term_analysis", "risk_flags", "suggested_modifications"],
+      "data_sources": ["Legal Templates", "Standard Terms", "Regulatory Requirements"],
+      "used_in_steps": [5]
+    },
+    {
+      "agent_name": "ProcurementSummaryAgent",
+      "description": "Generates comprehensive procurement recommendations",
+      "inputs": ["all_analysis_data"],
+      "outputs": ["recommendation_report", "decision_matrix", "action_plan"],
+      "data_sources": ["All Procurement Systems"],
+      "used_in_steps": [6]
+    }
+  ],
+  "conversation_flow": [
+    {
+      "step_number": 1,
+      "user_message": "Help me evaluate these vendor proposals and recommend the best option for our procurement needs.",
+      "agent_response": "I've analyzed the 3 proposals for industrial equipment. Clear differentiation in pricing and terms.\n\n**Procurement Request Summary:**\n\n| Item | Details |\n|------|--------|\n| Category | CNC machining equipment |\n| Quantity | 12 units |\n| Budget | $2.4M |\n| Timeline | Q1 delivery required |\n| Stakeholder | Operations VP |\n\n**Proposal Comparison:**\n\n| Criteria | Vendor A (Precision) | Vendor B (TechMfg) | Vendor C (GlobalEquip) |\n|----------|---------------------|--------------------|-----------------------|\n| Total price | $2.28M | $2.12M | $2.45M |\n| Delivery | 8 weeks | 12 weeks | 6 weeks |\n| Warranty | 2 years | 1 year | 3 years |\n| Installation | Included | +$45K | Included |\n| Training | 3 days | 1 day | 5 days |\n\n**Vendor Status:**\n\n| Vendor | Existing? | Performance | Risk Level |\n|--------|-----------|-------------|------------|\n| Precision | Yes (3 yrs) | 94% on-time | Low |\n| TechMfg | New | N/A | Medium |\n| GlobalEquip | Yes (1 yr) | 82% on-time | Medium |\n\n**Initial Observation:** TechMfg lowest price but new vendor; Precision proven but mid-price.\n\nSource: [Proposal Analysis + Vendor Database]\nAgents: ProposalAnalysisAgent, VendorIntelligenceAgent\n\nSee detailed pricing and risk analysis?",
+      "wait_timeout_seconds": 15,
+      "description": "Proposal comparison overview"
+    },
+    {
+      "step_number": 2,
+      "user_message": "Yes, break down the pricing and show me the vendor risks",
+      "agent_response": "Pricing analysis reveals hidden costs. TechMfg's low price has catches.\n\n**Total Cost of Ownership (5-Year):**\n\n| Component | Precision | TechMfg | GlobalEquip |\n|-----------|-----------|---------|-------------|\n| Equipment | $2.28M | $2.12M | $2.45M |\n| Installation | Included | $45K | Included |\n| Training | Included | $8K | Included |\n| Extended warranty | $0 | $120K* | -$40K credit |\n| Spare parts (est.) | $85K | $140K | $65K |\n| **5-Year TCO** | **$2.37M** | **$2.43M** | **$2.48M** |\n\n*TechMfg requires paid warranty extension for year 2\n\n**Market Benchmark:**\n- Category average: $195K/unit\n- Precision: $190K/unit (3% below)\n- TechMfg: $177K/unit (9% below, but TCO reverses)\n- GlobalEquip: $204K/unit (5% above)\n\n**Vendor Risk Assessment:**\n\n| Risk Factor | Precision | TechMfg | GlobalEquip |\n|-------------|-----------|---------|-------------|\n| Financial stability | Strong | Moderate | Strong |\n| Delivery reliability | 94% | Unknown | 82% |\n| Support capability | Local | Remote only | Regional |\n| Spare parts | 24-hr | 5-7 days | 48-hr |\n| **Overall Risk** | **Low** | **Medium-High** | **Medium** |\n\n**Red Flag - TechMfg:** Recent news shows layoffs and facility consolidation.\n\nSource: [Pricing Database + Risk Intelligence]\nAgents: PricingAnalysisAgent, RiskAssessmentAgent\n\nGet negotiation recommendations?",
+      "wait_timeout_seconds": 15,
+      "description": "Pricing and risk analysis"
+    },
+    {
+      "step_number": 3,
+      "user_message": "Yes, how should I negotiate with the top choice?",
+      "agent_response": "Negotiation strategy developed for Precision Industrial. Strong leverage available.\n\n**Recommended Vendor:** Precision Industrial\n\n| Reason | Details |\n|--------|--------|\n| Lowest TCO | $2.37M vs $2.43M+ |\n| Proven performance | 94% on-time, 3-year history |\n| Low risk | Financial stability, local support |\n| Relationship value | Strategic partner potential |\n\n**Your Negotiation Leverage:**\n\n| Lever | Strength | Use |\n|-------|----------|-----|\n| Competitive pricing | Strong | TechMfg quote is 7% lower |\n| Volume commitment | Medium | 12 units is significant |\n| Relationship history | Strong | 3 years, $4M spend |\n| Market conditions | Medium | Q4 equipment surplus |\n\n**Negotiation Targets:**\n\n| Term | Current | Target | Stretch |\n|------|---------|--------|--------|\n| Unit price | $190K | $182K (-4%) | $178K (-6%) |\n| Warranty | 2 years | 3 years | 4 years |\n| Payment terms | Net 30 | Net 45 | Net 60 |\n| Training | 3 days | 5 days | + ongoing |\n\n**Walk-Away Point:** $2.35M total with 2-year warranty minimum\n\n**Opening Position:**\n\"We value our relationship, but TechMfg came in 7% lower. We want to stay with you - help us close that gap.\"\n\nSource: [Contract History + Market Intelligence]\nAgents: NegotiationSupportAgent, PricingAnalysisAgent\n\nReview contract terms?",
+      "wait_timeout_seconds": 15,
+      "description": "Negotiation strategy"
+    },
+    {
+      "step_number": 4,
+      "user_message": "Yes, review their contract and flag any issues",
+      "agent_response": "Contract review complete. 4 terms need modification before signing.\n\n**Contract Summary:**\n\n| Element | Status |\n|---------|--------|\n| Agreement type | Master equipment purchase |\n| Term | 5 years |\n| Pages reviewed | 34 |\n| Clauses analyzed | 48 |\n| Issues identified | 4 |\n\n**Issues Requiring Modification:**\n\n| Issue | Clause | Risk | Recommendation |\n|-------|--------|------|----------------|\n| Liability cap | 8.2 | High | Increase from $500K to $2M |\n| IP indemnification | 12.1 | Medium | Add mutual indemnification |\n| Termination notice | 15.3 | Medium | Reduce from 180 to 90 days |\n| Price escalation | 6.4 | Medium | Cap at 3% annually |\n\n**Clause 8.2 Detail (Liability):**\n- Current: Vendor liability capped at $500K\n- Risk: Equipment failure could cause $2M+ production loss\n- Standard: Industry typically 1-2x contract value\n- Modification: \"Liability limited to 100% of contract value\"\n\n**Favorable Terms (Keep As-Is):**\n- Warranty terms: Clear and comprehensive\n- Delivery guarantees: Includes penalties\n- Support SLAs: 4-hour response commitment\n- Payment terms: Net 30 (negotiable)\n\n**Legal Review:** Recommend legal sign-off on liability clause.\n\nSource: [Contract + Legal Standards]\nAgents: ContractReviewAgent, RiskAssessmentAgent\n\nGenerate final recommendation?",
+      "wait_timeout_seconds": 15,
+      "description": "Contract review and issues"
+    },
+    {
+      "step_number": 5,
+      "user_message": "Yes, create the final procurement recommendation",
+      "agent_response": "Final procurement recommendation prepared with decision matrix.\n\n**Recommendation: Award to Precision Industrial**\n\n**Decision Matrix:**\n\n| Criteria | Weight | Precision | TechMfg | GlobalEquip |\n|----------|--------|-----------|---------|-------------|\n| Price/TCO | 30% | 28 | 24 | 22 |\n| Quality | 25% | 23 | 18 | 20 |\n| Delivery | 20% | 18 | 14 | 20 |\n| Risk | 15% | 14 | 9 | 11 |\n| Support | 10% | 9 | 6 | 8 |\n| **Total** | **100%** | **92** | **71** | **81** |\n\n**Recommended Award:**\n\n| Element | Details |\n|---------|--------|\n| Vendor | Precision Industrial |\n| Amount | $2.28M (negotiable to $2.18M) |\n| Savings target | $100K (4.4%) |\n| Delivery | 8 weeks (meets Q1 requirement) |\n| Risk level | Low |\n\n**Contract Modifications Required:**\n1. Liability cap: Increase to $2M\n2. IP indemnification: Make mutual\n3. Termination notice: Reduce to 90 days\n4. Price escalation: Cap at 3%\n\n**Approval Package:**\n- Business case: Attached\n- Vendor scorecard: Complete\n- Risk assessment: Low\n- Legal review: Pending (4 items)\n- Budget approval: Required ($2.28M)\n\nSource: [All Procurement Analysis]\nAgents: ContractReviewAgent, NegotiationSupportAgent\n\nGenerate executive summary?",
+      "wait_timeout_seconds": 15,
+      "description": "Final recommendation"
+    },
+    {
+      "step_number": 6,
+      "user_message": "Yes, give me the complete summary for approval",
+      "agent_response": "Procurement analysis complete. Here's your executive summary for approval.\n\n**Executive Summary:**\n\n| Decision | Award to Precision Industrial |\n|----------|------------------------------|\n| Category | CNC machining equipment (12 units) |\n| Value | $2.28M (target: $2.18M after negotiation) |\n| Savings | $100K (4.4%) + $60K avoided TCO costs |\n| Timeline | 8 weeks to delivery |\n\n**Analysis Summary:**\n\n| Activity | Completed |\n|----------|----------|\n| Proposals analyzed | 3 vendors |\n| Terms compared | 48 contract clauses |\n| TCO calculated | 5-year projection |\n| Risks assessed | Financial, operational, compliance |\n| Benchmarks applied | Industry pricing |\n\n**Why Precision Industrial:**\n\n| Factor | Finding |\n|--------|--------|\n| Lowest TCO | $2.37M (5-year) vs $2.43M+ |\n| Proven track record | 94% on-time, 3-year relationship |\n| Lowest risk | Strong financial, local support |\n| Best support | 24-hour spare parts, 4-hour response |\n\n**Next Steps:**\n\n| Step | Owner | Timeline |\n|------|-------|----------|\n| Legal review | Legal | 3 days |\n| Negotiation | Procurement | 1 week |\n| Executive approval | VP Ops | 1 week |\n| Contract execution | Legal | 2 days |\n| PO issuance | Procurement | 1 day |\n\n**Approvals Required:** VP Operations, Legal, CFO (>$2M threshold)\n\nSource: [All Procurement Systems]\nAgents: ProcurementSummaryAgent (orchestrating all agents)\n\nYour AI-powered procurement analysis evaluated 3 vendors, identified $160K in total savings opportunity, and prepared a complete recommendation package for approval.",
+      "wait_timeout_seconds": 20,
+      "description": "Executive summary for approval"
+    }
+  ],
+  "design_principles": {
+    "max_response_length": "150-250 words",
+    "max_lines": "25-30 lines",
+    "max_table_rows": "4-5 rows",
+    "max_bullets": "4-6 bullets",
+    "sections": "2-3 maximum",
+    "visual_elements": "1 status indicator OR 1 table per response",
+    "source_attribution": "Compact format at end",
+    "evergreen_language": "Relative timeframes only",
+    "call_to_action": "Clear next question to continue"
+  },
+  "business_value": {
+    "problem": "$180M annual spend with manual vendor analysis, missed savings opportunities, contract risks, lengthy procurement cycles",
+    "solution": "AI-powered procurement support with automated proposal analysis, TCO modeling, risk assessment, and negotiation strategies",
+    "roi": "$160K savings identified (7%), contract risks flagged, vendor evaluation in minutes vs days",
+    "performance": "3 proposals analyzed, 48 contract clauses reviewed, 5-year TCO modeled, complete approval package generated"
+  }
+}

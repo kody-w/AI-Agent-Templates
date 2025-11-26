@@ -1,0 +1,58 @@
+{
+  "id": "win_loss_analysis_stack",
+  "name": "Win/Loss Analysis Agent Stack",
+  "version": "1.0.0",
+  "description": "Analyzes closed deals for trends and insights",
+  "category": "b2b_sales",
+  "complexity": "intermediate",
+  "features": [
+    "Deal analysis",
+    "Competitive insights",
+    "Process improvement"
+  ],
+  "benefits": [
+    "Improves win rates",
+    "Identifies success patterns",
+    "Informs strategy"
+  ],
+  "technicalRequirements": {
+    "platforms": [
+      "Windows",
+      "macOS",
+      "Linux"
+    ],
+    "dependencies": [
+      "Python 3.8+",
+      "requests",
+      "json"
+    ],
+    "apiKeys": [
+      "CRM_API_KEY",
+      "POWER_BI_API_KEY"
+    ],
+    "integrations": [
+      "CRM",
+      "Power BI",
+      "Copilot Studio",
+      "Clari"
+    ]
+  },
+  "components": [
+    {
+      "name": "win_loss_analysis_agent.py",
+      "description": "Analyzes closed deals for trends and insights",
+      "role": "Primary processing engine"
+    }
+  ],
+  "demo": {
+    "available": true,
+    "url": "agents_lab/b2b_sales_stack/win_loss_analysis_stack/demos/win_loss_analysis_demo.html",
+    "title": "Win/Loss Analysis Agent Interactive Demo",
+    "description": "Interactive demonstration of Win/Loss Analysis Agent capabilities"
+  },
+  "useCases": [
+    "Deal analysis",
+    "Competitive insights",
+    "Process improvement"
+  ]
+}

@@ -1,0 +1,143 @@
+{
+  "demo_name": "Sales_Coach_1Min_Demo",
+  "description": "1-minute demo: AI-powered sales coaching with call analysis, skill development, and performance improvement recommendations",
+  "version": "2.0.0",
+  "trigger_phrases": [
+    "Analyze my last sales call and give me coaching on how to improve my close rate.",
+    "sales call coaching",
+    "improve sales performance"
+  ],
+  "metadata": {
+    "category": "sales_enablement",
+    "industry": "cross_industry",
+    "max_response_length": "250_words",
+    "total_steps": 6,
+    "estimated_duration_seconds": 60,
+    "target_audience": "sales_representatives"
+  },
+  "persona": {
+    "name": "Rachel Torres",
+    "title": "Sales Enablement Director",
+    "company": "SaaS Solutions Inc",
+    "context": "Coaching 45 sales reps, seeking to improve team close rate from 22% to 30% with data-driven coaching"
+  },
+  "agents_utilized": [
+    {
+      "agent_name": "CallAnalysisAgent",
+      "description": "Analyzes sales calls for key moments, talk patterns, and effectiveness",
+      "inputs": ["call_recording", "call_metadata"],
+      "outputs": ["call_summary", "key_moments", "talk_patterns", "engagement_metrics"],
+      "data_sources": ["Gong/Chorus", "Call Recordings", "Meeting Transcripts"],
+      "used_in_steps": [1]
+    },
+    {
+      "agent_name": "SkillAssessmentAgent",
+      "description": "Evaluates sales skills demonstrated in interactions",
+      "inputs": ["call_analysis", "skill_framework"],
+      "outputs": ["skill_scores", "strengths", "improvement_areas"],
+      "data_sources": ["Skills Framework", "Competency Models", "Best Practices"],
+      "used_in_steps": [1, 2]
+    },
+    {
+      "agent_name": "BenchmarkComparisonAgent",
+      "description": "Compares performance against top performers and team averages",
+      "inputs": ["rep_data", "team_data"],
+      "outputs": ["benchmark_comparison", "percentile_ranking", "gap_analysis"],
+      "data_sources": ["Team Performance Data", "Industry Benchmarks"],
+      "used_in_steps": [2, 3]
+    },
+    {
+      "agent_name": "CoachingRecommendationAgent",
+      "description": "Generates personalized coaching recommendations and exercises",
+      "inputs": ["skill_assessment", "rep_profile", "goals"],
+      "outputs": ["coaching_plan", "exercises", "resources", "practice_scenarios"],
+      "data_sources": ["Coaching Playbooks", "Training Library", "Success Patterns"],
+      "used_in_steps": [3, 4]
+    },
+    {
+      "agent_name": "DealStrategyAgent",
+      "description": "Provides strategic recommendations for active deals",
+      "inputs": ["deal_context", "buyer_signals", "competitive_info"],
+      "outputs": ["deal_strategy", "next_steps", "risk_mitigation"],
+      "data_sources": ["CRM", "Competitive Intel", "Win/Loss Data"],
+      "used_in_steps": [4]
+    },
+    {
+      "agent_name": "ProgressTrackingAgent",
+      "description": "Tracks skill development progress over time",
+      "inputs": ["historical_assessments", "coaching_activities"],
+      "outputs": ["progress_metrics", "trend_analysis", "goal_tracking"],
+      "data_sources": ["Assessment History", "Activity Logs", "Outcome Data"],
+      "used_in_steps": [5]
+    },
+    {
+      "agent_name": "CoachingSummaryAgent",
+      "description": "Generates comprehensive coaching reports and action plans",
+      "inputs": ["all_coaching_data"],
+      "outputs": ["coaching_summary", "development_plan", "success_metrics"],
+      "data_sources": ["All Sales Systems"],
+      "used_in_steps": [6]
+    }
+  ],
+  "conversation_flow": [
+    {
+      "step_number": 1,
+      "user_message": "Analyze my last sales call and give me coaching on how to improve my close rate.",
+      "agent_response": "I've analyzed your call with TechCorp. Strong discovery but closing opportunity missed.\n\n**Call Summary:**\n\n| Element | Details |\n|---------|--------|\n| Prospect | TechCorp (Enterprise) |\n| Stage | Discovery → Demo |\n| Duration | 47 minutes |\n| Outcome | \"Will review internally\" |\n| Next step | Follow-up scheduled |\n\n**Talk Pattern Analysis:**\n\n| Metric | Your Call | Top Performers |\n|--------|-----------|----------------|\n| Talk/listen ratio | 62/38 | 45/55 |\n| Questions asked | 8 | 12-15 |\n| Discovery depth | Moderate | Deep |\n| Competitor mentions | 0 | 2-3 |\n\n**Key Moments Detected:**\n\n| Timestamp | Moment | Assessment |\n|-----------|--------|------------|\n| 12:34 | Budget question | Too early, prospect deflected |\n| 28:45 | Pain point identified | Strong - captured well |\n| 41:20 | Closing attempt | Weak - no urgency created |\n| 45:00 | Next steps | Vague commitment only |\n\n**Call Score:** 68/100\n\n**Quick Insight:** You identified the pain but didn't connect it to urgency for action.\n\nSource: [Call Recording + Engagement Metrics]\nAgents: CallAnalysisAgent, SkillAssessmentAgent\n\nSee detailed skill assessment?",
+      "wait_timeout_seconds": 15,
+      "description": "Call analysis overview"
+    },
+    {
+      "step_number": 2,
+      "user_message": "Yes, show me where I need to improve",
+      "agent_response": "Skill assessment complete. Discovery is strong; closing needs focus.\n\n**Skill Scores:**\n\n| Skill | Your Score | Team Avg | Top Performer |\n|-------|------------|----------|---------------|\n| Discovery | 78/100 | 72 | 88 |\n| Active listening | 74/100 | 70 | 85 |\n| Value articulation | 65/100 | 68 | 90 |\n| Objection handling | 62/100 | 65 | 88 |\n| Closing | 54/100 | 60 | 92 |\n\n**Strengths (Keep Doing):**\n- Strong rapport building (opened with relevant industry insight)\n- Good pain point identification (\"compliance burden\" captured)\n- Clear product knowledge (technical questions handled well)\n\n**Improvement Areas:**\n\n| Area | Issue | Impact |\n|------|-------|--------|\n| Closing urgency | Didn't tie pain to timeline | -15% close rate |\n| Decision process | Never asked \"who else involved\" | Stalled deals |\n| Competitive positioning | No differentiation stated | Price-focused buyer |\n| Commitment | Accepted \"we'll review\" | Weak next step |\n\n**Your Biggest Gap:**\nClosing skill is 38 points below top performers. This correlates with your 18% close rate vs team's 22%.\n\nSource: [Skills Framework + Team Benchmarks]\nAgents: SkillAssessmentAgent, BenchmarkComparisonAgent\n\nGet personalized coaching recommendations?",
+      "wait_timeout_seconds": 15,
+      "description": "Skill assessment and gaps"
+    },
+    {
+      "step_number": 3,
+      "user_message": "Yes, how do I improve my closing?",
+      "agent_response": "Personalized closing improvement plan with specific techniques.\n\n**Closing Skill Development:**\n\n**Technique 1: Pain-to-Urgency Bridge**\n\nWhat you said: \"Sounds like compliance is a challenge.\"\n\nWhat top performers say: \"You mentioned the compliance audit is in 6 weeks. What happens if you're not ready?\"\n\n**Technique 2: Multi-threaded Closing**\n\n| Step | Question | Why It Works |\n|------|----------|-------------|\n| 1 | \"Who else weighs in on this?\" | Identifies blockers |\n| 2 | \"What would they need to see?\" | Addresses objections early |\n| 3 | \"Can we include them next time?\" | Accelerates decision |\n\n**Technique 3: Assumptive Next Step**\n\nInstead of: \"So, let me know what you decide.\"\n\nTry: \"Based on what you've shared, the Compliance package addresses your audit deadline. I have time Thursday at 2 PM for an implementation planning call - does that work?\"\n\n**Practice Exercise:**\nRecord yourself closing with these techniques on your next 3 calls. Review with me after.\n\n**Resource:** Top performer call library - 5 closing examples tagged for you.\n\nSource: [Coaching Playbooks + Success Patterns]\nAgents: CoachingRecommendationAgent, BenchmarkComparisonAgent\n\nGet strategy for saving this TechCorp deal?",
+      "wait_timeout_seconds": 15,
+      "description": "Closing improvement coaching"
+    },
+    {
+      "step_number": 4,
+      "user_message": "Yes, how do I save this TechCorp deal?",
+      "agent_response": "TechCorp deal strategy created. Still winnable with the right approach.\n\n**Deal Assessment:**\n\n| Factor | Status |\n|--------|--------|\n| Deal size | $85K ARR |\n| Current stage | Demo complete |\n| Win probability | 35% (declining) |\n| Competition | Unknown (likely evaluating) |\n| Decision timeline | \"Sometime next quarter\" |\n\n**Buyer Signals Detected:**\n- Strong interest in compliance feature (repeated questions)\n- Budget not confirmed but within typical range\n- Decision-maker not on call (red flag)\n\n**Recovery Strategy:**\n\n| Step | Action | Timing |\n|------|--------|--------|\n| 1 | Send value summary | Today |\n| 2 | Request exec meeting | Tomorrow |\n| 3 | Create urgency | In meeting |\n| 4 | Propose timeline | End of week |\n\n**Email Template (Step 1):**\n\"Hi [Name], Great discussion today. Based on your 6-week audit deadline, I mapped out how we'd get you compliant in 4 weeks. [Link to value summary]. Can we schedule 20 minutes with your CFO to discuss the implementation timeline?\"\n\n**Urgency Lever:**\n- Their audit: 6 weeks away\n- Our implementation: 4 weeks\n- Gap: Only 2-week buffer\n- Message: \"Any delay risks your audit readiness\"\n\n**Multi-thread Target:** CFO or VP Operations\n\nSource: [CRM + Competitive Intel]\nAgents: DealStrategyAgent, CoachingRecommendationAgent\n\nSet up progress tracking?",
+      "wait_timeout_seconds": 15,
+      "description": "Deal rescue strategy"
+    },
+    {
+      "step_number": 5,
+      "user_message": "Yes, track my progress and set goals",
+      "agent_response": "Progress tracking activated with measurable improvement goals.\n\n**Current Performance Baseline:**\n\n| Metric | Current | Goal (30 days) | Stretch |\n|--------|---------|----------------|--------|\n| Close rate | 18% | 24% | 28% |\n| Closing score | 54/100 | 70/100 | 80/100 |\n| Avg deal cycle | 45 days | 38 days | 32 days |\n| Multi-thread rate | 20% | 60% | 80% |\n\n**Development Plan:**\n\n| Week | Focus | Activity |\n|------|-------|----------|\n| 1 | Urgency creation | Practice pain-to-timeline bridge |\n| 2 | Multi-threading | Ask \"who else\" on every call |\n| 3 | Assumptive close | Use commitment language |\n| 4 | Deal acceleration | Propose specific next steps |\n\n**Tracking Activated:**\n\n| What We'll Measure | How |\n|--------------------|-----|\n| Closing language | AI call analysis |\n| Question count | Automatic tracking |\n| Multi-threading | CRM contact count |\n| Outcomes | Win/loss tracking |\n\n**Check-In Schedule:**\n- Weekly: AI analysis of your calls\n- Bi-weekly: 1:1 coaching session\n- Monthly: Progress review vs goals\n\n**Gamification:** You'll earn \"Closer\" badge when you hit 70+ closing score.\n\nSource: [Assessment History + Goal Framework]\nAgents: ProgressTrackingAgent, CoachingRecommendationAgent\n\nGenerate coaching summary?",
+      "wait_timeout_seconds": 15,
+      "description": "Progress tracking and goals"
+    },
+    {
+      "step_number": 6,
+      "user_message": "Yes, give me the complete coaching summary",
+      "agent_response": "Sales coaching session complete. Here's your development action plan.\n\n**Coaching Summary:**\n\n| Analysis | Result |\n|----------|--------|\n| Call analyzed | TechCorp discovery (47 min) |\n| Call score | 68/100 |\n| Key strength | Discovery (78/100) |\n| Key gap | Closing (54/100 vs 92 top) |\n| Deal status | Winnable with action |\n\n**Your Development Focus:**\n\n| Priority | Skill | Target Improvement |\n|----------|-------|-------------------|\n| 1 | Closing urgency | +16 points |\n| 2 | Multi-threading | 20% → 60% |\n| 3 | Commitment language | Specific next steps |\n\n**30-Day Goals:**\n\n| Metric | Current | Target |\n|--------|---------|--------|\n| Close rate | 18% | 24% |\n| Closing score | 54 | 70 |\n| Multi-thread deals | 20% | 60% |\n\n**Immediate Actions:**\n\n| Action | Timeline |\n|--------|----------|\n| Send TechCorp value summary | Today |\n| Request exec meeting | Tomorrow |\n| Practice closing techniques | 3 calls |\n| Review top performer calls | This week |\n\n**Resources Assigned:**\n- 5 top performer closing examples\n- Urgency creation framework\n- Multi-threading checklist\n\n**Next Coaching:** Weekly AI analysis + bi-weekly 1:1\n\nSource: [All Sales Systems]\nAgents: CoachingSummaryAgent (orchestrating all agents)\n\nYour AI sales coach analyzed your call, identified closing as your biggest opportunity (38-point gap to top performers), and created a 30-day plan to improve your close rate from 18% to 24%.",
+      "wait_timeout_seconds": 20,
+      "description": "Complete coaching summary"
+    }
+  ],
+  "design_principles": {
+    "max_response_length": "150-250 words",
+    "max_lines": "25-30 lines",
+    "max_table_rows": "4-5 rows",
+    "max_bullets": "4-6 bullets",
+    "sections": "2-3 maximum",
+    "visual_elements": "1 status indicator OR 1 table per response",
+    "source_attribution": "Compact format at end",
+    "evergreen_language": "Relative timeframes only",
+    "call_to_action": "Clear next question to continue"
+  },
+  "business_value": {
+    "problem": "22% team close rate, inconsistent sales performance, limited coaching capacity, subjective feedback",
+    "solution": "AI-powered sales coaching with call analysis, skill assessment, personalized recommendations, and progress tracking",
+    "roi": "Close rate improvement from 18% to 24% target, data-driven coaching at scale, objective skill measurement",
+    "performance": "Automated call analysis, benchmark comparison, personalized coaching plans, real-time progress tracking"
+  }
+}

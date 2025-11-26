@@ -1,0 +1,143 @@
+{
+  "demo_name": "Fraud_Detection_Alert_1Min_Demo",
+  "description": "1-minute demo: AI-powered fraud detection with real-time transaction monitoring, pattern analysis, and investigation prioritization",
+  "version": "2.0.0",
+  "trigger_phrases": [
+    "Show me the fraud alerts from overnight and help me prioritize which ones to investigate first.",
+    "review fraud alerts",
+    "suspicious transaction analysis"
+  ],
+  "metadata": {
+    "category": "fraud_prevention",
+    "industry": "financial_services",
+    "max_response_length": "250_words",
+    "total_steps": 6,
+    "estimated_duration_seconds": 60,
+    "target_audience": "fraud_analysts"
+  },
+  "persona": {
+    "name": "Marcus Thompson",
+    "title": "Fraud Operations Manager",
+    "company": "Atlantic Federal Bank",
+    "context": "Managing fraud team monitoring 2.4M daily transactions, overnight alerts require morning triage"
+  },
+  "agents_utilized": [
+    {
+      "agent_name": "TransactionMonitoringAgent",
+      "description": "Monitors real-time transactions and flags anomalies",
+      "inputs": ["transaction_stream", "monitoring_rules"],
+      "outputs": ["flagged_transactions", "anomaly_scores", "rule_triggers"],
+      "data_sources": ["Core Banking", "Card Processing", "Wire Transfer System"],
+      "used_in_steps": [1]
+    },
+    {
+      "agent_name": "AlertTriageAgent",
+      "description": "Prioritizes alerts by risk level and investigation urgency",
+      "inputs": ["alert_queue", "risk_thresholds"],
+      "outputs": ["prioritized_alerts", "risk_scores", "recommended_actions"],
+      "data_sources": ["Alert Management System", "Risk Models"],
+      "used_in_steps": [1]
+    },
+    {
+      "agent_name": "PatternAnalysisAgent",
+      "description": "Identifies fraud patterns and connected suspicious activity",
+      "inputs": ["flagged_transactions", "historical_patterns"],
+      "outputs": ["pattern_matches", "network_connections", "velocity_analysis"],
+      "data_sources": ["Fraud Pattern DB", "Network Analytics", "Behavioral Models"],
+      "used_in_steps": [2]
+    },
+    {
+      "agent_name": "AccountInvestigationAgent",
+      "description": "Compiles comprehensive account profiles for investigation",
+      "inputs": ["account_ids", "investigation_depth"],
+      "outputs": ["account_profiles", "transaction_history", "relationship_map", "red_flags"],
+      "data_sources": ["CRM", "Transaction History", "KYC Records"],
+      "used_in_steps": [3]
+    },
+    {
+      "agent_name": "CaseManagementAgent",
+      "description": "Creates and manages fraud investigation cases",
+      "inputs": ["investigation_data", "case_templates"],
+      "outputs": ["case_files", "evidence_packages", "regulatory_reports"],
+      "data_sources": ["Case Management System", "Document Repository"],
+      "used_in_steps": [4]
+    },
+    {
+      "agent_name": "FraudMetricsAgent",
+      "description": "Tracks fraud prevention performance and identifies trends",
+      "inputs": ["detection_data", "outcome_tracking"],
+      "outputs": ["performance_metrics", "trend_analysis", "model_effectiveness"],
+      "data_sources": ["Fraud Analytics", "Outcome Database"],
+      "used_in_steps": [5]
+    },
+    {
+      "agent_name": "FraudSummaryAgent",
+      "description": "Generates operational summaries and executive reports",
+      "inputs": ["all_fraud_data"],
+      "outputs": ["daily_summary", "risk_exposure", "action_items"],
+      "data_sources": ["All Fraud Systems"],
+      "used_in_steps": [6]
+    }
+  ],
+  "conversation_flow": [
+    {
+      "step_number": 1,
+      "user_message": "Show me the fraud alerts from overnight and help me prioritize which ones to investigate first.",
+      "agent_response": "I've analyzed 1,247 overnight alerts. 23 are critical priority requiring immediate investigation.\n\n**Overnight Alert Summary:**\n\n| Priority | Alerts | Total Value | Action Required |\n|----------|--------|-------------|----------------|\n| Critical | 23 | $892K | Immediate review |\n| High | 67 | $1.4M | Today |\n| Medium | 234 | $2.1M | 48-hour queue |\n| Low | 923 | $3.2M | Auto-disposition |\n\n**Critical Alert Breakdown:**\n\n| Alert Type | Count | Avg Value | Top Pattern |\n|------------|-------|-----------|-------------|\n| Account takeover | 8 | $34K | Credential change + transfer |\n| Card fraud ring | 6 | $28K | Multi-location velocity |\n| Wire fraud | 5 | $67K | First-time international |\n| Check fraud | 4 | $42K | Duplicate deposit pattern |\n\n**Immediate Attention:**\n- Alert #F-78234: $127K wire to high-risk jurisdiction\n- Alert #F-78156: Account takeover in progress\n- Alert #F-78089: Suspected card testing pattern\n\nSource: [Transaction Monitoring + Risk Models]\nAgents: TransactionMonitoringAgent, AlertTriageAgent\n\nWant to see the pattern analysis for critical alerts?",
+      "wait_timeout_seconds": 15,
+      "description": "Alert triage and prioritization"
+    },
+    {
+      "step_number": 2,
+      "user_message": "Yes, show me the pattern analysis and connected activity",
+      "agent_response": "Pattern analysis reveals 3 organized fraud rings. Alert #F-78156 connects to 12 additional compromised accounts.\n\n**Connected Fraud Patterns:**\n\n**Ring 1 - Account Takeover Network:**\n- Primary alert: #F-78156\n- Connected accounts: 12\n- Total exposure: $340K\n- Pattern: Same device fingerprint across accounts\n- Velocity: 8 password resets in 2 hours\n\n**Ring 2 - Card Testing Operation:**\n\n| Indicator | Finding |\n|-----------|--------|\n| Cards tested | 47 in 4 hours |\n| Common merchant | Gas stations (small amounts) |\n| Geographic spread | 3 states, same region |\n| Success rate | 23% (indicates stolen batch) |\n\n**Ring 3 - Wire Fraud Scheme:**\n- 5 accounts opened in last 30 days\n- All received similar deposits\n- Attempting international wires\n- Destination: Known mule accounts\n\n**AI Confidence Scores:**\n- Ring 1: 94% (high pattern match)\n- Ring 2: 87% (known modus operandi)\n- Ring 3: 91% (behavioral anomaly)\n\nSource: [Pattern Analysis + Network Graph]\nAgents: PatternAnalysisAgent\n\nInvestigate the account takeover ring first?",
+      "wait_timeout_seconds": 15,
+      "description": "Pattern analysis and ring detection"
+    },
+    {
+      "step_number": 3,
+      "user_message": "Yes, investigate the account takeover ring and show me the accounts",
+      "agent_response": "Full investigation package prepared for the 12-account takeover ring. $340K at immediate risk.\n\n**Account Takeover Investigation:**\n\n| Account | Customer | Balance | Status | Risk |\n|---------|----------|---------|--------|------|\n| ***4521 | J. Morrison | $89K | Compromised | Critical |\n| ***7834 | S. Chen | $67K | Compromised | Critical |\n| ***2156 | M. Williams | $54K | Attempted | High |\n| ***9012 | R. Garcia | $48K | Attempted | High |\n\n**Primary Account - J. Morrison (***4521):**\n\n**Timeline:**\n- 2:14 AM: Password reset from new IP\n- 2:18 AM: Email changed\n- 2:22 AM: Phone number changed\n- 2:34 AM: $15K wire initiated\n- 2:35 AM: AI blocked transfer\n\n**Attack Indicators:**\n- IP geolocation: Different country than customer\n- Device: Never seen before\n- Behavioral: Unusual navigation pattern\n- Velocity: All changes in 20 minutes\n\n**Customer Verified:** Real customer confirmed no activity (contacted at 6 AM)\n\nSource: [Account Investigation + Transaction History]\nAgents: AccountInvestigationAgent\n\nCreate cases and block the compromised accounts?",
+      "wait_timeout_seconds": 15,
+      "description": "Deep account investigation"
+    },
+    {
+      "step_number": 4,
+      "user_message": "Yes, create investigation cases and take protective action",
+      "agent_response": "Cases created and protective actions executed. 12 accounts secured, $340K protected.\n\n**Protective Actions Completed:**\n\n| Action | Accounts | Status |\n|--------|----------|--------|\n| Account freeze | 12 | Complete |\n| Cards blocked | 18 | Complete |\n| Wire block | 5 pending | Blocked |\n| Password force-reset | 12 | Queued |\n\n**Cases Created:**\n\n| Case # | Type | Value | Assigned |\n|--------|------|-------|----------|\n| FRD-2024-1847 | ATO Ring | $340K | Senior Analyst |\n| FRD-2024-1848 | Card Testing | $127K | Card Team |\n| FRD-2024-1849 | Wire Fraud | $224K | Wire Team |\n\n**Evidence Package (FRD-2024-1847):**\n- Device fingerprints collected\n- IP addresses logged\n- Transaction timeline documented\n- Customer statements attached\n- SAR draft prepared\n\n**Customer Communications:**\n- 12 automated alerts sent\n- 4 high-value customers flagged for personal call\n- New credential issuance scheduled\n\n**Regulatory Filing:** SAR draft ready for review\n\nSource: [Case Management + Fraud Prevention]\nAgents: CaseManagementAgent\n\nShow overall fraud metrics and trends?",
+      "wait_timeout_seconds": 15,
+      "description": "Case creation and protective actions"
+    },
+    {
+      "step_number": 5,
+      "user_message": "Yes, show me our fraud prevention performance and any concerning trends",
+      "agent_response": "Fraud metrics show strong prevention but emerging ATO trend requires attention.\n\n**Prevention Performance (MTD):**\n\n| Metric | Current | Target | Status |\n|--------|---------|--------|--------|\n| Detection rate | 94.2% | 90% | Exceeding |\n| False positive rate | 2.8% | 5% | Exceeding |\n| Avg detection time | 4.2 sec | 10 sec | Exceeding |\n| Losses prevented | $4.8M | $4M | Exceeding |\n\n**Fraud Trends (30-Day):**\n\n| Fraud Type | Trend | Change | Concern |\n|------------|-------|--------|--------|\n| Account takeover | Rising | +34% | High |\n| Card present | Declining | -12% | Low |\n| Wire fraud | Stable | +2% | Medium |\n| Check fraud | Declining | -8% | Low |\n\n**ATO Trend Analysis:**\n- Increase correlates with dark web credential dump\n- Specific customer segment targeted (high-balance accounts)\n- Attack sophistication increasing (bypassing 2FA)\n\n**Recommended Actions:**\n1. Implement adaptive authentication for high-risk accounts\n2. Deploy behavioral biometrics pilot\n3. Increase monitoring thresholds for credential changes\n\nSource: [Fraud Analytics + Trend Analysis]\nAgents: FraudMetricsAgent\n\nGenerate complete summary?",
+      "wait_timeout_seconds": 15,
+      "description": "Performance metrics and trends"
+    },
+    {
+      "step_number": 6,
+      "user_message": "Yes, summarize everything and give me the action items",
+      "agent_response": "Morning fraud review complete. Here's your operational summary and priorities.\n\n**Session Summary:**\n\n| Accomplishment | Result |\n|----------------|--------|\n| Alerts reviewed | 1,247 overnight |\n| Critical identified | 23 requiring action |\n| Fraud rings detected | 3 organized schemes |\n| Accounts secured | 12 compromised |\n| Value protected | $691K ($340K ATO + $351K other) |\n\n**Cases Opened Today:**\n\n| Case | Type | Value | Priority |\n|------|------|-------|----------|\n| FRD-2024-1847 | ATO Ring | $340K | Critical |\n| FRD-2024-1848 | Card Testing | $127K | High |\n| FRD-2024-1849 | Wire Fraud | $224K | High |\n\n**Immediate Actions:**\n1. Complete SAR filing for ATO ring (deadline: 48 hours)\n2. Customer outreach for 4 high-value affected accounts\n3. Coordinate with card team on testing pattern\n\n**Strategic Priorities (This Week):**\n- Address 34% increase in ATO attacks\n- Pilot behavioral biometrics for high-risk segment\n- Review credential change monitoring thresholds\n\n**Team Workload:**\n- 23 critical alerts assigned\n- 67 high alerts in queue\n- 234 medium for 48-hour review\n\nSource: [All Fraud Systems]\nAgents: FraudSummaryAgent (orchestrating all agents)\n\nYour morning fraud review identified 3 organized rings, protected $691K, and secured 12 compromised accounts with full investigation packages created.",
+      "wait_timeout_seconds": 20,
+      "description": "Complete summary and action items"
+    }
+  ],
+  "design_principles": {
+    "max_response_length": "150-250 words",
+    "max_lines": "25-30 lines",
+    "max_table_rows": "4-5 rows",
+    "max_bullets": "4-6 bullets",
+    "sections": "2-3 maximum",
+    "visual_elements": "1 status indicator OR 1 table per response",
+    "source_attribution": "Compact format at end",
+    "evergreen_language": "Relative timeframes only",
+    "call_to_action": "Clear next question to continue"
+  },
+  "business_value": {
+    "problem": "1,247 overnight alerts requiring triage, organized fraud rings, emerging ATO trend",
+    "solution": "AI-powered fraud detection with pattern analysis, ring identification, and automated case management",
+    "roi": "$691K protected, 12 accounts secured, 3 fraud rings identified, 94.2% detection rate",
+    "performance": "4.2-second detection time, 2.8% false positive rate, automated SAR preparation"
+  }
+}

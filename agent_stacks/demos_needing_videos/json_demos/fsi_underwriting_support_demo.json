@@ -1,0 +1,143 @@
+{
+  "demo_name": "Underwriting_Support_1Min_Demo",
+  "description": "1-minute demo: AI-powered underwriting assistance with automated risk assessment, policy analysis, and decision recommendations",
+  "version": "2.0.0",
+  "trigger_phrases": [
+    "Help me evaluate this commercial insurance application and provide a risk assessment with pricing recommendation.",
+    "underwriting analysis",
+    "insurance risk assessment"
+  ],
+  "metadata": {
+    "category": "underwriting",
+    "industry": "financial_services_insurance",
+    "max_response_length": "250_words",
+    "total_steps": 6,
+    "estimated_duration_seconds": 60,
+    "target_audience": "underwriters"
+  },
+  "persona": {
+    "name": "Richard Chen",
+    "title": "Senior Commercial Underwriter",
+    "company": "National Business Insurance",
+    "context": "Processing 80 commercial applications monthly, seeking to reduce evaluation time while maintaining underwriting quality"
+  },
+  "agents_utilized": [
+    {
+      "agent_name": "ApplicationAnalysisAgent",
+      "description": "Extracts and validates data from insurance applications and supporting documents",
+      "inputs": ["application_docs", "supplemental_forms"],
+      "outputs": ["extracted_data", "completeness_score", "red_flags"],
+      "data_sources": ["Application Portal", "Document OCR", "Validation Rules"],
+      "used_in_steps": [1]
+    },
+    {
+      "agent_name": "RiskAssessmentAgent",
+      "description": "Evaluates risk factors and generates risk scores",
+      "inputs": ["application_data", "risk_models"],
+      "outputs": ["risk_score", "risk_factors", "hazard_analysis", "loss_projections"],
+      "data_sources": ["Risk Models", "Industry Data", "Claims History"],
+      "used_in_steps": [1, 2]
+    },
+    {
+      "agent_name": "LossHistoryAgent",
+      "description": "Analyzes historical loss data and claims patterns",
+      "inputs": ["insured_id", "industry_code"],
+      "outputs": ["loss_history", "claim_patterns", "industry_benchmarks"],
+      "data_sources": ["Claims Database", "ISO", "Industry Loss Data"],
+      "used_in_steps": [2]
+    },
+    {
+      "agent_name": "PricingRecommendationAgent",
+      "description": "Generates premium recommendations based on risk assessment",
+      "inputs": ["risk_assessment", "coverage_requirements", "pricing_guidelines"],
+      "outputs": ["premium_recommendation", "rate_factors", "margin_analysis"],
+      "data_sources": ["Rating Engine", "Actuarial Models", "Competitor Rates"],
+      "used_in_steps": [3]
+    },
+    {
+      "agent_name": "CoverageStructureAgent",
+      "description": "Recommends optimal coverage structure and policy terms",
+      "inputs": ["risk_profile", "coverage_needs", "available_products"],
+      "outputs": ["coverage_recommendation", "exclusions", "conditions"],
+      "data_sources": ["Product Library", "Underwriting Guidelines", "Reinsurance Treaties"],
+      "used_in_steps": [4]
+    },
+    {
+      "agent_name": "ComplianceCheckAgent",
+      "description": "Validates underwriting decision against guidelines and regulations",
+      "inputs": ["proposed_terms", "regulatory_requirements"],
+      "outputs": ["compliance_status", "required_approvals", "documentation_needs"],
+      "data_sources": ["Underwriting Authority", "Regulatory Database", "Compliance Rules"],
+      "used_in_steps": [5]
+    },
+    {
+      "agent_name": "UnderwritingSummaryAgent",
+      "description": "Generates comprehensive underwriting reports and recommendations",
+      "inputs": ["all_underwriting_data"],
+      "outputs": ["underwriting_report", "decision_recommendation", "conditions"],
+      "data_sources": ["All Underwriting Systems"],
+      "used_in_steps": [6]
+    }
+  ],
+  "conversation_flow": [
+    {
+      "step_number": 1,
+      "user_message": "Help me evaluate this commercial insurance application and provide a risk assessment with pricing recommendation.",
+      "agent_response": "I've analyzed the Midwest Manufacturing application. Moderate risk profile with some areas requiring attention.\n\n**Application Summary:**\n\n| Field | Details |\n|-------|--------|\n| Applicant | Midwest Manufacturing Inc. |\n| Industry | Metal fabrication (NAICS 332312) |\n| Annual revenue | $24M |\n| Employees | 145 |\n| Location | Columbus, OH (single site) |\n| Coverage requested | GL, Property, Products |\n\n**Application Completeness:**\n\n| Section | Status | Notes |\n|---------|--------|-------|\n| Business info | Complete | Verified |\n| Financial data | 95% | Need current financials |\n| Operations | Complete | Detailed |\n| Loss history | Complete | 5 years provided |\n| Property schedule | 90% | Values need confirmation |\n\n**Initial Risk Flags:**\n\n| Flag | Concern | Impact |\n|------|---------|--------|\n| Equipment age | 40% over 15 years | Property risk |\n| Single location | Concentration risk | Higher exposure |\n| Heavy machinery | Products liability | Premium driver |\n\n**Preliminary Risk Score:** 68/100 (Moderate)\n\nSource: [Application Portal + Validation Engine]\nAgents: ApplicationAnalysisAgent, RiskAssessmentAgent\n\nSee detailed risk assessment and loss history?",
+      "wait_timeout_seconds": 15,
+      "description": "Application analysis and initial assessment"
+    },
+    {
+      "step_number": 2,
+      "user_message": "Yes, show me the full risk assessment and their loss history",
+      "agent_response": "Comprehensive risk assessment complete. Loss history is favorable with one notable claim.\n\n**Risk Factor Analysis:**\n\n| Factor | Score | Weight | Notes |\n|--------|-------|--------|-------|\n| Industry hazard | 72/100 | 25% | Metal fab = moderate risk |\n| Financial stability | 78/100 | 20% | Healthy ratios |\n| Loss experience | 82/100 | 25% | Better than class |\n| Operations quality | 70/100 | 20% | Aging equipment concern |\n| Management | 75/100 | 10% | Experienced team |\n\n**Loss History (5 Years):**\n\n| Year | Claims | Incurred | Type |\n|------|--------|----------|------|\n| Current | 0 | $0 | - |\n| Year -1 | 1 | $45,000 | Equipment damage |\n| Year -2 | 2 | $12,000 | Slip/fall |\n| Year -3 | 1 | $180,000 | Products liability |\n| Year -4 | 0 | $0 | - |\n\n**Products Liability Claim Detail (Year -3):**\n- Claim: Defective bracket caused customer equipment failure\n- Incurred: $180,000\n- Status: Closed\n- Root cause: Quality control gap (since addressed)\n\n**Industry Benchmark:**\n- Their loss ratio: 0.42\n- Class average: 0.58\n- Rating: Better than class\n\n**Key Risk Concerns:**\n1. Equipment age increases breakdown probability\n2. Products liability history (single event, resolved)\n3. Single location = no disaster redundancy\n\nSource: [Claims Database + Industry Data]\nAgents: LossHistoryAgent, RiskAssessmentAgent\n\nGenerate pricing recommendation?",
+      "wait_timeout_seconds": 15,
+      "description": "Detailed risk and loss history analysis"
+    },
+    {
+      "step_number": 3,
+      "user_message": "Yes, what premium should we quote?",
+      "agent_response": "Pricing recommendation generated based on risk assessment and competitive positioning.\n\n**Premium Recommendation:**\n\n| Coverage | Limit | Premium | Rate Basis |\n|----------|-------|---------|------------|\n| General Liability | $1M/$2M | $32,400 | Per $1K revenue |\n| Property | $8.2M | $28,700 | Per $100 value |\n| Products Liability | $1M/$2M | $18,600 | Per $1K revenue |\n| Business Income | $2M | $8,400 | 25% of property |\n| **Total Package** | | **$88,100** | |\n\n**Rate Factor Analysis:**\n\n| Factor | Impact | Adjustment |\n|--------|--------|------------|\n| Industry class | Base | - |\n| Loss experience | Credit | -8% |\n| Equipment age | Debit | +5% |\n| Single location | Debit | +3% |\n| Safety program | Credit | -4% |\n| **Net adjustment** | | **-4%** |\n\n**Competitive Positioning:**\n\n| Comparison | Premium | vs. Ours |\n|------------|---------|----------|\n| Our quote | $88,100 | - |\n| Market low | $82,000 | -7% |\n| Market high | $96,000 | +9% |\n| Target position | $88,000 | Competitive |\n\n**Margin Analysis:**\n- Expected loss ratio: 52%\n- Target margin: 12%\n- Projected combined ratio: 94%\n\nSource: [Rating Engine + Actuarial Models]\nAgents: PricingRecommendationAgent, RiskAssessmentAgent\n\nReview coverage structure and terms?",
+      "wait_timeout_seconds": 15,
+      "description": "Premium pricing recommendation"
+    },
+    {
+      "step_number": 4,
+      "user_message": "Yes, what coverage structure do you recommend?",
+      "agent_response": "Optimal coverage structure designed for their risk profile.\n\n**Recommended Coverage Structure:**\n\n**General Liability:**\n\n| Element | Recommendation |\n|---------|---------------|\n| Occurrence limit | $1,000,000 |\n| Aggregate limit | $2,000,000 |\n| Deductible | $5,000 |\n| Products included | Yes |\n\n**Property Coverage:**\n\n| Element | Recommendation |\n|---------|---------------|\n| Building | $4,200,000 (replacement) |\n| Contents | $3,400,000 |\n| Equipment | $600,000 (scheduled) |\n| Valuation | Replacement cost |\n| Deductible | $10,000 |\n\n**Recommended Endorsements:**\n\n| Endorsement | Reason |\n|-------------|--------|\n| Equipment breakdown | Aging machinery risk |\n| Contingent business income | Single location |\n| Blanket additional insured | Customer contracts |\n| Waiver of subrogation | Industry standard |\n\n**Recommended Exclusions:**\n\n| Exclusion | Rationale |\n|-----------|----------|\n| Pollution (standard) | Manufacturing ops |\n| Cyber (separate policy) | Emerging risk |\n| Professional services | Not applicable |\n\n**Policy Terms:**\n- Term: 12 months\n- Audit basis: Annual revenue audit\n- Payment: Quarterly installments available\n\n**Subjectivities:**\n1. Current financial statements\n2. Equipment maintenance records\n3. Quality control procedures update\n\nSource: [Product Library + Guidelines]\nAgents: CoverageStructureAgent, RiskAssessmentAgent\n\nRun compliance check and finalize?",
+      "wait_timeout_seconds": 15,
+      "description": "Coverage structure recommendation"
+    },
+    {
+      "step_number": 5,
+      "user_message": "Yes, check compliance and finalize the recommendation",
+      "agent_response": "Compliance validated. Within authority, ready for quote issuance.\n\n**Compliance Check Results:**\n\n| Check | Status | Notes |\n|-------|--------|-------|\n| Underwriting authority | Pass | Within $10M limit |\n| Rate adequacy | Pass | Above minimum |\n| Form compliance | Pass | All forms approved |\n| Reinsurance treaty | Pass | Within capacity |\n| State filing | Pass | OH rates filed |\n\n**Approval Requirements:**\n\n| Requirement | Status |\n|-------------|--------|\n| Underwriter authority | Approved (your level) |\n| Senior UW review | Not required |\n| Actuarial review | Not required |\n| Management approval | Not required |\n\n**Documentation Checklist:**\n\n| Document | Status |\n|----------|--------|\n| Application | Complete |\n| Loss runs | On file |\n| Inspection | Waived (desk UW) |\n| Financial review | Pending (subjectivity) |\n| Quote letter | Ready to generate |\n\n**Binding Authority:**\n- You have authority to bind this risk\n- No referral required\n- Standard policy forms apply\n\n**Subjectivities Required Before Binding:**\n1. Current year financials\n2. Equipment list with ages\n3. QC procedure documentation\n\n**Quote Validity:** 30 days\n\nSource: [Authority Matrix + Compliance Rules]\nAgents: ComplianceCheckAgent, CoverageStructureAgent\n\nGenerate final underwriting summary?",
+      "wait_timeout_seconds": 15,
+      "description": "Compliance validation"
+    },
+    {
+      "step_number": 6,
+      "user_message": "Yes, generate the complete underwriting summary",
+      "agent_response": "Underwriting analysis complete. Here's your decision summary.\n\n**Underwriting Decision Summary:**\n\n| Recommendation | Approve with Conditions |\n|----------------|------------------------|\n| Risk score | 68/100 (Moderate) |\n| Premium | $88,100 |\n| Authority | Within limits |\n\n**Midwest Manufacturing Inc.**\n\n| Element | Decision |\n|---------|----------|\n| General Liability | Accept - $1M/$2M |\n| Property | Accept - $8.2M total |\n| Products Liability | Accept - included |\n| Business Income | Accept - $2M |\n\n**Key Underwriting Factors:**\n\n| Positive | Negative |\n|----------|----------|\n| Favorable loss history | Aging equipment |\n| Experienced management | Single location |\n| Strong financials | Products claim history |\n| Safety program in place | - |\n\n**Conditions for Binding:**\n1. Receipt of current financials\n2. Equipment list confirmation\n3. QC procedures documentation\n\n**Premium Summary:**\n- Annual premium: $88,100\n- Payment terms: Quarterly available\n- Audit basis: Revenue\n\n**Quote Package:**\n- Quote letter: Generated\n- Coverage summary: Attached\n- Subjectivities: Listed\n- Valid for: 30 days\n\nSource: [All Underwriting Systems]\nAgents: UnderwritingSummaryAgent (orchestrating all agents)\n\nYour AI-powered underwriting analysis evaluated the risk in minutes, provided data-driven pricing at $88,100, and generated a complete quote package ready for the producer.",
+      "wait_timeout_seconds": 20,
+      "description": "Complete underwriting decision summary"
+    }
+  ],
+  "design_principles": {
+    "max_response_length": "150-250 words",
+    "max_lines": "25-30 lines",
+    "max_table_rows": "4-5 rows",
+    "max_bullets": "4-6 bullets",
+    "sections": "2-3 maximum",
+    "visual_elements": "1 status indicator OR 1 table per response",
+    "source_attribution": "Compact format at end",
+    "evergreen_language": "Relative timeframes only",
+    "call_to_action": "Clear next question to continue"
+  },
+  "business_value": {
+    "problem": "80 applications monthly with hours per evaluation, manual risk assessment, inconsistent pricing, slow turnaround",
+    "solution": "AI-powered underwriting support with automated risk scoring, pricing optimization, and compliance validation",
+    "roi": "Evaluation time reduced from hours to minutes, consistent risk assessment, data-driven pricing",
+    "performance": "Complete application analysis, 5-year loss history review, competitive pricing, compliance-cleared quote ready"
+  }
+}

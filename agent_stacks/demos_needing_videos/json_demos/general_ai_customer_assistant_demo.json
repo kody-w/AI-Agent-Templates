@@ -1,0 +1,143 @@
+{
+  "demo_name": "AI_Customer_Assistant_1Min_Demo",
+  "description": "1-minute demo: AI-powered customer service assistant with intelligent routing, knowledge retrieval, and resolution recommendations",
+  "version": "2.0.0",
+  "trigger_phrases": [
+    "Help me resolve this customer inquiry by finding the right information and recommended actions.",
+    "customer service AI",
+    "intelligent service assistant"
+  ],
+  "metadata": {
+    "category": "customer_service",
+    "industry": "cross_industry",
+    "max_response_length": "250_words",
+    "total_steps": 6,
+    "estimated_duration_seconds": 60,
+    "target_audience": "customer_service_agents"
+  },
+  "persona": {
+    "name": "Marcus Johnson",
+    "title": "Customer Service Director",
+    "company": "TechServe Solutions",
+    "context": "Managing 150-agent contact center with 5,000 daily interactions, seeking to improve first-contact resolution and agent efficiency"
+  },
+  "agents_utilized": [
+    {
+      "agent_name": "InquiryAnalysisAgent",
+      "description": "Analyzes customer inquiry to understand intent, sentiment, and urgency",
+      "inputs": ["inquiry_text", "channel", "customer_context"],
+      "outputs": ["intent_classification", "sentiment_score", "urgency_level", "topic_tags"],
+      "data_sources": ["NLP Engine", "Intent Models", "Sentiment Analysis"],
+      "used_in_steps": [1]
+    },
+    {
+      "agent_name": "CustomerContextAgent",
+      "description": "Retrieves comprehensive customer profile and interaction history",
+      "inputs": ["customer_id"],
+      "outputs": ["customer_profile", "interaction_history", "product_holdings", "open_issues"],
+      "data_sources": ["CRM", "Product Database", "Ticket System"],
+      "used_in_steps": [1, 2]
+    },
+    {
+      "agent_name": "KnowledgeRetrievalAgent",
+      "description": "Searches knowledge base for relevant articles and solutions",
+      "inputs": ["query", "context_filters"],
+      "outputs": ["relevant_articles", "solution_steps", "confidence_scores"],
+      "data_sources": ["Knowledge Base", "FAQ Database", "Product Documentation"],
+      "used_in_steps": [2, 3]
+    },
+    {
+      "agent_name": "ResolutionRecommendationAgent",
+      "description": "Generates recommended resolution actions based on context",
+      "inputs": ["inquiry", "customer_context", "knowledge_results"],
+      "outputs": ["recommended_actions", "scripts", "escalation_paths"],
+      "data_sources": ["Resolution Playbooks", "Best Practices", "Policy Engine"],
+      "used_in_steps": [3]
+    },
+    {
+      "agent_name": "ActionExecutionAgent",
+      "description": "Executes authorized service actions on behalf of agents",
+      "inputs": ["action_type", "customer_id", "parameters"],
+      "outputs": ["action_result", "confirmation", "updated_status"],
+      "data_sources": ["Order System", "Account Management", "Billing System"],
+      "used_in_steps": [4]
+    },
+    {
+      "agent_name": "FollowUpAgent",
+      "description": "Schedules and manages post-resolution follow-ups",
+      "inputs": ["resolution_details", "customer_preferences"],
+      "outputs": ["follow_up_schedule", "satisfaction_survey", "escalation_monitoring"],
+      "data_sources": ["Task Management", "Survey System", "CRM"],
+      "used_in_steps": [5]
+    },
+    {
+      "agent_name": "ServiceSummaryAgent",
+      "description": "Generates service interaction summaries and quality metrics",
+      "inputs": ["interaction_data"],
+      "outputs": ["interaction_summary", "quality_score", "improvement_insights"],
+      "data_sources": ["All Service Systems"],
+      "used_in_steps": [6]
+    }
+  ],
+  "conversation_flow": [
+    {
+      "step_number": 1,
+      "user_message": "Help me resolve this customer inquiry by finding the right information and recommended actions.",
+      "agent_response": "I've analyzed the incoming inquiry. Billing dispute from a long-term customer - needs careful handling.\n\n**Inquiry Analysis:**\n\n| Element | Finding |\n|---------|--------|\n| Channel | Email |\n| Intent | Billing dispute |\n| Sentiment | Frustrated (-0.6) |\n| Urgency | High |\n| Topic | Unexpected charges |\n\n**Customer: Jennifer Adams**\n\n| Profile | Details |\n|---------|--------|\n| Customer since | 2019 (5 years) |\n| Account value | $2,400/year |\n| Loyalty tier | Gold |\n| Current status | Active, auto-pay |\n\n**Inquiry Content:**\n\"I was charged $149 for a service I never ordered. This is the second time this has happened. I want a refund and an explanation or I'm canceling my account.\"\n\n**Quick Context:**\n- Previous similar issue: 8 months ago (resolved with credit)\n- Recent account changes: None by customer\n- Charge source: Add-on service auto-enrolled\n\n**Risk Assessment:**\n- Churn risk: High (explicit threat)\n- Escalation risk: Medium\n- Value at risk: $2,400/year\n\nSource: [CRM + Billing System + Email]\nAgents: InquiryAnalysisAgent, CustomerContextAgent\n\nSearch knowledge base for resolution options?",
+      "wait_timeout_seconds": 15,
+      "description": "Inquiry analysis and customer context"
+    },
+    {
+      "step_number": 2,
+      "user_message": "Yes, find the relevant knowledge articles and what happened",
+      "agent_response": "Knowledge search complete. Issue identified: Auto-enrollment in promotional add-on.\n\n**Root Cause Identified:**\n\n| Finding | Details |\n|---------|--------|\n| Charge type | Premium Support Add-on |\n| Amount | $149/month |\n| Source | Promotional auto-enrollment |\n| Opt-out | Customer missed email |\n\n**Timeline of Events:**\n\n| Date | Event |\n|------|-------|\n| 45 days ago | Promo email sent (offer accepted = silence) |\n| 30 days ago | Free trial ended |\n| 3 days ago | First charge processed |\n| Today | Customer complaint |\n\n**Relevant Knowledge Articles:**\n\n| Article | Relevance | Solution |\n|---------|-----------|----------|\n| KB-2341: Add-on Billing | 95% | Refund process |\n| KB-1892: Promotional Enrollment | 88% | Cancel steps |\n| KB-3102: Customer Retention | 82% | Goodwill gestures |\n\n**Policy Check:**\n\n| Policy | Status |\n|--------|--------|\n| Refund eligible | Yes (within 30 days) |\n| Cancel without penalty | Yes |\n| Retention offers | Available |\n| Agent authority | Full refund approved |\n\n**Similar Cases:** 23 similar complaints this month (known issue)\n\nSource: [Knowledge Base + Billing Records]\nAgents: KnowledgeRetrievalAgent, CustomerContextAgent\n\nGet recommended resolution actions?",
+      "wait_timeout_seconds": 15,
+      "description": "Knowledge retrieval and root cause"
+    },
+    {
+      "step_number": 3,
+      "user_message": "Yes, what should I do to resolve this?",
+      "agent_response": "Resolution recommendation generated with customer retention focus.\n\n**Recommended Actions:**\n\n**Step 1: Acknowledge & Apologize**\n\"Ms. Adams, I sincerely apologize for the frustration. I can see exactly what happened and I'm going to fix this right now.\"\n\n**Step 2: Explain Clearly**\n\"A promotional add-on was auto-enrolled 45 days ago. The opt-out was in an email that was easy to miss. This shouldn't have happened this way.\"\n\n**Step 3: Immediate Resolution**\n\n| Action | Details |\n|--------|--------|\n| Full refund | $149 (process immediately) |\n| Cancel add-on | Remove from account |\n| Block future auto-enroll | Flag account |\n\n**Step 4: Retention Gesture**\n\n| Offer | Value | Purpose |\n|-------|-------|--------|\n| Service credit | $50 | Goodwill |\n| Free month | $200 value | Retention |\n| Priority support | 3 months | Loyalty |\n\n**Recommended Script:**\n\"I've processed your $149 refund - you'll see it in 3-5 days. I've also canceled the add-on and flagged your account to prevent future auto-enrollments. As a thank you for your 5 years with us, I'd like to add a $50 credit to your account.\"\n\n**Authority Level:** You can approve all these actions.\n\nSource: [Resolution Playbooks + Policy Engine]\nAgents: ResolutionRecommendationAgent, KnowledgeRetrievalAgent\n\nExecute the resolution?",
+      "wait_timeout_seconds": 15,
+      "description": "Resolution recommendations"
+    },
+    {
+      "step_number": 4,
+      "user_message": "Yes, process the refund and apply the credit",
+      "agent_response": "Resolution actions executed. All changes applied successfully.\n\n**Actions Completed:**\n\n| Action | Status | Confirmation |\n|--------|--------|-------------|\n| Refund $149 | Processed | REF-892341 |\n| Cancel add-on | Complete | Effective immediately |\n| Block auto-enroll | Applied | Account flagged |\n| Apply $50 credit | Complete | CRD-892342 |\n\n**Account Updated:**\n\n| Before | After |\n|--------|-------|\n| Monthly: $249 | Monthly: $200 |\n| Add-on: Active | Add-on: Canceled |\n| Credits: $0 | Credits: $50 |\n\n**Refund Details:**\n- Amount: $149.00\n- Method: Original payment (Visa ****4521)\n- Timeline: 3-5 business days\n- Reference: REF-892341\n\n**Customer Communication:**\n- Confirmation email: Queued (sends in 5 min)\n- Includes: Refund confirmation, account changes, credit applied\n\n**Ticket Updated:**\n- Status: Resolved\n- Resolution: Full refund + goodwill credit\n- Notes: Auto-populated\n\n**Retention Score:** High probability of retention (based on similar cases: 94%)\n\nSource: [Billing System + Account Management]\nAgents: ActionExecutionAgent, CustomerContextAgent\n\nSet up follow-up and close?",
+      "wait_timeout_seconds": 15,
+      "description": "Resolution execution"
+    },
+    {
+      "step_number": 5,
+      "user_message": "Yes, schedule follow-up and prepare the response",
+      "agent_response": "Follow-up scheduled and response prepared for Jennifer Adams.\n\n**Follow-Up Scheduled:**\n\n| Touchpoint | Timing | Channel | Purpose |\n|------------|--------|---------|--------|\n| Satisfaction survey | +24 hours | Email | Gauge resolution |\n| Check-in call | +7 days | Phone | Relationship |\n| Retention review | +30 days | Internal | Account health |\n\n**Draft Email Response:**\n\n**Subject:** Your Account Has Been Corrected - Refund Processed\n\n\"Dear Ms. Adams,\n\nThank you for bringing this to our attention, and I sincerely apologize for the frustration this caused.\n\nHere's what I've done:\n\n✓ Processed a full refund of $149 (Ref: REF-892341)\n✓ Canceled the Premium Support add-on\n✓ Added a $50 account credit as a thank you for your patience\n✓ Flagged your account to prevent future auto-enrollments\n\nYour refund will appear in 3-5 business days. The $50 credit is available immediately.\n\nWe truly value your 5 years with us. If you have any questions, please reply to this email or call me directly.\n\nWarm regards,\n[Agent Name]\nCustomer Care Team\"\n\n**Approval:** Ready to send with your confirmation.\n\nSource: [Task Management + Email Templates]\nAgents: FollowUpAgent, ResolutionRecommendationAgent\n\nGenerate session summary?",
+      "wait_timeout_seconds": 15,
+      "description": "Follow-up scheduling and response"
+    },
+    {
+      "step_number": 6,
+      "user_message": "Yes, summarize this interaction",
+      "agent_response": "Customer service interaction complete. Here's your session summary.\n\n**Interaction Summary:**\n\n| Element | Result |\n|---------|--------|\n| Customer | Jennifer Adams (Gold, 5 years) |\n| Issue | Unauthorized $149 charge |\n| Root cause | Promotional auto-enrollment |\n| Resolution | Full refund + $50 credit |\n| Outcome | Retained high-value customer |\n\n**Actions Taken:**\n\n| Action | Value | Status |\n|--------|-------|--------|\n| Refund processed | $149 | Complete |\n| Add-on canceled | - | Complete |\n| Goodwill credit | $50 | Applied |\n| Auto-enroll blocked | - | Active |\n| Follow-up scheduled | 3 touchpoints | Queued |\n\n**Quality Metrics:**\n\n| Metric | Score |\n|--------|-------|\n| First contact resolution | Yes |\n| Handle time | 8 minutes |\n| Customer effort | Low |\n| Predicted CSAT | 4.5/5 |\n| Retention probability | 94% |\n\n**Value Protected:**\n- Annual account value: $2,400\n- Lifetime value (5 years): $12,000+\n- Cost of resolution: $199 ($149 refund + $50 credit)\n- ROI: 60x (value protected vs cost)\n\n**System Learning:**\n- Issue flagged for product team (23 similar cases)\n- Resolution pattern: Added to knowledge base\n\nSource: [All Service Systems]\nAgents: ServiceSummaryAgent (orchestrating all agents)\n\nYour AI assistant resolved a high-risk escalation in 8 minutes, protected $12,000+ in customer lifetime value, and captured insights to prevent future occurrences.",
+      "wait_timeout_seconds": 20,
+      "description": "Complete interaction summary"
+    }
+  ],
+  "design_principles": {
+    "max_response_length": "150-250 words",
+    "max_lines": "25-30 lines",
+    "max_table_rows": "4-5 rows",
+    "max_bullets": "4-6 bullets",
+    "sections": "2-3 maximum",
+    "visual_elements": "1 status indicator OR 1 table per response",
+    "source_attribution": "Compact format at end",
+    "evergreen_language": "Relative timeframes only",
+    "call_to_action": "Clear next question to continue"
+  },
+  "business_value": {
+    "problem": "5,000 daily interactions, slow knowledge retrieval, inconsistent resolutions, churn risk from poor experiences",
+    "solution": "AI-powered customer assistant with intelligent inquiry analysis, automated knowledge retrieval, and guided resolution",
+    "roi": "8-minute resolution, 94% retention probability, $12,000 customer value protected, first-contact resolution",
+    "performance": "Real-time sentiment analysis, instant knowledge search, automated action execution, quality metrics tracking"
+  }
+}

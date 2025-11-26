@@ -1,0 +1,143 @@
+{
+  "demo_name": "Personalized_Shopping_Assistant_1Min_Demo",
+  "description": "1-minute demo: AI-powered personal shopping assistant with style profiling, real-time recommendations, and outfit coordination",
+  "version": "2.0.0",
+  "trigger_phrases": [
+    "Help me find the perfect outfit for a customer based on their style preferences and purchase history.",
+    "personalized style recommendations",
+    "AI shopping assistant"
+  ],
+  "metadata": {
+    "category": "personalization",
+    "industry": "b2c_retail",
+    "max_response_length": "250_words",
+    "total_steps": 6,
+    "estimated_duration_seconds": 60,
+    "target_audience": "retail_associates"
+  },
+  "persona": {
+    "name": "Amanda Foster",
+    "title": "Personal Styling Director",
+    "company": "Luxe Department Store",
+    "context": "Leading team of 40 personal shoppers, seeking to scale personalized service with AI assistance"
+  },
+  "agents_utilized": [
+    {
+      "agent_name": "StyleProfileAgent",
+      "description": "Builds comprehensive style profiles from purchase history and preferences",
+      "inputs": ["customer_id", "preference_survey"],
+      "outputs": ["style_profile", "color_preferences", "size_info", "brand_affinities", "price_sensitivity"],
+      "data_sources": ["Purchase History", "Wishlist", "Browsing Data", "Returns Analysis"],
+      "used_in_steps": [1]
+    },
+    {
+      "agent_name": "OccasionMatchingAgent",
+      "description": "Understands occasion requirements and matches to appropriate styles",
+      "inputs": ["occasion_type", "formality_level", "venue_context"],
+      "outputs": ["occasion_requirements", "dress_code_guidance", "style_constraints"],
+      "data_sources": ["Occasion Database", "Style Rules", "Trend Data"],
+      "used_in_steps": [1, 2]
+    },
+    {
+      "agent_name": "ProductRecommendationAgent",
+      "description": "Generates personalized product recommendations using AI matching",
+      "inputs": ["style_profile", "occasion", "budget", "inventory"],
+      "outputs": ["product_recommendations", "match_scores", "alternative_options"],
+      "data_sources": ["Product Catalog", "Inventory System", "AI Recommendation Engine"],
+      "used_in_steps": [2, 3]
+    },
+    {
+      "agent_name": "OutfitCoordinationAgent",
+      "description": "Creates complete outfit combinations with coordinating pieces",
+      "inputs": ["anchor_piece", "style_profile", "occasion"],
+      "outputs": ["complete_outfits", "accessory_pairings", "layering_options"],
+      "data_sources": ["Style Rules Engine", "Coordination Database", "Visual AI"],
+      "used_in_steps": [3]
+    },
+    {
+      "agent_name": "InventoryAvailabilityAgent",
+      "description": "Checks real-time inventory and suggests alternatives",
+      "inputs": ["product_ids", "size", "location_preference"],
+      "outputs": ["availability_status", "nearby_inventory", "shipping_options", "alternatives"],
+      "data_sources": ["Inventory Management", "Store Systems", "Warehouse Data"],
+      "used_in_steps": [4]
+    },
+    {
+      "agent_name": "PricingOptimizationAgent",
+      "description": "Optimizes offers and bundles for maximum value",
+      "inputs": ["cart_contents", "customer_tier", "promotions"],
+      "outputs": ["bundle_offers", "loyalty_discounts", "price_optimizations"],
+      "data_sources": ["Pricing Engine", "Promotion Calendar", "Loyalty System"],
+      "used_in_steps": [4, 5]
+    },
+    {
+      "agent_name": "ShoppingSummaryAgent",
+      "description": "Generates session summaries and follow-up recommendations",
+      "inputs": ["session_data", "customer_profile"],
+      "outputs": ["shopping_summary", "saved_looks", "follow_up_suggestions", "stylist_notes"],
+      "data_sources": ["Session History", "CRM", "Wishlist System"],
+      "used_in_steps": [6]
+    }
+  ],
+  "conversation_flow": [
+    {
+      "step_number": 1,
+      "user_message": "Help me find the perfect outfit for a customer based on their style preferences and purchase history.",
+      "agent_response": "I've analyzed Jennifer Hayes' complete style profile. She has a clear aesthetic with specific preferences.\n\n**Customer Style Profile:**\n\n| Attribute | Preference |\n|-----------|------------|\n| Style archetype | Modern Classic |\n| Color palette | Neutrals, navy, burgundy |\n| Fit preference | Tailored, not tight |\n| Price range | $150-400 per piece |\n| Preferred brands | Theory, Vince, Equipment |\n\n**Size Information:**\n\n| Category | Size | Notes |\n|----------|------|-------|\n| Tops | 6 / Small | Prefers relaxed fit |\n| Bottoms | 28 / 6 | High-rise preferred |\n| Dresses | 6 | Midi length |\n| Shoes | 8 | Comfortable heels only |\n\n**Recent Purchase Patterns:**\n- Last purchase: 3 weeks ago (silk blouse)\n- Avg items/visit: 2.4\n- Return rate: 8% (well below average)\n- Total spend (YTD): $4,200\n\n**Style Notes from Past Sessions:**\n\"Loves structured pieces, avoids prints, prefers investment pieces over trends\"\n\nSource: [Purchase History + Style Profile + CRM Notes]\nAgents: StyleProfileAgent, OccasionMatchingAgent\n\nWhat occasion is she shopping for?",
+      "wait_timeout_seconds": 15,
+      "description": "Customer style profile analysis"
+    },
+    {
+      "step_number": 2,
+      "user_message": "She needs an outfit for a business dinner with clients",
+      "agent_response": "Business dinner requirements analyzed. Here are personalized recommendations for Jennifer.\n\n**Occasion Analysis:**\n\n| Requirement | Recommendation |\n|-------------|----------------|\n| Dress code | Business elegant |\n| Impression | Polished, confident |\n| Comfort level | Seated dining, standing cocktails |\n| Her preference | Structured, not stuffy |\n\n**Top Picks for Jennifer:**\n\n| Item | Brand | Price | Match Score |\n|------|-------|-------|-------------|\n| Wool crepe blazer | Theory | $375 | 96% |\n| Silk shell top | Vince | $195 | 94% |\n| Tailored ankle pant | Equipment | $285 | 92% |\n| Midi sheath dress | Theory | $345 | 91% |\n\n**Why These Selections:**\n- Blazer: Her favorite Theory brand, structured silhouette she loves\n- Shell: Navy (her color), pairs with blazer\n- Pants: High-rise she prefers, versatile neutral\n- Dress option: One-piece alternative, midi length\n\n**Not Recommended:**\n- Prints (she avoids)\n- Fitted dresses (prefers relaxed)\n- Trendy pieces (wants investment value)\n\nSource: [Recommendation Engine + Occasion Database]\nAgents: ProductRecommendationAgent, OccasionMatchingAgent\n\nWant to see complete outfit combinations?",
+      "wait_timeout_seconds": 15,
+      "description": "Personalized product recommendations"
+    },
+    {
+      "step_number": 3,
+      "user_message": "Yes, show me complete outfit options with accessories",
+      "agent_response": "Three complete outfits created based on Jennifer's style profile and the occasion.\n\n**Outfit 1: Power Suiting (Her Go-To Style)**\n\n| Piece | Item | Price |\n|-------|------|-------|\n| Blazer | Theory wool crepe | $375 |\n| Top | Vince silk shell (navy) | $195 |\n| Pants | Equipment tailored ankle | $285 |\n| Shoes | Low block heel pump | $295 |\n| Bag | Structured leather tote | $425 |\n| **Total** | | **$1,575** |\n\n**Outfit 2: Elegant Simplicity**\n\n| Piece | Item | Price |\n|-------|------|-------|\n| Dress | Theory midi sheath | $345 |\n| Blazer | Same Theory blazer | $375 |\n| Shoes | Pointed kitten heel | $265 |\n| Jewelry | Gold bar necklace | $125 |\n| **Total** | | **$1,110** |\n\n**Outfit 3: Modern Edge**\n\n| Piece | Item | Price |\n|-------|------|-------|\n| Jumpsuit | Vince tailored | $395 |\n| Belt | Leather waist | $145 |\n| Earrings | Statement gold | $85 |\n| Clutch | Evening leather | $295 |\n| **Total** | | **$920** |\n\n**Stylist Recommendation:** Outfit 1 - most aligned with her established style.\n\nSource: [Outfit Coordination Engine + Style Rules]\nAgents: OutfitCoordinationAgent, ProductRecommendationAgent\n\nCheck availability for her sizes?",
+      "wait_timeout_seconds": 15,
+      "description": "Complete outfit combinations"
+    },
+    {
+      "step_number": 4,
+      "user_message": "Yes, check inventory and see what's in stock for her size",
+      "agent_response": "Inventory checked for Jennifer's sizes. Most items available with one alternative needed.\n\n**Outfit 1 Availability (Her Sizes):**\n\n| Item | Size | Status | Location |\n|------|------|--------|----------|\n| Theory blazer | 6 | In stock | This store |\n| Vince shell | S | In stock | This store |\n| Equipment pants | 28 | Low stock (2 left) | This store |\n| Block heel pump | 8 | Out | Alternative below |\n\n**Shoe Alternative:**\n- Stuart Weitzman block heel - Size 8 in stock\n- Same height, similar style, $315 (+$20)\n- Customer has purchased this brand before (good fit)\n\n**Outfit 2 Availability:**\n\n| Item | Size | Status |\n|------|------|--------|\n| Theory midi sheath | 6 | In stock |\n| Kitten heel | 8 | In stock |\n| Gold necklace | One size | In stock |\n\n**Outfit 3 Availability:**\n- Jumpsuit only in size 4 here\n- Can ship from warehouse (2 days)\n- Or available at downtown location\n\n**Recommendation:** Outfit 1 fully available today with shoe swap.\n\nSource: [Inventory System + Store Network]\nAgents: InventoryAvailabilityAgent, ProductRecommendationAgent\n\nSee pricing with her loyalty benefits?",
+      "wait_timeout_seconds": 15,
+      "description": "Real-time inventory check"
+    },
+    {
+      "step_number": 5,
+      "user_message": "Yes, what's the best offer I can give her?",
+      "agent_response": "Pricing optimized with Jennifer's loyalty status and current promotions.\n\n**Customer Status:**\n- Loyalty tier: Platinum\n- Points balance: 4,200 ($42 value)\n- Active offers: 2\n\n**Outfit 1 Optimized Pricing:**\n\n| Item | Regular | Her Price | Savings |\n|------|---------|-----------|--------|\n| Theory blazer | $375 | $337 | 10% Platinum |\n| Vince shell | $195 | $175 | 10% Platinum |\n| Equipment pants | $285 | $256 | 10% Platinum |\n| SW heels | $315 | $283 | 10% Platinum |\n| Leather tote | $425 | $382 | 10% Platinum |\n\n**Additional Offers:**\n\n| Offer | Value | Conditions |\n|-------|-------|------------|\n| Bundle bonus | Extra 5% | 3+ pieces |\n| Points redemption | -$42 | Use balance |\n| Free alterations | $35 value | Platinum perk |\n\n**Best Deal Package:**\n\n| | Amount |\n|---|--------|\n| Original total | $1,595 |\n| Platinum discount (10%) | -$159 |\n| Bundle bonus (5%) | -$72 |\n| Points applied | -$42 |\n| **Final price** | **$1,322** |\n| **Total savings** | **$273 (17%)** |\n\nSource: [Pricing Engine + Loyalty System + Promotions]\nAgents: PricingOptimizationAgent, InventoryAvailabilityAgent\n\nGenerate session summary?",
+      "wait_timeout_seconds": 15,
+      "description": "Optimized pricing and offers"
+    },
+    {
+      "step_number": 6,
+      "user_message": "Yes, wrap up and save everything to her profile",
+      "agent_response": "Shopping session complete. All selections saved to Jennifer's profile.\n\n**Session Summary:**\n\n| Accomplishment | Result |\n|----------------|--------|\n| Style profile applied | 5 preferences matched |\n| Outfits created | 3 complete looks |\n| Recommended outfit | Power Suiting (#1) |\n| Availability confirmed | 4 of 5 in store |\n| Savings delivered | $273 (17% off) |\n\n**Saved to Profile:**\n- Outfit 1: Saved as \"Business Dinner Look\"\n- Outfits 2 & 3: Added to wishlist\n- Size preferences: Confirmed accurate\n- Brand note: Stuart Weitzman added\n\n**Follow-Up Scheduled:**\n\n| Trigger | Action | Timing |\n|---------|--------|--------|\n| New Theory arrivals | Notification | Automatic |\n| Pants low stock | Alert | If not purchased |\n| Wishlist items on sale | Email | When discounted |\n\n**Stylist Notes Added:**\n\"Business dinner 11/26 - Power suiting recommended. Loves Theory blazer fit. Open to SW shoes as alternative to usual brands.\"\n\n**Next Appointment:**\n- Suggested: Pre-holiday shopping session\n- Best timing: 2 weeks (new arrivals)\n\nSource: [All Systems]\nAgents: ShoppingSummaryAgent (orchestrating all agents)\n\nYour personalized shopping session created 3 complete outfits with 96% style match, $273 in savings, and automated follow-ups for Jennifer's preferences.",
+      "wait_timeout_seconds": 20,
+      "description": "Session summary and profile update"
+    }
+  ],
+  "design_principles": {
+    "max_response_length": "150-250 words",
+    "max_lines": "25-30 lines",
+    "max_table_rows": "4-5 rows",
+    "max_bullets": "4-6 bullets",
+    "sections": "2-3 maximum",
+    "visual_elements": "1 status indicator OR 1 table per response",
+    "source_attribution": "Compact format at end",
+    "evergreen_language": "Relative timeframes only",
+    "call_to_action": "Clear next question to continue"
+  },
+  "business_value": {
+    "problem": "Scaling personalized styling service, inconsistent recommendations, missed cross-sell opportunities, time-consuming profile lookups",
+    "solution": "AI-powered personal shopping assistant with automated style profiling, occasion matching, and outfit coordination",
+    "roi": "96% style match accuracy, 17% customer savings through optimization, complete outfits in minutes vs hours",
+    "performance": "Instant style profile analysis, 3 complete outfits generated, real-time inventory checks, automated follow-ups"
+  }
+}

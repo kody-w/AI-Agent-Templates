@@ -1,0 +1,143 @@
+{
+  "demo_name": "Wealth_Insights_Generator_1Min_Demo",
+  "description": "1-minute demo: AI-powered wealth insights with portfolio health analysis, opportunity identification, and personalized recommendations",
+  "version": "2.0.0",
+  "trigger_phrases": [
+    "Generate wealth insights for my top clients and identify opportunities to deepen relationships.",
+    "client wealth analysis",
+    "portfolio opportunity insights"
+  ],
+  "metadata": {
+    "category": "wealth_management",
+    "industry": "financial_services_wealth",
+    "max_response_length": "250_words",
+    "total_steps": 6,
+    "estimated_duration_seconds": 60,
+    "target_audience": "wealth_advisors"
+  },
+  "persona": {
+    "name": "Alexandra Rhodes",
+    "title": "Private Wealth Director",
+    "company": "Legacy Wealth Partners",
+    "context": "Managing 85 ultra-high-net-worth families with $2.4B total AUM, seeking to identify wallet share growth opportunities"
+  },
+  "agents_utilized": [
+    {
+      "agent_name": "WealthAnalyticsAgent",
+      "description": "Analyzes client wealth across all held-away and managed assets",
+      "inputs": ["client_ids", "aggregation_period"],
+      "outputs": ["wealth_summary", "asset_breakdown", "held_away_estimates", "wallet_share"],
+      "data_sources": ["Portfolio System", "Account Aggregation", "Wealth Estimates"],
+      "used_in_steps": [1]
+    },
+    {
+      "agent_name": "OpportunityIdentificationAgent",
+      "description": "Identifies growth opportunities based on client profiles and market conditions",
+      "inputs": ["client_data", "product_catalog", "market_conditions"],
+      "outputs": ["opportunities", "priority_ranking", "revenue_potential"],
+      "data_sources": ["CRM", "Product Library", "Market Data"],
+      "used_in_steps": [1, 2]
+    },
+    {
+      "agent_name": "ClientInsightsAgent",
+      "description": "Generates deep insights on individual client situations",
+      "inputs": ["client_id"],
+      "outputs": ["life_stage_analysis", "goals_assessment", "risk_profile", "service_gaps"],
+      "data_sources": ["Financial Plan", "CRM Notes", "Interaction History"],
+      "used_in_steps": [2, 3]
+    },
+    {
+      "agent_name": "PlanningGapAgent",
+      "description": "Identifies gaps in client financial planning coverage",
+      "inputs": ["client_profile", "planning_checklist"],
+      "outputs": ["planning_gaps", "priority_recommendations", "service_opportunities"],
+      "data_sources": ["Planning System", "Estate Documents", "Insurance Records"],
+      "used_in_steps": [3]
+    },
+    {
+      "agent_name": "RelationshipStrategyAgent",
+      "description": "Develops personalized relationship deepening strategies",
+      "inputs": ["client_profile", "opportunities", "engagement_history"],
+      "outputs": ["engagement_strategy", "touchpoint_plan", "value_propositions"],
+      "data_sources": ["CRM", "Marketing Automation", "Event Calendar"],
+      "used_in_steps": [4]
+    },
+    {
+      "agent_name": "OutreachGeneratorAgent",
+      "description": "Creates personalized outreach content and meeting agendas",
+      "inputs": ["client_data", "opportunity_context"],
+      "outputs": ["email_drafts", "meeting_agendas", "talking_points"],
+      "data_sources": ["Template Library", "Personalization Engine"],
+      "used_in_steps": [5]
+    },
+    {
+      "agent_name": "WealthSummaryAgent",
+      "description": "Generates executive summaries of wealth insights and opportunities",
+      "inputs": ["all_insights_data"],
+      "outputs": ["executive_summary", "action_plan", "revenue_projections"],
+      "data_sources": ["All Wealth Systems"],
+      "used_in_steps": [6]
+    }
+  ],
+  "conversation_flow": [
+    {
+      "step_number": 1,
+      "user_message": "Generate wealth insights for my top clients and identify opportunities to deepen relationships.",
+      "agent_response": "I've analyzed your 85 UHNW clients. $840M in identified opportunities across wallet share, planning gaps, and life events.\n\n**Portfolio Overview:**\n\n| Metric | Value |\n|--------|-------|\n| Total clients | 85 families |\n| AUM managed | $2.4B |\n| Estimated held-away | $4.1B |\n| Current wallet share | 37% |\n| Target wallet share | 55% |\n\n**Opportunity Segmentation:**\n\n| Category | Clients | Revenue Potential |\n|----------|---------|------------------|\n| Wallet share growth | 34 | $4.2M/year |\n| Planning gaps | 28 | $1.8M/year |\n| Life event triggers | 12 | $2.1M/year |\n| At-risk relationships | 6 | Retain $890K/year |\n\n**Top 5 Immediate Opportunities:**\n\n| Client | Opportunity | Est. Value |\n|--------|-------------|------------|\n| Morrison Family | Outside stock concentration | $8M transfer |\n| Chen Holdings | Business succession | $12M planning |\n| Thompson Trust | Estate restructuring | $6M |\n| Williams Family | Next-gen engagement | $4M |\n| Garcia Estate | Philanthropic planning | $5M |\n\n**Quick Win:** Morrison Family has $8M in concentrated employer stock - ideal for diversification conversation.\n\nSource: [Portfolio System + Wealth Estimates]\nAgents: WealthAnalyticsAgent, OpportunityIdentificationAgent\n\nDive into the top opportunities?",
+      "wait_timeout_seconds": 15,
+      "description": "Client wealth and opportunity overview"
+    },
+    {
+      "step_number": 2,
+      "user_message": "Yes, show me details on the Morrison Family opportunity",
+      "agent_response": "Morrison Family deep dive complete. Significant opportunity with clear conversation path.\n\n**Morrison Family Profile:**\n\n| Detail | Information |\n|--------|-------------|\n| Primary contact | David Morrison (62) |\n| Relationship since | 2018 |\n| Total wealth (est.) | $28M |\n| With us | $12M (43%) |\n| Held away | $16M (57%) |\n\n**Held-Away Assets Identified:**\n\n| Asset | Value | Location | Opportunity |\n|-------|-------|----------|-------------|\n| Company stock | $8M | 401(k) + RSUs | Diversification |\n| Real estate | $4M | Personal | 1031 exchange |\n| Cash | $2.2M | Bank | Yield enhancement |\n| Old 401(k) | $1.8M | Former employer | Consolidation |\n\n**Concentration Risk:**\n- Single stock: 29% of total wealth\n- Company: Tech sector (volatile)\n- Vesting: $800K RSUs next quarter\n- Risk: Undiversified, correlated to income\n\n**Conversation Trigger:**\n- David mentioned retirement timeline (5 years)\n- Recent article about tech layoffs shared with him\n- His response: \"Been thinking about this\"\n\n**Recommended Approach:**\n\"David, with 5 years to retirement and $8M tied to one stock, let's look at a phased diversification strategy that manages taxes.\"\n\nSource: [CRM + Account Aggregation]\nAgents: ClientInsightsAgent, OpportunityIdentificationAgent\n\nSee their planning gaps and service needs?",
+      "wait_timeout_seconds": 15,
+      "description": "Morrison Family opportunity deep dive"
+    },
+    {
+      "step_number": 3,
+      "user_message": "Yes, what planning gaps do they have?",
+      "agent_response": "Planning gap analysis reveals 4 areas needing attention for the Morrison family.\n\n**Planning Gap Assessment:**\n\n| Area | Status | Gap | Priority |\n|------|--------|-----|----------|\n| Investment management | Strong | Concentration risk | High |\n| Retirement planning | Partial | Updated projections | Medium |\n| Estate planning | Outdated | Documents 8 years old | High |\n| Tax planning | Reactive | No proactive strategy | High |\n| Insurance review | Unknown | Not discussed | Medium |\n\n**Estate Planning Gaps:**\n\n| Document | Status | Issue |\n|----------|--------|-------|\n| Will | 2016 | Pre-TCJA, needs update |\n| Trust | None | No living trust |\n| POA | 2016 | May need update |\n| Healthcare directive | Unknown | Not on file |\n| Beneficiaries | Unchecked | May be outdated |\n\n**Tax Planning Opportunities:**\n\n| Strategy | Potential Savings |\n|----------|------------------|\n| Concentrated stock strategy | $240K+ over 5 years |\n| RSU tax-loss coordination | $45K annually |\n| Qualified opportunity zone | Defer gains |\n| Charitable giving strategy | $80K if philanthropic |\n\n**Service Expansion Opportunity:**\n- Current: Investment management only\n- Proposed: Comprehensive wealth planning\n- Fee opportunity: +$48K annually\n- Value delivered: 10x+ in tax savings\n\nSource: [Planning System + Estate Documents]\nAgents: PlanningGapAgent, ClientInsightsAgent\n\nDevelop engagement strategy?",
+      "wait_timeout_seconds": 15,
+      "description": "Planning gap analysis"
+    },
+    {
+      "step_number": 4,
+      "user_message": "Yes, how should I approach this relationship expansion?",
+      "agent_response": "Personalized engagement strategy developed for the Morrison family relationship expansion.\n\n**Engagement Strategy:**\n\n**Phase 1: Immediate (This Week)**\n\n| Action | Purpose |\n|--------|--------|\n| Personal call | Reconnect, mention retirement comment |\n| Share article | Concentrated stock risk (non-salesy) |\n| Propose meeting | \"Retirement readiness review\" |\n\n**Phase 2: Discovery Meeting (2 Weeks)**\n\n| Agenda Item | Insight to Gather |\n|-------------|------------------|\n| Retirement vision | Timeline confirmation |\n| Family update | Children, grandchildren |\n| Company outlook | His confidence level |\n| Estate goals | Legacy intentions |\n| Concerns | What keeps him up at night |\n\n**Phase 3: Proposal (4 Weeks)**\n\n| Recommendation | Expected Response |\n|----------------|-------------------|\n| Phased diversification | Likely receptive |\n| Comprehensive planning | Intrigued |\n| Estate update | Will agree |\n| Tax strategy | High interest |\n\n**Key Messages:**\n- \"5 years gives us time to do this right\"\n- \"We can manage taxes while reducing risk\"\n- \"Your estate plan is due for a checkup\"\n- \"Let's make sure Sarah [wife] is protected\"\n\n**Relationship Deepening Touches:**\n- Invite to client appreciation dinner (next month)\n- Introduce to estate attorney (our partner)\n- Include in quarterly outlook webinar\n\nSource: [CRM + Engagement History]\nAgents: RelationshipStrategyAgent, ClientInsightsAgent\n\nDraft outreach and meeting agenda?",
+      "wait_timeout_seconds": 15,
+      "description": "Engagement strategy development"
+    },
+    {
+      "step_number": 5,
+      "user_message": "Yes, create the outreach email and meeting agenda",
+      "agent_response": "Personalized outreach and meeting materials ready for David Morrison.\n\n**Draft Email:**\n\n**Subject:** Catching Up + Retirement Readiness Thoughts\n\n\"David,\n\nHope you and Sarah are well. I've been thinking about our conversation where you mentioned the 5-year retirement horizon.\n\nWith the market changes this year and your significant company stock position, I'd love to sit down and map out a retirement readiness review - specifically looking at:\n\n1. How your current allocation aligns with your timeline\n2. Tax-smart strategies for your RSU vesting schedule\n3. Making sure your estate plan still reflects your wishes\n\nNo pressure, just a strategic conversation. How does your calendar look in the next two weeks?\n\nBest,\nAlexandra\"\n\n**Meeting Agenda - Retirement Readiness Review:**\n\n| Time | Topic | Purpose |\n|------|-------|--------|\n| 0-10 min | Personal catch-up | Strengthen relationship |\n| 10-25 min | Retirement vision | Understand goals |\n| 25-40 min | Current situation | Review wealth picture |\n| 40-55 min | Opportunities | Present strategies |\n| 55-60 min | Next steps | Agree on actions |\n\n**Talking Points Card:**\n- Concentration risk with specific numbers\n- Tax savings potential ($240K+)\n- Estate document timeline (8 years)\n- Comprehensive planning value prop\n\nSource: [Template Library + Personalization]\nAgents: OutreachGeneratorAgent, RelationshipStrategyAgent\n\nGenerate complete insights summary?",
+      "wait_timeout_seconds": 15,
+      "description": "Outreach and meeting materials"
+    },
+    {
+      "step_number": 6,
+      "user_message": "Yes, give me the complete wealth insights summary",
+      "agent_response": "Wealth insights analysis complete. Here's your opportunity action plan.\n\n**Insights Summary:**\n\n| Analysis | Result |\n|----------|--------|\n| Clients analyzed | 85 UHNW families |\n| Total AUM | $2.4B |\n| Held-away identified | $4.1B |\n| Current wallet share | 37% |\n| Opportunities identified | 80+ across clients |\n\n**Opportunity Pipeline:**\n\n| Category | Clients | Revenue Potential |\n|----------|---------|------------------|\n| Wallet share | 34 | $4.2M/year |\n| Planning services | 28 | $1.8M/year |\n| Life events | 12 | $2.1M/year |\n| **Total pipeline** | | **$8.1M/year** |\n\n**Immediate Actions:**\n\n| Client | Opportunity | Next Step | Due |\n|--------|-------------|-----------|-----|\n| Morrison | $8M diversification | Send email | Today |\n| Chen | Succession planning | Schedule call | This week |\n| Thompson | Estate restructuring | Intro to attorney | Next week |\n\n**Morrison Family Opportunity:**\n- Potential transfer: $8M\n- Planning expansion: $48K/year\n- Tax savings created: $240K+\n- Materials ready: Email + agenda\n\n**Success Metrics:**\n- Wallet share target: 37% → 55%\n- AUM growth potential: +$1.8B\n- Revenue opportunity: $8.1M/year\n\nSource: [All Wealth Systems]\nAgents: WealthSummaryAgent (orchestrating all agents)\n\nYour AI-powered wealth insights identified $840M in opportunities across 85 clients, with $8.1M annual revenue potential and ready-to-use outreach for top priorities.",
+      "wait_timeout_seconds": 20,
+      "description": "Complete wealth insights summary"
+    }
+  ],
+  "design_principles": {
+    "max_response_length": "150-250 words",
+    "max_lines": "25-30 lines",
+    "max_table_rows": "4-5 rows",
+    "max_bullets": "4-6 bullets",
+    "sections": "2-3 maximum",
+    "visual_elements": "1 status indicator OR 1 table per response",
+    "source_attribution": "Compact format at end",
+    "evergreen_language": "Relative timeframes only",
+    "call_to_action": "Clear next question to continue"
+  },
+  "business_value": {
+    "problem": "Limited visibility into held-away assets, missed wallet share opportunities, reactive relationship management, manual opportunity identification",
+    "solution": "AI-powered wealth insights with automated opportunity identification, planning gap analysis, and personalized engagement strategies",
+    "roi": "$8.1M annual revenue potential identified, 85 clients analyzed in minutes, ready-to-use outreach materials",
+    "performance": "Wallet share analysis, held-away asset identification, planning gap detection, personalized engagement content"
+  }
+}

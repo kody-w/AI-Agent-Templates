@@ -1,0 +1,143 @@
+{
+  "demo_name": "Customer_360_Speech_1Min_Demo",
+  "description": "1-minute demo: AI-powered voice-enabled customer 360 with real-time profile access, sentiment detection, and personalized recommendations",
+  "version": "2.0.0",
+  "trigger_phrases": [
+    "Pull up the complete customer profile for the caller on line 2 and give me talking points.",
+    "voice customer lookup",
+    "speech-enabled customer 360"
+  ],
+  "metadata": {
+    "category": "customer_service",
+    "industry": "b2c_retail",
+    "max_response_length": "250_words",
+    "total_steps": 6,
+    "estimated_duration_seconds": 60,
+    "target_audience": "contact_center_agents"
+  },
+  "persona": {
+    "name": "Jessica Chen",
+    "title": "Customer Experience Manager",
+    "company": "Premier Home Goods",
+    "context": "Managing 200-seat contact center with 4,500 daily calls, seeking to reduce average handle time while improving CSAT"
+  },
+  "agents_utilized": [
+    {
+      "agent_name": "VoiceRecognitionAgent",
+      "description": "Processes incoming voice commands and converts to actionable queries",
+      "inputs": ["audio_stream", "agent_id"],
+      "outputs": ["transcribed_text", "intent_classification", "entity_extraction"],
+      "data_sources": ["Azure Speech Services", "Custom Intent Model"],
+      "used_in_steps": [1]
+    },
+    {
+      "agent_name": "CustomerIdentificationAgent",
+      "description": "Identifies caller from phone number, account lookup, or voice biometrics",
+      "inputs": ["caller_id", "voice_sample", "account_hints"],
+      "outputs": ["customer_id", "confidence_score", "verification_status"],
+      "data_sources": ["Telephony System", "CRM", "Voice Biometrics DB"],
+      "used_in_steps": [1]
+    },
+    {
+      "agent_name": "Customer360Agent",
+      "description": "Aggregates comprehensive customer profile from all touchpoints",
+      "inputs": ["customer_id"],
+      "outputs": ["unified_profile", "purchase_history", "interaction_history", "preferences", "lifetime_value"],
+      "data_sources": ["CRM", "E-commerce Platform", "Loyalty System", "Support Tickets"],
+      "used_in_steps": [1, 2]
+    },
+    {
+      "agent_name": "SentimentAnalysisAgent",
+      "description": "Analyzes real-time call sentiment and emotional indicators",
+      "inputs": ["audio_stream", "transcript"],
+      "outputs": ["sentiment_score", "emotion_detection", "escalation_risk", "tone_indicators"],
+      "data_sources": ["Azure Cognitive Services", "Custom Sentiment Model"],
+      "used_in_steps": [2, 3]
+    },
+    {
+      "agent_name": "TalkingPointsAgent",
+      "description": "Generates personalized talking points based on customer context",
+      "inputs": ["customer_profile", "interaction_context", "call_reason"],
+      "outputs": ["personalized_scripts", "empathy_statements", "resolution_suggestions"],
+      "data_sources": ["Knowledge Base", "Best Practices DB", "Product Catalog"],
+      "used_in_steps": [3]
+    },
+    {
+      "agent_name": "RecommendationAgent",
+      "description": "Provides personalized product and service recommendations",
+      "inputs": ["customer_profile", "purchase_history", "current_context"],
+      "outputs": ["product_recommendations", "cross_sell_opportunities", "loyalty_offers"],
+      "data_sources": ["Recommendation Engine", "Inventory System", "Promotion Engine"],
+      "used_in_steps": [4]
+    },
+    {
+      "agent_name": "CallSummaryAgent",
+      "description": "Generates post-call summary and next-best-actions",
+      "inputs": ["call_transcript", "actions_taken", "customer_profile"],
+      "outputs": ["call_summary", "follow_up_tasks", "crm_update", "quality_metrics"],
+      "data_sources": ["Call Recording", "CRM", "Task Management"],
+      "used_in_steps": [5, 6]
+    }
+  ],
+  "conversation_flow": [
+    {
+      "step_number": 1,
+      "user_message": "Pull up the complete customer profile for the caller on line 2 and give me talking points.",
+      "agent_response": "I've identified the caller and pulled their complete profile. High-value customer with an open issue.\n\n**Caller Identified: Margaret Wilson**\n\n| Profile | Details |\n|---------|--------|\n| Customer since | 2019 (5 years) |\n| Lifetime value | $12,400 |\n| Loyalty tier | Platinum |\n| Preferred channel | Phone |\n\n**Recent Activity:**\n\n| Date | Activity | Status |\n|------|----------|--------|\n| 3 days ago | Order #78234 delivered | Issue reported |\n| 2 days ago | Email complaint sent | Pending |\n| Today | Called support | Current |\n\n**Open Issue:**\n- Order #78234: Dining table delivered with scratch\n- Customer requested replacement\n- Warehouse confirmed stock available\n\n**Quick Context:**\n- She's called twice about this already\n- Usually patient but frustration building\n- Birthday in 2 weeks (opportunity)\n\nSource: [CRM + Order System + Interaction History]\nAgents: VoiceRecognitionAgent, CustomerIdentificationAgent, Customer360Agent\n\nWant real-time sentiment monitoring for this call?",
+      "wait_timeout_seconds": 15,
+      "description": "Voice-activated customer identification and profile"
+    },
+    {
+      "step_number": 2,
+      "user_message": "Yes, monitor sentiment and show me her full interaction history",
+      "agent_response": "Sentiment monitoring active. Current mood: Frustrated but contained. Here's her interaction history.\n\n**Live Sentiment Indicators:**\n\n| Metric | Status | Action |\n|--------|--------|--------|\n| Overall sentiment | Frustrated | Monitor |\n| Escalation risk | Medium (62%) | Proactive resolution |\n| Voice stress | Elevated | Use empathy |\n| Speaking pace | Fast | Let her vent |\n\n**Interaction Timeline:**\n\n| Date | Channel | Topic | Resolution |\n|------|---------|-------|------------|\n| Today | Phone | Table replacement | Current |\n| 2 days ago | Email | Damage complaint | Pending |\n| 3 days ago | Phone | Reported damage | Ticket created |\n| Last month | Store | Purchased dining set | Completed |\n| 3 months ago | Online | Bedroom furniture | Satisfied |\n\n**Pattern Detected:**\n- Third contact about same issue\n- Each contact shows increasing frustration\n- High-value customer at risk\n\n**Recommended Tone:**\n- Lead with acknowledgment: \"I see this is your third contact...\"\n- Take ownership immediately\n- Don't make her repeat the story\n\nSource: [Sentiment Analysis + CRM + Call History]\nAgents: SentimentAnalysisAgent, Customer360Agent\n\nGet personalized talking points?",
+      "wait_timeout_seconds": 15,
+      "description": "Real-time sentiment and interaction history"
+    },
+    {
+      "step_number": 3,
+      "user_message": "Yes, give me the talking points to resolve this",
+      "agent_response": "Personalized talking points generated based on her profile and current sentiment.\n\n**Opening Script (Empathy-First):**\n\n\"Mrs. Wilson, I see you've had to contact us three times about your dining table, and I sincerely apologize for that frustration. I'm taking personal ownership of this right now.\"\n\n**Resolution Options:**\n\n| Option | Details | Her Likely Response |\n|--------|---------|--------------------|\n| Express replacement | Next-day delivery | Preferred (based on history) |\n| White glove service | We handle everything | High satisfaction |\n| Compensation | 15% off + free delivery | Loyalty gesture |\n\n**Recommended Approach:**\n1. Apologize for multiple contacts (don't minimize)\n2. Confirm replacement table in stock\n3. Offer express next-day delivery at no charge\n4. Add 15% discount as goodwill gesture\n5. Mention Platinum status = priority handling\n\n**Personalized Touch:**\n- Her birthday is in 2 weeks\n- Consider: \"We'd like to ensure your dining table is perfect for any celebrations\"\n\n**Avoid:**\n- Making her explain the issue again\n- Transferring to another department\n- Promising \"I'll look into it\"\n\nSource: [Knowledge Base + Best Practices + Customer Profile]\nAgents: TalkingPointsAgent, SentimentAnalysisAgent\n\nNeed product recommendations for cross-sell?",
+      "wait_timeout_seconds": 15,
+      "description": "Personalized resolution talking points"
+    },
+    {
+      "step_number": 4,
+      "user_message": "Yes, and any relevant offers I can extend",
+      "agent_response": "Cross-sell opportunities identified based on her purchase history and current situation.\n\n**Personalized Recommendations:**\n\n| Product | Why Recommend | Offer |\n|---------|--------------|-------|\n| Dining chairs (4-set) | Matches her table | 20% off |\n| Table linens | New table = refresh | Buy 2, get 1 free |\n| Dining room rug | Browsed online | 15% Platinum discount |\n\n**Loyalty Offers Available:**\n\n| Offer | Value | Conditions |\n|-------|-------|------------|\n| Birthday bonus | 500 points ($50) | Activates in 2 weeks |\n| Platinum exclusive | Early access sale | Next week |\n| Recovery gesture | Free delivery 3 months | After this resolution |\n\n**Suggested Closing Script:**\n\n\"Mrs. Wilson, I've arranged your replacement table for next-day delivery with our white glove service. As a thank you for your patience, I'm adding 15% off this order. Also, I noticed your birthday is coming up - you'll receive 500 bonus points automatically. Is there anything else I can help you with today?\"\n\n**Timing:** Offer after resolution confirmed, not before.\n\nSource: [Recommendation Engine + Loyalty System + Promotions]\nAgents: RecommendationAgent, Customer360Agent\n\nGenerate call summary and CRM update?",
+      "wait_timeout_seconds": 15,
+      "description": "Cross-sell recommendations and offers"
+    },
+    {
+      "step_number": 5,
+      "user_message": "Yes, wrap up the call and update CRM",
+      "agent_response": "Call wrapped up successfully. CRM updated and follow-ups scheduled.\n\n**Call Summary Generated:**\n\n| Metric | Result |\n|--------|--------|\n| Call duration | 6:42 |\n| Issue | Table replacement |\n| Resolution | Express replacement + 15% off |\n| Customer sentiment | Frustrated → Satisfied |\n| Escalation | Avoided |\n\n**CRM Updates Applied:**\n- Order #78234: Replacement scheduled\n- Delivery: Next-day express (confirmed)\n- Discount: 15% applied ($89 value)\n- Notes: Customer de-escalated successfully\n- Tag: High-value recovery\n\n**Follow-Up Tasks Created:**\n\n| Task | Due | Owner |\n|------|-----|-------|\n| Confirm delivery | Tomorrow | Automated |\n| Satisfaction check | 3 days | You |\n| Birthday offer activation | 12 days | System |\n\n**Quality Metrics:**\n- First call resolution: Yes (for replacement)\n- Customer effort score: Low (agent handled all)\n- Predicted CSAT: 4.5/5\n\nSource: [Call Recording + CRM + Task System]\nAgents: CallSummaryAgent, Customer360Agent\n\nSee performance impact?",
+      "wait_timeout_seconds": 15,
+      "description": "Call summary and CRM updates"
+    },
+    {
+      "step_number": 6,
+      "user_message": "Yes, show me the session summary and impact",
+      "agent_response": "Voice-enabled customer 360 session complete. Here's the full impact summary.\n\n**Session Summary:**\n\n| Accomplishment | Result |\n|----------------|--------|\n| Customer identified | Voice command (2 sec) |\n| Profile retrieved | Complete 360 view |\n| Sentiment monitored | Real-time tracking |\n| Issue resolved | First call resolution |\n| Relationship saved | $12,400 LTV protected |\n\n**Call Performance:**\n\n| Metric | This Call | Team Avg | Improvement |\n|--------|-----------|----------|-------------|\n| Handle time | 6:42 | 9:15 | -27% |\n| Sentiment shift | +45 pts | +12 pts | 3.8x better |\n| Resolution rate | 100% | 72% | +28 pts |\n| Cross-sell attempt | Yes | 34% | Above avg |\n\n**Voice-Enabled Efficiency:**\n- Profile lookup: 2 seconds (vs 45 sec manual)\n- Context available: Before customer spoke\n- Talking points: Personalized instantly\n- CRM update: Auto-generated\n\n**Customer Impact:**\n- Frustration → Satisfaction\n- Churn risk eliminated\n- Loyalty reinforced\n- Birthday engagement queued\n\nSource: [All Systems]\nAgents: CallSummaryAgent (orchestrating all agents)\n\nYour voice-enabled customer 360 resolved a high-value customer issue in 27% less time with real-time sentiment tracking and personalized resolution.",
+      "wait_timeout_seconds": 20,
+      "description": "Complete session summary and impact"
+    }
+  ],
+  "design_principles": {
+    "max_response_length": "150-250 words",
+    "max_lines": "25-30 lines",
+    "max_table_rows": "4-5 rows",
+    "max_bullets": "4-6 bullets",
+    "sections": "2-3 maximum",
+    "visual_elements": "1 status indicator OR 1 table per response",
+    "source_attribution": "Compact format at end",
+    "evergreen_language": "Relative timeframes only",
+    "call_to_action": "Clear next question to continue"
+  },
+  "business_value": {
+    "problem": "4,500 daily calls, slow customer lookup, no real-time sentiment visibility, inconsistent service quality",
+    "solution": "AI-powered voice-enabled customer 360 with instant identification, real-time sentiment monitoring, and personalized talking points",
+    "roi": "27% reduction in handle time, 28-point improvement in first call resolution, high-value customer retention",
+    "performance": "2-second voice lookup, real-time sentiment tracking, automated CRM updates, personalized cross-sell recommendations"
+  }
+}

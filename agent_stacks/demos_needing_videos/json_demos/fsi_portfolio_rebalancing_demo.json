@@ -1,0 +1,135 @@
+{
+  "demo_name": "Portfolio_Rebalancing_1Min_Demo",
+  "description": "1-minute demo: AI-powered portfolio rebalancing with drift detection, tax-aware optimization, and automated trade generation",
+  "version": "2.0.0",
+  "trigger_phrases": [
+    "Analyze my client portfolios for rebalancing opportunities and optimize for tax efficiency.",
+    "portfolio drift analysis",
+    "tax-efficient rebalancing"
+  ],
+  "metadata": {
+    "category": "portfolio_management",
+    "industry": "financial_services_wealth",
+    "max_response_length": "250_words",
+    "total_steps": 6,
+    "estimated_duration_seconds": 60,
+    "target_audience": "portfolio_managers"
+  },
+  "persona": {
+    "name": "Michael Sterling",
+    "title": "Chief Investment Officer",
+    "company": "Sterling Wealth Management",
+    "context": "Managing $1.2B AUM across 450 client portfolios, quarterly rebalancing review with tax-loss harvesting focus"
+  },
+  "agents_utilized": [
+    {
+      "agent_name": "DriftDetectionAgent",
+      "description": "Monitors portfolio drift from target allocations across all accounts",
+      "inputs": ["portfolio_ids", "drift_thresholds"],
+      "outputs": ["drift_analysis", "priority_ranking", "rebalancing_candidates"],
+      "data_sources": ["Portfolio Management System", "Model Allocations", "Position Data"],
+      "used_in_steps": [1]
+    },
+    {
+      "agent_name": "TaxOptimizationAgent",
+      "description": "Identifies tax-loss harvesting opportunities and optimizes for tax efficiency",
+      "inputs": ["positions", "cost_basis", "holding_periods"],
+      "outputs": ["tax_loss_opportunities", "wash_sale_checks", "lot_selection"],
+      "data_sources": ["Tax Lot Data", "Transaction History", "IRS Rules Engine"],
+      "used_in_steps": [2, 3]
+    },
+    {
+      "agent_name": "RebalancingOptimizerAgent",
+      "description": "Optimizes rebalancing trades for minimum tax impact and trading costs",
+      "inputs": ["current_positions", "target_allocations", "constraints"],
+      "outputs": ["optimized_trades", "tax_impact", "cost_analysis"],
+      "data_sources": ["Optimization Engine", "Trading Cost Models", "Tax Rules"],
+      "used_in_steps": [3]
+    },
+    {
+      "agent_name": "TradeGenerationAgent",
+      "description": "Generates trade tickets with proper lot selection and compliance checks",
+      "inputs": ["rebalancing_plan", "trading_rules"],
+      "outputs": ["trade_tickets", "compliance_flags", "execution_instructions"],
+      "data_sources": ["Trading System", "Compliance Rules", "Custodian APIs"],
+      "used_in_steps": [4]
+    },
+    {
+      "agent_name": "ComplianceValidationAgent",
+      "description": "Validates all trades against investment policy and regulatory requirements",
+      "inputs": ["trade_proposals", "client_ips", "regulations"],
+      "outputs": ["compliance_status", "restriction_flags", "approval_requirements"],
+      "data_sources": ["IPS Database", "Restricted List", "Regulatory Rules"],
+      "used_in_steps": [4, 5]
+    },
+    {
+      "agent_name": "RebalancingSummaryAgent",
+      "description": "Generates comprehensive rebalancing reports and client communications",
+      "inputs": ["all_rebalancing_data"],
+      "outputs": ["executive_summary", "client_reports", "audit_trail"],
+      "data_sources": ["All Portfolio Systems"],
+      "used_in_steps": [6]
+    }
+  ],
+  "conversation_flow": [
+    {
+      "step_number": 1,
+      "user_message": "Analyze my client portfolios for rebalancing opportunities and optimize for tax efficiency.",
+      "agent_response": "I've analyzed all 450 portfolios. 127 need rebalancing with $4.2M in tax-loss harvesting opportunities.\n\n**Portfolio Drift Summary:**\n\n| Drift Level | Portfolios | AUM | Priority |\n|-------------|------------|-----|----------|\n| Critical (>7%) | 23 | $124M | Immediate |\n| Significant (5-7%) | 48 | $286M | This week |\n| Moderate (3-5%) | 56 | $312M | This month |\n| Within tolerance | 323 | $478M | Monitor |\n\n**Top Drift Categories:**\n\n| Asset Class | Avg Overweight | Avg Underweight |\n|-------------|----------------|----------------|\n| US Large Cap | +4.2% | - |\n| International | - | -3.8% |\n| Fixed Income | - | -2.1% |\n| Alternatives | - | -1.5% |\n\n**Tax-Loss Harvesting Snapshot:**\n- Portfolios with opportunities: 89\n- Total harvestable losses: $4.2M\n- Estimated tax savings: $1.26M (at 30%)\n\n**Market Context:**\n- Strong equity rally created overweights\n- International underperformance = harvesting opportunity\n- Bond rally reduced losses\n\nSource: [Portfolio System + Tax Lot Data]\nAgents: DriftDetectionAgent, TaxOptimizationAgent\n\nSee the critical portfolios and tax opportunities?",
+      "wait_timeout_seconds": 15,
+      "description": "Portfolio drift analysis overview"
+    },
+    {
+      "step_number": 2,
+      "user_message": "Yes, show me the critical portfolios and best tax opportunities",
+      "agent_response": "Critical portfolios identified with combined rebalancing and tax optimization opportunities.\n\n**Critical Priority Portfolios (Top 5):**\n\n| Client | AUM | Drift | Tax Loss Available |\n|--------|-----|-------|-------------------|\n| Harrison Trust | $18.2M | 9.4% | $124K |\n| Mitchell Family | $12.8M | 8.7% | $89K |\n| Chen Holdings | $8.4M | 8.2% | $67K |\n| Roberts IRA | $6.2M | 7.8% | $0 (IRA) |\n| Williams Trust | $5.9M | 7.6% | $52K |\n\n**Harrison Trust Deep Dive:**\n\n| Asset Class | Current | Target | Drift |\n|-------------|---------|--------|-------|\n| US Large Cap | 52% | 45% | +7% |\n| US Small Cap | 12% | 10% | +2% |\n| International | 14% | 20% | -6% |\n| Fixed Income | 18% | 22% | -4% |\n| Alternatives | 4% | 3% | +1% |\n\n**Tax-Loss Harvesting - Harrison:**\n\n| Position | Loss Available | Holding Period | Action |\n|----------|----------------|----------------|--------|\n| IEFA | $68,000 | >1 year | Harvest, swap to VEA |\n| EEM | $42,000 | >1 year | Harvest, swap to VWO |\n| BND | $14,000 | <1 year | Hold (short-term) |\n\n**No Wash Sale Issues:** All swap candidates verified clean.\n\nSource: [Tax Lot Analysis + Position Data]\nAgents: TaxOptimizationAgent, DriftDetectionAgent\n\nGenerate optimized rebalancing plan?",
+      "wait_timeout_seconds": 15,
+      "description": "Critical portfolios and tax opportunities"
+    },
+    {
+      "step_number": 3,
+      "user_message": "Yes, create the optimized rebalancing plan for Harrison Trust",
+      "agent_response": "Optimized rebalancing plan generated for Harrison Trust with tax-aware execution.\n\n**Harrison Trust Rebalancing Plan:**\n\n**Sells (Tax-Optimized Lot Selection):**\n\n| Security | Shares | Value | Gain/Loss | Tax Impact |\n|----------|--------|-------|-----------|------------|\n| VTI | 2,400 | $624K | +$12K | $3,600 |\n| VB | 1,800 | $198K | +$8K | $2,400 |\n| IEFA | 4,200 | $312K | -$68K | -$20,400 |\n| EEM | 2,100 | $89K | -$42K | -$12,600 |\n\n**Buys:**\n\n| Security | Shares | Value | Purpose |\n|----------|--------|-------|--------|\n| VEA | 4,400 | $312K | Replace IEFA |\n| VWO | 2,200 | $89K | Replace EEM |\n| AGG | 3,800 | $380K | Increase bonds |\n| VTIP | 1,200 | $78K | Increase bonds |\n\n**Net Tax Impact:**\n\n| Category | Amount |\n|----------|--------|\n| Gains realized | +$20K |\n| Losses harvested | -$110K |\n| Net loss | -$90K |\n| Tax savings (30%) | **$27,000** |\n\n**Trading Cost Estimate:** $180 (0.001% of trades)\n\nSource: [Optimization Engine + Tax Rules]\nAgents: RebalancingOptimizerAgent, TaxOptimizationAgent\n\nGenerate trade tickets and compliance check?",
+      "wait_timeout_seconds": 15,
+      "description": "Optimized rebalancing plan"
+    },
+    {
+      "step_number": 4,
+      "user_message": "Yes, generate the trades and run compliance",
+      "agent_response": "Trade tickets generated and compliance validated. Ready for execution.\n\n**Trade Tickets - Harrison Trust:**\n\n| Action | Symbol | Shares | Est. Value | Status |\n|--------|--------|--------|------------|--------|\n| SELL | VTI | 2,400 | $624,000 | Ready |\n| SELL | VB | 1,800 | $198,000 | Ready |\n| SELL | IEFA | 4,200 | $312,000 | Ready |\n| SELL | EEM | 2,100 | $89,000 | Ready |\n| BUY | VEA | 4,400 | $312,000 | Ready |\n| BUY | VWO | 2,200 | $89,000 | Ready |\n| BUY | AGG | 3,800 | $380,000 | Ready |\n| BUY | VTIP | 1,200 | $78,000 | Ready |\n\n**Compliance Validation:**\n\n| Check | Status |\n|-------|--------|\n| IPS alignment | Pass |\n| Concentration limits | Pass |\n| Restricted list | Clear |\n| Wash sale check | Clear |\n| Best execution | Compliant |\n| Suitability | Confirmed |\n\n**Execution Instructions:**\n- Route: VWAP over 2 hours\n- Settlement: T+1\n- Custodian: Schwab\n- Trade date: Today\n\n**Approval Required:** Your authorization to execute.\n\nSource: [Trading System + Compliance Engine]\nAgents: TradeGenerationAgent, ComplianceValidationAgent\n\nApply to remaining critical portfolios?",
+      "wait_timeout_seconds": 15,
+      "description": "Trade generation and compliance"
+    },
+    {
+      "step_number": 5,
+      "user_message": "Yes, show me the batch rebalancing for all critical portfolios",
+      "agent_response": "Batch rebalancing prepared for all 23 critical portfolios.\n\n**Batch Summary - Critical Portfolios:**\n\n| Metric | Value |\n|--------|-------|\n| Portfolios | 23 |\n| Total AUM | $124M |\n| Total trades | 184 |\n| Net tax savings | $312K |\n\n**Batch Trades by Type:**\n\n| Action | Trade Count | Total Value |\n|--------|-------------|-------------|\n| Sells | 92 | $14.2M |\n| Buys | 92 | $14.2M |\n| Tax-loss harvests | 34 | $3.8M |\n\n**Compliance Status:**\n\n| Check | Passed | Flagged |\n|-------|--------|--------|\n| IPS alignment | 23 | 0 |\n| Concentration | 23 | 0 |\n| Restricted list | 22 | 1 (review) |\n| Suitability | 23 | 0 |\n\n**One Exception:**\n- Roberts IRA: Flagged for company stock >10%\n- Issue: IBM holding from prior employer\n- Action: Diversification discussion needed\n- Trades held pending client conversation\n\n**Ready for Execution:**\n- 22 portfolios: All trades approved\n- 1 portfolio: Manual review required\n\n**Execution Plan:**\n- Batch execute at market open\n- VWAP algorithm for large trades\n- Same-day settlement where possible\n\nSource: [Batch Processing + Compliance]\nAgents: ComplianceValidationAgent, TradeGenerationAgent\n\nGenerate complete summary?",
+      "wait_timeout_seconds": 15,
+      "description": "Batch rebalancing for all critical portfolios"
+    },
+    {
+      "step_number": 6,
+      "user_message": "Yes, give me the executive summary",
+      "agent_response": "Quarterly rebalancing analysis complete. Here's your executive summary.\n\n**Rebalancing Summary:**\n\n| Analysis | Result |\n|----------|--------|\n| Portfolios analyzed | 450 |\n| Rebalancing needed | 127 (28%) |\n| Critical priority | 23 |\n| Trades generated | 184 |\n| Tax-loss opportunities | $4.2M |\n\n**Execution Ready:**\n\n| Category | Portfolios | Trades | Status |\n|----------|------------|--------|--------|\n| Critical | 22 | 176 | Ready |\n| Critical (review) | 1 | 8 | Pending |\n| Significant | 48 | Queued | Next batch |\n\n**Financial Impact:**\n\n| Metric | Amount |\n|--------|--------|\n| Rebalanced AUM | $124M |\n| Tax losses harvested | $1.04M |\n| Tax savings (30%) | $312,000 |\n| Trading costs | $1,420 |\n| Net benefit | $310,580 |\n\n**Post-Rebalancing Targets:**\n- All 23 critical portfolios within 2% of target\n- Tax-efficient lot selection on all sells\n- No wash sale violations\n\n**Next Steps:**\n1. Execute 22 approved portfolios (ready now)\n2. Call Roberts re: IBM concentration\n3. Schedule significant tier (48 portfolios)\n4. Generate client reports\n\nSource: [All Portfolio Systems]\nAgents: RebalancingSummaryAgent (orchestrating all agents)\n\nYour AI-powered rebalancing analyzed 450 portfolios, identified $312K in tax savings, and prepared 184 compliance-cleared trades for execution.",
+      "wait_timeout_seconds": 20,
+      "description": "Executive rebalancing summary"
+    }
+  ],
+  "design_principles": {
+    "max_response_length": "150-250 words",
+    "max_lines": "25-30 lines",
+    "max_table_rows": "4-5 rows",
+    "max_bullets": "4-6 bullets",
+    "sections": "2-3 maximum",
+    "visual_elements": "1 status indicator OR 1 table per response",
+    "source_attribution": "Compact format at end",
+    "evergreen_language": "Relative timeframes only",
+    "call_to_action": "Clear next question to continue"
+  },
+  "business_value": {
+    "problem": "Manual portfolio drift monitoring, missed tax-loss harvesting, compliance bottlenecks, time-consuming trade generation",
+    "solution": "AI-powered rebalancing with automated drift detection, tax optimization, and compliance-validated trade generation",
+    "roi": "$312K tax savings identified, 450 portfolios analyzed in minutes, 184 trades generated with full compliance",
+    "performance": "Automated drift monitoring, tax-aware lot selection, batch compliance validation, execution-ready trade tickets"
+  }
+}

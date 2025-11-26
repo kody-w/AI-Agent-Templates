@@ -1,0 +1,990 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>M365 Copilot - Account Intelligence (LIVE DEMO)</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+            background: #faf9f8;
+            height: 100vh;
+            display: flex;
+            overflow: hidden;
+            color: #323130;
+        }
+
+        /* Sidebar */
+        .sidebar {
+            width: 260px;
+            background: #ffffff;
+            display: flex;
+            flex-direction: column;
+            border-right: 1px solid #edebe9;
+        }
+
+        .sidebar-header {
+            padding: 12px 16px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            border-bottom: 1px solid #edebe9;
+            height: 48px;
+        }
+
+        .copilot-icon {
+            width: 24px;
+            height: 24px;
+            background: linear-gradient(135deg, #0078d4 0%, #00bcf2 100%);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            font-size: 14px;
+        }
+
+        .sidebar-title {
+            font-size: 14px;
+            font-weight: 600;
+            color: #323130;
+        }
+
+        .live-badge {
+            background: #10b981;
+            color: white;
+            font-size: 10px;
+            padding: 2px 8px;
+            border-radius: 12px;
+            margin-left: auto;
+            font-weight: 600;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.7; }
+        }
+
+        .sidebar-nav {
+            flex: 1;
+            overflow-y: auto;
+            padding: 16px;
+        }
+
+        .nav-section {
+            margin-bottom: 24px;
+        }
+
+        .nav-title {
+            font-size: 12px;
+            font-weight: 600;
+            color: #605e5c;
+            margin-bottom: 8px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .nav-item {
+            padding: 8px 12px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 14px;
+            color: #323130;
+            margin-bottom: 4px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .nav-item:hover {
+            background: #f3f2f1;
+        }
+
+        .nav-item.active {
+            background: #e1dfdd;
+            font-weight: 600;
+        }
+
+        /* Main Content */
+        .main-content {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            background: #ffffff;
+        }
+
+        .chat-header {
+            padding: 12px 24px;
+            border-bottom: 1px solid #edebe9;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            height: 48px;
+        }
+
+        .chat-title {
+            font-size: 16px;
+            font-weight: 600;
+            color: #323130;
+        }
+
+        .demo-controls {
+            display: flex;
+            gap: 8px;
+        }
+
+        .control-btn {
+            padding: 6px 16px;
+            border: 1px solid #8a8886;
+            background: white;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 13px;
+            font-weight: 500;
+            color: #323130;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            transition: all 0.2s;
+        }
+
+        .control-btn:hover {
+            background: #f3f2f1;
+            border-color: #605e5c;
+        }
+
+        .control-btn.primary {
+            background: #0078d4;
+            color: white;
+            border-color: #0078d4;
+        }
+
+        .control-btn.primary:hover {
+            background: #106ebe;
+        }
+
+        .control-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        /* Chat Area */
+        .chat-container {
+            flex: 1;
+            overflow-y: auto;
+            padding: 24px;
+            background: #faf9f8;
+        }
+
+        .welcome-screen {
+            max-width: 600px;
+            margin: 80px auto;
+            text-align: center;
+        }
+
+        .welcome-icon {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, #0078d4 0%, #00bcf2 100%);
+            border-radius: 50%;
+            margin: 0 auto 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 36px;
+            font-weight: bold;
+        }
+
+        .welcome-title {
+            font-size: 28px;
+            font-weight: 600;
+            color: #323130;
+            margin-bottom: 12px;
+        }
+
+        .welcome-subtitle {
+            font-size: 16px;
+            color: #605e5c;
+            margin-bottom: 32px;
+            line-height: 1.5;
+        }
+
+        .info-card {
+            background: white;
+            border: 1px solid #edebe9;
+            border-radius: 8px;
+            padding: 20px;
+            text-align: left;
+            margin-top: 24px;
+        }
+
+        .info-card h3 {
+            font-size: 16px;
+            margin-bottom: 12px;
+            color: #323130;
+        }
+
+        .info-card ul {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .info-card li {
+            padding: 8px 0;
+            color: #605e5c;
+            font-size: 14px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .info-card li::before {
+            content: '✓';
+            color: #10b981;
+            font-weight: bold;
+        }
+
+        /* Messages */
+        .message {
+            margin-bottom: 20px;
+            display: flex;
+            gap: 12px;
+        }
+
+        .message.user {
+            flex-direction: row-reverse;
+        }
+
+        .message-avatar {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            flex-shrink: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            font-size: 14px;
+        }
+
+        .message.user .message-avatar {
+            background: #d4d2d0;
+            color: #323130;
+        }
+
+        .message.agent .message-avatar {
+            background: linear-gradient(135deg, #0078d4 0%, #00bcf2 100%);
+            color: white;
+        }
+
+        .message-content {
+            max-width: 70%;
+            background: white;
+            border: 1px solid #edebe9;
+            border-radius: 8px;
+            padding: 12px 16px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+
+        .message.user .message-content {
+            background: #e1f5ff;
+            border-color: #b3e0ff;
+        }
+
+        .message-text {
+            color: #323130;
+            font-size: 14px;
+            line-height: 1.5;
+            margin-bottom: 8px;
+        }
+
+        .message-time {
+            font-size: 11px;
+            color: #8a8886;
+            margin-top: 4px;
+        }
+
+        /* Agent Data Cards */
+        .agent-data {
+            margin-top: 16px;
+            background: #ffffff;
+            border: 1px solid #edebe9;
+            border-radius: 8px;
+            padding: 0;
+            overflow: hidden;
+        }
+
+        .data-section {
+            border-bottom: 1px solid #edebe9;
+            padding: 16px;
+        }
+
+        .data-section:last-child {
+            border-bottom: none;
+        }
+
+        .data-title {
+            font-weight: 600;
+            color: #323130;
+            margin-bottom: 12px;
+            font-size: 14px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding-bottom: 8px;
+            border-bottom: 2px solid #0078d4;
+        }
+
+        .data-content {
+            font-size: 13px;
+            color: #605e5c;
+            line-height: 1.7;
+        }
+
+        .data-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 12px;
+        }
+
+        .data-item {
+            background: #faf9f8;
+            padding: 10px 12px;
+            border-radius: 4px;
+            border-left: 3px solid #0078d4;
+        }
+
+        .data-label {
+            font-size: 11px;
+            color: #8a8886;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 4px;
+        }
+
+        .data-value {
+            font-size: 14px;
+            color: #323130;
+            font-weight: 500;
+        }
+
+        .data-badge {
+            display: inline-block;
+            padding: 2px 8px;
+            border-radius: 12px;
+            font-size: 11px;
+            font-weight: 600;
+            margin-left: 8px;
+        }
+
+        .badge-critical {
+            background: #fde7e9;
+            color: #c50f1f;
+        }
+
+        .badge-high {
+            background: #fff4ce;
+            color: #986f0b;
+        }
+
+        .badge-moderate {
+            background: #d3e4fd;
+            color: #004578;
+        }
+
+        .badge-low {
+            background: #dff6dd;
+            color: #0e700e;
+        }
+
+        .data-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .data-list li {
+            padding: 8px 0;
+            border-bottom: 1px solid #edebe9;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .data-list li:last-child {
+            border-bottom: none;
+        }
+
+        .data-list-label {
+            font-weight: 500;
+            color: #323130;
+            font-size: 13px;
+        }
+
+        .data-list-value {
+            color: #605e5c;
+            font-size: 13px;
+            text-align: right;
+        }
+
+        /* Typing Indicator */
+        .typing-indicator {
+            display: none;
+            padding: 12px 16px;
+            background: white;
+            border: 1px solid #edebe9;
+            border-radius: 8px;
+            max-width: 80px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+
+        .typing-indicator.show {
+            display: flex;
+            gap: 4px;
+            align-items: center;
+        }
+
+        .typing-dot {
+            width: 8px;
+            height: 8px;
+            background: #8a8886;
+            border-radius: 50%;
+            animation: typing 1.4s infinite;
+        }
+
+        .typing-dot:nth-child(2) {
+            animation-delay: 0.2s;
+        }
+
+        .typing-dot:nth-child(3) {
+            animation-delay: 0.4s;
+        }
+
+        @keyframes typing {
+            0%, 60%, 100% {
+                transform: translateY(0);
+                opacity: 0.5;
+            }
+            30% {
+                transform: translateY(-10px);
+                opacity: 1;
+            }
+        }
+
+        .hidden {
+            display: none !important;
+        }
+    </style>
+</head>
+<body>
+    <!-- Sidebar -->
+    <div class="sidebar">
+        <div class="sidebar-header">
+            <div class="copilot-icon">C</div>
+            <span class="sidebar-title">Copilot</span>
+            <span class="live-badge">LIVE</span>
+        </div>
+
+        <div class="sidebar-nav">
+            <div class="nav-section">
+                <div class="nav-title">Recent</div>
+                <div class="nav-item active">
+                    <span>🎯</span>
+                    <span>Contoso Corporation</span>
+                </div>
+            </div>
+
+            <div class="nav-section">
+                <div class="nav-title">Demo Features</div>
+                <div class="nav-item">
+                    <span>📊</span>
+                    <span>Account Intelligence</span>
+                </div>
+                <div class="nav-item">
+                    <span>👥</span>
+                    <span>Stakeholder Mapping</span>
+                </div>
+                <div class="nav-item">
+                    <span>⚔️</span>
+                    <span>Competitive Intel</span>
+                </div>
+                <div class="nav-item">
+                    <span>📅</span>
+                    <span>Meeting Prep</span>
+                </div>
+                <div class="nav-item">
+                    <span>✉️</span>
+                    <span>Message Generation</span>
+                </div>
+                <div class="nav-item">
+                    <span>⚠️</span>
+                    <span>Risk Assessment</span>
+                </div>
+                <div class="nav-item">
+                    <span>📋</span>
+                    <span>Action Planning</span>
+                </div>
+                <div class="nav-item">
+                    <span>📈</span>
+                    <span>Deal Dashboard</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="main-content">
+        <div class="chat-header">
+            <div class="chat-title">Account Intelligence Demo - Contoso Corporation</div>
+            <div class="demo-controls">
+                <button class="control-btn primary" id="playBtn" onclick="startDemo()">
+                    <span>▶</span>
+                    <span>Play Demo</span>
+                </button>
+                <button class="control-btn" id="pauseBtn" onclick="pauseDemo()" disabled>
+                    <span>⏸</span>
+                    <span>Pause</span>
+                </button>
+                <button class="control-btn" id="resetBtn" onclick="resetDemo()">
+                    <span>↻</span>
+                    <span>Reset</span>
+                </button>
+            </div>
+        </div>
+
+        <div class="chat-container" id="chatContainer">
+            <!-- Welcome Screen -->
+            <div class="welcome-screen" id="welcomeScreen">
+                <div class="welcome-icon">C</div>
+                <h1 class="welcome-title">Account Intelligence Stack</h1>
+                <p class="welcome-subtitle">
+                    Experience a live demo powered by real AI agents running with mock data.<br>
+                    Watch as the system analyzes Contoso Corporation in real-time.
+                </p>
+
+                <div class="info-card">
+                    <h3>🚀 What You'll See:</h3>
+                    <ul>
+                        <li>Complete account briefing with multi-source intelligence</li>
+                        <li>Stakeholder analysis with influence scoring</li>
+                        <li>Competitive intelligence and battle cards</li>
+                        <li>Meeting preparation briefs</li>
+                        <li>AI-generated personalized messages</li>
+                        <li>Deal risk assessment</li>
+                        <li>Prioritized action plans</li>
+                        <li>Real-time deal tracking dashboard</li>
+                    </ul>
+                </div>
+
+                <div class="info-card" style="margin-top: 16px;">
+                    <h3>💡 How It Works:</h3>
+                    <ul>
+                        <li>Connects to local server at http://localhost:5001</li>
+                        <li>Uses MOCK MODE (no credentials needed)</li>
+                        <li>Real agents processing real requests</li>
+                        <li>Realistic Contoso Corporation scenario</li>
+                        <li>All 8 operations demonstrated</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Chat Messages (hidden initially) -->
+            <div id="chatMessages" class="hidden"></div>
+
+            <!-- Typing Indicator -->
+            <div class="message agent" id="typingIndicator">
+                <div class="message-avatar">C</div>
+                <div class="typing-indicator">
+                    <div class="typing-dot"></div>
+                    <div class="typing-dot"></div>
+                    <div class="typing-dot"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const SERVER_URL = 'http://localhost:5001';
+        let currentStep = 0;
+        let isPaused = false;
+        let isPlaying = false;
+
+        // Demo script - Maps user questions to API operations
+        const demoSteps = [
+            {
+                userMessage: "I just got assigned Contoso Corporation as a new account. Give me a complete briefing so I can hit the ground running.",
+                operation: "account_briefing",
+                intro: "I've analyzed Contoso Corporation across all connected data sources. Here's your complete account intelligence briefing:"
+            },
+            {
+                userMessage: "Who are the key stakeholders I need to build relationships with, and what's their influence on our deal?",
+                operation: "stakeholder_analysis",
+                intro: "I've mapped the entire buying committee with influence scores, relationship status, and engagement history:"
+            },
+            {
+                userMessage: "What's the competitive situation? Who am I up against and how do we win?",
+                operation: "competitive_intelligence",
+                intro: "I've detected active competitive threats and created your battle card. Here's real-time competitive intelligence:"
+            },
+            {
+                userMessage: "I have a meeting with the new CTO Sarah Chen next week. Prep me for it.",
+                operation: "meeting_prep",
+                contact_id: "CONT001",
+                intro: "I've prepared a complete meeting brief for your executive conversation with Dr. Sarah Chen:"
+            },
+            {
+                userMessage: "Draft a LinkedIn connection request for Sarah Chen that will get her attention.",
+                operation: "generate_messaging",
+                contact_id: "CONT001",
+                context: { message_type: "linkedin_connection" },
+                intro: "I've crafted a personalized LinkedIn message based on her recent activity and your value proposition:"
+            },
+            {
+                userMessage: "What are the biggest risks to closing this $2.1M deal, and how do I mitigate them?",
+                operation: "risk_assessment",
+                opportunity_id: "OPP001",
+                intro: "I've analyzed all risk factors and calculated win probability with mitigation strategies:"
+            },
+            {
+                userMessage: "What should I do in the next 48 hours to move this deal forward?",
+                operation: "action_plan",
+                context: { timeframe: "48_hours" },
+                intro: "I've created a prioritized action plan for the next 48 hours with impact scoring:"
+            },
+            {
+                userMessage: "Show me a real-time dashboard tracking this deal's progress.",
+                operation: "deal_dashboard",
+                opportunity_id: "OPP001",
+                intro: "Here's your live deal tracking dashboard with milestones, metrics, and leading indicators:"
+            }
+        ];
+
+        async function startDemo() {
+            if (isPlaying) return;
+
+            isPlaying = true;
+            isPaused = false;
+
+            document.getElementById('playBtn').disabled = true;
+            document.getElementById('pauseBtn').disabled = false;
+            document.getElementById('welcomeScreen').classList.add('hidden');
+            document.getElementById('chatMessages').classList.remove('hidden');
+
+            if (currentStep === 0) {
+                document.getElementById('chatMessages').innerHTML = '';
+            }
+
+            await playNextStep();
+        }
+
+        function pauseDemo() {
+            isPaused = true;
+            isPlaying = false;
+            document.getElementById('playBtn').disabled = false;
+            document.getElementById('pauseBtn').disabled = true;
+            document.getElementById('playBtn').innerHTML = '<span>▶</span><span>Resume</span>';
+        }
+
+        function resetDemo() {
+            isPaused = false;
+            isPlaying = false;
+            currentStep = 0;
+
+            document.getElementById('playBtn').disabled = false;
+            document.getElementById('pauseBtn').disabled = true;
+            document.getElementById('playBtn').innerHTML = '<span>▶</span><span>Play Demo</span>';
+            document.getElementById('welcomeScreen').classList.remove('hidden');
+            document.getElementById('chatMessages').classList.add('hidden');
+            document.getElementById('chatMessages').innerHTML = '';
+        }
+
+        async function playNextStep() {
+            if (isPaused || currentStep >= demoSteps.length) {
+                if (currentStep >= demoSteps.length) {
+                    completeDemo();
+                }
+                return;
+            }
+
+            const step = demoSteps[currentStep];
+
+            // Show user message
+            await addUserMessage(step.userMessage);
+            await sleep(1500);
+
+            if (isPaused) return;
+
+            // Show typing indicator
+            showTypingIndicator();
+
+            // Call API
+            try {
+                const payload = {
+                    operation: step.operation,
+                    account_id: "CONTOSO001",
+                    ...(step.contact_id && { contact_id: step.contact_id }),
+                    ...(step.opportunity_id && { opportunity_id: step.opportunity_id }),
+                    ...(step.context && { context: step.context })
+                };
+
+                const response = await fetch(`${SERVER_URL}/intelligence`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
+
+                const result = await response.json();
+
+                // Hide typing indicator
+                hideTypingIndicator();
+
+                if (isPaused) return;
+
+                // Show agent response
+                await addAgentMessage(step.intro, result.data);
+
+                currentStep++;
+
+                // Continue to next step
+                await sleep(2000);
+                if (!isPaused) {
+                    await playNextStep();
+                }
+
+            } catch (error) {
+                hideTypingIndicator();
+                await addAgentMessage(`❌ Error: ${error.message}. Make sure the server is running at ${SERVER_URL}`, null);
+                pauseDemo();
+            }
+        }
+
+        async function addUserMessage(text) {
+            const container = document.getElementById('chatMessages');
+            const messageDiv = document.createElement('div');
+            messageDiv.className = 'message user';
+
+            const time = new Date().toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit' });
+
+            messageDiv.innerHTML = `
+                <div class="message-content">
+                    <div class="message-text">${text}</div>
+                    <div class="message-time">${time}</div>
+                </div>
+                <div class="message-avatar">Y</div>
+            `;
+
+            container.appendChild(messageDiv);
+            scrollToBottom();
+            return sleep(500);
+        }
+
+        async function addAgentMessage(intro, data) {
+            const container = document.getElementById('chatMessages');
+            const messageDiv = document.createElement('div');
+            messageDiv.className = 'message agent';
+
+            const time = new Date().toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit' });
+
+            let dataHTML = '';
+            if (data) {
+                dataHTML = '<div class="agent-data">' + renderData(data) + '</div>';
+            }
+
+            messageDiv.innerHTML = `
+                <div class="message-avatar">C</div>
+                <div class="message-content">
+                    <div class="message-text">${intro}</div>
+                    ${dataHTML}
+                    <div class="message-time">${time}</div>
+                </div>
+            `;
+
+            container.appendChild(messageDiv);
+            scrollToBottom();
+            return sleep(500);
+        }
+
+        function renderData(data, depth = 0) {
+            if (depth > 3) return `<code>${JSON.stringify(data, null, 2)}</code>`;
+
+            let html = '';
+
+            for (const [key, value] of Object.entries(data)) {
+                html += '<div class="data-section">';
+                html += `<div class="data-title">${addEmoji(key)} ${key}</div>`;
+
+                if (Array.isArray(value)) {
+                    // Arrays: render as list or grid depending on item type
+                    if (value.length > 0 && typeof value[0] === 'object') {
+                        // Array of objects - render each as a sub-section
+                        value.forEach((item, idx) => {
+                            if (typeof item === 'object' && item !== null) {
+                                html += '<div style="margin-bottom: 12px; padding-left: 12px; border-left: 2px solid #edebe9;">';
+                                html += renderObjectAsList(item);
+                                html += '</div>';
+                            }
+                        });
+                    } else {
+                        // Simple array - render as list
+                        html += '<ul class="data-list">';
+                        value.forEach(item => {
+                            html += `<li><span class="data-list-label">• ${formatValue(item)}</span></li>`;
+                        });
+                        html += '</ul>';
+                    }
+                } else if (typeof value === 'object' && value !== null) {
+                    // Objects: render as grid of labeled items
+                    html += '<div class="data-grid">';
+                    for (const [subKey, subValue] of Object.entries(value)) {
+                        html += '<div class="data-item">';
+                        html += `<div class="data-label">${subKey}</div>`;
+                        html += `<div class="data-value">${formatValue(subValue)}</div>`;
+                        html += '</div>';
+                    }
+                    html += '</div>';
+                } else {
+                    // Primitive values
+                    html += `<div class="data-content" style="font-weight: 500;">${formatValue(value)}</div>`;
+                }
+
+                html += '</div>';
+            }
+
+            return html;
+        }
+
+        function renderObjectAsList(obj) {
+            let html = '<ul class="data-list">';
+            for (const [key, value] of Object.entries(obj)) {
+                html += '<li>';
+                html += `<span class="data-list-label">${key}</span>`;
+                html += `<span class="data-list-value">${formatValue(value)}</span>`;
+                html += '</li>';
+            }
+            html += '</ul>';
+            return html;
+        }
+
+        function addEmoji(text) {
+            const emojiMap = {
+                'company': '🏢',
+                'stakeholder': '👤',
+                'competitive': '⚔️',
+                'risk': '⚠️',
+                'action': '📋',
+                'deal': '💰',
+                'meeting': '📅',
+                'message': '✉️',
+                'dashboard': '📊',
+                'overview': '📌',
+                'status': '🎯',
+                'threat': '🔴',
+                'opportunity': '🎯',
+                'revenue': '💵',
+                'metric': '📈',
+                'alert': '🚨'
+            };
+
+            const lower = text.toLowerCase();
+            for (const [keyword, emoji] of Object.entries(emojiMap)) {
+                if (lower.includes(keyword)) return emoji;
+            }
+            return '📎';
+        }
+
+        function formatValue(value) {
+            if (value === null || value === undefined) return '<span style="color: #8a8886;">—</span>';
+            if (typeof value === 'boolean') return value ? '✓ Yes' : '✗ No';
+
+            if (typeof value === 'number') {
+                if (value > 1000000) return `<strong>$${(value/1000000).toFixed(1)}M</strong>`;
+                if (value > 1000) return `<strong>${value.toLocaleString()}</strong>`;
+                return value.toString();
+            }
+
+            if (Array.isArray(value)) {
+                if (value.length === 0) return '<span style="color: #8a8886;">None</span>';
+                return value.map(v => formatValue(v)).join(', ');
+            }
+
+            if (typeof value === 'object') {
+                // Nested objects - show as compact JSON
+                return `<code style="font-size: 11px; background: #f3f2f1; padding: 2px 6px; border-radius: 3px;">${JSON.stringify(value)}</code>`;
+            }
+
+            // String formatting with badges for risk levels
+            const str = value.toString();
+            if (str.includes('CRITICAL') || str.includes('🔴')) {
+                return `${str} <span class="data-badge badge-critical">CRITICAL</span>`;
+            }
+            if (str.includes('HIGH') || str.includes('🟡')) {
+                return `${str} <span class="data-badge badge-high">HIGH</span>`;
+            }
+            if (str.includes('MODERATE') || str.includes('🟠')) {
+                return `${str} <span class="data-badge badge-moderate">MODERATE</span>`;
+            }
+            if (str.includes('LOW') || str.includes('🟢')) {
+                return `${str} <span class="data-badge badge-low">LOW</span>`;
+            }
+
+            return str;
+        }
+
+        function showTypingIndicator() {
+            document.querySelector('#typingIndicator .typing-indicator').classList.add('show');
+            scrollToBottom();
+        }
+
+        function hideTypingIndicator() {
+            document.querySelector('#typingIndicator .typing-indicator').classList.remove('show');
+        }
+
+        function scrollToBottom() {
+            const container = document.getElementById('chatContainer');
+            setTimeout(() => {
+                container.scrollTop = container.scrollHeight;
+            }, 100);
+        }
+
+        function sleep(ms) {
+            return new Promise(resolve => setTimeout(resolve, ms));
+        }
+
+        function completeDemo() {
+            isPlaying = false;
+            document.getElementById('playBtn').disabled = false;
+            document.getElementById('pauseBtn').disabled = true;
+            document.getElementById('playBtn').innerHTML = '<span>↻</span><span>Replay</span>';
+
+            setTimeout(() => {
+                addAgentMessage("🎉 Demo complete! The Account Intelligence Stack successfully analyzed Contoso Corporation across all 8 operations using live AI agents with mock data.", null);
+            }, 1000);
+        }
+
+        // Check server on load
+        window.addEventListener('load', async () => {
+            try {
+                const response = await fetch(`${SERVER_URL}/health`);
+                if (response.ok) {
+                    console.log('✅ Server connected');
+                } else {
+                    console.warn('⚠️ Server not responding');
+                }
+            } catch (error) {
+                console.error('❌ Server offline:', error);
+                alert(`Server is not running!\n\nPlease start the server:\npython3 local_server.py\n\nThen refresh this page.`);
+            }
+        });
+    </script>
+</body>
+</html>

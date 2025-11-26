@@ -1,0 +1,143 @@
+{
+  "demo_name": "Cart_Abandonment_Recovery_1Min_Demo",
+  "description": "1-minute demo: AI-powered cart abandonment recovery with personalized incentives, timing optimization, and conversion tracking",
+  "version": "2.0.0",
+  "trigger_phrases": [
+    "Show me today's abandoned carts and help me recover the high-value ones with personalized offers.",
+    "recover abandoned carts",
+    "cart recovery campaigns"
+  ],
+  "metadata": {
+    "category": "conversion_optimization",
+    "industry": "b2c_ecommerce",
+    "max_response_length": "250_words",
+    "total_steps": 6,
+    "estimated_duration_seconds": 60,
+    "target_audience": "ecommerce_managers"
+  },
+  "persona": {
+    "name": "Michelle Torres",
+    "title": "E-Commerce Director",
+    "company": "StyleHub Retail",
+    "context": "Managing online store with $2.4M monthly revenue, 68% cart abandonment rate, Q4 peak season"
+  },
+  "agents_utilized": [
+    {
+      "agent_name": "CartAnalyticsAgent",
+      "description": "Analyzes abandoned cart data with customer segmentation and value scoring",
+      "inputs": ["date_range", "cart_threshold"],
+      "outputs": ["abandoned_carts", "segment_breakdown", "value_at_risk", "abandonment_reasons"],
+      "data_sources": ["E-commerce Platform", "Customer Data Platform", "Session Analytics"],
+      "used_in_steps": [1]
+    },
+    {
+      "agent_name": "CustomerSegmentationAgent",
+      "description": "Segments customers by value, behavior, and recovery likelihood",
+      "inputs": ["customer_list", "purchase_history"],
+      "outputs": ["customer_segments", "ltv_scores", "propensity_scores"],
+      "data_sources": ["CDP", "Transaction History", "Loyalty Program"],
+      "used_in_steps": [1, 2]
+    },
+    {
+      "agent_name": "PersonalizedOfferAgent",
+      "description": "Creates individualized recovery offers based on customer profiles",
+      "inputs": ["customer_segment", "cart_contents", "margin_rules"],
+      "outputs": ["personalized_offers", "discount_recommendations", "messaging"],
+      "data_sources": ["Pricing Engine", "Inventory", "Customer Preferences"],
+      "used_in_steps": [2, 3]
+    },
+    {
+      "agent_name": "CampaignOrchestrationAgent",
+      "description": "Deploys multi-channel recovery campaigns with optimized timing",
+      "inputs": ["offers", "customer_channels", "timing_rules"],
+      "outputs": ["campaign_deployment", "channel_selection", "send_schedule"],
+      "data_sources": ["Marketing Automation", "Email Platform", "SMS Gateway"],
+      "used_in_steps": [3]
+    },
+    {
+      "agent_name": "ConversionForecastAgent",
+      "description": "Predicts recovery rates and revenue impact",
+      "inputs": ["campaign_data", "historical_performance"],
+      "outputs": ["conversion_forecast", "revenue_projection", "benchmark_comparison"],
+      "data_sources": ["Historical Campaigns", "Industry Benchmarks"],
+      "used_in_steps": [4]
+    },
+    {
+      "agent_name": "OptimizationRecommendationAgent",
+      "description": "Identifies improvements to increase recovery rates",
+      "inputs": ["performance_data", "best_practices"],
+      "outputs": ["optimization_opportunities", "ab_test_recommendations", "roi_projections"],
+      "data_sources": ["Analytics", "A/B Test Results", "Industry Best Practices"],
+      "used_in_steps": [5]
+    },
+    {
+      "agent_name": "RecoverySummaryAgent",
+      "description": "Generates comprehensive recovery program reports",
+      "inputs": ["all_campaign_data"],
+      "outputs": ["executive_summary", "action_plan", "financial_impact"],
+      "data_sources": ["All Recovery Systems"],
+      "used_in_steps": [6]
+    }
+  ],
+  "conversation_flow": [
+    {
+      "step_number": 1,
+      "user_message": "Show me today's abandoned carts and help me recover the high-value ones with personalized offers.",
+      "agent_response": "Analyzed 847 abandoned carts worth $127K today.\n\n| Segment | Carts | Value | Recovery |\n|---------|-------|-------|----------|\n| VIP | 34 | $18K | 45% |\n| Repeat buyers | 89 | $24K | 38% |\n| New visitors | 412 | $53K | 22% |\n\n**Top Opportunities:** Sarah M ($892), James K ($647), Emily R ($534)\n\n**Why Abandoning:** 42% shipping cost, 28% comparison shopping, 18% payment friction\n\nWant personalized recovery strategies?",
+      "wait_timeout_seconds": 15,
+      "description": "Abandonment analysis with segmentation"
+    },
+    {
+      "step_number": 2,
+      "user_message": "Yes, create personalized recovery strategies for the top opportunities",
+      "agent_response": "Personalized strategies by segment:\n\n**Sarah M. ($892 VIP):** \"Your favorite bags are 40% off\" + double points, Email + SMS\n\n**High-Value (8,400):** VIP early access + 3X points\n\n**Point Expiry (12,000):** \"Use before they expire\" + 25% bonus\n\n**Lapsed Browsers (13,600):** Items viewed + 20% off + free shipping\n\nLaunch campaigns?",
+      "wait_timeout_seconds": 15,
+      "description": "Personalized recovery strategies"
+    },
+    {
+      "step_number": 3,
+      "user_message": "Yes, launch the campaigns and show me the full recovery program",
+      "agent_response": "Campaigns launched across all channels. Here's the complete multi-touch program.\n\n**Campaigns Activated:**\n\n| Campaign | Members | Channel | Status |\n|----------|---------|---------|--------|\n| High-value win-back | 8,400 | Email + SMS | Sent |\n| Point expiry alert | 12,000 | Email + Push | Sent |\n| Lapsed browser | 13,600 | Email + Retargeting | Active |\n\n**VIP Recovery (34 carts, $18,400):**\n- Email 1: Immediate - Personal note + reserved items\n- SMS: 1 hour - \"Your items are waiting\"\n- Email 2: 4 hours - Free express shipping offer\n- Personal call: 24 hours (for $500+ carts)\n\n**Repeat Buyer Recovery (89 carts, $24,200):**\n- Email 1: 30 min - Loyalty points reminder\n- Push notification: 2 hours - Cart reminder\n- Email 2: 12 hours - Free shipping threshold hint\n\n**New Visitor Recovery (412 carts, $52,800):**\n- Email 1: 1 hour - Welcome discount (10%)\n- Retargeting: Immediate - Social + display ads\n- Email 2: 24 hours - Social proof + reviews\n\nSource: [Marketing Automation + CDP]\nAgents: CampaignOrchestrationAgent\n\nWant to see real-time recovery tracking?",
+      "wait_timeout_seconds": 15,
+      "description": "Multi-touch recovery program launch"
+    },
+    {
+      "step_number": 4,
+      "user_message": "Yes, show me the tracking dashboard and expected results",
+      "agent_response": "Real-time tracking activated. Here's your recovery performance forecast.\n\n**Recovery Forecast (Next 48 Hours):**\n\n| Segment | Target Recovery | Revenue | Confidence |\n|---------|----------------|---------|------------|\n| VIP | 45% (15 carts) | $8,280 | High |\n| Repeat buyers | 38% (34 carts) | $9,196 | High |\n| New visitors | 22% (91 carts) | $11,616 | Medium |\n| Price sensitive | 28% (87 carts) | $8,848 | Medium |\n| **Total** | **27% (227 carts)** | **$37,940** | **High** |\n\n**Live Dashboard Metrics:**\n- Emails sent: 847\n- Opened: Tracking live\n- Clicked: Tracking live\n- Recovered: Updating in real-time\n\n**Benchmark Comparison:**\n- Industry avg recovery: 18%\n- Your current rate: 24%\n- Target with AI: 27%+ (+$37,940/day)\n\n**Monthly Impact Projection:**\n- Current monthly recovery: $172,000\n- With optimized program: $228,000\n- **Incremental revenue: $56,000/month**\n\nSource: [Recovery Analytics + Industry Benchmarks]\nAgents: ConversionForecastAgent\n\nGenerate the optimization recommendations?",
+      "wait_timeout_seconds": 15,
+      "description": "Recovery tracking and forecasting"
+    },
+    {
+      "step_number": 5,
+      "user_message": "Yes, what else can we do to improve recovery rates?",
+      "agent_response": "I've identified 5 optimization opportunities to push recovery rate from 27% to 35%.\n\n**Optimization Recommendations:**\n\n| Opportunity | Current | Optimized | Revenue Impact |\n|-------------|---------|-----------|---------------|\n| Exit intent popup | None | Enabled | +$18K/month |\n| SMS recovery | VIP only | All segments | +$12K/month |\n| Dynamic pricing | Static | Personalized | +$8K/month |\n| Shipping threshold | $75 | $65 | +$6K/month |\n| Payment options | 3 methods | 6 methods | +$4K/month |\n\n**Quick Win - Exit Intent Popup:**\n- Trigger: Mouse moves toward close\n- Offer: \"Wait! Get 10% off your first order\"\n- Expected conversion: 8-12% of abandoners\n- Implementation: Same day\n\n**Quick Win - Shipping Threshold:**\n- Current: Free shipping at $75\n- Avg abandoned cart: $128\n- Insight: 42% abandon at shipping reveal\n- Action: Lower to $65 or offer flat $5 rate\n\n**A/B Test Recommendations:**\n- Test subject lines (urgency vs personalization)\n- Test timing (immediate vs 30-min delay)\n- Test offer types (discount vs free shipping)\n\nSource: [Optimization Engine + Industry Best Practices]\nAgents: OptimizationRecommendationAgent\n\nSummarize the complete strategy?",
+      "wait_timeout_seconds": 15,
+      "description": "Optimization recommendations"
+    },
+    {
+      "step_number": 6,
+      "user_message": "Yes, give me the complete summary",
+      "agent_response": "Cart abandonment recovery program complete. Here's your optimized strategy.\n\n**Session Summary:**\n\n| Accomplishment | Result |\n|----------------|--------|\n| Carts analyzed | 847 worth $127,000 |\n| Segments identified | 4 with tailored strategies |\n| Campaigns launched | 4 multi-touch sequences |\n| Recovery forecast | 27% ($37,940/day) |\n| Optimizations identified | 5 opportunities (+$48K/month) |\n\n**Recovery Program Launched:**\n- VIP: Personal outreach + express shipping\n- Repeat buyers: Loyalty points + free shipping\n- New visitors: Welcome discount + social proof\n- Price sensitive: Price alerts + alternatives\n\n**Immediate Actions Active:**\n- 847 recovery emails sent\n- Retargeting campaigns live\n- SMS sequences scheduled\n- Personal calls queued for $500+ VIP carts\n\n**Financial Impact:**\n\n| Metric | Before | After | Improvement |\n|--------|--------|-------|-------------|\n| Recovery rate | 24% | 35% (target) | +46% |\n| Monthly recovery | $172K | $276K | +$104K |\n| Annual impact | $2.1M | $3.3M | +$1.2M |\n\nSource: [All Recovery Systems]\nAgents: RecoverySummaryAgent (orchestrating all agents)\n\nYour AI-powered cart recovery program is live - targeting $37,940 in recovered revenue today with a path to $1.2M annual improvement.",
+      "wait_timeout_seconds": 20,
+      "description": "Complete summary and impact"
+    }
+  ],
+  "design_principles": {
+    "max_response_length": "150-250 words",
+    "max_lines": "25-30 lines",
+    "max_table_rows": "4-5 rows",
+    "max_bullets": "4-6 bullets",
+    "sections": "2-3 maximum",
+    "visual_elements": "1 status indicator OR 1 table per response",
+    "source_attribution": "Compact format at end",
+    "evergreen_language": "Relative timeframes only",
+    "call_to_action": "Clear next question to continue"
+  },
+  "business_value": {
+    "problem": "68% cart abandonment rate, $127K in abandoned carts today, generic recovery messaging",
+    "solution": "AI-powered personalized recovery with behavioral segmentation, timing optimization, and multi-touch campaigns",
+    "roi": "Recovery rate improvement from 24% to 35%, $1.2M annual incremental revenue",
+    "performance": "847 carts analyzed and segmented, 4 personalized campaigns launched, real-time tracking active"
+  }
+}
