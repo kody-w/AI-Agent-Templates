@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Predictive Asset Maintenance Intelligence · Live Demo</title>
+<style>
+  :root {
+    --ink:#1f1f1f; --ink-soft:#4b5563; --ink-mute:#6b7280;
+    --rule:#e5e7eb; --bg:#faf9f8; --card:#ffffff;
+    --blue:#0078d4; --blue-2:#005a9e; --teal:#16a085; --teal-2:#0e7c66;
+    --amber:#d97706; --rose:#db2777; --green:#16a34a;
+    --shadow-1:0 1px 2px rgba(15,23,42,.04);
+    --shadow-2:0 8px 24px rgba(15,23,42,.10);
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;padding:0;background:var(--bg);color:var(--ink);font-family:"Segoe UI",-apple-system,BlinkMacSystemFont,sans-serif;-webkit-font-smoothing:antialiased}
+  body::before{content:"";position:fixed;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--blue),var(--teal));z-index:50}
+  .wrap{max-width:1280px;margin:0 auto;padding:30px 32px 80px}
+  header{display:flex;justify-content:space-between;align-items:flex-start;gap:20px;margin-bottom:18px}
+  .brand{display:flex;gap:12px;align-items:center}
+  .logo{width:42px;height:42px;border-radius:11px;background:linear-gradient(135deg,var(--blue),var(--teal));color:#fff;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:18px}
+  .brand-name{font-weight:700;font-size:16px;letter-spacing:-0.01em}
+  .brand-tag{font-size:11px;color:var(--ink-mute);text-transform:uppercase;letter-spacing:.12em;margin-top:2px}
+  .industry{font-size:12px;background:#eef2f7;color:var(--ink-soft);padding:6px 14px;border-radius:999px;border:1px solid var(--rule);font-weight:600;letter-spacing:.02em}
+
+  h1{font-size:34px;font-weight:800;letter-spacing:-0.02em;margin:14px 0 6px}
+  .subtitle{color:var(--ink-soft);font-size:15px;max-width:880px;line-height:1.5;margin:0 0 22px}
+
+  /* PIPELINE */
+  .pipeline{background:var(--card);border:1px solid var(--rule);border-radius:16px;padding:18px 18px 20px;margin-bottom:22px;box-shadow:var(--shadow-1)}
+  .pipeline h3{margin:0 0 14px;font-size:11px;text-transform:uppercase;letter-spacing:.14em;color:var(--ink-mute);font-weight:800}
+  .agents{display:grid;grid-template-columns:repeat(8,1fr);gap:8px}
+  .agent{background:linear-gradient(180deg,#fff 0%,#f6f8fc 100%);border:1px solid var(--rule);border-radius:10px;padding:12px 10px;transition:all .25s;position:relative;overflow:hidden}
+  .agent .n{position:absolute;top:6px;right:8px;font-size:9px;color:var(--ink-mute);font-weight:800;letter-spacing:.06em}
+  .agent .icon{width:30px;height:30px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:14px;color:#fff;margin-bottom:8px}
+  .agent .label{font-size:11.5px;font-weight:700;line-height:1.25;color:var(--ink);letter-spacing:-0.01em}
+  .agent.firing{transform:translateY(-2px);box-shadow:var(--shadow-2);border-color:rgba(0,120,212,.30)}
+  .agent.fired{border-color:rgba(22,160,133,.30)}
+  .agent .icon.b1{background:#0078d4}.agent .icon.b2{background:#7c3aed}.agent .icon.b3{background:#db2777}
+  .agent .icon.b4{background:#16a085}.agent .icon.b5{background:#d97706}.agent .icon.b6{background:#475569}
+  .agent .icon.b7{background:#0e7c66}.agent .icon.b8{background:#005a9e}
+
+  /* CHAT */
+  .chat{background:var(--card);border:1px solid var(--rule);border-radius:16px;box-shadow:var(--shadow-1);overflow:hidden}
+  .chat-head{padding:14px 20px;border-bottom:1px solid var(--rule);background:linear-gradient(180deg,#fafbfd 0%,#fff 100%);display:flex;justify-content:space-between;align-items:center}
+  .chat-head .title{font-weight:700;font-size:14px;letter-spacing:-0.01em}
+  .chat-head .meta{font-size:11px;color:var(--ink-mute);letter-spacing:.04em}
+  .chat-head .meta .dot{display:inline-block;width:7px;height:7px;border-radius:50%;background:var(--green);margin-right:6px;vertical-align:1px}
+  .messages{padding:20px;min-height:360px;max-height:560px;overflow-y:auto}
+  .msg{margin-bottom:18px;animation:fadeIn .35s cubic-bezier(.2,.7,.2,1)}
+  @keyframes fadeIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
+  .msg.user{display:flex;justify-content:flex-end}
+  .msg.user .bubble{background:#f3f6fb;color:var(--ink);max-width:78%;padding:10px 14px;border-radius:14px 14px 4px 14px;font-size:14px;border:1px solid var(--rule)}
+  .msg.assistant{display:flex;gap:10px}
+  .msg.assistant .ai{width:28px;height:28px;border-radius:8px;background:linear-gradient(135deg,var(--blue),var(--teal));color:#fff;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:800;flex-shrink:0}
+  .msg.assistant .bubble{background:#fff;border:1px solid var(--rule);border-radius:14px 14px 14px 4px;padding:14px 16px;font-size:14px;flex:1;line-height:1.55;box-shadow:var(--shadow-1)}
+  .msg.assistant .bubble h4{margin:0 0 8px;font-size:13px;text-transform:uppercase;letter-spacing:.08em;color:var(--ink-mute);font-weight:800}
+  .msg.assistant .agents-used{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:10px}
+  .msg.assistant .pill{font-size:11px;background:#eef2f7;color:var(--ink-soft);padding:3px 10px;border-radius:999px;border:1px solid var(--rule);font-weight:600;letter-spacing:.02em}
+  .table{width:100%;border-collapse:collapse;margin:10px 0 4px;font-size:12.5px}
+  .table th,.table td{padding:7px 10px;text-align:left;border-bottom:1px solid var(--rule)}
+  .table th{background:#fafbfd;font-weight:700;color:var(--ink-mute);text-transform:uppercase;letter-spacing:.06em;font-size:10px}
+  .table td.num{font-variant-numeric:tabular-nums;font-family:"SF Mono",Monaco,Consolas,monospace}
+  .badge{display:inline-block;padding:2px 8px;border-radius:6px;font-size:10.5px;font-weight:700;letter-spacing:.04em}
+  .badge.degraded{background:#fef3c7;color:#92400e}
+  .badge.watch{background:#dbeafe;color:#1e40af}
+  .badge.critical{background:#fee2e2;color:#991b1b}
+  .badge.healthy{background:#d1fae5;color:#065f46}
+  .badge.p1{background:#fee2e2;color:#991b1b}
+  .badge.p2{background:#fef3c7;color:#92400e}
+  .badge.p3{background:#dbeafe;color:#1e40af}
+  .drivers{font-size:11.5px;color:var(--ink-mute);font-style:italic}
+  .summary-stat{display:inline-block;margin-right:14px}
+  .summary-stat .val{font-size:18px;font-weight:800;color:var(--ink);font-variant-numeric:tabular-nums}
+  .summary-stat .lbl{font-size:11px;color:var(--ink-mute);text-transform:uppercase;letter-spacing:.06em;display:block;margin-top:2px}
+
+  /* PROMPT BAR */
+  .prompts{padding:14px 20px;border-top:1px solid var(--rule);background:#fafbfd}
+  .prompts .label{font-size:11px;text-transform:uppercase;letter-spacing:.12em;color:var(--ink-mute);font-weight:700;margin-bottom:10px}
+  .prompts .row{display:grid;grid-template-columns:repeat(2,1fr);gap:8px}
+  .prompts button{text-align:left;padding:12px 14px;border:1px solid var(--rule);background:#fff;border-radius:10px;cursor:pointer;font-family:inherit;font-size:13px;color:var(--ink);transition:all .15s;display:flex;align-items:center;gap:10px}
+  .prompts button:hover{border-color:var(--blue);transform:translateY(-1px);box-shadow:var(--shadow-1)}
+  .prompts button .arrow{margin-left:auto;color:var(--blue);font-weight:800}
+  .prompts button:disabled{opacity:.5;cursor:not-allowed;transform:none;box-shadow:none}
+  .reset{margin-top:8px;background:transparent;border:none;color:var(--ink-mute);font-size:12px;cursor:pointer;font-family:inherit}
+  .reset:hover{color:var(--blue)}
+
+  /* PROMISE FOOTER */
+  .footer-promise{margin-top:24px;text-align:center;padding:20px;background:linear-gradient(135deg,rgba(0,120,212,.06),rgba(22,160,133,.06));border:1px solid rgba(0,120,212,.18);border-radius:14px}
+  .footer-promise .big{font-size:15px;font-weight:700;margin:0}
+  .footer-promise .small{font-size:12.5px;color:var(--ink-mute);margin:4px 0 0}
+  .footer-promise a{color:var(--blue);text-decoration:none;font-weight:600}
+  .footer-promise a:hover{text-decoration:underline}
+
+  @media (max-width:900px){
+    .wrap{padding:20px 16px 60px}
+    h1{font-size:24px}
+    .agents{grid-template-columns:repeat(4,1fr)}
+    .prompts .row{grid-template-columns:1fr}
+    .table{font-size:11.5px}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header>
+    <div class="brand">
+      <div class="logo">⚡</div>
+      <div>
+        <div class="brand-name">Predictive Asset Maintenance Intelligence</div>
+        <div class="brand-tag">8-agent stack · Energy Utilities</div>
+      </div>
+    </div>
+    <div class="industry">Live demo · real agent output</div>
+  </header>
+
+  <h1>Reactive maintenance → condition-based intervention</h1>
+  <p class="subtitle">Eight focused agents that monitor grid asset health, predict failure across 30/90/180-day horizons, draft Field Service work orders, plan parts, capture execution, write back to the register, and roll into a multi-year capex pipeline. Click any starter to see real agent output.</p>
+
+  <!-- PIPELINE -->
+  <div class="pipeline">
+    <h3>The 8 agents</h3>
+    <div class="agents" id="agents">
+      <div class="agent" data-key="aggregator"><span class="n">01</span><div class="icon b1">📡</div><div class="label">Asset Sensor Aggregator</div></div>
+      <div class="agent" data-key="scorer"><span class="n">02</span><div class="icon b2">🧠</div><div class="label">Asset Health Scorer</div></div>
+      <div class="agent" data-key="ranker"><span class="n">03</span><div class="icon b3">📊</div><div class="label">Failure Probability Ranker</div></div>
+      <div class="agent" data-key="wo"><span class="n">04</span><div class="icon b4">🛠</div><div class="label">Maintenance Work Order</div></div>
+      <div class="agent" data-key="parts"><span class="n">05</span><div class="icon b5">📦</div><div class="label">Parts Planner</div></div>
+      <div class="agent" data-key="capture"><span class="n">06</span><div class="icon b6">📱</div><div class="label">Field Execution Capture</div></div>
+      <div class="agent" data-key="writeback"><span class="n">07</span><div class="icon b7">📝</div><div class="label">Asset Register Write-back</div></div>
+      <div class="agent" data-key="capex"><span class="n">08</span><div class="icon b8">💰</div><div class="label">Lifecycle Capex Planner</div></div>
+    </div>
+  </div>
+
+  <!-- CHAT -->
+  <div class="chat">
+    <div class="chat-head">
+      <div class="title">M365 Copilot · Predictive Asset Maintenance Intelligence</div>
+      <div class="meta"><span class="dot"></span>Agents loaded · BasicAgent runtime</div>
+    </div>
+    <div class="messages" id="messages">
+      <div class="msg assistant">
+        <div class="ai">AI</div>
+        <div class="bubble">
+          <h4>Ready to help</h4>
+          Hi — I'm running the <strong>Predictive Asset Maintenance Intelligence</strong> stack. I have eight agents that work the grid asset health pipeline end-to-end. Pick a starter below or ask me anything about your fleet.
+        </div>
+      </div>
+    </div>
+    <div class="prompts">
+      <div class="label">Try a starter prompt</div>
+      <div class="row">
+        <button data-prompt="risk">Show me the highest-risk grid assets for the next 90 days<span class="arrow">→</span></button>
+        <button data-prompt="sub44">Run the predictive maintenance pipeline for substation SUB-44<span class="arrow">→</span></button>
+        <button data-prompt="wos">Generate work orders for any asset above a 30% 90-day failure probability<span class="arrow">→</span></button>
+        <button data-prompt="capex">Give me the fleet-level replacement capex pipeline<span class="arrow">→</span></button>
+      </div>
+      <button class="reset" id="resetBtn">↺ Reset demo</button>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <div class="footer-promise">
+    <p class="big">Output is portable RAPP agents — runs in the customer's own tenant, deployable to Copilot Studio.</p>
+    <p class="small">
+      <a href="../agents/" target="_blank">8 agent.py files</a> &nbsp;·&nbsp;
+      <a href="../tests/test_agents.py" target="_blank">pytest suite (11 passing)</a> &nbsp;·&nbsp;
+      <a href="../README.md" target="_blank">README</a> &nbsp;·&nbsp;
+      <a href="https://github.com/kody-w/AI-Agent-Templates/tree/main/agent_stacks/energy_stacks/predictive_asset_maintenance_intelligence_stack" target="_blank">View on GitHub</a>
+    </p>
+  </div>
+
+</div>
+
+<script>
+// Real agent output captured from the actual 8-agent pipeline (deterministic seeded data)
+const DATA = {"top_risk_90d":[{"asset_id":"AST-00004","asset_class":"transformer","substation":"SUB-74","anomaly_score":0.735,"health_score":26,"rul_days":540,"condition_band":"Degraded","p_fail_30d":0.2344,"p_fail_90d":0.5513,"p_fail_180d":0.7986,"key_drivers":["Elevated DGA"]},{"asset_id":"AST-00001","asset_class":"underground_cable","substation":"SUB-55","anomaly_score":0.732,"health_score":27,"rul_days":544,"condition_band":"Degraded","p_fail_30d":0.2329,"p_fail_90d":0.5486,"p_fail_180d":0.7962,"key_drivers":["Moisture ingress","Insulation degradation"]},{"asset_id":"AST-00018","asset_class":"overhead_line","substation":"SUB-48","anomaly_score":0.716,"health_score":28,"rul_days":567,"condition_band":"Degraded","p_fail_30d":0.2248,"p_fail_90d":0.5342,"p_fail_180d":0.7831,"key_drivers":["Excessive sag"]},{"asset_id":"AST-00009","asset_class":"underground_cable","substation":"SUB-94","anomaly_score":0.682,"health_score":32,"rul_days":620,"condition_band":"Degraded","p_fail_30d":0.2081,"p_fail_90d":0.5034,"p_fail_180d":0.7534,"key_drivers":["Moisture ingress","Insulation degradation"]},{"asset_id":"AST-00002","asset_class":"underground_cable","substation":"SUB-74","anomaly_score":0.642,"health_score":36,"rul_days":688,"condition_band":"Degraded","p_fail_30d":0.189,"p_fail_90d":0.4666,"p_fail_180d":0.7154,"key_drivers":["Insulation degradation","Thermal cycling"]},{"asset_id":"AST-00011","asset_class":"overhead_line","substation":"SUB-58","anomaly_score":0.621,"health_score":38,"rul_days":726,"condition_band":"Degraded","p_fail_30d":0.1793,"p_fail_90d":0.4471,"p_fail_180d":0.6943,"key_drivers":["Normal operating envelope"]},{"asset_id":"AST-00006","asset_class":"transformer","substation":"SUB-39","anomaly_score":0.614,"health_score":39,"rul_days":740,"condition_band":"Degraded","p_fail_30d":0.1761,"p_fail_90d":0.4406,"p_fail_180d":0.6871,"key_drivers":["Normal operating envelope"]},{"asset_id":"AST-00017","asset_class":"transformer","substation":"SUB-88","anomaly_score":0.613,"health_score":39,"rul_days":742,"condition_band":"Degraded","p_fail_30d":0.1756,"p_fail_90d":0.4397,"p_fail_180d":0.6861,"key_drivers":["Partial discharge activity"]}],"sub_44_pipeline":[{"asset_id":"AST-00004","asset_class":"transformer","substation":"SUB-74","anomaly_score":0.735,"health_score":26,"rul_days":540,"condition_band":"Degraded","p_fail_30d":0.2344,"p_fail_90d":0.5513,"p_fail_180d":0.7986,"key_drivers":["Elevated DGA"]},{"asset_id":"AST-00001","asset_class":"underground_cable","substation":"SUB-55","anomaly_score":0.732,"health_score":27,"rul_days":544,"condition_band":"Degraded","p_fail_30d":0.2329,"p_fail_90d":0.5486,"p_fail_180d":0.7962,"key_drivers":["Moisture ingress","Insulation degradation"]},{"asset_id":"AST-00018","asset_class":"overhead_line","substation":"SUB-48","anomaly_score":0.716,"health_score":28,"rul_days":567,"condition_band":"Degraded","p_fail_30d":0.2248,"p_fail_90d":0.5342,"p_fail_180d":0.7831,"key_drivers":["Excessive sag"]}],"work_orders":[{"work_order_id":"WO-A804E5029C","status":"pending_review","asset_id":"AST-00004","asset_class":"transformer","substation":"SUB-74","priority":"P2","horizon_days":90,"failure_probability":0.5513,"condition_band":"Degraded","task":"Oil DGA Sample + Analyze","assigned_crew_type":"specialist_oil_sampling_crew","estimated_hours":4,"due_by":"2026-05-27","rationale":"Elevated DGA","target_system":"D365 Field Service"},{"work_order_id":"WO-806A55C4A7","status":"pending_review","asset_id":"AST-00001","asset_class":"underground_cable","substation":"SUB-55","priority":"P2","horizon_days":90,"failure_probability":0.5486,"condition_band":"Degraded","task":"Partial Discharge Field Survey","assigned_crew_type":"cable_pd_crew","estimated_hours":5,"due_by":"2026-05-27","rationale":"Moisture ingress; Insulation degradation","target_system":"D365 Field Service"},{"work_order_id":"WO-FC875C3105","status":"pending_review","asset_id":"AST-00018","asset_class":"overhead_line","substation":"SUB-48","priority":"P2","horizon_days":90,"failure_probability":0.5342,"condition_band":"Degraded","task":"Aerial Patrol + LiDAR Resag Check","assigned_crew_type":"aerial_patrol_team","estimated_hours":4,"due_by":"2026-05-27","rationale":"Excessive sag","target_system":"D365 Field Service"},{"work_order_id":"WO-C2D3F195CC","status":"pending_review","asset_id":"AST-00009","asset_class":"underground_cable","substation":"SUB-94","priority":"P2","horizon_days":90,"failure_probability":0.5034,"condition_band":"Degraded","task":"Partial Discharge Field Survey","assigned_crew_type":"cable_pd_crew","estimated_hours":5,"due_by":"2026-05-27","rationale":"Moisture ingress; Insulation degradation","target_system":"D365 Field Service"},{"work_order_id":"WO-64CF998A9D","status":"pending_review","asset_id":"AST-00002","asset_class":"underground_cable","substation":"SUB-74","priority":"P3","horizon_days":90,"failure_probability":0.4666,"condition_band":"Degraded","task":"Partial Discharge Field Survey","assigned_crew_type":"cable_pd_crew","estimated_hours":5,"due_by":"2026-06-12","rationale":"Insulation degradation; Thermal cycling","target_system":"D365 Field Service"},{"work_order_id":"WO-3ED065019E","status":"pending_review","asset_id":"AST-00011","asset_class":"overhead_line","substation":"SUB-58","priority":"P3","horizon_days":90,"failure_probability":0.4471,"condition_band":"Degraded","task":"Aerial Patrol + LiDAR Resag Check","assigned_crew_type":"aerial_patrol_team","estimated_hours":4,"due_by":"2026-06-12","rationale":"Normal operating envelope","target_system":"D365 Field Service"},{"work_order_id":"WO-529E629DB4","status":"pending_review","asset_id":"AST-00006","asset_class":"transformer","substation":"SUB-39","priority":"P3","horizon_days":90,"failure_probability":0.4406,"condition_band":"Degraded","task":"Oil DGA Sample + Analyze","assigned_crew_type":"specialist_oil_sampling_crew","estimated_hours":4,"due_by":"2026-06-12","rationale":"Normal operating envelope","target_system":"D365 Field Service"},{"work_order_id":"WO-11C873825F","status":"pending_review","asset_id":"AST-00017","asset_class":"transformer","substation":"SUB-88","priority":"P3","horizon_days":90,"failure_probability":0.4397,"condition_band":"Degraded","task":"Oil DGA Sample + Analyze","assigned_crew_type":"specialist_oil_sampling_crew","estimated_hours":4,"due_by":"2026-06-12","rationale":"Partial discharge activity","target_system":"D365 Field Service"}],"capex_pipeline":{"as_of_utc":"2026-05-13T14:35:52.818349Z","current_fiscal_year":2026,"horizon_years":4,"annual_summary":[{"fiscal_year":2026,"candidates":8,"total_replace_cost_usd":7110000,"total_avoided_failure_value_usd":27600000,"by_class":{"transformer":3,"overhead_line":2,"underground_cable":3}},{"fiscal_year":2027,"candidates":8,"total_replace_cost_usd":5220000,"total_avoided_failure_value_usd":17700000,"by_class":{"switchgear":3,"overhead_line":2,"underground_cable":3}},{"fiscal_year":2028,"candidates":1,"total_replace_cost_usd":320000,"total_avoided_failure_value_usd":1500000,"by_class":{"switchgear":1}},{"fiscal_year":2029,"candidates":1,"total_replace_cost_usd":320000,"total_avoided_failure_value_usd":1500000,"by_class":{"switchgear":1}}],"pipeline":[{"asset_id":"AST-00004","asset_class":"transformer","substation":"SUB-74","anomaly_score":0.735,"p_fail_180d":0.7986,"condition_band":"Degraded","planned_fiscal_year":2026,"indicative_replace_cost_usd":950000,"avoided_failure_value_usd":4800000,"benefit_cost_ratio":4.04,"justification_drivers":["Elevated DGA"]},{"asset_id":"AST-00006","asset_class":"transformer","substation":"SUB-39","anomaly_score":0.614,"p_fail_180d":0.6871,"condition_band":"Degraded","planned_fiscal_year":2026,"indicative_replace_cost_usd":950000,"avoided_failure_value_usd":4800000,"benefit_cost_ratio":3.47,"justification_drivers":["Normal operating envelope"]},{"asset_id":"AST-00017","asset_class":"transformer","substation":"SUB-88","anomaly_score":0.613,"p_fail_180d":0.6861,"condition_band":"Degraded","planned_fiscal_year":2026,"indicative_replace_cost_usd":950000,"avoided_failure_value_usd":4800000,"benefit_cost_ratio":3.47,"justification_drivers":["Partial discharge activity"]},{"asset_id":"AST-00018","asset_class":"overhead_line","substation":"SUB-48","anomaly_score":0.716,"p_fail_180d":0.7831,"condition_band":"Degraded","planned_fiscal_year":2026,"indicative_replace_cost_usd":480000,"avoided_failure_value_usd":1800000,"benefit_cost_ratio":2.94,"justification_drivers":["Excessive sag"]},{"asset_id":"AST-00011","asset_class":"overhead_line","substation":"SUB-58","anomaly_score":0.621,"p_fail_180d":0.6943,"condition_band":"Degraded","planned_fiscal_year":2026,"indicative_replace_cost_usd":480000,"avoided_failure_value_usd":1800000,"benefit_cost_ratio":2.6,"justification_drivers":["Normal operating envelope"]},{"asset_id":"AST-00001","asset_class":"underground_cable","substation":"SUB-55","anomaly_score":0.732,"p_fail_180d":0.7962,"condition_band":"Degraded","planned_fiscal_year":2026,"indicative_replace_cost_usd":1100000,"avoided_failure_value_usd":3200000,"benefit_cost_ratio":2.32,"justification_drivers":["Moisture ingress","Insulation degradation"]},{"asset_id":"AST-00009","asset_class":"underground_cable","substation":"SUB-94","anomaly_score":0.682,"p_fail_180d":0.7534,"condition_band":"Degraded","planned_fiscal_year":2026,"indicative_replace_cost_usd":1100000,"avoided_failure_value_usd":3200000,"benefit_cost_ratio":2.19,"justification_drivers":["Moisture ingress","Insulation degradation"]},{"asset_id":"AST-00002","asset_class":"underground_cable","substation":"SUB-74","anomaly_score":0.642,"p_fail_180d":0.7154,"condition_band":"Degraded","planned_fiscal_year":2026,"indicative_replace_cost_usd":1100000,"avoided_failure_value_usd":3200000,"benefit_cost_ratio":2.08,"justification_drivers":["Insulation degradation","Thermal cycling"]},{"asset_id":"AST-00016","asset_class":"switchgear","substation":"SUB-96","anomaly_score":0.559,"p_fail_180d":0.6276,"condition_band":"Degraded","planned_fiscal_year":2027,"indicative_replace_cost_usd":320000,"avoided_failure_value_usd":1500000,"benefit_cost_ratio":2.94,"justification_drivers":["Normal operating envelope"]},{"asset_id":"AST-00003","asset_class":"switchgear","substation":"SUB-29","anomaly_score":0.482,"p_fail_180d":0.5376,"condition_band":"Watch","planned_fiscal_year":2027,"indicative_replace_cost_usd":320000,"avoided_failure_value_usd":1500000,"benefit_cost_ratio":2.52,"justification_drivers":["SF6 leak signal","High operations count"]},{"asset_id":"AST-00014","asset_class":"switchgear","substation":"SUB-25","anomaly_score":0.477,"p_fail_180d":0.5316,"condition_band":"Watch","planned_fiscal_year":2027,"indicative_replace_cost_usd":320000,"avoided_failure_value_usd":1500000,"benefit_cost_ratio":2.49,"justification_drivers":["SF6 leak signal","High operations count"]},{"asset_id":"AST-00007","asset_class":"overhead_line","substation":"SUB-48","anomaly_score":0.559,"p_fail_180d":0.6276,"condition_band":"Degraded","planned_fiscal_year":2027,"indicative_replace_cost_usd":480000,"avoided_failure_value_usd":1800000,"benefit_cost_ratio":2.35,"justification_drivers":["Excessive sag"]},{"asset_id":"AST-00015","asset_class":"underground_cable","substation":"SUB-01","anomaly_score":0.578,"p_fail_180d":0.6487,"condition_band":"Degraded","planned_fiscal_year":2027,"indicative_replace_cost_usd":1100000,"avoided_failure_value_usd":3200000,"benefit_cost_ratio":1.89,"justification_drivers":["Normal operating envelope"]},{"asset_id":"AST-00010","asset_class":"underground_cable","substation":"SUB-56","anomaly_score":0.548,"p_fail_180d":0.6151,"condition_band":"Watch","planned_fiscal_year":2027,"indicative_replace_cost_usd":1100000,"avoided_failure_value_usd":3200000,"benefit_cost_ratio":1.79,"justification_drivers":["Insulation degradation"]},{"asset_id":"AST-00008","asset_class":"overhead_line","substation":"SUB-59","anomaly_score":0.429,"p_fail_180d":0.4732,"condition_band":"Watch","planned_fiscal_year":2027,"indicative_replace_cost_usd":480000,"avoided_failure_value_usd":1800000,"benefit_cost_ratio":1.77,"justification_drivers":["Normal operating envelope"]},{"asset_id":"AST-00013","asset_class":"underground_cable","substation":"SUB-90","anomaly_score":0.44,"p_fail_180d":0.4866,"condition_band":"Watch","planned_fiscal_year":2027,"indicative_replace_cost_usd":1100000,"avoided_failure_value_usd":3200000,"benefit_cost_ratio":1.42,"justification_drivers":["Insulation degradation"]},{"asset_id":"AST-00005","asset_class":"switchgear","substation":"SUB-75","anomaly_score":0.306,"p_fail_180d":0.3275,"condition_band":"Watch","planned_fiscal_year":2028,"indicative_replace_cost_usd":320000,"avoided_failure_value_usd":1500000,"benefit_cost_ratio":1.54,"justification_drivers":["Normal operating envelope"]},{"asset_id":"AST-00012","asset_class":"switchgear","substation":"SUB-16","anomaly_score":0.149,"p_fail_180d":0.1845,"condition_band":"Healthy","planned_fiscal_year":2029,"indicative_replace_cost_usd":320000,"avoided_failure_value_usd":1500000,"benefit_cost_ratio":0.86,"justification_drivers":["Normal operating envelope"]}]}};
+
+const msgs = document.getElementById('messages');
+const agentsRow = document.getElementById('agents');
+
+function fmt(n) { return n.toLocaleString(); }
+function fmtPct(p) { return (p * 100).toFixed(1) + '%'; }
+function fmtUSD(n) { return '$' + (n >= 1e6 ? (n/1e6).toFixed(2) + 'M' : (n/1e3).toFixed(0) + 'K'); }
+function bandClass(b) { return b.toLowerCase(); }
+
+function scrollChat() { msgs.scrollTop = msgs.scrollHeight; }
+
+function appendUser(text) {
+  const el = document.createElement('div');
+  el.className = 'msg user';
+  el.innerHTML = `<div class="bubble">${text}</div>`;
+  msgs.appendChild(el);
+  scrollChat();
+}
+
+function fireAgents(keys) {
+  // Light up agents sequentially
+  keys.forEach((k, i) => {
+    setTimeout(() => {
+      const el = agentsRow.querySelector(`[data-key="${k}"]`);
+      if (el) {
+        el.classList.add('firing');
+        setTimeout(() => { el.classList.remove('firing'); el.classList.add('fired'); }, 700);
+      }
+    }, i * 220);
+  });
+}
+
+function appendAssistant(html, agentsUsed) {
+  const el = document.createElement('div');
+  el.className = 'msg assistant';
+  const pills = (agentsUsed || []).map(a => `<span class="pill">${a}</span>`).join('');
+  el.innerHTML = `
+    <div class="ai">AI</div>
+    <div class="bubble">
+      ${pills ? `<div class="agents-used">${pills}</div>` : ''}
+      ${html}
+    </div>`;
+  msgs.appendChild(el);
+  scrollChat();
+}
+
+function buildRiskTable(rows) {
+  const trs = rows.map(r => `
+    <tr>
+      <td><strong>${r.asset_id}</strong></td>
+      <td>${r.asset_class.replace('_',' ')}</td>
+      <td>${r.substation}</td>
+      <td class="num">${fmtPct(r.p_fail_90d)}</td>
+      <td class="num">${fmtPct(r.p_fail_180d)}</td>
+      <td><span class="badge ${bandClass(r.condition_band)}">${r.condition_band}</span></td>
+      <td class="drivers">${r.key_drivers.join(', ')}</td>
+    </tr>`).join('');
+  return `
+    <table class="table">
+      <thead><tr><th>Asset</th><th>Class</th><th>Substation</th><th>P(fail 90d)</th><th>P(fail 180d)</th><th>Condition</th><th>Drivers</th></tr></thead>
+      <tbody>${trs}</tbody>
+    </table>`;
+}
+
+function buildWOTable(rows) {
+  const trs = rows.map(o => `
+    <tr>
+      <td><strong>${o.work_order_id}</strong></td>
+      <td>${o.asset_id}</td>
+      <td>${o.task}</td>
+      <td><span class="badge p${o.priority.charAt(1)}">${o.priority}</span></td>
+      <td class="num">${fmtPct(o.failure_probability)}</td>
+      <td class="num">${o.due_by}</td>
+    </tr>`).join('');
+  return `
+    <table class="table">
+      <thead><tr><th>Work Order</th><th>Asset</th><th>Task</th><th>Pri</th><th>P(90d)</th><th>Due By</th></tr></thead>
+      <tbody>${trs}</tbody>
+    </table>`;
+}
+
+function buildCapexTable(annual) {
+  const trs = annual.map(y => `
+    <tr>
+      <td><strong>FY${y.fiscal_year}</strong></td>
+      <td class="num">${y.candidates}</td>
+      <td class="num">${fmtUSD(y.total_replace_cost_usd)}</td>
+      <td class="num">${fmtUSD(y.total_avoided_failure_value_usd)}</td>
+      <td>${Object.entries(y.by_class).map(([k,v]) => `${k.replace('_',' ')}:${v}`).join(', ')}</td>
+    </tr>`).join('');
+  return `
+    <table class="table">
+      <thead><tr><th>Fiscal Year</th><th>Assets</th><th>Replace cost</th><th>Avoided failure value</th><th>By class</th></tr></thead>
+      <tbody>${trs}</tbody>
+    </table>`;
+}
+
+const HANDLERS = {
+  risk: () => {
+    appendUser('Show me the highest-risk grid assets for the next 90 days');
+    fireAgents(['aggregator', 'scorer', 'ranker']);
+    setTimeout(() => {
+      appendAssistant(`
+        <h4>Top-risk grid assets (90-day horizon)</h4>
+        <p style="margin:0 0 8px">8 assets in <strong>Degraded</strong> band, top probability <strong>${fmtPct(DATA.top_risk_90d[0].p_fail_90d)}</strong> on <strong>${DATA.top_risk_90d[0].asset_id}</strong> (transformer, SUB-74) — elevated DGA. Drill in to draft work orders.</p>
+        ${buildRiskTable(DATA.top_risk_90d)}
+      `, ['Asset Sensor Aggregator', 'Asset Health Scorer', 'Failure Probability Ranker']);
+    }, 900);
+  },
+  sub44: () => {
+    appendUser('Run the predictive maintenance pipeline for substation SUB-44');
+    fireAgents(['aggregator', 'scorer', 'ranker', 'wo']);
+    setTimeout(() => {
+      appendAssistant(`
+        <h4>SUB-44 / sample substations · pipeline run</h4>
+        <p style="margin:0 0 8px">No SUB-44 in the current synthetic fleet — showing the three highest-risk substations as representative. Pipeline aggregated telemetry, scored each asset, ranked by 90-day failure probability, and queued WO drafts.</p>
+        ${buildRiskTable(DATA.sub_44_pipeline)}
+      `, ['Asset Sensor Aggregator', 'Asset Health Scorer', 'Failure Probability Ranker', 'Maintenance Work Order']);
+    }, 900);
+  },
+  wos: () => {
+    appendUser('Generate work orders for any asset above a 30% 90-day failure probability');
+    fireAgents(['aggregator', 'scorer', 'ranker', 'wo', 'parts']);
+    setTimeout(() => {
+      appendAssistant(`
+        <h4>Work orders generated · pending dispatcher review</h4>
+        <div style="margin-bottom:10px">
+          <span class="summary-stat"><span class="val">${DATA.work_orders.length}</span><span class="lbl">WOs drafted</span></span>
+          <span class="summary-stat"><span class="val">30%</span><span class="lbl">Threshold (90d)</span></span>
+          <span class="summary-stat"><span class="val">D365 FS</span><span class="lbl">Target system</span></span>
+        </div>
+        ${buildWOTable(DATA.work_orders)}
+        <p style="margin:10px 0 0;font-size:12px;color:var(--ink-mute)">All work orders are in <strong>pending_review</strong> — dispatcher confirms before they hit the field-service queue.</p>
+      `, ['Failure Probability Ranker', 'Maintenance Work Order', 'Parts Planner']);
+    }, 1000);
+  },
+  capex: () => {
+    appendUser('Give me the fleet-level replacement capex pipeline');
+    fireAgents(['aggregator', 'scorer', 'ranker', 'capex']);
+    setTimeout(() => {
+      const totals = DATA.capex_pipeline.annual_summary.reduce((acc,y)=>{acc.cost+=y.total_replace_cost_usd;acc.avoid+=y.total_avoided_failure_value_usd;acc.n+=y.candidates;return acc;},{cost:0,avoid:0,n:0});
+      appendAssistant(`
+        <h4>4-year capital replacement pipeline · FY26–FY29</h4>
+        <div style="margin-bottom:10px">
+          <span class="summary-stat"><span class="val">${totals.n}</span><span class="lbl">Candidates</span></span>
+          <span class="summary-stat"><span class="val">${fmtUSD(totals.cost)}</span><span class="lbl">Replace cost</span></span>
+          <span class="summary-stat"><span class="val">${fmtUSD(totals.avoid)}</span><span class="lbl">Avoided failure value</span></span>
+          <span class="summary-stat"><span class="val">${(totals.avoid/totals.cost).toFixed(2)}×</span><span class="lbl">Portfolio BCR</span></span>
+        </div>
+        ${buildCapexTable(DATA.capex_pipeline.annual_summary)}
+        <p style="margin:10px 0 0;font-size:12px;color:var(--ink-mute)">Output is suitable for capex committee review — agent does not auto-approve.</p>
+      `, ['Failure Probability Ranker', 'Lifecycle Capex Planner']);
+    }, 1000);
+  },
+};
+
+document.querySelectorAll('.prompts button[data-prompt]').forEach(btn => {
+  btn.addEventListener('click', () => {
+    HANDLERS[btn.dataset.prompt]();
+  });
+});
+
+document.getElementById('resetBtn').addEventListener('click', () => {
+  msgs.innerHTML = `
+    <div class="msg assistant">
+      <div class="ai">AI</div>
+      <div class="bubble">
+        <h4>Ready to help</h4>
+        Hi — I'm running the <strong>Predictive Asset Maintenance Intelligence</strong> stack. I have eight agents that work the grid asset health pipeline end-to-end. Pick a starter below or ask me anything about your fleet.
+      </div>
+    </div>`;
+  document.querySelectorAll('.agent').forEach(a => a.classList.remove('firing','fired'));
+});
+</script>
+</body>
+</html>

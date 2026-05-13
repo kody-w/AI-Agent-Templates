@@ -7779,6 +7779,281 @@
           "Status tracking"
         ]
       }
+    },
+    {
+      "id": "predictive_asset_maintenance_intelligence_stack",
+      "name": "Predictive Asset Maintenance Intelligence Stack",
+      "path": "agent_stacks/energy_stacks/predictive_asset_maintenance_intelligence_stack",
+      "industry": "Energy & Utilities",
+      "agents": [
+        {
+          "id": "predictive_asset_maintenance_intelligence_stack_asset_sensor_aggregator_agent",
+          "name": "Asset Sensor Aggregator Agent",
+          "filename": "asset_sensor_aggregator_agent.py",
+          "path": "agent_stacks/energy_stacks/predictive_asset_maintenance_intelligence_stack/agents/asset_sensor_aggregator_agent.py",
+          "url": "https://raw.githubusercontent.com/kody-w/AI-Agent-Templates/main/agent_stacks/energy_stacks/predictive_asset_maintenance_intelligence_stack/agents/asset_sensor_aggregator_agent.py",
+          "size": 4960,
+          "size_formatted": "4.8KB",
+          "type": "stack",
+          "stack_name": "Predictive Asset Maintenance Intelligence Agent Stack",
+          "stack_path": "energy_stacks/predictive_asset_maintenance_intelligence_stack",
+          "industry": "Energy & Utilities",
+          "icon": "\ud83d\udce1",
+          "description": "Aggregates IoT/SCADA telemetry across transformers, switchgear, cables, overhead lines.",
+          "features": [
+            "Energy utilities domain",
+            "BasicAgent runtime",
+            "Synthetic data, no PII",
+            "Tested end-to-end"
+          ]
+        },
+        {
+          "id": "predictive_asset_maintenance_intelligence_stack_asset_health_scorer_agent",
+          "name": "Asset Health Scorer Agent",
+          "filename": "asset_health_scorer_agent.py",
+          "path": "agent_stacks/energy_stacks/predictive_asset_maintenance_intelligence_stack/agents/asset_health_scorer_agent.py",
+          "url": "https://raw.githubusercontent.com/kody-w/AI-Agent-Templates/main/agent_stacks/energy_stacks/predictive_asset_maintenance_intelligence_stack/agents/asset_health_scorer_agent.py",
+          "size": 6526,
+          "size_formatted": "6.4KB",
+          "type": "stack",
+          "stack_name": "Predictive Asset Maintenance Intelligence Agent Stack",
+          "stack_path": "energy_stacks/predictive_asset_maintenance_intelligence_stack",
+          "industry": "Energy & Utilities",
+          "icon": "\ud83e\udde0",
+          "description": "Anomaly score, health score, condition band, Remaining Useful Life.",
+          "features": [
+            "Energy utilities domain",
+            "BasicAgent runtime",
+            "Synthetic data, no PII",
+            "Tested end-to-end"
+          ]
+        },
+        {
+          "id": "predictive_asset_maintenance_intelligence_stack_failure_probability_ranker_agent",
+          "name": "Failure Probability Ranker Agent",
+          "filename": "failure_probability_ranker_agent.py",
+          "path": "agent_stacks/energy_stacks/predictive_asset_maintenance_intelligence_stack/agents/failure_probability_ranker_agent.py",
+          "url": "https://raw.githubusercontent.com/kody-w/AI-Agent-Templates/main/agent_stacks/energy_stacks/predictive_asset_maintenance_intelligence_stack/agents/failure_probability_ranker_agent.py",
+          "size": 4982,
+          "size_formatted": "4.9KB",
+          "type": "stack",
+          "stack_name": "Predictive Asset Maintenance Intelligence Agent Stack",
+          "stack_path": "energy_stacks/predictive_asset_maintenance_intelligence_stack",
+          "industry": "Energy & Utilities",
+          "icon": "\ud83d\udcca",
+          "description": "Ranks fleet across 30/90/180-day horizons (hazard-survival model).",
+          "features": [
+            "Energy utilities domain",
+            "BasicAgent runtime",
+            "Synthetic data, no PII",
+            "Tested end-to-end"
+          ]
+        },
+        {
+          "id": "predictive_asset_maintenance_intelligence_stack_maintenance_work_order_agent",
+          "name": "Maintenance Work Order Agent",
+          "filename": "maintenance_work_order_agent.py",
+          "path": "agent_stacks/energy_stacks/predictive_asset_maintenance_intelligence_stack/agents/maintenance_work_order_agent.py",
+          "url": "https://raw.githubusercontent.com/kody-w/AI-Agent-Templates/main/agent_stacks/energy_stacks/predictive_asset_maintenance_intelligence_stack/agents/maintenance_work_order_agent.py",
+          "size": 6573,
+          "size_formatted": "6.4KB",
+          "type": "stack",
+          "stack_name": "Predictive Asset Maintenance Intelligence Agent Stack",
+          "stack_path": "energy_stacks/predictive_asset_maintenance_intelligence_stack",
+          "industry": "Energy & Utilities",
+          "icon": "\ud83d\udee0",
+          "description": "Drafts D365 Field Service work orders, pending_review by design.",
+          "features": [
+            "Energy utilities domain",
+            "BasicAgent runtime",
+            "Synthetic data, no PII",
+            "Tested end-to-end"
+          ]
+        },
+        {
+          "id": "predictive_asset_maintenance_intelligence_stack_parts_planner_agent",
+          "name": "Parts Planner Agent",
+          "filename": "parts_planner_agent.py",
+          "path": "agent_stacks/energy_stacks/predictive_asset_maintenance_intelligence_stack/agents/parts_planner_agent.py",
+          "url": "https://raw.githubusercontent.com/kody-w/AI-Agent-Templates/main/agent_stacks/energy_stacks/predictive_asset_maintenance_intelligence_stack/agents/parts_planner_agent.py",
+          "size": 6851,
+          "size_formatted": "6.7KB",
+          "type": "stack",
+          "stack_name": "Predictive Asset Maintenance Intelligence Agent Stack",
+          "stack_path": "energy_stacks/predictive_asset_maintenance_intelligence_stack",
+          "industry": "Energy & Utilities",
+          "icon": "\ud83d\udce6",
+          "description": "Consolidates parts demand and emits SAP MM long-lead procurement triggers.",
+          "features": [
+            "Energy utilities domain",
+            "BasicAgent runtime",
+            "Synthetic data, no PII",
+            "Tested end-to-end"
+          ]
+        },
+        {
+          "id": "predictive_asset_maintenance_intelligence_stack_field_execution_capture_agent",
+          "name": "Field Execution Capture Agent",
+          "filename": "field_execution_capture_agent.py",
+          "path": "agent_stacks/energy_stacks/predictive_asset_maintenance_intelligence_stack/agents/field_execution_capture_agent.py",
+          "url": "https://raw.githubusercontent.com/kody-w/AI-Agent-Templates/main/agent_stacks/energy_stacks/predictive_asset_maintenance_intelligence_stack/agents/field_execution_capture_agent.py",
+          "size": 5435,
+          "size_formatted": "5.3KB",
+          "type": "stack",
+          "stack_name": "Predictive Asset Maintenance Intelligence Agent Stack",
+          "stack_path": "energy_stacks/predictive_asset_maintenance_intelligence_stack",
+          "industry": "Energy & Utilities",
+          "icon": "\ud83d\udcf1",
+          "description": "Captures field-execution outcomes from the Power Apps mobile form.",
+          "features": [
+            "Energy utilities domain",
+            "BasicAgent runtime",
+            "Synthetic data, no PII",
+            "Tested end-to-end"
+          ]
+        },
+        {
+          "id": "predictive_asset_maintenance_intelligence_stack_asset_register_writeback_agent",
+          "name": "Asset Register Write-back Agent",
+          "filename": "asset_register_writeback_agent.py",
+          "path": "agent_stacks/energy_stacks/predictive_asset_maintenance_intelligence_stack/agents/asset_register_writeback_agent.py",
+          "url": "https://raw.githubusercontent.com/kody-w/AI-Agent-Templates/main/agent_stacks/energy_stacks/predictive_asset_maintenance_intelligence_stack/agents/asset_register_writeback_agent.py",
+          "size": 5280,
+          "size_formatted": "5.2KB",
+          "type": "stack",
+          "stack_name": "Predictive Asset Maintenance Intelligence Agent Stack",
+          "stack_path": "energy_stacks/predictive_asset_maintenance_intelligence_stack",
+          "industry": "Energy & Utilities",
+          "icon": "\ud83d\udcdd",
+          "description": "Stages AMS + ERP fixed-asset register updates.",
+          "features": [
+            "Energy utilities domain",
+            "BasicAgent runtime",
+            "Synthetic data, no PII",
+            "Tested end-to-end"
+          ]
+        },
+        {
+          "id": "predictive_asset_maintenance_intelligence_stack_lifecycle_capex_planner_agent",
+          "name": "Lifecycle Capex Planner Agent",
+          "filename": "lifecycle_capex_planner_agent.py",
+          "path": "agent_stacks/energy_stacks/predictive_asset_maintenance_intelligence_stack/agents/lifecycle_capex_planner_agent.py",
+          "url": "https://raw.githubusercontent.com/kody-w/AI-Agent-Templates/main/agent_stacks/energy_stacks/predictive_asset_maintenance_intelligence_stack/agents/lifecycle_capex_planner_agent.py",
+          "size": 6441,
+          "size_formatted": "6.3KB",
+          "type": "stack",
+          "stack_name": "Predictive Asset Maintenance Intelligence Agent Stack",
+          "stack_path": "energy_stacks/predictive_asset_maintenance_intelligence_stack",
+          "industry": "Energy & Utilities",
+          "icon": "\ud83d\udcb0",
+          "description": "Multi-year capital replacement pipeline with benefit/cost ratio.",
+          "features": [
+            "Energy utilities domain",
+            "BasicAgent runtime",
+            "Synthetic data, no PII",
+            "Tested end-to-end"
+          ]
+        }
+      ],
+      "metadata": {
+        "id": "predictive_asset_maintenance_intelligence_stack",
+        "name": "Predictive Asset Maintenance Intelligence Agent Stack",
+        "version": "1.0.0.0",
+        "description": "Extends the operational life of critical grid infrastructure and reduces unplanned outages by using AI to continuously monitor asset health and predict failures before they occur \u2014 replacing reactive maintenance with intelligent, condition-based interventions across transmission and distribution networks.",
+        "category": "energy_utilities",
+        "complexity": "intermediate",
+        "features": [
+          "Asset Sensor Data Aggregation (transformers, switchgear, cables, OH lines)",
+          "Anomaly Detection & Health Scoring with remaining-useful-life estimate",
+          "Failure Probability Ranking across 30/90/180-day horizons",
+          "Maintenance Work Order Generation in Field Service for above-threshold assets",
+          "Resources & Parts Pre-Planning with long-lead procurement triggers",
+          "Maintenance Execution & Quality Capture in Power Apps mobile",
+          "Asset Register Update \u2014 write-back to AMS + ERP fixed-asset register",
+          "Asset Lifecycle & Replacement Planning capex pipeline view"
+        ],
+        "benefits": [
+          "Reduced unplanned failures across transmission and distribution infrastructure",
+          "Longer average asset operational life through proactive intervention",
+          "Lower total maintenance cost through condition-based scheduling",
+          "Lower capital replacement expenditure through better lifecycle management"
+        ],
+        "technicalRequirements": {
+          "platforms": [
+            "Windows",
+            "macOS",
+            "Linux"
+          ],
+          "dependencies": [
+            "Python 3.11+",
+            "requests",
+            "json"
+          ],
+          "integrations": [
+            "Azure IoT Hub",
+            "Azure AI / ML",
+            "Copilot Studio",
+            "Field Service Platform",
+            "Power Apps",
+            "Power BI",
+            "Power Automate",
+            "ERP / Procurement",
+            "Asset Management System"
+          ]
+        },
+        "components": [
+          {
+            "name": "asset_sensor_aggregator_agent.py",
+            "description": "Aggregates IoT/SCADA telemetry across transformers, switchgear, cables, overhead lines.",
+            "role": "Focused agent in the 8-agent stack"
+          },
+          {
+            "name": "asset_health_scorer_agent.py",
+            "description": "Anomaly score, health score, condition band, Remaining Useful Life.",
+            "role": "Focused agent in the 8-agent stack"
+          },
+          {
+            "name": "failure_probability_ranker_agent.py",
+            "description": "Ranks fleet across 30/90/180-day horizons (hazard-survival model).",
+            "role": "Focused agent in the 8-agent stack"
+          },
+          {
+            "name": "maintenance_work_order_agent.py",
+            "description": "Drafts D365 Field Service work orders, pending_review by design.",
+            "role": "Focused agent in the 8-agent stack"
+          },
+          {
+            "name": "parts_planner_agent.py",
+            "description": "Consolidates parts demand and emits SAP MM long-lead procurement triggers.",
+            "role": "Focused agent in the 8-agent stack"
+          },
+          {
+            "name": "field_execution_capture_agent.py",
+            "description": "Captures field-execution outcomes from the Power Apps mobile form.",
+            "role": "Focused agent in the 8-agent stack"
+          },
+          {
+            "name": "asset_register_writeback_agent.py",
+            "description": "Stages AMS + ERP fixed-asset register updates.",
+            "role": "Focused agent in the 8-agent stack"
+          },
+          {
+            "name": "lifecycle_capex_planner_agent.py",
+            "description": "Multi-year capital replacement pipeline with benefit/cost ratio.",
+            "role": "Focused agent in the 8-agent stack"
+          }
+        ],
+        "demo": {
+          "available": true,
+          "url": "agent_stacks/energy_stacks/predictive_asset_maintenance_intelligence_stack/demos/predictive_asset_maintenance_intelligence_demo.html"
+        },
+        "useCases": [
+          "Show me the highest-risk grid assets for the next 90 days",
+          "Run the predictive maintenance pipeline for substation SUB-44",
+          "Generate work orders for any asset above a 30% 90-day failure probability",
+          "Give me the fleet-level replacement capex pipeline"
+        ]
+      }
     }
   ]
 }
