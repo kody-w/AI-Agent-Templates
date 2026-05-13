@@ -1,0 +1,73 @@
+{
+  "id": "predictive_asset_maintenance_intelligence_stack",
+  "name": "Predictive Asset Maintenance Intelligence Agent Stack",
+  "version": "1.0.0.0",
+  "description": "Extends the operational life of critical grid infrastructure and reduces unplanned outages by using AI to continuously monitor asset health and predict failures before they occur \u2014 replacing reactive maintenance with intelligent, condition-based interventions across transmission and distribution networks.",
+  "category": "energy_utilities",
+  "industry_label": "Energy Utilities",
+  "complexity": "intermediate",
+  "features": [
+    "Asset Sensor Data Aggregation (transformers, switchgear, cables, OH lines)",
+    "Anomaly Detection & Health Scoring with remaining-useful-life estimate",
+    "Failure Probability Ranking across 30/90/180-day horizons",
+    "Maintenance Work Order Generation in Field Service for above-threshold assets",
+    "Resources & Parts Pre-Planning with long-lead procurement triggers",
+    "Maintenance Execution & Quality Capture in Power Apps mobile",
+    "Asset Register Update \u2014 write-back to AMS + ERP fixed-asset register",
+    "Asset Lifecycle & Replacement Planning capex pipeline view"
+  ],
+  "benefits": [
+    "Reduced unplanned failures across transmission and distribution infrastructure",
+    "Longer average asset operational life through proactive intervention",
+    "Lower total maintenance cost through condition-based scheduling",
+    "Lower capital replacement expenditure through better lifecycle management"
+  ],
+  "starters": [
+    "Show me the highest-risk grid assets for the next 90 days",
+    "Run the predictive maintenance pipeline for substation SUB-44",
+    "Generate work orders for any asset above a 30% 90-day failure probability",
+    "Give me the fleet-level replacement capex pipeline"
+  ],
+  "technicalRequirements": {
+    "platforms": [
+      "Windows",
+      "macOS",
+      "Linux"
+    ],
+    "dependencies": [
+      "Python 3.11+",
+      "requests",
+      "json"
+    ],
+    "integrations": [
+      "Azure IoT Hub",
+      "Azure AI / ML",
+      "Copilot Studio",
+      "Field Service Platform",
+      "Power Apps",
+      "Power BI",
+      "Power Automate",
+      "ERP / Procurement",
+      "Asset Management System"
+    ]
+  },
+  "components": [
+    {
+      "name": "predictive_asset_maintenance_intelligence_agent.py",
+      "description": "Extends the operational life of critical grid infrastructure and reduces unplanned outages by using AI to continuously monitor asset health and predict failures before they occur \u2014 replacing reactive maintenance with intelligent, condition-based interventions across transmission and distribution networks.",
+      "role": "Primary processing engine (Azure Function / rapp_ai-style)"
+    }
+  ],
+  "deliverables": {
+    "readme": "README.md",
+    "solution_zip": "PredictiveAssetMaintenanceIntelligence_v1.0.0.0.zip",
+    "setup_guide_pdf": "Predictive Asset Maintenance Intelligence Agent - Setup Guide.pdf",
+    "overview_deck_pptx": "Predictive Asset Maintenance Intelligence Agent - Overview Deck.pptx",
+    "eval_test_plan_pdf": "Predictive Asset Maintenance Intelligence Agent - Evaluation Test Plan.pdf",
+    "eval_test_set_csv": "Predictive Asset Maintenance Intelligence Agent - Evaluation Test Set.csv",
+    "icon_png": "Predictive Asset Maintenance Intelligence Icon.png",
+    "agent_py": "agents/predictive_asset_maintenance_intelligence_agent.py",
+    "architecture_copilot_studio": "architecture/copilot_studio.mmd",
+    "architecture_azure_function": "architecture/azure_function.mmd"
+  }
+}
