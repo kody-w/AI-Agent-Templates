@@ -833,19 +833,22 @@
             },
             {
                 type: 'agent',
-                content: `Pipeline complete for SUB-44 and its three feeder substations. Captured telemetry, scored health, ranked failure probabilities, and queued draft work orders.
-
-**Substation SUB-44 fleet snapshot:**
-• 18 assets in scope (12 transformers, 4 switchgear units, 2 cables)
-• Health bands: 1 Healthy · 6 Watch · 8 Degraded · 0 Critical
-• Highest risk: AST-00004 (transformer) — 55.1% / 90d · elevated DGA
-
-**Drafted work orders (pending_review):**
-• WO-A804E5029C → Oil DGA Sample + Analyze · P2 · due 2026-05-27
-• WO-806A55C4A7 → Partial Discharge Field Survey · P2 · due 2026-05-27
-• WO-FC875C3105 → Aerial Patrol + LiDAR Resag Check · P2 · due 2026-05-27
-
-**Pipeline timing:** end-to-end 2.1s · all 8 agents ran clean through the BasicAgent runtime. No customer data — synthetic, deterministic seed.`,
+                content: `Pipeline complete for SUB-44 and its feeder substations. Aggregated telemetry, scored health, ranked failure probabilities, and queued draft work orders.`,
+                agentData: {
+                    title: 'SUB-44 Pipeline · End-to-End Run',
+                    status: 'Pipeline Complete',
+                    details: {
+                        'Assets in scope': '18 (12 transformers · 4 switchgear · 2 cables)',
+                        'Health band distribution': '1 Healthy · 6 Watch · 8 Degraded · 0 Critical',
+                        'Highest risk asset': 'AST-00004 (transformer) — 55.1% / 90d · elevated DGA',
+                        'WO drafted #1': 'WO-A804E5029C → Oil DGA Sample + Analyze · P2 · due 2026-05-27',
+                        'WO drafted #2': 'WO-806A55C4A7 → Partial Discharge Field Survey · P2 · due 2026-05-27',
+                        'WO drafted #3': 'WO-FC875C3105 → Aerial Patrol + LiDAR Resag Check · P2 · due 2026-05-27',
+                        'Pipeline timing': 'End-to-end 2.1s · all 8 agents ran clean through the BasicAgent runtime',
+                        'Data source': 'Synthetic, deterministic seed — no customer data',
+                        'Agents invoked': 'Asset Sensor Aggregator → Health Scorer → Failure Probability Ranker → Maintenance Work Order'
+                    }
+                },
                 typingTime: 2500,
                 delay: 2000
             },
