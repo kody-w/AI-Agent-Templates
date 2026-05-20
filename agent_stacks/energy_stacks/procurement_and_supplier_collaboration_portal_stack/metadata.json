@@ -1,0 +1,98 @@
+{
+  "id": "procurement_and_supplier_collaboration_portal_stack",
+  "name": "Procurement and Supplier Collaboration Portal Agent Stack",
+  "version": "1.0.0.0",
+  "description": "Accelerates procurement cycles and improves supplier performance via AI-assisted bid evaluation, automated approval workflows, and a digital supplier collaboration portal -- covering demand signal through three-way invoice match.",
+  "category": "energy_utilities",
+  "industry_label": "Energy Utilities",
+  "complexity": "intermediate",
+  "features": [
+    "Demand signal + requisition creation from maintenance / capital plans",
+    "Procurement strategy determination (direct award / mini-comp / open tender)",
+    "RFQ preparation with eligible-supplier shortlist",
+    "Supplier portal bid submission with Copilot-assisted Q&A",
+    "AI-assisted bid evaluation across price, lead time, quality, sustainability",
+    "PO approval + issuance with automated supplier acknowledgement",
+    "ASN + delivery tracking with deviation alerting",
+    "Three-way match: PO / Goods Receipt / Invoice with payment release"
+  ],
+  "benefits": [
+    "Faster end-to-end procurement cycle for routine and framework orders",
+    "Higher on-time supplier delivery rate for critical network materials",
+    "Lower average procurement cost through AI-assisted bid evaluation",
+    "Less manual supplier correspondence through automated portal workflows"
+  ],
+  "starters": [
+    "Recommend a procurement route for this 2 MUSD framework order",
+    "Build an RFQ for medium-voltage cable replenishment",
+    "Score the bids submitted by these suppliers",
+    "Show me suppliers tracking behind their committed delivery schedule"
+  ],
+  "technicalRequirements": {
+    "platforms": [
+      "Windows",
+      "macOS",
+      "Linux"
+    ],
+    "dependencies": [
+      "Python 3.11+"
+    ],
+    "integrations": [
+      "ERP / MRP System",
+      "Power Automate",
+      "Copilot Studio",
+      "Power Apps",
+      "ERP / Procurement",
+      "Azure AI",
+      "ERP / Finance Module"
+    ]
+  },
+  "components": [
+    {
+      "name": "demand_signal_requisition_agent.py",
+      "description": "Pulls demand from maintenance + capital plans.",
+      "role": "Focused agent in the 8-agent stack"
+    },
+    {
+      "name": "procurement_strategy_agent.py",
+      "description": "Direct award / mini-comp / open tender decision.",
+      "role": "Focused agent in the 8-agent stack"
+    },
+    {
+      "name": "rfq_builder_agent.py",
+      "description": "Builds RFQ + shortlists eligible suppliers.",
+      "role": "Focused agent in the 8-agent stack"
+    },
+    {
+      "name": "supplier_bid_intake_agent.py",
+      "description": "Receives bids + clarification Q&A.",
+      "role": "Focused agent in the 8-agent stack"
+    },
+    {
+      "name": "bid_evaluation_agent.py",
+      "description": "Scores bids across weighted criteria.",
+      "role": "Focused agent in the 8-agent stack"
+    },
+    {
+      "name": "po_approval_issuance_agent.py",
+      "description": "Drafts PO + routes for approval (pending_review).",
+      "role": "Focused agent in the 8-agent stack"
+    },
+    {
+      "name": "delivery_tracking_agent.py",
+      "description": "Tracks ASN + flags deviation vs commitment.",
+      "role": "Focused agent in the 8-agent stack"
+    },
+    {
+      "name": "three_way_match_agent.py",
+      "description": "PO <-> GR <-> Invoice reconciliation.",
+      "role": "Focused agent in the 8-agent stack"
+    }
+  ],
+  "useCases": [
+    "Recommend a procurement route for this 2 MUSD framework order",
+    "Build an RFQ for medium-voltage cable replenishment",
+    "Score the bids submitted by these suppliers",
+    "Show me suppliers tracking behind their committed delivery schedule"
+  ]
+}

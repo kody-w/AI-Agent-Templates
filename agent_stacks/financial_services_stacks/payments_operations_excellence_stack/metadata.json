@@ -1,0 +1,99 @@
+{
+  "id": "payments_operations_excellence_stack",
+  "name": "Payments Operations Excellence Agent Stack",
+  "version": "1.0.0.0",
+  "description": "Optimises end-to-end payments processing: reduces exceptions, improves STP rates, and ensures real-time compliance with scheme rules across CHAPS, Faster Payments, SEPA, and SWIFT rails.",
+  "category": "financial_services",
+  "industry_label": "Financial Services",
+  "complexity": "intermediate",
+  "features": [
+    "Payment ingestion + scheme-rule validation across CHAPS / FPS / SEPA / SWIFT",
+    "Sanctions screening against OFAC / HMT / EU lists",
+    "Exception handling with Copilot-assisted cause analysis + repair playbook",
+    "Nostro reconciliation and payment-position automation",
+    "Correspondent-banking limit and nostro-funding monitoring",
+    "Pre-release transaction-level fraud scoring",
+    "Customer-query resolution with real-time payment status",
+    "Payments analytics: volumes, STP rates, scheme-compliance KPIs"
+  ],
+  "benefits": [
+    "Higher straight-through-processing rate across payment rails",
+    "Real-time scheme compliance monitoring",
+    "Lower payment exception handling cost",
+    "Faster resolution of customer payment queries"
+  ],
+  "starters": [
+    "Show me today's STP rate by payment rail",
+    "Why did this CHAPS payment fail validation?",
+    "What is our nostro position reconciliation status?",
+    "Track payment reference 12345 and explain its current state"
+  ],
+  "technicalRequirements": {
+    "platforms": [
+      "Windows",
+      "macOS",
+      "Linux"
+    ],
+    "dependencies": [
+      "Python 3.11+"
+    ],
+    "integrations": [
+      "Azure AI",
+      "Payment Platform",
+      "Sanctions Screening",
+      "Power Apps",
+      "Copilot Studio",
+      "Power Automate",
+      "ERP Finance Module",
+      "Power BI"
+    ]
+  },
+  "components": [
+    {
+      "name": "payment_ingestion_validator_agent.py",
+      "description": "Validates payment against scheme rules (CHAPS / FPS / SEPA / SWIFT).",
+      "role": "Focused agent in the 8-agent stack"
+    },
+    {
+      "name": "sanctions_screening_agent.py",
+      "description": "Screens parties against OFAC / HMT / EU lists.",
+      "role": "Focused agent in the 8-agent stack"
+    },
+    {
+      "name": "payment_exception_repair_agent.py",
+      "description": "Diagnoses payment-failure root cause + repair playbook.",
+      "role": "Focused agent in the 8-agent stack"
+    },
+    {
+      "name": "nostro_reconciliation_agent.py",
+      "description": "Reconciles internal payment-position to nostro statement.",
+      "role": "Focused agent in the 8-agent stack"
+    },
+    {
+      "name": "correspondent_banking_monitor_agent.py",
+      "description": "Monitors correspondent-bank limits + nostro funding.",
+      "role": "Focused agent in the 8-agent stack"
+    },
+    {
+      "name": "pre_release_fraud_scorer_agent.py",
+      "description": "Scores transaction-level fraud risk pre-release.",
+      "role": "Focused agent in the 8-agent stack"
+    },
+    {
+      "name": "payment_status_tracker_agent.py",
+      "description": "Returns lifecycle state of a payment by reference.",
+      "role": "Focused agent in the 8-agent stack"
+    },
+    {
+      "name": "payments_analytics_agent.py",
+      "description": "STP rate, volume, scheme-compliance KPIs by rail.",
+      "role": "Focused agent in the 8-agent stack"
+    }
+  ],
+  "useCases": [
+    "Show me today's STP rate by payment rail",
+    "Why did this CHAPS payment fail validation?",
+    "What is our nostro position reconciliation status?",
+    "Track payment reference 12345 and explain its current state"
+  ]
+}

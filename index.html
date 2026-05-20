@@ -1706,6 +1706,8 @@ graph TB
               class="search-input"
               id="templateSearchInput"
               placeholder="Search templates by name, description, or use case..."
+              oninput="templateManager.applyFilters()"
+              onkeydown="if(event.key==='Enter'){event.preventDefault();templateManager.applyFilters();}"
             />
             <button
               class="btn btn-primary"
@@ -2469,6 +2471,7 @@ graph TB
               description: stack.metadata?.description || `Complete ${stack.name} solution`,
               longDescription: stack.metadata?.longDescription,
               category: stack.metadata?.category || 'general',
+              useCase: stack.metadata?.category || this.determineStackUseCase(stack.id),
               complexity: stack.metadata?.complexity || 'intermediate',
               estimatedTime: stack.metadata?.estimatedSetupTime || '1-2 weeks',
               agents: stack.agents.map(a => a.id),
@@ -3674,28 +3677,28 @@ graph TB
         }
 
         searchTemplates() {
-          const searchTerm = document
-            .getElementById("templateSearchInput")
-            .value.toLowerCase();
-
-          if (!searchTerm) {
-            this.filteredTemplates = [...this.agentTemplates];
-          } else {
-            this.filteredTemplates = this.agentTemplates.filter(
-              (template) =>
-                template.name.toLowerCase().includes(searchTerm) ||
-                template.description.toLowerCase().includes(searchTerm) ||
-                template.useCase.toLowerCase().includes(searchTerm) ||
-                template.agents.some((a) =>
-                  a.toLowerCase().includes(searchTerm)
-                ) ||
-                template.benefits.some((b) =>
-                  b.toLowerCase().includes(searchTerm)
-                )
-            );
-          }
-
+          // applyFilters re-reads the search input and applies both text and dropdown filters
           this.applyFilters();
+        }
+
+        _matchesSearch(template, searchTerm) {
+          if (!searchTerm) return true;
+          const haystack = [
+            template.name,
+            template.description,
+            template.longDescription,
+            template.useCase,
+            template.category,
+            template.industry,
+            ...(Array.isArray(template.agents) ? template.agents : []),
+            ...(Array.isArray(template.benefits) ? template.benefits : []),
+            ...(Array.isArray(template.features) ? template.features : []),
+            ...(Array.isArray(template.tags) ? template.tags : []),
+          ]
+            .filter((v) => typeof v === "string" && v.length)
+            .join("  ")
+            .toLowerCase();
+          return haystack.includes(searchTerm);
         }
 
         filterTemplates() {
@@ -3705,24 +3708,17 @@ graph TB
         applyFilters() {
           const useCase = document.getElementById("useCaseFilter").value;
           const complexity = document.getElementById("complexityFilter").value;
-          const searchTerm = document
-            .getElementById("templateSearchInput")
-            .value.toLowerCase();
+          const searchTerm = (
+            document.getElementById("templateSearchInput").value || ""
+          )
+            .trim()
+            .toLowerCase();
 
           let filtered = [...this.agentTemplates];
 
           if (searchTerm) {
-            filtered = filtered.filter(
-              (template) =>
-                template.name.toLowerCase().includes(searchTerm) ||
-                template.description.toLowerCase().includes(searchTerm) ||
-                template.useCase.toLowerCase().includes(searchTerm) ||
-                template.agents.some((a) =>
-                  a.toLowerCase().includes(searchTerm)
-                ) ||
-                template.benefits.some((b) =>
-                  b.toLowerCase().includes(searchTerm)
-                )
+            filtered = filtered.filter((template) =>
+              this._matchesSearch(template, searchTerm)
             );
           }
 

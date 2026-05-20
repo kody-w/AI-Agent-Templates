@@ -1,0 +1,99 @@
+{
+  "id": "field_crew_safety_and_work_permit_management_stack",
+  "name": "Field Crew Safety and Work Permit Management Agent Stack",
+  "version": "1.0.0.0",
+  "description": "Digitises the end-to-end permit-to-work process to reduce unsafe working conditions, ensure regulatory compliance, and provide real-time crew safety visibility across the field estate.",
+  "category": "energy_utilities",
+  "industry_label": "Energy Utilities",
+  "complexity": "intermediate",
+  "features": [
+    "Permit-to-work request capture from a mobile app",
+    "Risk Assessment & Method Statement (RAMS) drafted with Copilot Studio",
+    "Safety document validation against the asset isolation plan",
+    "Staged permit authorisation workflow with digital sign-off",
+    "Live isolation confirmation from the Distribution Management System",
+    "On-site safety brief and crew acceptance capture",
+    "Work completion + permit clearance with personnel and tools check",
+    "Permit-cycle audit trail and safety analytics"
+  ],
+  "benefits": [
+    "Faster permit issue, authorisation and closure vs paper-based process",
+    "Real-time visibility of live work activities across the field estate",
+    "Reduced permit-related safety risk through automated pre-work checks",
+    "Full digital audit trail for every permit"
+  ],
+  "starters": [
+    "Raise a permit-to-work request for substation SUB-12 transformer overhaul",
+    "Validate this risk assessment against the asset isolation plan",
+    "Show me all live permits across the field estate right now",
+    "Generate the monthly permit-cycle compliance report"
+  ],
+  "technicalRequirements": {
+    "platforms": [
+      "Windows",
+      "macOS",
+      "Linux"
+    ],
+    "dependencies": [
+      "Python 3.11+"
+    ],
+    "integrations": [
+      "Power Apps",
+      "Field Service Platform",
+      "Copilot Studio",
+      "Azure AI",
+      "Distribution Management System",
+      "Power Automate",
+      "SharePoint",
+      "Power BI"
+    ]
+  },
+  "components": [
+    {
+      "name": "permit_request_capture_agent.py",
+      "description": "Captures permit-to-work request from a mobile form.",
+      "role": "Focused agent in the 8-agent stack"
+    },
+    {
+      "name": "risk_assessment_agent.py",
+      "description": "Drafts a Risk Assessment + Method Statement (RAMS) tailored to asset class and work.",
+      "role": "Focused agent in the 8-agent stack"
+    },
+    {
+      "name": "isolation_plan_validator_agent.py",
+      "description": "Validates the RAMS against the published asset isolation plan.",
+      "role": "Focused agent in the 8-agent stack"
+    },
+    {
+      "name": "permit_authorisation_workflow_agent.py",
+      "description": "Routes the permit through PIC -> AP -> Manager digital sign-off.",
+      "role": "Focused agent in the 8-agent stack"
+    },
+    {
+      "name": "live_isolation_confirmation_agent.py",
+      "description": "Confirms live breaker / disconnector state from the DMS.",
+      "role": "Focused agent in the 8-agent stack"
+    },
+    {
+      "name": "crew_acceptance_agent.py",
+      "description": "Captures on-site safety brief and per-crew acceptance signatures.",
+      "role": "Focused agent in the 8-agent stack"
+    },
+    {
+      "name": "permit_clearance_agent.py",
+      "description": "Closes permit: personnel count + tools accounted + area safe.",
+      "role": "Focused agent in the 8-agent stack"
+    },
+    {
+      "name": "safety_analytics_agent.py",
+      "description": "Aggregates permit-cycle KPIs (cycle time, on-time closure, near-miss).",
+      "role": "Focused agent in the 8-agent stack"
+    }
+  ],
+  "useCases": [
+    "Raise a permit-to-work request for substation SUB-12 transformer overhaul",
+    "Validate this risk assessment against the asset isolation plan",
+    "Show me all live permits across the field estate right now",
+    "Generate the monthly permit-cycle compliance report"
+  ]
+}
