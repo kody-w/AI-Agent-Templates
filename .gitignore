@@ -3,3 +3,5 @@
 .DS_Store
 agent_stacks/.DS_Store
 agent_stacks/b2b_sales_stacks/.DS_Store
+__pycache__/
+*.pyc
