@@ -7,18 +7,20 @@
 <meta name="description" content="An open library of single-file AI agent templates and industry agent stacks for the Microsoft AI stack, with a live simulated enterprise sandbox.">
 <style>
 :root {
-  --bg: #0b0e14; --bg-soft: #11151f; --panel: #151a26; --panel-2: #1a2130;
-  --border: #232b3d; --text: #e6e9f0; --text-dim: #9aa3b5; --text-faint: #6b7488;
-  --accent: #5b9dff; --accent-2: #7c6cff; --accent-soft: rgba(91,157,255,.12);
-  --ok: #3fb97f; --warn: #e0a63f;
-  --shadow: 0 8px 28px rgba(0,0,0,.35); --radius: 14px;
+  --bg: #faf9f8; --bg-soft: #f5f4f3; --panel: #ffffff; --panel-2: #f5f4f3;
+  --border: #edebe9; --text: #323130; --text-dim: #605e5c; --text-faint: #a19f9d;
+  --accent: #0078d4; --accent-hover: #106ebe; --accent-pressed: #005a9e;
+  --accent-2: #5b5fc7; --accent-soft: rgba(0,120,212,.08);
+  --ok: #107c10; --warn: #d83b01;
+  --shadow: 0 0.3px 0.9px rgba(0,0,0,.1), 0 1.6px 3.6px rgba(0,0,0,.13); --radius: 8px;
 }
-[data-theme="light"] {
-  --bg: #f4f6fa; --bg-soft: #eceff5; --panel: #ffffff; --panel-2: #f6f8fc;
-  --border: #dde3ee; --text: #1c2333; --text-dim: #5a6478; --text-faint: #8b94a8;
-  --accent: #2f6fdb; --accent-2: #6a5de0; --accent-soft: rgba(47,111,219,.10);
-  --ok: #1f8f5c; --warn: #b07d1e;
-  --shadow: 0 6px 20px rgba(28,35,51,.10);
+[data-theme="dark"] {
+  --bg: #1b1a19; --bg-soft: #201f1e; --panel: #252423; --panel-2: #2d2c2b;
+  --border: #3b3a39; --text: #f3f2f1; --text-dim: #c8c6c4; --text-faint: #797775;
+  --accent: #2899f5; --accent-hover: #3aa0f3; --accent-pressed: #6cb8f6;
+  --accent-2: #7f85f5; --accent-soft: rgba(40,153,245,.14);
+  --ok: #92c353; --warn: #f1707b;
+  --shadow: 0 0.3px 0.9px rgba(0,0,0,.32), 0 1.6px 3.6px rgba(0,0,0,.4);
 }
 * { margin:0; padding:0; box-sizing:border-box; }
 html { scroll-behavior: smooth; }
@@ -52,7 +54,7 @@ header {
 .nav-actions { margin-left: auto; display: flex; gap: 8px; align-items: center; }
 .icon-btn {
   background: var(--panel); border: 1px solid var(--border); color: var(--text-dim);
-  width: 32px; height: 32px; border-radius: 9px; cursor: pointer;
+  width: 32px; height: 32px; border-radius: 4px; cursor: pointer;
   display: inline-flex; align-items: center; justify-content: center; font-size: 15px;
 }
 .icon-btn:hover { color: var(--text); border-color: var(--text-faint); }
@@ -66,7 +68,7 @@ header {
     radial-gradient(500px 260px at 80% 10%, color-mix(in srgb, var(--accent-2) 10%, transparent), transparent 70%);
 }
 .hero-inner { position: relative; max-width: 780px; }
-.hero h1 { font-size: clamp(30px, 5vw, 46px); line-height: 1.12; letter-spacing: -0.02em; font-weight: 750; }
+.hero h1 { font-size: clamp(30px, 5vw, 46px); line-height: 1.12; letter-spacing: -0.02em; font-weight: 700; }
 .hero h1 .grad {
   background: linear-gradient(92deg, var(--accent), var(--accent-2));
   -webkit-background-clip: text; background-clip: text; color: transparent;
@@ -75,11 +77,12 @@ header {
 .hero-ctas { display: flex; gap: 12px; margin-top: 26px; flex-wrap: wrap; }
 .btn {
   display: inline-flex; align-items: center; gap: 8px;
-  font-size: 14px; font-weight: 650; padding: 10px 18px; border-radius: 10px;
+  font-size: 14px; font-weight: 600; padding: 9px 18px; border-radius: 4px;
   border: 1px solid transparent; cursor: pointer; font-family: inherit;
 }
 .btn.primary { background: var(--accent); color: #fff; }
-.btn.primary:hover { filter: brightness(1.1); text-decoration: none; }
+.btn.primary:hover { background: var(--accent-hover); text-decoration: none; }
+.btn.primary:active { background: var(--accent-pressed); }
 .btn.ghost { background: var(--panel); border-color: var(--border); color: var(--text); }
 .btn.ghost:hover { border-color: var(--text-faint); text-decoration: none; }
 .hero-stats { display: flex; gap: 28px; margin-top: 36px; flex-wrap: wrap; }
@@ -107,7 +110,7 @@ section { padding: 52px 0 8px; }
 .toolbar { display: flex; gap: 10px; flex-wrap: wrap; align-items: center; margin-bottom: 18px; }
 .search {
   flex: 1 1 260px; display: flex; align-items: center; gap: 8px;
-  background: var(--panel); border: 1px solid var(--border); border-radius: 10px;
+  background: var(--panel); border: 1px solid var(--border); border-radius: 4px;
   padding: 8px 12px;
 }
 .search .glyph { color: var(--text-faint); display: inline-flex; }
@@ -129,6 +132,7 @@ section { padding: 52px 0 8px; }
 .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(290px, 1fr)); gap: 14px; margin-top: 12px; }
 .card {
   background: var(--panel); border: 1px solid var(--border); border-radius: var(--radius);
+  box-shadow: var(--shadow);
   padding: 16px; display: flex; flex-direction: column; gap: 8px; min-width: 0;
   transition: border-color .15s, transform .15s;
 }
@@ -148,7 +152,8 @@ section { padding: 52px 0 8px; }
 .demo-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 10px; margin-top: 12px; }
 .demo-link {
   display: flex; align-items: center; gap: 10px;
-  background: var(--panel); border: 1px solid var(--border); border-radius: 11px;
+  background: var(--panel); border: 1px solid var(--border); border-radius: var(--radius);
+  box-shadow: var(--shadow);
   padding: 11px 14px; color: var(--text); font-size: 13px; font-weight: 600; min-width: 0;
 }
 .demo-link:hover { border-color: color-mix(in srgb, var(--accent) 45%, var(--border)); text-decoration: none; }
@@ -159,7 +164,8 @@ section { padding: 52px 0 8px; }
 /* ---------- agents ---------- */
 .agent-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(270px, 1fr)); gap: 12px; margin-top: 12px; }
 .agent-card {
-  background: var(--panel); border: 1px solid var(--border); border-radius: 12px;
+  background: var(--panel); border: 1px solid var(--border); border-radius: var(--radius);
+  box-shadow: var(--shadow);
   padding: 13px 15px; min-width: 0;
 }
 .agent-card h4 { font-size: 13.5px; font-weight: 660; display: flex; align-items: center; gap: 8px; }
@@ -171,7 +177,8 @@ section { padding: 52px 0 8px; }
 /* ---------- sandbox ---------- */
 .sandbox-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(270px, 1fr)); gap: 12px; margin-top: 12px; }
 .sys {
-  background: var(--panel); border: 1px solid var(--border); border-radius: 12px;
+  background: var(--panel); border: 1px solid var(--border); border-radius: var(--radius);
+  box-shadow: var(--shadow);
   padding: 14px 15px; display: flex; flex-direction: column; gap: 6px; min-width: 0;
 }
 .sys .top { display: flex; align-items: center; gap: 9px; }
@@ -357,13 +364,13 @@ footer { margin-top: 64px; border-top: 1px solid var(--border); padding: 28px 0 
 var root = document.documentElement;
 var saved = null;
 try { saved = localStorage.getItem("aat-theme"); } catch (e) {}
-if (saved === "light" || (saved === null && window.matchMedia && matchMedia("(prefers-color-scheme: light)").matches)) {
-  root.setAttribute("data-theme", "light");
+if (saved === "dark" || (saved === null && window.matchMedia && matchMedia("(prefers-color-scheme: dark)").matches)) {
+  root.setAttribute("data-theme", "dark");
 }
 document.getElementById("themeToggle").addEventListener("click", function () {
-  var light = root.getAttribute("data-theme") === "light";
-  if (light) { root.removeAttribute("data-theme"); } else { root.setAttribute("data-theme", "light"); }
-  try { localStorage.setItem("aat-theme", light ? "dark" : "light"); } catch (e) {}
+  var dark = root.getAttribute("data-theme") === "dark";
+  if (dark) { root.removeAttribute("data-theme"); } else { root.setAttribute("data-theme", "dark"); }
+  try { localStorage.setItem("aat-theme", dark ? "light" : "dark"); } catch (e) {}
 });
 
 var GH = "https://github.com/kody-w/AI-Agent-Templates/tree/main/";
