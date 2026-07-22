@@ -108,7 +108,7 @@ Deploy complete infrastructure using ARM template:
 Deploy via: `azuredeploy.json`
 
 ### Microsoft 365 Integration
-1. Import Power Platform solution: `MSFTAIBASMultiAgentCopilot_1_0_0_2.zip`
+1. Import Power Platform solution: `MSFTAIBASMultiAgentCopilot_1_0_0_5.zip`
 2. Configure Power Automate flow with Azure Function endpoint
 3. Deploy to Teams/M365 Copilot via Copilot Studio
 

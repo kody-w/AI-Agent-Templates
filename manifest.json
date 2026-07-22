@@ -1,6 +1,6 @@
 {
   "version": "1.0.0",
-  "generated": "2026-05-20T15:35:09.499359Z",
+  "generated": "2026-07-22T01:53:21.785538Z",
   "repository": "kody-w/AI-Agent-Templates",
   "branch": "main",
   "agents": [
@@ -9571,38 +9571,6 @@
           "Status tracking"
         ]
       }
-    },
-    {
-      "id": "b2b_sales_stacks copy 2",
-      "name": "B2B Sales Stacks Copy 2",
-      "path": "agent_stacks/agent_stacks/b2b_sales_stacks copy 2",
-      "industry": "General",
-      "agents": [],
-      "metadata": null
-    },
-    {
-      "id": "b2b_sales_stacks copy 3",
-      "name": "B2B Sales Stacks Copy 3",
-      "path": "agent_stacks/agent_stacks/b2b_sales_stacks copy 3",
-      "industry": "General",
-      "agents": [],
-      "metadata": null
-    },
-    {
-      "id": "demos_needing_videos",
-      "name": "Demos Needing Videos",
-      "path": "agent_stacks/agent_stacks/demos_needing_videos",
-      "industry": "General",
-      "agents": [],
-      "metadata": null
-    },
-    {
-      "id": "b2b_sales_stacks copy",
-      "name": "B2B Sales Stacks Copy",
-      "path": "agent_stacks/agent_stacks/b2b_sales_stacks copy",
-      "industry": "General",
-      "agents": [],
-      "metadata": null
     }
   ]
 }

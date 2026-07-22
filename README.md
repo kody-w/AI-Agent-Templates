@@ -84,7 +84,7 @@ curl -X POST [YOUR_FUNCTION_URL] \
 
 ### Step 3: Connect to Microsoft 365 (Optional)
 
-1. **Download Power Platform Solution**: [MSFTAIBASMultiAgentCopilot_1_0_0_2.zip](https://github.com/kody-w/AI-Agent-Templates/raw/main/MSFTAIBASMultiAgentCopilot_1_0_0_2.zip)
+1. **Download Power Platform Solution**: [MSFTAIBASMultiAgentCopilot_1_0_0_5.zip](https://github.com/kody-w/AI-Agent-Templates/raw/main/MSFTAIBASMultiAgentCopilot_1_0_0_5.zip)
 
 2. **Import to Power Platform**:
    - Go to [make.powerapps.com](https://make.powerapps.com)
