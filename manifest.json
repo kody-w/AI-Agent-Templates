@@ -1,6 +1,6 @@
 {
   "version": "1.0.0",
-  "generated": "2026-07-22T01:53:21.785538Z",
+  "generated": "2026-07-22T02:11:18.076180Z",
   "repository": "kody-w/AI-Agent-Templates",
   "branch": "main",
   "agents": [
@@ -4115,7 +4115,7 @@
       "id": "ask_hr_stack",
       "name": "Ask Hr Stack",
       "path": "agent_stacks/human_resources_stacks/ask_hr_stack",
-      "industry": "Human Resources Stacks",
+      "industry": "Human Resources",
       "agents": [
         {
           "id": "ask_hr_stack_ask_hr_agent",
@@ -4128,7 +4128,7 @@
           "type": "stack",
           "stack_name": "Ask Hr Stack",
           "stack_path": "human_resources_stacks/ask_hr_stack",
-          "industry": "Human Resources Stacks",
+          "industry": "Human Resources",
           "icon": "\ud83e\udd16",
           "description": "AI agent for task automation and workflow optimization",
           "features": [
@@ -5000,7 +5000,7 @@
       "id": "it_helpdesk_stack",
       "name": "It Helpdesk Stack",
       "path": "agent_stacks/it_management_stacks/it_helpdesk_stack",
-      "industry": "It Management Stacks",
+      "industry": "IT Management",
       "agents": [
         {
           "id": "it_helpdesk_stack_it_helpdesk_agent",
@@ -5013,7 +5013,7 @@
           "type": "stack",
           "stack_name": "It Helpdesk Stack",
           "stack_path": "it_management_stacks/it_helpdesk_stack",
-          "industry": "It Management Stacks",
+          "industry": "IT Management",
           "icon": "\ud83e\udd16",
           "description": "AI agent for task automation and workflow optimization",
           "features": [

@@ -2,200 +2,69 @@
 
 This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
 
-## Repository Overview
+## What This Is
 
-AI Agent Templates is a comprehensive collection of modular AI agents and stacks for building intelligent automation solutions with Azure and Microsoft 365 integration. The repository contains both individual agents and complete agent stacks organized by industry verticals.
+AI-Agent-Templates is the **original single-file agent template library** for the Microsoft AI stack: standalone Python agents plus 86 industry agent stacks across 14 verticals, a web gallery (`index.html`), interactive demos, and one-click Azure deployment. Its evolution is the [RAR registry](https://github.com/kody-w/RAR) (live-data agents, community store); this repo stays the readable, copyable origin.
+
+GitHub Pages serves the repo root at https://kody-w.github.io/AI-Agent-Templates/ (legacy build, branch `main`, path `/`).
+
+## Stable Contracts — Do Not Break
+
+External agents in the RAR ecosystem consume this repo raw. Never rename or remove:
+
+1. **`manifest.json`** — schema `{version, generated, repository, branch, agents, stacks}` and the entry shapes inside (fetched by `@kody-w/transcript2prototype_agent`). Regenerating values is fine; keys and referenced paths must stay resolvable.
+2. **`agents/*.py` filenames and `agents/index.json`** (`{"agents": [filenames]}`) — enumerated by `@discreetRappers/scripted_demo_agent` and `@kody-w/github_agent_library_agent`. Content edits are fine if each file still parses and runs standalone.
+3. **`agent_stacks/<vertical>_stacks/<stack>/` paths** referenced by manifest.json, and the `agent_stacks/demos_needing_videos/*.html` filenames.
+4. **`index.html` at repo root** — it is the Pages landing page.
+
+## Build Commands
+
+```bash
+# Regenerate manifest.json + agents/index.json (the only build step; CI runs it too)
+python3 scripts/generate_manifest.py     # update_manifest.py is a back-compat shim
+
+# Regenerate all 31 demo pages from the single template
+python3 scripts/generate_demos.py
+```
+
+CI: `.github/workflows/generate-manifest.yml` runs `scripts/generate_manifest.py` on pushes touching `agents/**` or `agent_stacks/**` and commits the result.
 
 ## Architecture
 
 ### Core Agent Pattern
-All agents inherit from `BasicAgent` class (`agents/basic_agent.py`):
-```python
-class BasicAgent:
-    def __init__(self, name, metadata):
-        self.name = name
-        self.metadata = metadata
-    
-    def perform(self):
-        pass
-```
+
+All agents inherit from `BasicAgent` (`agents/basic_agent.py`), define `self.metadata` (name, description, JSON-schema parameters), and implement `perform(**kwargs)`. One file per agent, `*_agent.py`, snake_case. Every agent must run standalone: `python3 agents/<name>.py` exits cleanly.
 
 ### Directory Structure
-- `agents/` - Individual agent implementations (single-purpose components)
-- `agent_stacks/` - Complete solutions organized by industry:
-  - `general_stacks/` - Cross-industry solutions (voice_to_crm, email_drafting, simulation_sales)
-  - `[industry]_stacks/` - Industry-specific stacks (financial_services, healthcare, retail_cpg, etc.)
-- `agents_lab/` - Legacy industry-specific agent stacks (being migrated to agent_stacks/)
 
-### Stack Structure Pattern
-Each agent stack follows standardized organization:
-```
-stack_name/
-├── agents/
-│   └── stack_agent.py         # Python agent implementation
-├── demos/
-│   └── stack_demo.html        # Interactive HTML demonstration
-├── metadata.json              # Stack configuration and documentation
-└── files/ (optional)          # Supporting resources
-```
+- `agents/` — standalone single-file agents
+- `agent_stacks/<vertical>_stacks/<stack>/` — industry stacks: `agents/` + `metadata.json` + optional `demos/`, `files/`
+- `agent_stacks/demos_needing_videos/` — the 31 generated demo pages (edit `scripts/generate_demos.py`, never the HTML directly)
+- `agents_lab/` — legacy stacks kept for reference
+- `scripts/` — generators (manifest, demos)
 
-## Common Development Tasks
+### Demo Pages
 
-### Running Agent Scripts
-```bash
-# Individual agents
-python agents/[agent_name].py
+All demos in `demos_needing_videos/` come from **one template** inside `scripts/generate_demos.py`: dark-first responsive UI, scripted 3-turn conversation, and a live-data panel fetching the matching simulated-estate API in-browser (graceful offline fallback). To change a demo, edit its spec in the `DEMOS` dict and rerun the generator. The generator refuses to create files not already present (filenames are a contract).
 
-# Stack-specific agents (general)
-python agent_stacks/general_stacks/[stack_name]/agents/[agent_name].py
+### The Simulated Enterprise Estate
 
-# Industry vertical agents
-python agent_stacks/[industry]_stacks/[stack_name]/agents/[agent_name].py
+Demos and the `index.html` sandbox section fetch from 14 public schema-true simulators (`kody-w.github.io/static-*`) sharing the Aster Lane Office Systems fictional world. Full map: RAR `skill.md`, section "The Simulated Enterprise Estate". When adding demo integrations, verify an endpoint with `curl` before wiring it in.
 
-# Update manifest for web interface
-python update_manifest.py
-```
+### index.html
 
-### Testing Agents
-No formal test framework is configured. Test agents by:
-1. Creating test scripts that import and instantiate agents
-2. Calling `perform(**kwargs)` with test parameters
-3. Validating JSON response structure
+Single-file gallery, no dependencies, no emojis (inline SVG glyphs only). Stacks/agents render from `manifest.json` fetched at runtime with an embedded fallback snapshot (`FALLBACK` const) so `file://` works. If the manifest changes shape-visibly (new stacks/verticals), refresh the embedded fallback: build a compact `{agents, stacks}` snapshot from manifest.json and replace the JSON after the `/*__FALLBACK_JSON__*/` marker comment (see git history for the injection snippet).
 
-## Demo HTML Structure
+## Deployment Tiers (README has the user-facing version)
 
-### M365 Copilot Pattern
-All demo files follow the Microsoft 365 Copilot design system (`m365_copilot_demo_template.html`):
-- Segoe UI font family
-- Sidebar navigation with Copilot branding
-- Chat-based interface with typing indicators
-- Demo controls (Play/Pause/Skip/Reset)
-- Agent result cards with structured data display
+1. **Brainstem (local)** — RAPP installer, GitHub Copilot as engine, agents drop-in.
+2. **Azure** — `azuredeploy.json` ARM template (Function App Python 3.11, Azure OpenAI, storage, App Insights).
+3. **Copilot Studio** — import `MSFTAIBASMultiAgentCopilot_1_0_0_5.zip`, point it at the Azure Function, publish to Teams/M365 Copilot. The zip rides the rapp-installer release train — update it by copying the new binary from `kody-w/rapp-installer` (never push to that repo) and bumping every filename reference.
 
-### Demo Script Format
-Demo conversations use this structure:
-```javascript
-const demoScript = [
-    {
-        "type": "user",
-        "content": "User message",
-        "typingTime": 1500,
-        "delay": 1000
-    },
-    {
-        "type": "agent", 
-        "content": "Agent response",
-        "typingTime": 2000,
-        "delay": 1500,
-        "agentData": {
-            "Category": {
-                "Field": "Value"
-            }
-        }
-    }
-];
-```
+## Conventions
 
-## Azure Deployment
-
-### One-Click Deployment
-Deploy complete infrastructure using ARM template:
-- Azure OpenAI Service (GPT-4o)
-- Azure Function App for agent execution
-- Storage Account for data persistence
-- Application Insights for monitoring
-
-Deploy via: `azuredeploy.json`
-
-### Microsoft 365 Integration
-1. Import Power Platform solution: `MSFTAIBASMultiAgentCopilot_1_0_0_5.zip`
-2. Configure Power Automate flow with Azure Function endpoint
-3. Deploy to Teams/M365 Copilot via Copilot Studio
-
-## Agent Development Guidelines
-
-### Metadata Structure
-All agents must define metadata with:
-- `name`: Agent identifier
-- `description`: Clear purpose statement
-- `parameters`: Input schema with types and requirements
-- `required`: Array of mandatory parameters
-
-### Response Format
-Consistent JSON structure:
-```json
-{
-  "status": "success|error",
-  "message": "Human-readable message",
-  "data": {},
-  "errors": []
-}
-```
-
-### Environment Variables
-External service credentials:
-- **Dynamics 365**: `DYNAMICS_365_CLIENT_ID`, `DYNAMICS_365_CLIENT_SECRET`, `DYNAMICS_365_TENANT_ID`, `DYNAMICS_365_RESOURCE`
-- **Azure OpenAI**: `AZURE_OPENAI_API_KEY`, `AZURE_OPENAI_ENDPOINT`
-- **Azure Storage**: `AZURE_STORAGE_CONNECTION_STRING`
-
-## Web Interface
-
-### Main Gallery (`index.html`)
-- Dynamic agent/stack browsing from GitHub
-- Trading card export functionality
-- Live API integration mode
-- Simulated demo mode
-
-### Trading Card Export
-Generate standalone HTML agent cards: `generate_trading_card.js`
-
-### Manifest Generation
-The `update_manifest.py` script scans the repository and generates `manifest.json` with:
-- All agents from `agents/` directory
-- All stacks from `agent_stacks/` with industry categorization
-- Deduplication of agents that exist in both locations
-- File sizes, URLs, and metadata for web interface
-
-## Python Code Conventions
-
-- **Classes**: PascalCase (e.g., `CalendarAgent`)
-- **Methods**: snake_case (e.g., `perform()`, `validate_parameters()`)
-- **Private methods**: Leading underscore (e.g., `_internal_method()`)
-- **Agent inheritance**: All agents extend `BasicAgent`
-- **Error handling**: Try-except blocks with structured error responses
-- **Parameter validation**: Validate before processing
-
-## AI Decision System Pattern
-
-For agents requiring probabilistic decision-making:
-```python
-def make_decision(self, context):
-    decision = {
-        "recommendation": "action",
-        "confidence": 0.85,
-        "reasoning": "Detailed explanation",
-        "factors": {
-            "factor1": {"weight": 0.4, "value": 0.9},
-            "factor2": {"weight": 0.6, "value": 0.7}
-        },
-        "alternatives": [
-            {"action": "alternative", "confidence": 0.65}
-        ]
-    }
-    return decision
-```
-
-## Common Issues and Solutions
-
-### Demo Not Playing
-If demo doesn't show content when Play is clicked:
-1. Check JavaScript console for errors
-2. Verify `demoScript` array structure matches expected format (type: "user"/"agent")
-3. Ensure HTML strings in content are properly escaped with `<br>` tags for line breaks
-4. Check that `playNextMessage()` function correctly reads message type
-
-### Agent Not Found
-If agents aren't loading:
-1. Run `python update_manifest.py` to regenerate manifest
-2. Check file paths match expected pattern
-3. Verify metadata.json exists in stack directories
+- Python 3.11+; classes PascalCase, methods snake_case, agents end `_agent.py`.
+- Secrets via `os.environ.get()`, never hardcoded; agents degrade gracefully when env vars are missing.
+- `manifest.json` and `agents/index.json` are generated — never hand-edit.
+- No emojis in any UI surface; use inline SVG glyphs.
+- Verify pages by serving locally (`python3 -m http.server`) and driving with a real browser before pushing.

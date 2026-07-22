@@ -181,6 +181,8 @@ def scan_stacks():
         'financial_services_stacks': 'Financial Services',
         'general_stacks': 'Cross-Industry',
         'healthcare_stacks': 'Healthcare',
+        'human_resources_stacks': 'Human Resources',
+        'it_management_stacks': 'IT Management',
         'manufacturing_stacks': 'Manufacturing',
         'professional_services_stacks': 'Professional Services',
         'retail_cpg_stacks': 'Retail & CPG',

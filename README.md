@@ -1,358 +1,118 @@
-MAIN USER PAGE: https://kody-w.github.io/AI-Agent-Templates/
+# AI Agent Templates
 
-# AI Agent Templates 🚀
+**Live library: https://kody-w.github.io/AI-Agent-Templates/**
 
-A comprehensive collection of AI agent templates and stacks for building intelligent automation solutions with Azure and Microsoft 365 integration.
+An open library of **single-file AI agent templates** and **industry agent stacks** for the Microsoft AI stack. Each stack is a folder of plain Python agents plus an interactive demo — browse it, copy it, point it at your own tenant. No framework, no build step, no lock-in.
 
 [![Deploy to Azure](https://aka.ms/deploytoazurebutton)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fkody-w%2FAI-Agent-Templates%2Fmain%2Fazuredeploy.json)
 
-## 🌟 Quick Start - Three Ways to Deploy
+## This library and RAR
 
-### 1. Azure Deployment (Recommended)
-Deploy complete infrastructure in minutes with our one-click Azure deployment.
+This repository is the **original template library** — the place the industry agents were first written and where the patterns are easiest to read. Its evolution lives at the **[RAPP Agent Registry (RAR)](https://kody-w.github.io/RAR/)**: upgraded live-data versions of these same industry agents, a community store with ratings, quality tiers, and one-command install. Start here to learn; graduate to RAR to run.
 
-### 2. Microsoft 365 Copilot Integration
-Connect your agents directly to Teams and M365 Copilot using our Power Platform solution.
+## What's inside
 
-### 3. Standalone Development
-Use individual agents and stacks in your own applications.
+| Path | What it is |
+|------|------------|
+| `agents/` | Standalone single-file agents (calendar, CRM, search, memory, …). Drop any into an `agents/` folder and it self-registers. |
+| `agent_stacks/<vertical>_stacks/` | Industry agent stacks — 86 stacks across 14 verticals (B2B/B2C sales, financial services, healthcare, energy, government, manufacturing, retail, IT, HR, professional services, software). |
+| `agent_stacks/demos_needing_videos/` | 31 interactive demos, one per use case: a scripted conversation plus a **live-data panel** that fetches real records from the simulated enterprise sandbox. |
+| `manifest.json` | Machine-readable index of every agent and stack (auto-generated — see below). |
+| `index.html` | The web gallery — search, filter by vertical, live sandbox status. Works from `file://` too. |
+| `azuredeploy.json` | One-click ARM template: Function App, Azure OpenAI, storage, App Insights. |
+| `MSFTAIBASMultiAgentCopilot_1_0_0_5.zip` | Power Platform solution for Copilot Studio / Teams / M365 Copilot. |
 
-## 🏗️ Solution Architecture
+### The agent pattern
 
-```mermaid
-graph TB
-    subgraph "User Interface Layer"
-        M365[Microsoft 365 Copilot]
-        Teams[Microsoft Teams]
-        Web[Web Interface]
-    end
-    
-    subgraph "Conversation Layer"
-        CS[Copilot Studio<br/>NLP & Auth]
-    end
-    
-    subgraph "Integration Layer"
-        PA[Power Automate<br/>Orchestration]
-    end
-    
-    subgraph "Processing Layer"
-        AF[Azure Function<br/>Agent Execution]
-    end
-    
-    subgraph "Agent Layer"
-        Agents[AI Agents<br/>Business Logic]
-    end
-    
-    M365 --> CS
-    Teams --> CS
-    Web --> CS
-    CS --> PA
-    PA --> AF
-    AF --> Agents
-    
-    style M365 fill:#eff6ff
-    style CS fill:#f3e8ff
-    style PA fill:#fef3c7
-    style AF fill:#dcfce7
-    style Agents fill:#fce7f3
-```
-
-## 🚀 Getting Started
-
-### Step 1: Deploy to Azure (1 minute)
-
-Click the Deploy to Azure button above or use this link:
-```
-https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fkody-w%2FAI-Agent-Templates%2Fmain%2Fazuredeploy.json
-```
-
-This deploys:
-- ✅ Azure OpenAI Service (GPT-4o)
-- ✅ Azure Function App
-- ✅ Storage Account
-- ✅ Application Insights
-
-### Step 2: Test Your Endpoint
-
-After deployment, get your function URL from the Azure Portal:
-
-```bash
-curl -X POST [YOUR_FUNCTION_URL] \
-  -H "Content-Type: application/json" \
-  -d '{"action": "test", "agent": "basic_agent"}'
-```
-
-### Step 3: Connect to Microsoft 365 (Optional)
-
-1. **Download Power Platform Solution**: [MSFTAIBASMultiAgentCopilot_1_0_0_5.zip](https://github.com/kody-w/AI-Agent-Templates/raw/main/MSFTAIBASMultiAgentCopilot_1_0_0_5.zip)
-
-2. **Import to Power Platform**:
-   - Go to [make.powerapps.com](https://make.powerapps.com)
-   - Solutions → Import solution
-   - Upload the ZIP file
-
-3. **Configure Power Automate**:
-   - Edit "Talk to MAC" flow
-   - Update HTTP action with your Azure Function URL
-   - Save and activate
-
-4. **Deploy to Teams/M365**:
-   - Open in [Copilot Studio](https://copilotstudio.microsoft.com)
-   - Channels → Microsoft Teams → Turn on
-   - For M365 Copilot: Enable M365 channel
-
-## 📁 Project Structure
-
-```
-AI-Agent-Templates/
-├── agents/                    # Individual agent templates
-│   ├── basic_agent.py         # Base agent class
-│   ├── calendar_agent.py      # Calendar scheduling
-│   ├── dynamics_365_agent.py  # Dynamics 365 CRM
-│   ├── email_drafting_agent.py # Email composition
-│   └── ...                    # 20+ more agents
-├── agent_stacks/              # Complete solutions
-│   ├── voice_to_crm_stack/    # Voice-enabled CRM
-│   ├── crm_bulk_data_stack/   # Test data generation
-│   ├── email_drafting_stack/  # Email automation
-│   └── simulation_sales_stack/ # Sales training
-├── azuredeploy.json           # Azure ARM template
-├── index.html                 # Web interface
-└── manifest.json              # Agent registry
-```
-
-## 🤖 Available Agents
-
-### Core Agents
-- **BasicAgent**: Base class for all agents
-- **ContextMemoryAgent**: Persistent memory capabilities
-- **ManageMemoryAgent**: Memory optimization
-
-### Business Integration
-- **Dynamics365Agent**: Microsoft Dynamics 365 operations
-- **SalesforceQueryAgent**: Salesforce data queries
-- **ServiceNowAgent**: ServiceNow ticket management
-- **CalendarAgent**: Meeting scheduling
-- **EmailDraftingAgent**: Intelligent email composition
-
-### AI & Automation
-- **ImageGenerationAgent**: DALL-E image generation
-- **CodeReviewAgent**: Automated code analysis
-- **PowerPointAgent**: Presentation generation
-- **DuckDuckGoSearchAgent**: Web search capabilities
-
-## 🛠️ Agent Stacks
-
-Complete, production-ready solutions combining multiple agents:
-
-### Voice to CRM Stack
-```mermaid
-graph LR
-    Voice[Voice Input] --> STT[Speech-to-Text]
-    STT --> NLP[NLP Processing]
-    NLP --> CRM[CRM Update]
-    NLP --> Email[Email Draft]
-    CRM --> Confirm[Confirmation]
-```
-
-**Features:**
-- Real-time voice transcription
-- Entity extraction
-- Automatic CRM record creation
-- Email drafting from voice
-- SharePoint integration
-
-### CRM Bulk Data Creator Stack
-Generate realistic test data for CRM systems:
-- 1000s of customer records
-- Complex relationships
-- GDPR-compliant data
-- Industry templates
-
-### Email Drafting Stack
-AI-powered email automation:
-- Context-aware generation
-- Multi-language support
-- Sentiment analysis
-- Template management
-
-### Sales Simulation Stack
-Advanced training platform:
-- Customer persona simulations
-- Real-time coaching
-- Objection handling
-- Performance analytics
-
-## 💻 Development Guide
-
-### Creating a Custom Agent
+Every agent is one Python file extending `BasicAgent`:
 
 ```python
 from agents.basic_agent import BasicAgent
 
-class CustomAgent(BasicAgent):
+class WeatherAgent(BasicAgent):
     def __init__(self):
-        self.name = "CustomAgent"
+        self.name = "Weather"
         self.metadata = {
             "name": self.name,
-            "description": "Your agent description",
+            "description": "Gets the weather for a city.",
             "parameters": {
                 "type": "object",
-                "properties": {
-                    "input": {
-                        "type": "string",
-                        "description": "Input parameter"
-                    }
-                },
-                "required": ["input"]
+                "properties": {"city": {"type": "string", "description": "City name"}},
+                "required": ["city"]
             }
         }
         super().__init__(name=self.name, metadata=self.metadata)
-    
-    def perform(self, **kwargs):
-        input_data = kwargs.get('input', '')
-        # Your logic here
-        return f"Processed: {input_data}"
+
+    def perform(self, city="", **kwargs):
+        return f"It's sunny in {city}!"
 ```
 
-### Using Agent Stacks
+Any `*_agent.py` file with this shape is auto-discovered by the RAPP brainstem, the Azure Function host, and Copilot Studio alike.
 
-```python
-from agent_stacks.voice_to_crm_stack.agents.dynamics_365_agent import Dynamics365Agent
+## The live enterprise sandbox
 
-# Initialize agent
-dynamics = Dynamics365Agent()
+The demos (and your own experiments) run against a **globally public, simulated enterprise estate**: fourteen schema-true static APIs that mirror the real systems these agents integrate with — same shapes, field names, and id formats, no auth, no rate limits. All fourteen share one fictional world (**Aster Lane Office Systems**, 22 customer accounts, cross-linked stories), so records join *across* systems: CRM case `CAS-2601xx` → ITSM `INC00100xx` → ERP `PO-470xx` → HRIS `TOR-10xx`.
 
-# Create CRM record
-result = dynamics.create_account({
-    "name": "Contoso Corp",
-    "revenue": 1000000
-})
-```
+| System | Sample endpoint |
+|--------|-----------------|
+| CRM (Dynamics 365 style) | `https://kody-w.github.io/static-dynamics-365/api/data/v9.2/accounts.json` |
+| Finance & Ops (F&O style) | `https://kody-w.github.io/static-dynamics-fno/data/CustomersV3.json` |
+| ITSM (ServiceNow style) | `https://kody-w.github.io/static-itsm/api/now/table/incident.json` |
+| Healthcare (FHIR R4) | `https://kody-w.github.io/static-fhir/fhir/Patient.json` |
+| ERP / supply chain | `https://kody-w.github.io/static-erp/api/v1/purchase_orders.json` |
+| HRIS | `https://kody-w.github.io/static-hris/api/v1/workers.json` |
+| Sensor telemetry | `https://kody-w.github.io/static-telemetry/api/v1/sensors.json` |
+| Second CRM (Salesforce style) | `https://kody-w.github.io/static-salesforce/services/data/v59.0/query/Account.json` |
+| Documents (SharePoint style) | `https://kody-w.github.io/static-sharepoint/_api/web/lists/Policies/items.json` |
+| Chat (Teams/Graph style) | `https://kody-w.github.io/static-teams/v1.0/teams.json` |
+| Mail + Calendar (Graph style) | `https://kody-w.github.io/static-outlook/v1.0/users/jordan.lee/messages.json` |
+| Issue tracking (Jira style) | `https://kody-w.github.io/static-issue-tracker/rest/api/2/search.json` |
+| Core banking | `https://kody-w.github.io/static-core-banking/api/v1/members.json` |
+| Firmographic enrichment | `https://kody-w.github.io/static-enrichment/api/v1/companies/summittrail.example.json` |
 
-## 🔧 Configuration
+Templates coded against these run unchanged against a real tenant — swap the base URL. The full estate map (all shapes, join keys, and Issues-based write APIs) is documented in [RAR's skill.md](https://github.com/kody-w/RAR/blob/main/skill.md).
 
-### Environment Variables
+## Quickstart
+
+**Just browse:** open https://kody-w.github.io/AI-Agent-Templates/ — search the stacks, play the demos, watch the sandbox status pings.
+
+**Run an agent locally** (any Python 3.11+):
 
 ```bash
-# Azure OpenAI
-AZURE_OPENAI_API_KEY="your-key"
-AZURE_OPENAI_ENDPOINT="your-endpoint"
-AZURE_OPENAI_DEPLOYMENT_NAME="gpt-4o"
-
-# Azure Storage
-AZURE_STORAGE_CONNECTION_STRING="your-connection"
-
-# Dynamics 365 (if using CRM agents)
-DYNAMICS_365_CLIENT_ID="your-client-id"
-DYNAMICS_365_CLIENT_SECRET="your-secret"
-DYNAMICS_365_TENANT_ID="your-tenant"
-DYNAMICS_365_RESOURCE="your-resource"
+git clone https://github.com/kody-w/AI-Agent-Templates.git
+cd AI-Agent-Templates
+python3 agents/calendar_agent.py
 ```
 
-## 🌐 Web Interface
+**Run the full ladder** — the same three tiers the [RAPP installer](https://kody-w.github.io/rapp-installer/) teaches:
 
-Open `index.html` to access:
-- **Discovery Tool**: Find the right agents for your needs
-- **Setup Guide**: Step-by-step deployment instructions
-- **Template Library**: Browse and export agent stacks
-- **Agent Store**: Individual agent catalog
+1. **Tier 1 — The Brainstem (local).** `curl -fsSL https://kody-w.github.io/rapp-installer/install.sh | bash` gives you a local agent server powered by GitHub Copilot (no API keys). Drop any agent file from this library into its `agents/` folder.
+2. **Tier 2 — The Spinal Cord (Azure).** Click **Deploy to Azure** above: Function App (Python 3.11), Azure OpenAI, storage, App Insights — Entra ID auth, no keys.
+3. **Tier 3 — The Nervous System (Copilot Studio).** Import the included Power Platform solution (`MSFTAIBASMultiAgentCopilot_1_0_0_5.zip`) into Copilot Studio, point it at your Azure Function, and publish. The same agent logic you tested locally now answers in Microsoft Teams and M365 Copilot across your organization.
 
-### Features
-- 🎯 Interactive agent selection
-- 📦 One-click stack export
-- 🔄 Live API integration
-- 📊 Visual architecture diagrams
+## Regenerating the manifest
 
-## 📊 Performance & Scalability
+`manifest.json` and `agents/index.json` are generated — never hand-edit them:
 
-```mermaid
-graph LR
-    subgraph "Load Distribution"
-        LB[Load Balancer] --> F1[Function 1]
-        LB --> F2[Function 2]
-        LB --> F3[Function N]
-    end
-    
-    subgraph "Caching Layer"
-        F1 --> Cache[Redis Cache]
-        F2 --> Cache
-        F3 --> Cache
-    end
-    
-    subgraph "Storage"
-        Cache --> Storage[Azure Storage]
-        Cache --> DB[(Cosmos DB)]
-    end
+```bash
+python3 scripts/generate_manifest.py   # CI runs this on every push to agents/ or agent_stacks/
 ```
 
-### Optimization Features
-- **Manifest-based loading**: Instant load times
-- **Raw URL fallback**: No API rate limits
-- **Agent caching**: Reduced latency
-- **Parallel execution**: Multi-agent processing
+The manifest schema (`{version, generated, repository, branch, agents, stacks}`) and the `agents/index.json` shape (`{"agents": [filenames]}`) are **stable contracts** consumed by external agents in the RAR ecosystem — keep keys and paths resolvable.
 
-## 🔐 Security & Compliance
+The demo pages are also generated from one template:
 
-- **Azure AD Integration**: Enterprise authentication
-- **Managed Identities**: Secure credential handling
-- **RBAC**: Role-based access control
-- **Audit Logging**: Complete activity tracking
-- **GDPR Compliant**: Data privacy controls
+```bash
+python3 scripts/generate_demos.py      # rewrites agent_stacks/demos_needing_videos/*.html in place
+```
 
-## 📈 Monitoring & Analytics
+## Contributing
 
-The solution includes built-in monitoring:
-- Application Insights integration
-- Custom metrics tracking
-- Performance dashboards
-- Error tracking and alerts
+1. Fork, then add your agent as **one Python file** following the `BasicAgent` pattern (`*_agent.py`, snake_case).
+2. Standalone agents go in `agents/`; industry solutions get a stack folder: `agent_stacks/<vertical>_stacks/<your_stack>/` with `agents/`, `metadata.json`, and optionally `demos/`.
+3. Run `python3 scripts/generate_manifest.py` and include the regenerated `manifest.json` in your PR.
+4. Want ratings, versioning, and one-command install for your agent? Submit it to [RAR](https://github.com/kody-w/RAR) — that's where the community registry lives.
 
-## 🤝 Contributing
+## License
 
-We welcome contributions! See our [Contributing Guide](CONTRIBUTING.md) for details.
-
-### Adding a New Agent
-1. Create Python file in `agents/`
-2. Extend `BasicAgent` class
-3. Implement `perform()` method
-4. Add metadata
-5. Update manifest
-
-### Adding a Stack
-1. Create directory in `agent_stacks/`
-2. Add agents, demos, and metadata
-3. Include demo HTML
-4. Update documentation
-
-## 📚 Resources
-
-- [Azure OpenAI Documentation](https://learn.microsoft.com/azure/ai-services/openai/)
-- [Copilot Studio Guide](https://learn.microsoft.com/microsoft-copilot-studio/)
-- [Power Platform Documentation](https://learn.microsoft.com/power-platform/)
-- [Azure Functions Guide](https://learn.microsoft.com/azure/azure-functions/)
-
-## 💰 Cost Estimation
-
-| Component | Monthly Cost |
-|-----------|-------------|
-| Azure Function App | ~$0 (consumption plan) |
-| Storage Account | ~$5 |
-| Azure OpenAI | Pay-per-use (~$0.01/1K tokens) |
-| **Total** | **~$5-10/month + usage** |
-
-## 🆘 Support
-
-- **Issues**: [GitHub Issues](https://github.com/kody-w/AI-Agent-Templates/issues)
-- **Discussions**: [GitHub Discussions](https://github.com/kody-w/AI-Agent-Templates/discussions)
-- **Documentation**: [Wiki](https://github.com/kody-w/AI-Agent-Templates/wiki)
-
-## 📝 License
-
-This project is provided as-is for educational and development purposes.
-
----
-
-**Built with ❤️ for the AI community**
-
-⭐ Star this repo if it helps you!
+MIT
