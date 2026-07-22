@@ -1,1614 +1,334 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Voice to CRM Agent - M365 Copilot</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
-            background: #faf9f8;
-            height: 100vh;
-            display: flex;
-            overflow: hidden;
-            color: #323130;
-        }
-
-        /* Sidebar */
-        .sidebar {
-            width: 260px;
-            background: #ffffff;
-            display: flex;
-            flex-direction: column;
-            border-right: 1px solid #edebe9;
-        }
-
-        /* Sidebar Header */
-        .sidebar-header {
-            padding: 12px 16px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            border-bottom: 1px solid #edebe9;
-            height: 48px;
-        }
-
-        .copilot-icon {
-            width: 24px;
-            height: 24px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .copilot-icon img {
-            width: 100%;
-            height: 100%;
-        }
-
-        .sidebar-title {
-            font-size: 14px;
-            font-weight: 600;
-            color: #323130;
-        }
-
-        .sidebar-button {
-            margin-left: auto;
-            background: none;
-            border: none;
-            padding: 4px;
-            cursor: pointer;
-            color: #605e5c;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            border-radius: 4px;
-            width: 32px;
-            height: 32px;
-        }
-
-        .sidebar-button:hover {
-            background: #f3f2f1;
-        }
-
-        /* Navigation */
-        .nav-section {
-            flex: 1;
-            overflow-y: auto;
-            padding: 4px 0;
-        }
-
-        .nav-item {
-            padding: 8px 16px;
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            cursor: pointer;
-            font-size: 14px;
-            color: #323130;
-            transition: background 0.1s;
-            position: relative;
-            user-select: none;
-        }
-
-        .nav-item:hover {
-            background: #f3f2f1;
-        }
-
-        .nav-item.active {
-            background: #f3f2f1;
-        }
-
-        .nav-item.active::before {
-            content: '';
-            position: absolute;
-            left: 0;
-            top: 8px;
-            bottom: 8px;
-            width: 2px;
-            background: #5b5fc7;
-            border-radius: 1px;
-        }
-
-        .nav-icon {
-            width: 20px;
-            height: 20px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            flex-shrink: 0;
-        }
-
-        .nav-expand {
-            margin-left: auto;
-            color: #605e5c;
-            font-size: 10px;
-            transition: transform 0.2s;
-        }
-
-        .nav-expand.expanded {
-            transform: rotate(180deg);
-        }
-
-        /* Demo Controls Section */
-        .controls-section {
-            border-top: 1px solid #edebe9;
-            padding: 12px;
-        }
-
-        .controls-title {
-            font-size: 12px;
-            font-weight: 600;
-            color: #605e5c;
-            margin-bottom: 8px;
-            text-transform: uppercase;
-        }
-
-        .control-buttons {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 8px;
-            margin-bottom: 12px;
-        }
-
-        .control-btn {
-            padding: 6px 12px;
-            border: 1px solid #d2d0ce;
-            border-radius: 4px;
-            background: white;
-            color: #323130;
-            font-size: 12px;
-            cursor: pointer;
-            transition: all 0.2s;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 4px;
-        }
-
-        .control-btn:hover:not(:disabled) {
-            background: #f3f2f1;
-            border-color: #605e5c;
-        }
-
-        .control-btn.primary {
-            background: #0078d4;
-            color: white;
-            border-color: #0078d4;
-        }
-
-        .control-btn.primary:hover:not(:disabled) {
-            background: #106ebe;
-            border-color: #106ebe;
-        }
-
-        .control-btn:disabled {
-            opacity: 0.5;
-            cursor: not-allowed;
-        }
-
-        .speed-control {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            margin-top: 8px;
-        }
-
-        .speed-label {
-            font-size: 12px;
-            color: #605e5c;
-        }
-
-        .speed-slider {
-            flex: 1;
-            height: 4px;
-            -webkit-appearance: none;
-            appearance: none;
-            background: #edebe9;
-            border-radius: 2px;
-            outline: none;
-        }
-
-        .speed-slider::-webkit-slider-thumb {
-            -webkit-appearance: none;
-            appearance: none;
-            width: 12px;
-            height: 12px;
-            background: #5b5fc7;
-            border-radius: 50%;
-            cursor: pointer;
-        }
-
-        /* Progress Indicators */
-        .progress-section {
-            padding: 12px;
-            border-top: 1px solid #edebe9;
-        }
-
-        .progress-bar {
-            height: 4px;
-            background: #edebe9;
-            border-radius: 2px;
-            overflow: hidden;
-            margin-bottom: 12px;
-        }
-
-        .progress-fill {
-            height: 100%;
-            background: linear-gradient(90deg, #742774 0%, #00a651 100%);
-            width: 0%;
-            transition: width 0.5s ease;
-        }
-
-        .step-indicators {
-            display: flex;
-            justify-content: space-between;
-            gap: 4px;
-        }
-
-        .step-indicator {
-            flex: 1;
-            text-align: center;
-        }
-
-        .step-circle {
-            width: 24px;
-            height: 24px;
-            border-radius: 50%;
-            background: white;
-            border: 2px solid #edebe9;
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 10px;
-            color: #605e5c;
-            transition: all 0.3s;
-            margin-bottom: 4px;
-        }
-
-        .step-indicator.active .step-circle {
-            background: #5b5fc7;
-            border-color: #5b5fc7;
-            color: white;
-        }
-
-        .step-indicator.completed .step-circle {
-            background: #10b981;
-            border-color: #10b981;
-            color: white;
-        }
-
-        .step-label {
-            font-size: 10px;
-            color: #605e5c;
-        }
-
-        /* Bottom section */
-        .sidebar-bottom {
-            border-top: 1px solid #edebe9;
-            padding: 8px 0;
-        }
-
-        .mode-section {
-            padding: 8px 16px;
-        }
-
-        .mode-toggle {
-            display: flex;
-            gap: 8px;
-        }
-
-        .mode-btn {
-            flex: 1;
-            padding: 6px 12px;
-            border: 1px solid #d2d0ce;
-            border-radius: 4px;
-            background: white;
-            color: #323130;
-            font-size: 12px;
-            cursor: pointer;
-            transition: all 0.2s;
-            text-align: center;
-        }
-
-        .mode-btn.active {
-            background: #5b5fc7;
-            color: white;
-            border-color: #5b5fc7;
-        }
-
-        .mode-btn:hover:not(.active) {
-            background: #f3f2f1;
-        }
-
-        /* Main Content */
-        .main-content {
-            flex: 1;
-            display: flex;
-            flex-direction: column;
-            background: #faf9f8;
-        }
-
-        /* Header */
-        .content-header {
-            height: 48px;
-            padding: 0 20px;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            background: #ffffff;
-            border-bottom: 1px solid #edebe9;
-        }
-
-        .header-title {
-            font-size: 14px;
-            color: #605e5c;
-        }
-
-        .header-actions {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-        }
-
-        .voice-button {
-            padding: 6px 16px;
-            border: 1px solid #d2d0ce;
-            border-radius: 20px;
-            background: white;
-            color: #323130;
-            font-size: 14px;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            transition: all 0.2s;
-        }
-
-        .voice-button:hover:not(:disabled) {
-            border-color: #605e5c;
-            background: #f3f2f1;
-        }
-
-        .voice-button.recording {
-            background: #ef4444;
-            color: white;
-            border-color: #ef4444;
-            animation: pulse 1.5s infinite;
-        }
-
-        @keyframes pulse {
-            0% { box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.4); }
-            70% { box-shadow: 0 0 0 10px rgba(239, 68, 68, 0); }
-            100% { box-shadow: 0 0 0 0 rgba(239, 68, 68, 0); }
-        }
-
-        .voice-button:disabled {
-            opacity: 0.5;
-            cursor: not-allowed;
-        }
-
-        .status-badge {
-            padding: 4px 12px;
-            background: #f3f2f1;
-            border-radius: 12px;
-            font-size: 12px;
-            color: #605e5c;
-            display: flex;
-            align-items: center;
-            gap: 6px;
-        }
-
-        .status-dot {
-            width: 6px;
-            height: 6px;
-            border-radius: 50%;
-            background: #10b981;
-        }
-
-        .status-dot.processing {
-            background: #f59e0b;
-            animation: blink 1s infinite;
-        }
-
-        @keyframes blink {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0.3; }
-        }
-
-        .header-icon-button {
-            width: 32px;
-            height: 32px;
-            border: none;
-            background: none;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            border-radius: 4px;
-            color: #605e5c;
-            transition: background 0.1s;
-        }
-
-        .header-icon-button:hover {
-            background: #f3f2f1;
-        }
-
-        /* Chat Container */
-        .chat-container {
-            flex: 1;
-            display: flex;
-            flex-direction: column;
-            overflow: hidden;
-        }
-
-        /* Live Config Panel */
-        .config-panel {
-            background: #fff3cd;
-            padding: 16px 20px;
-            border-bottom: 1px solid #ffc107;
-            display: none;
-        }
-
-        .config-panel.active {
-            display: block;
-        }
-
-        .config-content {
-            max-width: 900px;
-            margin: 0 auto;
-            display: flex;
-            gap: 12px;
-            align-items: end;
-        }
-
-        .config-field {
-            flex: 1;
-        }
-
-        .config-label {
-            font-size: 12px;
-            font-weight: 600;
-            color: #856404;
-            margin-bottom: 4px;
-        }
-
-        .config-input {
-            width: 100%;
-            padding: 6px 12px;
-            border: 1px solid #ffc107;
-            border-radius: 4px;
-            font-size: 14px;
-            background: white;
-        }
-
-        .config-btn {
-            padding: 6px 16px;
-            background: #0078d4;
-            color: white;
-            border: none;
-            border-radius: 4px;
-            font-size: 14px;
-            cursor: pointer;
-            white-space: nowrap;
-        }
-
-        .config-btn:hover {
-            background: #106ebe;
-        }
-
-        .connection-status {
-            margin-top: 8px;
-            font-size: 12px;
-            color: #856404;
-        }
-
-        .connection-status.connected {
-            color: #155724;
-        }
-
-        .connection-status.error {
-            color: #721c24;
-        }
-
-        /* Chat Messages */
-        .chat-messages {
-            flex: 1;
-            overflow-y: auto;
-            padding: 20px;
-        }
-
-        .message {
-            max-width: 900px;
-            margin: 0 auto 24px;
-        }
-
-        .message-header {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            margin-bottom: 8px;
-        }
-
-        .message-avatar-user {
-            width: 28px;
-            height: 28px;
-            border-radius: 50%;
-            background: #5b5fc7;
-            color: white;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 12px;
-            font-weight: 600;
-        }
-
-        .message-avatar-agent {
-            width: 28px;
-            height: 28px;
-            border-radius: 6px;
-            background: linear-gradient(135deg, #742774 0%, #00a651 100%);
-            color: white;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 14px;
-            font-weight: 600;
-        }
-
-        .message-author {
-            font-size: 14px;
-            font-weight: 600;
-            color: #323130;
-        }
-
-        .message-tag {
-            padding: 2px 8px;
-            background: #f3f2f1;
-            border-radius: 4px;
-            font-size: 12px;
-            color: #605e5c;
-        }
-
-        .message-time {
-            font-size: 12px;
-            color: #a19f9d;
-        }
-
-        .message-content {
-            margin-left: 40px;
-            font-size: 14px;
-            line-height: 1.6;
-            color: #323130;
-        }
-
-        /* Voice Transcript */
-        .voice-transcript {
-            background: #e1f5e1;
-            border: 1px solid #00a651;
-            border-radius: 8px;
-            padding: 12px;
-            margin-bottom: 12px;
-            font-style: italic;
-            color: #004d00;
-        }
-
-        /* Agent Cards */
-        .agent-card {
-            margin-top: 16px;
-            background: white;
-            border: 1px solid #edebe9;
-            border-radius: 8px;
-            overflow: hidden;
-        }
-
-        .agent-card-header {
-            padding: 16px;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            border-bottom: 1px solid #edebe9;
-            background: #faf9f8;
-        }
-
-        .agent-card-title {
-            font-size: 16px;
-            font-weight: 600;
-            color: #323130;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        .agent-card-status {
-            padding: 4px 12px;
-            background: #d1fae5;
-            color: #065f46;
-            border-radius: 12px;
-            font-size: 12px;
-            font-weight: 600;
-        }
-
-        .agent-card-content {
-            padding: 16px;
-        }
-
-        .detail-list {
-            list-style: none;
-        }
-
-        .detail-item {
-            padding: 8px 0;
-            font-size: 14px;
-            color: #323130;
-            display: flex;
-            gap: 8px;
-            border-bottom: 1px solid #f3f2f1;
-        }
-
-        .detail-item:last-child {
-            border-bottom: none;
-        }
-
-        .detail-label {
-            font-weight: 600;
-            min-width: 140px;
-            color: #605e5c;
-        }
-
-        .detail-value {
-            color: #323130;
-        }
-
-        .entity-badges {
-            margin-top: 12px;
-            display: flex;
-            flex-wrap: wrap;
-            gap: 8px;
-        }
-
-        .entity-badge {
-            padding: 4px 12px;
-            background: linear-gradient(135deg, #742774 0%, #00a651 100%);
-            color: white;
-            border-radius: 12px;
-            font-size: 12px;
-            font-weight: 600;
-        }
-
-        /* Typing Indicator */
-        .typing-indicator {
-            margin-left: 40px;
-            display: flex;
-            gap: 4px;
-            padding: 8px 0;
-        }
-
-        .typing-dot {
-            width: 8px;
-            height: 8px;
-            background: #605e5c;
-            border-radius: 50%;
-            animation: typing 1.4s infinite;
-        }
-
-        .typing-dot:nth-child(2) {
-            animation-delay: 0.2s;
-        }
-
-        .typing-dot:nth-child(3) {
-            animation-delay: 0.4s;
-        }
-
-        @keyframes typing {
-            0%, 60%, 100% {
-                transform: translateY(0);
-                opacity: 0.5;
-            }
-            30% {
-                transform: translateY(-10px);
-                opacity: 1;
-            }
-        }
-
-        /* Welcome Screen */
-        .welcome-screen {
-            flex: 1;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            padding: 40px;
-            max-width: 1200px;
-            margin: 0 auto;
-            width: 100%;
-        }
-
-        .welcome-title {
-            font-size: 36px;
-            font-weight: 600;
-            color: #323130;
-            margin-bottom: 16px;
-            text-align: center;
-        }
-
-        .welcome-subtitle {
-            font-size: 16px;
-            color: #605e5c;
-            text-align: center;
-            max-width: 600px;
-            margin-bottom: 48px;
-        }
-
-        .feature-cards {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 20px;
-            width: 100%;
-            max-width: 900px;
-        }
-
-        .feature-card {
-            background: white;
-            border: 1px solid #edebe9;
-            border-radius: 8px;
-            padding: 24px;
-            text-align: center;
-            transition: all 0.2s;
-        }
-
-        .feature-card:hover {
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-            transform: translateY(-2px);
-        }
-
-        .feature-icon {
-            font-size: 32px;
-            margin-bottom: 12px;
-        }
-
-        .feature-title {
-            font-size: 16px;
-            font-weight: 600;
-            color: #323130;
-            margin-bottom: 8px;
-        }
-
-        .feature-description {
-            font-size: 14px;
-            color: #605e5c;
-            line-height: 1.4;
-        }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Voice to CRM — AI Agent Templates Demo</title>
+<style>
+:root {
+  --bg: #0b0e14; --bg-soft: #11151f; --panel: #151a26; --panel-2: #1a2130;
+  --border: #232b3d; --text: #e6e9f0; --text-dim: #9aa3b5; --text-faint: #6b7488;
+  --accent: #5b9dff; --accent-soft: rgba(91,157,255,.12);
+  --user-bubble: #24304a; --ok: #3fb97f; --warn: #e0a63f;
+  --shadow: 0 8px 28px rgba(0,0,0,.35); --radius: 14px;
+}
+[data-theme="light"] {
+  --bg: #f4f6fa; --bg-soft: #eceff5; --panel: #ffffff; --panel-2: #f6f8fc;
+  --border: #dde3ee; --text: #1c2333; --text-dim: #5a6478; --text-faint: #8b94a8;
+  --accent: #2f6fdb; --accent-soft: rgba(47,111,219,.10);
+  --user-bubble: #e3ecfb; --ok: #1f8f5c; --warn: #b07d1e;
+  --shadow: 0 6px 20px rgba(28,35,51,.10);
+}
+* { margin:0; padding:0; box-sizing:border-box; }
+html, body { max-width:100%; overflow-x:hidden; }
+body {
+  font-family: "Segoe UI", -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+  background: var(--bg); color: var(--text);
+  min-height: 100vh; line-height: 1.55;
+  -webkit-font-smoothing: antialiased;
+}
+svg { width: 1em; height: 1em; display: inline-block; vertical-align: -0.12em; }
+a { color: var(--accent); text-decoration: none; }
+a:hover { text-decoration: underline; }
+
+header {
+  position: sticky; top: 0; z-index: 10;
+  background: color-mix(in srgb, var(--bg) 88%, transparent);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid var(--border);
+}
+.header-inner {
+  max-width: 1160px; margin: 0 auto; padding: 12px 20px;
+  display: flex; align-items: center; gap: 14px; flex-wrap: wrap;
+}
+.back-link {
+  display: inline-flex; align-items: center; gap: 6px;
+  color: var(--text-dim); font-size: 13px; white-space: nowrap;
+}
+.back-link:hover { color: var(--text); text-decoration: none; }
+.header-title { display: flex; align-items: baseline; gap: 10px; flex-wrap: wrap; min-width: 0; }
+.header-title h1 { font-size: 16px; font-weight: 650; letter-spacing: -0.01em; }
+.badge {
+  font-size: 11px; font-weight: 600; letter-spacing: .04em; text-transform: uppercase;
+  color: var(--accent); background: var(--accent-soft);
+  border: 1px solid color-mix(in srgb, var(--accent) 30%, transparent);
+  padding: 2px 9px; border-radius: 999px; white-space: nowrap;
+}
+.header-actions { margin-left: auto; display: flex; gap: 8px; }
+.icon-btn {
+  background: var(--panel); border: 1px solid var(--border); color: var(--text-dim);
+  width: 32px; height: 32px; border-radius: 9px; cursor: pointer;
+  display: inline-flex; align-items: center; justify-content: center; font-size: 15px;
+}
+.icon-btn:hover { color: var(--text); border-color: var(--text-faint); }
+
+.page {
+  max-width: 1160px; margin: 0 auto; padding: 22px 20px 48px;
+}
+.intro { margin-bottom: 18px; }
+.intro p.tagline { color: var(--text-dim); font-size: 14.5px; max-width: 62ch; }
+.intro p.persona { color: var(--text-faint); font-size: 12.5px; margin-top: 4px; }
+
+.layout { display: grid; grid-template-columns: minmax(0,1fr) 340px; gap: 18px; align-items: start; }
+@media (max-width: 920px) { .layout { grid-template-columns: 1fr; } }
+
+.chat-panel {
+  background: var(--panel); border: 1px solid var(--border);
+  border-radius: var(--radius); box-shadow: var(--shadow);
+  display: flex; flex-direction: column; min-height: 420px;
+}
+.chat-head {
+  display: flex; align-items: center; gap: 10px;
+  padding: 12px 16px; border-bottom: 1px solid var(--border);
+}
+.chat-head .glyph { color: var(--accent); font-size: 17px; display: inline-flex; }
+.chat-head span { font-size: 13.5px; font-weight: 600; }
+.chat-controls { margin-left: auto; display: flex; gap: 8px; }
+.ctl-btn {
+  display: inline-flex; align-items: center; gap: 6px;
+  background: var(--accent); color: #fff; border: none; cursor: pointer;
+  font-size: 13px; font-weight: 600; padding: 7px 14px; border-radius: 9px;
+  font-family: inherit;
+}
+.ctl-btn.secondary { background: var(--panel-2); color: var(--text-dim); border: 1px solid var(--border); }
+.ctl-btn:hover { filter: brightness(1.08); }
+.ctl-btn:disabled { opacity: .45; cursor: default; filter: none; }
+.chat-body { padding: 18px 16px; display: flex; flex-direction: column; gap: 14px; flex: 1; }
+.msg { display: flex; gap: 10px; max-width: 92%; animation: rise .28s ease both; }
+@keyframes rise { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
+.msg .avatar {
+  flex: 0 0 30px; width: 30px; height: 30px; border-radius: 9px;
+  display: flex; align-items: center; justify-content: center; font-size: 15px;
+}
+.msg.user { align-self: flex-end; flex-direction: row-reverse; }
+.msg.user .avatar { background: var(--user-bubble); color: var(--text-dim); }
+.msg.bot .avatar { background: var(--accent-soft); color: var(--accent); }
+.bubble {
+  padding: 10px 14px; border-radius: 12px; font-size: 14px; white-space: pre-wrap;
+  overflow-wrap: break-word; min-width: 0;
+}
+.msg.user .bubble { background: var(--user-bubble); border-top-right-radius: 4px; }
+.msg.bot .bubble { background: var(--panel-2); border: 1px solid var(--border); border-top-left-radius: 4px; }
+.typing { display: inline-flex; gap: 4px; padding: 4px 2px; }
+.typing i {
+  width: 6px; height: 6px; border-radius: 50%; background: var(--text-faint);
+  animation: blink 1.1s infinite;
+}
+.typing i:nth-child(2) { animation-delay: .18s; } .typing i:nth-child(3) { animation-delay: .36s; }
+@keyframes blink { 0%,70%,100% { opacity: .25 } 30% { opacity: 1 } }
+.chat-hint { color: var(--text-faint); font-size: 12.5px; text-align: center; padding: 8px 0 2px; }
+
+.live-panel { display: flex; flex-direction: column; gap: 14px; min-width: 0; }
+.live-card {
+  background: var(--panel); border: 1px solid var(--border);
+  border-radius: var(--radius); box-shadow: var(--shadow); overflow: hidden;
+}
+.live-card .lc-head {
+  display: flex; align-items: center; gap: 9px; padding: 11px 14px;
+  border-bottom: 1px solid var(--border);
+}
+.lc-head .glyph { color: var(--accent); display: inline-flex; font-size: 15px; }
+.lc-head .lc-title { font-size: 12.5px; font-weight: 650; }
+.lc-head .lc-count {
+  margin-left: auto; font-size: 11.5px; font-weight: 600; color: var(--ok);
+  background: color-mix(in srgb, var(--ok) 12%, transparent);
+  padding: 2px 8px; border-radius: 999px; white-space: nowrap;
+}
+.lc-head .lc-count.err { color: var(--warn); background: color-mix(in srgb, var(--warn) 12%, transparent); }
+.lc-body { padding: 0; }
+.lc-note { padding: 12px 14px; font-size: 12.5px; color: var(--text-dim); }
+.lc-table-wrap { overflow-x: auto; }
+table.lc { width: 100%; border-collapse: collapse; font-size: 12px; }
+table.lc th {
+  text-align: left; padding: 7px 12px; color: var(--text-faint);
+  font-weight: 600; font-size: 10.5px; letter-spacing: .05em; text-transform: uppercase;
+  border-bottom: 1px solid var(--border); white-space: nowrap;
+}
+table.lc td {
+  padding: 7px 12px; border-bottom: 1px solid var(--border); color: var(--text-dim);
+  max-width: 150px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+}
+table.lc tr:last-child td { border-bottom: none; }
+.lc-src { padding: 8px 14px; font-size: 11px; color: var(--text-faint); border-top: 1px solid var(--border); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.live-blurb { font-size: 12px; color: var(--text-faint); line-height: 1.5; padding: 0 2px; }
+</style>
 </head>
 <body>
-    <!-- Sidebar -->
-    <div class="sidebar">
-        <div class="sidebar-header">
-            <div class="copilot-icon"><img src="https://res.public.onecdn.static.microsoft/midgard/versionless/officestartresources/copilot_20_light_and_dark.svg" alt="Copilot"></div>
-            <span class="sidebar-title">Voice to CRM</span>
-            <button class="sidebar-button">☰</button>
-        </div>
-
-        <div class="nav-section">
-            <div class="nav-item active">
-                <div class="nav-icon">💬</div>
-                <span>Chat</span>
-            </div>
-            <div class="nav-item">
-                <div class="nav-icon">🎤</div>
-                <span>Voice Commands</span>
-            </div>
-            <div class="nav-item">
-                <div class="nav-icon">📊</div>
-                <span>CRM Records</span>
-            </div>
-            <div class="nav-item">
-                <div class="nav-icon">📧</div>
-                <span>Email Drafts</span>
-            </div>
-            <div class="nav-item">
-                <div class="nav-icon">🎫</div>
-                <span>Support Tickets</span>
-            </div>
-            <div class="nav-item">
-                <div class="nav-icon">⚙️</div>
-                <span>Settings</span>
-            </div>
-        </div>
-
-        <!-- Demo Controls -->
-        <div class="controls-section">
-            <div class="controls-title">Demo Controls</div>
-            <div class="control-buttons">
-                <button class="control-btn primary" onclick="startDemo()" id="startBtn">
-                    ▶️ Start
-                </button>
-                <button class="control-btn" onclick="pauseDemo()" id="pauseBtn" disabled>
-                    ⏸️ Pause
-                </button>
-                <button class="control-btn" onclick="resetDemo()" id="resetBtn">
-                    🔄 Reset
-                </button>
-                <button class="control-btn" onclick="skipToNext()" id="skipBtn" disabled>
-                    ⏭️ Skip
-                </button>
-            </div>
-            <div class="speed-control">
-                <span class="speed-label">Speed:</span>
-                <input type="range" class="speed-slider" id="speedSlider" min="0.5" max="3" step="0.5" value="1">
-                <span class="speed-label" id="speedLabel">1x</span>
-            </div>
-        </div>
-
-        <!-- Progress Section -->
-        <div class="progress-section">
-            <div class="progress-bar">
-                <div class="progress-fill" id="progressBar"></div>
-            </div>
-            <div class="step-indicators">
-                <div class="step-indicator" id="step1">
-                    <div class="step-circle">🎤</div>
-                    <div class="step-label">Voice</div>
-                </div>
-                <div class="step-indicator" id="step2">
-                    <div class="step-circle">🧠</div>
-                    <div class="step-label">Process</div>
-                </div>
-                <div class="step-indicator" id="step3">
-                    <div class="step-circle">💾</div>
-                    <div class="step-label">Save</div>
-                </div>
-            </div>
-        </div>
-
-        <div class="sidebar-bottom">
-            <div class="mode-section">
-                <div class="mode-toggle">
-                    <button class="mode-btn active" onclick="switchMode('demo')" id="demoModeBtn">
-                        Demo
-                    </button>
-                    <button class="mode-btn" onclick="switchMode('live')" id="liveModeBtn">
-                        Live
-                    </button>
-                </div>
-            </div>
-        </div>
+<header>
+  <div class="header-inner">
+    <a class="back-link" href="../../index.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 5l-7 7 7 7"/></svg> All templates</a>
+    <div class="header-title">
+      <h1>Voice to CRM</h1>
+      <span class="badge">Cross-Industry</span>
     </div>
-
-    <!-- Main Content -->
-    <div class="main-content">
-        <div class="content-header">
-            <div class="header-title">Voice to CRM Multi-Agent System</div>
-            <div class="header-actions">
-                <button class="voice-button" id="voiceBtn" onclick="simulateVoiceInput()" disabled>
-                    <span id="voiceBtnIcon">🎤</span>
-                    <span id="voiceBtnText">Click to Simulate Voice</span>
-                </button>
-                <div class="status-badge">
-                    <span class="status-dot" id="statusDot"></span>
-                    <span id="statusText">Ready</span>
-                </div>
-                <button class="header-icon-button">⋯</button>
-            </div>
-        </div>
-
-        <!-- Live Config Panel -->
-        <div class="config-panel" id="liveConfig">
-            <div class="config-content">
-                <div class="config-field">
-                    <div class="config-label">Azure Function Key</div>
-                    <input type="password" class="config-input" id="apiKey" placeholder="Enter your function key">
-                </div>
-                <div class="config-field">
-                    <div class="config-label">Function App URL</div>
-                    <input type="text" class="config-input" id="apiEndpoint" placeholder="https://your-app.azurewebsites.net">
-                </div>
-                <button class="config-btn" onclick="testConnection()">Test Connection</button>
-            </div>
-            <div class="connection-status" id="connectionStatus">⚠️ Configure your Azure Function to enable live mode</div>
-        </div>
-
-        <div class="chat-container">
-            <!-- Welcome Screen -->
-            <div class="welcome-screen" id="welcomeScreen">
-                <h1 class="welcome-title">🎤 Voice to CRM Agent</h1>
-                <p class="welcome-subtitle">Transform voice commands into CRM records instantly with AI-powered speech recognition</p>
-                
-                <div class="feature-cards">
-                    <div class="feature-card">
-                        <div class="feature-icon">🗣️</div>
-                        <div class="feature-title">Natural Voice Input</div>
-                        <div class="feature-description">Speak naturally to create and update CRM records</div>
-                    </div>
-                    <div class="feature-card">
-                        <div class="feature-icon">🔄</div>
-                        <div class="feature-title">Multi-Platform</div>
-                        <div class="feature-description">Works with Dynamics 365, ServiceNow, and more</div>
-                    </div>
-                    <div class="feature-card">
-                        <div class="feature-icon">⚡</div>
-                        <div class="feature-title">80% Faster</div>
-                        <div class="feature-description">Reduce data entry time dramatically</div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Chat Messages (Hidden initially) -->
-            <div class="chat-messages" id="chatMessages" style="display: none;">
-                <!-- Messages will be dynamically added here -->
-            </div>
-        </div>
+    <div class="header-actions">
+      <button class="icon-btn" id="themeToggle" title="Toggle light/dark" aria-label="Toggle theme">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="4.2"/><path d="M12 2.5v2.4M12 19.1v2.4M2.5 12h2.4M19.1 12h2.4M5 5l1.7 1.7M17.3 17.3L19 19M19 5l-1.7 1.7M6.7 17.3L5 19"/></svg>
+      </button>
     </div>
+  </div>
+</header>
 
-    <script>
-        // Copy all the JavaScript from the original demo
-        // Global state
-        let currentMode = 'demo';
-        let demoState = {
-            isPlaying: false,
-            isPaused: false,
-            currentMessageIndex: 0,
-            currentStep: 0,
-            speed: 1,
-            typingTimer: null,
-            messageTimer: null
-        };
+<div class="page">
+  <div class="intro">
+    <p class="tagline">Hands-free CRM: query, update, and log records by voice.</p>
+    <p class="persona">Scenario: Field seller, hands-free in transit &middot; Fictional world: Aster Lane Office Systems (simulated enterprise estate)</p>
+  </div>
 
-        let liveState = {
-            isConnected: false,
-            apiKey: '',
-            endpoint: '',
-            isRecording: false,
-            mediaRecorder: null,
-            audioChunks: [],
-            stream: null
-        };
+  <div class="layout">
+    <section class="chat-panel" aria-label="Scripted demo conversation">
+      <div class="chat-head">
+        <span class="glyph"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3l1.9 5.6L19.5 10l-5.6 1.9L12 17.5l-1.9-5.6L4.5 10l5.6-1.4z"/></svg></span><span>Agent conversation</span>
+        <div class="chat-controls">
+          <button class="ctl-btn" id="playBtn"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5.5v13l11-6.5z"/></svg> Play demo</button>
+          <button class="ctl-btn secondary" id="resetBtn" title="Restart"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 10a8 8 0 1 1 2.3 6.9"/><path d="M4 16v-6h6"/></svg></button>
+        </div>
+      </div>
+      <div class="chat-body" id="chatBody">
+        <div class="chat-hint" id="chatHint">Press Play to walk through the scripted scenario.</div>
+      </div>
+    </section>
 
-        // Demo script with voice transcripts and CRM actions
-        const demoScript = [
-            {
-                type: 'voice',
-                transcript: "Create a new account for Acme Corporation. They're a technology company based in Seattle with annual revenue of 50 million dollars. The main contact is John Smith, CEO, and his email is john.smith@acme.com",
-                messages: [
-                    {
-                        role: 'user',
-                        content: '🎤 Voice Input Detected',
-                        showTranscript: true,
-                        typingTime: 1500,
-                        delay: 1000
-                    },
-                    {
-                        role: 'assistant',
-                        content: `I'm processing your voice command and extracting the CRM entities...
+    <aside class="live-panel" aria-label="Live data from the simulated enterprise estate">
+      <div class="live-card"><div class="lc-head"><span class="glyph"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><ellipse cx="12" cy="5.5" rx="7.5" ry="2.8"/><path d="M4.5 5.5v13c0 1.5 3.4 2.8 7.5 2.8s7.5-1.3 7.5-2.8v-13"/><path d="M4.5 12c0 1.5 3.4 2.8 7.5 2.8s7.5-1.3 7.5-2.8"/></svg></span><span class="lc-title">Dynamics 365 — Accounts</span><span class="lc-count" id="lcCount0">loading&hellip;</span></div><div class="lc-body" id="lcBody0"><div class="lc-note">Fetching live records&hellip;</div></div><div class="lc-src">GET https://kody-w.github.io/static-dynamics-365/api/data/v9.2/accounts.json</div></div>
+      <div class="live-card"><div class="lc-head"><span class="glyph"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><ellipse cx="12" cy="5.5" rx="7.5" ry="2.8"/><path d="M4.5 5.5v13c0 1.5 3.4 2.8 7.5 2.8s7.5-1.3 7.5-2.8v-13"/><path d="M4.5 12c0 1.5 3.4 2.8 7.5 2.8s7.5-1.3 7.5-2.8"/></svg></span><span class="lc-title">Dynamics 365 — Opportunities</span><span class="lc-count" id="lcCount1">loading&hellip;</span></div><div class="lc-body" id="lcBody1"><div class="lc-note">Fetching live records&hellip;</div></div><div class="lc-src">GET https://kody-w.github.io/static-dynamics-365/api/data/v9.2/opportunities.json</div></div>
+      <p class="live-blurb">This panel fetches real records from the public simulated enterprise estate — schema-true sandbox APIs sharing one fictional world. Point the production agents at your own tenant by swapping the base URL. Explore the estate at <a href="https://kody-w.github.io/RAR/" target="_blank" rel="noopener">the RAR registry</a>.</p>
+    </aside>
+  </div>
+</div>
 
-## 🧠 Natural Language Processing Results
+<script>
+(function () {
+  "use strict";
+  // ----- theme -----
+  var root = document.documentElement;
+  var saved = null;
+  try { saved = localStorage.getItem("aat-theme"); } catch (e) {}
+  if (saved === "light" || (saved === null && window.matchMedia && matchMedia("(prefers-color-scheme: light)").matches)) {
+    root.setAttribute("data-theme", "light");
+  }
+  document.getElementById("themeToggle").addEventListener("click", function () {
+    var light = root.getAttribute("data-theme") === "light";
+    if (light) { root.removeAttribute("data-theme"); } else { root.setAttribute("data-theme", "light"); }
+    try { localStorage.setItem("aat-theme", light ? "dark" : "light"); } catch (e) {}
+  });
 
-I've identified the following information from your voice input:
+  // ----- scripted conversation -----
+  var TURNS = [["\"What's my pipeline looking like this month?\"", "Your month: 6 open opportunities.\n- 2 in Commit \u2014 Marigold Field Services and the Beacon Hill add-on.\n- 3 mid-stage, 1 early.\n- Attention flag: the Beacon Hill add-on has a proposal due tomorrow that isn't marked sent.\nWant me to open that one?"], ["\"Yes \u2014 push the Beacon Hill proposal date to Monday and note that their signer is traveling this week.\"", "Done: proposal due date moved to Monday, and I've added the note \"Signer traveling this week\" to the Beacon Hill opportunity. The Commit forecast keeps its close date \u2014 the slip is inside the buffer. You'll get a Monday-morning reminder."], ["\"Log a quick call note: spoke with Prairie Wind, they're happy, renewal conversation in September.\"", "Logged: call activity on Prairie Wind Energy Cooperative \u2014 positive sentiment, renewal conversation targeted for September. I also created a September follow-up task so the renewal doesn't depend on memory. Anything else while you're driving?"]];
+  var GLYPH_USER = "<svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><circle cx=\"12\" cy=\"8\" r=\"3.5\"/><path d=\"M4.5 20c1.6-3.2 4.3-4.8 7.5-4.8s5.9 1.6 7.5 4.8\"/></svg>";
+  var GLYPH_SPARK = "<svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><path d=\"M12 3l1.9 5.6L19.5 10l-5.6 1.9L12 17.5l-1.9-5.6L4.5 10l5.6-1.4z\"/></svg>";
+  var body = document.getElementById("chatBody");
+  var hint = document.getElementById("chatHint");
+  var playBtn = document.getElementById("playBtn");
+  var resetBtn = document.getElementById("resetBtn");
+  var idx = 0, playing = false, timer = null;
 
-**Entities Detected:**
-- Company Account
-- Contact Person
-- Financial Data
-- Contact Information
+  function bubble(role, text) {
+    var msg = document.createElement("div");
+    msg.className = "msg " + role;
+    var av = document.createElement("div");
+    av.className = "avatar";
+    av.innerHTML = role === "user" ? GLYPH_USER : GLYPH_SPARK;
+    var b = document.createElement("div");
+    b.className = "bubble";
+    b.textContent = text;
+    msg.appendChild(av); msg.appendChild(b);
+    body.appendChild(msg);
+    msg.scrollIntoView({ behavior: "smooth", block: "end" });
+    return b;
+  }
 
-Let me create these records in your CRM system now...`,
-                        typingTime: 2000,
-                        delay: 1500,
-                        action: 'step1'
-                    }
-                ]
-            },
-            {
-                type: 'crm',
-                messages: [
-                    {
-                        role: 'assistant',
-                        content: `## ✅ CRM Records Created Successfully
+  function typingBubble() {
+    var msg = document.createElement("div");
+    msg.className = "msg bot";
+    var av = document.createElement("div");
+    av.className = "avatar"; av.innerHTML = GLYPH_SPARK;
+    var b = document.createElement("div");
+    b.className = "bubble";
+    b.innerHTML = '<span class="typing"><i></i><i></i><i></i></span>';
+    msg.appendChild(av); msg.appendChild(b);
+    body.appendChild(msg);
+    msg.scrollIntoView({ behavior: "smooth", block: "end" });
+    return { msg: msg, b: b };
+  }
 
-I've created the following records in Dynamics 365:`,
-                        showCRM: true,
-                        crmData: {
-                            account: {
-                                name: 'Acme Corporation',
-                                type: 'Technology Company',
-                                location: 'Seattle, WA',
-                                revenue: '$50,000,000',
-                                status: 'Active',
-                                id: 'ACC-2024-0842'
-                            },
-                            contact: {
-                                name: 'John Smith',
-                                title: 'CEO',
-                                email: 'john.smith@acme.com',
-                                phone: '(206) 555-0100',
-                                account: 'Acme Corporation',
-                                id: 'CON-2024-1563'
-                            }
-                        },
-                        typingTime: 2000,
-                        delay: 1500,
-                        action: 'step2'
-                    }
-                ]
-            },
-            {
-                type: 'voice',
-                transcript: "Schedule a follow-up meeting with John next Tuesday at 2 PM to discuss the enterprise software proposal. Also create an opportunity for 500 thousand dollars closing in Q2",
-                messages: [
-                    {
-                        role: 'user',
-                        content: '🎤 Voice Input Detected',
-                        showTranscript: true,
-                        typingTime: 1500,
-                        delay: 2000
-                    },
-                    {
-                        role: 'assistant',
-                        content: `Processing your voice command for meeting and opportunity creation...
+  function step() {
+    if (idx >= TURNS.length) { playing = false; playBtn.disabled = true; return; }
+    var t = TURNS[idx];
+    bubble("user", t[0]);
+    var tb = typingBubble();
+    timer = setTimeout(function () {
+      tb.b.textContent = t[1];
+      tb.msg.scrollIntoView({ behavior: "smooth", block: "end" });
+      idx += 1;
+      if (playing && idx < TURNS.length) { timer = setTimeout(step, 1600); }
+      else if (idx >= TURNS.length) { playing = false; playBtn.disabled = true; }
+    }, 900);
+  }
 
-## 📅 Calendar & Opportunity Management
+  playBtn.addEventListener("click", function () {
+    if (playing) return;
+    if (hint) { hint.remove(); hint = null; }
+    playing = true;
+    step();
+  });
+  resetBtn.addEventListener("click", function () {
+    clearTimeout(timer); playing = false; idx = 0; playBtn.disabled = false;
+    body.innerHTML = '<div class="chat-hint">Press Play to walk through the scripted scenario.</div>';
+    hint = body.firstChild;
+  });
 
-I've identified:
-- **Meeting Request**: Follow-up with John Smith
-- **Date/Time**: Next Tuesday at 2:00 PM
-- **Topic**: Enterprise Software Proposal
-- **Opportunity**: $500,000 closing Q2 2024
+  // ----- live estate data -----
+  var SOURCES = [{"label": "Dynamics 365 \u2014 Accounts", "url": "https://kody-w.github.io/static-dynamics-365/api/data/v9.2/accounts.json", "shape": "odata", "cols": [["Account", "name"], ["City", "address1_city"], ["No.", "accountnumber"]]}, {"label": "Dynamics 365 \u2014 Opportunities", "url": "https://kody-w.github.io/static-dynamics-365/api/data/v9.2/opportunities.json", "shape": "odata", "cols": [["Opportunity", "name"], ["Customer", "customeridname"], ["Win %", "closeprobability"]]}];
 
-Creating these items now...`,
-                        typingTime: 2000,
-                        delay: 1500
-                    }
-                ]
-            },
-            {
-                type: 'crm',
-                messages: [
-                    {
-                        role: 'assistant',
-                        content: `## ✅ Meeting and Opportunity Created
+  function rowsOf(shape, data) {
+    if (shape === "odata" || shape === "plain") return data.value || [];
+    if (shape === "sf") return data.records || [];
+    if (shape === "sn") return data.result || [];
+    return [];
+  }
+  function countOf(shape, data, rows) {
+    if (shape === "odata") return data["@odata.count"] != null ? data["@odata.count"] : rows.length;
+    if (shape === "plain") return data.count != null ? data.count : rows.length;
+    if (shape === "sf") return data.totalSize != null ? data.totalSize : rows.length;
+    return rows.length;
+  }
+  function cell(v) {
+    if (v == null) return "";
+    if (typeof v === "object") return v.display_value || v.value || "";
+    return String(v);
+  }
 
-### 📅 Meeting Scheduled`,
-                        showCRM: true,
-                        crmData: {
-                            meeting: {
-                                subject: 'Enterprise Software Proposal Discussion',
-                                attendees: 'John Smith (Acme Corporation)',
-                                date: 'Tuesday, January 28, 2024',
-                                time: '2:00 PM - 3:00 PM PST',
-                                location: 'Microsoft Teams',
-                                status: 'Scheduled',
-                                id: 'MTG-2024-0367'
-                            },
-                            opportunity: {
-                                name: 'Acme Enterprise Software',
-                                account: 'Acme Corporation',
-                                amount: '$500,000',
-                                closeDate: 'Q2 2024',
-                                probability: '60%',
-                                stage: 'Proposal',
-                                id: 'OPP-2024-0198'
-                            }
-                        },
-                        typingTime: 2000,
-                        delay: 1500,
-                        action: 'step3'
-                    }
-                ]
-            },
-            {
-                type: 'summary',
-                messages: [
-                    {
-                        role: 'assistant',
-                        content: `## 🎉 Demo Complete!
-
-### Voice to CRM Benefits Demonstrated:
-
-✅ **80% Faster Data Entry** - Voice input vs manual typing
-✅ **Multi-Platform Integration** - Dynamics 365, ServiceNow, Email
-✅ **Natural Language Processing** - No training required
-✅ **Real-time Validation** - Ensures data accuracy
-✅ **Mobile Ready** - Works anywhere with a microphone
-
-### Records Created in This Demo:
-- 1 Account (Acme Corporation)
-- 1 Contact (John Smith)
-- 1 Opportunity ($500,000)
-- 1 Meeting (Next Tuesday)
-
-**Ready to transform your CRM workflow with voice?**`,
-                        typingTime: 2500,
-                        delay: 2000
-                    }
-                ]
-            }
-        ];
-
-        let currentScriptIndex = 0;
-        let currentMessageIndex = 0;
-
-        // Initialize on page load
-        window.addEventListener('DOMContentLoaded', () => {
-            setupEventListeners();
+  SOURCES.forEach(function (src, i) {
+    var countEl = document.getElementById("lcCount" + i);
+    var bodyEl = document.getElementById("lcBody" + i);
+    fetch(src.url).then(function (r) {
+      if (!r.ok) throw new Error("HTTP " + r.status);
+      return r.json();
+    }).then(function (data) {
+      var rows = rowsOf(src.shape, data);
+      var count = countOf(src.shape, data, rows);
+      countEl.textContent = count + " records";
+      var html = '<div class="lc-table-wrap"><table class="lc"><thead><tr>';
+      src.cols.forEach(function (c) { html += "<th>" + c[0] + "</th>"; });
+      html += "</tr></thead><tbody>";
+      rows.slice(0, 5).forEach(function (row) {
+        html += "<tr>";
+        src.cols.forEach(function (c) {
+          var v = cell(row[c[1]]);
+          html += "<td title=\"" + v.replace(/"/g, "&quot;") + "\">" + v + "</td>";
         });
-
-        function setupEventListeners() {
-            const speedSlider = document.getElementById('speedSlider');
-            speedSlider.addEventListener('input', (e) => {
-                demoState.speed = parseFloat(e.target.value);
-                document.getElementById('speedLabel').textContent = `${demoState.speed}x`;
-            });
-        }
-
-        function switchMode(mode) {
-            currentMode = mode;
-            document.getElementById('demoModeBtn').classList.toggle('active', mode === 'demo');
-            document.getElementById('liveModeBtn').classList.toggle('active', mode === 'live');
-            document.getElementById('liveConfig').classList.toggle('active', mode === 'live');
-            
-            const voiceButton = document.getElementById('voiceBtn');
-            const voiceBtnText = document.getElementById('voiceBtnText');
-            
-            if (mode === 'demo') {
-                resetDemo();
-                voiceButton.disabled = true;
-                voiceButton.onclick = simulateVoiceInput;
-                voiceBtnText.textContent = 'Click to Simulate Voice';
-            } else {
-                voiceButton.onclick = handleLiveVoiceInput;
-                voiceBtnText.textContent = 'Click to Record Voice';
-                voiceButton.disabled = !liveState.isConnected;
-                
-                const savedConfig = localStorage.getItem('voiceToCRMConfig');
-                if (savedConfig) {
-                    const config = JSON.parse(savedConfig);
-                    document.getElementById('apiKey').value = config.apiKey || '';
-                    document.getElementById('apiEndpoint').value = config.endpoint || '';
-                }
-            }
-        }
-
-        async function testConnection() {
-            const apiKey = document.getElementById('apiKey').value;
-            const endpoint = document.getElementById('apiEndpoint').value;
-            
-            if (!apiKey || !endpoint) {
-                updateConnectionStatus('error', '❌ Please enter both API Key and Endpoint');
-                return;
-            }
-            
-            updateConnectionStatus('processing', '⏳ Testing connection...');
-            
-            try {
-                const response = await fetch(endpoint, {
-                    method: 'POST',
-                    headers: {
-                        'x-functions-key': apiKey,
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify({
-                        action: 'health',
-                        test: true
-                    })
-                });
-                
-                if (response.ok) {
-                    liveState.isConnected = true;
-                    liveState.apiKey = apiKey;
-                    liveState.endpoint = endpoint;
-                    
-                    localStorage.setItem('voiceToCRMConfig', JSON.stringify({
-                        apiKey: apiKey,
-                        endpoint: endpoint
-                    }));
-                    
-                    updateConnectionStatus('connected', '✅ Connected Successfully');
-                    document.getElementById('voiceBtn').disabled = false;
-                } else {
-                    throw new Error(`Connection failed: ${response.status}`);
-                }
-            } catch (error) {
-                updateConnectionStatus('error', `❌ Connection Failed: ${error.message}`);
-                liveState.isConnected = false;
-            }
-        }
-
-        function updateConnectionStatus(status, message) {
-            const statusElement = document.getElementById('connectionStatus');
-            statusElement.className = `connection-status ${status}`;
-            statusElement.textContent = message;
-        }
-
-        async function handleLiveVoiceInput() {
-            const voiceBtn = document.getElementById('voiceBtn');
-            const voiceBtnIcon = document.getElementById('voiceBtnIcon');
-            const voiceBtnText = document.getElementById('voiceBtnText');
-            
-            if (!liveState.isConnected) {
-                alert('Please connect to your Azure Function first');
-                return;
-            }
-            
-            if (!liveState.isRecording) {
-                try {
-                    liveState.stream = await navigator.mediaDevices.getUserMedia({ audio: true });
-                    liveState.mediaRecorder = new MediaRecorder(liveState.stream);
-                    liveState.audioChunks = [];
-                    
-                    liveState.mediaRecorder.ondataavailable = (event) => {
-                        liveState.audioChunks.push(event.data);
-                    };
-                    
-                    liveState.mediaRecorder.onstop = async () => {
-                        const audioBlob = new Blob(liveState.audioChunks, { type: 'audio/wav' });
-                        await processAudioWithAPI(audioBlob);
-                    };
-                    
-                    liveState.mediaRecorder.start();
-                    liveState.isRecording = true;
-                    
-                    voiceBtn.classList.add('recording');
-                    voiceBtnIcon.textContent = '🔴';
-                    voiceBtnText.textContent = 'Recording... Click to Stop';
-                    
-                    updateStatus('processing', 'Recording...');
-                    
-                } catch (error) {
-                    alert('Microphone access denied. Please allow microphone access to use voice input.');
-                    console.error('Error accessing microphone:', error);
-                }
-            } else {
-                liveState.mediaRecorder.stop();
-                liveState.stream.getTracks().forEach(track => track.stop());
-                liveState.isRecording = false;
-                
-                voiceBtn.classList.remove('recording');
-                voiceBtnIcon.textContent = '🎤';
-                voiceBtnText.textContent = 'Processing...';
-                
-                updateStatus('processing', 'Processing voice input...');
-            }
-        }
-
-        function startDemo() {
-            if (demoState.isPlaying && !demoState.isPaused) return;
-            
-            // Hide welcome screen and show chat
-            document.getElementById('welcomeScreen').style.display = 'none';
-            document.getElementById('chatMessages').style.display = 'block';
-            
-            demoState.isPlaying = true;
-            demoState.isPaused = false;
-            
-            document.getElementById('startBtn').disabled = true;
-            document.getElementById('pauseBtn').disabled = false;
-            document.getElementById('skipBtn').disabled = false;
-            document.getElementById('voiceBtn').disabled = false;
-            
-            updateStatus('processing', 'Running Demo...');
-            
-            if (currentScriptIndex === 0 && currentMessageIndex === 0) {
-                document.getElementById('chatMessages').innerHTML = '';
-            }
-            
-            playNextMessage();
-        }
-
-        function pauseDemo() {
-            demoState.isPaused = true;
-            document.getElementById('startBtn').disabled = false;
-            document.getElementById('pauseBtn').disabled = true;
-            
-            clearTimeout(demoState.messageTimer);
-            clearTimeout(demoState.typingTimer);
-            
-            updateStatus('idle', 'Paused');
-        }
-
-        function resetDemo() {
-            clearTimeout(demoState.messageTimer);
-            clearTimeout(demoState.typingTimer);
-            
-            demoState.isPlaying = false;
-            demoState.isPaused = false;
-            demoState.currentStep = 0;
-            currentScriptIndex = 0;
-            currentMessageIndex = 0;
-            
-            document.getElementById('startBtn').disabled = false;
-            document.getElementById('pauseBtn').disabled = true;
-            document.getElementById('skipBtn').disabled = true;
-            document.getElementById('voiceBtn').disabled = true;
-            
-            document.getElementById('voiceBtn').classList.remove('recording');
-            document.getElementById('voiceBtnIcon').textContent = '🎤';
-            document.getElementById('voiceBtnText').textContent = 'Click to Simulate Voice';
-            
-            document.getElementById('progressBar').style.width = '0%';
-            
-            document.querySelectorAll('.step-indicator').forEach(step => {
-                step.classList.remove('active', 'completed');
-            });
-            
-            const typingIndicator = document.getElementById('typingIndicator');
-            if (typingIndicator) {
-                typingIndicator.remove();
-            }
-            
-            updateStatus('idle', 'Ready');
-            
-            // Show welcome screen
-            document.getElementById('welcomeScreen').style.display = 'flex';
-            document.getElementById('chatMessages').style.display = 'none';
-            document.getElementById('chatMessages').innerHTML = '';
-        }
-
-        function skipToNext() {
-            clearTimeout(demoState.messageTimer);
-            clearTimeout(demoState.typingTimer);
-            
-            currentMessageIndex++;
-            if (currentMessageIndex >= demoScript[currentScriptIndex].messages.length) {
-                currentScriptIndex++;
-                currentMessageIndex = 0;
-            }
-            
-            if (currentScriptIndex < demoScript.length) {
-                playNextMessage();
-            }
-        }
-
-        function playNextMessage() {
-            if (!demoState.isPlaying || demoState.isPaused) return;
-            
-            if (currentScriptIndex >= demoScript.length) {
-                completeDemo();
-                return;
-            }
-            
-            const currentSection = demoScript[currentScriptIndex];
-            const currentMessage = currentSection.messages[currentMessageIndex];
-            
-            if (!currentMessage) {
-                currentScriptIndex++;
-                currentMessageIndex = 0;
-                if (currentScriptIndex < demoScript.length) {
-                    playNextMessage();
-                } else {
-                    completeDemo();
-                }
-                return;
-            }
-            
-            if (currentSection.type === 'voice' && currentMessageIndex === 0) {
-                simulateVoiceRecording();
-            }
-            
-            showTypingIndicator();
-            
-            demoState.typingTimer = setTimeout(() => {
-                hideTypingIndicator();
-                addMessage(currentMessage, currentSection);
-                
-                updateProgress();
-                
-                if (currentMessage.action) {
-                    updateStep(currentMessage.action);
-                }
-                
-                currentMessageIndex++;
-                if (currentMessageIndex >= currentSection.messages.length) {
-                    currentScriptIndex++;
-                    currentMessageIndex = 0;
-                }
-                
-                const delay = (currentMessage.delay || 2000) / demoState.speed;
-                demoState.messageTimer = setTimeout(() => {
-                    playNextMessage();
-                }, delay);
-                
-            }, (currentMessage.typingTime || 2000) / demoState.speed);
-        }
-
-        function addMessage(message, section) {
-            const messagesContainer = document.getElementById('chatMessages');
-            const messageDiv = document.createElement('div');
-            messageDiv.className = 'message';
-            
-            const time = new Date().toLocaleString('en-US', {
-                month: 'short',
-                day: 'numeric'
-            });
-            
-            let contentHTML = `
-                <div class="message-header">
-                    ${message.role === 'user' 
-                        ? '<div class="message-avatar-user">YU</div>'
-                        : '<div class="message-avatar-agent">AI</div>'}
-                    <span class="message-author">${message.role === 'user' ? 'You' : 'Voice to CRM Agent'}</span>
-                    ${message.role === 'assistant' ? '<span class="message-tag">ⓘ</span>' : ''}
-                    <span class="message-time">${time}</span>
-                </div>
-                <div class="message-content">
-            `;
-            
-            if (message.showTranscript && section.transcript) {
-                contentHTML += `
-                    <div class="voice-transcript">
-                        🎤 "${section.transcript}"
-                    </div>
-                `;
-            }
-            
-            contentHTML += message.content;
-            
-            if (message.showCRM && message.crmData) {
-                contentHTML += createCRMCards(message.crmData);
-            }
-            
-            contentHTML += '</div>';
-            messageDiv.innerHTML = contentHTML;
-            
-            messagesContainer.appendChild(messageDiv);
-            messagesContainer.scrollTop = messagesContainer.scrollHeight;
-        }
-
-        function createCRMCards(data) {
-            let html = '';
-            
-            for (const [key, value] of Object.entries(data)) {
-                const title = key.charAt(0).toUpperCase() + key.slice(1);
-                const icon = key === 'account' ? '🏢' : key === 'contact' ? '👤' : 
-                            key === 'meeting' ? '📅' : key === 'opportunity' ? '💰' : 
-                            key === 'ticket' ? '🎫' : '📋';
-                
-                html += `
-                    <div class="agent-card">
-                        <div class="agent-card-header">
-                            <div class="agent-card-title">
-                                <span>${icon}</span>
-                                <span>${title}</span>
-                            </div>
-                            <div class="agent-card-status">Created</div>
-                        </div>
-                        <div class="agent-card-content">
-                            <ul class="detail-list">
-                `;
-                
-                for (const [field, fieldValue] of Object.entries(value)) {
-                    if (field !== 'id') {
-                        const label = field.charAt(0).toUpperCase() + field.slice(1).replace(/([A-Z])/g, ' $1');
-                        html += `
-                            <li class="detail-item">
-                                <span class="detail-label">${label}:</span>
-                                <span class="detail-value">${fieldValue}</span>
-                            </li>
-                        `;
-                    }
-                }
-                
-                html += '</ul>';
-                
-                if (value.id) {
-                    html += `
-                        <div class="entity-badges">
-                            <div class="entity-badge">ID: ${value.id}</div>
-                        </div>
-                    `;
-                }
-                
-                html += `
-                        </div>
-                    </div>
-                `;
-            }
-            
-            return html;
-        }
-
-        function simulateVoiceRecording() {
-            const voiceBtn = document.getElementById('voiceBtn');
-            const voiceBtnIcon = document.getElementById('voiceBtnIcon');
-            const voiceBtnText = document.getElementById('voiceBtnText');
-            
-            voiceBtn.classList.add('recording');
-            voiceBtnIcon.textContent = '🔴';
-            voiceBtnText.textContent = 'Recording...';
-            
-            setTimeout(() => {
-                voiceBtn.classList.remove('recording');
-                voiceBtnIcon.textContent = '🎤';
-                voiceBtnText.textContent = 'Processing...';
-                
-                setTimeout(() => {
-                    voiceBtnText.textContent = 'Click to Simulate Voice';
-                }, 1000);
-            }, 3000 / demoState.speed);
-        }
-
-        function simulateVoiceInput() {
-            if (!demoState.isPlaying) return;
-            skipToNext();
-        }
-
-        function showTypingIndicator() {
-            const messagesContainer = document.getElementById('chatMessages');
-            const indicator = document.createElement('div');
-            indicator.className = 'typing-indicator';
-            indicator.id = 'typingIndicator';
-            indicator.innerHTML = `
-                <div class="typing-dot"></div>
-                <div class="typing-dot"></div>
-                <div class="typing-dot"></div>
-            `;
-            messagesContainer.appendChild(indicator);
-            messagesContainer.scrollTop = messagesContainer.scrollHeight;
-        }
-
-        function hideTypingIndicator() {
-            const indicator = document.getElementById('typingIndicator');
-            if (indicator) {
-                indicator.remove();
-            }
-        }
-
-        function updateProgress() {
-            const totalMessages = demoScript.reduce((sum, section) => sum + section.messages.length, 0);
-            const currentProgress = (currentScriptIndex * 10 + currentMessageIndex) / totalMessages * 100;
-            document.getElementById('progressBar').style.width = `${currentProgress}%`;
-        }
-
-        function updateStep(action) {
-            if (action === 'step1') {
-                document.getElementById('step1').classList.add('active');
-                demoState.currentStep = 1;
-            } else if (action === 'step2') {
-                document.getElementById('step1').classList.remove('active');
-                document.getElementById('step1').classList.add('completed');
-                document.getElementById('step2').classList.add('active');
-                demoState.currentStep = 2;
-            } else if (action === 'step3') {
-                document.getElementById('step2').classList.remove('active');
-                document.getElementById('step2').classList.add('completed');
-                document.getElementById('step3').classList.add('active');
-                demoState.currentStep = 3;
-            }
-        }
-
-        function updateStatus(status, text) {
-            const statusDot = document.getElementById('statusDot');
-            const statusText = document.getElementById('statusText');
-            
-            statusDot.className = `status-dot ${status}`;
-            statusText.textContent = text;
-        }
-
-        function completeDemo() {
-            demoState.isPlaying = false;
-            document.getElementById('startBtn').disabled = false;
-            document.getElementById('pauseBtn').disabled = true;
-            document.getElementById('skipBtn').disabled = true;
-            document.getElementById('voiceBtn').disabled = true;
-            
-            document.getElementById('step3').classList.remove('active');
-            document.getElementById('step3').classList.add('completed');
-            
-            document.getElementById('progressBar').style.width = '100%';
-            
-            updateStatus('idle', 'Demo Complete');
-        }
-
-        function getCurrentTime() {
-            const now = new Date();
-            return now.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' });
-        }
-    </script>
+        html += "</tr>";
+      });
+      html += "</tbody></table></div>";
+      bodyEl.innerHTML = html;
+    }).catch(function () {
+      countEl.textContent = "offline";
+      countEl.classList.add("err");
+      bodyEl.innerHTML = '<div class="lc-note">Live data unavailable — you appear to be offline or the sandbox is unreachable. The scripted demo above still works; reconnect to see real records from this system.</div>';
+    });
+  });
+})();
+</script>
 </body>
 </html>
