@@ -1,0 +1,56 @@
+---
+import '../styles/global.css';
+
+interface Props { title: string; description?: string; }
+const { title, description = 'One-click Copilot Studio industry solutions — one-pagers, demos, and native GitHub engagement.' } = Astro.props;
+const base = import.meta.env.BASE_URL;
+
+// Client-side product telemetry via Microsoft Clarity. Enabled only when a
+// project id is supplied at build time (PUBLIC_CLARITY_ID) and only in prod.
+const clarityId = import.meta.env.PUBLIC_CLARITY_ID;
+const enableClarity = import.meta.env.PROD && !!clarityId;
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content={description} />
+    <title>{title}</title>
+    {enableClarity && (
+      <script is:inline define:vars={{ clarityId }}>
+        (function (c, l, a, r, i, t, y) {
+          c[a] = c[a] || function () { (c[a].q = c[a].q || []).push(arguments); };
+          t = l.createElement(r); t.async = 1; t.src = 'https://www.clarity.ms/tag/' + i;
+          y = l.getElementsByTagName(r)[0]; y.parentNode.insertBefore(t, y);
+        })(window, document, 'clarity', 'script', clarityId);
+      </script>
+    )}
+  </head>
+  <body>
+    <div class="gradient-bar"></div>
+    <nav class="nav">
+      <div class="nav__inner container">
+        <a href={base} class="brand">
+          <span class="brand__mark"></span>
+          AI Agent Templates
+          <span class="brand__sub">/ Industry Solutions</span>
+        </a>
+        <div class="nav__links">
+          <a href={base}>Solutions</a>
+          <a href="https://github.com/kody-w/AI-Agent-Templates/discussions" target="_blank" rel="noopener">Discussions</a>
+          <a href="https://github.com/kody-w/AI-Agent-Templates" target="_blank" rel="noopener">GitHub</a>
+        </div>
+      </div>
+    </nav>
+    <main class="container">
+      <slot />
+    </main>
+    <footer class="footer">
+      <div class="container">
+        One-click Copilot Studio industry solutions, published by the <strong>Microsoft AI Business Applications Specialist Team (AIBAST)</strong>. Synthetic data — no PII. Engagement (upvotes · discussion) is native to <a href="https://github.com/kody-w/AI-Agent-Templates/discussions">GitHub Discussions</a>.
+      </div>
+    </footer>
+  </body>
+</html>

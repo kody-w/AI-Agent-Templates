@@ -1,0 +1,98 @@
+// The five AIBAST industry solutions. `discussion` maps to the GitHub Discussion
+// created for each solution — upvote/comment happen natively on GitHub; download
+// and video-play events log Microsoft Clarity custom events (no owned backend).
+export const REPO = 'kody-w/AI-Agent-Templates';
+export const REPO_URL = 'https://github.com/kody-w/AI-Agent-Templates';
+
+export const SOLUTIONS = [
+  {
+    slug: 'loan-origination', title: 'Loan Origination & Credit Decisioning',
+    kicker: 'Financial Services', accent: 'cyan', icon: 'card',
+    func: 'Retail Lending & Credit Risk',
+    benefit: 'Compresses loan origination from application to drawdown into one guided, automated journey — clean capture, Open Banking affordability, and real-time credit and fraud decisioning — so more customers get a faster, fairer decision while risk stays in control.',
+    kpis: [['-50%', 'time to decision'], ['+15%', 'approval within appetite'], ['-30%', 'manual underwriting'], ['+20%', 'offer → drawdown']],
+    stack: 'agent_stacks/financial_services_stacks/loan_origination_assistant_stack', discussion: 2,
+    steps: [
+      ['Application Submission', 'Copilot Studio guides digital/branch capture so every required field lands correctly.', ['Copilot Studio', 'Power Apps']],
+      ['Open Banking Data', 'Azure AI analyses consented Open Banking data for an enriched affordability view.', ['Azure AI', 'Open Banking Platform']],
+      ['Credit Decisioning', 'An automated scorecard runs over bureau, application, and behavioural data; Azure AI flags anomalies.', ['Azure AI', 'Credit Bureau API']],
+      ['Fraud Risk Scoring', 'The fraud engine runs concurrently, assessing identity, device, and application-level indicators.', ['Azure AI', 'Fraud Prevention']],
+      ['Offer Presentation', 'Approved applicants get a personalised offer, optimised for conversion within risk appetite.', ['Copilot Studio']],
+      ['Drawdown Processing', 'Accepted offers trigger automated drawdown in the core banking system within the regulatory window.', ['Power Automate', 'Core Banking System']],
+      ['Referred Case Management', 'Referred cases reach underwriters in Power Apps with a full AI assessment; rationale is captured.', ['Power Apps', 'Copilot Studio']],
+      ['Portfolio MI', 'Power BI tracks approval rates, bad debt by vintage, and model performance for governance.', ['Power BI']],
+    ],
+  },
+  {
+    slug: 'payments-operations', title: 'Payments Operations Excellence',
+    kicker: 'Financial Services', accent: 'purple', icon: 'package',
+    func: 'Payments Operations',
+    benefit: 'Runs payments operations end to end across every rail — ingesting and validating instructions, screening sanctions, repairing exceptions, reconciling positions, resolving queries — lifting straight-through processing and keeping the bank continuously compliant.',
+    kpis: [['+12pt', 'STP rate'], ['-40%', 'exception cost'], ['real-time', 'sanctions compliance'], ['-50%', 'query resolution']],
+    stack: 'agent_stacks/financial_services_stacks/payments_operations_excellence_stack', discussion: 3,
+    steps: [
+      ['Payment Ingestion', 'CHAPS/FPS/SEPA/SWIFT instructions are ingested and validated by Azure AI against scheme rules and sanction lists.', ['Azure AI', 'Payment Platform']],
+      ['Sanctions & Screening', 'Every payment is screened against OFAC/HMT/EU lists in real time; hits route to compliance in Power Apps.', ['Copilot Studio', 'Power Apps']],
+      ['Exception Handling', 'STP failures route to ops agents; Copilot Studio gives cause analysis and a suggested repair.', ['Power Apps', 'Copilot Studio']],
+      ['Reconciliation', 'Nostro and position reconciliation runs automatically; unreconciled items are flagged in Power Apps.', ['Power Automate', 'Power Apps']],
+      ['Correspondent Banking', 'Relationship data and limits are tracked; Copilot Studio watches for breaches and nostro funding.', ['Power Apps', 'Copilot Studio']],
+      ['Fraud Prevention', 'Transaction-level indicators are assessed by Azure AI before release; suspicious payments trigger verification.', ['Azure AI', 'Copilot Studio']],
+      ['Customer Query Resolution', 'Tracking queries are resolved via Copilot Studio against real-time payment status.', ['Copilot Studio', 'Payment Platform']],
+      ['Payments Analytics', 'Power BI tracks volumes, values, STP rates, and scheme compliance across all rails.', ['Power BI']],
+    ],
+  },
+  {
+    slug: 'patient-intake-triage', title: 'Intelligent Patient Intake & Triage',
+    kicker: 'Patient Experience', accent: 'green', icon: 'ticket',
+    func: 'Patient Access & Admissions',
+    benefit: 'Streamlines the intake journey from first contact to clinical triage — reducing wait times, capturing accurate data, and prioritising clinical urgency automatically — improving patient experience and departmental throughput.',
+    kpis: [['-35%', 'intake wait time'], ['-40%', 'paper registration admin'], ['+25%', 'triage accuracy'], ['+20%', 'patient satisfaction']],
+    stack: 'agent_stacks/healthcare_stacks/patient_intake_stack', discussion: 4,
+    steps: [
+      ['Patient Contact & Channel', 'Copilot Studio identifies the channel (web/mobile/phone/walk-in) and starts a structured intake.', ['Copilot Studio']],
+      ['Identity Verification', 'Identity is verified against the Patient Administration System and the existing record retrieved.', ['Copilot Studio', 'Patient Administration System']],
+      ['Symptom & History Capture', 'A guided assessment captures symptoms, duration, severity, history, allergies, and medications.', ['Copilot Studio', 'Azure OpenAI']],
+      ['Clinical Triage Scoring', 'Azure AI applies validated protocols (e.g. Manchester Triage) to produce a priority score with rationale.', ['Azure AI', 'Copilot Studio']],
+      ['Clinician Alert & Queue', 'Power Automate notifies the duty clinician of high-priority patients; the patient enters the right queue.', ['Power Automate', 'Power Apps']],
+      ['Registration Pre-Population', 'Power Apps pre-fills the registration form for review and digital signature.', ['Power Apps']],
+      ['Insurance & Eligibility', 'Copilot Studio checks payer eligibility and flags coverage gaps or pre-auth needs.', ['Copilot Studio', 'Payer / Insurance System']],
+      ['EHR Update & Bed Allocation', 'Intake data is written to the EHR; Power Apps assigns care area and notifies the team.', ['EHR System', 'Power Automate']],
+    ],
+  },
+  {
+    slug: 'clinical-documentation', title: 'Clinical Documentation & Coding',
+    kicker: 'Clinical Operations', accent: 'pink', icon: 'report',
+    func: 'Clinical Administration & Medical Coding',
+    benefit: 'Reduces the burden of clinical documentation by using AI to transcribe, structure, and code encounters — freeing clinicians to focus on care while improving coding accuracy and revenue capture.',
+    kpis: [['-50%', 'documentation time'], ['-30%', 'days to bill'], ['+15%', 'coding accuracy'], ['+1.5', 'appts/clinician/day']],
+    stack: 'agent_stacks/healthcare_stacks/clinical_notes_summarizer_stack', discussion: 5,
+    steps: [
+      ['Encounter Recording', 'Clinician dictates into Power Apps or uses ambient AI listening during the consult.', ['Power Apps', 'Azure AI Speech']],
+      ['Speech-to-Text', 'Azure AI Speech converts audio to a structured transcript, identifying speaker roles.', ['Azure AI Speech']],
+      ['Note Structuring', 'Azure OpenAI structures the transcript into SOAP and extracts clinical entities.', ['Azure OpenAI', 'Copilot Studio']],
+      ['ICD & CPT Suggestion', 'Copilot Studio matches entities to ICD-10/11 and CPT libraries with confidence scores.', ['Copilot Studio', 'Azure AI']],
+      ['Clinician Review', 'The note and codes are presented in Power Apps for rapid review and one-click approval.', ['Power Apps']],
+      ['EHR Write-Back', 'Approved note and codes are written back to the EHR automatically.', ['EHR System', 'Power Automate']],
+      ['Charge Capture', 'Approved CPT codes flow to Revenue Cycle Management to generate the claim.', ['Power Automate']],
+      ['Audit Trail', 'Every suggestion, acceptance, and override is logged in an immutable audit trail.', ['Azure Monitor', 'Power BI']],
+    ],
+  },
+  {
+    slug: 'prior-authorization', title: 'Prior Authorization & Utilization Management',
+    kicker: 'Clinical Operations', accent: 'orange', icon: 'ticket',
+    func: 'Utilization Management & Revenue Integrity',
+    benefit: 'Automates the prior-authorization lifecycle end to end — detecting when an auth is required, assembling clinical evidence, submitting to the payer, chasing pended requests, and drafting appeals — so care is scheduled sooner and revenue leakage from avoidable denials is eliminated.',
+    kpis: [['-60%', 'auth turnaround'], ['-25%', 'denial rate'], ['+30%', 'UM productivity'], ['-45%', 'peer-to-peer delay']],
+    stack: 'agent_stacks/healthcare_stacks/prior_authorization_stack', discussion: 6,
+    steps: [
+      ['Auth Requirement Detection', 'Copilot Studio checks the payer rules engine for the CPT/plan, honouring gold-carding.', ['Copilot Studio', 'Payer Rules Engine']],
+      ['Clinical Criteria Assembly', 'Azure OpenAI extracts EHR evidence and maps it to MCG/InterQual medical-necessity criteria.', ['Azure OpenAI', 'EHR System']],
+      ['Payer Submission', 'Power Automate submits via portal or X12 278 with the evidence packet, flagging expedited cases.', ['Power Automate', 'Payer Portal / X12 278']],
+      ['Status & Pend Management', 'Every request is tracked against its SLA clock; pends trigger chase and breaches escalate.', ['Power Automate', 'Power Apps']],
+      ['Denial Triage & Appeal', 'Azure OpenAI drafts appeals citing the payer criteria and the member facts for nurse review.', ['Azure OpenAI', 'Copilot Studio']],
+      ['Peer-to-Peer Scheduling', 'Copilot Studio negotiates a peer-to-peer slot between physician and payer medical director.', ['Copilot Studio']],
+      ['Decision Write-Back', 'Auth numbers, validity windows, and unit limits are written back to the EHR and scheduling.', ['EHR System', 'Power Automate']],
+      ['UM Analytics', 'Power BI tracks turnaround, denial/overturn rates, SLA breaches, and gold-carding eligibility.', ['Power BI']],
+    ],
+  },
+];
