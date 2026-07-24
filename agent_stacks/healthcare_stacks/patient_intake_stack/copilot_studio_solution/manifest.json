@@ -1,0 +1,59 @@
+{
+ "suite": "PatientIntakeTriage",
+ "display": "Intelligent Patient Intake & Triage",
+ "solutions": [
+  {
+   "name": "PatientIntakeTriageMcpConnectors",
+   "zip": "PatientIntakeTriageMcpConnectors_1_0_0_1.zip",
+   "kind": "connectors"
+  },
+  {
+   "name": "PatientIntakeTriageMcpAgents",
+   "zip": "PatientIntakeTriageMcpAgents_1_0_0_1.zip",
+   "kind": "agents"
+  }
+ ],
+ "connector": {
+  "schema": "aibast_intelligent-20_f7463afd",
+  "id": "44d31273-713c-565b-a21d-2b8e893af5c4",
+  "display": "Intelligent Patient Intake MCP",
+  "tools": [
+   "get_clinicianqueueregistration",
+   "get_insuranceehrbedding",
+   "get_patientcontactidentity",
+   "get_symptomtriagescoring",
+   "list_clinicianqueueregistration",
+   "list_insuranceehrbedding",
+   "list_patientcontactidentity",
+   "list_symptomtriagescoring"
+  ]
+ },
+ "agents": {
+  "parent": "aibast_intelligentpatientintaketriageassistant_5c0368",
+  "parent_display": "Intelligent Patient Intake & Triage Assistant",
+  "child": "aibast_insuranceehrbeddingagent_dc20e1",
+  "child_display": "Insurance Ehr Bedding Agent",
+  "skills": [
+   [
+    "clinicianqueueregistration",
+    "clinician_queue_registration_agent"
+   ],
+   [
+    "insuranceehrbedding",
+    "insurance_ehr_bedding_agent"
+   ],
+   [
+    "patientcontactidentity",
+    "patient_contact_identity_agent"
+   ],
+   [
+    "symptomtriagescoring",
+    "symptom_triage_agent"
+   ]
+  ]
+ },
+ "skills_mode": "thin",
+ "manual_step": "Copilot Studio -> Intelligent Patient Intake & Triage Assistant -> Tools -> Add a tool -> Model Context Protocol -> 'Intelligent Patient Intake MCP' -> create the (no-auth) connection -> Save -> Publish. No API exists for this attach.",
+ "manual_steps_html_file": "MANUAL_STEPS.html",
+ "evaluation_csv_file": "EVALUATION.csv"
+}

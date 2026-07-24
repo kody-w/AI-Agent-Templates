@@ -1,0 +1,59 @@
+{
+ "suite": "LoanOrigination",
+ "display": "Loan Origination & Credit Decisioning",
+ "solutions": [
+  {
+   "name": "LoanOriginationMcpConnectors",
+   "zip": "LoanOriginationMcpConnectors_1_0_0_1.zip",
+   "kind": "connectors"
+  },
+  {
+   "name": "LoanOriginationMcpAgents",
+   "zip": "LoanOriginationMcpAgents_1_0_0_1.zip",
+   "kind": "agents"
+  }
+ ],
+ "connector": {
+  "schema": "aibast_loan-20origina_eb397162",
+  "id": "2d164b1d-30fb-5942-956e-c4c3cc78aeb7",
+  "display": "Loan Origination & Credit MCP",
+  "tools": [
+   "get_creditdecisionengine",
+   "get_loanapplicationintake",
+   "get_loanofferdrawdown",
+   "get_referredcaseportfolio",
+   "list_creditdecisionengine",
+   "list_loanapplicationintake",
+   "list_loanofferdrawdown",
+   "list_referredcaseportfolio"
+  ]
+ },
+ "agents": {
+  "parent": "aibast_loanoriginationcreditdecisioningassistant_6ca993",
+  "parent_display": "Loan Origination & Credit Decisioning Assistant",
+  "child": "aibast_loanapplicationintakeagent_e8c6ba",
+  "child_display": "Loan Application Intake Agent",
+  "skills": [
+   [
+    "creditdecisionengine",
+    "credit_decision_agent"
+   ],
+   [
+    "loanapplicationintake",
+    "loan_application_intake_agent"
+   ],
+   [
+    "loanofferdrawdown",
+    "loan_offer_drawdown_agent"
+   ],
+   [
+    "referredcaseportfolio",
+    "referred_case_portfolio_agent"
+   ]
+  ]
+ },
+ "skills_mode": "thin",
+ "manual_step": "Copilot Studio -> Loan Origination & Credit Decisioning Assistant -> Tools -> Add a tool -> Model Context Protocol -> 'Loan Origination & Credit MCP' -> create the (no-auth) connection -> Save -> Publish. No API exists for this attach.",
+ "manual_steps_html_file": "MANUAL_STEPS.html",
+ "evaluation_csv_file": "EVALUATION.csv"
+}

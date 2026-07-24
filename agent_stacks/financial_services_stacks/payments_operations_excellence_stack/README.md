@@ -67,3 +67,15 @@ curl -X POST http://localhost:7072/api/businessinsightbot_function \
   -H "Content-Type: application/json" \
   -d '{"user_input": "Show me today's STP rate by payment rail", "conversation_history": []}'
 ```
+
+---
+
+## 🚀 One-click Copilot Studio deploy
+
+Want this in **Copilot Studio** instead of (or as well as) the local runtime?
+[`copilot_studio_solution/`](copilot_studio_solution/) is a ready-to-import
+Power Platform bundle — the **Payments Operations Excellence** solution as new-generation connected
+agents, published by **Microsoft AI Business Applications Specialist Team
+(AIBAST)**. Import `PaymentsOperationsMcpConnectors_1_0_0_1.zip` then `PaymentsOperationsMcpAgents_1_0_0_1.zip`, publish, attach the MCP connector, and
+you have a working agent in your environment. Full steps in
+[`copilot_studio_solution/README.md`](copilot_studio_solution/README.md).

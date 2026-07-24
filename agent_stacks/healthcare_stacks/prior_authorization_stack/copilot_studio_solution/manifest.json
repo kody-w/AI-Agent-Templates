@@ -1,0 +1,59 @@
+{
+ "suite": "PriorAuthorization",
+ "display": "Prior Authorization & Utilization Management",
+ "solutions": [
+  {
+   "name": "PriorAuthorizationMcpConnectors",
+   "zip": "PriorAuthorizationMcpConnectors_1_0_0_1.zip",
+   "kind": "connectors"
+  },
+  {
+   "name": "PriorAuthorizationMcpAgents",
+   "zip": "PriorAuthorizationMcpAgents_1_0_0_1.zip",
+   "kind": "agents"
+  }
+ ],
+ "connector": {
+  "schema": "aibast_prior-20author_42c38b15",
+  "id": "cddc0ec8-4538-566d-b62e-ae3ac7448432",
+  "display": "Prior Authorization & MCP",
+  "tools": [
+   "get_authdetectioncriteria",
+   "get_denialappealpeer",
+   "get_submissiontracking",
+   "get_writebackanalytics",
+   "list_authdetectioncriteria",
+   "list_denialappealpeer",
+   "list_submissiontracking",
+   "list_writebackanalytics"
+  ]
+ },
+ "agents": {
+  "parent": "aibast_priorauthorizationutilizationmanagementassistant_ff7b04",
+  "parent_display": "Prior Authorization & Utilization Management Assistant",
+  "child": "aibast_denialappealpeeragent_ba7144",
+  "child_display": "Denial Appeal Peer Agent",
+  "skills": [
+   [
+    "authdetectioncriteria",
+    "auth_detection_criteria_agent"
+   ],
+   [
+    "denialappealpeer",
+    "denial_appeal_peer_agent"
+   ],
+   [
+    "submissiontracking",
+    "submission_tracking_agent"
+   ],
+   [
+    "writebackanalytics",
+    "writeback_analytics_agent"
+   ]
+  ]
+ },
+ "skills_mode": "thin",
+ "manual_step": "Copilot Studio -> Prior Authorization & Utilization Management Assistant -> Tools -> Add a tool -> Model Context Protocol -> 'Prior Authorization & MCP' -> create the (no-auth) connection -> Save -> Publish. No API exists for this attach.",
+ "manual_steps_html_file": "MANUAL_STEPS.html",
+ "evaluation_csv_file": "EVALUATION.csv"
+}
