@@ -7,13 +7,13 @@ No code, no hosting: import two solutions, publish, attach one connector.
 
 **Publisher:** Microsoft AI Business Applications Specialist Team (AIBAST) · prefix `aibast`
 
-| Industry solution | Domain | One-click bundle |
-|-------------------|--------|------------------|
-| **Loan Origination & Credit Decisioning** | retail lending | [`agent_stacks/financial_services_stacks/loan_origination_assistant_stack/copilot_studio_solution/`](agent_stacks/financial_services_stacks/loan_origination_assistant_stack/copilot_studio_solution/) |
-| **Payments Operations Excellence** | payments | [`agent_stacks/financial_services_stacks/payments_operations_excellence_stack/copilot_studio_solution/`](agent_stacks/financial_services_stacks/payments_operations_excellence_stack/copilot_studio_solution/) |
-| **Intelligent Patient Intake & Triage** | patient access | [`agent_stacks/healthcare_stacks/patient_intake_stack/copilot_studio_solution/`](agent_stacks/healthcare_stacks/patient_intake_stack/copilot_studio_solution/) |
-| **Clinical Documentation & Coding** | clinical documentation | [`agent_stacks/healthcare_stacks/clinical_notes_summarizer_stack/copilot_studio_solution/`](agent_stacks/healthcare_stacks/clinical_notes_summarizer_stack/copilot_studio_solution/) |
-| **Prior Authorization & Utilization Management** | utilization management | [`agent_stacks/healthcare_stacks/prior_authorization_stack/copilot_studio_solution/`](agent_stacks/healthcare_stacks/prior_authorization_stack/copilot_studio_solution/) |
+| Industry solution | Domain | One-pager | One-click bundle |
+|-------------------|--------|-----------|------------------|
+| **Loan Origination & Credit Decisioning** | retail lending | [view](agent_stacks/financial_services_stacks/loan_origination_assistant_stack/ONE_PAGER.html) | [`agent_stacks/financial_services_stacks/loan_origination_assistant_stack/copilot_studio_solution/`](agent_stacks/financial_services_stacks/loan_origination_assistant_stack/copilot_studio_solution/) |
+| **Payments Operations Excellence** | payments | [view](agent_stacks/financial_services_stacks/payments_operations_excellence_stack/ONE_PAGER.html) | [`agent_stacks/financial_services_stacks/payments_operations_excellence_stack/copilot_studio_solution/`](agent_stacks/financial_services_stacks/payments_operations_excellence_stack/copilot_studio_solution/) |
+| **Intelligent Patient Intake & Triage** | patient access | [view](agent_stacks/healthcare_stacks/patient_intake_stack/ONE_PAGER.html) | [`agent_stacks/healthcare_stacks/patient_intake_stack/copilot_studio_solution/`](agent_stacks/healthcare_stacks/patient_intake_stack/copilot_studio_solution/) |
+| **Clinical Documentation & Coding** | clinical documentation | [view](agent_stacks/healthcare_stacks/clinical_notes_summarizer_stack/ONE_PAGER.html) | [`agent_stacks/healthcare_stacks/clinical_notes_summarizer_stack/copilot_studio_solution/`](agent_stacks/healthcare_stacks/clinical_notes_summarizer_stack/copilot_studio_solution/) |
+| **Prior Authorization & Utilization Management** | utilization management | [view](agent_stacks/healthcare_stacks/prior_authorization_stack/ONE_PAGER.html) | [`agent_stacks/healthcare_stacks/prior_authorization_stack/copilot_studio_solution/`](agent_stacks/healthcare_stacks/prior_authorization_stack/copilot_studio_solution/) |
 
 ## The shape (BlastBox two-solution)
 Each bundle is **two** solutions: an inline **MCP data connector** (synthetic
