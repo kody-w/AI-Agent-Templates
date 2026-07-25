@@ -1,0 +1,41 @@
+{
+ "suite": "ProposalCreationAgent",
+ "display": "Proposal Creation Agent",
+ "solutions": [
+  {
+   "name": "ProposalCreationAgentMcpConnectors",
+   "zip": "ProposalCreationAgentMcpConnectors_1_0_0_1.zip",
+   "kind": "connectors"
+  },
+  {
+   "name": "ProposalCreationAgentMcpAgents",
+   "zip": "ProposalCreationAgentMcpAgents_1_0_0_1.zip",
+   "kind": "agents"
+  }
+ ],
+ "connector": {
+  "schema": "aibast_proposal-20cre_cd22c679",
+  "id": "349a23f9-d3c8-537a-a514-36dc98c1277d",
+  "display": "Proposal Creation Agent MCP",
+  "tools": [
+   "get_proposalcreationagent",
+   "list_proposalcreationagent"
+  ]
+ },
+ "agents": {
+  "parent": "aibast_proposalcreationagentassistant_0faa62",
+  "parent_display": "Proposal Creation Agent Assistant",
+  "child": null,
+  "child_display": null,
+  "skills": [
+   [
+    "proposalcreationagent",
+    "proposal_creation_agent_agent"
+   ]
+  ]
+ },
+ "skills_mode": "thin",
+ "manual_step": "Copilot Studio -> Proposal Creation Agent Assistant -> Tools -> Add a tool -> Model Context Protocol -> 'Proposal Creation Agent MCP' -> create the (no-auth) connection -> Save -> Publish. No API exists for this attach.",
+ "manual_steps_html_file": "MANUAL_STEPS.html",
+ "evaluation_csv_file": "EVALUATION.csv"
+}

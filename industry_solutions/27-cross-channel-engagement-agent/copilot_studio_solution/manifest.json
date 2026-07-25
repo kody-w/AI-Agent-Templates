@@ -1,0 +1,41 @@
+{
+ "suite": "CrossChannelEngagementAgent",
+ "display": "Cross-Channel Engagement Agent",
+ "solutions": [
+  {
+   "name": "CrossChannelEngagementAgentMcpConnectors",
+   "zip": "CrossChannelEngagementAgentMcpConnectors_1_0_0_1.zip",
+   "kind": "connectors"
+  },
+  {
+   "name": "CrossChannelEngagementAgentMcpAgents",
+   "zip": "CrossChannelEngagementAgentMcpAgents_1_0_0_1.zip",
+   "kind": "agents"
+  }
+ ],
+ "connector": {
+  "schema": "aibast_cross-20channe_5f93dd92",
+  "id": "fe8a780f-00e4-5e0b-87a3-b1197a249b76",
+  "display": "Cross-Channel Engagement MCP",
+  "tools": [
+   "get_crosschannelengagementagent",
+   "list_crosschannelengagementagent"
+  ]
+ },
+ "agents": {
+  "parent": "aibast_crosschannelengagementagentassistant_908d6b",
+  "parent_display": "Cross-Channel Engagement Agent Assistant",
+  "child": null,
+  "child_display": null,
+  "skills": [
+   [
+    "crosschannelengagementagent",
+    "cross_channel_engagement_agent_agent"
+   ]
+  ]
+ },
+ "skills_mode": "thin",
+ "manual_step": "Copilot Studio -> Cross-Channel Engagement Agent Assistant -> Tools -> Add a tool -> Model Context Protocol -> 'Cross-Channel Engagement MCP' -> create the (no-auth) connection -> Save -> Publish. No API exists for this attach.",
+ "manual_steps_html_file": "MANUAL_STEPS.html",
+ "evaluation_csv_file": "EVALUATION.csv"
+}

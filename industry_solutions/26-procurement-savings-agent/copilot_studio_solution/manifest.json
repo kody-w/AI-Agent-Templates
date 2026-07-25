@@ -1,0 +1,41 @@
+{
+ "suite": "ProcurementSavingsAgent",
+ "display": "Procurement Savings Agent",
+ "solutions": [
+  {
+   "name": "ProcurementSavingsAgentMcpConnectors",
+   "zip": "ProcurementSavingsAgentMcpConnectors_1_0_0_1.zip",
+   "kind": "connectors"
+  },
+  {
+   "name": "ProcurementSavingsAgentMcpAgents",
+   "zip": "ProcurementSavingsAgentMcpAgents_1_0_0_1.zip",
+   "kind": "agents"
+  }
+ ],
+ "connector": {
+  "schema": "aibast_procurement-20_83edfb14",
+  "id": "8de527c4-f458-5255-887b-6b943658579d",
+  "display": "Procurement Savings Agent MCP",
+  "tools": [
+   "get_procurementsavingsagent",
+   "list_procurementsavingsagent"
+  ]
+ },
+ "agents": {
+  "parent": "aibast_procurementsavingsagentassistant_1af7b2",
+  "parent_display": "Procurement Savings Agent Assistant",
+  "child": null,
+  "child_display": null,
+  "skills": [
+   [
+    "procurementsavingsagent",
+    "procurement_savings_agent_agent"
+   ]
+  ]
+ },
+ "skills_mode": "thin",
+ "manual_step": "Copilot Studio -> Procurement Savings Agent Assistant -> Tools -> Add a tool -> Model Context Protocol -> 'Procurement Savings Agent MCP' -> create the (no-auth) connection -> Save -> Publish. No API exists for this attach.",
+ "manual_steps_html_file": "MANUAL_STEPS.html",
+ "evaluation_csv_file": "EVALUATION.csv"
+}

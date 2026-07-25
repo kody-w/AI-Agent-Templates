@@ -1,0 +1,41 @@
+{
+ "suite": "LoyaltyInsightsAgent",
+ "display": "Loyalty Insights Agent",
+ "solutions": [
+  {
+   "name": "LoyaltyInsightsAgentMcpConnectors",
+   "zip": "LoyaltyInsightsAgentMcpConnectors_1_0_0_1.zip",
+   "kind": "connectors"
+  },
+  {
+   "name": "LoyaltyInsightsAgentMcpAgents",
+   "zip": "LoyaltyInsightsAgentMcpAgents_1_0_0_1.zip",
+   "kind": "agents"
+  }
+ ],
+ "connector": {
+  "schema": "aibast_loyalty-20insi_9c325718",
+  "id": "b20fadfb-f733-59fa-b69e-3dbddd3c455b",
+  "display": "Loyalty Insights Agent MCP",
+  "tools": [
+   "get_loyaltyinsightsagent",
+   "list_loyaltyinsightsagent"
+  ]
+ },
+ "agents": {
+  "parent": "aibast_loyaltyinsightsagentassistant_46234c",
+  "parent_display": "Loyalty Insights Agent Assistant",
+  "child": null,
+  "child_display": null,
+  "skills": [
+   [
+    "loyaltyinsightsagent",
+    "loyalty_insights_agent_agent"
+   ]
+  ]
+ },
+ "skills_mode": "thin",
+ "manual_step": "Copilot Studio -> Loyalty Insights Agent Assistant -> Tools -> Add a tool -> Model Context Protocol -> 'Loyalty Insights Agent MCP' -> create the (no-auth) connection -> Save -> Publish. No API exists for this attach.",
+ "manual_steps_html_file": "MANUAL_STEPS.html",
+ "evaluation_csv_file": "EVALUATION.csv"
+}

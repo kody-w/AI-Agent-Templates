@@ -1,0 +1,41 @@
+{
+ "suite": "ClientOnboardingAgent",
+ "display": "Client Onboarding Agent",
+ "solutions": [
+  {
+   "name": "ClientOnboardingAgentMcpConnectors",
+   "zip": "ClientOnboardingAgentMcpConnectors_1_0_0_1.zip",
+   "kind": "connectors"
+  },
+  {
+   "name": "ClientOnboardingAgentMcpAgents",
+   "zip": "ClientOnboardingAgentMcpAgents_1_0_0_1.zip",
+   "kind": "agents"
+  }
+ ],
+ "connector": {
+  "schema": "aibast_client-20onboa_0ace1b4b",
+  "id": "3bf59a05-d953-5f46-aca2-3de247e10600",
+  "display": "Client Onboarding Agent MCP",
+  "tools": [
+   "get_clientonboardingagent",
+   "list_clientonboardingagent"
+  ]
+ },
+ "agents": {
+  "parent": "aibast_clientonboardingagentassistant_a4f19f",
+  "parent_display": "Client Onboarding Agent Assistant",
+  "child": null,
+  "child_display": null,
+  "skills": [
+   [
+    "clientonboardingagent",
+    "client_onboarding_agent_agent"
+   ]
+  ]
+ },
+ "skills_mode": "thin",
+ "manual_step": "Copilot Studio -> Client Onboarding Agent Assistant -> Tools -> Add a tool -> Model Context Protocol -> 'Client Onboarding Agent MCP' -> create the (no-auth) connection -> Save -> Publish. No API exists for this attach.",
+ "manual_steps_html_file": "MANUAL_STEPS.html",
+ "evaluation_csv_file": "EVALUATION.csv"
+}

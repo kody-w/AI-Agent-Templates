@@ -1,0 +1,41 @@
+{
+ "suite": "ProductFeedbackInsightsAgent",
+ "display": "Product Feedback Insights Agent",
+ "solutions": [
+  {
+   "name": "ProductFeedbackInsightsAgentMcpConnectors",
+   "zip": "ProductFeedbackInsightsAgentMcpConnectors_1_0_0_1.zip",
+   "kind": "connectors"
+  },
+  {
+   "name": "ProductFeedbackInsightsAgentMcpAgents",
+   "zip": "ProductFeedbackInsightsAgentMcpAgents_1_0_0_1.zip",
+   "kind": "agents"
+  }
+ ],
+ "connector": {
+  "schema": "aibast_product-20feed_0f54fe84",
+  "id": "09ea99a7-a1ae-5001-95c2-277e90815a81",
+  "display": "Product Feedback Insights MCP",
+  "tools": [
+   "get_productfeedbackinsightsagent",
+   "list_productfeedbackinsightsagent"
+  ]
+ },
+ "agents": {
+  "parent": "aibast_productfeedbackinsightsagentassistant_2a6c3c",
+  "parent_display": "Product Feedback Insights Agent Assistant",
+  "child": null,
+  "child_display": null,
+  "skills": [
+   [
+    "productfeedbackinsightsagent",
+    "product_feedback_insights_agent_agent"
+   ]
+  ]
+ },
+ "skills_mode": "thin",
+ "manual_step": "Copilot Studio -> Product Feedback Insights Agent Assistant -> Tools -> Add a tool -> Model Context Protocol -> 'Product Feedback Insights MCP' -> create the (no-auth) connection -> Save -> Publish. No API exists for this attach.",
+ "manual_steps_html_file": "MANUAL_STEPS.html",
+ "evaluation_csv_file": "EVALUATION.csv"
+}

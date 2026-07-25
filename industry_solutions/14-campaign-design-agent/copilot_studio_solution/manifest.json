@@ -1,0 +1,41 @@
+{
+ "suite": "CampaignDesignAgent",
+ "display": "Campaign Design Agent",
+ "solutions": [
+  {
+   "name": "CampaignDesignAgentMcpConnectors",
+   "zip": "CampaignDesignAgentMcpConnectors_1_0_0_1.zip",
+   "kind": "connectors"
+  },
+  {
+   "name": "CampaignDesignAgentMcpAgents",
+   "zip": "CampaignDesignAgentMcpAgents_1_0_0_1.zip",
+   "kind": "agents"
+  }
+ ],
+ "connector": {
+  "schema": "aibast_campaign-20des_4794dfa3",
+  "id": "35f6491d-43d6-5f26-abd5-e1be07f8bc56",
+  "display": "Campaign Design Agent Data MCP",
+  "tools": [
+   "get_campaigndesignagent",
+   "list_campaigndesignagent"
+  ]
+ },
+ "agents": {
+  "parent": "aibast_campaigndesignagentassistant_0f825b",
+  "parent_display": "Campaign Design Agent Assistant",
+  "child": null,
+  "child_display": null,
+  "skills": [
+   [
+    "campaigndesignagent",
+    "campaign_design_agent_agent"
+   ]
+  ]
+ },
+ "skills_mode": "thin",
+ "manual_step": "Copilot Studio -> Campaign Design Agent Assistant -> Tools -> Add a tool -> Model Context Protocol -> 'Campaign Design Agent Data MCP' -> create the (no-auth) connection -> Save -> Publish. No API exists for this attach.",
+ "manual_steps_html_file": "MANUAL_STEPS.html",
+ "evaluation_csv_file": "EVALUATION.csv"
+}

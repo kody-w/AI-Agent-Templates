@@ -1,0 +1,41 @@
+{
+ "suite": "ResourceUtilizationAgent",
+ "display": "Resource Utilization Agent",
+ "solutions": [
+  {
+   "name": "ResourceUtilizationAgentMcpConnectors",
+   "zip": "ResourceUtilizationAgentMcpConnectors_1_0_0_1.zip",
+   "kind": "connectors"
+  },
+  {
+   "name": "ResourceUtilizationAgentMcpAgents",
+   "zip": "ResourceUtilizationAgentMcpAgents_1_0_0_1.zip",
+   "kind": "agents"
+  }
+ ],
+ "connector": {
+  "schema": "aibast_resource-20uti_e0da2723",
+  "id": "75759ffd-8b07-5666-a2ab-d7d25d8d5099",
+  "display": "Resource Utilization Agent MCP",
+  "tools": [
+   "get_resourceutilizationagent",
+   "list_resourceutilizationagent"
+  ]
+ },
+ "agents": {
+  "parent": "aibast_resourceutilizationagentassistant_119948",
+  "parent_display": "Resource Utilization Agent Assistant",
+  "child": null,
+  "child_display": null,
+  "skills": [
+   [
+    "resourceutilizationagent",
+    "resource_utilization_agent_agent"
+   ]
+  ]
+ },
+ "skills_mode": "thin",
+ "manual_step": "Copilot Studio -> Resource Utilization Agent Assistant -> Tools -> Add a tool -> Model Context Protocol -> 'Resource Utilization Agent MCP' -> create the (no-auth) connection -> Save -> Publish. No API exists for this attach.",
+ "manual_steps_html_file": "MANUAL_STEPS.html",
+ "evaluation_csv_file": "EVALUATION.csv"
+}

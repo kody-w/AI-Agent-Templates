@@ -1,0 +1,41 @@
+{
+ "suite": "PredictiveMaintenanceAgent",
+ "display": "Predictive Maintenance Agent",
+ "solutions": [
+  {
+   "name": "PredictiveMaintenanceAgentMcpConnectors",
+   "zip": "PredictiveMaintenanceAgentMcpConnectors_1_0_0_1.zip",
+   "kind": "connectors"
+  },
+  {
+   "name": "PredictiveMaintenanceAgentMcpAgents",
+   "zip": "PredictiveMaintenanceAgentMcpAgents_1_0_0_1.zip",
+   "kind": "agents"
+  }
+ ],
+ "connector": {
+  "schema": "aibast_predictive-20m_bb041d3a",
+  "id": "0f692abf-c3a7-59d3-b8a3-e821f43ee35d",
+  "display": "Predictive Maintenance MCP",
+  "tools": [
+   "get_predictivemaintenanceagent",
+   "list_predictivemaintenanceagent"
+  ]
+ },
+ "agents": {
+  "parent": "aibast_predictivemaintenanceagentassistant_b8f7e2",
+  "parent_display": "Predictive Maintenance Agent Assistant",
+  "child": null,
+  "child_display": null,
+  "skills": [
+   [
+    "predictivemaintenanceagent",
+    "predictive_maintenance_agent_agent"
+   ]
+  ]
+ },
+ "skills_mode": "thin",
+ "manual_step": "Copilot Studio -> Predictive Maintenance Agent Assistant -> Tools -> Add a tool -> Model Context Protocol -> 'Predictive Maintenance MCP' -> create the (no-auth) connection -> Save -> Publish. No API exists for this attach.",
+ "manual_steps_html_file": "MANUAL_STEPS.html",
+ "evaluation_csv_file": "EVALUATION.csv"
+}

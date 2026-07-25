@@ -1,0 +1,41 @@
+{
+ "suite": "AbandonedCartRecoveryAgent",
+ "display": "Abandoned Cart Recovery Agent",
+ "solutions": [
+  {
+   "name": "AbandonedCartRecoveryAgentMcpConnectors",
+   "zip": "AbandonedCartRecoveryAgentMcpConnectors_1_0_0_1.zip",
+   "kind": "connectors"
+  },
+  {
+   "name": "AbandonedCartRecoveryAgentMcpAgents",
+   "zip": "AbandonedCartRecoveryAgentMcpAgents_1_0_0_1.zip",
+   "kind": "agents"
+  }
+ ],
+ "connector": {
+  "schema": "aibast_abandoned-20ca_be28b5f0",
+  "id": "00bc4303-014e-5c59-8a99-56897009fcea",
+  "display": "Abandoned Cart Recovery MCP",
+  "tools": [
+   "get_abandonedcartrecoveryagent",
+   "list_abandonedcartrecoveryagent"
+  ]
+ },
+ "agents": {
+  "parent": "aibast_abandonedcartrecoveryagentassistant_be00ef",
+  "parent_display": "Abandoned Cart Recovery Agent Assistant",
+  "child": null,
+  "child_display": null,
+  "skills": [
+   [
+    "abandonedcartrecoveryagent",
+    "abandoned_cart_recovery_agent_agent"
+   ]
+  ]
+ },
+ "skills_mode": "thin",
+ "manual_step": "Copilot Studio -> Abandoned Cart Recovery Agent Assistant -> Tools -> Add a tool -> Model Context Protocol -> 'Abandoned Cart Recovery MCP' -> create the (no-auth) connection -> Save -> Publish. No API exists for this attach.",
+ "manual_steps_html_file": "MANUAL_STEPS.html",
+ "evaluation_csv_file": "EVALUATION.csv"
+}

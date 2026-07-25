@@ -1,0 +1,41 @@
+{
+ "suite": "ReturnsComplaintsAgent",
+ "display": "Returns & Complaints Agent",
+ "solutions": [
+  {
+   "name": "ReturnsComplaintsAgentMcpConnectors",
+   "zip": "ReturnsComplaintsAgentMcpConnectors_1_0_0_1.zip",
+   "kind": "connectors"
+  },
+  {
+   "name": "ReturnsComplaintsAgentMcpAgents",
+   "zip": "ReturnsComplaintsAgentMcpAgents_1_0_0_1.zip",
+   "kind": "agents"
+  }
+ ],
+ "connector": {
+  "schema": "aibast_returns-20comp_078e393c",
+  "id": "b6d40c06-3444-5240-a9da-76c8a54348ea",
+  "display": "Returns & Complaints Agent MCP",
+  "tools": [
+   "get_returnscomplaintsagent",
+   "list_returnscomplaintsagent"
+  ]
+ },
+ "agents": {
+  "parent": "aibast_returnscomplaintsagentassistant_caef1e",
+  "parent_display": "Returns & Complaints Agent Assistant",
+  "child": null,
+  "child_display": null,
+  "skills": [
+   [
+    "returnscomplaintsagent",
+    "returns_complaints_agent_agent"
+   ]
+  ]
+ },
+ "skills_mode": "thin",
+ "manual_step": "Copilot Studio -> Returns & Complaints Agent Assistant -> Tools -> Add a tool -> Model Context Protocol -> 'Returns & Complaints Agent MCP' -> create the (no-auth) connection -> Save -> Publish. No API exists for this attach.",
+ "manual_steps_html_file": "MANUAL_STEPS.html",
+ "evaluation_csv_file": "EVALUATION.csv"
+}

@@ -1,0 +1,41 @@
+{
+ "suite": "EnergyOperationsAgentC",
+ "display": "Energy Operations Agent (c)",
+ "solutions": [
+  {
+   "name": "EnergyOperationsAgentCMcpConnectors",
+   "zip": "EnergyOperationsAgentCMcpConnectors_1_0_0_1.zip",
+   "kind": "connectors"
+  },
+  {
+   "name": "EnergyOperationsAgentCMcpAgents",
+   "zip": "EnergyOperationsAgentCMcpAgents_1_0_0_1.zip",
+   "kind": "agents"
+  }
+ ],
+ "connector": {
+  "schema": "aibast_energy-20opera_aca92d23",
+  "id": "54b63047-9ce2-51b2-be5b-d8fba801961b",
+  "display": "Energy Operations Agent MCP",
+  "tools": [
+   "get_energyoperationsagentc",
+   "list_energyoperationsagentc"
+  ]
+ },
+ "agents": {
+  "parent": "aibast_energyoperationsagentcassistant_a3ab30",
+  "parent_display": "Energy Operations Agent (c) Assistant",
+  "child": null,
+  "child_display": null,
+  "skills": [
+   [
+    "energyoperationsagentc",
+    "energy_operations_agent_c_agent"
+   ]
+  ]
+ },
+ "skills_mode": "thin",
+ "manual_step": "Copilot Studio -> Energy Operations Agent (c) Assistant -> Tools -> Add a tool -> Model Context Protocol -> 'Energy Operations Agent MCP' -> create the (no-auth) connection -> Save -> Publish. No API exists for this attach.",
+ "manual_steps_html_file": "MANUAL_STEPS.html",
+ "evaluation_csv_file": "EVALUATION.csv"
+}

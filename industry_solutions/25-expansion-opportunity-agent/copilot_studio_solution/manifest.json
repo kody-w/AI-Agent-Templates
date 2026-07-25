@@ -1,0 +1,41 @@
+{
+ "suite": "ExpansionOpportunityAgent",
+ "display": "Expansion Opportunity Agent",
+ "solutions": [
+  {
+   "name": "ExpansionOpportunityAgentMcpConnectors",
+   "zip": "ExpansionOpportunityAgentMcpConnectors_1_0_0_1.zip",
+   "kind": "connectors"
+  },
+  {
+   "name": "ExpansionOpportunityAgentMcpAgents",
+   "zip": "ExpansionOpportunityAgentMcpAgents_1_0_0_1.zip",
+   "kind": "agents"
+  }
+ ],
+ "connector": {
+  "schema": "aibast_expansion-20op_20149f81",
+  "id": "71f8e33f-1b64-584e-846f-f71448235d9f",
+  "display": "Expansion Opportunity MCP",
+  "tools": [
+   "get_expansionopportunityagent",
+   "list_expansionopportunityagent"
+  ]
+ },
+ "agents": {
+  "parent": "aibast_expansionopportunityagentassistant_acb63d",
+  "parent_display": "Expansion Opportunity Agent Assistant",
+  "child": null,
+  "child_display": null,
+  "skills": [
+   [
+    "expansionopportunityagent",
+    "expansion_opportunity_agent_agent"
+   ]
+  ]
+ },
+ "skills_mode": "thin",
+ "manual_step": "Copilot Studio -> Expansion Opportunity Agent Assistant -> Tools -> Add a tool -> Model Context Protocol -> 'Expansion Opportunity MCP' -> create the (no-auth) connection -> Save -> Publish. No API exists for this attach.",
+ "manual_steps_html_file": "MANUAL_STEPS.html",
+ "evaluation_csv_file": "EVALUATION.csv"
+}

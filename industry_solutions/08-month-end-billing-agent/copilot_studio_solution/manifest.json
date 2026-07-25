@@ -1,0 +1,41 @@
+{
+ "suite": "MonthEndBillingAgent",
+ "display": "Month-End Billing Agent",
+ "solutions": [
+  {
+   "name": "MonthEndBillingAgentMcpConnectors",
+   "zip": "MonthEndBillingAgentMcpConnectors_1_0_0_1.zip",
+   "kind": "connectors"
+  },
+  {
+   "name": "MonthEndBillingAgentMcpAgents",
+   "zip": "MonthEndBillingAgentMcpAgents_1_0_0_1.zip",
+   "kind": "agents"
+  }
+ ],
+ "connector": {
+  "schema": "aibast_month-20end-20_8d7cf095",
+  "id": "bb9f709b-d758-5bff-a048-4e649d106bba",
+  "display": "Month-End Billing Agent MCP",
+  "tools": [
+   "get_monthendbillingagent",
+   "list_monthendbillingagent"
+  ]
+ },
+ "agents": {
+  "parent": "aibast_monthendbillingagentassistant_19c001",
+  "parent_display": "Month-End Billing Agent Assistant",
+  "child": null,
+  "child_display": null,
+  "skills": [
+   [
+    "monthendbillingagent",
+    "month_end_billing_agent_agent"
+   ]
+  ]
+ },
+ "skills_mode": "thin",
+ "manual_step": "Copilot Studio -> Month-End Billing Agent Assistant -> Tools -> Add a tool -> Model Context Protocol -> 'Month-End Billing Agent MCP' -> create the (no-auth) connection -> Save -> Publish. No API exists for this attach.",
+ "manual_steps_html_file": "MANUAL_STEPS.html",
+ "evaluation_csv_file": "EVALUATION.csv"
+}

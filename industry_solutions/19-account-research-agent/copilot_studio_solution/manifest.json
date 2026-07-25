@@ -1,0 +1,41 @@
+{
+ "suite": "AccountResearchAgent",
+ "display": "Account Research Agent",
+ "solutions": [
+  {
+   "name": "AccountResearchAgentMcpConnectors",
+   "zip": "AccountResearchAgentMcpConnectors_1_0_0_1.zip",
+   "kind": "connectors"
+  },
+  {
+   "name": "AccountResearchAgentMcpAgents",
+   "zip": "AccountResearchAgentMcpAgents_1_0_0_1.zip",
+   "kind": "agents"
+  }
+ ],
+ "connector": {
+  "schema": "aibast_account-20rese_0aecbaa2",
+  "id": "442bd593-aaea-53ab-a082-4fc76bea60c2",
+  "display": "Account Research Agent MCP",
+  "tools": [
+   "get_accountresearchagent",
+   "list_accountresearchagent"
+  ]
+ },
+ "agents": {
+  "parent": "aibast_accountresearchagentassistant_c64a47",
+  "parent_display": "Account Research Agent Assistant",
+  "child": null,
+  "child_display": null,
+  "skills": [
+   [
+    "accountresearchagent",
+    "account_research_agent_agent"
+   ]
+  ]
+ },
+ "skills_mode": "thin",
+ "manual_step": "Copilot Studio -> Account Research Agent Assistant -> Tools -> Add a tool -> Model Context Protocol -> 'Account Research Agent MCP' -> create the (no-auth) connection -> Save -> Publish. No API exists for this attach.",
+ "manual_steps_html_file": "MANUAL_STEPS.html",
+ "evaluation_csv_file": "EVALUATION.csv"
+}

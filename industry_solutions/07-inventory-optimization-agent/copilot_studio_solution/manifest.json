@@ -1,0 +1,41 @@
+{
+ "suite": "InventoryOptimizationAgent",
+ "display": "Inventory Optimization Agent",
+ "solutions": [
+  {
+   "name": "InventoryOptimizationAgentMcpConnectors",
+   "zip": "InventoryOptimizationAgentMcpConnectors_1_0_0_1.zip",
+   "kind": "connectors"
+  },
+  {
+   "name": "InventoryOptimizationAgentMcpAgents",
+   "zip": "InventoryOptimizationAgentMcpAgents_1_0_0_1.zip",
+   "kind": "agents"
+  }
+ ],
+ "connector": {
+  "schema": "aibast_inventory-20op_87dd8238",
+  "id": "0eef0518-56a5-5f90-a2fb-a72ba7c1fef7",
+  "display": "Inventory Optimization MCP",
+  "tools": [
+   "get_inventoryoptimizationagent",
+   "list_inventoryoptimizationagent"
+  ]
+ },
+ "agents": {
+  "parent": "aibast_inventoryoptimizationagentassistant_9dbcb5",
+  "parent_display": "Inventory Optimization Agent Assistant",
+  "child": null,
+  "child_display": null,
+  "skills": [
+   [
+    "inventoryoptimizationagent",
+    "inventory_optimization_agent_agent"
+   ]
+  ]
+ },
+ "skills_mode": "thin",
+ "manual_step": "Copilot Studio -> Inventory Optimization Agent Assistant -> Tools -> Add a tool -> Model Context Protocol -> 'Inventory Optimization MCP' -> create the (no-auth) connection -> Save -> Publish. No API exists for this attach.",
+ "manual_steps_html_file": "MANUAL_STEPS.html",
+ "evaluation_csv_file": "EVALUATION.csv"
+}

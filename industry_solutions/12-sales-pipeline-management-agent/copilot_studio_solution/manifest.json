@@ -1,0 +1,41 @@
+{
+ "suite": "SalesPipelineManagementAgent",
+ "display": "Sales Pipeline Management Agent",
+ "solutions": [
+  {
+   "name": "SalesPipelineManagementAgentMcpConnectors",
+   "zip": "SalesPipelineManagementAgentMcpConnectors_1_0_0_1.zip",
+   "kind": "connectors"
+  },
+  {
+   "name": "SalesPipelineManagementAgentMcpAgents",
+   "zip": "SalesPipelineManagementAgentMcpAgents_1_0_0_1.zip",
+   "kind": "agents"
+  }
+ ],
+ "connector": {
+  "schema": "aibast_sales-20pipeli_30bd8986",
+  "id": "5d892623-058a-5e69-b24b-3c8da0cbf793",
+  "display": "Sales Pipeline Management MCP",
+  "tools": [
+   "get_salespipelinemanagementagent",
+   "list_salespipelinemanagementagent"
+  ]
+ },
+ "agents": {
+  "parent": "aibast_salespipelinemanagementagentassistant_844b3c",
+  "parent_display": "Sales Pipeline Management Agent Assistant",
+  "child": null,
+  "child_display": null,
+  "skills": [
+   [
+    "salespipelinemanagementagent",
+    "sales_pipeline_management_agent_agent"
+   ]
+  ]
+ },
+ "skills_mode": "thin",
+ "manual_step": "Copilot Studio -> Sales Pipeline Management Agent Assistant -> Tools -> Add a tool -> Model Context Protocol -> 'Sales Pipeline Management MCP' -> create the (no-auth) connection -> Save -> Publish. No API exists for this attach.",
+ "manual_steps_html_file": "MANUAL_STEPS.html",
+ "evaluation_csv_file": "EVALUATION.csv"
+}

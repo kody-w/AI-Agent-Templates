@@ -1,0 +1,41 @@
+{
+ "suite": "ClientHealthScoreAgent",
+ "display": "Client Health Score Agent",
+ "solutions": [
+  {
+   "name": "ClientHealthScoreAgentMcpConnectors",
+   "zip": "ClientHealthScoreAgentMcpConnectors_1_0_0_1.zip",
+   "kind": "connectors"
+  },
+  {
+   "name": "ClientHealthScoreAgentMcpAgents",
+   "zip": "ClientHealthScoreAgentMcpAgents_1_0_0_1.zip",
+   "kind": "agents"
+  }
+ ],
+ "connector": {
+  "schema": "aibast_client-20healt_1e018a25",
+  "id": "d4a4b0fb-f064-5205-a6c1-2cf9adb58563",
+  "display": "Client Health Score Agent MCP",
+  "tools": [
+   "get_clienthealthscoreagent",
+   "list_clienthealthscoreagent"
+  ]
+ },
+ "agents": {
+  "parent": "aibast_clienthealthscoreagentassistant_114a18",
+  "parent_display": "Client Health Score Agent Assistant",
+  "child": null,
+  "child_display": null,
+  "skills": [
+   [
+    "clienthealthscoreagent",
+    "client_health_score_agent_agent"
+   ]
+  ]
+ },
+ "skills_mode": "thin",
+ "manual_step": "Copilot Studio -> Client Health Score Agent Assistant -> Tools -> Add a tool -> Model Context Protocol -> 'Client Health Score Agent MCP' -> create the (no-auth) connection -> Save -> Publish. No API exists for this attach.",
+ "manual_steps_html_file": "MANUAL_STEPS.html",
+ "evaluation_csv_file": "EVALUATION.csv"
+}

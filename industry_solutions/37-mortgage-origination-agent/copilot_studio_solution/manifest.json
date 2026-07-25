@@ -1,0 +1,41 @@
+{
+ "suite": "MortgageOriginationAgent",
+ "display": "Mortgage Origination Agent",
+ "solutions": [
+  {
+   "name": "MortgageOriginationAgentMcpConnectors",
+   "zip": "MortgageOriginationAgentMcpConnectors_1_0_0_1.zip",
+   "kind": "connectors"
+  },
+  {
+   "name": "MortgageOriginationAgentMcpAgents",
+   "zip": "MortgageOriginationAgentMcpAgents_1_0_0_1.zip",
+   "kind": "agents"
+  }
+ ],
+ "connector": {
+  "schema": "aibast_mortgage-20ori_5db4c903",
+  "id": "15670f58-4223-593f-aebe-e768e3f81bc9",
+  "display": "Mortgage Origination Agent MCP",
+  "tools": [
+   "get_mortgageoriginationagent",
+   "list_mortgageoriginationagent"
+  ]
+ },
+ "agents": {
+  "parent": "aibast_mortgageoriginationagentassistant_a33434",
+  "parent_display": "Mortgage Origination Agent Assistant",
+  "child": null,
+  "child_display": null,
+  "skills": [
+   [
+    "mortgageoriginationagent",
+    "mortgage_origination_agent_agent"
+   ]
+  ]
+ },
+ "skills_mode": "thin",
+ "manual_step": "Copilot Studio -> Mortgage Origination Agent Assistant -> Tools -> Add a tool -> Model Context Protocol -> 'Mortgage Origination Agent MCP' -> create the (no-auth) connection -> Save -> Publish. No API exists for this attach.",
+ "manual_steps_html_file": "MANUAL_STEPS.html",
+ "evaluation_csv_file": "EVALUATION.csv"
+}

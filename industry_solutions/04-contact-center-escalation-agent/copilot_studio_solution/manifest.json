@@ -1,0 +1,41 @@
+{
+ "suite": "ContactCenterEscalationAgent",
+ "display": "Contact Center Escalation Agent",
+ "solutions": [
+  {
+   "name": "ContactCenterEscalationAgentMcpConnectors",
+   "zip": "ContactCenterEscalationAgentMcpConnectors_1_0_0_1.zip",
+   "kind": "connectors"
+  },
+  {
+   "name": "ContactCenterEscalationAgentMcpAgents",
+   "zip": "ContactCenterEscalationAgentMcpAgents_1_0_0_1.zip",
+   "kind": "agents"
+  }
+ ],
+ "connector": {
+  "schema": "aibast_contact-20cent_70be94c6",
+  "id": "318ae61b-d7d1-50d7-aee4-9e54d8252d56",
+  "display": "Contact Center Escalation MCP",
+  "tools": [
+   "get_contactcenterescalationagent",
+   "list_contactcenterescalationagent"
+  ]
+ },
+ "agents": {
+  "parent": "aibast_contactcenterescalationagentassistant_69b930",
+  "parent_display": "Contact Center Escalation Agent Assistant",
+  "child": null,
+  "child_display": null,
+  "skills": [
+   [
+    "contactcenterescalationagent",
+    "contact_center_escalation_agent_agent"
+   ]
+  ]
+ },
+ "skills_mode": "thin",
+ "manual_step": "Copilot Studio -> Contact Center Escalation Agent Assistant -> Tools -> Add a tool -> Model Context Protocol -> 'Contact Center Escalation MCP' -> create the (no-auth) connection -> Save -> Publish. No API exists for this attach.",
+ "manual_steps_html_file": "MANUAL_STEPS.html",
+ "evaluation_csv_file": "EVALUATION.csv"
+}
