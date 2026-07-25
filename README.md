@@ -22,6 +22,7 @@ This repository is the **original template library** — the place the industry 
 | `azuredeploy.json` | One-click ARM template: Function App, Azure OpenAI, storage, App Insights. |
 | `MSFTAIBASMultiAgentCopilot_1_0_0_5.zip` | Power Platform solution for Copilot Studio / Teams / M365 Copilot. |
 | `COPILOT_STUDIO_SOLUTIONS.md` | Per-industry **one-click Copilot Studio** deploy bundles — each industry stack as new-generation connected agents (AIBAST publisher), ready to import. |
+| `industry_solutions/` | **All 48 AIBAST industry agents**, each packaged 3 ways: one-click Copilot Studio solution, RAPP brainstem `agent.py`, and a portable `SKILL.md`+`.py` for any AI tool. See `industry_solutions/README.md`. |
 
 ### The agent pattern
 
