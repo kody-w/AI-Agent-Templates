@@ -58,9 +58,20 @@ header{background:var(--bg);border-bottom:1px solid var(--line);padding:14px 28p
 <script>
 const AUTH_CLIENT_ID='Ov23liuueQBIUggrH8NG';
 const AUTH_WORKER_URL='https://rappterbook-auth.kwildfeuer.workers.dev';
-const REPO='kody-w/AI-Agent-Templates', RAW='https://github.com/kody-w/AI-Agent-Templates/raw/main/';
+const REPO='kody-w/AI-Agent-Templates';
+// GitHub-native downloads: each solution is a one-click bundle published as a
+// Release asset. Direct download, no login, and GitHub counts downloads natively.
+const RELEASE_TAG='industry-solutions-v1.0.0';
+const BUNDLE={
+ 'loan-origination':'AIBAST-Loan-Origination-Credit-Decisioning-CopilotStudio.zip',
+ 'payments-operations':'AIBAST-Payments-Operations-Excellence-CopilotStudio.zip',
+ 'patient-intake-triage':'AIBAST-Patient-Intake-Triage-CopilotStudio.zip',
+ 'clinical-documentation':'AIBAST-Clinical-Documentation-Coding-CopilotStudio.zip',
+ 'prior-authorization':'AIBAST-Prior-Authorization-UM-CopilotStudio.zip',
+};
+const relUrl=s=>`https://github.com/${REPO}/releases/download/${RELEASE_TAG}/${BUNDLE[s]}`;
 let ghToken=localStorage.getItem('rb_access_token')||localStorage.getItem('gh_token');
-let ghUser=null, ENG=null;
+let ghUser=null, ENG=null, DLCOUNT={};
 
 // ---- the five solutions (summary; full detail in each ONE_PAGER.html) ----
 const SOL=[
