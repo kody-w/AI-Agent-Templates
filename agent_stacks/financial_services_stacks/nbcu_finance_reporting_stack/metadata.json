@@ -2,12 +2,12 @@
   "id": "nbcu_finance_reporting_stack",
   "name": "NBCU Finance Reporting Copilot Stack",
   "version": "0.1.0",
-  "description": "Public demo-contract stack for a monthly-pacing finance reporting copilot: distinguishes a provisional carry-forward snapshot from a submitted-only roll-up, flags blocking exceptions (missing submissions, reconciliation gaps, cross-slide mismatches), and stages a draft review workbook and executive deck pending Finance approval.",
+  "description": "Public demo-contract stack for a monthly-pacing finance reporting copilot: distinguishes a provisional submitted-data subtotal from a complete roll-up, keeps missing values visible without inserting or zeroing them, flags blocking exceptions (missing submissions, reconciliation gaps, cross-slide mismatches), and stages a draft review workbook and executive deck pending Finance approval.",
   "category": "financial_services",
   "complexity": "intermediate",
   "features": [
     "Current Estimate vs Budget / Prior Year / Prior Pacing / Prior Estimate summary",
-    "Explicit provisional carry-forward versus submitted-only reporting status",
+    "Explicit provisional submitted-data subtotal versus complete-roll-up status",
     "Blocking vs advisory exception routing",
     "Cross-slide and formula consistency checks",
     "Draft-until-approved review workbook and executive deck staging"

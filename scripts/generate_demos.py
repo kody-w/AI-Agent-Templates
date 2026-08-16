@@ -953,7 +953,7 @@ DEMOS = {
         "sources": ["nbcu_finance_findings", "nbcu_finance_exceptions"],
         "turns": [
             {"u": "Summarize Current Estimate versus Budget and flag blocking review items.",
-             "a": "**Provisional source snapshot:** Current Estimate **$1,536.8mm** vs **Budget $1,472.0mm** — variance **+$64.8mm** [1]. This view explicitly carries forward the last-known **$15.0mm** Local Political value; it is not a submitted-only or publishable roll-up.\n"
+             "a": "**Provisional submitted-data subtotal:** Current Estimate **$1,536.8mm** vs **Budget $1,472.0mm** — variance **+$64.8mm** [1]. Local Political is still missing: its last-known **$15.0mm** remains visible in the exception context but is not inserted into this subtotal or treated as zero. This is not a complete, publishable roll-up.\n"
                   "\n"
                   "**Variance vs. prior views:**\n"
                   "- Current Estimate vs Budget: **+$64.8mm**\n"

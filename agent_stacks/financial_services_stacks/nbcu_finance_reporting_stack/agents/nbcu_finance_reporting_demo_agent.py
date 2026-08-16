@@ -27,9 +27,9 @@ from agents.basic_agent import BasicAgent
 # so this agent runs standalone with zero file I/O.
 SYNTHETIC_SUMMARY = {
     "units": "$mm",
-    "status": "provisional-carry-forward",
+    "status": "provisional-submitted-data-subtotal",
     "publishable": False,
-    "carry_forward_inputs": ["Local Political 15.0"],
+    "missing_inputs": ["Local Political; last-known value 15.0 retained in exception context"],
     "total_current": 1536.8,
     "total_budget": 1472.0,
     "variance_vs_budget": 64.8,
@@ -94,10 +94,11 @@ SYNTHETIC_EXCEPTIONS = [
 _SCRIPTED_REPLIES = [
     (
         ("summarize", "budget"),
-        "Provisional source snapshot: Current Estimate $1,536.8mm vs Budget "
-        "$1,472.0mm, variance +$64.8mm. This view explicitly carries forward "
-        "the last-known Local Political $15.0mm value and is not a "
-        "submitted-only or publishable roll-up. "
+        "Provisional submitted-data subtotal: Current Estimate $1,536.8mm vs "
+        "Budget $1,472.0mm, variance +$64.8mm. Local Political remains missing; "
+        "its last-known $15.0mm stays visible in the exception context but is "
+        "not inserted into this subtotal or treated as zero. This is not a "
+        "complete, publishable roll-up. "
         "3 blocking review items must be resolved before this package can "
         "route to Finance for approval; 1 advisory item is also open.",
     ),
@@ -196,8 +197,9 @@ class NbcuFinanceReportingDemoAgent(BasicAgent):
                     "notice": (
                         "Synthetic demo data only. No NBCUniversal customer "
                         "or production financial data is included. The total "
-                        "is a provisional source snapshot with an explicit "
-                        "last-known carry-forward, not a publishable roll-up."
+                        "is a provisional submitted-data subtotal. The missing "
+                        "Local Political value remains visible in the exception "
+                        "context but is not inserted or treated as zero."
                     ),
                     "summary": SYNTHETIC_SUMMARY,
                     "exceptions": SYNTHETIC_EXCEPTIONS,

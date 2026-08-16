@@ -6,9 +6,9 @@
   "units": "$mm",
   "generated": "2026-08-07T00:00:00Z",
   "summary": {
-    "status": "provisional-carry-forward",
+    "status": "provisional-submitted-data-subtotal",
     "publishable": false,
-    "carry_forward_inputs": ["Local Political 15.0"],
+    "missing_inputs": ["Local Political; last-known value 15.0 retained in exception context"],
     "total_current": 1536.8,
     "total_budget": 1472.0,
     "variance_vs_budget": 64.8,
