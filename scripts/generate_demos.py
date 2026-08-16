@@ -50,6 +50,15 @@ ERP = "https://kody-w.github.io/static-erp/api/v1"
 ITSM = "https://kody-w.github.io/static-itsm/api/now/table"
 ENRICH = "https://kody-w.github.io/static-enrichment/api/v1"
 
+# This repo's own GitHub Pages build serves a small synthetic finance
+# reporting snapshot (signed-off demo figures, no live estate simulator
+# exists for FP&A monthly pacing). Same "plain" {count, value} envelope as
+# the estate simulators so it degrades offline through the same code path.
+NBCU_FINANCE = (
+    "https://kody-w.github.io/AI-Agent-Templates/agent_stacks/"
+    "financial_services_stacks/nbcu_finance_reporting_stack/files"
+)
+
 # Live-data sources rendered as adaptive cards inside agent replies.
 # shape: odata {"@odata.count","value"} | plain {"count","value"} |
 #        sf {"totalSize","records"} | sn {"result"}
@@ -129,6 +138,16 @@ SOURCES = {
         "url": f"{ITSM}/incident.json", "shape": "sn",
         "cols": [["Incident", "number"], ["Summary", "short_description"], ["Priority", "priority"]],
     },
+    "nbcu_finance_findings": {
+        "label": "Reporting findings (synthetic)", "system": "Finance Reporting",
+        "url": f"{NBCU_FINANCE}/nbcu_finance_reporting_snapshot.json", "shape": "plain",
+        "cols": [["Entity", "entity"], ["Finding", "label"], ["Blocking", "blocking_display"]],
+    },
+    "nbcu_finance_exceptions": {
+        "label": "Blocking exception queue (synthetic)", "system": "Finance Reporting",
+        "url": f"{NBCU_FINANCE}/nbcu_finance_reporting_snapshot.json", "shape": "plain",
+        "cols": [["Entity", "entity"], ["Owner", "owner"], ["Severity", "severity"]],
+    },
 }
 
 # Citation targets. Dynamics list views deep-link the simulator's browsable
@@ -153,6 +172,8 @@ CITES = {
     "erp_grn": ("Goods receipts — ERP (simulated)", f"{ERP}/goods_receipts.json"),
     "itsm_incidents": ("Incidents — ITSM (simulated)", f"{ITSM}/incident.json"),
     "enrich_summittrail": ("Company profile: summittrail.example — Enrichment (simulated)", f"{ENRICH}/companies/summittrail.example.json"),
+    "nbcu_findings": ("Reporting package findings — Finance Reporting (synthetic)", f"{NBCU_FINANCE}/nbcu_finance_reporting_snapshot.json"),
+    "nbcu_control_readout": ("Cross-slide control readout — Finance Reporting (synthetic)", f"{NBCU_FINANCE}/nbcu_finance_reporting_snapshot.json"),
 }
 
 # Record-id autolinks used by the in-page markdown renderer.
@@ -918,6 +939,55 @@ DEMOS = {
              "c": ["itsm_incidents"]},
         ],
     },
+    "finance_nbcu_reporting_demo.html": {
+        "title": "NBCUniversal Finance Reporting Copilot",
+        "vertical": "Finance",
+        "tagline": "Monthly pacing package validation — blocking exceptions flagged before Finance sees a draft.",
+        "persona": "Priya Kapoor, FP&A Analyst",
+        "disclosure": (
+            "Simulated interface for demonstration — recreated with CSS only; "
+            "not affiliated with or endorsed by Microsoft. Customer or "
+            "organization names used in this prototype scenario do not imply "
+            "endorsement. AI-generated content over synthetic data."
+        ),
+        "sources": ["nbcu_finance_findings", "nbcu_finance_exceptions"],
+        "turns": [
+            {"u": "Summarize Current Estimate versus Budget and flag blocking review items.",
+             "a": "**Provisional source snapshot:** Current Estimate **$1,536.8mm** vs **Budget $1,472.0mm** — variance **+$64.8mm** [1]. This view explicitly carries forward the last-known **$15.0mm** Local Political value; it is not a submitted-only or publishable roll-up.\n"
+                  "\n"
+                  "**Variance vs. prior views:**\n"
+                  "- Current Estimate vs Budget: **+$64.8mm**\n"
+                  "- Current Estimate vs Prior Year: **-$152.8mm**\n"
+                  "- Current Estimate vs Prior Pacing: **+$21.4mm**\n"
+                  "- Current Estimate vs Prior Estimate: **+$36.8mm**\n"
+                  "\n"
+                  "**3 blocking review items** must be resolved before this package can route to Finance for approval [1]:\n"
+                  "- A reconciliation gap at NBC Sports (driver-walk residual $0.5mm).\n"
+                  "- A missing Local Political submission — its prior $15.0mm snapshot is preserved, never coerced to zero.\n"
+                  "- A cross-slide mismatch on the Executive Readout slide, detected and corrected to $64.8mm.\n"
+                  "\n"
+                  "One additional advisory (non-blocking) label issue is also open. The executive deck therefore labels the submitted-only total as unavailable until the missing input arrives. All figures are synthetic demo data.",
+             "c": ["nbcu_findings"]},
+            {"u": "Show the blocking exceptions and formula/cross-slide controls.",
+             "a": "**Blocking exceptions (3):**\n"
+                  "- **HIGH — Local Political:** submission is missing while the prior snapshot held $15.0mm; missing data is never coerced to zero [1].\n"
+                  "- **MEDIUM — NBC Sports:** current vs budget variance $12.0mm does not equal the configured driver walk of $11.5mm; residual $0.5mm.\n"
+                  "- **HIGH — S09 (Executive Readout):** Detected and corrected: S09 showed $63.8mm; canonical Budget variance is $64.8mm [2]. Still routed to Finance for review under package policy, even though the slide value is already corrected.\n"
+                  "\n"
+                  "**Advisory (non-blocking):** the label on Digital Revenue Variance.xlsx!S5 still reads last period's comparison.\n"
+                  "\n"
+                  "Formula governance separately checks that comparable rows across the package share consistent formula patterns before anything is marked ready for review.",
+             "c": ["nbcu_findings", "nbcu_control_readout"]},
+            {"u": "Build the review workbook and editable executive reporting deck, clearly draft until Finance approval.",
+             "a": "Generated:\n"
+                  "1. A formula-driven **review workbook** with the reconciliation, driver walks, and exception queue as live cells, not static paste-ins.\n"
+                  "2. An editable **executive reporting deck** covering the Budget bridge, Prior Year view, and Executive Readout slide, with every metric shape bound by name so a rerun updates the numbers in place.\n"
+                  "3. The Executive Readout slide is corrected to **$64.8mm** (matches the canonical Budget variance) — no $63.8mm figure remains anywhere in the draft outputs.\n"
+                  "\n"
+                  "**Status: DRAFT.** Both outputs are watermarked draft and withheld from distribution until a Finance owner clears the 3 blocking exceptions and approves the package — nothing here should be treated as final.",
+             "c": []},
+        ],
+    },
 }
 
 
@@ -1247,7 +1317,7 @@ sup.cite a:hover { background: var(--accent); color: #fff; text-decoration: none
           <input class="input-field" type="text" placeholder="Message Copilot (scripted demo — use Play or a suggested prompt)" disabled aria-label="Message input (disabled in demo)">
           <span class="input-send" aria-hidden="true">__G_SEND__</span>
         </div>
-        <div class="ai-note">Simulated interface for demonstration — recreated with CSS only; not affiliated with or endorsed by Microsoft. AI-generated content over synthetic data (Aster Lane Office Systems simulated enterprise estate).</div>
+        <div class="ai-note">__DISCLOSURE__</div>
       </div>
     </div>
   </main>
@@ -1538,12 +1608,19 @@ def resolve_turns(spec):
 def render(fname, spec):
     sources = [SOURCES[s] for s in spec["sources"]]
     agent_name = spec["title"] + " Agent"
+    disclosure = spec.get(
+        "disclosure",
+        "Simulated interface for demonstration — recreated with CSS only; "
+        "not affiliated with or endorsed by Microsoft. AI-generated content "
+        "over synthetic data (Aster Lane Office Systems simulated enterprise estate).",
+    )
     page = (
         TEMPLATE
         .replace("__TITLE__", html.escape(spec["title"]))
         .replace("__VERTICAL__", html.escape(spec["vertical"]))
         .replace("__TAGLINE__", html.escape(spec["tagline"]))
         .replace("__PERSONA__", html.escape(spec["persona"]))
+        .replace("__DISCLOSURE__", html.escape(disclosure))
         .replace("__AGENT_NAME__", html.escape(agent_name))
         .replace("__GLYPH_BACK__", GLYPH_BACK)
         .replace("__GLYPH_SPARK__", GLYPH_SPARK)

@@ -1,0 +1,45 @@
+{
+  "id": "nbcu_finance_reporting_stack",
+  "name": "NBCU Finance Reporting Copilot Stack",
+  "version": "0.1.0",
+  "description": "Public demo-contract stack for a monthly-pacing finance reporting copilot: distinguishes a provisional carry-forward snapshot from a submitted-only roll-up, flags blocking exceptions (missing submissions, reconciliation gaps, cross-slide mismatches), and stages a draft review workbook and executive deck pending Finance approval.",
+  "category": "financial_services",
+  "complexity": "intermediate",
+  "features": [
+    "Current Estimate vs Budget / Prior Year / Prior Pacing / Prior Estimate summary",
+    "Explicit provisional carry-forward versus submitted-only reporting status",
+    "Blocking vs advisory exception routing",
+    "Cross-slide and formula consistency checks",
+    "Draft-until-approved review workbook and executive deck staging"
+  ],
+  "benefits": [
+    "Surfaces blocking review items before a package reaches Finance",
+    "Never coerces a missing submission to zero",
+    "Keeps generated outputs clearly marked draft until an owner approves them"
+  ],
+  "technicalRequirements": {
+    "platforms": ["Windows", "macOS", "Linux"],
+    "dependencies": ["Python 3.11+"],
+    "apiKeys": [],
+    "integrations": ["Microsoft 365 Copilot (demo surface)"]
+  },
+  "components": [
+    {
+      "name": "nbcu_finance_reporting_demo_agent.py",
+      "description": "Small standalone public demo agent returning the fixed, signed-off synthetic reporting snapshot used by this stack's demo. It intentionally does not implement workbook/PPTX generation, formula-signature governance, or Office file ingestion \u2014 that full engine is a private production package. This agent exists to keep the public demo's data contract versioned, deterministic, and honest about its own scope.",
+      "role": "Demo data contract"
+    }
+  ],
+  "demo": {
+    "available": true,
+    "url": "agent_stacks/demos_needing_videos/finance_nbcu_reporting_demo.html",
+    "title": "NBCUniversal Finance Reporting Copilot Interactive Demo",
+    "description": "Scripted 3-turn Microsoft 365 Copilot-style demo: summarize Current Estimate vs Budget, show blocking exceptions and cross-slide controls, then stage a draft review workbook and executive deck."
+  },
+  "useCases": [
+    "Monthly pacing / Current Estimate reporting reviews",
+    "Blocking exception triage before Finance approval",
+    "Draft executive reporting deck staging"
+  ],
+  "dataDisclosure": "All figures and entity names in this stack's demo and files/ snapshot are synthetic. The NBCUniversal name identifies a prototype scenario and does not imply endorsement. No customer or production NBCUniversal financial data is included."
+}
