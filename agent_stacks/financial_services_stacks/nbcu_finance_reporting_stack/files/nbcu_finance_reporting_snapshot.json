@@ -1,0 +1,66 @@
+{
+  "schema": "finance-reporting-snapshot/1.0",
+  "synthetic": true,
+  "notice": "SYNTHETIC DEMO DATA ONLY. Every entity, dollar figure, and finding below is fictional and generated for public demonstration purposes. No NBCUniversal customer, vendor, or production financial data is included or referenced.",
+  "profile": "NBCU Finance Monthly Pacing (synthetic demo profile)",
+  "units": "$mm",
+  "generated": "2026-08-07T00:00:00Z",
+  "summary": {
+    "status": "provisional-carry-forward",
+    "publishable": false,
+    "carry_forward_inputs": ["Local Political 15.0"],
+    "total_current": 1536.8,
+    "total_budget": 1472.0,
+    "variance_vs_budget": 64.8,
+    "variance_vs_prior_year": -152.8,
+    "variance_vs_prior_pacing": 21.4,
+    "variance_vs_prior_estimate": 36.8,
+    "exceptions": 4,
+    "blocking_exceptions": 3,
+    "approval_required": true,
+    "approval_note": "Generated outputs remain draft until a finance owner approves them."
+  },
+  "count": 4,
+  "value": [
+    {
+      "entity": "NBC Sports",
+      "type": "reconciliation_gap",
+      "label": "Reconciliation gap",
+      "severity": "medium",
+      "blocking": true,
+      "blocking_display": "Yes",
+      "message": "Current vs budget variance 12.0 does not equal configured drivers 11.5; residual 0.5.",
+      "owner": "Linear finance owner"
+    },
+    {
+      "entity": "Local Political",
+      "type": "missing_submission",
+      "label": "Missing submission",
+      "severity": "high",
+      "blocking": true,
+      "blocking_display": "Yes",
+      "message": "Submission status is missing while the prior snapshot contained 15.0; missing data is never coerced to zero.",
+      "owner": "FP&A reviewer"
+    },
+    {
+      "entity": "S09",
+      "type": "cross_slide_mismatch",
+      "label": "Cross-slide mismatch",
+      "severity": "high",
+      "blocking": true,
+      "blocking_display": "Yes",
+      "message": "variance_vs_budget on the Executive Readout slide is 63.8 but the canonical reconciled value is 64.8.",
+      "owner": "FP&A reviewer"
+    },
+    {
+      "entity": "Digital Revenue Variance.xlsx!S5",
+      "type": "stale_label",
+      "label": "Stale label",
+      "severity": "medium",
+      "blocking": false,
+      "blocking_display": "No (advisory)",
+      "message": "Expected label '2026 current view vs 2026 budget', found '2027 budget vs 2026 budget'.",
+      "owner": "FP&A reviewer"
+    }
+  ]
+}
