@@ -1,6 +1,6 @@
 {
   "version": "1.0.0",
-  "generated": "2026-08-16T00:33:42.920696Z",
+  "generated": "2026-08-16T00:53:19.408977Z",
   "repository": "kody-w/AI-Agent-Templates",
   "branch": "main",
   "agents": [
@@ -6093,7 +6093,7 @@
           "filename": "nbcu_finance_reporting_demo_agent.py",
           "path": "agent_stacks/financial_services_stacks/nbcu_finance_reporting_stack/agents/nbcu_finance_reporting_demo_agent.py",
           "url": "https://raw.githubusercontent.com/kody-w/AI-Agent-Templates/main/agent_stacks/financial_services_stacks/nbcu_finance_reporting_stack/agents/nbcu_finance_reporting_demo_agent.py",
-          "size": 9613,
+          "size": 9630,
           "size_formatted": "9.4KB",
           "type": "stack",
           "stack_name": "Nbcu Finance Reporting Stack",

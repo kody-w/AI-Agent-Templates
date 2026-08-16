@@ -49,7 +49,7 @@
       "severity": "high",
       "blocking": true,
       "blocking_display": "Yes",
-      "message": "variance_vs_budget on the Executive Readout slide is 63.8 but the canonical reconciled value is 64.8.",
+      "message": "variance_vs_budget on the Publication Decision slide (S09) is 63.8 but the canonical reconciled value is 64.8.",
       "owner": "FP&A reviewer"
     },
     {

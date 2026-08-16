@@ -964,15 +964,15 @@ DEMOS = {
                   "**3 blocking review items** must be resolved before this package can route to Finance for approval [1]:\n"
                   "- A reconciliation gap at NBC Sports (driver-walk residual $0.5mm).\n"
                   "- A missing Local Political submission — its prior $15.0mm snapshot is preserved, never coerced to zero.\n"
-                  "- A cross-slide mismatch on the Executive Readout slide, detected and corrected to $64.8mm.\n"
+                  "- A cross-slide mismatch on the Publication Decision slide (S09), detected and corrected to $64.8mm.\n"
                   "\n"
-                  "One additional advisory (non-blocking) label issue is also open. The executive deck therefore labels the submitted-only total as unavailable until the missing input arrives. All figures are synthetic demo data.",
+                  "One additional advisory (non-blocking) label issue is also open. The executive deck therefore labels the subtotal provisional and holds publication until the missing input arrives. All figures are synthetic demo data.",
              "c": ["nbcu_findings"]},
             {"u": "Show the blocking exceptions and formula/cross-slide controls.",
              "a": "**Blocking exceptions (3):**\n"
                   "- **HIGH — Local Political:** submission is missing while the prior snapshot held $15.0mm; missing data is never coerced to zero [1].\n"
                   "- **MEDIUM — NBC Sports:** current vs budget variance $12.0mm does not equal the configured driver walk of $11.5mm; residual $0.5mm.\n"
-                  "- **HIGH — S09 (Executive Readout):** Detected and corrected: S09 showed $63.8mm; canonical Budget variance is $64.8mm [2]. Still routed to Finance for review under package policy, even though the slide value is already corrected.\n"
+                  "- **HIGH — S09 (Publication Decision):** Detected and corrected: S09 showed $63.8mm; canonical Budget variance is $64.8mm [2]. Still routed to Finance for review under package policy, even though the slide value is already corrected.\n"
                   "\n"
                   "**Advisory (non-blocking):** the label on Digital Revenue Variance.xlsx!S5 still reads last period's comparison.\n"
                   "\n"
@@ -981,8 +981,8 @@ DEMOS = {
             {"u": "Build the review workbook and editable executive reporting deck, clearly draft until Finance approval.",
              "a": "Generated:\n"
                   "1. A formula-driven **review workbook** with the reconciliation, driver walks, and exception queue as live cells, not static paste-ins.\n"
-                  "2. An editable **executive reporting deck** covering the Budget bridge, Prior Year view, and Executive Readout slide, with every metric shape bound by name so a rerun updates the numbers in place.\n"
-                  "3. The Executive Readout slide is corrected to **$64.8mm** (matches the canonical Budget variance) — no $63.8mm figure remains anywhere in the draft outputs.\n"
+                  "2. An editable **executive reporting deck** covering Publication Decision, Budget Comparison, Prior Year Comparison, and Driver Reconciliation, with every metric shape bound by name so a rerun updates the numbers in place.\n"
+                  "3. The Publication Decision slide (S09) is corrected to **$64.8mm** (matches the canonical Budget variance) — no $63.8mm figure remains anywhere in the draft outputs.\n"
                   "\n"
                   "**Status: DRAFT.** Both outputs are watermarked draft and withheld from distribution until a Finance owner clears the 3 blocking exceptions and approves the package — nothing here should be treated as final.",
              "c": []},
