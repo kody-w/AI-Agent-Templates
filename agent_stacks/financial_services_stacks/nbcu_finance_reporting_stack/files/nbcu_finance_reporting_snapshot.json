@@ -3,7 +3,7 @@
   "synthetic": true,
   "notice": "SYNTHETIC DEMO DATA ONLY. Every entity, dollar figure, and finding below is fictional and generated for public demonstration purposes. No NBCUniversal customer, vendor, or production financial data is included or referenced.",
   "profile": "NBCU Finance Monthly Pacing (synthetic demo profile)",
-  "units": "$mm",
+  "units": "USD millions",
   "generated": "2026-08-07T00:00:00Z",
   "summary": {
     "status": "provisional-submitted-data-subtotal",

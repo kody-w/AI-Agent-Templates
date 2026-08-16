@@ -944,6 +944,8 @@ DEMOS = {
         "vertical": "Finance",
         "tagline": "Monthly pacing package validation — blocking exceptions flagged before Finance sees a draft.",
         "persona": "Priya Kapoor, FP&A Analyst",
+        "avatar": "PK",
+        "avatar_title": "Signed in (simulated): Priya Kapoor",
         "disclosure": (
             "Simulated interface for demonstration — recreated with CSS only; "
             "not affiliated with or endorsed by Microsoft. Customer or "
@@ -953,26 +955,26 @@ DEMOS = {
         "sources": ["nbcu_finance_findings", "nbcu_finance_exceptions"],
         "turns": [
             {"u": "Summarize Current Estimate versus Budget and flag blocking review items.",
-             "a": "**Provisional submitted-data subtotal:** Current Estimate **$1,536.8mm** vs **Budget $1,472.0mm** — variance **+$64.8mm** [1]. Local Political is still missing: its last-known **$15.0mm** remains visible in the exception context but is not inserted into this subtotal or treated as zero. This is not a complete, publishable roll-up.\n"
+             "a": "**Provisional submitted-data subtotal:** Current Estimate **$1,536.8 million** vs **Budget $1,472.0 million** — variance **+$64.8 million** [1]. Local Political is still missing: its last-known **$15.0 million** remains visible in the exception context but is not inserted into this subtotal or treated as zero. This is not a complete, publishable roll-up.\n"
                   "\n"
                   "**Variance vs. prior views:**\n"
-                  "- Current Estimate vs Budget: **+$64.8mm**\n"
-                  "- Current Estimate vs Prior Year: **-$152.8mm**\n"
-                  "- Current Estimate vs Prior Pacing: **+$21.4mm**\n"
-                  "- Current Estimate vs Prior Estimate: **+$36.8mm**\n"
+                  "- Current Estimate vs Budget: **+$64.8 million**\n"
+                  "- Current Estimate vs Prior Year: **-$152.8 million**\n"
+                  "- Current Estimate vs Prior Pacing: **+$21.4 million**\n"
+                  "- Current Estimate vs Prior Estimate: **+$36.8 million**\n"
                   "\n"
                   "**3 blocking review items** must be resolved before this package can route to Finance for approval [1]:\n"
-                  "- A reconciliation gap at NBC Sports (driver-walk residual $0.5mm).\n"
-                  "- A missing Local Political submission — its prior $15.0mm snapshot is preserved, never coerced to zero.\n"
-                  "- A cross-slide mismatch on the Publication Decision slide (S09), detected and corrected to $64.8mm.\n"
+                  "- A reconciliation gap at NBC Sports (driver-walk residual $0.5 million).\n"
+                  "- A missing Local Political submission — its prior $15.0 million snapshot is preserved, never coerced to zero.\n"
+                  "- A cross-slide mismatch on the Publication Decision slide (S09), detected and corrected to $64.8 million.\n"
                   "\n"
                   "One additional advisory (non-blocking) label issue is also open. The executive deck therefore labels the subtotal provisional and holds publication until the missing input arrives. All figures are synthetic demo data.",
              "c": ["nbcu_findings"]},
             {"u": "Show the blocking exceptions and formula/cross-slide controls.",
              "a": "**Blocking exceptions (3):**\n"
-                  "- **HIGH — Local Political:** submission is missing while the prior snapshot held $15.0mm; missing data is never coerced to zero [1].\n"
-                  "- **MEDIUM — NBC Sports:** current vs budget variance $12.0mm does not equal the configured driver walk of $11.5mm; residual $0.5mm.\n"
-                  "- **HIGH — S09 (Publication Decision):** Detected and corrected: S09 showed $63.8mm; canonical Budget variance is $64.8mm [2]. Still routed to Finance for review under package policy, even though the slide value is already corrected.\n"
+                  "- **HIGH — Local Political:** submission is missing while the prior snapshot held $15.0 million; missing data is never coerced to zero [1].\n"
+                  "- **MEDIUM — NBC Sports:** current vs budget variance $12.0 million does not equal the configured driver walk of $11.5 million; residual $0.5 million.\n"
+                  "- **HIGH — S09 (Publication Decision):** Detected and corrected: S09 showed $63.8 million; canonical Budget variance is $64.8 million [2]. Still routed to Finance for review under package policy, even though the slide value is already corrected.\n"
                   "\n"
                   "**Advisory (non-blocking):** the label on Digital Revenue Variance.xlsx!S5 still reads last period's comparison.\n"
                   "\n"
@@ -982,7 +984,7 @@ DEMOS = {
              "a": "Generated:\n"
                   "1. A formula-driven **review workbook** with the reconciliation, driver walks, and exception queue as live cells, not static paste-ins.\n"
                   "2. An editable **executive reporting deck** covering Publication Decision, Budget Comparison, Prior Year Comparison, and Driver Reconciliation, with every metric shape bound by name so a rerun updates the numbers in place.\n"
-                  "3. The Publication Decision slide (S09) is corrected to **$64.8mm** (matches the canonical Budget variance) — no $63.8mm figure remains anywhere in the draft outputs.\n"
+                  "3. The Publication Decision slide (S09) is corrected to **$64.8 million** (matches the canonical Budget variance) — no $63.8 million figure remains anywhere in the draft outputs.\n"
                   "\n"
                   "**Status: DRAFT.** Both outputs are watermarked draft and withheld from distribution until a Finance owner clears the 3 blocking exceptions and approves the package — nothing here should be treated as final.",
              "c": []},
@@ -1277,7 +1279,7 @@ sup.cite a:hover { background: var(--accent); color: #fff; text-decoration: none
     <button class="tb-btn" id="themeToggle" title="Toggle light/dark" aria-label="Toggle theme">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="4.2"/><path d="M12 2.5v2.4M12 19.1v2.4M2.5 12h2.4M19.1 12h2.4M5 5l1.7 1.7M17.3 17.3L19 19M19 5l-1.7 1.7M6.7 17.3L5 19"/></svg>
     </button>
-    <div class="tb-avatar" title="Signed in (simulated): Aster Lane">AL</div>
+    <div class="tb-avatar" title="__AVATAR_TITLE__">__AVATAR__</div>
   </div>
 </div>
 
@@ -1608,6 +1610,8 @@ def resolve_turns(spec):
 def render(fname, spec):
     sources = [SOURCES[s] for s in spec["sources"]]
     agent_name = spec["title"] + " Agent"
+    avatar = spec.get("avatar", "AL")
+    avatar_title = spec.get("avatar_title", "Signed in (simulated): Aster Lane")
     disclosure = spec.get(
         "disclosure",
         "Simulated interface for demonstration — recreated with CSS only; "
@@ -1620,6 +1624,8 @@ def render(fname, spec):
         .replace("__VERTICAL__", html.escape(spec["vertical"]))
         .replace("__TAGLINE__", html.escape(spec["tagline"]))
         .replace("__PERSONA__", html.escape(spec["persona"]))
+        .replace("__AVATAR__", html.escape(avatar))
+        .replace("__AVATAR_TITLE__", html.escape(avatar_title))
         .replace("__DISCLOSURE__", html.escape(disclosure))
         .replace("__AGENT_NAME__", html.escape(agent_name))
         .replace("__GLYPH_BACK__", GLYPH_BACK)
