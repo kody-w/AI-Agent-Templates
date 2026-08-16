@@ -26,7 +26,7 @@ from agents.basic_agent import BasicAgent
 # nbcu_finance_reporting_snapshot.json -- kept in sync by hand, not derived,
 # so this agent runs standalone with zero file I/O.
 SYNTHETIC_SUMMARY = {
-    "units": "$mm",
+    "units": "USD millions",
     "status": "provisional-submitted-data-subtotal",
     "publishable": False,
     "missing_inputs": ["Local Political; last-known value 15.0 retained in exception context"],
@@ -94,9 +94,9 @@ SYNTHETIC_EXCEPTIONS = [
 _SCRIPTED_REPLIES = [
     (
         ("summarize", "budget"),
-        "Provisional submitted-data subtotal: Current Estimate $1,536.8mm vs "
-        "Budget $1,472.0mm, variance +$64.8mm. Local Political remains missing; "
-        "its last-known $15.0mm stays visible in the exception context but is "
+        "Provisional submitted-data subtotal: Current Estimate $1,536.8 million "
+        "vs Budget $1,472.0 million, variance +$64.8 million. Local Political "
+        "remains missing; its last-known $15.0 million stays visible in the exception context but is "
         "not inserted into this subtotal or treated as zero. This is not a "
         "complete, publishable roll-up. "
         "3 blocking review items must be resolved before this package can "
