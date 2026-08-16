@@ -70,7 +70,7 @@ SYNTHETIC_EXCEPTIONS = [
         "severity": "high",
         "blocking": True,
         "message": (
-            "variance_vs_budget on the Executive Readout slide is 63.8 but "
+            "variance_vs_budget on the Publication Decision slide (S09) is 63.8 but "
             "the canonical reconciled value is 64.8."
         ),
         "owner": "FP&A reviewer",
@@ -106,8 +106,8 @@ _SCRIPTED_REPLIES = [
         ("blocking", "exception"),
         "3 blocking exceptions: a reconciliation gap at NBC Sports, a "
         "missing Local Political submission (its prior 15.0 was preserved, "
-        "not zeroed), and a cross-slide mismatch on the Executive Readout "
-        "slide (63.8 shown vs 64.8 canonical). 1 advisory: a stale label on "
+        "not zeroed), and a cross-slide mismatch on the Publication Decision "
+        "slide (S09: 63.8 shown vs 64.8 canonical). 1 advisory: a stale label on "
         "Digital Revenue Variance.xlsx!S5.",
     ),
     (
