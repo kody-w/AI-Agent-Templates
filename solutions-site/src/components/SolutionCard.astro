@@ -1,0 +1,50 @@
+---
+interface Props {
+  slug: string; title: string; kicker: string; func: string;
+  accent: string; icon: string; kpis: [string, string][]; href: string;
+}
+const { slug, title, kicker, func, accent, icon, kpis, href } = Astro.props;
+const accentMap: Record<string, string> = {
+  cyan: 'var(--c-cyan)', purple: 'var(--c-purple)', pink: 'var(--c-pink)',
+  orange: 'var(--c-orange)', green: 'var(--c-green)',
+};
+const c = accentMap[accent] ?? accentMap.cyan;
+const icons: Record<string, string> = {
+  card: '<rect x="2" y="5" width="20" height="14" rx="2"/><line x1="2" y1="10" x2="22" y2="10"/><line x1="6" y1="15" x2="10" y2="15"/>',
+  package: '<path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><polyline points="3.27 6.96 12 12.01 20.73 6.96"/><line x1="12" y1="22.08" x2="12" y2="12"/>',
+  ticket: '<path d="M2 9a3 3 0 0 1 0 6v2a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-2a3 3 0 0 1 0-6V7a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2Z"/><path d="M13 5v14"/>',
+  report: '<path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/>',
+};
+const path = icons[icon] ?? icons.card;
+---
+<a class="card" href={href} style={`--accent:${c}`}>
+  <div class="card__art">
+    <span class="card__icon" set:html={`<svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">${path}</svg>`}></span>
+    <span class="card__kicker">{kicker}</span>
+  </div>
+  <div class="card__body">
+    <h3 class="card__title">{title}</h3>
+    <p class="card__func">{func}</p>
+    <div class="card__kpis">
+      {kpis.slice(0, 3).map((k) => <span class="kpi"><b>{k[0]}</b> {k[1]}</span>)}
+    </div>
+    <span class="card__link">Explore solution
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="M12 5l7 7-7 7"/></svg>
+    </span>
+  </div>
+</a>
+<style>
+  .card { display: flex; flex-direction: column; background: var(--c-surface); border: 1px solid var(--c-border); border-radius: var(--radius); overflow: hidden; transition: all .22s ease; color: inherit; }
+  .card:hover { text-decoration: none; transform: translateY(-3px); border-color: transparent; box-shadow: 0 16px 42px rgba(0,0,0,.14), 0 0 0 1px color-mix(in srgb, var(--accent) 40%, transparent); }
+  .card__art { position: relative; aspect-ratio: 16/6; display: flex; align-items: center; justify-content: center; background: radial-gradient(ellipse 70% 100% at 50% 120%, color-mix(in srgb, var(--accent) 26%, transparent), transparent 70%), var(--c-bg-deep); border-bottom: 1px solid var(--c-border-subtle); }
+  .card__icon { color: var(--accent); filter: drop-shadow(0 0 12px color-mix(in srgb, var(--accent) 50%, transparent)); }
+  .card__kicker { position: absolute; top: 10px; left: 12px; font-family: var(--font-mono); font-size: .6rem; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: var(--accent); border: 1px solid color-mix(in srgb, var(--accent) 45%, transparent); background: color-mix(in srgb, var(--accent) 10%, transparent); padding: 3px 8px; border-radius: 20px; }
+  .card__body { padding: 18px 20px 20px; display: flex; flex-direction: column; gap: 8px; flex: 1; }
+  .card__title { font-size: 1.1rem; font-weight: 700; letter-spacing: -.01em; }
+  .card__func { font-size: .84rem; color: var(--c-text-2); }
+  .card__kpis { display: flex; flex-wrap: wrap; gap: 7px; margin: 2px 0 4px; }
+  .kpi { font-size: .72rem; color: var(--c-text-2); background: var(--c-surface-2); border: 1px solid var(--c-border-subtle); border-radius: 6px; padding: 4px 8px; }
+  .kpi b { color: var(--accent); }
+  .card__link { display: inline-flex; align-items: center; gap: 6px; font-size: .84rem; font-weight: 700; color: var(--accent); margin-top: auto; transition: gap .18s ease; }
+  .card:hover .card__link { gap: 10px; }
+</style>

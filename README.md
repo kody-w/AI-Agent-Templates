@@ -21,6 +21,8 @@ This repository is the **original template library** — the place the industry 
 | `index.html` | The web gallery — search, filter by vertical, live sandbox status. Works from `file://` too. |
 | `azuredeploy.json` | One-click ARM template: Function App, Azure OpenAI, storage, App Insights. |
 | `MSFTAIBASMultiAgentCopilot_1_0_0_5.zip` | Power Platform solution for Copilot Studio / Teams / M365 Copilot. |
+| `COPILOT_STUDIO_SOLUTIONS.md` | Per-industry **one-click Copilot Studio** deploy bundles — each industry stack as new-generation connected agents (AIBAST publisher), ready to import. |
+| `industry_solutions/` | **All 48 AIBAST industry agents**, each packaged 3 ways: one-click Copilot Studio solution, RAPP brainstem `agent.py`, and a portable `SKILL.md`+`.py` for any AI tool. See `industry_solutions/README.md`. |
 
 ### The agent pattern
 
@@ -88,7 +90,7 @@ python3 agents/calendar_agent.py
 
 1. **Tier 1 — The Brainstem (local).** `curl -fsSL https://kody-w.github.io/rapp-installer/install.sh | bash` gives you a local agent server powered by GitHub Copilot (no API keys). Drop any agent file from this library into its `agents/` folder.
 2. **Tier 2 — The Spinal Cord (Azure).** Click **Deploy to Azure** above: Function App (Python 3.11), Azure OpenAI, storage, App Insights — Entra ID auth, no keys.
-3. **Tier 3 — The Nervous System (Copilot Studio).** Import the included Power Platform solution (`MSFTAIBASMultiAgentCopilot_1_0_0_5.zip`) into Copilot Studio, point it at your Azure Function, and publish. The same agent logic you tested locally now answers in Microsoft Teams and M365 Copilot across your organization.
+3. **Tier 3 — The Nervous System (Copilot Studio).** Import the included Power Platform solution (`MSFTAIBASMultiAgentCopilot_1_0_0_5.zip`) into Copilot Studio, point it at your Azure Function, and publish. The same agent logic you tested locally now answers in Microsoft Teams and M365 Copilot across your organization. For **per-industry one-click deploys** — each stack as self-contained new-generation connected agents with embedded data (no Azure Function needed) — see [`COPILOT_STUDIO_SOLUTIONS.md`](COPILOT_STUDIO_SOLUTIONS.md).
 
 ## Regenerating the manifest
 

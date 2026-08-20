@@ -1,0 +1,41 @@
+{
+ "suite": "SubscriptionRenewalAgent",
+ "display": "Subscription Renewal Agent",
+ "solutions": [
+  {
+   "name": "SubscriptionRenewalAgentMcpConnectors",
+   "zip": "SubscriptionRenewalAgentMcpConnectors_1_0_0_1.zip",
+   "kind": "connectors"
+  },
+  {
+   "name": "SubscriptionRenewalAgentMcpAgents",
+   "zip": "SubscriptionRenewalAgentMcpAgents_1_0_0_1.zip",
+   "kind": "agents"
+  }
+ ],
+ "connector": {
+  "schema": "aibast_subscription-2_8f51d7f0",
+  "id": "ef1ee9d4-31c5-55b7-b93c-024554655788",
+  "display": "Subscription Renewal Agent MCP",
+  "tools": [
+   "get_subscriptionrenewalagent",
+   "list_subscriptionrenewalagent"
+  ]
+ },
+ "agents": {
+  "parent": "aibast_subscriptionrenewalagentassistant_44da3c",
+  "parent_display": "Subscription Renewal Agent Assistant",
+  "child": null,
+  "child_display": null,
+  "skills": [
+   [
+    "subscriptionrenewalagent",
+    "subscription_renewal_agent_agent"
+   ]
+  ]
+ },
+ "skills_mode": "thin",
+ "manual_step": "Copilot Studio -> Subscription Renewal Agent Assistant -> Tools -> Add a tool -> Model Context Protocol -> 'Subscription Renewal Agent MCP' -> create the (no-auth) connection -> Save -> Publish. No API exists for this attach.",
+ "manual_steps_html_file": "MANUAL_STEPS.html",
+ "evaluation_csv_file": "EVALUATION.csv"
+}

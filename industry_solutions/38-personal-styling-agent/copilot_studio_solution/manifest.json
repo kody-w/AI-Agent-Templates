@@ -1,0 +1,41 @@
+{
+ "suite": "PersonalStylingAgent",
+ "display": "Personal Styling Agent",
+ "solutions": [
+  {
+   "name": "PersonalStylingAgentMcpConnectors",
+   "zip": "PersonalStylingAgentMcpConnectors_1_0_0_1.zip",
+   "kind": "connectors"
+  },
+  {
+   "name": "PersonalStylingAgentMcpAgents",
+   "zip": "PersonalStylingAgentMcpAgents_1_0_0_1.zip",
+   "kind": "agents"
+  }
+ ],
+ "connector": {
+  "schema": "aibast_personal-20sty_966f9765",
+  "id": "4bcbe34d-4ec6-5f84-8bc2-231499ff5805",
+  "display": "Personal Styling Agent MCP",
+  "tools": [
+   "get_personalstylingagent",
+   "list_personalstylingagent"
+  ]
+ },
+ "agents": {
+  "parent": "aibast_personalstylingagentassistant_90e0cb",
+  "parent_display": "Personal Styling Agent Assistant",
+  "child": null,
+  "child_display": null,
+  "skills": [
+   [
+    "personalstylingagent",
+    "personal_styling_agent_agent"
+   ]
+  ]
+ },
+ "skills_mode": "thin",
+ "manual_step": "Copilot Studio -> Personal Styling Agent Assistant -> Tools -> Add a tool -> Model Context Protocol -> 'Personal Styling Agent MCP' -> create the (no-auth) connection -> Save -> Publish. No API exists for this attach.",
+ "manual_steps_html_file": "MANUAL_STEPS.html",
+ "evaluation_csv_file": "EVALUATION.csv"
+}

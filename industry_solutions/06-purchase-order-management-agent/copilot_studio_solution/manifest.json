@@ -1,0 +1,41 @@
+{
+ "suite": "PurchaseOrderManagementAgent",
+ "display": "Purchase Order Management Agent",
+ "solutions": [
+  {
+   "name": "PurchaseOrderManagementAgentMcpConnectors",
+   "zip": "PurchaseOrderManagementAgentMcpConnectors_1_0_0_1.zip",
+   "kind": "connectors"
+  },
+  {
+   "name": "PurchaseOrderManagementAgentMcpAgents",
+   "zip": "PurchaseOrderManagementAgentMcpAgents_1_0_0_1.zip",
+   "kind": "agents"
+  }
+ ],
+ "connector": {
+  "schema": "aibast_purchase-20ord_95800f36",
+  "id": "a1f1789a-f43a-5ac9-a6be-00a513de0996",
+  "display": "Purchase Order Management MCP",
+  "tools": [
+   "get_purchaseordermanagementagent",
+   "list_purchaseordermanagementagent"
+  ]
+ },
+ "agents": {
+  "parent": "aibast_purchaseordermanagementagentassistant_3a08d0",
+  "parent_display": "Purchase Order Management Agent Assistant",
+  "child": null,
+  "child_display": null,
+  "skills": [
+   [
+    "purchaseordermanagementagent",
+    "purchase_order_management_agent_agent"
+   ]
+  ]
+ },
+ "skills_mode": "thin",
+ "manual_step": "Copilot Studio -> Purchase Order Management Agent Assistant -> Tools -> Add a tool -> Model Context Protocol -> 'Purchase Order Management MCP' -> create the (no-auth) connection -> Save -> Publish. No API exists for this attach.",
+ "manual_steps_html_file": "MANUAL_STEPS.html",
+ "evaluation_csv_file": "EVALUATION.csv"
+}

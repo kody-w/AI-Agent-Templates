@@ -1,0 +1,41 @@
+{
+ "suite": "StoreAssociateAgent",
+ "display": "Store Associate Agent",
+ "solutions": [
+  {
+   "name": "StoreAssociateAgentMcpConnectors",
+   "zip": "StoreAssociateAgentMcpConnectors_1_0_0_1.zip",
+   "kind": "connectors"
+  },
+  {
+   "name": "StoreAssociateAgentMcpAgents",
+   "zip": "StoreAssociateAgentMcpAgents_1_0_0_1.zip",
+   "kind": "agents"
+  }
+ ],
+ "connector": {
+  "schema": "aibast_store-20associ_49ba5ecb",
+  "id": "e28828f5-a0a5-57ed-89be-adea86f43d9c",
+  "display": "Store Associate Agent Data MCP",
+  "tools": [
+   "get_storeassociateagent",
+   "list_storeassociateagent"
+  ]
+ },
+ "agents": {
+  "parent": "aibast_storeassociateagentassistant_65ed44",
+  "parent_display": "Store Associate Agent Assistant",
+  "child": null,
+  "child_display": null,
+  "skills": [
+   [
+    "storeassociateagent",
+    "store_associate_agent_agent"
+   ]
+  ]
+ },
+ "skills_mode": "thin",
+ "manual_step": "Copilot Studio -> Store Associate Agent Assistant -> Tools -> Add a tool -> Model Context Protocol -> 'Store Associate Agent Data MCP' -> create the (no-auth) connection -> Save -> Publish. No API exists for this attach.",
+ "manual_steps_html_file": "MANUAL_STEPS.html",
+ "evaluation_csv_file": "EVALUATION.csv"
+}

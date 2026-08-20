@@ -1,0 +1,41 @@
+{
+ "suite": "ClaimsProcessingAgent",
+ "display": "Claims Processing Agent",
+ "solutions": [
+  {
+   "name": "ClaimsProcessingAgentMcpConnectors",
+   "zip": "ClaimsProcessingAgentMcpConnectors_1_0_0_1.zip",
+   "kind": "connectors"
+  },
+  {
+   "name": "ClaimsProcessingAgentMcpAgents",
+   "zip": "ClaimsProcessingAgentMcpAgents_1_0_0_1.zip",
+   "kind": "agents"
+  }
+ ],
+ "connector": {
+  "schema": "aibast_claims-20proce_40fdc80f",
+  "id": "852df888-3154-50ed-9c70-791ec14c3fe7",
+  "display": "Claims Processing Agent MCP",
+  "tools": [
+   "get_claimsprocessingagent",
+   "list_claimsprocessingagent"
+  ]
+ },
+ "agents": {
+  "parent": "aibast_claimsprocessingagentassistant_69bbf6",
+  "parent_display": "Claims Processing Agent Assistant",
+  "child": null,
+  "child_display": null,
+  "skills": [
+   [
+    "claimsprocessingagent",
+    "claims_processing_agent_agent"
+   ]
+  ]
+ },
+ "skills_mode": "thin",
+ "manual_step": "Copilot Studio -> Claims Processing Agent Assistant -> Tools -> Add a tool -> Model Context Protocol -> 'Claims Processing Agent MCP' -> create the (no-auth) connection -> Save -> Publish. No API exists for this attach.",
+ "manual_steps_html_file": "MANUAL_STEPS.html",
+ "evaluation_csv_file": "EVALUATION.csv"
+}

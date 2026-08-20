@@ -1,0 +1,41 @@
+{
+ "suite": "CareGapClosureAgent",
+ "display": "Care Gap Closure Agent",
+ "solutions": [
+  {
+   "name": "CareGapClosureAgentMcpConnectors",
+   "zip": "CareGapClosureAgentMcpConnectors_1_0_0_1.zip",
+   "kind": "connectors"
+  },
+  {
+   "name": "CareGapClosureAgentMcpAgents",
+   "zip": "CareGapClosureAgentMcpAgents_1_0_0_1.zip",
+   "kind": "agents"
+  }
+ ],
+ "connector": {
+  "schema": "aibast_care-20gap-20c_b37d4d78",
+  "id": "2ab5e460-1b9f-5c42-9805-46a5da522a86",
+  "display": "Care Gap Closure Agent MCP",
+  "tools": [
+   "get_caregapclosureagent",
+   "list_caregapclosureagent"
+  ]
+ },
+ "agents": {
+  "parent": "aibast_caregapclosureagentassistant_f355d5",
+  "parent_display": "Care Gap Closure Agent Assistant",
+  "child": null,
+  "child_display": null,
+  "skills": [
+   [
+    "caregapclosureagent",
+    "care_gap_closure_agent_agent"
+   ]
+  ]
+ },
+ "skills_mode": "thin",
+ "manual_step": "Copilot Studio -> Care Gap Closure Agent Assistant -> Tools -> Add a tool -> Model Context Protocol -> 'Care Gap Closure Agent MCP' -> create the (no-auth) connection -> Save -> Publish. No API exists for this attach.",
+ "manual_steps_html_file": "MANUAL_STEPS.html",
+ "evaluation_csv_file": "EVALUATION.csv"
+}

@@ -1,0 +1,41 @@
+{
+ "suite": "FraudDetectionAlertAgent",
+ "display": "Fraud Detection & Alert Agent",
+ "solutions": [
+  {
+   "name": "FraudDetectionAlertAgentMcpConnectors",
+   "zip": "FraudDetectionAlertAgentMcpConnectors_1_0_0_1.zip",
+   "kind": "connectors"
+  },
+  {
+   "name": "FraudDetectionAlertAgentMcpAgents",
+   "zip": "FraudDetectionAlertAgentMcpAgents_1_0_0_1.zip",
+   "kind": "agents"
+  }
+ ],
+ "connector": {
+  "schema": "aibast_fraud-20detect_a1de381c",
+  "id": "068d0346-a27e-5448-9cc7-3aa3e753e0a3",
+  "display": "Fraud Detection & Alert MCP",
+  "tools": [
+   "get_frauddetectionalertagent",
+   "list_frauddetectionalertagent"
+  ]
+ },
+ "agents": {
+  "parent": "aibast_frauddetectionalertagentassistant_8d1cbc",
+  "parent_display": "Fraud Detection & Alert Agent Assistant",
+  "child": null,
+  "child_display": null,
+  "skills": [
+   [
+    "frauddetectionalertagent",
+    "fraud_detection_alert_agent_agent"
+   ]
+  ]
+ },
+ "skills_mode": "thin",
+ "manual_step": "Copilot Studio -> Fraud Detection & Alert Agent Assistant -> Tools -> Add a tool -> Model Context Protocol -> 'Fraud Detection & Alert MCP' -> create the (no-auth) connection -> Save -> Publish. No API exists for this attach.",
+ "manual_steps_html_file": "MANUAL_STEPS.html",
+ "evaluation_csv_file": "EVALUATION.csv"
+}

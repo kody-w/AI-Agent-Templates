@@ -1,0 +1,41 @@
+{
+ "suite": "BranchBankingAdvisoryAgent",
+ "display": "Branch Banking Advisory Agent",
+ "solutions": [
+  {
+   "name": "BranchBankingAdvisoryAgentMcpConnectors",
+   "zip": "BranchBankingAdvisoryAgentMcpConnectors_1_0_0_1.zip",
+   "kind": "connectors"
+  },
+  {
+   "name": "BranchBankingAdvisoryAgentMcpAgents",
+   "zip": "BranchBankingAdvisoryAgentMcpAgents_1_0_0_1.zip",
+   "kind": "agents"
+  }
+ ],
+ "connector": {
+  "schema": "aibast_branch-20banki_67c0d3d1",
+  "id": "e21063c5-18a3-53a9-a93a-8aa853ea3a3b",
+  "display": "Branch Banking Advisory MCP",
+  "tools": [
+   "get_branchbankingadvisoryagent",
+   "list_branchbankingadvisoryagent"
+  ]
+ },
+ "agents": {
+  "parent": "aibast_branchbankingadvisoryagentassistant_81f95a",
+  "parent_display": "Branch Banking Advisory Agent Assistant",
+  "child": null,
+  "child_display": null,
+  "skills": [
+   [
+    "branchbankingadvisoryagent",
+    "branch_banking_advisory_agent_agent"
+   ]
+  ]
+ },
+ "skills_mode": "thin",
+ "manual_step": "Copilot Studio -> Branch Banking Advisory Agent Assistant -> Tools -> Add a tool -> Model Context Protocol -> 'Branch Banking Advisory MCP' -> create the (no-auth) connection -> Save -> Publish. No API exists for this attach.",
+ "manual_steps_html_file": "MANUAL_STEPS.html",
+ "evaluation_csv_file": "EVALUATION.csv"
+}

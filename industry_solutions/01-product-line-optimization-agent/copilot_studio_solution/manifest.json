@@ -1,0 +1,41 @@
+{
+ "suite": "ProductLineOptimizationAgent",
+ "display": "Product Line Optimization Agent",
+ "solutions": [
+  {
+   "name": "ProductLineOptimizationAgentMcpConnectors",
+   "zip": "ProductLineOptimizationAgentMcpConnectors_1_0_0_1.zip",
+   "kind": "connectors"
+  },
+  {
+   "name": "ProductLineOptimizationAgentMcpAgents",
+   "zip": "ProductLineOptimizationAgentMcpAgents_1_0_0_1.zip",
+   "kind": "agents"
+  }
+ ],
+ "connector": {
+  "schema": "aibast_product-20line_e49412c9",
+  "id": "282100d2-4c26-5f93-aa5d-02195bd0bda3",
+  "display": "Product Line Optimization MCP",
+  "tools": [
+   "get_productlineoptimizationagent",
+   "list_productlineoptimizationagent"
+  ]
+ },
+ "agents": {
+  "parent": "aibast_productlineoptimizationagentassistant_eb4e16",
+  "parent_display": "Product Line Optimization Agent Assistant",
+  "child": null,
+  "child_display": null,
+  "skills": [
+   [
+    "productlineoptimizationagent",
+    "product_line_optimization_agent_agent"
+   ]
+  ]
+ },
+ "skills_mode": "thin",
+ "manual_step": "Copilot Studio -> Product Line Optimization Agent Assistant -> Tools -> Add a tool -> Model Context Protocol -> 'Product Line Optimization MCP' -> create the (no-auth) connection -> Save -> Publish. No API exists for this attach.",
+ "manual_steps_html_file": "MANUAL_STEPS.html",
+ "evaluation_csv_file": "EVALUATION.csv"
+}

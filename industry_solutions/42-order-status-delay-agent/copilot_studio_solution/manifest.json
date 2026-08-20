@@ -1,0 +1,41 @@
+{
+ "suite": "OrderStatusDelayAgent",
+ "display": "Order Status & Delay Agent",
+ "solutions": [
+  {
+   "name": "OrderStatusDelayAgentMcpConnectors",
+   "zip": "OrderStatusDelayAgentMcpConnectors_1_0_0_1.zip",
+   "kind": "connectors"
+  },
+  {
+   "name": "OrderStatusDelayAgentMcpAgents",
+   "zip": "OrderStatusDelayAgentMcpAgents_1_0_0_1.zip",
+   "kind": "agents"
+  }
+ ],
+ "connector": {
+  "schema": "aibast_order-20status_0274d9fa",
+  "id": "b3f67f41-7430-561d-8b33-a7ab7722a4bc",
+  "display": "Order Status & Delay Agent MCP",
+  "tools": [
+   "get_orderstatusdelayagent",
+   "list_orderstatusdelayagent"
+  ]
+ },
+ "agents": {
+  "parent": "aibast_orderstatusdelayagentassistant_2ea424",
+  "parent_display": "Order Status & Delay Agent Assistant",
+  "child": null,
+  "child_display": null,
+  "skills": [
+   [
+    "orderstatusdelayagent",
+    "order_status_delay_agent_agent"
+   ]
+  ]
+ },
+ "skills_mode": "thin",
+ "manual_step": "Copilot Studio -> Order Status & Delay Agent Assistant -> Tools -> Add a tool -> Model Context Protocol -> 'Order Status & Delay Agent MCP' -> create the (no-auth) connection -> Save -> Publish. No API exists for this attach.",
+ "manual_steps_html_file": "MANUAL_STEPS.html",
+ "evaluation_csv_file": "EVALUATION.csv"
+}

@@ -1,0 +1,41 @@
+{
+ "suite": "CustomerSentimentChurnAgent",
+ "display": "Customer Sentiment & Churn Agent",
+ "solutions": [
+  {
+   "name": "CustomerSentimentChurnAgentMcpConnectors",
+   "zip": "CustomerSentimentChurnAgentMcpConnectors_1_0_0_1.zip",
+   "kind": "connectors"
+  },
+  {
+   "name": "CustomerSentimentChurnAgentMcpAgents",
+   "zip": "CustomerSentimentChurnAgentMcpAgents_1_0_0_1.zip",
+   "kind": "agents"
+  }
+ ],
+ "connector": {
+  "schema": "aibast_customer-20sen_b4cb3fd0",
+  "id": "962ed0c1-e7bf-52a1-9d58-3a297eccbf2e",
+  "display": "Customer Sentiment & Churn MCP",
+  "tools": [
+   "get_customersentimentchurnagent",
+   "list_customersentimentchurnagent"
+  ]
+ },
+ "agents": {
+  "parent": "aibast_customersentimentchurnagentassistant_1bfca2",
+  "parent_display": "Customer Sentiment & Churn Agent Assistant",
+  "child": null,
+  "child_display": null,
+  "skills": [
+   [
+    "customersentimentchurnagent",
+    "customer_sentiment_churn_agent_agent"
+   ]
+  ]
+ },
+ "skills_mode": "thin",
+ "manual_step": "Copilot Studio -> Customer Sentiment & Churn Agent Assistant -> Tools -> Add a tool -> Model Context Protocol -> 'Customer Sentiment & Churn MCP' -> create the (no-auth) connection -> Save -> Publish. No API exists for this attach.",
+ "manual_steps_html_file": "MANUAL_STEPS.html",
+ "evaluation_csv_file": "EVALUATION.csv"
+}

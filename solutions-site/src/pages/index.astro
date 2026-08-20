@@ -1,0 +1,19 @@
+---
+import Base from '../layouts/Base.astro';
+import SolutionCard from '../components/SolutionCard.astro';
+import { SOLUTIONS } from '../data/solutions.js';
+const base = import.meta.env.BASE_URL;
+---
+<Base title="Industry Solutions — AI Agent Templates">
+  <section class="hero">
+    <div class="hero__eyebrow">Copilot Studio · one-click industry solutions</div>
+    <h1>Deploy a working industry agent in minutes.</h1>
+    <p>Five production-shaped industry solutions, each a one-click Copilot Studio deploy published by the Microsoft AI Business Applications Specialist Team (AIBAST). Read the one-pager, watch the demo, and import the solution into your own environment — upvote and discuss natively on GitHub.</p>
+  </section>
+  <div class="grid">
+    {SOLUTIONS.map((s) => (
+      <SolutionCard slug={s.slug} title={s.title} kicker={s.kicker} func={s.func}
+        accent={s.accent} icon={s.icon} kpis={s.kpis} href={`${base}${s.slug}/`} />
+    ))}
+  </div>
+</Base>

@@ -1,0 +1,41 @@
+{
+ "suite": "OmnichannelInventoryAgent",
+ "display": "Omnichannel Inventory Agent",
+ "solutions": [
+  {
+   "name": "OmnichannelInventoryAgentMcpConnectors",
+   "zip": "OmnichannelInventoryAgentMcpConnectors_1_0_0_1.zip",
+   "kind": "connectors"
+  },
+  {
+   "name": "OmnichannelInventoryAgentMcpAgents",
+   "zip": "OmnichannelInventoryAgentMcpAgents_1_0_0_1.zip",
+   "kind": "agents"
+  }
+ ],
+ "connector": {
+  "schema": "aibast_omnichannel-20_604b461c",
+  "id": "5580157b-16ee-56fe-8b18-af8395fe5811",
+  "display": "Omnichannel Inventory MCP",
+  "tools": [
+   "get_omnichannelinventoryagent",
+   "list_omnichannelinventoryagent"
+  ]
+ },
+ "agents": {
+  "parent": "aibast_omnichannelinventoryagentassistant_c4df0b",
+  "parent_display": "Omnichannel Inventory Agent Assistant",
+  "child": null,
+  "child_display": null,
+  "skills": [
+   [
+    "omnichannelinventoryagent",
+    "omnichannel_inventory_agent_agent"
+   ]
+  ]
+ },
+ "skills_mode": "thin",
+ "manual_step": "Copilot Studio -> Omnichannel Inventory Agent Assistant -> Tools -> Add a tool -> Model Context Protocol -> 'Omnichannel Inventory MCP' -> create the (no-auth) connection -> Save -> Publish. No API exists for this attach.",
+ "manual_steps_html_file": "MANUAL_STEPS.html",
+ "evaluation_csv_file": "EVALUATION.csv"
+}

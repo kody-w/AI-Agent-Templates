@@ -1,0 +1,41 @@
+{
+ "suite": "ClinicalSummaryAgent",
+ "display": "Clinical Summary Agent",
+ "solutions": [
+  {
+   "name": "ClinicalSummaryAgentMcpConnectors",
+   "zip": "ClinicalSummaryAgentMcpConnectors_1_0_0_1.zip",
+   "kind": "connectors"
+  },
+  {
+   "name": "ClinicalSummaryAgentMcpAgents",
+   "zip": "ClinicalSummaryAgentMcpAgents_1_0_0_1.zip",
+   "kind": "agents"
+  }
+ ],
+ "connector": {
+  "schema": "aibast_clinical-20sum_c9688c65",
+  "id": "5d537b9a-6c01-5e2e-8bc4-13724715fdad",
+  "display": "Clinical Summary Agent MCP",
+  "tools": [
+   "get_clinicalsummaryagent",
+   "list_clinicalsummaryagent"
+  ]
+ },
+ "agents": {
+  "parent": "aibast_clinicalsummaryagentassistant_4ae56e",
+  "parent_display": "Clinical Summary Agent Assistant",
+  "child": null,
+  "child_display": null,
+  "skills": [
+   [
+    "clinicalsummaryagent",
+    "clinical_summary_agent_agent"
+   ]
+  ]
+ },
+ "skills_mode": "thin",
+ "manual_step": "Copilot Studio -> Clinical Summary Agent Assistant -> Tools -> Add a tool -> Model Context Protocol -> 'Clinical Summary Agent MCP' -> create the (no-auth) connection -> Save -> Publish. No API exists for this attach.",
+ "manual_steps_html_file": "MANUAL_STEPS.html",
+ "evaluation_csv_file": "EVALUATION.csv"
+}

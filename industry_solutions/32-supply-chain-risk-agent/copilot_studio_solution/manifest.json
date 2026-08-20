@@ -1,0 +1,41 @@
+{
+ "suite": "SupplyChainRiskAgent",
+ "display": "Supply Chain Risk Agent",
+ "solutions": [
+  {
+   "name": "SupplyChainRiskAgentMcpConnectors",
+   "zip": "SupplyChainRiskAgentMcpConnectors_1_0_0_1.zip",
+   "kind": "connectors"
+  },
+  {
+   "name": "SupplyChainRiskAgentMcpAgents",
+   "zip": "SupplyChainRiskAgentMcpAgents_1_0_0_1.zip",
+   "kind": "agents"
+  }
+ ],
+ "connector": {
+  "schema": "aibast_supply-20chain_719c0f55",
+  "id": "5475df7a-8915-55ad-a48e-51180f6a5da2",
+  "display": "Supply Chain Risk Agent MCP",
+  "tools": [
+   "get_supplychainriskagent",
+   "list_supplychainriskagent"
+  ]
+ },
+ "agents": {
+  "parent": "aibast_supplychainriskagentassistant_9c1449",
+  "parent_display": "Supply Chain Risk Agent Assistant",
+  "child": null,
+  "child_display": null,
+  "skills": [
+   [
+    "supplychainriskagent",
+    "supply_chain_risk_agent_agent"
+   ]
+  ]
+ },
+ "skills_mode": "thin",
+ "manual_step": "Copilot Studio -> Supply Chain Risk Agent Assistant -> Tools -> Add a tool -> Model Context Protocol -> 'Supply Chain Risk Agent MCP' -> create the (no-auth) connection -> Save -> Publish. No API exists for this attach.",
+ "manual_steps_html_file": "MANUAL_STEPS.html",
+ "evaluation_csv_file": "EVALUATION.csv"
+}

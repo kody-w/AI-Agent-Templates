@@ -1,0 +1,41 @@
+{
+ "suite": "PortfolioRebalancingAgent",
+ "display": "Portfolio Rebalancing Agent",
+ "solutions": [
+  {
+   "name": "PortfolioRebalancingAgentMcpConnectors",
+   "zip": "PortfolioRebalancingAgentMcpConnectors_1_0_0_1.zip",
+   "kind": "connectors"
+  },
+  {
+   "name": "PortfolioRebalancingAgentMcpAgents",
+   "zip": "PortfolioRebalancingAgentMcpAgents_1_0_0_1.zip",
+   "kind": "agents"
+  }
+ ],
+ "connector": {
+  "schema": "aibast_portfolio-20re_0491d3ec",
+  "id": "9476313b-9c27-54db-8777-748897d59d3a",
+  "display": "Portfolio Rebalancing MCP",
+  "tools": [
+   "get_portfoliorebalancingagent",
+   "list_portfoliorebalancingagent"
+  ]
+ },
+ "agents": {
+  "parent": "aibast_portfoliorebalancingagentassistant_222b7e",
+  "parent_display": "Portfolio Rebalancing Agent Assistant",
+  "child": null,
+  "child_display": null,
+  "skills": [
+   [
+    "portfoliorebalancingagent",
+    "portfolio_rebalancing_agent_agent"
+   ]
+  ]
+ },
+ "skills_mode": "thin",
+ "manual_step": "Copilot Studio -> Portfolio Rebalancing Agent Assistant -> Tools -> Add a tool -> Model Context Protocol -> 'Portfolio Rebalancing MCP' -> create the (no-auth) connection -> Save -> Publish. No API exists for this attach.",
+ "manual_steps_html_file": "MANUAL_STEPS.html",
+ "evaluation_csv_file": "EVALUATION.csv"
+}

@@ -1,0 +1,41 @@
+{
+ "suite": "CommercialUnderwritingAgent",
+ "display": "Commercial Underwriting Agent",
+ "solutions": [
+  {
+   "name": "CommercialUnderwritingAgentMcpConnectors",
+   "zip": "CommercialUnderwritingAgentMcpConnectors_1_0_0_1.zip",
+   "kind": "connectors"
+  },
+  {
+   "name": "CommercialUnderwritingAgentMcpAgents",
+   "zip": "CommercialUnderwritingAgentMcpAgents_1_0_0_1.zip",
+   "kind": "agents"
+  }
+ ],
+ "connector": {
+  "schema": "aibast_commercial-20u_374d4122",
+  "id": "9d50100a-ff70-506b-978a-6168bdb422fc",
+  "display": "Commercial Underwriting MCP",
+  "tools": [
+   "get_commercialunderwritingagent",
+   "list_commercialunderwritingagent"
+  ]
+ },
+ "agents": {
+  "parent": "aibast_commercialunderwritingagentassistant_253356",
+  "parent_display": "Commercial Underwriting Agent Assistant",
+  "child": null,
+  "child_display": null,
+  "skills": [
+   [
+    "commercialunderwritingagent",
+    "commercial_underwriting_agent_agent"
+   ]
+  ]
+ },
+ "skills_mode": "thin",
+ "manual_step": "Copilot Studio -> Commercial Underwriting Agent Assistant -> Tools -> Add a tool -> Model Context Protocol -> 'Commercial Underwriting MCP' -> create the (no-auth) connection -> Save -> Publish. No API exists for this attach.",
+ "manual_steps_html_file": "MANUAL_STEPS.html",
+ "evaluation_csv_file": "EVALUATION.csv"
+}

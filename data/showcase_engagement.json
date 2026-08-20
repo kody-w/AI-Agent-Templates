@@ -1,0 +1,46 @@
+{
+  "repo": "kody-w/AI-Agent-Templates",
+  "category": "Show and tell",
+  "solutions": {
+    "loan-origination": {
+      "title": "Loan Origination & Credit Decisioning",
+      "discussionId": "D_kwDOPRrhFM4AoBQu",
+      "discussionNumber": 2,
+      "discussionUrl": "https://github.com/kody-w/AI-Agent-Templates/discussions/2",
+      "downloadTallyCommentId": "DC_kwDOPRrhFM4BDyG0",
+      "stack": "financial_services_stacks/loan_origination_assistant_stack"
+    },
+    "payments-operations": {
+      "title": "Payments Operations Excellence",
+      "discussionId": "D_kwDOPRrhFM4AoBQv",
+      "discussionNumber": 3,
+      "discussionUrl": "https://github.com/kody-w/AI-Agent-Templates/discussions/3",
+      "downloadTallyCommentId": "DC_kwDOPRrhFM4BDyG2",
+      "stack": "financial_services_stacks/payments_operations_excellence_stack"
+    },
+    "patient-intake-triage": {
+      "title": "Intelligent Patient Intake & Triage",
+      "discussionId": "D_kwDOPRrhFM4AoBQw",
+      "discussionNumber": 4,
+      "discussionUrl": "https://github.com/kody-w/AI-Agent-Templates/discussions/4",
+      "downloadTallyCommentId": "DC_kwDOPRrhFM4BDyG4",
+      "stack": "healthcare_stacks/patient_intake_stack"
+    },
+    "clinical-documentation": {
+      "title": "Clinical Documentation & Coding",
+      "discussionId": "D_kwDOPRrhFM4AoBQx",
+      "discussionNumber": 5,
+      "discussionUrl": "https://github.com/kody-w/AI-Agent-Templates/discussions/5",
+      "downloadTallyCommentId": "DC_kwDOPRrhFM4BDyG5",
+      "stack": "healthcare_stacks/clinical_notes_summarizer_stack"
+    },
+    "prior-authorization": {
+      "title": "Prior Authorization & Utilization Management",
+      "discussionId": "D_kwDOPRrhFM4AoBQz",
+      "discussionNumber": 6,
+      "discussionUrl": "https://github.com/kody-w/AI-Agent-Templates/discussions/6",
+      "downloadTallyCommentId": "DC_kwDOPRrhFM4BDyG7",
+      "stack": "healthcare_stacks/prior_authorization_stack"
+    }
+  }
+}

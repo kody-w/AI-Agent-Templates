@@ -1,0 +1,41 @@
+{
+ "suite": "UtilityLeakDetectionBillingAgent",
+ "display": "Utility Leak Detection & Billing Agent",
+ "solutions": [
+  {
+   "name": "UtilityLeakDetectionBillingAgentMcpConnectors",
+   "zip": "UtilityLeakDetectionBillingAgentMcpConnectors_1_0_0_1.zip",
+   "kind": "connectors"
+  },
+  {
+   "name": "UtilityLeakDetectionBillingAgentMcpAgents",
+   "zip": "UtilityLeakDetectionBillingAgentMcpAgents_1_0_0_1.zip",
+   "kind": "agents"
+  }
+ ],
+ "connector": {
+  "schema": "aibast_utility-20leak_8925d670",
+  "id": "12e86856-c21f-5f44-b248-44bb1ca74f66",
+  "display": "Utility Leak Detection & MCP",
+  "tools": [
+   "get_utilityleakdetectionbillingagent",
+   "list_utilityleakdetectionbillingagent"
+  ]
+ },
+ "agents": {
+  "parent": "aibast_utilityleakdetectionbillingagentassistant_22e721",
+  "parent_display": "Utility Leak Detection & Billing Agent Assistant",
+  "child": null,
+  "child_display": null,
+  "skills": [
+   [
+    "utilityleakdetectionbillingagent",
+    "utility_leak_detection_billing_agent_agent"
+   ]
+  ]
+ },
+ "skills_mode": "thin",
+ "manual_step": "Copilot Studio -> Utility Leak Detection & Billing Agent Assistant -> Tools -> Add a tool -> Model Context Protocol -> 'Utility Leak Detection & MCP' -> create the (no-auth) connection -> Save -> Publish. No API exists for this attach.",
+ "manual_steps_html_file": "MANUAL_STEPS.html",
+ "evaluation_csv_file": "EVALUATION.csv"
+}

@@ -1,0 +1,184 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Industry Solutions Showcase — AI Agent Templates</title>
+<meta name="description" content="One-click Copilot Studio industry solutions (AIBAST) — one-pagers, demos, and GitHub-tracked engagement.">
+<style>
+:root{--ink:#171717;--muted:#5b5b5b;--faint:#8a8a8a;--line:#e5e5e5;--gold:#b8912d;--blue:#0067b8;--bg:#fff;--surface:#f6f7f9}
+@media(prefers-color-scheme:dark){:root{--ink:#e9eaec;--muted:#a9adb3;--faint:#7d8288;--line:#2a2d31;--bg:#16181c;--surface:#1e2126}}
+*{box-sizing:border-box}
+body{margin:0;font-family:'Segoe UI',system-ui,Arial,sans-serif;color:var(--ink);background:var(--surface)}
+a{color:var(--blue);text-decoration:none}a:hover{text-decoration:underline}
+header{background:var(--bg);border-bottom:1px solid var(--line);padding:14px 28px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:5}
+.brand{display:flex;align-items:center;gap:10px;font-weight:700;font-size:1.05rem}
+.brand .dot{width:26px;height:26px;border-radius:7px;background:linear-gradient(135deg,#0067b8,#b8912d)}
+.ghbtn{border:1px solid var(--line);background:var(--bg);color:var(--ink);border-radius:8px;padding:7px 13px;font-size:.86rem;font-weight:600;cursor:pointer;display:inline-flex;gap:7px;align-items:center}
+.ghbtn svg{width:17px;height:17px;fill:currentColor}
+.userpill{display:inline-flex;align-items:center;gap:8px;font-size:.85rem}
+.userpill img{width:24px;height:24px;border-radius:50%}
+.hero{max-width:1180px;margin:0 auto;padding:36px 28px 8px}
+.hero h1{font-size:30px;margin:0 0 8px}
+.hero p{color:var(--muted);font-size:15px;max-width:760px;line-height:1.5;margin:0}
+.note{max-width:1180px;margin:14px auto 0;padding:0 28px}
+.note .box{background:var(--bg);border:1px solid var(--line);border-left:3px solid var(--blue);border-radius:8px;padding:11px 15px;font-size:13px;color:var(--muted)}
+.grid{max-width:1180px;margin:22px auto 60px;padding:0 28px;display:grid;grid-template-columns:repeat(auto-fill,minmax(520px,1fr));gap:20px}
+.card{background:var(--bg);border:1px solid var(--line);border-radius:12px;overflow:hidden;display:flex;flex-direction:column}
+.ctop{height:5px;background:linear-gradient(90deg,#0067b8,#40a3e6 60%,#b8912d)}
+.cbody{padding:20px 22px 8px}
+.kicker{font-size:11.5px;font-weight:700;letter-spacing:.1em;color:var(--blue)}
+.card h2{font-size:20px;margin:5px 0 4px}
+.func{font-size:13px;color:var(--muted);margin-bottom:12px}
+.kpis{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:14px}
+.kpi{background:var(--surface);border:1px solid var(--line);border-radius:6px;padding:6px 10px;font-size:12px}
+.kpi b{color:var(--blue)}
+.video{margin:6px 0 4px;border:1px dashed var(--line);border-radius:9px;background:var(--surface);padding:16px;text-align:center;color:var(--faint);font-size:12.5px;cursor:pointer}
+.links{display:flex;gap:14px;flex-wrap:wrap;font-size:13px;margin:12px 0 2px}
+.bar{border-top:1px solid var(--line);margin-top:12px;padding:12px 22px;display:flex;gap:8px;flex-wrap:wrap;align-items:center;background:var(--surface)}
+.act{border:1px solid var(--line);background:var(--bg);color:var(--ink);border-radius:8px;padding:8px 12px;font-size:13px;font-weight:600;cursor:pointer;display:inline-flex;gap:6px;align-items:center;text-decoration:none}
+.act.primary{background:var(--blue);border-color:var(--blue);color:#fff}
+.act.on{border-color:var(--gold);color:var(--gold)}
+.act .n{color:var(--faint);font-weight:500}
+.act.primary .n{color:#dbeafe}
+.foot{max-width:1180px;margin:0 auto;padding:0 28px 50px;color:var(--faint);font-size:12.5px}
+#toast{position:fixed;bottom:22px;left:50%;transform:translateX(-50%);background:#222;color:#fff;padding:10px 18px;border-radius:8px;font-size:13.5px;opacity:0;transition:opacity .2s;pointer-events:none;z-index:20}
+#toast.show{opacity:1}
+@media(max-width:600px){.grid{grid-template-columns:1fr;padding:0 16px}.hero{padding:24px 16px 4px}}
+</style></head><body>
+<header>
+  <div class="brand"><span class="dot"></span>AI Agent Templates — Industry Solutions</div>
+  <div id="authslot"></div>
+</header>
+<div class="hero">
+  <h1>Industry Solutions Showcase</h1>
+  <p>Five production-shaped industry solutions, each a one-click <b>Copilot Studio</b> deploy published by the Microsoft AI Business Applications Specialist Team (AIBAST). Read the one-pager, watch the demo, and deploy it into your own environment — sign in with GitHub to download, upvote, and join the discussion.</p>
+</div>
+<div class="note"><div class="box" id="authnote">Sign in with your public GitHub account to download solutions and register an upvote or install — engagement is tracked per solution on GitHub Discussions.</div></div>
+<div class="grid" id="grid"></div>
+<div class="foot">Publisher: <b>Microsoft AI Business Applications Specialist Team (AIBAST)</b> · prefix <code>aibast</code>. Synthetic data — no PII. Engagement (upvotes · installs · discussion) is stored natively on <a href="https://github.com/kody-w/AI-Agent-Templates/discussions">GitHub Discussions</a>; a 👍 = one unique user.</div>
+<div id="toast"></div>
+<script>
+const AUTH_CLIENT_ID='Ov23liuueQBIUggrH8NG';
+const AUTH_WORKER_URL='https://rappterbook-auth.kwildfeuer.workers.dev';
+const REPO='kody-w/AI-Agent-Templates';
+// GitHub-native downloads: each solution is a one-click bundle published as a
+// Release asset. Direct download, no login, and GitHub counts downloads natively.
+const RELEASE_TAG='industry-solutions-v1.0.0';
+const BUNDLE={
+ 'loan-origination':'AIBAST-Loan-Origination-Credit-Decisioning-CopilotStudio.zip',
+ 'payments-operations':'AIBAST-Payments-Operations-Excellence-CopilotStudio.zip',
+ 'patient-intake-triage':'AIBAST-Patient-Intake-Triage-CopilotStudio.zip',
+ 'clinical-documentation':'AIBAST-Clinical-Documentation-Coding-CopilotStudio.zip',
+ 'prior-authorization':'AIBAST-Prior-Authorization-UM-CopilotStudio.zip',
+};
+const relUrl=s=>`https://github.com/${REPO}/releases/download/${RELEASE_TAG}/${BUNDLE[s]}`;
+let ghToken=localStorage.getItem('rb_access_token')||localStorage.getItem('gh_token');
+let ghUser=null, ENG=null, DLCOUNT={};
+
+// ---- the five solutions (summary; full detail in each ONE_PAGER.html) ----
+const SOL=[
+ {slug:'loan-origination',kicker:'FINANCIAL SERVICES',title:'Loan Origination & Credit Decisioning',func:'Retail Lending & Credit Risk',
+  kpis:[['-50%','time to decision'],['+15%','approval within appetite'],['-30%','manual underwriting']],
+  stack:'agent_stacks/financial_services_stacks/loan_origination_assistant_stack'},
+ {slug:'payments-operations',kicker:'FINANCIAL SERVICES',title:'Payments Operations Excellence',func:'Payments Operations',
+  kpis:[['+12pt','STP rate'],['-40%','exception cost'],['-50%','query resolution']],
+  stack:'agent_stacks/financial_services_stacks/payments_operations_excellence_stack'},
+ {slug:'patient-intake-triage',kicker:'PATIENT EXPERIENCE',title:'Intelligent Patient Intake & Triage',func:'Patient Access & Admissions',
+  kpis:[['-35%','intake wait time'],['+25%','triage accuracy'],['+20%','patient satisfaction']],
+  stack:'agent_stacks/healthcare_stacks/patient_intake_stack'},
+ {slug:'clinical-documentation',kicker:'CLINICAL OPERATIONS',title:'Clinical Documentation & Coding',func:'Clinical Admin & Medical Coding',
+  kpis:[['-50%','documentation time'],['+15%','coding accuracy'],['+1.5','appts/clinician/day']],
+  stack:'agent_stacks/healthcare_stacks/clinical_notes_summarizer_stack'},
+ {slug:'prior-authorization',kicker:'CLINICAL OPERATIONS',title:'Prior Authorization & Utilization Management',func:'Utilization Management & Revenue Integrity',
+  kpis:[['-60%','auth turnaround'],['-25%','denial rate'],['+30%','UM productivity']],
+  stack:'agent_stacks/healthcare_stacks/prior_authorization_stack'},
+];
+
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+function toast(m){const t=document.getElementById('toast');t.textContent=m;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),2600);}
+
+// ---- auth (reuses RAPPterBook OAuth, shared token) ----
+async function login(){const r=location.origin+location.pathname;location.href=`https://github.com/login/oauth/authorize?client_id=${AUTH_CLIENT_ID}&scope=public_repo&redirect_uri=${encodeURIComponent(r)}`;}
+function logout(){ghToken=null;ghUser=null;localStorage.removeItem('rb_access_token');localStorage.removeItem('gh_token');renderAuth();render();}
+async function handleCallback(){const p=new URLSearchParams(location.search),code=p.get('code');if(!code)return;history.replaceState({},'',location.href.split('?')[0]+(location.hash||''));try{const resp=await fetch(AUTH_WORKER_URL+'/api/auth/token',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({code})});const d=await resp.json();if(d.access_token){ghToken=d.access_token;localStorage.setItem('rb_access_token',ghToken);toast('Signed in');}else toast('Auth failed: '+(d.error||'unknown'));}catch(e){toast('Sign-in failed. Try again.');}}
+async function checkAuth(){if(!ghToken)return;try{const r=await fetch('https://api.github.com/user',{headers:{Authorization:`Bearer ${ghToken}`}});if(r.ok){ghUser=await r.json();}else{ghToken=null;localStorage.removeItem('rb_access_token');localStorage.removeItem('gh_token');}}catch(e){}}
+function renderAuth(){const s=document.getElementById('authslot');const GH='<svg viewBox="0 0 16 16"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>';
+  if(ghUser)s.innerHTML=`<span class="userpill"><img src="${esc(ghUser.avatar_url)}" alt=""> ${esc(ghUser.login)} <button class="ghbtn" onclick="logout()" style="padding:4px 9px">Sign out</button></span>`;
+  else s.innerHTML=`<button class="ghbtn" onclick="login()">${GH} Sign in with GitHub</button>`;
+  document.getElementById('authnote').style.display=ghUser?'none':'';}
+
+// ---- GitHub GraphQL ----
+async function gql(q,v){const r=await fetch('https://api.github.com/graphql',{method:'POST',headers:{Authorization:`Bearer ${ghToken}`,'Content-Type':'application/json'},body:JSON.stringify({query:q,variables:v})});const d=await r.json();if(d.errors)throw new Error(d.errors[0].message);return d.data;}
+const ADD_R='mutation($id:ID!){addReaction(input:{subjectId:$id,content:THUMBS_UP}){reaction{id}}}';
+const DEL_R='mutation($id:ID!){removeReaction(input:{subjectId:$id,content:THUMBS_UP}){reaction{id}}}';
+
+// ---- live counts per solution (needs a token; GraphQL reactions are auth-only) ----
+async function hydrate(){
+  if(!ghToken||!ENG)return;
+  for(const s of SOL){
+    const e=ENG.solutions[s.slug];if(!e)continue;
+    try{
+      const d=await gql(`query($d:ID!,$c:ID!){disc:node(id:$d){...on Discussion{reactionGroups{content viewerHasReacted reactors{totalCount}} comments{totalCount}}} tally:node(id:$c){...on DiscussionComment{reactionGroups{content viewerHasReacted reactors{totalCount}}}}}`,{d:e.discussionId,c:e.downloadTallyCommentId});
+      const up=(d.disc.reactionGroups||[]).find(g=>g.content==='THUMBS_UP');
+      const dl=(d.tally.reactionGroups||[]).find(g=>g.content==='THUMBS_UP');
+      e._up=up?up.reactors.totalCount:0; e._upMine=!!(up&&up.viewerHasReacted);
+      e._dl=dl?dl.reactors.totalCount:0; e._dlMine=!!(dl&&dl.viewerHasReacted);
+      e._comments=d.disc.comments?d.disc.comments.totalCount:0;
+    }catch(err){}
+  }
+  render();
+}
+
+async function upvote(slug){
+  if(!ghUser){login();return;}
+  const e=ENG.solutions[slug];const mine=!!e._upMine;
+  try{await gql(mine?DEL_R:ADD_R,{id:e.discussionId});e._upMine=!mine;e._up=(e._up||0)+(mine?-1:1);render();toast(mine?'Upvote withdrawn':'Upvoted on GitHub');}
+  catch(err){toast('Vote failed: '+(err.message||'error'));}
+}
+async function download(slug,kind){
+  const e=ENG.solutions[slug];const s=SOL.find(x=>x.slug===slug);
+  if(!ghUser){toast('Sign in with GitHub to download');login();return;}
+  // log a unique install (👍 the tally comment) — idempotent per user
+  try{if(!e._dlMine){await gql(ADD_R,{id:e.downloadTallyCommentId});e._dlMine=true;e._dl=(e._dl||0)+1;render();}}catch(err){}
+  const url = kind==='zip'
+    ? `https://github.com/${REPO}/tree/main/${s.stack}/copilot_studio_solution`
+    : `https://github.com/${REPO}/tree/main/${s.stack}/copilot_studio_solution/source_agents`;
+  window.open(url,'_blank','noopener');
+  toast('Opening '+(kind==='zip'?'the one-click solution bundle':'the agent.py source'));
+}
+function playVideo(slug){
+  // Phase 3: real MP4 + play-count telemetry. For now, register intent.
+  toast('Demo video coming soon — it will play here and log a view.');
+}
+
+function render(){
+  const g=document.getElementById('grid');
+  g.innerHTML=SOL.map(s=>{
+    const e=(ENG&&ENG.solutions[s.slug])||{};
+    const up=e._up!=null?e._up:'—', dl=e._dl!=null?e._dl:'', cm=e._comments!=null?e._comments:'';
+    const durl=e.discussionUrl||`https://github.com/${REPO}/discussions`;
+    return `<div class="card"><div class="ctop"></div><div class="cbody">
+      <div class="kicker">${esc(s.kicker)}</div>
+      <h2>${esc(s.title)}</h2>
+      <div class="func">${esc(s.func)}</div>
+      <div class="kpis">${s.kpis.map(k=>`<span class="kpi"><b>${esc(k[0])}</b> ${esc(k[1])}</span>`).join('')}</div>
+      <div class="video" onclick="playVideo('${s.slug}')">▶ Demo video — coming soon (RAPP video maker). Click to be notified.</div>
+      <div class="links"><a href="${s.stack}/ONE_PAGER.html" target="_blank">📄 Full one-pager</a>
+        <a href="${s.stack}/copilot_studio_solution/README.md" target="_blank">📦 Import guide</a></div>
+    </div>
+    <div class="bar">
+      <a class="act primary" onclick="download('${s.slug}','zip');return false;" href="#">⬇ One-click solution ${dl!==''?`<span class="n">· ${dl} installs</span>`:''}</a>
+      <a class="act" onclick="download('${s.slug}','agentpy');return false;" href="#">⬇ agent.py</a>
+      <button class="act ${e._upMine?'on':''}" onclick="upvote('${s.slug}')">👍 Upvote <span class="n" >${up}</span></button>
+      <a class="act" href="${esc(durl)}" target="_blank">💬 Discuss${cm!==''&&cm>0?` <span class="n">${cm}</span>`:''}</a>
+    </div></div>`;
+  }).join('');
+}
+
+(async function init(){
+  await handleCallback();
+  await checkAuth();
+  renderAuth();
+  try{ENG=await (await fetch('./data/showcase_engagement.json',{cache:'no-store'})).json();}catch(e){ENG={solutions:{}};}
+  render();
+  hydrate();
+})();
+</script></body></html>

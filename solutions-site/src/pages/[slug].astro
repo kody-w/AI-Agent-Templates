@@ -1,0 +1,94 @@
+---
+import Base from '../layouts/Base.astro';
+import { SOLUTIONS, REPO_URL } from '../data/solutions.js';
+
+export function getStaticPaths() {
+  return SOLUTIONS.map((s) => ({ params: { slug: s.slug }, props: { s } }));
+}
+const { s } = Astro.props;
+const base = import.meta.env.BASE_URL;
+const discUrl = `${REPO_URL}/discussions/${s.discussion}`;
+const bundleUrl = `${REPO_URL}/tree/main/${s.stack}/copilot_studio_solution`;
+const agentsUrl = `${REPO_URL}/tree/main/${s.stack}/copilot_studio_solution/source_agents`;
+---
+<Base title={`${s.title} — AI Agent Templates`} description={s.benefit}>
+  <a class="back" href={base}>← All solutions</a>
+
+  <header class="head">
+    <div class="hero__eyebrow">{s.kicker}</div>
+    <h1>{s.title}</h1>
+  </header>
+
+  <section class="cols">
+    <div>
+      <div class="section-label">Business function</div>
+      <p class="func">{s.func}</p>
+    </div>
+    <div class="span2">
+      <div class="section-label">Business benefit</div>
+      <p class="benefit">{s.benefit}</p>
+    </div>
+  </section>
+
+  <div class="section-label" style="margin-top:26px">Indicative KPIs & value drivers</div>
+  <div class="kpis">
+    {s.kpis.map((k) => <div class="kpi"><b>{k[0]}</b><span>{k[1]}</span></div>)}
+  </div>
+
+  <div class="video" data-play={s.slug}>▶ Demo video — coming soon. Playback logs a Clarity “video_play” event.</div>
+
+  <div class="section-label" style="margin-top:30px">Agentic process flow — 8 steps</div>
+  <div class="steps">
+    {s.steps.map((st, i) => (
+      <div class="step">
+        <span class="num">{i + 1}</span>
+        <div>
+          <div class="st">{st[0]}</div>
+          <p class="sd">{st[1]}</p>
+          <div class="chips">{st[2].map((c) => <span class="chip">{c}</span>)}</div>
+        </div>
+      </div>
+    ))}
+  </div>
+
+  <div class="bar">
+    <a class="btn btn--primary" href={bundleUrl} target="_blank" rel="noopener" data-dl="bundle" data-slug={s.slug}>⬇ One-click solution</a>
+    <a class="btn" href={agentsUrl} target="_blank" rel="noopener" data-dl="agentpy" data-slug={s.slug}>⬇ agent.py source</a>
+    <a class="btn" href={discUrl} target="_blank" rel="noopener">👍 Upvote on GitHub</a>
+    <a class="btn" href={discUrl} target="_blank" rel="noopener">💬 Discuss</a>
+  </div>
+  <p class="foot-note">Upvote = a 👍 reaction on this solution’s GitHub Discussion; comment to discuss. Downloads open the solution in GitHub and log a Clarity event. Publisher: <b>Microsoft AI Business Applications Specialist Team (AIBAST)</b> · prefix <code>aibast</code>.</p>
+
+  <script is:inline>
+    // github-native + Clarity: fire product telemetry on download / video-play.
+    function track(name, props) { try { window.clarity && window.clarity('event', name); } catch (e) {} }
+    document.querySelectorAll('[data-dl]').forEach(function (a) {
+      a.addEventListener('click', function () { track('download_' + a.getAttribute('data-dl')); });
+    });
+    var v = document.querySelector('[data-play]');
+    if (v) v.addEventListener('click', function () { track('video_play'); v.textContent = '▶ Demo video coming soon — you’ll be able to play it here.'; });
+  </script>
+</Base>
+
+<style>
+  .back { display: inline-block; margin: 24px 0 6px; font-size: .86rem; font-weight: 600; color: var(--c-text-2); }
+  .head h1 { font-size: 34px; line-height: 1.12; margin-top: 6px; letter-spacing: -.01em; }
+  .cols { display: grid; grid-template-columns: 1fr 2fr; gap: 40px; margin-top: 22px; }
+  .cols .span2 { grid-column: auto; }
+  .func { font-size: 18px; font-weight: 600; margin-top: 6px; }
+  .benefit { font-size: 16px; color: var(--c-text-2); line-height: 1.55; margin-top: 6px; }
+  .kpis { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; margin-top: 12px; }
+  .kpi { border: 1px solid var(--c-border); border-radius: 10px; padding: 14px 16px; background: var(--c-surface); }
+  .kpi b { display: block; font-size: 25px; color: var(--c-primary); }
+  .kpi span { font-size: 12.5px; color: var(--c-text-2); display: block; margin-top: 4px; }
+  .video { margin-top: 26px; border: 1px dashed var(--c-border); border-radius: 11px; background: var(--c-surface-2); padding: 20px; text-align: center; color: var(--c-text-muted); font-size: 13.5px; cursor: pointer; }
+  .steps { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; margin-top: 12px; }
+  .step { display: flex; gap: 12px; border: 1px solid var(--c-border); border-radius: 10px; padding: 16px 18px; background: var(--c-surface); }
+  .num { flex: 0 0 auto; width: 28px; height: 28px; border: 2px solid var(--c-orange); border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; font-weight: 700; font-size: 13px; }
+  .st { font-weight: 700; font-size: 15.5px; }
+  .sd { font-size: 13px; color: var(--c-text-2); line-height: 1.45; margin: 6px 0 10px; }
+  .chips { display: flex; flex-wrap: wrap; gap: 7px; }
+  .bar { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 28px; }
+  .foot-note { margin-top: 14px; font-size: 12.5px; color: var(--c-text-muted); }
+  @media (max-width: 640px) { .cols { grid-template-columns: 1fr; gap: 18px; } .kpis { grid-template-columns: repeat(2, 1fr); } .steps { grid-template-columns: 1fr; } }
+</style>

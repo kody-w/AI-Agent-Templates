@@ -1,0 +1,41 @@
+{
+ "suite": "ContractReviewAgent",
+ "display": "Contract Review Agent",
+ "solutions": [
+  {
+   "name": "ContractReviewAgentMcpConnectors",
+   "zip": "ContractReviewAgentMcpConnectors_1_0_0_1.zip",
+   "kind": "connectors"
+  },
+  {
+   "name": "ContractReviewAgentMcpAgents",
+   "zip": "ContractReviewAgentMcpAgents_1_0_0_1.zip",
+   "kind": "agents"
+  }
+ ],
+ "connector": {
+  "schema": "aibast_contract-20rev_085d5d6f",
+  "id": "b562f8ba-dd03-5da0-a435-4cdf93f9ee31",
+  "display": "Contract Review Agent Data MCP",
+  "tools": [
+   "get_contractreviewagent",
+   "list_contractreviewagent"
+  ]
+ },
+ "agents": {
+  "parent": "aibast_contractreviewagentassistant_5188d5",
+  "parent_display": "Contract Review Agent Assistant",
+  "child": null,
+  "child_display": null,
+  "skills": [
+   [
+    "contractreviewagent",
+    "contract_review_agent_agent"
+   ]
+  ]
+ },
+ "skills_mode": "thin",
+ "manual_step": "Copilot Studio -> Contract Review Agent Assistant -> Tools -> Add a tool -> Model Context Protocol -> 'Contract Review Agent Data MCP' -> create the (no-auth) connection -> Save -> Publish. No API exists for this attach.",
+ "manual_steps_html_file": "MANUAL_STEPS.html",
+ "evaluation_csv_file": "EVALUATION.csv"
+}

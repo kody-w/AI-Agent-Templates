@@ -1,0 +1,41 @@
+{
+ "suite": "BuildingPermitReviewAgent",
+ "display": "Building Permit Review Agent",
+ "solutions": [
+  {
+   "name": "BuildingPermitReviewAgentMcpConnectors",
+   "zip": "BuildingPermitReviewAgentMcpConnectors_1_0_0_1.zip",
+   "kind": "connectors"
+  },
+  {
+   "name": "BuildingPermitReviewAgentMcpAgents",
+   "zip": "BuildingPermitReviewAgentMcpAgents_1_0_0_1.zip",
+   "kind": "agents"
+  }
+ ],
+ "connector": {
+  "schema": "aibast_building-20per_23c92127",
+  "id": "808095df-9179-5b1c-b1f1-11ae1f0af163",
+  "display": "Building Permit Review MCP",
+  "tools": [
+   "get_buildingpermitreviewagent",
+   "list_buildingpermitreviewagent"
+  ]
+ },
+ "agents": {
+  "parent": "aibast_buildingpermitreviewagentassistant_275c36",
+  "parent_display": "Building Permit Review Agent Assistant",
+  "child": null,
+  "child_display": null,
+  "skills": [
+   [
+    "buildingpermitreviewagent",
+    "building_permit_review_agent_agent"
+   ]
+  ]
+ },
+ "skills_mode": "thin",
+ "manual_step": "Copilot Studio -> Building Permit Review Agent Assistant -> Tools -> Add a tool -> Model Context Protocol -> 'Building Permit Review MCP' -> create the (no-auth) connection -> Save -> Publish. No API exists for this attach.",
+ "manual_steps_html_file": "MANUAL_STEPS.html",
+ "evaluation_csv_file": "EVALUATION.csv"
+}

@@ -1,0 +1,59 @@
+{
+ "suite": "PaymentsOperations",
+ "display": "Payments Operations Excellence",
+ "solutions": [
+  {
+   "name": "PaymentsOperationsMcpConnectors",
+   "zip": "PaymentsOperationsMcpConnectors_1_0_0_1.zip",
+   "kind": "connectors"
+  },
+  {
+   "name": "PaymentsOperationsMcpAgents",
+   "zip": "PaymentsOperationsMcpAgents_1_0_0_1.zip",
+   "kind": "agents"
+  }
+ ],
+ "connector": {
+  "schema": "aibast_payments-20ope_f1d8c6a9",
+  "id": "69f3058a-dc16-5a10-9a3b-0f83fb55e85e",
+  "display": "Payments Operations MCP",
+  "tools": [
+   "get_correspondentfraudmonitor",
+   "get_paymentexceptionrecon",
+   "get_paymentingestionscreening",
+   "get_paymentqueryanalytics",
+   "list_correspondentfraudmonitor",
+   "list_paymentexceptionrecon",
+   "list_paymentingestionscreening",
+   "list_paymentqueryanalytics"
+  ]
+ },
+ "agents": {
+  "parent": "aibast_paymentsoperationsexcellenceassistant_fad18a",
+  "parent_display": "Payments Operations Excellence Assistant",
+  "child": "aibast_paymentexceptionreconagent_a9ebbf",
+  "child_display": "Payment Exception Recon Agent",
+  "skills": [
+   [
+    "correspondentfraudmonitor",
+    "correspondent_fraud_agent"
+   ],
+   [
+    "paymentexceptionrecon",
+    "payment_exception_recon_agent"
+   ],
+   [
+    "paymentingestionscreening",
+    "payment_ingestion_screening_agent"
+   ],
+   [
+    "paymentqueryanalytics",
+    "payment_query_analytics_agent"
+   ]
+  ]
+ },
+ "skills_mode": "thin",
+ "manual_step": "Copilot Studio -> Payments Operations Excellence Assistant -> Tools -> Add a tool -> Model Context Protocol -> 'Payments Operations MCP' -> create the (no-auth) connection -> Save -> Publish. No API exists for this attach.",
+ "manual_steps_html_file": "MANUAL_STEPS.html",
+ "evaluation_csv_file": "EVALUATION.csv"
+}

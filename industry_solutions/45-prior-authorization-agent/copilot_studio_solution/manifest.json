@@ -1,0 +1,41 @@
+{
+ "suite": "PriorAuthorizationAgent",
+ "display": "Prior Authorization Agent",
+ "solutions": [
+  {
+   "name": "PriorAuthorizationAgentMcpConnectors",
+   "zip": "PriorAuthorizationAgentMcpConnectors_1_0_0_1.zip",
+   "kind": "connectors"
+  },
+  {
+   "name": "PriorAuthorizationAgentMcpAgents",
+   "zip": "PriorAuthorizationAgentMcpAgents_1_0_0_1.zip",
+   "kind": "agents"
+  }
+ ],
+ "connector": {
+  "schema": "aibast_prior-20author_46f0a3a3",
+  "id": "e6ddaccf-ceb1-5737-8ccf-4e9df6a22ac8",
+  "display": "Prior Authorization Agent MCP",
+  "tools": [
+   "get_priorauthorizationagent",
+   "list_priorauthorizationagent"
+  ]
+ },
+ "agents": {
+  "parent": "aibast_priorauthorizationagentassistant_d52685",
+  "parent_display": "Prior Authorization Agent Assistant",
+  "child": null,
+  "child_display": null,
+  "skills": [
+   [
+    "priorauthorizationagent",
+    "prior_authorization_agent_agent"
+   ]
+  ]
+ },
+ "skills_mode": "thin",
+ "manual_step": "Copilot Studio -> Prior Authorization Agent Assistant -> Tools -> Add a tool -> Model Context Protocol -> 'Prior Authorization Agent MCP' -> create the (no-auth) connection -> Save -> Publish. No API exists for this attach.",
+ "manual_steps_html_file": "MANUAL_STEPS.html",
+ "evaluation_csv_file": "EVALUATION.csv"
+}

@@ -1,0 +1,59 @@
+{
+ "suite": "ClinicalDocumentation",
+ "display": "Clinical Documentation & Coding",
+ "solutions": [
+  {
+   "name": "ClinicalDocumentationMcpConnectors",
+   "zip": "ClinicalDocumentationMcpConnectors_1_0_0_1.zip",
+   "kind": "connectors"
+  },
+  {
+   "name": "ClinicalDocumentationMcpAgents",
+   "zip": "ClinicalDocumentationMcpAgents_1_0_0_1.zip",
+   "kind": "agents"
+  }
+ ],
+ "connector": {
+  "schema": "aibast_clinical-20doc_9b753d48",
+  "id": "bd586a6a-da05-5bd3-989e-dcfd42e3744c",
+  "display": "Clinical Documentation & MCP",
+  "tools": [
+   "get_billingaudittrail",
+   "get_encountertranscription",
+   "get_reviewwriteback",
+   "get_soapcodingsuggestion",
+   "list_billingaudittrail",
+   "list_encountertranscription",
+   "list_reviewwriteback",
+   "list_soapcodingsuggestion"
+  ]
+ },
+ "agents": {
+  "parent": "aibast_clinicaldocumentationcodingassistant_c3f60c",
+  "parent_display": "Clinical Documentation & Coding Assistant",
+  "child": "aibast_encountertranscriptionagent_0421ce",
+  "child_display": "Encounter Transcription Agent",
+  "skills": [
+   [
+    "billingaudittrail",
+    "billing_audit_agent"
+   ],
+   [
+    "encountertranscription",
+    "encounter_transcription_agent"
+   ],
+   [
+    "reviewwriteback",
+    "review_writeback_agent"
+   ],
+   [
+    "soapcodingsuggestion",
+    "soap_coding_agent"
+   ]
+  ]
+ },
+ "skills_mode": "thin",
+ "manual_step": "Copilot Studio -> Clinical Documentation & Coding Assistant -> Tools -> Add a tool -> Model Context Protocol -> 'Clinical Documentation & MCP' -> create the (no-auth) connection -> Save -> Publish. No API exists for this attach.",
+ "manual_steps_html_file": "MANUAL_STEPS.html",
+ "evaluation_csv_file": "EVALUATION.csv"
+}

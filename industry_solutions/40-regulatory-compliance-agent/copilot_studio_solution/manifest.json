@@ -1,0 +1,41 @@
+{
+ "suite": "RegulatoryComplianceAgent",
+ "display": "Regulatory Compliance Agent",
+ "solutions": [
+  {
+   "name": "RegulatoryComplianceAgentMcpConnectors",
+   "zip": "RegulatoryComplianceAgentMcpConnectors_1_0_0_1.zip",
+   "kind": "connectors"
+  },
+  {
+   "name": "RegulatoryComplianceAgentMcpAgents",
+   "zip": "RegulatoryComplianceAgentMcpAgents_1_0_0_1.zip",
+   "kind": "agents"
+  }
+ ],
+ "connector": {
+  "schema": "aibast_regulatory-20c_e44905aa",
+  "id": "b920d93b-c94d-532e-bf9b-ce809e96079e",
+  "display": "Regulatory Compliance MCP",
+  "tools": [
+   "get_regulatorycomplianceagent",
+   "list_regulatorycomplianceagent"
+  ]
+ },
+ "agents": {
+  "parent": "aibast_regulatorycomplianceagentassistant_3e8bef",
+  "parent_display": "Regulatory Compliance Agent Assistant",
+  "child": null,
+  "child_display": null,
+  "skills": [
+   [
+    "regulatorycomplianceagent",
+    "regulatory_compliance_agent_agent"
+   ]
+  ]
+ },
+ "skills_mode": "thin",
+ "manual_step": "Copilot Studio -> Regulatory Compliance Agent Assistant -> Tools -> Add a tool -> Model Context Protocol -> 'Regulatory Compliance MCP' -> create the (no-auth) connection -> Save -> Publish. No API exists for this attach.",
+ "manual_steps_html_file": "MANUAL_STEPS.html",
+ "evaluation_csv_file": "EVALUATION.csv"
+}

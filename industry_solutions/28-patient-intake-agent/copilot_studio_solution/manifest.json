@@ -1,0 +1,41 @@
+{
+ "suite": "PatientIntakeAgent",
+ "display": "Patient Intake Agent",
+ "solutions": [
+  {
+   "name": "PatientIntakeAgentMcpConnectors",
+   "zip": "PatientIntakeAgentMcpConnectors_1_0_0_1.zip",
+   "kind": "connectors"
+  },
+  {
+   "name": "PatientIntakeAgentMcpAgents",
+   "zip": "PatientIntakeAgentMcpAgents_1_0_0_1.zip",
+   "kind": "agents"
+  }
+ ],
+ "connector": {
+  "schema": "aibast_patient-20inta_791a4c60",
+  "id": "57ea1db2-d6ca-5343-b5ef-2d91663f97fa",
+  "display": "Patient Intake Agent Data MCP",
+  "tools": [
+   "get_patientintakeagent",
+   "list_patientintakeagent"
+  ]
+ },
+ "agents": {
+  "parent": "aibast_patientintakeagentassistant_c81dda",
+  "parent_display": "Patient Intake Agent Assistant",
+  "child": null,
+  "child_display": null,
+  "skills": [
+   [
+    "patientintakeagent",
+    "patient_intake_agent_agent"
+   ]
+  ]
+ },
+ "skills_mode": "thin",
+ "manual_step": "Copilot Studio -> Patient Intake Agent Assistant -> Tools -> Add a tool -> Model Context Protocol -> 'Patient Intake Agent Data MCP' -> create the (no-auth) connection -> Save -> Publish. No API exists for this attach.",
+ "manual_steps_html_file": "MANUAL_STEPS.html",
+ "evaluation_csv_file": "EVALUATION.csv"
+}
